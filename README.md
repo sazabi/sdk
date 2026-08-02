@@ -1,14 +1,14 @@
 # Sazabi SDK
 
 The official TypeScript SDK for the [Sazabi](https://sazabi.com) public API,
-published to npm as [`@sazabi/public-sdk`](https://www.npmjs.com/package/@sazabi/public-sdk).
+published to npm as [`@sazabi/sdk`](https://www.npmjs.com/package/@sazabi/sdk).
 
 ```bash
-npm install @sazabi/public-sdk
+npm install @sazabi/sdk
 ```
 
 ```ts
-import { createClient } from "@sazabi/public-sdk";
+import { createClient } from "@sazabi/sdk";
 
 const client = createClient({
   credentialProvider: {
