@@ -1,0 +1,13 @@
+{
+  "sourceSha": "f70548b43390d939a81a2b121f2200b0ea609749",
+  "sourceRunId": "30768761656",
+  "builtAt": "2026-08-02T21:51:00Z",
+  "distSha256": "cd8e6ad6110911ef3f1aa58a270bee8b0193526317deb0b78f2a5632c18e03e6",
+  "baseVersion": "0.1.0",
+  "syncFiles": [
+    "dist",
+    "package.json",
+    "release-manifest.json"
+  ],
+  "version": "0.1.0"
+}
