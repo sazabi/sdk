@@ -8219,27 +8219,33 @@ var CONNECT_BUTTON = {
   label: "Connect",
   pendingLabel: "Connecting..."
 };
-var otelOrderedSteps = (noun) => [
-  `Add the OpenTelemetry SDK to your ${noun}. Most languages have official OpenTelemetry SDKs available (e.g., \`@opentelemetry/api\` for Node.js, \`opentelemetry-api\` for Python, etc.).`,
-  `Initialize OpenTelemetry in your ${noun}.`,
-  `Set the following environment variables in your ${noun} environment.`
-];
-var otelEnvVarFields = (protocol = "http/protobuf") => [
+var otelSetupActions = (noun, protocol = "http/protobuf") => [
   {
-    kind: "copyable",
-    label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
-    value: "https://${context.ingestHost}",
-    copyLabel: "OTLP endpoint"
+    instruction: `Add the OpenTelemetry SDK to your ${noun}. Most languages have official OpenTelemetry SDKs available (e.g., \`@opentelemetry/api\` for Node.js, \`opentelemetry-api\` for Python, etc.).`
   },
   {
-    kind: "copyable",
-    label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
-    value: protocol,
-    copyLabel: "OTLP protocol"
+    instruction: `Initialize OpenTelemetry in your ${noun}.`
+  },
+  {
+    instruction: `Set the following environment variables in your ${noun} environment.`,
+    payloads: [
+      {
+        kind: "copyable",
+        label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
+        value: "https://${context.ingestHost}",
+        copyLabel: "OTLP endpoint"
+      },
+      {
+        kind: "copyable",
+        label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
+        value: protocol,
+        copyLabel: "OTLP protocol"
+      }
+    ],
+    notes: [otelSdkAutoDetectNote]
   }
 ];
 var otelSdkAutoDetectNote = {
-  kind: "prose",
   text: "Most OpenTelemetry SDKs automatically detect these environment variables. If your SDK is already configured in code, use the same endpoint and protocol values there instead."
 };
 
@@ -8251,24 +8257,27 @@ var cloudflareManaged = {
       id: "prepare",
       title: "Create token",
       description: "Create a Cloudflare token with Logpush permissions.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "**Cloudflare Logpush is only available on the Enterprise plan.** Free, Pro, and Business accounts cannot create Logpush jobs."
+        }
+      ],
+      actions: [
+        {
+          kind: "instruction",
+          instruction: "Create a Cloudflare API token with **Account Settings: Read**, **Zone: Read**, and **Zone Logs: Edit** permissions.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Cloudflare API token template",
+              href: "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22account_settings%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22account%22%7D%2C%7B%22key%22%3A%22logs%22%2C%22type%22%3A%22edit%22%2C%22scope%22%3A%22zone%22%7D%2C%7B%22key%22%3A%22zone%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22zone%22%7D%5D&name=Sazabi+Cloudflare+Logpush"
+            }
+          ]
         },
         {
-          kind: "prose",
-          text: "Create a Cloudflare API token with **Account Settings: Read**, **Zone: Read**, and **Zone Logs: Edit** permissions."
-        },
-        {
-          kind: "prose",
-          text: "Pick the account you want to connect, click **Continue to summary**, then **Create Token**, and copy the token for the next step."
-        },
-        {
-          kind: "external-link",
-          label: "Open Cloudflare API token template",
-          href: "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22account_settings%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22account%22%7D%2C%7B%22key%22%3A%22logs%22%2C%22type%22%3A%22edit%22%2C%22scope%22%3A%22zone%22%7D%2C%7B%22key%22%3A%22zone%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22zone%22%7D%5D&name=Sazabi+Cloudflare+Logpush"
+          kind: "instruction",
+          instruction: "Pick the account you want to connect, click **Continue to summary**, then **Create Token**, and copy the token for the next step."
         }
       ]
     },
@@ -8276,7 +8285,7 @@ var cloudflareManaged = {
       id: "credentials",
       title: "Enter credentials",
       description: "Enter your token and account ID.",
-      steps: [
+      actions: [
         {
           id: "token",
           kind: "secret",
@@ -8354,19 +8363,18 @@ var cloudflareConnectionless = {
       section: "config",
       title: "Open Logpush",
       description: "Create an HTTP Logpush job in Cloudflare.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "**Cloudflare Logpush is only available on the Enterprise plan.** Free, Pro, and Business accounts cannot create Logpush jobs."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Create a Logpush job in your [Cloudflare dashboard](https://dash.cloudflare.com) under **Analytics & Logs > Logpush**, or via the Cloudflare API."
         },
         {
-          kind: "prose",
-          text: "Create a Logpush job in your [Cloudflare dashboard](https://dash.cloudflare.com) under **Analytics & Logs > Logpush**, or via the Cloudflare API."
-        },
-        {
-          kind: "prose",
-          text: "Select **HTTP** as the destination type."
+          instruction: "Select **HTTP** as the destination type."
         }
       ]
     },
@@ -8374,12 +8382,16 @@ var cloudflareConnectionless = {
       id: "destination",
       section: "endpoint",
       title: "Copy destination URL",
-      description: "Paste your Sazabi intake URL (above) into the Logpush HTTP destination field.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Destination URL",
-          value: "https://${context.ingestHost}/v1/logs"
+          instruction: "Paste your Sazabi intake URL (above) into the Logpush HTTP destination field.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Destination URL",
+              value: "https://${context.ingestHost}/v1/logs"
+            }
+          ]
         }
       ]
     },
@@ -8388,10 +8400,9 @@ var cloudflareConnectionless = {
       section: "config",
       title: "Set output options",
       description: "Use a timestamp format Sazabi can parse reliably.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In the Logpush job's **Output options**, set **Timestamp format** to **RFC3339** so Sazabi can parse event times accurately."
+          instruction: "In the Logpush job's **Output options**, set **Timestamp format** to **RFC3339** so Sazabi can parse event times accurately."
         }
       ]
     }
@@ -8446,14 +8457,12 @@ var cloudflareWorkersConnectionless = {
       section: "config",
       title: "Open telemetry destinations",
       description: "Add separate Cloudflare Workers Observability destinations for logs and traces.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In your Cloudflare dashboard, go to **Workers & Pages > Observability > Telemetry** and click **Add Destination**."
+          instruction: "In your Cloudflare dashboard, go to **Workers & Pages > Observability > Telemetry** and click **Add Destination**."
         },
         {
-          kind: "prose",
-          text: "Add one destination for logs and a second for traces."
+          instruction: "Add one destination for logs and a second for traces."
         }
       ]
     },
@@ -8461,22 +8470,26 @@ var cloudflareWorkersConnectionless = {
       id: "logs",
       section: "endpoint",
       title: "Configure logs destination",
-      description: "Paste these values into Cloudflare's **Add New Destination** dialog for logs.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Destination type",
-          value: "Logs"
-        },
-        {
-          kind: "copyable",
-          label: "OTLP logs endpoint",
-          value: "https://${context.ingestHost}/v1/logs"
-        },
-        {
-          kind: "copyable",
-          label: "Destination name",
-          value: "sazabi-logs"
+          instruction: "Paste these values into Cloudflare's **Add New Destination** dialog for logs.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Destination type",
+              value: "Logs"
+            },
+            {
+              kind: "copyable",
+              label: "OTLP logs endpoint",
+              value: "https://${context.ingestHost}/v1/logs"
+            },
+            {
+              kind: "copyable",
+              label: "Destination name",
+              value: "sazabi-logs"
+            }
+          ]
         }
       ]
     },
@@ -8484,22 +8497,26 @@ var cloudflareWorkersConnectionless = {
       id: "traces",
       section: "endpoint",
       title: "Configure traces destination",
-      description: "Paste these values into Cloudflare's **Add New Destination** dialog for traces.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Destination type",
-          value: "Traces"
-        },
-        {
-          kind: "copyable",
-          label: "OTLP traces endpoint",
-          value: "https://${context.ingestHost}/v1/traces"
-        },
-        {
-          kind: "copyable",
-          label: "Destination name",
-          value: "sazabi-traces"
+          instruction: "Paste these values into Cloudflare's **Add New Destination** dialog for traces.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Destination type",
+              value: "Traces"
+            },
+            {
+              kind: "copyable",
+              label: "OTLP traces endpoint",
+              value: "https://${context.ingestHost}/v1/traces"
+            },
+            {
+              kind: "copyable",
+              label: "Destination name",
+              value: "sazabi-traces"
+            }
+          ]
         }
       ]
     },
@@ -8508,14 +8525,12 @@ var cloudflareWorkersConnectionless = {
       section: "config",
       title: "Enable destinations",
       description: "Opt each Worker into the destination names you created.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In each Worker's `wrangler.jsonc` / `wrangler.toml`, enable observability and list the log and trace destination names you created."
+          instruction: "In each Worker's `wrangler.jsonc` / `wrangler.toml`, enable observability and list the log and trace destination names you created."
         },
         {
-          kind: "prose",
-          text: "Redeploy the Worker after updating Wrangler config. The destination is enabled only after the deployed Worker references it by name."
+          instruction: "Redeploy the Worker after updating Wrangler config. The destination is enabled only after the deployed Worker references it by name."
         }
       ]
     }
@@ -8563,7 +8578,7 @@ var cloudwatchRoleArnStep = {
   id: "role-arn",
   title: "Enter role ARN",
   description: "Enter the IAM Role ARN created by your selected setup method.",
-  steps: [
+  actions: [
     {
       id: "arn",
       kind: "text",
@@ -8614,19 +8629,21 @@ var cloudwatchManaged = {
             id: "prepare",
             title: "Launch stack",
             description: "Create the IAM role from Sazabi's CloudFormation template.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Launch a CloudFormation stack in your AWS account to create the IAM role that lets Sazabi read your CloudWatch logs."
+                kind: "instruction",
+                instruction: "Launch a CloudFormation stack in your AWS account to create the IAM role that lets Sazabi read your CloudWatch logs.",
+                payloads: [
+                  {
+                    kind: "external-link",
+                    label: "Launch CloudFormation stack",
+                    href: "${context.extras.cloudwatch.cloudFormationQuickCreateUrl}"
+                  }
+                ]
               },
               {
-                kind: "external-link",
-                label: "Launch CloudFormation stack",
-                href: "${context.extras.cloudwatch.cloudFormationQuickCreateUrl}"
-              },
-              {
-                kind: "prose",
-                text: "After the stack is created, find your role ARN under **Stacks → ${context.extras.cloudwatch.stackName} → Outputs** and copy the `RoleArn` value."
+                kind: "instruction",
+                instruction: "After the stack is created, find your role ARN under **Stacks → ${context.extras.cloudwatch.stackName} → Outputs** and copy the `RoleArn` value."
               }
             ]
           },
@@ -8647,16 +8664,16 @@ var cloudwatchManaged = {
             id: "prepare",
             title: "Apply Terraform",
             description: "Add the IAM role and policy resources to your Terraform stack.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Add this configuration to your Terraform files. It creates the IAM role that lets Sazabi read your CloudWatch logs."
-              },
-              {
-                kind: "code",
-                language: "hcl",
-                copyLabel: "Terraform",
-                value: `data "aws_caller_identity" "current" {}
+                kind: "instruction",
+                instruction: "Add this configuration to your Terraform files. It creates the IAM role that lets Sazabi read your CloudWatch logs.",
+                payloads: [
+                  {
+                    kind: "code",
+                    language: "hcl",
+                    copyLabel: "Terraform",
+                    value: `data "aws_caller_identity" "current" {}
 
 resource "aws_iam_role" "sazabi_log_ingestion" {
   name = "SazabiLogIngestion"
@@ -8689,10 +8706,12 @@ resource "aws_iam_role_policy" "sazabi_cloudwatch_logs" {
 output "sazabi_role_arn" {
   value = aws_iam_role.sazabi_log_ingestion.arn
 }`
+                  }
+                ]
               },
               {
-                kind: "prose",
-                text: "Run `terraform apply`, then copy the `sazabi_role_arn` output value."
+                kind: "instruction",
+                instruction: "Run `terraform apply`, then copy the `sazabi_role_arn` output value."
               }
             ]
           },
@@ -8713,16 +8732,16 @@ output "sazabi_role_arn" {
             id: "prepare",
             title: "Run commands",
             description: "Create the IAM role and permissions from your terminal.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Run the following commands in your terminal to create the IAM role that lets Sazabi read your CloudWatch logs. Replace `YOUR_ACCOUNT_ID` with your 12-digit AWS account ID; the final command prints the role ARN."
-              },
-              {
-                kind: "code",
-                language: "bash",
-                copyLabel: "CLI",
-                value: `cat > trust-policy.json << 'EOF'
+                kind: "instruction",
+                instruction: "Run the following commands in your terminal to create the IAM role that lets Sazabi read your CloudWatch logs. Replace `YOUR_ACCOUNT_ID` with your 12-digit AWS account ID; the final command prints the role ARN.",
+                payloads: [
+                  {
+                    kind: "code",
+                    language: "bash",
+                    copyLabel: "CLI",
+                    value: `cat > trust-policy.json << 'EOF'
 {
   "Version": "2012-10-17",
   "Statement": [{
@@ -8749,6 +8768,8 @@ EOF
 aws iam create-role --role-name SazabiLogIngestion --assume-role-policy-document file://trust-policy.json
 aws iam put-role-policy --role-name SazabiLogIngestion --policy-name SazabiLogSubscriptionManagement --policy-document file://permission-policy.json
 aws iam get-role --role-name SazabiLogIngestion --query 'Role.Arn' --output text`
+                  }
+                ]
               }
             ]
           },
@@ -8801,30 +8822,32 @@ var cloudwatchConnectionless = {
       section: "config",
       title: "Prepare AWS access",
       description: "Give the collector AWS credentials that can read your CloudWatch log groups.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           text: "To forward CloudWatch logs to Sazabi without granting Sazabi a cross-account IAM role, run an OpenTelemetry Collector yourself. The collector reads your log groups with the `awscloudwatch` receiver and exports OTLP to Sazabi. Sazabi never assumes a role in your account on this path."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Provision an IAM identity for the collector with permission to read the target log groups, and pin the AWS region. The collector authenticates with the standard AWS SDK credential chain (environment variables, an instance/task role, or a named profile)."
         },
         {
-          kind: "prose",
-          text: "Provision an IAM identity for the collector with permission to read the target log groups, and pin the AWS region. The collector authenticates with the standard AWS SDK credential chain (environment variables, an instance/task role, or a named profile)."
-        },
-        {
-          kind: "prose",
-          text: "Grant that identity these minimum IAM permissions, scoped to the log groups you forward:"
-        },
-        {
-          kind: "bulleted-list",
-          items: [
-            "`logs:DescribeLogGroups`",
-            "`logs:GetLogEvents`",
-            "`logs:StartLiveTail`"
+          instruction: "Grant that identity these minimum IAM permissions, scoped to the log groups you forward:",
+          payloads: [
+            {
+              kind: "bulleted-list",
+              items: [
+                "`logs:DescribeLogGroups`",
+                "`logs:GetLogEvents`",
+                "`logs:StartLiveTail`"
+              ]
+            }
+          ],
+          notes: [
+            {
+              text: "Alternatively, forward through a CloudWatch Logs subscription filter into a Firehose or Lambda that emits OTLP to the same endpoint. Either way the transport is customer-run OTLP, not the Sazabi-managed Kinesis path."
+            }
           ]
-        },
-        {
-          kind: "note",
-          text: "Alternatively, forward through a CloudWatch Logs subscription filter into a Firehose or Lambda that emits OTLP to the same endpoint. Either way the transport is customer-run OTLP, not the Sazabi-managed Kinesis path."
         }
       ]
     },
@@ -8832,13 +8855,17 @@ var cloudwatchConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy Sazabi values",
-      description: "Use these values in the collector exporter configuration.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "`OTLP endpoint`",
-          value: "https://${context.ingestHost}",
-          copyLabel: "OTLP endpoint"
+          instruction: "Use these values in the collector exporter configuration.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`OTLP endpoint`",
+              value: "https://${context.ingestHost}",
+              copyLabel: "OTLP endpoint"
+            }
+          ]
         }
       ]
     },
@@ -8847,18 +8874,22 @@ var cloudwatchConnectionless = {
       section: "config",
       title: "Configure collector",
       description: "Use an `awscloudwatch` receiver and an `otlphttp` exporter.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Use the `opentelemetry-collector-contrib` distribution — the `awscloudwatch` receiver ships there, not in the core collector."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "code",
-          label: "Example collector configuration",
-          language: "yaml",
-          copyLabel: "Collector configuration",
-          value: `receivers:
+          instruction: "Add this collector configuration, replacing `YOUR_AWS_REGION` with the region your log groups live in and listing the log group names you want to forward under `groups.named`.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Example collector configuration",
+              language: "yaml",
+              copyLabel: "Collector configuration",
+              value: `receivers:
   awscloudwatch:
     region: YOUR_AWS_REGION
     logs:
@@ -8876,10 +8907,13 @@ service:
     logs:
       receivers: [awscloudwatch]
       exporters: [otlphttp]`
-        },
-        {
-          kind: "prose",
-          text: "Replace `YOUR_AWS_REGION` with the region your log groups live in, and list the log group names you want to forward under `groups.named`. The key is embedded in the endpoint hostname, so no OTLP auth header is required."
+            }
+          ],
+          notes: [
+            {
+              text: "The key is embedded in the endpoint hostname, so no OTLP auth header is required."
+            }
+          ]
         }
       ]
     },
@@ -8888,10 +8922,9 @@ service:
       section: "verify",
       title: "Run and verify",
       description: "Deploy the collector and generate logs in the AWS account.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "After the collector is running, write a new log event in one of the forwarded log groups and check the collector logs for export errors. Logs should appear in Sazabi within a few minutes."
+          instruction: "After the collector is running, write a new log event in one of the forwarded log groups and check the collector logs for export errors. Logs should appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -8964,10 +8997,10 @@ var convexManaged = {
       id: "credentials",
       title: "Enter access token",
       description: "Enter a Convex team access token.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "You can create one in your [Convex dashboard team settings](https://dashboard.convex.dev)."
+          kind: "instruction",
+          instruction: "Create a team access token in your [Convex dashboard team settings](https://dashboard.convex.dev)."
         },
         {
           id: "token",
@@ -8982,7 +9015,7 @@ var convexManaged = {
       id: "team",
       title: "Choose team",
       description: "Select the Convex team whose deployments Sazabi should list.",
-      steps: [
+      actions: [
         {
           id: "team",
           kind: "select",
@@ -9016,19 +9049,20 @@ var convexConnectionless = {
       section: "config",
       title: "Open Log Streams",
       description: "Add a webhook log stream in the Convex dashboard.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "**Convex log streams require the Pro plan.** Free/Starter teams cannot configure log streams."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "prose",
-          text: "In your [Convex dashboard](https://dashboard.convex.dev), open the deployment you want to forward, then go to **Settings > Integrations** and configure a **Webhook** log stream."
-        },
-        {
-          kind: "prose",
-          text: "Log streams are **per deployment** — repeat this setup for each deployment you want to forward. To onboard many deployments at once, connect your Convex account instead and Sazabi creates the log streams for you."
+          instruction: "In your [Convex dashboard](https://dashboard.convex.dev), open the deployment you want to forward, then go to **Settings > Integrations** and configure a **Webhook** log stream.",
+          notes: [
+            {
+              text: "Log streams are **per deployment** — repeat this setup for each deployment you want to forward. To onboard many deployments at once, connect your Convex account instead and Sazabi creates the log streams for you."
+            }
+          ]
         }
       ]
     },
@@ -9036,16 +9070,21 @@ var convexConnectionless = {
       id: "endpoint",
       section: "endpoint",
       title: "Copy webhook URL",
-      description: "Paste your Sazabi intake URL (above) into the webhook configuration.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Webhook URL",
-          value: "https://${context.ingestHost}"
-        },
-        {
-          kind: "note",
-          text: "Your key is embedded in the hostname, so the webhook needs no custom headers."
+          instruction: "Paste your Sazabi intake URL (above) into the webhook configuration.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Webhook URL",
+              value: "https://${context.ingestHost}"
+            }
+          ],
+          notes: [
+            {
+              text: "Your key is embedded in the hostname, so the webhook needs no custom headers."
+            }
+          ]
         }
       ]
     },
@@ -9054,10 +9093,9 @@ var convexConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Confirm logs arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the log stream, then trigger activity — run a Convex function or hit a deployed endpoint. Logs appear in Sazabi within a few minutes."
+          instruction: "Save the log stream, then trigger activity — run a Convex function or hit a deployed endpoint. Logs appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -9131,40 +9169,37 @@ var convexSpec = {
 
 // ../data-sources/src/sources/datadog/setup.ts
 var datadogConnectionless = {
-  kind: "choice",
   perStreamInstructions: true,
-  title: "Choose Agent configuration",
-  description: "Choose whether this Datadog Agent should dual-ship to Datadog and Sazabi or send only to Sazabi.",
-  options: [
+  groups: [
     {
-      id: "datadog-yaml-dual-ship",
-      label: "`datadog.yaml` dual-ship",
-      description: "Keep the Agent's Datadog API key and add Sazabi as an additional logs endpoint.",
-      flow: {
-        groups: [
-          {
-            id: "values",
-            title: "Copy Sazabi values",
-            description: "Use this host in `logs_config.additional_endpoints`.",
-            steps: [
-              {
-                kind: "copyable",
-                label: "Intake host",
-                value: "${context.ingestHost}",
-                copyLabel: "Datadog intake host"
-              }
-            ]
-          },
-          {
-            id: "configure",
-            title: "Apply `datadog.yaml` config",
-            description: "Add Sazabi as an additional endpoint without changing the Agent's root Datadog API key.",
-            steps: [
-              {
-                kind: "code",
-                language: "yaml",
-                copyLabel: "datadog.yaml dual-ship configuration",
-                value: `# Enable logs collection if it is not already enabled.
+      id: "configure",
+      title: "Configure the Datadog Agent",
+      actions: [
+        {
+          instruction: "Choose how this Datadog Agent should ship to Sazabi, then copy the Sazabi value and apply the matching config.",
+          payloads: [
+            {
+              kind: "options",
+              label: "Choose Agent configuration",
+              options: [
+                {
+                  id: "datadog-yaml-dual-ship",
+                  label: "`datadog.yaml` dual-ship",
+                  description: "Keep the Agent's Datadog API key and add Sazabi as an additional logs endpoint.",
+                  payloads: [
+                    {
+                      kind: "copyable",
+                      label: "Intake host",
+                      value: "${context.ingestHost}",
+                      copyLabel: "Datadog intake host",
+                      description: "Use this host in `logs_config.additional_endpoints`."
+                    },
+                    {
+                      kind: "code",
+                      language: "yaml",
+                      copyLabel: "datadog.yaml dual-ship configuration",
+                      description: "Add Sazabi as an additional endpoint without changing the Agent's root Datadog API key.",
+                      value: `# Enable logs collection if it is not already enabled.
 logs_enabled: true
 
 # Send a copy of logs to Sazabi while the primary Agent config
@@ -9178,208 +9213,110 @@ logs_config:
     - api_key: any-non-empty-value
       Host: \${context.ingestHost}
       Port: 443`
-              }
-            ]
-          },
-          {
-            id: "restart",
-            title: "Restart and verify",
-            description: "Restart the Agent after updating `datadog.yaml`.",
-            steps: [
-              {
-                kind: "prose",
-                text: "Restart the Agent so it picks up the updated `datadog.yaml`."
-              },
-              {
-                kind: "note",
-                variant: "requirement",
-                text: "`DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS` requires Datadog Agent v6.18+ or v7.18+."
-              },
-              {
-                kind: "note",
-                variant: "requirement",
-                text: "Avoid configuring both a Sazabi additional endpoint and a Sazabi-only logs URL in the same Agent, or you may send duplicate logs."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: "env-dual-ship",
-      label: "Env vars dual-ship",
-      description: "Keep `DD_API_KEY` pointed at Datadog and add Sazabi through environment variables.",
-      flow: {
-        groups: [
-          {
-            id: "values",
-            title: "Copy Sazabi values",
-            description: "Use this host in `DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS`.",
-            steps: [
-              {
-                kind: "copyable",
-                label: "Intake host",
-                value: "${context.ingestHost}",
-                copyLabel: "Datadog intake host"
-              }
-            ]
-          },
-          {
-            id: "configure",
-            title: "Apply environment variables",
-            description: "Add these variables without changing the Agent's existing Datadog API key.",
-            steps: [
-              {
-                kind: "code",
-                language: "bash",
-                copyLabel: "Datadog Agent dual-ship environment variables",
-                value: `DD_LOGS_ENABLED=true
+                    }
+                  ]
+                },
+                {
+                  id: "env-dual-ship",
+                  label: "Env vars dual-ship",
+                  description: "Keep `DD_API_KEY` pointed at Datadog and add Sazabi through environment variables.",
+                  payloads: [
+                    {
+                      kind: "copyable",
+                      label: "Intake host",
+                      value: "${context.ingestHost}",
+                      copyLabel: "Datadog intake host",
+                      description: "Use this host in `DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS`."
+                    },
+                    {
+                      kind: "code",
+                      language: "bash",
+                      copyLabel: "Datadog Agent dual-ship environment variables",
+                      description: "Add these variables without changing the Agent's existing Datadog API key.",
+                      value: `DD_LOGS_ENABLED=true
 DD_LOGS_CONFIG_FORCE_USE_HTTP=true
 DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS='[{"api_key":"any-non-empty-value","Host":"\${context.ingestHost}","Port":443}]'`
-              }
-            ]
-          },
-          {
-            id: "restart",
-            title: "Restart and verify",
-            description: "Restart or redeploy the Agent after changing environment variables.",
-            steps: [
-              {
-                kind: "prose",
-                text: "Restart or redeploy the Agent so the new environment variables take effect."
-              },
-              {
-                kind: "note",
-                variant: "requirement",
-                text: "`DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS` requires Datadog Agent v6.18+ or v7.18+."
-              },
-              {
-                kind: "note",
-                variant: "requirement",
-                text: "Avoid configuring both a Sazabi additional endpoint and a Sazabi-only logs URL in the same Agent, or you may send duplicate logs."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: "env-sazabi-only",
-      label: "Env vars Sazabi-only",
-      description: "Use a dedicated Agent or sidecar that sends logs only to Sazabi.",
-      flow: {
-        groups: [
-          {
-            id: "values",
-            title: "Copy Sazabi values",
-            description: "Use this URL as the Agent logs intake URL.",
-            steps: [
-              {
-                kind: "copyable",
-                label: "Intake URL",
-                value: "https://${context.ingestHost}",
-                copyLabel: "Datadog Agent intake URL"
-              }
-            ]
-          },
-          {
-            id: "configure",
-            title: "Apply environment variables",
-            description: "Set the dedicated Agent's API key and logs URL to Sazabi.",
-            steps: [
-              {
-                kind: "code",
-                language: "bash",
-                copyLabel: "Dedicated Datadog Agent environment variables",
-                value: `DD_API_KEY=any-non-empty-value
+                    }
+                  ]
+                },
+                {
+                  id: "env-sazabi-only",
+                  label: "Env vars Sazabi-only",
+                  description: "Use a dedicated Agent or sidecar that sends logs only to Sazabi.",
+                  payloads: [
+                    {
+                      kind: "copyable",
+                      label: "Intake URL",
+                      value: "https://${context.ingestHost}",
+                      copyLabel: "Datadog Agent intake URL",
+                      description: "Use this URL as the Agent logs intake URL."
+                    },
+                    {
+                      kind: "code",
+                      language: "bash",
+                      copyLabel: "Dedicated Datadog Agent environment variables",
+                      description: "Set the dedicated Agent's API key and logs URL to Sazabi.",
+                      value: `DD_API_KEY=any-non-empty-value
 DD_LOGS_ENABLED=true
 DD_LOGS_CONFIG_LOGS_DD_URL=https://\${context.ingestHost}
 DD_LOGS_CONFIG_FORCE_USE_HTTP=true`
-              }
-            ]
-          },
-          {
-            id: "restart",
-            title: "Restart and verify",
-            description: "Restart or redeploy the dedicated Agent after changing environment variables.",
-            steps: [
-              {
-                kind: "prose",
-                text: "Restart or redeploy the dedicated Agent so the new environment variables take effect."
-              },
-              {
-                kind: "note",
-                text: "`DD_API_KEY` is not used by Sazabi — the intake URL carries your public key in the hostname — but the Datadog Agent requires it to be a non-empty value to start."
-              },
-              {
-                kind: "note",
-                variant: "requirement",
-                text: "Avoid configuring both a Sazabi additional endpoint and a Sazabi-only logs URL in the same Agent, or you may send duplicate logs."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      id: "ecs-sidecar",
-      label: "ECS sidecar",
-      description: "Run a dedicated Datadog Agent sidecar in ECS/Fargate for Sazabi logs.",
-      flow: {
-        groups: [
-          {
-            id: "values",
-            title: "Copy Sazabi values",
-            description: "Use this URL in the sidecar container environment.",
-            steps: [
-              {
-                kind: "copyable",
-                label: "Intake URL",
-                value: "https://${context.ingestHost}",
-                copyLabel: "Datadog Agent intake URL"
-              }
-            ]
-          },
-          {
-            id: "configure",
-            title: "Apply sidecar environment",
-            description: "Set these on the dedicated Datadog Agent sidecar container.",
-            steps: [
-              {
-                kind: "code",
-                language: "bash",
-                copyLabel: "ECS Datadog Agent sidecar environment variables",
-                value: `ECS_FARGATE=true
+                    }
+                  ]
+                },
+                {
+                  id: "ecs-sidecar",
+                  label: "ECS sidecar",
+                  description: "Run a dedicated Datadog Agent sidecar in ECS/Fargate for Sazabi logs.",
+                  payloads: [
+                    {
+                      kind: "copyable",
+                      label: "Intake URL",
+                      value: "https://${context.ingestHost}",
+                      copyLabel: "Datadog Agent intake URL",
+                      description: "Use this URL in the sidecar container environment."
+                    },
+                    {
+                      kind: "code",
+                      language: "bash",
+                      copyLabel: "ECS Datadog Agent sidecar environment variables",
+                      description: "Set these on the dedicated Datadog Agent sidecar container.",
+                      value: `ECS_FARGATE=true
 DD_API_KEY=any-non-empty-value
 DD_LOGS_ENABLED=true
 DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
 DD_LOGS_CONFIG_LOGS_DD_URL=https://\${context.ingestHost}
 DD_LOGS_CONFIG_FORCE_USE_HTTP=true`
-              }
-            ]
-          },
-          {
-            id: "restart",
-            title: "Restart and verify",
-            description: "Redeploy the ECS task definition after changing the sidecar environment.",
-            steps: [
-              {
-                kind: "prose",
-                text: "Redeploy the ECS task definition so the sidecar picks up the new environment."
-              },
-              {
-                kind: "note",
-                text: "`DD_API_KEY` is not used by Sazabi — the intake URL carries your public key in the hostname — but the Datadog Agent requires it to be a non-empty value to start."
-              },
-              {
-                kind: "note",
-                variant: "requirement",
-                text: "Avoid configuring both a Sazabi additional endpoint and a Sazabi-only logs URL in the same Agent, or you may send duplicate logs."
-              }
-            ]
-          }
-        ]
-      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "restart",
+      title: "Restart and verify",
+      description: "Restart or redeploy the Agent after applying the config.",
+      actions: [
+        {
+          instruction: "Restart or redeploy the Agent so it picks up the updated configuration.",
+          notes: [
+            {
+              variant: "requirement",
+              text: "`DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS` requires Datadog Agent v6.18+ or v7.18+."
+            },
+            {
+              text: "For the dedicated Agent and ECS sidecar methods, `DD_API_KEY` is not used by Sazabi — the intake URL carries your public key in the hostname — but the Datadog Agent requires it to be a non-empty value to start."
+            },
+            {
+              variant: "requirement",
+              text: "Avoid configuring both a Sazabi additional endpoint and a Sazabi-only logs URL in the same Agent, or you may send duplicate logs."
+            }
+          ]
+        }
+      ]
     }
   ]
 };
@@ -9418,15 +9355,15 @@ var daytonaConnectionless = {
       section: "config",
       title: "Open OpenTelemetry card",
       description: "Find the organization-level OpenTelemetry settings in Daytona.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "The OpenTelemetry card is visible to organization owners only."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "prose",
-          text: "Open the [Daytona dashboard](https://app.daytona.io), choose your organization, open **Settings**, and find the **OpenTelemetry** card."
+          instruction: "Open the [Daytona dashboard](https://app.daytona.io), choose your organization, open **Settings**, and find the **OpenTelemetry** card."
         }
       ]
     },
@@ -9434,12 +9371,21 @@ var daytonaConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy OTLP values",
-      description: "Set the endpoint on the Daytona OpenTelemetry card. The key is embedded in the URL, so no authorization header is needed.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "OTLP Endpoint",
-          value: "https://${context.ingestHost}"
+          instruction: "Set the endpoint on the Daytona OpenTelemetry card.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "OTLP Endpoint",
+              value: "https://${context.ingestHost}"
+            }
+          ],
+          notes: [
+            {
+              text: "The key is embedded in the URL, so no authorization header is needed."
+            }
+          ]
         }
       ]
     },
@@ -9448,17 +9394,18 @@ var daytonaConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Restart or start a sandbox so Daytona exports fresh telemetry.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the OpenTelemetry card, then restart or start a sandbox. Sandboxes begin exporting telemetry automatically on their next start with no per-sandbox change required."
-        },
-        {
-          kind: "bulleted-list",
-          items: [
-            "Filter in Sazabi using the resource attributes Daytona stamps on each record: `daytona_organization_id`, `daytona_region_id`, `daytona_snapshot`.",
-            "Sazabi currently stores logs and traces from this source. Metrics sent to the endpoint aren't stored yet.",
-            "Daytona only retains sandbox telemetry for 3 days in its own dashboard, so Sazabi is the durable store."
+          instruction: "Save the OpenTelemetry card, then restart or start a sandbox. Sandboxes begin exporting telemetry automatically on their next start with no per-sandbox change required.",
+          payloads: [
+            {
+              kind: "bulleted-list",
+              items: [
+                "Filter in Sazabi using the resource attributes Daytona stamps on each record: `daytona_organization_id`, `daytona_region_id`, `daytona_snapshot`.",
+                "Sazabi currently stores logs and traces from this source. Metrics sent to the endpoint aren't stored yet.",
+                "Daytona only retains sandbox telemetry for 3 days in its own dashboard, so Sazabi is the durable store."
+              ]
+            }
           ]
         }
       ]
@@ -9501,10 +9448,10 @@ var digitalOceanManaged = {
       id: "prepare",
       title: "Create access token",
       description: "Create a DigitalOcean token with App Platform permissions.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Create a [DigitalOcean personal access token](https://cloud.digitalocean.com/account/api/tokens) with **Full Access** scope, or use Custom Scopes with `app:read`, `app:update`, `actions:read`, `regions:read`, and `sizes:read` so Sazabi can set up log forwarding on your apps."
+          kind: "instruction",
+          instruction: "Create a [DigitalOcean personal access token](https://cloud.digitalocean.com/account/api/tokens) with **Full Access** scope, or use Custom Scopes with `app:read`, `app:update`, `actions:read`, `regions:read`, and `sizes:read` so Sazabi can set up log forwarding on your apps."
         }
       ]
     },
@@ -9512,7 +9459,7 @@ var digitalOceanManaged = {
       id: "credentials",
       title: "Enter access token",
       description: "Enter your personal access token.",
-      steps: [
+      actions: [
         {
           id: "token",
           kind: "secret",
@@ -9547,18 +9494,17 @@ var digitalOceanConnectionless = {
       section: "config",
       title: "Open Log Forwarding",
       description: "Add a Datadog log destination to your App Platform app.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In the [DigitalOcean control panel](https://cloud.digitalocean.com/apps), open the App Platform app you want to forward, then go to **Settings > Log Forwarding** and add a **Datadog** destination. You can also add the destination through your app spec (`app.yaml`) or `doctl apps update`."
+          instruction: "In the [DigitalOcean control panel](https://cloud.digitalocean.com/apps), open the App Platform app you want to forward, then go to **Settings > Log Forwarding** and add a **Datadog** destination. You can also add the destination through your app spec (`app.yaml`) or `doctl apps update`."
         },
         {
-          kind: "prose",
-          text: "Log destinations are configured **per app** and attach to each service, worker, and job. Repeat this setup for every app you want to forward. To add forwarding across an app in one step from a picker, connect your DigitalOcean account instead."
-        },
-        {
-          kind: "note",
-          text: "App Platform Functions, Droplets, Spaces, Managed Databases, and Managed Kubernetes are not covered by this path — forward those with Sazabi's [OpenTelemetry endpoint](https://docs.sazabi.com/data/sources/endpoint/opentelemetry)."
+          instruction: "Repeat this setup for every app you want to forward — log destinations are configured **per app** and attach to each service, worker, and job. To add forwarding across an app in one step from a picker, connect your DigitalOcean account instead.",
+          notes: [
+            {
+              text: "App Platform Functions, Droplets, Spaces, Managed Databases, and Managed Kubernetes are not covered by this path — forward those with Sazabi's [OpenTelemetry endpoint](https://docs.sazabi.com/data/sources/endpoint/opentelemetry)."
+            }
+          ]
         }
       ]
     },
@@ -9566,20 +9512,24 @@ var digitalOceanConnectionless = {
       id: "endpoint",
       section: "endpoint",
       title: "Copy Datadog destination values",
-      description: "Paste these into the Datadog log destination fields.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Datadog endpoint (API URL)",
-          value: "https://${context.ingestHost}",
-          copyLabel: "DigitalOcean Datadog endpoint"
-        },
-        {
-          kind: "copyable",
-          label: "Datadog API key",
-          value: "${context.publicKey}",
-          copyLabel: "Sazabi public key",
-          description: "App Platform requires a Datadog API key field. Paste your Sazabi public key here — the key embedded in the endpoint hostname is what actually authenticates the stream."
+          instruction: "Paste these into the Datadog log destination fields.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Datadog endpoint (API URL)",
+              value: "https://${context.ingestHost}",
+              copyLabel: "DigitalOcean Datadog endpoint"
+            },
+            {
+              kind: "copyable",
+              label: "Datadog API key",
+              value: "${context.publicKey}",
+              copyLabel: "Sazabi public key",
+              description: "App Platform requires a Datadog API key field. Paste your Sazabi public key here — the key embedded in the endpoint hostname is what actually authenticates the stream."
+            }
+          ]
         }
       ]
     },
@@ -9588,10 +9538,9 @@ var digitalOceanConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Confirm logs arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the log destination, then trigger activity — deploy the app or hit one of its routes. Logs appear in Sazabi within a few minutes."
+          instruction: "Save the log destination, then trigger activity — deploy the app or hit one of its routes. Logs appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -9806,12 +9755,17 @@ finally:
     finally:
         # Flush logs before exit; runs even if sandbox.kill() raises.
         logger_provider.shutdown()`;
-var envVarSteps = [
+var envVarActions = [
   {
-    kind: "copyable",
-    label: "`SAZABI_INTAKE_URL`",
-    value: "https://${context.ingestHost}/v1/logs",
-    copyLabel: "Intake URL"
+    instruction: "Set these values in the application that creates E2B sandboxes.",
+    payloads: [
+      {
+        kind: "copyable",
+        label: "`SAZABI_INTAKE_URL`",
+        value: "https://${context.ingestHost}/v1/logs",
+        copyLabel: "Intake URL"
+      }
+    ]
   }
 ];
 var e2bConnectionless = {
@@ -9828,20 +9782,23 @@ var e2bConnectionless = {
           {
             id: "values",
             title: "Copy environment variables",
-            description: "Set these values in the application that creates E2B sandboxes.",
-            steps: envVarSteps
+            actions: envVarActions
           },
           {
             id: "instrument",
             title: "Instrument sandbox logs",
-            description: "Emit sandbox stdout and stderr through the OpenTelemetry logs SDK.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "TypeScript SDK integration",
-                language: "typescript",
-                copyLabel: "TypeScript code",
-                value: TYPESCRIPT_SDK
+                instruction: "Emit sandbox stdout and stderr through the OpenTelemetry logs SDK.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "TypeScript SDK integration",
+                    language: "typescript",
+                    copyLabel: "TypeScript code",
+                    value: TYPESCRIPT_SDK
+                  }
+                ]
               }
             ]
           }
@@ -9857,20 +9814,23 @@ var e2bConnectionless = {
           {
             id: "values",
             title: "Copy environment variables",
-            description: "Set these values in the application that creates E2B sandboxes.",
-            steps: envVarSteps
+            actions: envVarActions
           },
           {
             id: "instrument",
             title: "Instrument sandbox logs",
-            description: "Bridge sandbox stdout and stderr into the OpenTelemetry logs SDK.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "Python SDK integration",
-                language: "python",
-                copyLabel: "Python code",
-                value: PYTHON_SDK
+                instruction: "Bridge sandbox stdout and stderr into the OpenTelemetry logs SDK.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "Python SDK integration",
+                    language: "python",
+                    copyLabel: "Python code",
+                    value: PYTHON_SDK
+                  }
+                ]
               }
             ]
           }
@@ -9991,28 +9951,32 @@ var elasticCloudConnectionless = {
             id: "prepare-agent",
             title: "Prepare Elastic Agent",
             description: "Use the embedded OpenTelemetry Collector rather than a Fleet output.",
-            steps: [
+            notes: [
               {
-                kind: "note",
                 text: "Elastic Agent 8.13+ ships an embedded OpenTelemetry Collector (EDOT)."
-              },
+              }
+            ],
+            actions: [
               {
-                kind: "prose",
-                text: "Fleet's **Outputs** UI does not expose an OTLP type, so point Elastic Agent at Sazabi through the embedded OTel Collector, not via a Fleet output."
+                instruction: "Point Elastic Agent at Sazabi through the embedded OTel Collector, not via a Fleet output — Fleet's **Outputs** UI does not expose an OTLP type."
               }
             ]
           },
           {
             id: "copy-config",
             title: "Copy Collector config",
-            description: "Configure Sazabi as a standard `otlphttp` exporter.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "sazabi-otel.yml",
-                language: "yaml",
-                copyLabel: "OTel Collector config",
-                value: ELASTIC_AGENT_CONFIG
+                instruction: "Configure Sazabi as a standard `otlphttp` exporter.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "sazabi-otel.yml",
+                    language: "yaml",
+                    copyLabel: "OTel Collector config",
+                    value: ELASTIC_AGENT_CONFIG
+                  }
+                ]
               }
             ]
           },
@@ -10020,18 +9984,17 @@ var elasticCloudConnectionless = {
             id: "run-agent",
             title: "Run and tune",
             description: "Validate the config and tune receivers for your deployment.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Run it standalone with `elastic-agent otel --config sazabi-otel.yml` after validating with `elastic-agent otel validate --config sazabi-otel.yml`, or attach an **OpenTelemetry input package** to a Fleet Agent Policy on 9.2+."
+                instruction: "Run it standalone with `elastic-agent otel --config sazabi-otel.yml` after validating with `elastic-agent otel validate --config sazabi-otel.yml`, or attach an **OpenTelemetry input package** to a Fleet Agent Policy on 9.2+."
               },
               {
-                kind: "prose",
-                text: "Tune the `filelog` receiver's `include` paths to match your log files."
-              },
-              {
-                kind: "note",
-                text: "Standard OpenTelemetry receivers (`hostmetrics`, `journald`, `kubernetesattributes`, etc.) all compose with the same `exporters.otlphttp/sazabi` block."
+                instruction: "Tune the `filelog` receiver's `include` paths to match your log files.",
+                notes: [
+                  {
+                    text: "Standard OpenTelemetry receivers (`hostmetrics`, `journald`, `kubernetesattributes`, etc.) all compose with the same `exporters.otlphttp/sazabi` block."
+                  }
+                ]
               }
             ]
           }
@@ -10048,28 +10011,32 @@ var elasticCloudConnectionless = {
             id: "prepare-logstash",
             title: "Prepare Logstash",
             description: "Run Logstash yourself; Elastic Cloud only stores centralized pipelines.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Run Logstash 8.x or 9.x outside Elastic Cloud (Docker, sidecar, or self-managed)."
-              },
-              {
-                kind: "note",
-                text: "Elastic Cloud's Kibana **Logstash Pipelines** page only stores pipelines centrally — it does not run Logstash for you."
+                instruction: "Run Logstash 8.x or 9.x outside Elastic Cloud (Docker, sidecar, or self-managed).",
+                notes: [
+                  {
+                    text: "Elastic Cloud's Kibana **Logstash Pipelines** page only stores pipelines centrally — it does not run Logstash for you."
+                  }
+                ]
               }
             ]
           },
           {
             id: "copy-config",
             title: "Copy Logstash pipeline",
-            description: "Poll Elastic logs, wrap them in an OTLP envelope, and post them to Sazabi.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "logstash.conf",
-                language: "hcl",
-                copyLabel: "Logstash pipeline",
-                value: LOGSTASH_CONFIG
+                instruction: "Copy this Logstash pipeline to poll Elastic logs, wrap them in an OTLP envelope, and post them to Sazabi.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "logstash.conf",
+                    language: "hcl",
+                    copyLabel: "Logstash pipeline",
+                    value: LOGSTASH_CONFIG
+                  }
+                ]
               }
             ]
           },
@@ -10077,18 +10044,17 @@ var elasticCloudConnectionless = {
             id: "update-endpoint",
             title: "Update endpoint",
             description: "Point the pipeline at your Elastic Cloud deployment.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Replace `<your-deployment>` and `<region>` with your Elastic Cloud deployment's Elasticsearch endpoint, for example `https://acme.es.us-central1.gcp.cloud.es.io:443`."
-              },
-              {
-                kind: "prose",
-                text: 'The pipeline polls the index every minute via the `schedule` setting, builds an OTLP/HTTP `resourceLogs` envelope in a `ruby` filter, and POSTs the raw JSON via the `http` output (using `format => "message"` so Logstash sends the exact body the filter builds).'
-              },
-              {
-                kind: "note",
-                text: "The `ruby` filter is included with Logstash by default."
+                instruction: "Replace `<your-deployment>` and `<region>` with your Elastic Cloud deployment's Elasticsearch endpoint, for example `https://acme.es.us-central1.gcp.cloud.es.io:443`.",
+                notes: [
+                  {
+                    text: 'The pipeline polls the index every minute via the `schedule` setting, builds an OTLP/HTTP `resourceLogs` envelope in a `ruby` filter, and POSTs the raw JSON via the `http` output (using `format => "message"` so Logstash sends the exact body the filter builds).'
+                  },
+                  {
+                    text: "The `ruby` filter is included with Logstash by default."
+                  }
+                ]
               }
             ]
           }
@@ -10150,31 +10116,36 @@ var fluentBitConnectionless = {
       id: "copy-config",
       section: "config",
       title: "Copy output configuration",
-      description: "Configure Fluent Bit's built-in `opentelemetry` output plugin.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Requires Fluent Bit v2.0 or later. The `opentelemetry` output plugin is included in the default distribution, so no additional installation is needed."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "code-tabs",
-          label: "Output configuration",
-          description: "Choose the snippet format that matches how you manage Fluent Bit.",
-          tabs: [
+          instruction: "Configure Fluent Bit's built-in `opentelemetry` output plugin.",
+          payloads: [
             {
-              id: "classic",
-              label: "Classic config",
-              language: "bash",
-              copyLabel: "Classic Fluent Bit output configuration",
-              value: CLASSIC_CONFIG
-            },
-            {
-              id: "helm",
-              label: "Helm values",
-              language: "yaml",
-              copyLabel: "Fluent Bit Helm values",
-              value: HELM_VALUES
+              kind: "code-tabs",
+              label: "Output configuration",
+              description: "Choose the snippet format that matches how you manage Fluent Bit.",
+              tabs: [
+                {
+                  id: "classic",
+                  label: "Classic config",
+                  language: "bash",
+                  copyLabel: "Classic Fluent Bit output configuration",
+                  value: CLASSIC_CONFIG
+                },
+                {
+                  id: "helm",
+                  label: "Helm values",
+                  language: "yaml",
+                  copyLabel: "Fluent Bit Helm values",
+                  value: HELM_VALUES
+                }
+              ]
             }
           ]
         }
@@ -10185,14 +10156,14 @@ var fluentBitConnectionless = {
       section: "verify",
       title: "Restart and verify",
       description: "Restart Fluent Bit after changing the output configuration.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Restart Fluent Bit so it picks up the updated output configuration, then trigger some log activity."
-        },
-        {
-          kind: "note",
-          text: "If logs do not appear after restart, check the Fluent Bit process logs for TLS, DNS, or authorization errors."
+          instruction: "Restart Fluent Bit so it picks up the updated output configuration, then trigger some log activity.",
+          notes: [
+            {
+              text: "If logs do not appear after restart, check the Fluent Bit process logs for TLS, DNS, or authorization errors."
+            }
+          ]
         }
       ]
     }
@@ -10234,14 +10205,41 @@ var flyIoManaged = {
       id: "prepare",
       title: "Create token",
       description: "Create a read-only Fly.io organization token.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "From the CLI: `flyctl tokens create readonly -o <org-slug>`."
-        },
-        {
-          kind: "prose",
-          text: "Or open the org's Tokens tab in the [Fly.io dashboard](https://fly.io/dashboard) and create a read-only token."
+          kind: "instruction",
+          instruction: "Create a read-only organization token from the CLI or the Fly.io dashboard.",
+          payloads: [
+            {
+              kind: "options",
+              options: [
+                {
+                  id: "cli",
+                  label: "CLI",
+                  payloads: [
+                    {
+                      kind: "code",
+                      language: "bash",
+                      copyLabel: "flyctl read-only token command",
+                      value: "flyctl tokens create readonly -o <org-slug>"
+                    }
+                  ]
+                },
+                {
+                  id: "dashboard",
+                  label: "Dashboard",
+                  payloads: [
+                    {
+                      kind: "external-link",
+                      label: "Open the Fly.io dashboard",
+                      href: "https://fly.io/dashboard",
+                      description: "Open the org's Tokens tab and create a read-only token."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -10249,7 +10247,7 @@ var flyIoManaged = {
       id: "credentials",
       title: "Enter credentials",
       description: "Enter the token and organization slug Sazabi should use.",
-      steps: [
+      actions: [
         {
           id: "token",
           kind: "secret",
@@ -10297,14 +10295,14 @@ var flyIoConnectionless = {
       section: "config",
       title: "Run a log shipper",
       description: "Fly.io has no managed log-drain API, so you run a log shipper inside your Fly organization and point it at Sazabi.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           text: "Fly forwards logs from its internal NATS log stream, so you deploy a shipper into the **same Fly organization** as the apps you want to monitor. The shipper is required either way — to also let Sazabi discover and verify your apps from a read-only token, connect your Fly.io account instead."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "prose",
-          text: "Pick a log-shipper option — you run **one**, not both. **Option A — fly-log-shipper (simplest):** launch the stock [superfly/fly-log-shipper](https://github.com/superfly/fly-log-shipper) image in your org and enable its generic `http` sink with the two secrets below; Sazabi parses Fly's native JSON event format directly. **Option B — dedicated OTLP shipper:** for per-app keys and richer OTLP resource attributes, build a Vector app that wraps events in an OTLP `resourceLogs` envelope and POSTs to the OTLP endpoint below."
+          instruction: "Pick a log-shipper option — you run **one**, not both. **Option A — fly-log-shipper (simplest):** launch the stock [superfly/fly-log-shipper](https://github.com/superfly/fly-log-shipper) image in your org and enable its generic `http` sink with the two secrets below; Sazabi parses Fly's native JSON event format directly. **Option B — dedicated OTLP shipper:** for per-app keys and richer OTLP resource attributes, build a Vector app that wraps events in an OTLP `resourceLogs` envelope and POSTs to the OTLP endpoint below."
         }
       ]
     },
@@ -10312,35 +10310,40 @@ var flyIoConnectionless = {
       id: "endpoint",
       section: "endpoint",
       title: "Set the shipper secrets",
-      description: "Paste these into the fly-log-shipper app (Option A). The `/fly-log-shipper` path tells Sazabi to parse Fly's native event format.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "`HTTP_URL`",
-          value: "https://${context.ingestHost}/fly-log-shipper",
-          description: "The `/fly-log-shipper` path suffix is required — it routes the payload to the Fly event parser."
+          instruction: "Paste these into the fly-log-shipper app (Option A). The `/fly-log-shipper` path tells Sazabi to parse Fly's native event format.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`HTTP_URL`",
+              value: "https://${context.ingestHost}/fly-log-shipper",
+              description: "The `/fly-log-shipper` path suffix is required — it routes the payload to the Fly event parser."
+            },
+            {
+              kind: "copyable",
+              label: "`HTTP_TOKEN`",
+              value: "${context.publicKey}",
+              description: "Your Sazabi public key, sent as a bearer token. Paste the raw key with no `Bearer ` prefix."
+            },
+            {
+              kind: "code",
+              label: "Set both secrets on the shipper app",
+              language: "bash",
+              value: 'fly secrets set -a <log-shipper-app> \\\n  HTTP_URL="https://${context.ingestHost}/fly-log-shipper" \\\n  HTTP_TOKEN="${context.publicKey}"'
+            }
+          ]
         },
         {
-          kind: "copyable",
-          label: "`HTTP_TOKEN`",
-          value: "${context.publicKey}",
-          description: "Your Sazabi public key, sent as a bearer token. Paste the raw key with no `Bearer ` prefix."
-        },
-        {
-          kind: "code",
-          label: "Set both secrets on the shipper app",
-          language: "bash",
-          value: 'fly secrets set -a <log-shipper-app> \\\n  HTTP_URL="https://${context.ingestHost}/fly-log-shipper" \\\n  HTTP_TOKEN="${context.publicKey}"'
-        },
-        {
-          kind: "note",
-          text: "**Option B (dedicated OTLP shipper)** uses the endpoint below instead of the two secrets above: POST OTLP `resourceLogs` here with the same public key as a bearer token. The full `Dockerfile` and `vector.toml` are in the setup guide."
-        },
-        {
-          kind: "showIngestUrl",
-          label: "OTLP endpoint (Option B)",
-          pathSuffix: "/v1/logs",
-          description: "POST OTLP `resourceLogs` here, with your Sazabi public key as a bearer token."
+          instruction: "If you chose the dedicated OTLP shipper (Option B), POST OTLP `resourceLogs` to the endpoint below — with the same public key as a bearer token — instead of setting the two secrets above. The full `Dockerfile` and `vector.toml` are in the setup guide.",
+          payloads: [
+            {
+              kind: "showIngestUrl",
+              label: "OTLP endpoint (Option B)",
+              pathSuffix: "/v1/logs",
+              description: "POST OTLP `resourceLogs` here, with your Sazabi public key as a bearer token."
+            }
+          ]
         }
       ]
     },
@@ -10349,10 +10352,9 @@ var flyIoConnectionless = {
       section: "verify",
       title: "Deploy and verify",
       description: "Confirm logs arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Deploy the shipper, then trigger activity — deploy an app or hit a deployed route. Logs appear in Sazabi within a few minutes."
+          instruction: "Deploy the shipper, then trigger activity — deploy an app or hit a deployed route. Logs appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -10434,45 +10436,51 @@ var gcpManaged = {
             id: "prepare",
             title: "Prepare access",
             description: "Create a service account key with permissions for log forwarding.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Provide a GCP service account key with permissions to enable APIs and create log sinks, Pub/Sub topics, and pull subscriptions."
-              },
-              {
-                kind: "note",
-                text: "Sazabi turns on the required APIs and sets up the log pipeline in your GCP project automatically."
-              },
-              {
-                kind: "prose",
-                text: "The service account needs the following roles on the target GCP project(s):"
-              },
-              {
-                kind: "copyable-list",
-                items: [
-                  { value: "roles/serviceusage.serviceUsageAdmin" },
-                  { value: "roles/logging.configWriter" },
-                  { value: "roles/pubsub.admin" },
-                  { value: "roles/browser" }
+                kind: "instruction",
+                instruction: "Provide a GCP service account key with permissions to enable APIs and create log sinks, Pub/Sub topics, and pull subscriptions.",
+                notes: [
+                  {
+                    text: "Sazabi turns on the required APIs and sets up the log pipeline in your GCP project automatically."
+                  }
                 ]
               },
               {
-                kind: "note",
-                text: 'New or auto-created projects (for example a `gen-lang-client-...` project from Google AI Studio) may also need the Service Usage API enabled first. Sazabi uses that API to turn on the others, but it cannot enable itself. If you hit a "Service Usage API has not been used / is disabled" error, enable it on the project, wait about a minute, then retry.'
+                kind: "instruction",
+                instruction: "Grant the service account the following roles on the target GCP project(s).",
+                payloads: [
+                  {
+                    kind: "copyable-list",
+                    items: [
+                      { value: "roles/serviceusage.serviceUsageAdmin" },
+                      { value: "roles/logging.configWriter" },
+                      { value: "roles/pubsub.admin" },
+                      { value: "roles/browser" }
+                    ]
+                  }
+                ],
+                notes: [
+                  {
+                    text: 'New or auto-created projects (for example a `gen-lang-client-...` project from Google AI Studio) may also need the Service Usage API enabled first. Sazabi uses that API to turn on the others, but it cannot enable itself. If you hit a "Service Usage API has not been used / is disabled" error, enable it on the project, wait about a minute, then retry.'
+                  }
+                ]
               },
               {
-                kind: "prose",
-                text: "To create the key: go to [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts) in the Google Cloud Console, select (or create) the service account, open **Keys**, then choose **Add key → Create new key → JSON**. Download the file — you'll paste its contents in the next step. Alternatively, use `gcloud iam service-accounts keys create sazabi-key.json --iam-account=YOUR_SERVICE_ACCOUNT_EMAIL`."
-              },
-              {
-                kind: "external-link",
-                label: "Open service accounts in GCP Console",
-                href: "https://console.cloud.google.com/iam-admin/serviceaccounts"
-              },
-              {
-                kind: "external-link",
-                label: "Enable the Service Usage API",
-                href: "https://console.cloud.google.com/apis/library/serviceusage.googleapis.com"
+                kind: "instruction",
+                instruction: "To create the key: go to [Service Accounts](https://console.cloud.google.com/iam-admin/serviceaccounts) in the Google Cloud Console, select (or create) the service account, open **Keys**, then choose **Add key → Create new key → JSON**. Download the file — you'll paste its contents in the next step. Alternatively, use `gcloud iam service-accounts keys create sazabi-key.json --iam-account=YOUR_SERVICE_ACCOUNT_EMAIL`.",
+                payloads: [
+                  {
+                    kind: "external-link",
+                    label: "Open service accounts in GCP Console",
+                    href: "https://console.cloud.google.com/iam-admin/serviceaccounts"
+                  },
+                  {
+                    kind: "external-link",
+                    label: "Enable the Service Usage API",
+                    href: "https://console.cloud.google.com/apis/library/serviceusage.googleapis.com"
+                  }
+                ]
               }
             ]
           },
@@ -10480,7 +10488,7 @@ var gcpManaged = {
             id: "credentials",
             title: "Enter service account key",
             description: "Enter the service account JSON so Sazabi can validate it.",
-            steps: [
+            actions: [
               {
                 id: "key",
                 kind: "secret",
@@ -10560,24 +10568,27 @@ var gcpConnectionless = {
       section: "config",
       title: "Prepare GCP pipeline",
       description: "Create a Cloud Logging sink, Pub/Sub topic, and collector subscription.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Required GCP permissions: the person performing these steps needs a role that grants `logging.sinks.create` (e.g. `roles/logging.configWriter`) and `pubsub.topics.setIamPolicy` (e.g. `roles/pubsub.admin`)."
         },
         {
-          kind: "note",
           text: "To forward Google Cloud Logging data to Sazabi, create a log sink that routes logs to a Pub/Sub topic, then deploy an OpenTelemetry Collector with a `googlecloudpubsub` receiver that subscribes to that topic and exports to Sazabi."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Create a Pub/Sub topic and subscription in your GCP project (e.g. `sazabi-logs` and `sazabi-logs-sub`)."
         },
         {
-          kind: "ordered-steps",
-          items: [
-            "Create a Pub/Sub topic and subscription in your GCP project (e.g. `sazabi-logs` and `sazabi-logs-sub`).",
-            "Create a Cloud Logging sink that routes logs to the Pub/Sub topic. Grant the sink's service account the `roles/pubsub.publisher` role on the topic.",
-            "Deploy an OpenTelemetry Collector (e.g. on a GCE instance, GKE pod, or Cloud Run service) using the `opentelemetry-collector-contrib` distribution.",
-            "Ensure the collector's service account has the `roles/pubsub.subscriber` IAM role on the subscription."
-          ]
+          instruction: "Create a Cloud Logging sink that routes logs to the Pub/Sub topic. Grant the sink's service account the `roles/pubsub.publisher` role on the topic."
+        },
+        {
+          instruction: "Deploy an OpenTelemetry Collector (e.g. on a GCE instance, GKE pod, or Cloud Run service) using the `opentelemetry-collector-contrib` distribution."
+        },
+        {
+          instruction: "Ensure the collector's service account has the `roles/pubsub.subscriber` IAM role on the subscription."
         }
       ]
     },
@@ -10585,13 +10596,17 @@ var gcpConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy Sazabi values",
-      description: "Use these values in the collector exporter configuration.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "`OTLP endpoint`",
-          value: "https://${context.ingestHost}",
-          copyLabel: "OTLP endpoint"
+          instruction: "Use these values in the collector exporter configuration.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`OTLP endpoint`",
+              value: "https://${context.ingestHost}",
+              copyLabel: "OTLP endpoint"
+            }
+          ]
         }
       ]
     },
@@ -10599,19 +10614,22 @@ var gcpConnectionless = {
       id: "collector",
       section: "config",
       title: "Configure collector",
-      description: "Use a `googlecloudpubsub` receiver and `otlp_http` exporter.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "The receiver requires the `googlecloudlogentry_encoding` encoding extension."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "code",
-          label: "Example collector configuration",
-          language: "yaml",
-          copyLabel: "Collector configuration",
-          value: `extensions:
+          instruction: "Use a `googlecloudpubsub` receiver and `otlp_http` exporter.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Example collector configuration",
+              language: "yaml",
+              copyLabel: "Collector configuration",
+              value: `extensions:
   googlecloudlogentry_encoding:
 
 receivers:
@@ -10630,6 +10648,8 @@ service:
     logs:
       receivers: [googlecloudpubsub]
       exporters: [otlp_http]`
+            }
+          ]
         }
       ]
     },
@@ -10638,10 +10658,9 @@ service:
       section: "verify",
       title: "Run and verify",
       description: "Deploy the collector and generate logs in the GCP project.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "After the collector is running, write a test log entry in the project and check for delivery errors on the collector and Pub/Sub subscription."
+          instruction: "After the collector is running, write a test log entry in the project and check for delivery errors on the collector and Pub/Sub subscription."
         }
       ]
     }
@@ -10749,26 +10768,30 @@ var grafanaAlloyConnectionless = {
       id: "copy-config",
       section: "config",
       title: "Copy Alloy pipeline",
-      description: "Add Sazabi as an OTLP HTTP exporter in your Alloy deployment.",
-      steps: [
+      actions: [
         {
-          kind: "code-tabs",
-          label: "Alloy configuration",
-          description: "Choose the snippet format that matches how you deploy Alloy.",
-          tabs: [
+          instruction: "Add Sazabi as an OTLP HTTP exporter in your Alloy deployment.",
+          payloads: [
             {
-              id: "river",
-              label: "`config.alloy`",
-              language: "hcl",
-              copyLabel: "Alloy config",
-              value: ALLOY_RIVER
-            },
-            {
-              id: "helm",
-              label: "Helm values",
-              language: "yaml",
-              copyLabel: "Alloy Helm values",
-              value: ALLOY_HELM
+              kind: "code-tabs",
+              label: "Alloy configuration",
+              description: "Choose the snippet format that matches how you deploy Alloy.",
+              tabs: [
+                {
+                  id: "river",
+                  label: "`config.alloy`",
+                  language: "hcl",
+                  copyLabel: "Alloy config",
+                  value: ALLOY_RIVER
+                },
+                {
+                  id: "helm",
+                  label: "Helm values",
+                  language: "yaml",
+                  copyLabel: "Alloy Helm values",
+                  value: ALLOY_HELM
+                }
+              ]
             }
           ]
         }
@@ -10779,14 +10802,12 @@ var grafanaAlloyConnectionless = {
       section: "config",
       title: "Wire receivers",
       description: "Connect the exporter to the receivers that match your telemetry sources.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Replace `otelcol.receiver.otlp` with the OpenTelemetry receiver(s) that match your sources, such as `otelcol.receiver.filelog` for log files or `otelcol.receiver.jaeger` for Jaeger traces."
+          instruction: "Replace `otelcol.receiver.otlp` with the OpenTelemetry receiver(s) that match your sources, such as `otelcol.receiver.filelog` for log files or `otelcol.receiver.jaeger` for Jaeger traces."
         },
         {
-          kind: "prose",
-          text: "Each upstream `otelcol.*` component must list `otelcol.processor.batch.default.input` in its `output` block to ship data to Sazabi."
+          instruction: "Ensure each upstream `otelcol.*` component lists `otelcol.processor.batch.default.input` in its `output` block to ship data to Sazabi."
         }
       ]
     }
@@ -10828,29 +10849,16 @@ var inngestConnectionless = {
       section: "config",
       title: "Instrument the host application",
       description: "Configure the application that serves your Inngest functions to export OpenTelemetry data.",
-      steps: [
-        {
-          kind: "ordered-steps",
-          items: otelOrderedSteps("host application")
-        }
-      ]
-    },
-    {
-      id: "environment",
-      section: "config",
-      title: "Copy OTLP environment",
-      description: "Set these variables where your Inngest functions run.",
-      steps: [otelSdkAutoDetectNote, ...otelEnvVarFields()]
+      actions: [...otelSetupActions("host application")]
     },
     {
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
       description: "Restart the application runtime so the OpenTelemetry SDK reads the new variables.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Redeploy or restart the application that serves your Inngest functions, then invoke a function to generate fresh telemetry."
+          instruction: "Redeploy or restart the application that serves your Inngest functions, then invoke a function to generate fresh telemetry."
         }
       ]
     }
@@ -10880,6 +10888,23 @@ var inngestSpec = {
 };
 
 // ../data-sources/src/sources/langchain/setup.ts
+var langchainOtlpEnvironmentAction = {
+  instruction: "Set the following environment variables in your application environment.",
+  payloads: [
+    {
+      kind: "copyable",
+      label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
+      value: "https://${context.ingestHost}",
+      copyLabel: "OTLP endpoint"
+    },
+    {
+      kind: "copyable",
+      label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
+      value: "http/protobuf",
+      copyLabel: "OTLP protocol"
+    }
+  ]
+};
 var langchainConnectionless = {
   kind: "choice",
   title: "Choose LangChain runtime",
@@ -10895,38 +10920,43 @@ var langchainConnectionless = {
             id: "prepare",
             title: "Prepare instrumentation",
             description: "Set OTLP environment variables before the process starts, then initialize tracing once at startup.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Set the OTLP environment variables later in this flow so they are present when the process starts."
+                instruction: "Set the OTLP environment variables later in this flow so they are present when the process starts."
               }
             ]
           },
           {
             id: "install",
             title: "Install instrumentation",
-            description: "Install OpenInference and the OpenTelemetry HTTP exporter.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "Python install command",
-                language: "bash",
-                copyLabel: "Python install command",
-                value: "pip install openinference-instrumentation-langchain \\\n  opentelemetry-sdk \\\n  opentelemetry-exporter-otlp-proto-http"
+                instruction: "Install OpenInference and the OpenTelemetry HTTP exporter.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "Python install command",
+                    language: "bash",
+                    copyLabel: "Python install command",
+                    value: "pip install openinference-instrumentation-langchain \\\n  opentelemetry-sdk \\\n  opentelemetry-exporter-otlp-proto-http"
+                  }
+                ]
               }
             ]
           },
           {
             id: "initialize",
             title: "Initialize tracer",
-            description: "Run this once at startup before importing LangChain.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "Python init snippet",
-                language: "python",
-                copyLabel: "Python init snippet",
-                value: `from opentelemetry import trace
+                instruction: "Run this once at startup before importing LangChain.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "Python init snippet",
+                    language: "python",
+                    copyLabel: "Python init snippet",
+                    value: `from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
@@ -10938,6 +10968,8 @@ provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter()))
 trace.set_tracer_provider(provider)
 
 LangChainInstrumentor().instrument()`
+                  }
+                ]
               }
             ]
           },
@@ -10945,7 +10977,7 @@ LangChainInstrumentor().instrument()`
             id: "environment",
             title: "Set OTLP environment",
             description: "The OpenTelemetry SDK reads these variables automatically.",
-            steps: [...otelEnvVarFields()]
+            actions: [langchainOtlpEnvironmentAction]
           }
         ]
       }
@@ -10960,42 +10992,48 @@ LangChainInstrumentor().instrument()`
             id: "prepare",
             title: "Prepare instrumentation",
             description: "Set OTLP environment variables before the process starts, then initialize tracing once at startup.",
-            steps: [
+            notes: [
               {
-                kind: "note",
                 text: "LangChain.js has no module structure that OpenInference can auto-instrument, so you wire in the callbacks manager by hand."
-              },
+              }
+            ],
+            actions: [
               {
-                kind: "prose",
-                text: "Set the OTLP environment variables later in this flow so they are present when the process starts."
+                instruction: "Set the OTLP environment variables later in this flow so they are present when the process starts."
               }
             ]
           },
           {
             id: "install",
             title: "Install instrumentation",
-            description: "Install OpenInference, OpenTelemetry, and the LangChain core callbacks package.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "TypeScript install command",
-                language: "bash",
-                copyLabel: "TypeScript install command",
-                value: "npm install @arizeai/openinference-instrumentation-langchain \\\n  @opentelemetry/sdk-trace-node \\\n  @opentelemetry/exporter-trace-otlp-proto \\\n  @langchain/core"
+                instruction: "Install OpenInference, OpenTelemetry, and the LangChain core callbacks package.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "TypeScript install command",
+                    language: "bash",
+                    copyLabel: "TypeScript install command",
+                    value: "npm install @arizeai/openinference-instrumentation-langchain \\\n  @opentelemetry/sdk-trace-node \\\n  @opentelemetry/exporter-trace-otlp-proto \\\n  @langchain/core"
+                  }
+                ]
               }
             ]
           },
           {
             id: "initialize",
             title: "Initialize tracer",
-            description: "Run this once at startup before importing LangChain.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "TypeScript init snippet",
-                language: "typescript",
-                copyLabel: "TypeScript init snippet",
-                value: `import { NodeTracerProvider, BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
+                instruction: "Run this once at startup before importing LangChain.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "TypeScript init snippet",
+                    language: "typescript",
+                    copyLabel: "TypeScript init snippet",
+                    value: `import { NodeTracerProvider, BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { Resource } from "@opentelemetry/resources";
 import { LangChainInstrumentation } from "@arizeai/openinference-instrumentation-langchain";
@@ -11010,6 +11048,8 @@ provider.register();
 // LangChain.js has no traditional auto-instrumentable module structure, so the
 // callbacks manager must be wired in by hand.
 new LangChainInstrumentation().manuallyInstrument(CallbackManagerModule);`
+                  }
+                ]
               }
             ]
           },
@@ -11017,7 +11057,7 @@ new LangChainInstrumentation().manuallyInstrument(CallbackManagerModule);`
             id: "environment",
             title: "Set OTLP environment",
             description: "The OpenTelemetry SDK reads these variables automatically.",
-            steps: [...otelEnvVarFields()]
+            actions: [langchainOtlpEnvironmentAction]
           }
         ]
       }
@@ -11054,13 +11094,17 @@ var mastraConnectionless = {
       id: "environment",
       section: "endpoint",
       title: "Copy intake URL",
-      description: "Set the keyed intake URL in the application that initializes Mastra.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "`SAZABI_INTAKE_URL`",
-          value: "https://${context.ingestHost}/v1/traces",
-          copyLabel: "Intake URL"
+          instruction: "Set the keyed intake URL in the application that initializes Mastra.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`SAZABI_INTAKE_URL`",
+              value: "https://${context.ingestHost}/v1/traces",
+              copyLabel: "Intake URL"
+            }
+          ]
         }
       ]
     },
@@ -11068,14 +11112,16 @@ var mastraConnectionless = {
       id: "configure",
       section: "config",
       title: "Configure Mastra",
-      description: "Add Sazabi as a custom OTEL exporter in your Mastra observability config.",
-      steps: [
+      actions: [
         {
-          kind: "code",
-          label: "Configuration",
-          language: "typescript",
-          copyLabel: "TypeScript code",
-          value: `// src/mastra/index.ts
+          instruction: "Add Sazabi as a custom OTEL exporter in your Mastra observability config.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Configuration",
+              language: "typescript",
+              copyLabel: "TypeScript code",
+              value: `// src/mastra/index.ts
 import { Mastra } from "@mastra/core";
 import { OtelExporter } from "@mastra/otel-exporter";
 import { Observability } from "@mastra/observability";
@@ -11104,6 +11150,8 @@ export const mastra = new Mastra({
 // Use your Mastra instance
 const agent = mastra.getAgent("my-agent");
 const response = await agent.generate("Hello, world!");`
+            }
+          ]
         }
       ]
     },
@@ -11112,10 +11160,9 @@ const response = await agent.generate("Hello, world!");`
       section: "verify",
       title: "Redeploy and verify",
       description: "Restart the app so Mastra loads the new exporter configuration.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Redeploy or restart the service, then run an agent, tool, or workflow to generate a trace."
+          instruction: "Redeploy or restart the service, then run an agent, tool, or workflow to generate a trace."
         }
       ]
     }
@@ -11153,27 +11200,30 @@ var neonConnectionless = {
       id: "open-integration",
       section: "config",
       title: "Open Neon integration",
-      description: "Add Neon's OpenTelemetry integration for Postgres logs.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           text: "Neon's OpenTelemetry integration forwards Postgres logs to Sazabi."
         },
         {
-          kind: "note",
           variant: "requirement",
           text: "The integration is available on Neon's **Scale** plan, and both the integration itself and Postgres logs export are currently in Beta."
         },
         {
-          kind: "note",
           variant: "requirement",
           text: "You'll need admin access on the Neon project to add it."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "external-link",
-          label: "Open Neon integrations",
-          href: "https://console.neon.tech/app/projects",
-          description: "Choose the Neon project you want to monitor, then open the project's **Integrations** page."
+          instruction: "Add Neon's OpenTelemetry integration for Postgres logs.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Neon integrations",
+              href: "https://console.neon.tech/app/projects",
+              description: "Choose the Neon project you want to monitor, then open the project's **Integrations** page."
+            }
+          ]
         }
       ]
     },
@@ -11182,14 +11232,15 @@ var neonConnectionless = {
       section: "config",
       title: "Select exported data",
       description: "Enable Postgres logs only before filling in Sazabi values.",
-      steps: [
+      actions: [
         {
-          kind: "ordered-steps",
-          items: [
-            "In **Select data to export**, enable `Postgres logs` and leave `Metrics` disabled. Neon does not expose a traces export for this integration.",
-            "Choose the `HTTP` protocol. Neon appends `/v1/logs` automatically for log export.",
-            "Configure authentication as `Bearer`. Neon adds the `Bearer` prefix to outgoing requests automatically."
-          ]
+          instruction: "In **Select data to export**, enable `Postgres logs` and leave `Metrics` disabled. Neon does not expose a traces export for this integration."
+        },
+        {
+          instruction: "Choose the `HTTP` protocol. Neon appends `/v1/logs` automatically for log export."
+        },
+        {
+          instruction: "Configure authentication as `Bearer`. Neon adds the `Bearer` prefix to outgoing requests automatically."
         }
       ]
     },
@@ -11197,43 +11248,47 @@ var neonConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy integration values",
-      description: "Paste these values into the Neon OpenTelemetry configuration sidebar.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "OTLP endpoint URL",
-          value: "https://${context.ingestHost}",
-          copyLabel: "Neon OTLP endpoint URL",
-          description: "Use the base URL in Neon. Neon will send logs to this URL with `/v1/logs` appended."
-        },
-        {
-          kind: "copyable",
-          label: "Connection protocol",
-          value: "HTTP"
-        },
-        {
-          kind: "copyable",
-          label: "Data to export",
-          value: "Postgres logs only"
-        },
-        {
-          kind: "copyable",
-          label: "Authentication method",
-          value: "Bearer"
-        },
-        {
-          kind: "copyable",
-          label: "Bearer token value",
-          value: "sazabi",
-          copyLabel: "Neon bearer token value",
-          description: "Neon requires a non-empty Bearer token, but Sazabi authenticates using the public key hex embedded in the endpoint hostname and ignores this value — any placeholder works."
-        },
-        {
-          kind: "copyable",
-          label: "`service.name` resource attribute",
-          value: "neon-postgres",
-          copyLabel: "Neon service.name value",
-          description: "Optional but recommended — paste under **Resource attributes** in Neon. Change the suffix (e.g. `neon-postgres-prod`, `neon-checkout-db`) when you have more than one Neon project so streams stay easy to filter in Sazabi."
+          instruction: "Paste these values into the Neon OpenTelemetry configuration sidebar.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "OTLP endpoint URL",
+              value: "https://${context.ingestHost}",
+              copyLabel: "Neon OTLP endpoint URL",
+              description: "Use the base URL in Neon. Neon will send logs to this URL with `/v1/logs` appended."
+            },
+            {
+              kind: "copyable",
+              label: "Connection protocol",
+              value: "HTTP"
+            },
+            {
+              kind: "copyable",
+              label: "Data to export",
+              value: "Postgres logs only"
+            },
+            {
+              kind: "copyable",
+              label: "Authentication method",
+              value: "Bearer"
+            },
+            {
+              kind: "copyable",
+              label: "Bearer token value",
+              value: "sazabi",
+              copyLabel: "Neon bearer token value",
+              description: "Neon requires a non-empty Bearer token, but Sazabi authenticates using the public key hex embedded in the endpoint hostname and ignores this value — any placeholder works."
+            },
+            {
+              kind: "copyable",
+              label: "`service.name` resource attribute",
+              value: "neon-postgres",
+              copyLabel: "Neon service.name value",
+              description: "Optional but recommended — paste under **Resource attributes** in Neon. Change the suffix (e.g. `neon-postgres-prod`, `neon-checkout-db`) when you have more than one Neon project so streams stay easy to filter in Sazabi."
+            }
+          ]
         }
       ]
     },
@@ -11242,14 +11297,12 @@ var neonConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Save the integration and check for incoming Postgres logs.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Logs typically start arriving within a few minutes; if the compute has Scale to Zero enabled and is currently suspended, run a query against the database to wake it and begin log delivery."
+          instruction: "Wait a few minutes for logs to start arriving; if the compute has Scale to Zero enabled and is currently suspended, run a query against the database to wake it and begin log delivery."
         },
         {
-          kind: "prose",
-          text: "If logs do not arrive after a few minutes, check the Neon integration's status panel for OTLP export errors."
+          instruction: "If logs do not arrive after a few minutes, check the Neon integration's status panel for OTLP export errors."
         }
       ]
     }
@@ -11288,19 +11341,18 @@ var netlifyConnectionless = {
       section: "config",
       title: "Open log drain form",
       description: "Create a General HTTP endpoint drain from the Netlify site settings.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Log drains require a Netlify Enterprise plan."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Configure a log drain in your [Netlify site settings](https://app.netlify.com) under **Logs & Metrics > Log Drains**."
         },
         {
-          kind: "prose",
-          text: "Configure a log drain in your [Netlify site settings](https://app.netlify.com) under **Logs & Metrics > Log Drains**."
-        },
-        {
-          kind: "prose",
-          text: "Select **General HTTP endpoint** as the service."
+          instruction: "Select **General HTTP endpoint** as the service."
         }
       ]
     },
@@ -11308,17 +11360,21 @@ var netlifyConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy drain values",
-      description: "Paste these values into the Netlify log drain form.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Full URL",
-          value: "https://${context.ingestHost}"
-        },
-        {
-          kind: "copyable",
-          label: "Log drain format",
-          value: "JSON"
+          instruction: "Paste these values into the Netlify log drain form.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Full URL",
+              value: "https://${context.ingestHost}"
+            },
+            {
+              kind: "copyable",
+              label: "Log drain format",
+              value: "JSON"
+            }
+          ]
         }
       ]
     },
@@ -11327,10 +11383,9 @@ var netlifyConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Save the drain and generate fresh site traffic.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "After saving the drain, deploy or request the site so Netlify emits fresh logs."
+          instruction: "After saving the drain, deploy or request the site so Netlify emits fresh logs."
         }
       ]
     }
@@ -11368,15 +11423,16 @@ var openrouterConnectionless = {
       section: "config",
       title: "Open observability settings",
       description: "Enable broadcast and edit the OpenTelemetry Collector destination.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In the OpenRouter dashboard, open **Settings > Observability**, toggle **Enable Broadcast** on, then click the edit icon next to **OpenTelemetry Collector**."
-        },
-        {
-          kind: "external-link",
-          label: "Settings > Observability",
-          href: "https://openrouter.ai/settings/observability"
+          instruction: "In the OpenRouter dashboard, open **Settings > Observability**, toggle **Enable Broadcast** on, then click the edit icon next to **OpenTelemetry Collector**.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Settings > Observability",
+              href: "https://openrouter.ai/settings/observability"
+            }
+          ]
         }
       ]
     },
@@ -11384,13 +11440,17 @@ var openrouterConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy destination values",
-      description: "Paste these values into the OpenTelemetry Collector destination form.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Endpoint",
-          value: "https://${context.ingestHost}/v1/traces",
-          copyLabel: "Endpoint"
+          instruction: "Paste these values into the OpenTelemetry Collector destination form.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Endpoint",
+              value: "https://${context.ingestHost}/v1/traces",
+              copyLabel: "Endpoint"
+            }
+          ]
         }
       ]
     },
@@ -11399,14 +11459,14 @@ var openrouterConnectionless = {
       section: "verify",
       title: "Test and save",
       description: "OpenRouter saves the destination only after a successful connection test.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Click **Test Connection** to verify Sazabi accepts the trace."
-        },
-        {
-          kind: "note",
-          text: "A green check confirms forwarding is enabled."
+          instruction: "Click **Test Connection** to verify Sazabi accepts the trace.",
+          notes: [
+            {
+              text: "A green check confirms forwarding is enabled."
+            }
+          ]
         }
       ]
     }
@@ -11449,22 +11509,23 @@ var otelConnectionless = {
       section: "config",
       title: "Instrument application",
       description: "Configure your application to export OpenTelemetry logs and traces to Sazabi.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           text: "These variables work with any OpenTelemetry SDK (Node.js, Python, Go, Java, .NET, etc.)."
         },
         {
-          kind: "note",
           text: "Metrics sent to the endpoint aren't stored yet."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Add the OpenTelemetry SDK to your application. Most languages have official SDKs available (e.g., `@opentelemetry/api` for Node.js, `opentelemetry-api` for Python, etc.)."
         },
         {
-          kind: "ordered-steps",
-          items: [
-            "Add the OpenTelemetry SDK to your application. Most languages have official SDKs available (e.g., `@opentelemetry/api` for Node.js, `opentelemetry-api` for Python, etc.).",
-            "Initialize the OpenTelemetry SDK in your application and configure the OTLP exporters for the signals you want (logs and/or traces).",
-            "Set the environment variables in the next step so the SDK sends logs and traces to Sazabi."
-          ]
+          instruction: "Initialize the OpenTelemetry SDK in your application and configure the OTLP exporters for the signals you want (logs and/or traces)."
+        },
+        {
+          instruction: "Set the environment variables in the next step so the SDK sends logs and traces to Sazabi."
         }
       ]
     },
@@ -11472,19 +11533,23 @@ var otelConnectionless = {
       id: "environment",
       section: "endpoint",
       title: "Copy OTLP environment",
-      description: "Set these variables in the environment that runs your application.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
-          value: "https://${context.ingestHost}",
-          copyLabel: "OTLP endpoint"
-        },
-        {
-          kind: "copyable",
-          label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
-          value: "http/protobuf",
-          copyLabel: "OTLP protocol"
+          instruction: "Set these variables in the environment that runs your application.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
+              value: "https://${context.ingestHost}",
+              copyLabel: "OTLP endpoint"
+            },
+            {
+              kind: "copyable",
+              label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
+              value: "http/protobuf",
+              copyLabel: "OTLP protocol"
+            }
+          ]
         }
       ]
     },
@@ -11493,10 +11558,9 @@ var otelConnectionless = {
       section: "verify",
       title: "Redeploy and verify",
       description: "Restart the application so the OpenTelemetry SDK reads the new variables.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Restart or redeploy the application, then generate a test log or trace to confirm Sazabi receives telemetry."
+          instruction: "Restart or redeploy the application, then generate a test log or trace to confirm Sazabi receives telemetry."
         }
       ]
     }
@@ -11563,26 +11627,30 @@ var otelCollectorConnectionless = {
       id: "copy-config",
       section: "config",
       title: "Copy Collector config",
-      description: "Add the Sazabi exporter and include it in the logs and traces pipelines.",
-      steps: [
+      actions: [
         {
-          kind: "code-tabs",
-          label: "Collector configuration",
-          description: "Choose the snippet format that matches how you deploy the Collector.",
-          tabs: [
+          instruction: "Add the Sazabi exporter and include it in the logs and traces pipelines.",
+          payloads: [
             {
-              id: "yaml",
-              label: "`otelcol.yaml`",
-              language: "yaml",
-              copyLabel: "Collector config",
-              value: COLLECTOR_YAML
-            },
-            {
-              id: "helm",
-              label: "Helm values",
-              language: "yaml",
-              copyLabel: "Collector Helm values",
-              value: COLLECTOR_HELM
+              kind: "code-tabs",
+              label: "Collector configuration",
+              description: "Choose the snippet format that matches how you deploy the Collector.",
+              tabs: [
+                {
+                  id: "yaml",
+                  label: "`otelcol.yaml`",
+                  language: "yaml",
+                  copyLabel: "Collector config",
+                  value: COLLECTOR_YAML
+                },
+                {
+                  id: "helm",
+                  label: "Helm values",
+                  language: "yaml",
+                  copyLabel: "Collector Helm values",
+                  value: COLLECTOR_HELM
+                }
+              ]
             }
           ]
         }
@@ -11592,11 +11660,14 @@ var otelCollectorConnectionless = {
       id: "adjust-pipelines",
       section: "config",
       title: "Adjust pipelines",
-      description: "Match the receivers to the sources you have configured.",
-      steps: [
+      actions: [
         {
-          kind: "note",
-          text: "The `filelog` receiver collects container logs on Kubernetes; the `otlp` receiver accepts spans from instrumented services."
+          instruction: "Match the receivers to the sources you have configured.",
+          notes: [
+            {
+              text: "The `filelog` receiver collects container logs on Kubernetes; the `otlp` receiver accepts spans from instrumented services."
+            }
+          ]
         }
       ]
     }
@@ -11640,22 +11711,23 @@ var otelMetricsConnectionless = {
       section: "config",
       title: "Instrument application",
       description: "Configure your application or OpenTelemetry Collector to export OTLP metrics to Sazabi.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           text: "These variables work with any OpenTelemetry SDK or Collector that exports OTLP metrics."
         },
         {
-          kind: "note",
           text: "Sazabi stores each incoming metric data point as a log record, so you can search metrics alongside your logs and traces and line them up with each other."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Add or enable the OpenTelemetry metrics SDK in your application, or configure the OTLP metrics exporter on your OpenTelemetry Collector."
         },
         {
-          kind: "ordered-steps",
-          items: [
-            "Add or enable the OpenTelemetry metrics SDK in your application, or configure the OTLP metrics exporter on your OpenTelemetry Collector.",
-            "Point the OTLP metrics exporter at the Sazabi endpoint in the next step.",
-            "Set the environment variables so the exporter sends metrics to Sazabi."
-          ]
+          instruction: "Point the OTLP metrics exporter at the Sazabi endpoint in the next step."
+        },
+        {
+          instruction: "Set the environment variables so the exporter sends metrics to Sazabi."
         }
       ]
     },
@@ -11663,19 +11735,23 @@ var otelMetricsConnectionless = {
       id: "environment",
       section: "endpoint",
       title: "Copy OTLP metrics environment",
-      description: "Set these variables in the environment that runs your application or Collector.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "`OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`",
-          value: "https://${context.ingestHost}/v1/metrics",
-          copyLabel: "OTLP metrics endpoint"
-        },
-        {
-          kind: "copyable",
-          label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
-          value: "http/protobuf",
-          copyLabel: "OTLP protocol"
+          instruction: "Set these variables in the environment that runs your application or Collector.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`",
+              value: "https://${context.ingestHost}/v1/metrics",
+              copyLabel: "OTLP metrics endpoint"
+            },
+            {
+              kind: "copyable",
+              label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
+              value: "http/protobuf",
+              copyLabel: "OTLP protocol"
+            }
+          ]
         }
       ]
     },
@@ -11684,10 +11760,9 @@ var otelMetricsConnectionless = {
       section: "verify",
       title: "Redeploy and verify",
       description: "Restart the application or Collector so the OpenTelemetry exporter reads the new variables.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Restart or redeploy, then generate a metric to confirm Sazabi receives it as a log record."
+          instruction: "Restart or redeploy, then generate a metric to confirm Sazabi receives it as a log record."
         }
       ]
     }
@@ -11735,19 +11810,21 @@ var plainManaged = {
       id: "prepare",
       title: "Create API key",
       description: "Create a Plain API key with webhook permissions.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In Plain, open **Settings → API keys** and create a machine user API key."
+          kind: "instruction",
+          instruction: "In Plain, open **Settings → API keys** and create a machine user API key.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Plain API key settings",
+              href: "https://app.plain.com/settings/api-keys"
+            }
+          ]
         },
         {
-          kind: "prose",
-          text: "Grant the key these permissions: `webhookTarget:create`, `webhookTarget:edit`, `webhookTarget:delete`, `webhookTarget:read`, and `subscriptionEventTypes:read`. Workspace read access is included with every key."
-        },
-        {
-          kind: "external-link",
-          label: "Open Plain API key settings",
-          href: "https://app.plain.com/settings/api-keys"
+          kind: "instruction",
+          instruction: "Grant the key these permissions: `webhookTarget:create`, `webhookTarget:edit`, `webhookTarget:delete`, `webhookTarget:read`, and `subscriptionEventTypes:read`. Workspace read access is included with every key."
         }
       ]
     },
@@ -11755,7 +11832,7 @@ var plainManaged = {
       id: "credentials",
       title: "Enter API key",
       description: "Enter the API key so Sazabi can validate workspace access.",
-      steps: [
+      actions: [
         {
           id: "apiKey",
           kind: "secret",
@@ -11792,14 +11869,14 @@ var plainConnectionless = {
       section: "config",
       title: "Open Plain webhooks",
       description: "Add a webhook target in the Plain dashboard.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In your [Plain workspace](https://app.plain.com/settings/webhooks), go to **Settings > Webhooks** and click **Create webhook target**."
-        },
-        {
-          kind: "note",
-          text: "You configure and own this webhook target — you choose which event types it subscribes to in Plain. Sazabi never receives a Plain API key on this path and does not create, edit, or delete the target. To have Sazabi enumerate event types and manage the webhook target for you, connect your Plain account instead."
+          instruction: "In your [Plain workspace](https://app.plain.com/settings/webhooks), go to **Settings > Webhooks** and click **Create webhook target**.",
+          notes: [
+            {
+              text: "You configure and own this webhook target — you choose which event types it subscribes to in Plain. Sazabi never receives a Plain API key on this path and does not create, edit, or delete the target. To have Sazabi enumerate event types and manage the webhook target for you, connect your Plain account instead."
+            }
+          ]
         }
       ]
     },
@@ -11807,20 +11884,24 @@ var plainConnectionless = {
       id: "endpoint",
       section: "endpoint",
       title: "Copy webhook URL",
-      description: "Paste your Sazabi intake URL (above) into the webhook target configuration.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Webhook URL",
-          value: "https://${context.ingestHost}"
+          instruction: "Paste your Sazabi intake URL (above) into the webhook target configuration.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Webhook URL",
+              value: "https://${context.ingestHost}"
+            }
+          ],
+          notes: [
+            {
+              text: "Your key is embedded in the hostname, so the webhook needs no custom headers or query parameters."
+            }
+          ]
         },
         {
-          kind: "note",
-          text: "Your key is embedded in the hostname, so the webhook needs no custom headers or query parameters."
-        },
-        {
-          kind: "prose",
-          text: "Enable the target and select the event types you want to forward."
+          instruction: "Enable the target and select the event types you want to forward."
         }
       ]
     },
@@ -11829,10 +11910,9 @@ var plainConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Confirm events arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the webhook target, then trigger a subscribed event in Plain (for example create or update a thread). Events appear in Sazabi within a few minutes."
+          instruction: "Save the webhook target, then trigger a subscribed event in Plain (for example create or update a thread). Events appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -11935,24 +12015,28 @@ var porterConnectionless = {
       section: "config",
       title: "Send OpenTelemetry",
       description: "Export OTLP telemetry to Sazabi from your Porter app or a collector running in Porter.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Porter does not provide a generic log drain. Send OTLP telemetry to Sazabi directly from your app, or from a collector running in Porter."
-        },
-        {
-          kind: "external-link",
-          label: "Open Porter dashboard",
-          href: "https://dashboard.porter.run"
-        },
-        {
-          kind: "ordered-steps",
-          items: [
-            "Add the environment variables below to the Porter service you want to monitor. You can also put shared values in a Porter environment group.",
-            "For Node.js apps, add an `instrumentation.cjs` (below) and load it from your start command with `NODE_OPTIONS='--require ./instrumentation.cjs' <start command>`. For other runtimes, initialize OpenTelemetry before the app handles requests, or run an OpenTelemetry Collector, Vector, or Fluent Bit service in Porter.",
-            "Redeploy the Porter service, then generate a request or test log line.",
-            "Return to Sazabi and check for incoming logs or traces. If nothing appears, check the Porter logs for OpenTelemetry exporter errors."
+          instruction: "Porter does not provide a generic log drain. Send OTLP telemetry to Sazabi directly from your app, or from a collector running in Porter.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Porter dashboard",
+              href: "https://dashboard.porter.run"
+            }
           ]
+        },
+        {
+          instruction: "Add the environment variables below to the Porter service you want to monitor. You can also put shared values in a Porter environment group."
+        },
+        {
+          instruction: "For Node.js apps, add an `instrumentation.cjs` (below) and load it from your start command with `NODE_OPTIONS='--require ./instrumentation.cjs' <start command>`. For other runtimes, initialize OpenTelemetry before the app handles requests, or run an OpenTelemetry Collector, Vector, or Fluent Bit service in Porter."
+        },
+        {
+          instruction: "Redeploy the Porter service, then generate a request or test log line."
+        },
+        {
+          instruction: "Return to Sazabi and check for incoming logs or traces. If nothing appears, check the Porter logs for OpenTelemetry exporter errors."
         }
       ]
     },
@@ -11961,49 +12045,61 @@ var porterConnectionless = {
       section: "config",
       title: "Configure the exporter",
       description: "Set the OTLP environment variables and initialize the OpenTelemetry SDK.",
-      steps: [
+      actions: [
         {
-          kind: "code",
-          label: "Porter environment variables",
-          description: "Porter injects the `PORTER_*` values from its app and deployment metadata at runtime. The keyed endpoint URL embeds your project key, so no auth header is needed.",
-          language: "bash",
-          value: `OTEL_EXPORTER_OTLP_ENDPOINT=https://\${context.ingestHost}
+          instruction: "Set these environment variables on the Porter service you want to monitor.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Porter environment variables",
+              description: "Porter injects the `PORTER_*` values from its app and deployment metadata at runtime. The keyed endpoint URL embeds your project key, so no auth header is needed.",
+              language: "bash",
+              value: `OTEL_EXPORTER_OTLP_ENDPOINT=https://\${context.ingestHost}
 OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
 OTEL_SERVICE_NAME=$PORTER_APP_SERVICE_NAME
 OTEL_RESOURCE_ATTRIBUTES=service.version=$PORTER_IMAGE_TAG,porter.revision=$PORTER_POD_REVISION,porter.pod.name=$PORTER_POD_NAME`,
-          copyLabel: "Porter environment variables"
-        },
-        {
-          kind: "code-tabs",
-          label: "Install the OpenTelemetry SDK",
-          description: "Install the SDK if your app does not already initialize OpenTelemetry. Node.js apps then add the `instrumentation.cjs` shown below.",
-          tabs: [
-            {
-              id: "node",
-              label: "Node.js",
-              language: "bash",
-              value: "bun add @opentelemetry/api @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-proto @opentelemetry/exporter-logs-otlp-proto @opentelemetry/sdk-logs",
-              copyLabel: "Node.js OpenTelemetry install"
-            },
-            {
-              id: "python",
-              label: "Python",
-              language: "bash",
-              value: `pip install opentelemetry-distro opentelemetry-exporter-otlp-proto-http
-opentelemetry-bootstrap -a install
-
-# Porter start command example:
-opentelemetry-instrument python app.py`,
-              copyLabel: "Python OpenTelemetry bootstrap"
+              copyLabel: "Porter environment variables"
             }
           ]
         },
         {
-          kind: "code",
-          label: "Node.js: instrumentation.cjs",
-          description: 'Wires up both the trace and log exporters. `@opentelemetry/auto-instrumentations-node/register` configures traces only, so the installed logs exporter would otherwise never be used and logs would silently not flow. The exporters read the `OTEL_EXPORTER_OTLP_*` env vars above at runtime. Use the `.cjs` extension so the file loads as CommonJS even when your app\'s `package.json` sets `"type": "module"`.',
-          language: "javascript",
-          value: `// instrumentation.cjs
+          instruction: "Install the OpenTelemetry SDK if your app does not already initialize OpenTelemetry. Node.js apps then add the `instrumentation.cjs` shown below.",
+          payloads: [
+            {
+              kind: "code-tabs",
+              label: "Install the OpenTelemetry SDK",
+              tabs: [
+                {
+                  id: "node",
+                  label: "Node.js",
+                  language: "bash",
+                  value: "bun add @opentelemetry/api @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-proto @opentelemetry/exporter-logs-otlp-proto @opentelemetry/sdk-logs",
+                  copyLabel: "Node.js OpenTelemetry install"
+                },
+                {
+                  id: "python",
+                  label: "Python",
+                  language: "bash",
+                  value: `pip install opentelemetry-distro opentelemetry-exporter-otlp-proto-http
+opentelemetry-bootstrap -a install
+
+# Porter start command example:
+opentelemetry-instrument python app.py`,
+                  copyLabel: "Python OpenTelemetry bootstrap"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          instruction: "Add the `instrumentation.cjs` below, then load it from your **start command** only, for example `NODE_OPTIONS='--require ./instrumentation.cjs' node server.js`. Do not set a global `NODE_OPTIONS` environment variable: it also applies during build and install, where the relative `--require` path resolves from inside `node_modules/<pkg>/` and breaks dependency postinstall scripts. If your platform forces an env var, use an absolute path such as `--require /workspace/instrumentation.cjs`.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Node.js: instrumentation.cjs",
+              description: 'Wires up both the trace and log exporters. `@opentelemetry/auto-instrumentations-node/register` configures traces only, so the installed logs exporter would otherwise never be used and logs would silently not flow. The exporters read the `OTEL_EXPORTER_OTLP_*` env vars above at runtime. Use the `.cjs` extension so the file loads as CommonJS even when your app\'s `package.json` sets `"type": "module"`.',
+              language: "javascript",
+              value: `// instrumentation.cjs
 const { NodeSDK } = require("@opentelemetry/sdk-node");
 const {
   getNodeAutoInstrumentations,
@@ -12031,12 +12127,10 @@ try {
 } catch (err) {
   console.error("OpenTelemetry initialization failed", err);
 }`,
-          copyLabel: "Node.js instrumentation.cjs",
-          collapsible: true
-        },
-        {
-          kind: "prose",
-          text: "Load `instrumentation.cjs` from your **start command** only, for example `NODE_OPTIONS='--require ./instrumentation.cjs' node server.js`. Do not set a global `NODE_OPTIONS` environment variable: it also applies during build and install, where the relative `--require` path resolves from inside `node_modules/<pkg>/` and breaks dependency postinstall scripts. If your platform forces an env var, use an absolute path such as `--require /workspace/instrumentation.cjs`."
+              copyLabel: "Node.js instrumentation.cjs",
+              collapsible: true
+            }
+          ]
         }
       ]
     }
@@ -12074,14 +12168,14 @@ var posthogManaged = {
       id: "prepare",
       title: "Create key",
       description: "Create a PostHog personal API key with the required scopes.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Create a personal API key in your PostHog account under **Settings > Personal API keys** ([US](https://us.posthog.com/settings/user-api-keys) · [EU](https://eu.posthog.com/settings/user-api-keys))."
+          kind: "instruction",
+          instruction: "Create a personal API key in your PostHog account under **Settings > Personal API keys** ([US](https://us.posthog.com/settings/user-api-keys) · [EU](https://eu.posthog.com/settings/user-api-keys))."
         },
         {
-          kind: "prose",
-          text: "Grant it these scopes:\n\n- `project:read` - list your projects\n- `organization:read` - show your organization\n- `hog_function:write` - install the webhook destination"
+          kind: "instruction",
+          instruction: "Grant it these scopes:\n\n- `project:read` - list your projects\n- `organization:read` - show your organization\n- `hog_function:write` - install the webhook destination"
         }
       ]
     },
@@ -12089,7 +12183,7 @@ var posthogManaged = {
       id: "credentials",
       title: "Enter API key",
       description: "Enter the API key so Sazabi can validate the organization.",
-      steps: [
+      actions: [
         {
           id: "token",
           kind: "secret",
@@ -12168,14 +12262,12 @@ var posthogConnectionless = {
       section: "config",
       title: "Open destination form",
       description: "Create an HTTP Webhook destination in PostHog.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Configure an [HTTP Webhook destination](https://${context.posthogRegion}.posthog.com/pipeline/new/hog-template-webhook) in PostHog under **Data Pipeline > Destinations**."
+          instruction: "Configure an [HTTP Webhook destination](https://${context.posthogRegion}.posthog.com/pipeline/new/hog-template-webhook) in PostHog under **Data Pipeline > Destinations**."
         },
         {
-          kind: "prose",
-          text: "Use the values in the next step and set your webhook body template to the default event and person payload."
+          instruction: "Use the values in the next step and set your webhook body template to the default event and person payload."
         }
       ]
     },
@@ -12183,27 +12275,31 @@ var posthogConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy destination values",
-      description: "Paste these values into the PostHog HTTP Webhook destination form.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Destination URL",
-          value: "https://${context.ingestHost}"
-        },
-        {
-          kind: "copyable",
-          label: "Method",
-          value: "POST"
-        },
-        {
-          kind: "code",
-          label: "Body template",
-          language: "json",
-          copyLabel: "Body template",
-          value: `{
+          instruction: "Paste these values into the PostHog HTTP Webhook destination form.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Destination URL",
+              value: "https://${context.ingestHost}"
+            },
+            {
+              kind: "copyable",
+              label: "Method",
+              value: "POST"
+            },
+            {
+              kind: "code",
+              label: "Body template",
+              language: "json",
+              copyLabel: "Body template",
+              value: `{
   "event": "{event}",
   "person": "{person}"
 }`
+            }
+          ]
         }
       ]
     },
@@ -12212,10 +12308,9 @@ var posthogConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Save the destination and confirm events arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the PostHog destination, send a test event, and check Sazabi for the incoming product event."
+          instruction: "Save the PostHog destination, send a test event, and check Sazabi for the incoming product event."
         }
       ]
     }
@@ -12282,18 +12377,17 @@ var posthogSdkConnectionless = {
       section: "config",
       title: "Plan reverse proxy",
       description: "Send capture traffic to Sazabi and keep PostHog config and assets going to PostHog.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Configure posthog-js to use a reverse proxy as `api_host`."
+          instruction: "Configure posthog-js to use a reverse proxy as `api_host`."
         },
         {
-          kind: "prose",
-          text: "Send capture paths (`/e/`, `/i/`, `/s/`) to Sazabi, and send PostHog config, flags, and assets to PostHog."
-        },
-        {
-          kind: "note",
-          text: "Session replay is controlled by your PostHog project settings, not a `posthog.init` option."
+          instruction: "Send capture paths (`/e/`, `/i/`, `/s/`) to Sazabi, and send PostHog config, flags, and assets to PostHog.",
+          notes: [
+            {
+              text: "Session replay is controlled by your PostHog project settings, not a `posthog.init` option."
+            }
+          ]
         }
       ]
     },
@@ -12301,13 +12395,17 @@ var posthogSdkConnectionless = {
       id: "target",
       section: "endpoint",
       title: "Copy capture target",
-      description: "Use this as the upstream destination for capture-path proxy rules.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Sazabi capture target",
-          value: "https://${context.ingestHost}",
-          copyLabel: "URL"
+          instruction: "Use this as the upstream destination for capture-path proxy rules.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Sazabi capture target",
+              value: "https://${context.ingestHost}",
+              copyLabel: "URL"
+            }
+          ]
         }
       ]
     },
@@ -12315,30 +12413,32 @@ var posthogSdkConnectionless = {
       id: "initialize",
       section: "config",
       title: "Initialize posthog-js",
-      description: "Point posthog-js at your reverse proxy path.",
-      steps: [
+      actions: [
         {
-          kind: "code-tabs",
-          label: "Initialize posthog-js",
-          tabs: [
+          instruction: "Point posthog-js at your reverse proxy path.",
+          payloads: [
             {
-              id: "javascript",
-              label: "JavaScript",
-              language: "javascript",
-              copyLabel: "JavaScript",
-              value: `import posthog from "posthog-js";
+              kind: "code-tabs",
+              label: "Initialize posthog-js",
+              tabs: [
+                {
+                  id: "javascript",
+                  label: "JavaScript",
+                  language: "javascript",
+                  copyLabel: "JavaScript",
+                  value: `import posthog from "posthog-js";
 
 posthog.init("<your phc_* project token>", {
   api_host: "/ingest",
   ui_host: "https://us.posthog.com",
 });`
-            },
-            {
-              id: "nextjs",
-              label: "Next.js",
-              language: "typescript",
-              copyLabel: "Next.js",
-              value: `"use client";
+                },
+                {
+                  id: "nextjs",
+                  label: "Next.js",
+                  language: "typescript",
+                  copyLabel: "Next.js",
+                  value: `"use client";
 
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
@@ -12353,6 +12453,8 @@ if (typeof window !== "undefined") {
 export function Providers({ children }: { children: React.ReactNode }) {
   return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
 }`
+                }
+              ]
             }
           ]
         }
@@ -12362,18 +12464,21 @@ export function Providers({ children }: { children: React.ReactNode }) {
       id: "rewrites",
       section: "config",
       title: "Configure rewrites",
-      description: "Route capture paths to Sazabi and all other PostHog paths back to PostHog.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           text: "On Next.js, set `skipTrailingSlashRedirect: true`. Otherwise Next.js sends a 308 redirect on the trailing-slash capture paths, and they stop matching the Sazabi rule."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "code",
-          label: "Next.js rewrites",
-          language: "typescript",
-          copyLabel: "Next.js rewrites",
-          value: `// next.config.ts
+          instruction: "Route capture paths to Sazabi and all other PostHog paths back to PostHog.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Next.js rewrites",
+              language: "typescript",
+              copyLabel: "Next.js rewrites",
+              value: `// next.config.ts
 import type { NextConfig } from "next";
 
 const config: NextConfig = {
@@ -12396,6 +12501,8 @@ const config: NextConfig = {
 };
 
 export default config;`
+            }
+          ]
         }
       ]
     }
@@ -12455,20 +12562,25 @@ var prometheusConnectionless = {
       id: "collector-config",
       section: "config",
       title: "Export metrics through the OpenTelemetry Collector",
-      description: "Prometheus does not speak OTLP directly, so run an OpenTelemetry Collector that scrapes your Prometheus targets and forwards the metrics to Sazabi.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Requires the OpenTelemetry Collector (Contrib distribution) with the `prometheus` receiver and `otlphttp` exporter. Sazabi ingests each metric data point as a searchable log record, so there are no dashboards to configure."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "code",
-          label: "Collector configuration",
-          language: "yaml",
-          copyLabel: "OpenTelemetry Collector configuration for Prometheus",
-          description: "Point `scrape_configs.static_configs.targets` at your existing Prometheus targets or scrape endpoints.",
-          value: COLLECTOR_CONFIG
+          instruction: "Prometheus does not speak OTLP directly, so run an OpenTelemetry Collector that scrapes your Prometheus targets and forwards the metrics to Sazabi.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Collector configuration",
+              language: "yaml",
+              copyLabel: "OpenTelemetry Collector configuration for Prometheus",
+              description: "Point `scrape_configs.static_configs.targets` at your existing Prometheus targets or scrape endpoints.",
+              value: COLLECTOR_CONFIG
+            }
+          ]
         }
       ]
     },
@@ -12477,14 +12589,12 @@ var prometheusConnectionless = {
       section: "verify",
       title: "Restart and verify",
       description: "Restart the OpenTelemetry Collector after updating its configuration.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Restart or redeploy the Collector so the new metrics pipeline is loaded."
+          instruction: "Restart or redeploy the Collector so the new metrics pipeline is loaded."
         },
         {
-          kind: "prose",
-          text: "If metrics do not appear after restart, check the Collector logs for TLS, DNS, or authorization errors, and confirm the exporter posts to `/v1/metrics` with a valid Bearer public key."
+          instruction: "If metrics do not appear after restart, check the Collector logs for TLS, DNS, or authorization errors, and confirm the exporter posts to `/v1/metrics` with a valid Bearer public key."
         }
       ]
     }
@@ -12536,40 +12646,43 @@ opentelemetry-bootstrap -a install
 
 # Railway start command example:
 opentelemetry-instrument python app.py`;
-var railwayEnvironmentSteps = [
-  {
-    kind: "code",
-    label: "Railway Raw Editor variables",
-    description: "Paste this into the Railway service's Variables Raw Editor. Railway fills in the `${{...}}` references from its own service and deployment metadata.",
-    language: "bash",
-    value: RAILWAY_RAW_EDITOR_VARIABLES,
-    copyLabel: "Railway environment variables"
-  },
-  {
-    kind: "copyable",
-    label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
-    value: "https://${context.ingestHost}",
-    copyLabel: "OTLP endpoint"
-  },
-  {
-    kind: "copyable",
-    label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
-    value: "http/protobuf",
-    copyLabel: "OTLP protocol"
-  },
-  {
-    kind: "copyable",
-    label: "`OTEL_SERVICE_NAME`",
-    value: "${{RAILWAY_SERVICE_NAME}}",
-    copyLabel: "OTEL service name"
-  },
-  {
-    kind: "copyable",
-    label: "`OTEL_RESOURCE_ATTRIBUTES`",
-    value: "deployment.environment=${{RAILWAY_ENVIRONMENT_NAME}},service.version=${{RAILWAY_GIT_COMMIT_SHA}},railway.project.name=${{RAILWAY_PROJECT_NAME}},railway.deployment.id=${{RAILWAY_DEPLOYMENT_ID}}",
-    copyLabel: "OTEL resource attributes"
-  }
-];
+var railwayEnvironmentAction = {
+  instruction: "Add these variables in the Railway service Variables page.",
+  payloads: [
+    {
+      kind: "code",
+      label: "Railway Raw Editor variables",
+      description: "Paste this into the Railway service's Variables Raw Editor. Railway fills in the `${{...}}` references from its own service and deployment metadata.",
+      language: "bash",
+      value: RAILWAY_RAW_EDITOR_VARIABLES,
+      copyLabel: "Railway environment variables"
+    },
+    {
+      kind: "copyable",
+      label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
+      value: "https://${context.ingestHost}",
+      copyLabel: "OTLP endpoint"
+    },
+    {
+      kind: "copyable",
+      label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
+      value: "http/protobuf",
+      copyLabel: "OTLP protocol"
+    },
+    {
+      kind: "copyable",
+      label: "`OTEL_SERVICE_NAME`",
+      value: "${{RAILWAY_SERVICE_NAME}}",
+      copyLabel: "OTEL service name"
+    },
+    {
+      kind: "copyable",
+      label: "`OTEL_RESOURCE_ATTRIBUTES`",
+      value: "deployment.environment=${{RAILWAY_ENVIRONMENT_NAME}},service.version=${{RAILWAY_GIT_COMMIT_SHA}},railway.project.name=${{RAILWAY_PROJECT_NAME}},railway.deployment.id=${{RAILWAY_DEPLOYMENT_ID}}",
+      copyLabel: "OTEL resource attributes"
+    }
+  ]
+};
 var railwayConnectionless = {
   kind: "choice",
   title: "Choose Railway runtime",
@@ -12585,39 +12698,44 @@ var railwayConnectionless = {
             id: "prepare",
             title: "Prepare service",
             description: "Add OpenTelemetry to the Railway service you want to monitor.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Set up each Railway service you want to monitor so the application sends OpenTelemetry data directly to Sazabi."
-              },
-              {
-                kind: "note",
-                text: "If you cannot add the SDK, run a log forwarder such as Vector or Fluent Bit as its own Railway service and point it at the same OTLP endpoint."
-              },
-              {
-                kind: "external-link",
-                label: "Open Railway dashboard",
-                href: "https://railway.com/dashboard"
+                instruction: "Set up each Railway service you want to monitor so the application sends OpenTelemetry data directly to Sazabi.",
+                payloads: [
+                  {
+                    kind: "external-link",
+                    label: "Open Railway dashboard",
+                    href: "https://railway.com/dashboard"
+                  }
+                ],
+                notes: [
+                  {
+                    text: "If you cannot add the SDK, run a log forwarder such as Vector or Fluent Bit as its own Railway service and point it at the same OTLP endpoint."
+                  }
+                ]
               }
             ]
           },
           {
             id: "environment",
             title: "Set Railway variables",
-            description: "Add these variables in the Railway service Variables page.",
-            steps: railwayEnvironmentSteps
+            actions: [railwayEnvironmentAction]
           },
           {
             id: "bootstrap",
             title: "Bootstrap Node.js",
-            description: "Install the SDK and exporter packages, then load auto-instrumentation early.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "Node.js OpenTelemetry bootstrap",
-                language: "bash",
-                value: NODE_BOOTSTRAP,
-                copyLabel: "Node.js OpenTelemetry bootstrap"
+                instruction: "Install the SDK and exporter packages, then load auto-instrumentation early.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "Node.js OpenTelemetry bootstrap",
+                    language: "bash",
+                    value: NODE_BOOTSTRAP,
+                    copyLabel: "Node.js OpenTelemetry bootstrap"
+                  }
+                ]
               }
             ]
           },
@@ -12625,14 +12743,14 @@ var railwayConnectionless = {
             id: "deploy",
             title: "Redeploy and verify",
             description: "Deploy the staged variable changes, then send some traffic to the service.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Railway stages variable changes, so review and deploy the change set when prompted."
-              },
-              {
-                kind: "note",
-                text: "If nothing appears, check the Railway deployment logs for OpenTelemetry exporter errors and confirm your app is sending through OpenTelemetry, not only to stdout."
+                instruction: "Railway stages variable changes, so review and deploy the change set when prompted.",
+                notes: [
+                  {
+                    text: "If nothing appears, check the Railway deployment logs for OpenTelemetry exporter errors and confirm your app is sending through OpenTelemetry, not only to stdout."
+                  }
+                ]
               }
             ]
           }
@@ -12649,39 +12767,44 @@ var railwayConnectionless = {
             id: "prepare",
             title: "Prepare service",
             description: "Add OpenTelemetry to the Railway service you want to monitor.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Set up each Railway service you want to monitor so the application sends OpenTelemetry data directly to Sazabi."
-              },
-              {
-                kind: "note",
-                text: "If you cannot add the SDK, run a log forwarder such as Vector or Fluent Bit as its own Railway service and point it at the same OTLP endpoint."
-              },
-              {
-                kind: "external-link",
-                label: "Open Railway dashboard",
-                href: "https://railway.com/dashboard"
+                instruction: "Set up each Railway service you want to monitor so the application sends OpenTelemetry data directly to Sazabi.",
+                payloads: [
+                  {
+                    kind: "external-link",
+                    label: "Open Railway dashboard",
+                    href: "https://railway.com/dashboard"
+                  }
+                ],
+                notes: [
+                  {
+                    text: "If you cannot add the SDK, run a log forwarder such as Vector or Fluent Bit as its own Railway service and point it at the same OTLP endpoint."
+                  }
+                ]
               }
             ]
           },
           {
             id: "environment",
             title: "Set Railway variables",
-            description: "Add these variables in the Railway service Variables page.",
-            steps: railwayEnvironmentSteps
+            actions: [railwayEnvironmentAction]
           },
           {
             id: "bootstrap",
             title: "Bootstrap Python",
-            description: "Install OpenTelemetry distro packages and wrap the start command.",
-            steps: [
+            actions: [
               {
-                kind: "code",
-                label: "Python OpenTelemetry bootstrap",
-                language: "bash",
-                value: PYTHON_BOOTSTRAP,
-                copyLabel: "Python OpenTelemetry bootstrap"
+                instruction: "Install OpenTelemetry distro packages and wrap the start command.",
+                payloads: [
+                  {
+                    kind: "code",
+                    label: "Python OpenTelemetry bootstrap",
+                    language: "bash",
+                    value: PYTHON_BOOTSTRAP,
+                    copyLabel: "Python OpenTelemetry bootstrap"
+                  }
+                ]
               }
             ]
           },
@@ -12689,14 +12812,14 @@ var railwayConnectionless = {
             id: "deploy",
             title: "Redeploy and verify",
             description: "Deploy the staged variable changes, then send some traffic to the service.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Railway stages variable changes, so review and deploy the change set when prompted."
-              },
-              {
-                kind: "note",
-                text: "If nothing appears, check the Railway deployment logs for OpenTelemetry exporter errors and confirm your app is sending through OpenTelemetry, not only to stdout."
+                instruction: "Railway stages variable changes, so review and deploy the change set when prompted.",
+                notes: [
+                  {
+                    text: "If nothing appears, check the Railway deployment logs for OpenTelemetry exporter errors and confirm your app is sending through OpenTelemetry, not only to stdout."
+                  }
+                ]
               }
             ]
           }
@@ -12736,10 +12859,10 @@ var renderManaged = {
       id: "credentials",
       title: "Enter API key",
       description: "Enter a Render API key.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "You can create an API key in your [Render dashboard](https://dashboard.render.com/settings#api-keys)."
+          kind: "instruction",
+          instruction: "Create an API key in your [Render dashboard](https://dashboard.render.com/settings#api-keys)."
         },
         {
           id: "token",
@@ -12754,7 +12877,7 @@ var renderManaged = {
       id: "workspace",
       title: "Choose workspace",
       description: "Pick the Render workspace whose services Sazabi should list.",
-      steps: [
+      actions: [
         {
           id: "workspace",
           kind: "select",
@@ -12787,33 +12910,37 @@ var renderConnectionless = {
       id: "open-log-streams",
       title: "Open Log Streams",
       description: "Add a log stream in the Render dashboard.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "In your [Render dashboard](https://dashboard.render.com), open the workspace you want to forward, then go to **Workspace Settings > Log Streams** and add a log stream."
-        },
-        {
-          kind: "note",
-          text: "This log stream is **workspace-wide** — Render sends logs from every service in the workspace. To pick individual services instead, connect your Render account and Sazabi sets up a per-service log stream for each one."
+          instruction: "In your [Render dashboard](https://dashboard.render.com), open the workspace you want to forward, then go to **Workspace Settings > Log Streams** and add a log stream.",
+          notes: [
+            {
+              text: "This log stream is **workspace-wide** — Render sends logs from every service in the workspace. To pick individual services instead, connect your Render account and Sazabi sets up a per-service log stream for each one."
+            }
+          ]
         }
       ]
     },
     {
       id: "endpoint",
       title: "Set endpoint and token",
-      description: "Paste these values into the log stream form.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Endpoint",
-          value: "${context.projectRegion}.otel.${context.intakeDomain}:6514",
-          description: "A syslog endpoint (host and port, no scheme). Render sends logs here as RFC5424 syslog over TLS."
-        },
-        {
-          kind: "copyable",
-          label: "Token",
-          value: "${context.publicKey}",
-          description: "Render adds this token to every log line so Sazabi can verify the stream."
+          instruction: "Paste these values into the log stream form.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Endpoint",
+              value: "${context.projectRegion}.otel.${context.intakeDomain}:6514",
+              description: "A syslog endpoint (host and port, no scheme). Render sends logs here as RFC5424 syslog over TLS."
+            },
+            {
+              kind: "copyable",
+              label: "Token",
+              value: "${context.publicKey}",
+              description: "Render adds this token to every log line so Sazabi can verify the stream."
+            }
+          ]
         }
       ]
     },
@@ -12821,10 +12948,9 @@ var renderConnectionless = {
       id: "verify",
       title: "Save and verify",
       description: "Confirm logs arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the log stream, then trigger activity — deploy a service or hit an application route. Logs appear in Sazabi within a few minutes."
+          instruction: "Save the log stream, then trigger activity — deploy a service or hit an application route. Logs appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -12911,13 +13037,25 @@ var respanConnectionless = {
       id: "environment",
       section: "endpoint",
       title: "Copy your Respan base URL",
-      description: "Copy the keyed Respan base URL for this project. The public key is embedded in the hostname, so no auth header is needed. The Respan SDK appends its own `/api/v2/traces` path, so use this base host (no path).",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "`RESPAN_BASE_URL`",
-          value: "https://${context.ingestHost}",
-          copyLabel: "Respan base URL"
+          instruction: "Copy the keyed Respan base URL for this project.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`RESPAN_BASE_URL`",
+              value: "https://${context.ingestHost}",
+              copyLabel: "Respan base URL"
+            }
+          ],
+          notes: [
+            {
+              text: "The public key is embedded in the hostname, so no auth header is needed."
+            },
+            {
+              text: "The Respan SDK appends its own `/api/v2/traces` path, so use this base host (no path)."
+            }
+          ]
         }
       ]
     },
@@ -12925,18 +13063,27 @@ var respanConnectionless = {
       id: "install",
       section: "config",
       title: "Install the Respan SDK",
-      description: "Install the Respan SDK in the app you want to trace. It auto-instruments supported LLM and agent frameworks (OpenAI, Anthropic, Bedrock, Vertex, LangChain, and more).",
-      steps: [
+      actions: [
         {
-          kind: "code",
-          label: "Install",
-          language: "bash",
-          copyLabel: "Install command",
-          value: `# Python
+          instruction: "Install the Respan SDK in the app you want to trace.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Install",
+              language: "bash",
+              copyLabel: "Install command",
+              value: `# Python
 pip install respan-ai
 
 # TypeScript
 npm install @respan/respan`
+            }
+          ],
+          notes: [
+            {
+              text: "It auto-instruments supported LLM and agent frameworks (OpenAI, Anthropic, Bedrock, Vertex, LangChain, and more)."
+            }
+          ]
         }
       ]
     },
@@ -12944,27 +13091,29 @@ npm install @respan/respan`
       id: "configure",
       section: "config",
       title: "Point the Respan SDK at Sazabi",
-      description: "Initialize the Respan SDK with the base URL above (or set the `RESPAN_BASE_URL` environment variable). The SDK sends its auto-instrumented spans to Sazabi over OTLP/HTTP — you do not need a separate OpenTelemetry exporter.",
-      steps: [
+      actions: [
         {
-          kind: "code",
-          label: "Python",
-          language: "python",
-          copyLabel: "Python code",
-          value: `from respan import Respan
+          instruction: "Initialize the Respan SDK with the base URL above (or set the `RESPAN_BASE_URL` environment variable).",
+          payloads: [
+            {
+              kind: "code",
+              label: "Python",
+              language: "python",
+              copyLabel: "Python code",
+              value: `from respan import Respan
 
 # Send Respan's auto-instrumented spans to Sazabi.
 # You can also set RESPAN_BASE_URL in the environment instead of passing base_url.
 Respan(base_url="${"https://${context.ingestHost}"}")
 
 # All supported LLM and agent calls are now auto-traced and exported to Sazabi.`
-        },
-        {
-          kind: "code",
-          label: "TypeScript",
-          language: "typescript",
-          copyLabel: "TypeScript code",
-          value: `import { Respan } from "@respan/respan";
+            },
+            {
+              kind: "code",
+              label: "TypeScript",
+              language: "typescript",
+              copyLabel: "TypeScript code",
+              value: `import { Respan } from "@respan/respan";
 
 // Send Respan's auto-instrumented spans to Sazabi.
 // You can also set RESPAN_BASE_URL in the environment instead of passing baseURL.
@@ -12974,14 +13123,19 @@ const respan = new Respan({
 await respan.initialize();
 
 // All supported LLM and agent calls are now auto-traced and exported to Sazabi.`
-        },
-        {
-          kind: "note",
-          text: "Using an agent framework? Pass the matching instrumentor, e.g. `Respan({ instrumentations: [...] })`, exactly as you would when exporting to Respan's own backend — only the base URL changes."
-        },
-        {
-          kind: "note",
-          text: "Already send OpenTelemetry directly (or run an OTel Collector)? Skip the Respan SDK and point your existing OTLP/HTTP trace exporter at the same host with the standard `/v1/traces` path (http/json or http/protobuf). This source accepts both the Respan SDK's `/api/v2/traces` path and the standard OTLP `/v1/traces` path."
+            }
+          ],
+          notes: [
+            {
+              text: "The SDK sends its auto-instrumented spans to Sazabi over OTLP/HTTP — you do not need a separate OpenTelemetry exporter."
+            },
+            {
+              text: "Using an agent framework? Pass the matching instrumentor, e.g. `Respan({ instrumentations: [...] })`, exactly as you would when exporting to Respan's own backend — only the base URL changes."
+            },
+            {
+              text: "Already send OpenTelemetry directly (or run an OTel Collector)? Skip the Respan SDK and point your existing OTLP/HTTP trace exporter at the same host with the standard `/v1/traces` path (http/json or http/protobuf). This source accepts both the Respan SDK's `/api/v2/traces` path and the standard OTLP `/v1/traces` path."
+            }
+          ]
         }
       ]
     },
@@ -12990,10 +13144,9 @@ await respan.initialize();
       section: "verify",
       title: "Redeploy and verify",
       description: "Restart the app so it loads the new Respan configuration.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Redeploy or restart the service, then run an LLM or agent workload to generate a trace."
+          instruction: "Redeploy or restart the service, then run an LLM or agent workload to generate a trace."
         }
       ]
     }
@@ -13041,13 +13194,17 @@ var sentryConnectionless = {
           {
             id: "dsn",
             title: "Copy Sazabi DSN",
-            description: "Use this DSN in place of the Sentry project DSN for the app you want to monitor.",
-            steps: [
+            actions: [
               {
-                kind: "copyable",
-                label: "Sentry DSN",
-                value: "https://sazabi@${context.ingestHost}/0",
-                copyLabel: "DSN"
+                instruction: "Use this DSN in place of the Sentry project DSN for the app you want to monitor.",
+                payloads: [
+                  {
+                    kind: "copyable",
+                    label: "Sentry DSN",
+                    value: "https://sazabi@${context.ingestHost}/0",
+                    copyLabel: "DSN"
+                  }
+                ]
               }
             ]
           },
@@ -13055,33 +13212,41 @@ var sentryConnectionless = {
             id: "configure",
             title: "Initialize SDK",
             description: "Pick how you want events routed, then use the matching snippet.",
-            steps: [
+            actions: [
               {
-                kind: "note",
-                text: "**Option A — Send only to Sazabi.** Replace your Sentry project DSN with the Sazabi DSN. Simplest setup; your existing Sentry project no longer receives these events."
-              },
-              {
-                kind: "code",
-                label: "Send only to Sazabi — JavaScript / Node.js",
-                language: "javascript",
-                copyLabel: "JavaScript",
-                value: `import * as Sentry from "@sentry/node";
+                instruction: "Initialize the SDK with the snippet matching how you want events routed.",
+                payloads: [
+                  {
+                    kind: "options",
+                    options: [
+                      {
+                        id: "sazabi-only",
+                        label: "Send only to Sazabi",
+                        description: "Replaces your Sentry project DSN with the Sazabi DSN — the simplest setup; your existing Sentry project no longer receives these events.",
+                        payloads: [
+                          {
+                            kind: "code",
+                            language: "javascript",
+                            copyLabel: "JavaScript",
+                            value: `import * as Sentry from "@sentry/node";
 
 Sentry.init({
   dsn: "https://sazabi@\${context.ingestHost}/0",
   enableLogs: true,
 });`
-              },
-              {
-                kind: "note",
-                text: "**Option B — Multiplex (send to both).** Keep your existing Sentry project receiving events — so its dashboards and alerting stay intact — and also stream to Sazabi. The Sentry JavaScript SDK's built-in `makeMultiplexedTransport` sends every event to both DSNs."
-              },
-              {
-                kind: "code",
-                label: "Multiplex — JavaScript / Node.js",
-                language: "javascript",
-                copyLabel: "JavaScript",
-                value: `import * as Sentry from "@sentry/node";
+                          }
+                        ]
+                      },
+                      {
+                        id: "multiplex",
+                        label: "Multiplex (send to both)",
+                        description: "Keeps your existing Sentry project receiving events — so its dashboards and alerting stay intact — and also streams to Sazabi via the SDK's built-in `makeMultiplexedTransport`.",
+                        payloads: [
+                          {
+                            kind: "code",
+                            language: "javascript",
+                            copyLabel: "JavaScript",
+                            value: `import * as Sentry from "@sentry/node";
 import { makeMultiplexedTransport } from "@sentry/core";
 
 const SENTRY_DSN = "<your-existing-sentry-dsn>";
@@ -13097,8 +13262,18 @@ Sentry.init({
     // Fan every event out to both destinations.
     () => [{ dsn: SENTRY_DSN }, { dsn: SAZABI_DSN }],
   ),
-});`,
-                description: "`makeMultiplexedTransport` is part of the official Sentry JavaScript SDK. In the browser, import `makeFetchTransport` from `@sentry/browser` and pass it in place of `Sentry.makeNodeTransport`."
+});`
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                notes: [
+                  {
+                    text: "`makeMultiplexedTransport` is part of the official Sentry JavaScript SDK. In the browser, import `makeFetchTransport` from `@sentry/browser` and pass it in place of `Sentry.makeNodeTransport`."
+                  }
+                ]
               }
             ]
           },
@@ -13106,10 +13281,9 @@ Sentry.init({
             id: "verify",
             title: "Verify telemetry",
             description: "Restart the app, send a test exception, and write a structured log.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Turn on structured logging in the SDK first. This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
+                instruction: "Turn on structured logging in the SDK first. This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
               }
             ]
           }
@@ -13125,13 +13299,17 @@ Sentry.init({
           {
             id: "dsn",
             title: "Copy Sazabi DSN",
-            description: "Use this DSN in place of the Sentry project DSN for the app you want to monitor.",
-            steps: [
+            actions: [
               {
-                kind: "copyable",
-                label: "Sentry DSN",
-                value: "https://sazabi@${context.ingestHost}/0",
-                copyLabel: "DSN"
+                instruction: "Use this DSN in place of the Sentry project DSN for the app you want to monitor.",
+                payloads: [
+                  {
+                    kind: "copyable",
+                    label: "Sentry DSN",
+                    value: "https://sazabi@${context.ingestHost}/0",
+                    copyLabel: "DSN"
+                  }
+                ]
               }
             ]
           },
@@ -13139,33 +13317,41 @@ Sentry.init({
             id: "configure",
             title: "Initialize SDK",
             description: "Pick how you want events routed, then use the matching snippet.",
-            steps: [
+            actions: [
               {
-                kind: "note",
-                text: "**Option A — Send only to Sazabi.** Replace your Sentry project DSN with the Sazabi DSN. Simplest setup; your existing Sentry project no longer receives these events."
-              },
-              {
-                kind: "code",
-                label: "Send only to Sazabi — Python",
-                language: "python",
-                copyLabel: "Python",
-                value: `import sentry_sdk
+                instruction: "Initialize the SDK with the snippet matching how you want events routed.",
+                payloads: [
+                  {
+                    kind: "options",
+                    options: [
+                      {
+                        id: "sazabi-only",
+                        label: "Send only to Sazabi",
+                        description: "Replaces your Sentry project DSN with the Sazabi DSN — the simplest setup; your existing Sentry project no longer receives these events.",
+                        payloads: [
+                          {
+                            kind: "code",
+                            language: "python",
+                            copyLabel: "Python",
+                            value: `import sentry_sdk
 
 sentry_sdk.init(
     dsn="https://sazabi@\${context.ingestHost}/0",
     enable_logs=True,
 )`
-              },
-              {
-                kind: "note",
-                text: "**Option B — Multiplex (send to both).** Keep your existing Sentry project receiving events — so its dashboards and alerting stay intact — and also stream to Sazabi. The Python SDK has no built-in multiplexed transport, so use a second `Client` plus a `before_send` hook to forward a copy of each event to Sazabi."
-              },
-              {
-                kind: "code",
-                label: "Multiplex — Python",
-                language: "python",
-                copyLabel: "Python",
-                value: `import sentry_sdk
+                          }
+                        ]
+                      },
+                      {
+                        id: "multiplex",
+                        label: "Multiplex (send to both)",
+                        description: "Keeps your existing Sentry project receiving events — so its dashboards and alerting stay intact — and also streams to Sazabi. The Python SDK has no built-in multiplexed transport, so a second `Client` plus a `before_send` hook forwards a copy of each event to Sazabi; returning `event` keeps your primary Sentry project receiving it.",
+                        payloads: [
+                          {
+                            kind: "code",
+                            language: "python",
+                            copyLabel: "Python",
+                            value: `import sentry_sdk
 from sentry_sdk import Client
 
 SENTRY_DSN = "<your-existing-sentry-dsn>"
@@ -13182,8 +13368,13 @@ def _forward_to_sazabi(event, hint):
 sentry_sdk.init(
     dsn=SENTRY_DSN,
     before_send=_forward_to_sazabi,
-)`,
-                description: "Returning `event` keeps your primary Sentry project receiving it while the secondary client forwards a copy to Sazabi."
+)`
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ]
           },
@@ -13191,10 +13382,9 @@ sentry_sdk.init(
             id: "verify",
             title: "Verify telemetry",
             description: "Restart the app, send a test exception, and write a structured log.",
-            steps: [
+            actions: [
               {
-                kind: "prose",
-                text: "Turn on structured logging in the SDK first. This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
+                instruction: "Turn on structured logging in the SDK first. This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
               }
             ]
           }
@@ -13240,24 +13430,27 @@ var sentryPlatformManaged = {
       id: "prepare",
       title: "Create token",
       description: "Create a Sentry user auth token with org write access.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "You must be an **Owner** or **Manager** in the Sentry organization — creating an Internal Integration needs the `org:write` scope, which Admin, Member, and Billing roles do not have (Sentry returns 403)."
+        }
+      ],
+      actions: [
+        {
+          kind: "instruction",
+          instruction: "Create a Sentry user auth token with **Organization: Read & Write** (`org:write`), **Project: Read**, and **Issue & Event: Read**. The `org:write` scope only lets Sazabi create the Internal Integration; the integration itself only receives read-level webhook events.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Sentry auth token settings",
+              href: "https://sentry.io/settings/account/api/auth-tokens/new-token/"
+            }
+          ]
         },
         {
-          kind: "prose",
-          text: "Create a Sentry user auth token with **Organization: Read & Write** (`org:write`), **Project: Read**, and **Issue & Event: Read**. The `org:write` scope only lets Sazabi create the Internal Integration; the integration itself only receives read-level webhook events."
-        },
-        {
-          kind: "prose",
-          text: "Confirm the Permissions Preview at the bottom of the Sentry form shows `event:read, org:write, project:read` before submitting."
-        },
-        {
-          kind: "external-link",
-          label: "Open Sentry auth token settings",
-          href: "https://sentry.io/settings/account/api/auth-tokens/new-token/"
+          kind: "instruction",
+          instruction: "Confirm the Permissions Preview at the bottom of the Sentry form shows `event:read, org:write, project:read` before submitting."
         }
       ]
     },
@@ -13265,7 +13458,7 @@ var sentryPlatformManaged = {
       id: "credentials",
       title: "Enter credentials",
       description: "Enter the auth token and organization slug, then Sazabi validates them.",
-      steps: [
+      actions: [
         {
           id: "token",
           kind: "secret",
@@ -13312,24 +13505,25 @@ var sentryPlatformConnectionless = {
       section: "config",
       title: "Create the Internal Integration",
       description: "Create a Sentry Internal Integration in your organization's developer settings.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Creating an Internal Integration needs the **`org:write`** scope, which Sentry grants only to organization **Owners** and **Managers**. On this path the scope never leaves Sentry — you give Sazabi no auth token."
+        }
+      ],
+      actions: [
+        {
+          instruction: "In Sentry, go to **Settings → Developer Settings → Custom Integrations** and choose **New Internal Integration**.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Sentry Custom Integrations",
+              href: "https://sentry.io/settings/developer-settings/"
+            }
+          ]
         },
         {
-          kind: "prose",
-          text: "In Sentry, go to **Settings → Developer Settings → Custom Integrations** and choose **New Internal Integration**."
-        },
-        {
-          kind: "external-link",
-          label: "Open Sentry Custom Integrations",
-          href: "https://sentry.io/settings/developer-settings/"
-        },
-        {
-          kind: "prose",
-          text: "Under **Webhooks**, enable webhooks and subscribe to the **Issue** and **Comment** resources. To route alerts as well, enable **Alert Rule Action** so the integration can be added as a notification destination on Issue Alert and Metric Alert rules."
+          instruction: "Under **Webhooks**, enable webhooks and subscribe to the **Issue** and **Comment** resources. To route alerts as well, enable **Alert Rule Action** so the integration can be added as a notification destination on Issue Alert and Metric Alert rules."
         }
       ]
     },
@@ -13337,20 +13531,24 @@ var sentryPlatformConnectionless = {
       id: "endpoint",
       section: "endpoint",
       title: "Set the webhook URL",
-      description: "Paste this URL into the Internal Integration's Webhook URL field.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Webhook URL",
-          value: "https://${context.ingestHost}"
+          instruction: "Paste this URL into the Internal Integration's Webhook URL field.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Webhook URL",
+              value: "https://${context.ingestHost}"
+            }
+          ],
+          notes: [
+            {
+              text: "Your key sits inside the hostname, so the webhook needs no custom headers."
+            }
+          ]
         },
         {
-          kind: "note",
-          text: "Your key sits inside the hostname, so the webhook needs no custom headers."
-        },
-        {
-          kind: "prose",
-          text: "Save the integration."
+          instruction: "Save the integration."
         }
       ]
     },
@@ -13359,14 +13557,12 @@ var sentryPlatformConnectionless = {
       section: "verify",
       title: "Verify",
       description: "Confirm events arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Do something in Sentry to trigger an event — comment on an issue, change an issue's status, or create a fresh issue by throwing an exception in an instrumented project. `issue` and `comment` webhooks arrive within a few minutes."
+          instruction: "Do something in Sentry to trigger an event — comment on an issue, change an issue's status, or create a fresh issue by throwing an exception in an instrumented project. `issue` and `comment` webhooks arrive within a few minutes."
         },
         {
-          kind: "prose",
-          text: "**Alerts are opt-in.** To stream `event_alert` / `metric_alert` webhooks, edit each Issue Alert or Metric Alert rule in Sentry and add this integration as a notification destination."
+          instruction: "**Alerts are opt-in.** To stream `event_alert` / `metric_alert` webhooks, edit each Issue Alert or Metric Alert rule in Sentry and add this integration as a notification destination."
         }
       ]
     }
@@ -13420,15 +13616,15 @@ var supabaseConnectionless = {
       section: "config",
       title: "Open log drain form",
       description: "Create an OTLP log drain in the Supabase project settings.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Log Drains require a Supabase Pro, Team, or Enterprise plan."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "prose",
-          text: "In the [Supabase dashboard](https://supabase.com/dashboard), open the project whose logs you want to forward, then open **Project Settings > Log Drains** and click **Add destination**."
+          instruction: "In the [Supabase dashboard](https://supabase.com/dashboard), open the project whose logs you want to forward, then open **Project Settings > Log Drains** and click **Add destination**."
         }
       ]
     },
@@ -13437,20 +13633,24 @@ var supabaseConnectionless = {
       section: "config",
       title: "Copy drain fields",
       description: "Fill in these fields in order. Each one matches a field in the Supabase form.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Name",
-          value: "Sazabi"
+          instruction: "Fill in the **Name** and **Description** fields.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Name",
+              value: "Sazabi"
+            },
+            {
+              kind: "copyable",
+              label: "Description",
+              value: "Forward Supabase logs to Sazabi for observability and AI analysis."
+            }
+          ]
         },
         {
-          kind: "copyable",
-          label: "Description",
-          value: "Forward Supabase logs to Sazabi for observability and AI analysis."
-        },
-        {
-          kind: "prose",
-          text: "Set **Type** to **OpenTelemetry Protocol (OTLP)**."
+          instruction: "Set **Type** to **OpenTelemetry Protocol (OTLP)**."
         }
       ]
     },
@@ -13458,12 +13658,16 @@ var supabaseConnectionless = {
       id: "otlp-endpoint",
       section: "endpoint",
       title: "OTLP Endpoint",
-      description: "Paste your Sazabi intake URL (above) into the **OTLP Endpoint** field.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "OTLP Endpoint",
-          value: "https://${context.ingestHost}/v1/logs"
+          instruction: "Paste your Sazabi intake URL (above) into the **OTLP Endpoint** field.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "OTLP Endpoint",
+              value: "https://${context.ingestHost}/v1/logs"
+            }
+          ]
         }
       ]
     },
@@ -13472,15 +13676,19 @@ var supabaseConnectionless = {
       section: "config",
       title: "Finish drain fields",
       description: "Complete the remaining fields in the Supabase form.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Protocol",
-          value: "HTTP/Protobuf"
+          instruction: "Fill in the **Protocol** field.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Protocol",
+              value: "HTTP/Protobuf"
+            }
+          ]
         },
         {
-          kind: "prose",
-          text: "Set **Gzip Compression** to **Enabled**."
+          instruction: "Set **Gzip Compression** to **Enabled**."
         }
       ]
     },
@@ -13489,10 +13697,9 @@ var supabaseConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Save the drain and generate fresh Supabase logs.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the log drain, then trigger activity — run a query or hit your project's API. Logs appear in Sazabi within a few minutes."
+          instruction: "Save the log drain, then trigger activity — run a query or hit your project's API. Logs appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -13530,29 +13737,16 @@ var temporalConnectionless = {
       section: "config",
       title: "Instrument workers",
       description: "Set up each Temporal worker runtime to send OpenTelemetry data.",
-      steps: [
-        {
-          kind: "ordered-steps",
-          items: otelOrderedSteps("Temporal worker")
-        }
-      ]
-    },
-    {
-      id: "environment",
-      section: "endpoint",
-      title: "Copy OTLP environment",
-      description: "Set these variables where your Temporal workers run.",
-      steps: [otelSdkAutoDetectNote, ...otelEnvVarFields()]
+      actions: [...otelSetupActions("Temporal worker")]
     },
     {
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
       description: "Restart your workers so the OpenTelemetry SDK picks up the new variables.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Redeploy or restart your Temporal workers, then run a workflow or activity to generate fresh telemetry."
+          instruction: "Redeploy or restart your Temporal workers, then run a workflow or activity to generate fresh telemetry."
         }
       ]
     }
@@ -13590,14 +13784,15 @@ var triggerDevConnectionless = {
       section: "config",
       title: "Prepare Trigger.dev project",
       description: "Install the OTLP logs exporter and decide where to set it up.",
-      steps: [
+      actions: [
         {
-          kind: "ordered-steps",
-          items: [
-            "Install `@opentelemetry/exporter-logs-otlp-http` in the package that owns your `trigger.config.ts` file.",
-            "Set `telemetry.logExporters` directly in `trigger.config.ts`. Trigger.dev reserves `OTEL_*` environment variables for its own internal telemetry, so do not use them for this integration.",
-            "If your project already sets up OpenTelemetry in code, reuse the Sazabi log intake URL in that setup instead of adding a second exporter."
-          ]
+          instruction: "Install `@opentelemetry/exporter-logs-otlp-http` in the package that owns your `trigger.config.ts` file."
+        },
+        {
+          instruction: "Set `telemetry.logExporters` directly in `trigger.config.ts`. Trigger.dev reserves `OTEL_*` environment variables for its own internal telemetry, so do not use them for this integration."
+        },
+        {
+          instruction: "If your project already sets up OpenTelemetry in code, reuse the Sazabi log intake URL in that setup instead of adding a second exporter."
         }
       ]
     },
@@ -13605,13 +13800,17 @@ var triggerDevConnectionless = {
       id: "values",
       section: "endpoint",
       title: "Copy Sazabi values",
-      description: "Use this keyed intake URL in your Trigger.dev config.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Sazabi log intake URL",
-          value: "https://${context.ingestHost}/v1/logs",
-          copyLabel: "Sazabi log intake URL"
+          instruction: "Use this keyed intake URL in your Trigger.dev config.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Sazabi log intake URL",
+              value: "https://${context.ingestHost}/v1/logs",
+              copyLabel: "Sazabi log intake URL"
+            }
+          ]
         }
       ]
     },
@@ -13619,13 +13818,15 @@ var triggerDevConnectionless = {
       id: "configure",
       section: "config",
       title: "Configure log exporter",
-      description: "Add the OTLP log exporter to `trigger.config.ts`.",
-      steps: [
+      actions: [
         {
-          kind: "code",
-          label: "`trigger.config.ts`",
-          language: "typescript",
-          value: `import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
+          instruction: "Add the OTLP log exporter to `trigger.config.ts`.",
+          payloads: [
+            {
+              kind: "code",
+              label: "`trigger.config.ts`",
+              language: "typescript",
+              value: `import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
 import { defineConfig } from "@trigger.dev/sdk";
 
 export default defineConfig({
@@ -13639,7 +13840,9 @@ export default defineConfig({
   },
 });
 `,
-          copyLabel: "Trigger.dev config snippet"
+              copyLabel: "Trigger.dev config snippet"
+            }
+          ]
         }
       ]
     },
@@ -13648,14 +13851,14 @@ export default defineConfig({
       section: "verify",
       title: "Redeploy and verify",
       description: "Redeploy Trigger.dev so it starts sending task logs to Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Redeploy Trigger.dev so it picks up the new log exporter, then run a task to confirm its logs arrive in Sazabi."
-        },
-        {
-          kind: "note",
-          text: "This source stores logs only — trace exporters, metrics exporters, alert webhooks, and management API polling are intentionally out of scope. Use `telemetry.logExporters`; do not configure this source through `telemetry.exporters`, Trigger.dev alert webhooks, or management API polling."
+          instruction: "Redeploy Trigger.dev so it picks up the new log exporter, then run a task to confirm its logs arrive in Sazabi.",
+          notes: [
+            {
+              text: "This source stores logs only — trace exporters, metrics exporters, alert webhooks, and management API polling are intentionally out of scope. Use `telemetry.logExporters`; do not configure this source through `telemetry.exporters`, Trigger.dev alert webhooks, or management API polling."
+            }
+          ]
         }
       ]
     }
@@ -13768,31 +13971,36 @@ var vectorConnectionless = {
       id: "copy-config",
       section: "config",
       title: "Copy logs pipeline",
-      description: "Add a remap transform and OpenTelemetry sink to your Vector config.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "Vector 0.51.0 or later is required for the `otlp` encoding codec."
-        },
+        }
+      ],
+      actions: [
         {
-          kind: "code-tabs",
-          label: "Vector configuration",
-          description: "Choose the snippet format that matches how you deploy Vector.",
-          tabs: [
+          instruction: "Add a remap transform and OpenTelemetry sink to your Vector config.",
+          payloads: [
             {
-              id: "yaml",
-              label: "`vector.yaml`",
-              language: "yaml",
-              copyLabel: "Vector YAML config",
-              value: LOGS_YAML
-            },
-            {
-              id: "helm",
-              label: "Helm values",
-              language: "yaml",
-              copyLabel: "Vector Helm values",
-              value: LOGS_HELM
+              kind: "code-tabs",
+              label: "Vector configuration",
+              description: "Choose the snippet format that matches how you deploy Vector.",
+              tabs: [
+                {
+                  id: "yaml",
+                  label: "`vector.yaml`",
+                  language: "yaml",
+                  copyLabel: "Vector YAML config",
+                  value: LOGS_YAML
+                },
+                {
+                  id: "helm",
+                  label: "Helm values",
+                  language: "yaml",
+                  copyLabel: "Vector Helm values",
+                  value: LOGS_HELM
+                }
+              ]
             }
           ]
         }
@@ -13803,19 +14011,18 @@ var vectorConnectionless = {
       section: "config",
       title: "Wire sources",
       description: "Point the remap transform at the log sources you actually want to forward.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: 'Replace `inputs: ["*"]` on the `remap` transform with your specific source or transform IDs in production. `["*"]` also matches `internal_metrics` and other unrelated components.'
-        },
-        {
-          kind: "note",
-          variant: "requirement",
-          text: "The sink's `otlp` codec doesn't build the OTLP envelope on its own. If you wire raw sources straight into it, Vector drops every event."
-        },
-        {
-          kind: "note",
-          text: "Sazabi indexes logs and traces from Vector. It accepts metrics at the intake but silently drops them."
+          instruction: 'Replace `inputs: ["*"]` on the `remap` transform with your specific source or transform IDs in production. `["*"]` also matches `internal_metrics` and other unrelated components.',
+          notes: [
+            {
+              variant: "requirement",
+              text: "The sink's `otlp` codec doesn't build the OTLP envelope on its own. If you wire raw sources straight into it, Vector drops every event."
+            },
+            {
+              text: "Sazabi indexes logs and traces from Vector. It accepts metrics at the intake but silently drops them."
+            }
+          ]
         }
       ]
     },
@@ -13824,18 +14031,17 @@ var vectorConnectionless = {
       section: "config",
       title: "Forward traces (optional)",
       description: "Add a separate traces sink only when your source is already OTLP-shaped.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: 'Add a second `opentelemetry` sink with `uri` ending in `/v1/traces` and explicit `inputs` referencing an already-OTLP-shaped source, typically an `opentelemetry` Vector source with `use_otlp_decoding.traces: true` (use `inputs: ["otlp_in.traces"]`).'
+          instruction: 'Add a second `opentelemetry` sink with `uri` ending in `/v1/traces` and explicit `inputs` referencing an already-OTLP-shaped source, typically an `opentelemetry` Vector source with `use_otlp_decoding.traces: true` (use `inputs: ["otlp_in.traces"]`).',
+          notes: [
+            {
+              text: "No remap is needed for traces."
+            }
+          ]
         },
         {
-          kind: "note",
-          text: "No remap is needed for traces."
-        },
-        {
-          kind: "prose",
-          text: 'Do not wire `["*"]` into a traces sink.'
+          instruction: 'Do not wire `["*"]` into a traces sink.'
         }
       ]
     }
@@ -13877,10 +14083,10 @@ var vercelManaged = {
       id: "prepare",
       title: "Create token",
       description: "Create a Vercel API token for the account or team to connect.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Create a full-access API token in your [Vercel account settings](https://vercel.com/account/tokens). A token gets the same permissions as your account; for team accounts, create the token while scoped to the correct team."
+          kind: "instruction",
+          instruction: "Create a full-access API token in your [Vercel account settings](https://vercel.com/account/tokens). A token gets the same permissions as your account; for team accounts, create the token while scoped to the correct team."
         }
       ]
     },
@@ -13888,7 +14094,7 @@ var vercelManaged = {
       id: "credentials",
       title: "Enter token",
       description: "Enter the token so Sazabi can check the Vercel account.",
-      steps: [
+      actions: [
         {
           id: "token",
           kind: "secret",
@@ -13924,19 +14130,18 @@ var vercelConnectionless = {
       section: "config",
       title: "Open Drains",
       description: "Create a log drain in the Vercel dashboard.",
-      steps: [
+      notes: [
         {
-          kind: "note",
           variant: "requirement",
           text: "**Vercel Drains require the Pro or Enterprise plan.** Hobby and Pro Trial teams cannot create drains."
+        }
+      ],
+      actions: [
+        {
+          instruction: "In your [Vercel dashboard](https://vercel.com/dashboard), go to **Team Settings > Drains** and create a new drain."
         },
         {
-          kind: "prose",
-          text: "In your [Vercel dashboard](https://vercel.com/dashboard), go to **Team Settings > Drains** and create a new drain."
-        },
-        {
-          kind: "prose",
-          text: "Choose **Logs** as the data to deliver. This path covers logs only — to send traces or Web Analytics events, connect your Vercel account instead and Sazabi creates those drains for you."
+          instruction: "Choose **Logs** as the data to deliver. This path covers logs only — to send traces or Web Analytics events, connect your Vercel account instead and Sazabi creates those drains for you."
         }
       ]
     },
@@ -13944,16 +14149,21 @@ var vercelConnectionless = {
       id: "endpoint",
       section: "endpoint",
       title: "Copy endpoint URL",
-      description: "Paste your Sazabi intake URL (above) into the drain's endpoint field.",
-      steps: [
+      actions: [
         {
-          kind: "copyable",
-          label: "Endpoint URL",
-          value: "https://${context.ingestHost}"
-        },
-        {
-          kind: "note",
-          text: "The hostname already includes your key, so the drain needs no custom headers."
+          instruction: "Paste your Sazabi intake URL (above) into the drain's endpoint field.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Endpoint URL",
+              value: "https://${context.ingestHost}"
+            }
+          ],
+          notes: [
+            {
+              text: "The hostname already includes your key, so the drain needs no custom headers."
+            }
+          ]
         }
       ]
     },
@@ -13962,14 +14172,12 @@ var vercelConnectionless = {
       section: "config",
       title: "Set delivery options",
       description: "Deliver JSON from every log source you want to send.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Set the delivery format to **JSON**. Sazabi does not parse NDJSON on this endpoint."
+          instruction: "Set the delivery format to **JSON**. Sazabi does not parse NDJSON on this endpoint."
         },
         {
-          kind: "prose",
-          text: "Pick the projects, environments, and log sources to send. Sazabi accepts every Vercel log source (Static, Lambda, Edge, Build, External, Firewall, Redirect)."
+          instruction: "Pick the projects, environments, and log sources to send. Sazabi accepts every Vercel log source (Static, Lambda, Edge, Build, External, Firewall, Redirect)."
         }
       ]
     },
@@ -13978,10 +14186,9 @@ var vercelConnectionless = {
       section: "verify",
       title: "Save and verify",
       description: "Confirm logs arrive in Sazabi.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Save the drain, then send some traffic — push a deployment or hit an application route. Logs show up in Sazabi within a few minutes."
+          instruction: "Save the drain, then send some traffic — push a deployment or hit an application route. Logs show up in Sazabi within a few minutes."
         }
       ]
     }
@@ -14149,20 +14356,22 @@ var webhookEventsConnectionless = {
       section: "endpoint",
       title: "Copy your webhook URL",
       description: "Each stream has its own keyed URL. The key is embedded in the hostname, so no extra headers or secrets are needed — treat the URL itself as the credential.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Send an HTTP `POST` with a JSON body. A single JSON object is stored as one event; a JSON array of objects is stored as one event per element."
-        },
-        {
-          kind: "copyable",
-          label: "Webhook URL",
-          value: "https://${context.ingestHost}",
-          copyLabel: "Webhook URL"
-        },
-        {
-          kind: "note",
-          text: "You can append any path — for example `/deploys` — to record the event's origin; the path is passed through and stored as `webhook.path`."
+          instruction: "Send an HTTP `POST` with a JSON body. A single JSON object is stored as one event; a JSON array of objects is stored as one event per element.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Webhook URL",
+              value: "https://${context.ingestHost}",
+              copyLabel: "Webhook URL"
+            }
+          ],
+          notes: [
+            {
+              text: "You can append any path — for example `/deploys` — to record the event's origin; the path is passed through and stored as `webhook.path`."
+            }
+          ]
         }
       ]
     },
@@ -14171,14 +14380,14 @@ var webhookEventsConnectionless = {
       section: "config",
       title: "Paste the URL into your vendor",
       description: "Add the URL as a webhook or event-notification destination in whatever system emits the events.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Open your vendor's webhook or outbound-event settings, add a new endpoint, and paste the URL above. Choose JSON as the payload format if the vendor offers a choice."
-        },
-        {
-          kind: "note",
-          text: "Sazabi reads the time, severity, and message from common field names when present, and stores every field of the payload under `webhook.*` either way. There is nothing to map or declare."
+          instruction: "Open your vendor's webhook or outbound-event settings, add a new endpoint, and paste the URL above. Choose JSON as the payload format if the vendor offers a choice.",
+          notes: [
+            {
+              text: "Sazabi reads the time, severity, and message from common field names when present, and stores every field of the payload under `webhook.*` either way. There is nothing to map or declare."
+            }
+          ]
         }
       ]
     },
@@ -14187,20 +14396,21 @@ var webhookEventsConnectionless = {
       section: "verify",
       title: "Send a test event and verify",
       description: "Trigger an event from your vendor, or send one yourself, then confirm it arrives.",
-      steps: [
+      actions: [
         {
-          kind: "prose",
-          text: "Most webhook settings pages have a “Send test” button. If not, POST a sample event yourself and watch for it below."
-        },
-        {
-          kind: "code",
-          label: "Send a test event",
-          language: "bash",
-          copyLabel: "curl test event",
-          value: `curl -X POST \\
+          instruction: "Most webhook settings pages have a “Send test” button. If not, POST a sample event yourself and watch for it below.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Send a test event",
+              language: "bash",
+              copyLabel: "curl test event",
+              value: `curl -X POST \\
   https://\${context.ingestHost}/test \\
   -H 'content-type: application/json' \\
   -d '{"event":"hello.world","level":"info","message":"first webhook event"}'`
+            }
+          ]
         }
       ]
     }

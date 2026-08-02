@@ -1,7 +1,7 @@
 {
-  "name": "@sazabi/public-sdk",
+  "name": "@sazabi/sdk",
   "description": "TypeScript SDK for the Sazabi public API",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/types/public-sdk/index.d.ts",
