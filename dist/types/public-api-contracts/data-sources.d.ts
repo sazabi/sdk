@@ -17,6 +17,30 @@ export declare const DataSourceTypeInfoSchema: z.ZodObject<{
     setupSkill: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 /**
+ * One platform-owned endpoint card for a keyed stream (ENG-5344). The card's
+ * contents are computed server-side — the single intake-URL assembler lives
+ * in the platform — and clients render them verbatim. `url` cards carry the
+ * complete keyed URL (the hostname authenticates); `hostPort` cards carry a
+ * non-keyed listener plus the credential the sender must attach.
+ */
+export declare const DataSourceEndpointCardSchema: z.ZodObject<{
+    kind: z.ZodEnum<{
+        hostPort: "hostPort";
+        url: "url";
+    }>;
+    label: z.ZodOptional<z.ZodString>;
+    url: z.ZodOptional<z.ZodString>;
+    host: z.ZodOptional<z.ZodString>;
+    port: z.ZodOptional<z.ZodNumber>;
+    description: z.ZodOptional<z.ZodString>;
+    extraCredential: z.ZodOptional<z.ZodObject<{
+        label: z.ZodString;
+        value: z.ZodString;
+        description: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type DataSourceEndpointCard = z.infer<typeof DataSourceEndpointCardSchema>;
+/**
  * A data source connection record.
  */
 export declare const DataSourceConnectionSchema: z.ZodObject<{
@@ -70,6 +94,7 @@ export declare const DataSourceConnectionSchema: z.ZodObject<{
  */
 export declare const DataSourceStreamSchema: z.ZodObject<{
     id: z.ZodString;
+    instanceId: z.ZodString;
     connectionId: z.ZodNullable<z.ZodString>;
     displayName: z.ZodString;
     config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -82,6 +107,22 @@ export declare const DataSourceStreamSchema: z.ZodObject<{
     errorMessage: z.ZodNullable<z.ZodString>;
     enabled: z.ZodBoolean;
     createdAt: z.ZodString;
+    endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        kind: z.ZodEnum<{
+            hostPort: "hostPort";
+            url: "url";
+        }>;
+        label: z.ZodOptional<z.ZodString>;
+        url: z.ZodOptional<z.ZodString>;
+        host: z.ZodOptional<z.ZodString>;
+        port: z.ZodOptional<z.ZodNumber>;
+        description: z.ZodOptional<z.ZodString>;
+        extraCredential: z.ZodOptional<z.ZodObject<{
+            label: z.ZodString;
+            value: z.ZodString;
+            description: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>>;
 }, z.core.$strip>;
 export declare const ListDataSourceTypesInputSchema: z.ZodObject<{}, z.core.$strip>;
 export declare const ListDataSourceTypesOutputSchema: z.ZodObject<{
@@ -825,6 +866,22 @@ export declare const CreateDataSourceConnectionInputSchema: z.ZodObject<{
 export declare const CreateDataSourceConnectionOutputSchema: z.ZodObject<{
     connectionId: z.ZodString;
     publicKey: z.ZodString;
+    endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        kind: z.ZodEnum<{
+            hostPort: "hostPort";
+            url: "url";
+        }>;
+        label: z.ZodOptional<z.ZodString>;
+        url: z.ZodOptional<z.ZodString>;
+        host: z.ZodOptional<z.ZodString>;
+        port: z.ZodOptional<z.ZodNumber>;
+        description: z.ZodOptional<z.ZodString>;
+        extraCredential: z.ZodOptional<z.ZodObject<{
+            label: z.ZodString;
+            value: z.ZodString;
+            description: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>>;
 }, z.core.$strip>;
 export type CreateDataSourceConnectionInput = z.infer<typeof CreateDataSourceConnectionInputSchema>;
 export type CreateDataSourceConnectionOutput = z.infer<typeof CreateDataSourceConnectionOutputSchema>;
@@ -875,6 +932,22 @@ export declare const createDataSourceConnection: import("../orpc-contracts/index
 }, z.core.$strip>, z.ZodObject<{
     connectionId: z.ZodString;
     publicKey: z.ZodString;
+    endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        kind: z.ZodEnum<{
+            hostPort: "hostPort";
+            url: "url";
+        }>;
+        label: z.ZodOptional<z.ZodString>;
+        url: z.ZodOptional<z.ZodString>;
+        host: z.ZodOptional<z.ZodString>;
+        port: z.ZodOptional<z.ZodNumber>;
+        description: z.ZodOptional<z.ZodString>;
+        extraCredential: z.ZodOptional<z.ZodObject<{
+            label: z.ZodString;
+            value: z.ZodString;
+            description: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>>;
 }, z.core.$strip>, "api">;
 export declare const ListDataSourceStreamsInputSchema: z.ZodObject<{
     connectionId: z.ZodString;
@@ -883,6 +956,7 @@ export declare const ListDataSourceStreamsInputSchema: z.ZodObject<{
 export declare const ListDataSourceStreamsOutputSchema: z.ZodObject<{
     streams: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        instanceId: z.ZodString;
         connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -895,6 +969,22 @@ export declare const ListDataSourceStreamsOutputSchema: z.ZodObject<{
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
         createdAt: z.ZodString;
+        endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            kind: z.ZodEnum<{
+                hostPort: "hostPort";
+                url: "url";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            url: z.ZodOptional<z.ZodString>;
+            host: z.ZodOptional<z.ZodString>;
+            port: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            extraCredential: z.ZodOptional<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+                description: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListDataSourceStreamsInput = z.infer<typeof ListDataSourceStreamsInputSchema>;
@@ -905,6 +995,7 @@ export declare const listDataSourceStreams: import("../orpc-contracts/index.js")
 }, z.core.$strip>, z.ZodObject<{
     streams: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        instanceId: z.ZodString;
         connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -917,6 +1008,22 @@ export declare const listDataSourceStreams: import("../orpc-contracts/index.js")
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
         createdAt: z.ZodString;
+        endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            kind: z.ZodEnum<{
+                hostPort: "hostPort";
+                url: "url";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            url: z.ZodOptional<z.ZodString>;
+            host: z.ZodOptional<z.ZodString>;
+            port: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            extraCredential: z.ZodOptional<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+                description: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const ListDataSourceInstanceStreamsInputSchema: z.ZodObject<{
@@ -926,6 +1033,7 @@ export declare const ListDataSourceInstanceStreamsInputSchema: z.ZodObject<{
 export declare const ListDataSourceInstanceStreamsOutputSchema: z.ZodObject<{
     streams: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        instanceId: z.ZodString;
         connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -938,6 +1046,22 @@ export declare const ListDataSourceInstanceStreamsOutputSchema: z.ZodObject<{
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
         createdAt: z.ZodString;
+        endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            kind: z.ZodEnum<{
+                hostPort: "hostPort";
+                url: "url";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            url: z.ZodOptional<z.ZodString>;
+            host: z.ZodOptional<z.ZodString>;
+            port: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            extraCredential: z.ZodOptional<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+                description: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListDataSourceInstanceStreamsInput = z.infer<typeof ListDataSourceInstanceStreamsInputSchema>;
@@ -948,6 +1072,7 @@ export declare const listDataSourceInstanceStreams: import("../orpc-contracts/in
 }, z.core.$strip>, z.ZodObject<{
     streams: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        instanceId: z.ZodString;
         connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -960,10 +1085,26 @@ export declare const listDataSourceInstanceStreams: import("../orpc-contracts/in
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
         createdAt: z.ZodString;
+        endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            kind: z.ZodEnum<{
+                hostPort: "hostPort";
+                url: "url";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            url: z.ZodOptional<z.ZodString>;
+            host: z.ZodOptional<z.ZodString>;
+            port: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            extraCredential: z.ZodOptional<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+                description: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const CreateDataSourceStreamInputSchema: z.ZodObject<{
-    connectionId: z.ZodString;
+    instanceId: z.ZodString;
     displayName: z.ZodString;
     config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
 }, z.core.$strip>;
@@ -974,7 +1115,7 @@ export declare const CreateDataSourceStreamOutputSchema: z.ZodObject<{
 export type CreateDataSourceStreamInput = z.infer<typeof CreateDataSourceStreamInputSchema>;
 export type CreateDataSourceStreamOutput = z.infer<typeof CreateDataSourceStreamOutputSchema>;
 export declare const createDataSourceStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    connectionId: z.ZodString;
+    instanceId: z.ZodString;
     displayName: z.ZodString;
     config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
 }, z.core.$strip>, z.ZodObject<{
@@ -987,6 +1128,7 @@ export declare const GetDataSourceStreamInputSchema: z.ZodObject<{
 export declare const GetDataSourceStreamOutputSchema: z.ZodObject<{
     stream: z.ZodObject<{
         id: z.ZodString;
+        instanceId: z.ZodString;
         connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -999,6 +1141,22 @@ export declare const GetDataSourceStreamOutputSchema: z.ZodObject<{
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
         createdAt: z.ZodString;
+        endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            kind: z.ZodEnum<{
+                hostPort: "hostPort";
+                url: "url";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            url: z.ZodOptional<z.ZodString>;
+            host: z.ZodOptional<z.ZodString>;
+            port: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            extraCredential: z.ZodOptional<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+                description: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetDataSourceStreamInput = z.infer<typeof GetDataSourceStreamInputSchema>;
@@ -1008,6 +1166,7 @@ export declare const getDataSourceStream: import("../orpc-contracts/index.js").O
 }, z.core.$strip>, z.ZodObject<{
     stream: z.ZodObject<{
         id: z.ZodString;
+        instanceId: z.ZodString;
         connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -1020,6 +1179,22 @@ export declare const getDataSourceStream: import("../orpc-contracts/index.js").O
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
         createdAt: z.ZodString;
+        endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            kind: z.ZodEnum<{
+                hostPort: "hostPort";
+                url: "url";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            url: z.ZodOptional<z.ZodString>;
+            host: z.ZodOptional<z.ZodString>;
+            port: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            extraCredential: z.ZodOptional<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+                description: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const DeleteDataSourceStreamInputSchema: z.ZodObject<{
@@ -1407,6 +1582,22 @@ export declare const dataSourcesContract: {
     }, z.core.$strip>, z.ZodObject<{
         connectionId: z.ZodString;
         publicKey: z.ZodString;
+        endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            kind: z.ZodEnum<{
+                hostPort: "hostPort";
+                url: "url";
+            }>;
+            label: z.ZodOptional<z.ZodString>;
+            url: z.ZodOptional<z.ZodString>;
+            host: z.ZodOptional<z.ZodString>;
+            port: z.ZodOptional<z.ZodNumber>;
+            description: z.ZodOptional<z.ZodString>;
+            extraCredential: z.ZodOptional<z.ZodObject<{
+                label: z.ZodString;
+                value: z.ZodString;
+                description: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly disconnectConnection: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         connectionId: z.ZodString;
@@ -1420,6 +1611,7 @@ export declare const dataSourcesContract: {
     }, z.core.$strip>, z.ZodObject<{
         streams: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
+            instanceId: z.ZodString;
             connectionId: z.ZodNullable<z.ZodString>;
             displayName: z.ZodString;
             config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -1432,6 +1624,22 @@ export declare const dataSourcesContract: {
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
             createdAt: z.ZodString;
+            endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    hostPort: "hostPort";
+                    url: "url";
+                }>;
+                label: z.ZodOptional<z.ZodString>;
+                url: z.ZodOptional<z.ZodString>;
+                host: z.ZodOptional<z.ZodString>;
+                port: z.ZodOptional<z.ZodNumber>;
+                description: z.ZodOptional<z.ZodString>;
+                extraCredential: z.ZodOptional<z.ZodObject<{
+                    label: z.ZodString;
+                    value: z.ZodString;
+                    description: z.ZodOptional<z.ZodString>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly listInstanceStreams: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -1440,6 +1648,7 @@ export declare const dataSourcesContract: {
     }, z.core.$strip>, z.ZodObject<{
         streams: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
+            instanceId: z.ZodString;
             connectionId: z.ZodNullable<z.ZodString>;
             displayName: z.ZodString;
             config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -1452,10 +1661,26 @@ export declare const dataSourcesContract: {
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
             createdAt: z.ZodString;
+            endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    hostPort: "hostPort";
+                    url: "url";
+                }>;
+                label: z.ZodOptional<z.ZodString>;
+                url: z.ZodOptional<z.ZodString>;
+                host: z.ZodOptional<z.ZodString>;
+                port: z.ZodOptional<z.ZodNumber>;
+                description: z.ZodOptional<z.ZodString>;
+                extraCredential: z.ZodOptional<z.ZodObject<{
+                    label: z.ZodString;
+                    value: z.ZodString;
+                    description: z.ZodOptional<z.ZodString>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly createStream: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-        connectionId: z.ZodString;
+        instanceId: z.ZodString;
         displayName: z.ZodString;
         config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
     }, z.core.$strip>, z.ZodObject<{
@@ -1467,6 +1692,7 @@ export declare const dataSourcesContract: {
     }, z.core.$strip>, z.ZodObject<{
         stream: z.ZodObject<{
             id: z.ZodString;
+            instanceId: z.ZodString;
             connectionId: z.ZodNullable<z.ZodString>;
             displayName: z.ZodString;
             config: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -1479,6 +1705,22 @@ export declare const dataSourcesContract: {
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
             createdAt: z.ZodString;
+            endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    hostPort: "hostPort";
+                    url: "url";
+                }>;
+                label: z.ZodOptional<z.ZodString>;
+                url: z.ZodOptional<z.ZodString>;
+                host: z.ZodOptional<z.ZodString>;
+                port: z.ZodOptional<z.ZodNumber>;
+                description: z.ZodOptional<z.ZodString>;
+                extraCredential: z.ZodOptional<z.ZodObject<{
+                    label: z.ZodString;
+                    value: z.ZodString;
+                    description: z.ZodOptional<z.ZodString>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly deleteStream: import("@orpc/contract").ContractProcedure<z.ZodObject<{

@@ -7849,6 +7849,8 @@ var AutomationSchema = z2.object({
   projectId: z2.string().uuid(),
   name: z2.string(),
   kind: z2.enum(["script"]).describe("Automation kind: a scheduled script."),
+  scriptId: z2.string().uuid().nullable().describe("ID of the project_scripts row this automation runs, for DB-backed script automations. Null for legacy script_path automations and for signal automations."),
+  scriptName: z2.string().nullable().describe("Name of the project_scripts row this automation runs (see scriptId). Null when scriptId is null."),
   source: z2.enum(["sazabi_managed", "custom"]).describe("Whether the automation is Sazabi-managed or customer-defined."),
   enabled: z2.boolean(),
   cronExpression: z2.string().nullable().describe("Cron schedule for scheduled automations. Null for signal automations."),
@@ -7886,6 +7888,35 @@ var GetAutomationInputSchema = z2.object({
   projectId: z2.string().uuid().optional().describe("Project that owns the automation. Auto-filled from CLI and SDK context when omitted.")
 });
 var GetAutomationOutputSchema = z2.object({
+  automation: AutomationDetailSchema
+});
+var CreateAutomationInputSchema = z2.object({
+  projectId: z2.string().uuid().optional().describe("Project to create the automation in. Auto-filled from CLI and SDK context when omitted."),
+  name: z2.string().min(1).max(200).describe("Automation name."),
+  description: z2.string().max(500).nullable().optional().describe("Optional human-readable description."),
+  scriptId: z2.string().uuid().optional().describe("Project script to run, by ID. Provide exactly one of scriptId or script."),
+  script: z2.string().optional().describe("Project script to run, by name (resolved to scriptId server-side). Provide exactly one of scriptId or script."),
+  cronExpression: z2.string().optional().describe("Cron schedule for the automation. Defaults to every minute when omitted."),
+  timezone: z2.string().optional().describe("IANA timezone for cronExpression. Defaults to UTC."),
+  timeoutSeconds: z2.coerce.number().int().min(1).max(3600).optional().describe("Execution timeout in seconds. Defaults to 60."),
+  enabled: z2.boolean().optional().describe("Whether the automation starts enabled. Defaults to true.")
+}).refine((value) => Boolean(value.scriptId) !== Boolean(value.script), {
+  message: "Provide exactly one of scriptId or script.",
+  path: ["scriptId"]
+});
+var CreateAutomationOutputSchema = z2.object({
+  automation: AutomationDetailSchema
+});
+var UpdateAutomationInputSchema = z2.object({
+  automationId: AutomationIdSchema,
+  projectId: z2.string().uuid().optional().describe("Project that owns the automation. Auto-filled from CLI and SDK context when omitted."),
+  name: z2.string().min(1).max(200).optional().describe("New automation name."),
+  description: z2.string().max(500).nullable().optional().describe("New description, or null to clear it. Omit to leave unchanged."),
+  cronExpression: z2.string().optional().describe("New cron schedule."),
+  timezone: z2.string().optional().describe("New IANA timezone."),
+  timeoutSeconds: z2.coerce.number().int().min(1).max(3600).optional().describe("New execution timeout in seconds.")
+});
+var UpdateAutomationOutputSchema = z2.object({
   automation: AutomationDetailSchema
 });
 var EnableAutomationInputSchema = z2.object({
@@ -7927,6 +7958,35 @@ var getAutomation = defineOperation({
   },
   input: GetAutomationInputSchema,
   output: GetAutomationOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var createAutomation = defineOperation({
+  operationId: "automations.create",
+  description: "Create a scheduled automation that runs a durable project script (see scripts.create) on a cron schedule.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/automations",
+    successStatus: 201,
+    tags: ["Automations"]
+  },
+  input: CreateAutomationInputSchema,
+  output: CreateAutomationOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var updateAutomation = defineOperation({
+  operationId: "automations.update",
+  description: "Update an automation's name, description, or schedule. Does not change which script it runs.",
+  backend: "api",
+  route: {
+    method: "PATCH",
+    path: "/automations/{automationId}",
+    tags: ["Automations"]
+  },
+  input: UpdateAutomationInputSchema,
+  output: UpdateAutomationOutputSchema,
   pagination: "none",
   async: "sync"
 });
@@ -8048,6 +8108,8 @@ var getAutomationRunLogs = defineOperation({
 var automationsContract = {
   list: listAutomations.contract,
   get: getAutomation.contract,
+  create: createAutomation.contract,
+  update: updateAutomation.contract,
   enable: enableAutomation.contract,
   disable: disableAutomation.contract,
   runs: {
@@ -8221,20 +8283,19 @@ var CONNECT_BUTTON = {
 };
 var otelSetupActions = (noun, protocol = "http/protobuf") => [
   {
-    instruction: `Add the OpenTelemetry SDK to your ${noun}. Most languages have official OpenTelemetry SDKs available (e.g., \`@opentelemetry/api\` for Node.js, \`opentelemetry-api\` for Python, etc.).`
+    instruction: `Add the OpenTelemetry SDK to your ${noun}.`,
+    notes: [
+      {
+        text: "Most languages have official OpenTelemetry SDKs available (e.g., `@opentelemetry/api` for Node.js, `opentelemetry-api` for Python, etc.)."
+      }
+    ]
   },
   {
     instruction: `Initialize OpenTelemetry in your ${noun}.`
   },
   {
-    instruction: `Set the following environment variables in your ${noun} environment.`,
+    instruction: `Set the following environment variables in your ${noun} environment — \`OTEL_EXPORTER_OTLP_ENDPOINT\` is your intake URL (above).`,
     payloads: [
-      {
-        kind: "copyable",
-        label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
-        value: "https://${context.ingestHost}",
-        copyLabel: "OTLP endpoint"
-      },
       {
         kind: "copyable",
         label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
@@ -8256,7 +8317,6 @@ var cloudflareManaged = {
     {
       id: "prepare",
       title: "Create token",
-      description: "Create a Cloudflare token with Logpush permissions.",
       notes: [
         {
           variant: "requirement",
@@ -8284,7 +8344,6 @@ var cloudflareManaged = {
     {
       id: "credentials",
       title: "Enter credentials",
-      description: "Enter your token and account ID.",
       actions: [
         {
           id: "token",
@@ -8317,7 +8376,6 @@ var cloudflareManaged = {
       }
     ],
     metadata: {
-      connectionMode: "managed",
       cloudflareApiToken: "$token",
       accountId: "$accountId",
       accountName: "$validate.accountName"
@@ -8362,7 +8420,6 @@ var cloudflareConnectionless = {
       id: "open-logpush",
       section: "config",
       title: "Open Logpush",
-      description: "Create an HTTP Logpush job in Cloudflare.",
       notes: [
         {
           variant: "requirement",
@@ -8380,18 +8437,11 @@ var cloudflareConnectionless = {
     },
     {
       id: "destination",
-      section: "endpoint",
-      title: "Copy destination URL",
+      section: "config",
+      title: "Set the destination",
       actions: [
         {
-          instruction: "Paste your Sazabi intake URL (above) into the Logpush HTTP destination field.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Destination URL",
-              value: "https://${context.ingestHost}/v1/logs"
-            }
-          ]
+          instruction: "Paste your Sazabi intake URL (above) into the Logpush HTTP destination field."
         }
       ]
     },
@@ -8399,7 +8449,6 @@ var cloudflareConnectionless = {
       id: "output-options",
       section: "config",
       title: "Set output options",
-      description: "Use a timestamp format Sazabi can parse reliably.",
       actions: [
         {
           instruction: "In the Logpush job's **Output options**, set **Timestamp format** to **RFC3339** so Sazabi can parse event times accurately."
@@ -8412,6 +8461,12 @@ var cloudflareConnectionless = {
 
 // ../data-sources/src/sources/cloudflare/spec.ts
 var cloudflareSensitiveFields = ["cloudflareApiToken"];
+var cloudflareIntakeDeclaration = {
+  id: "cloudflare-logpush",
+  label: "Cloudflare Logpush",
+  subdomain: "cloudflare-logpush",
+  transform: "cloudflare-logpush"
+};
 var cloudflareSpec = {
   id: "cloudflare",
   name: "Cloudflare Logpush",
@@ -8421,6 +8476,7 @@ var cloudflareSpec = {
   delivery: ["push"],
   lifecycleEligible: true,
   sensitiveFields: cloudflareSensitiveFields,
+  intake: [cloudflareIntakeDeclaration],
   subtitle: "Stream your Cloudflare Logpush jobs to Sazabi for edge network observability.",
   features: ["Zone Logpush", "Account Logpush", "Edge analytics"],
   evidenceHints: [
@@ -8456,7 +8512,6 @@ var cloudflareWorkersConnectionless = {
       id: "open-telemetry",
       section: "config",
       title: "Open telemetry destinations",
-      description: "Add separate Cloudflare Workers Observability destinations for logs and traces.",
       actions: [
         {
           instruction: "In your Cloudflare dashboard, go to **Workers & Pages > Observability > Telemetry** and click **Add Destination**."
@@ -8468,21 +8523,16 @@ var cloudflareWorkersConnectionless = {
     },
     {
       id: "logs",
-      section: "endpoint",
+      section: "config",
       title: "Configure logs destination",
       actions: [
         {
-          instruction: "Paste these values into Cloudflare's **Add New Destination** dialog for logs.",
+          instruction: "Paste these values into Cloudflare's **Add New Destination** dialog for logs — the endpoint is your **OTLP logs endpoint** (above).",
           payloads: [
             {
               kind: "copyable",
               label: "Destination type",
               value: "Logs"
-            },
-            {
-              kind: "copyable",
-              label: "OTLP logs endpoint",
-              value: "https://${context.ingestHost}/v1/logs"
             },
             {
               kind: "copyable",
@@ -8495,21 +8545,16 @@ var cloudflareWorkersConnectionless = {
     },
     {
       id: "traces",
-      section: "endpoint",
+      section: "config",
       title: "Configure traces destination",
       actions: [
         {
-          instruction: "Paste these values into Cloudflare's **Add New Destination** dialog for traces.",
+          instruction: "Paste these values into Cloudflare's **Add New Destination** dialog for traces — the endpoint is your **OTLP traces endpoint** (above).",
           payloads: [
             {
               kind: "copyable",
               label: "Destination type",
               value: "Traces"
-            },
-            {
-              kind: "copyable",
-              label: "OTLP traces endpoint",
-              value: "https://${context.ingestHost}/v1/traces"
             },
             {
               kind: "copyable",
@@ -8524,13 +8569,17 @@ var cloudflareWorkersConnectionless = {
       id: "enable-worker",
       section: "config",
       title: "Enable destinations",
-      description: "Opt each Worker into the destination names you created.",
       actions: [
         {
           instruction: "In each Worker's `wrangler.jsonc` / `wrangler.toml`, enable observability and list the log and trace destination names you created."
         },
         {
-          instruction: "Redeploy the Worker after updating Wrangler config. The destination is enabled only after the deployed Worker references it by name."
+          instruction: "Redeploy the Worker after updating Wrangler config.",
+          notes: [
+            {
+              text: "The destination is enabled only after the deployed Worker references it by name."
+            }
+          ]
         }
       ]
     }
@@ -8545,6 +8594,18 @@ var cloudflareWorkersSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "cloudflare-workers",
+      label: "Cloudflare Workers Observability",
+      subdomain: "cloudflare",
+      aliases: ["cloudflare"],
+      transform: "otlp-strict-signal",
+      transformOptions: {
+        missingAuthMessage: "Missing Cloudflare Workers Observability auth: provide Authorization: Bearer <publicKey>"
+      }
+    }
+  ],
   lifecycleEligible: true,
   subtitle: "Stream Cloudflare Workers Observability logs and traces to Sazabi via OTLP.",
   features: [
@@ -8577,7 +8638,6 @@ var cloudwatchPrefetch = {
 var cloudwatchRoleArnStep = {
   id: "role-arn",
   title: "Enter role ARN",
-  description: "Enter the IAM Role ARN created by your selected setup method.",
   actions: [
     {
       id: "arn",
@@ -8606,8 +8666,7 @@ var cloudwatchSubmit = {
   metadata: {
     roleArn: "$arn",
     awsAccountId: "$validateRole.awsAccountId",
-    externalId: "${context.extras.cloudwatch.externalId}",
-    connectionMode: "managed"
+    externalId: "${context.extras.cloudwatch.externalId}"
   },
   displayName: "AWS Account $validateRole.awsAccountId",
   button: CONNECT_BUTTON
@@ -8628,7 +8687,6 @@ var cloudwatchManaged = {
           {
             id: "prepare",
             title: "Launch stack",
-            description: "Create the IAM role from Sazabi's CloudFormation template.",
             actions: [
               {
                 kind: "instruction",
@@ -8663,7 +8721,6 @@ var cloudwatchManaged = {
           {
             id: "prepare",
             title: "Apply Terraform",
-            description: "Add the IAM role and policy resources to your Terraform stack.",
             actions: [
               {
                 kind: "instruction",
@@ -8731,7 +8788,6 @@ output "sazabi_role_arn" {
           {
             id: "prepare",
             title: "Run commands",
-            description: "Create the IAM role and permissions from your terminal.",
             actions: [
               {
                 kind: "instruction",
@@ -8821,7 +8877,6 @@ var cloudwatchConnectionless = {
       id: "prepare",
       section: "config",
       title: "Prepare AWS access",
-      description: "Give the collector AWS credentials that can read your CloudWatch log groups.",
       notes: [
         {
           text: "To forward CloudWatch logs to Sazabi without granting Sazabi a cross-account IAM role, run an OpenTelemetry Collector yourself. The collector reads your log groups with the `awscloudwatch` receiver and exports OTLP to Sazabi. Sazabi never assumes a role in your account on this path."
@@ -8829,7 +8884,12 @@ var cloudwatchConnectionless = {
       ],
       actions: [
         {
-          instruction: "Provision an IAM identity for the collector with permission to read the target log groups, and pin the AWS region. The collector authenticates with the standard AWS SDK credential chain (environment variables, an instance/task role, or a named profile)."
+          instruction: "Provision an IAM identity for the collector with permission to read the target log groups, and pin the AWS region.",
+          notes: [
+            {
+              text: "The collector authenticates with the standard AWS SDK credential chain (environment variables, an instance/task role, or a named profile)."
+            }
+          ]
         },
         {
           instruction: "Grant that identity these minimum IAM permissions, scoped to the log groups you forward:",
@@ -8846,24 +8906,6 @@ var cloudwatchConnectionless = {
           notes: [
             {
               text: "Alternatively, forward through a CloudWatch Logs subscription filter into a Firehose or Lambda that emits OTLP to the same endpoint. Either way the transport is customer-run OTLP, not the Sazabi-managed Kinesis path."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "values",
-      section: "endpoint",
-      title: "Copy Sazabi values",
-      actions: [
-        {
-          instruction: "Use these values in the collector exporter configuration.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "`OTLP endpoint`",
-              value: "https://${context.ingestHost}",
-              copyLabel: "OTLP endpoint"
             }
           ]
         }
@@ -8921,10 +8963,9 @@ service:
       id: "run",
       section: "verify",
       title: "Run and verify",
-      description: "Deploy the collector and generate logs in the AWS account.",
       actions: [
         {
-          instruction: "After the collector is running, write a new log event in one of the forwarded log groups and check the collector logs for export errors. Logs should appear in Sazabi within a few minutes."
+          instruction: "Deploy the collector, then write a new log event in one of the forwarded log groups and check the collector logs for export errors. Logs should appear in Sazabi within a few minutes."
         }
       ]
     }
@@ -8996,7 +9037,6 @@ var convexManaged = {
     {
       id: "credentials",
       title: "Enter access token",
-      description: "Enter a Convex team access token.",
       actions: [
         {
           kind: "instruction",
@@ -9014,13 +9054,12 @@ var convexManaged = {
     {
       id: "team",
       title: "Choose team",
-      description: "Select the Convex team whose deployments Sazabi should list.",
       actions: [
         {
           id: "team",
           kind: "select",
           label: "Team",
-          instruction: "Select your team below.",
+          instruction: "Select the Convex team whose deployments Sazabi should list.",
           placeholder: "Select a team",
           optionsAction: "options",
           optionsInput: { token: "$token" },
@@ -9033,7 +9072,6 @@ var convexManaged = {
   ],
   submit: {
     metadata: {
-      connectionMode: "managed",
       accessToken: "$token",
       teamId: "$team.id",
       teamName: "$team.name"
@@ -9048,7 +9086,6 @@ var convexConnectionless = {
       id: "open-log-streams",
       section: "config",
       title: "Open Log Streams",
-      description: "Add a webhook log stream in the Convex dashboard.",
       notes: [
         {
           variant: "requirement",
@@ -9068,23 +9105,11 @@ var convexConnectionless = {
     },
     {
       id: "endpoint",
-      section: "endpoint",
-      title: "Copy webhook URL",
+      section: "config",
+      title: "Set webhook URL",
       actions: [
         {
-          instruction: "Paste your Sazabi intake URL (above) into the webhook configuration.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Webhook URL",
-              value: "https://${context.ingestHost}"
-            }
-          ],
-          notes: [
-            {
-              text: "Your key is embedded in the hostname, so the webhook needs no custom headers."
-            }
-          ]
+          instruction: "Paste your Sazabi intake URL (above) into the webhook configuration."
         }
       ]
     },
@@ -9092,7 +9117,6 @@ var convexConnectionless = {
       id: "verify",
       section: "verify",
       title: "Save and verify",
-      description: "Confirm logs arrive in Sazabi.",
       actions: [
         {
           instruction: "Save the log stream, then trigger activity — run a Convex function or hit a deployed endpoint. Logs appear in Sazabi within a few minutes."
@@ -9130,6 +9154,12 @@ var convexStreams = {
 
 // ../data-sources/src/sources/convex/spec.ts
 var convexSensitiveFields = ["accessToken"];
+var convexIntakeDeclaration = {
+  id: "convex",
+  label: "Convex",
+  subdomain: "convex",
+  transform: "convex-webhook"
+};
 var convexSpec = {
   id: "convex",
   name: "Convex",
@@ -9138,6 +9168,7 @@ var convexSpec = {
   delivery: ["push"],
   lifecycleEligible: true,
   sensitiveFields: convexSensitiveFields,
+  intake: [convexIntakeDeclaration],
   subtitle: "Forward your Convex deployment logs directly to Sazabi for serverless observability.",
   features: ["Function logs", "Database mutations", "Scheduled job monitoring"],
   evidenceHints: [
@@ -9173,14 +9204,14 @@ var datadogConnectionless = {
   groups: [
     {
       id: "configure",
+      section: "config",
       title: "Configure the Datadog Agent",
       actions: [
         {
-          instruction: "Choose how this Datadog Agent should ship to Sazabi, then copy the Sazabi value and apply the matching config.",
+          instruction: "Choose how this Datadog Agent should ship logs to Sazabi, then apply the matching configuration.",
           payloads: [
             {
               kind: "options",
-              label: "Choose Agent configuration",
               options: [
                 {
                   id: "datadog-yaml-dual-ship",
@@ -9198,7 +9229,6 @@ var datadogConnectionless = {
                       kind: "code",
                       language: "yaml",
                       copyLabel: "datadog.yaml dual-ship configuration",
-                      description: "Add Sazabi as an additional endpoint without changing the Agent's root Datadog API key.",
                       value: `# Enable logs collection if it is not already enabled.
 logs_enabled: true
 
@@ -9213,6 +9243,12 @@ logs_config:
     - api_key: any-non-empty-value
       Host: \${context.ingestHost}
       Port: 443`
+                    }
+                  ],
+                  notes: [
+                    {
+                      variant: "requirement",
+                      text: "`logs_config.additional_endpoints` requires Datadog Agent v6.18+ or v7.18+."
                     }
                   ]
                 },
@@ -9232,10 +9268,15 @@ logs_config:
                       kind: "code",
                       language: "bash",
                       copyLabel: "Datadog Agent dual-ship environment variables",
-                      description: "Add these variables without changing the Agent's existing Datadog API key.",
                       value: `DD_LOGS_ENABLED=true
 DD_LOGS_CONFIG_FORCE_USE_HTTP=true
 DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS='[{"api_key":"any-non-empty-value","Host":"\${context.ingestHost}","Port":443}]'`
+                    }
+                  ],
+                  notes: [
+                    {
+                      variant: "requirement",
+                      text: "`DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS` requires Datadog Agent v6.18+ or v7.18+."
                     }
                   ]
                 },
@@ -9245,21 +9286,19 @@ DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS='[{"api_key":"any-non-empty-value","Host":"\
                   description: "Use a dedicated Agent or sidecar that sends logs only to Sazabi.",
                   payloads: [
                     {
-                      kind: "copyable",
-                      label: "Intake URL",
-                      value: "https://${context.ingestHost}",
-                      copyLabel: "Datadog Agent intake URL",
-                      description: "Use this URL as the Agent logs intake URL."
-                    },
-                    {
                       kind: "code",
                       language: "bash",
+                      description: "`DD_LOGS_CONFIG_LOGS_DD_URL` is your intake URL (above).",
                       copyLabel: "Dedicated Datadog Agent environment variables",
-                      description: "Set the dedicated Agent's API key and logs URL to Sazabi.",
                       value: `DD_API_KEY=any-non-empty-value
 DD_LOGS_ENABLED=true
 DD_LOGS_CONFIG_LOGS_DD_URL=https://\${context.ingestHost}
 DD_LOGS_CONFIG_FORCE_USE_HTTP=true`
+                    }
+                  ],
+                  notes: [
+                    {
+                      text: "`DD_API_KEY` is not used by Sazabi — the intake URL carries your public key in the hostname — but the Datadog Agent requires it to be a non-empty value to start."
                     }
                   ]
                 },
@@ -9269,23 +9308,21 @@ DD_LOGS_CONFIG_FORCE_USE_HTTP=true`
                   description: "Run a dedicated Datadog Agent sidecar in ECS/Fargate for Sazabi logs.",
                   payloads: [
                     {
-                      kind: "copyable",
-                      label: "Intake URL",
-                      value: "https://${context.ingestHost}",
-                      copyLabel: "Datadog Agent intake URL",
-                      description: "Use this URL in the sidecar container environment."
-                    },
-                    {
                       kind: "code",
                       language: "bash",
+                      description: "Set these in the sidecar container environment — `DD_LOGS_CONFIG_LOGS_DD_URL` is your intake URL (above).",
                       copyLabel: "ECS Datadog Agent sidecar environment variables",
-                      description: "Set these on the dedicated Datadog Agent sidecar container.",
                       value: `ECS_FARGATE=true
 DD_API_KEY=any-non-empty-value
 DD_LOGS_ENABLED=true
 DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
 DD_LOGS_CONFIG_LOGS_DD_URL=https://\${context.ingestHost}
 DD_LOGS_CONFIG_FORCE_USE_HTTP=true`
+                    }
+                  ],
+                  notes: [
+                    {
+                      text: "`DD_API_KEY` is not used by Sazabi — the intake URL carries your public key in the hostname — but the Datadog Agent requires it to be a non-empty value to start."
                     }
                   ]
                 }
@@ -9297,19 +9334,13 @@ DD_LOGS_CONFIG_FORCE_USE_HTTP=true`
     },
     {
       id: "restart",
+      section: "verify",
       title: "Restart and verify",
       description: "Restart or redeploy the Agent after applying the config.",
       actions: [
         {
           instruction: "Restart or redeploy the Agent so it picks up the updated configuration.",
           notes: [
-            {
-              variant: "requirement",
-              text: "`DD_LOGS_CONFIG_ADDITIONAL_ENDPOINTS` requires Datadog Agent v6.18+ or v7.18+."
-            },
-            {
-              text: "For the dedicated Agent and ECS sidecar methods, `DD_API_KEY` is not used by Sazabi — the intake URL carries your public key in the hostname — but the Datadog Agent requires it to be a non-empty value to start."
-            },
             {
               variant: "requirement",
               text: "Avoid configuring both a Sazabi additional endpoint and a Sazabi-only logs URL in the same Agent, or you may send duplicate logs."
@@ -9328,6 +9359,14 @@ var datadogSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "datadog",
+      label: "Datadog",
+      subdomain: "datadog",
+      transform: "datadog-agent"
+    }
+  ],
   lifecycleSkipReason: "Manual SDK/agent setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Forward your Datadog Agent logs directly to Sazabi for AI-powered observability.",
   features: [
@@ -9354,7 +9393,6 @@ var daytonaConnectionless = {
       id: "open-settings",
       section: "config",
       title: "Open OpenTelemetry card",
-      description: "Find the organization-level OpenTelemetry settings in Daytona.",
       notes: [
         {
           variant: "requirement",
@@ -9369,23 +9407,11 @@ var daytonaConnectionless = {
     },
     {
       id: "values",
-      section: "endpoint",
-      title: "Copy OTLP values",
+      section: "config",
+      title: "Set OTLP values",
       actions: [
         {
-          instruction: "Set the endpoint on the Daytona OpenTelemetry card.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "OTLP Endpoint",
-              value: "https://${context.ingestHost}"
-            }
-          ],
-          notes: [
-            {
-              text: "The key is embedded in the URL, so no authorization header is needed."
-            }
-          ]
+          instruction: "Set the **OTLP Endpoint** on the Daytona OpenTelemetry card to your intake URL (above)."
         }
       ]
     },
@@ -9393,10 +9419,9 @@ var daytonaConnectionless = {
       id: "save",
       section: "verify",
       title: "Save and verify",
-      description: "Restart or start a sandbox so Daytona exports fresh telemetry.",
       actions: [
         {
-          instruction: "Save the OpenTelemetry card, then restart or start a sandbox. Sandboxes begin exporting telemetry automatically on their next start with no per-sandbox change required.",
+          instruction: "Save the OpenTelemetry card, then restart or start a sandbox.",
           payloads: [
             {
               kind: "bulleted-list",
@@ -9405,6 +9430,11 @@ var daytonaConnectionless = {
                 "Sazabi currently stores logs and traces from this source. Metrics sent to the endpoint aren't stored yet.",
                 "Daytona only retains sandbox telemetry for 3 days in its own dashboard, so Sazabi is the durable store."
               ]
+            }
+          ],
+          notes: [
+            {
+              text: "Sandboxes begin exporting telemetry automatically on their next start with no per-sandbox change required."
             }
           ]
         }
@@ -9421,6 +9451,18 @@ var daytonaSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "daytona",
+      label: "Daytona",
+      subdomain: "daytona",
+      transform: "otlp-signal-dispatch",
+      transformOptions: {
+        unsupportedPathMessage: "Unsupported Daytona OTLP path: expected /v1/logs, /v1/traces, or /v1/metrics",
+        metricsWarningMessage: "Daytona metrics received but not yet supported"
+      }
+    }
+  ],
   lifecycleSkipReason: "Manual webhook setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Stream sandbox telemetry from your Daytona organization to Sazabi via org-level OpenTelemetry export.",
   features: [
@@ -9447,7 +9489,6 @@ var digitalOceanManaged = {
     {
       id: "prepare",
       title: "Create access token",
-      description: "Create a DigitalOcean token with App Platform permissions.",
       actions: [
         {
           kind: "instruction",
@@ -9458,7 +9499,6 @@ var digitalOceanManaged = {
     {
       id: "credentials",
       title: "Enter access token",
-      description: "Enter your personal access token.",
       actions: [
         {
           id: "token",
@@ -9479,7 +9519,6 @@ var digitalOceanManaged = {
       }
     ],
     metadata: {
-      connectionMode: "managed",
       apiToken: "$token"
     },
     button: CONNECT_BUTTON
@@ -9493,14 +9532,16 @@ var digitalOceanConnectionless = {
       id: "open-log-forwarding",
       section: "config",
       title: "Open Log Forwarding",
-      description: "Add a Datadog log destination to your App Platform app.",
       actions: [
         {
           instruction: "In the [DigitalOcean control panel](https://cloud.digitalocean.com/apps), open the App Platform app you want to forward, then go to **Settings > Log Forwarding** and add a **Datadog** destination. You can also add the destination through your app spec (`app.yaml`) or `doctl apps update`."
         },
         {
-          instruction: "Repeat this setup for every app you want to forward — log destinations are configured **per app** and attach to each service, worker, and job. To add forwarding across an app in one step from a picker, connect your DigitalOcean account instead.",
+          instruction: "Repeat this setup for every app you want to forward — log destinations are configured **per app** and attach to each service, worker, and job.",
           notes: [
+            {
+              text: "To add forwarding across an app in one step from a picker, connect your DigitalOcean account instead."
+            },
             {
               text: "App Platform Functions, Droplets, Spaces, Managed Databases, and Managed Kubernetes are not covered by this path — forward those with Sazabi's [OpenTelemetry endpoint](https://docs.sazabi.com/data/sources/endpoint/opentelemetry)."
             }
@@ -9510,24 +9551,18 @@ var digitalOceanConnectionless = {
     },
     {
       id: "endpoint",
-      section: "endpoint",
-      title: "Copy Datadog destination values",
+      section: "config",
+      title: "Set Datadog destination values",
       actions: [
         {
-          instruction: "Paste these into the Datadog log destination fields.",
+          instruction: "Paste your Sazabi intake URL (above) into the **Endpoint (API URL)** field, and this key into the **API key** field.",
           payloads: [
-            {
-              kind: "copyable",
-              label: "Datadog endpoint (API URL)",
-              value: "https://${context.ingestHost}",
-              copyLabel: "DigitalOcean Datadog endpoint"
-            },
             {
               kind: "copyable",
               label: "Datadog API key",
               value: "${context.publicKey}",
               copyLabel: "Sazabi public key",
-              description: "App Platform requires a Datadog API key field. Paste your Sazabi public key here — the key embedded in the endpoint hostname is what actually authenticates the stream."
+              description: "App Platform requires a Datadog API key field — the key embedded in the endpoint hostname is what actually authenticates the stream."
             }
           ]
         }
@@ -9537,7 +9572,6 @@ var digitalOceanConnectionless = {
       id: "verify",
       section: "verify",
       title: "Save and verify",
-      description: "Confirm logs arrive in Sazabi.",
       actions: [
         {
           instruction: "Save the log destination, then trigger activity — deploy the app or hit one of its routes. Logs appear in Sazabi within a few minutes."
@@ -9580,6 +9614,12 @@ var digitalOceanStreams = {
 
 // ../data-sources/src/sources/digital-ocean/spec.ts
 var digitalOceanSensitiveFields = ["apiToken"];
+var digitalOceanIntakeDeclaration = {
+  id: "digital-ocean",
+  label: "DigitalOcean",
+  subdomain: "digital-ocean",
+  transform: "datadog-agent"
+};
 var digitalOceanSpec = {
   id: "digital_ocean",
   name: "DigitalOcean",
@@ -9589,6 +9629,7 @@ var digitalOceanSpec = {
   delivery: ["push"],
   lifecycleEligible: true,
   sensitiveFields: digitalOceanSensitiveFields,
+  intake: [digitalOceanIntakeDeclaration],
   subtitle: "Forward your DigitalOcean infrastructure logs directly to Sazabi for unified observability.",
   features: ["Log forwarding", "App Platform logs"],
   evidenceHints: [
@@ -9757,85 +9798,58 @@ finally:
         logger_provider.shutdown()`;
 var envVarActions = [
   {
-    instruction: "Set these values in the application that creates E2B sandboxes.",
-    payloads: [
-      {
-        kind: "copyable",
-        label: "`SAZABI_INTAKE_URL`",
-        value: "https://${context.ingestHost}/v1/logs",
-        copyLabel: "Intake URL"
-      }
-    ]
+    instruction: "Set `SAZABI_INTAKE_URL` to your intake URL (above) in the application that creates E2B sandboxes."
   }
 ];
 var e2bConnectionless = {
-  kind: "choice",
-  title: "Choose E2B SDK",
-  description: "Pick the SDK your sandbox code runs on.",
-  options: [
+  groups: [
     {
-      id: "typescript",
-      label: "TypeScript",
-      description: "Use the E2B TypeScript SDK and OpenTelemetry logs exporter.",
-      flow: {
-        groups: [
-          {
-            id: "values",
-            title: "Copy environment variables",
-            actions: envVarActions
-          },
-          {
-            id: "instrument",
-            title: "Instrument sandbox logs",
-            actions: [
-              {
-                instruction: "Emit sandbox stdout and stderr through the OpenTelemetry logs SDK.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "TypeScript SDK integration",
-                    language: "typescript",
-                    copyLabel: "TypeScript code",
-                    value: TYPESCRIPT_SDK
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      id: "values",
+      section: "config",
+      title: "Set environment variables",
+      actions: envVarActions
     },
     {
-      id: "python",
-      label: "Python",
-      description: "Use the E2B Python SDK and OpenTelemetry logs exporter.",
-      flow: {
-        groups: [
-          {
-            id: "values",
-            title: "Copy environment variables",
-            actions: envVarActions
-          },
-          {
-            id: "instrument",
-            title: "Instrument sandbox logs",
-            actions: [
-              {
-                instruction: "Bridge sandbox stdout and stderr into the OpenTelemetry logs SDK.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "Python SDK integration",
-                    language: "python",
-                    copyLabel: "Python code",
-                    value: PYTHON_SDK
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      id: "instrument",
+      section: "config",
+      title: "Instrument sandbox logs",
+      actions: [
+        {
+          instruction: "Emit sandbox stdout and stderr through the OpenTelemetry logs SDK.",
+          payloads: [
+            {
+              kind: "code-tabs",
+              label: "SDK integration",
+              tabs: [
+                {
+                  id: "typescript",
+                  label: "TypeScript",
+                  language: "typescript",
+                  value: TYPESCRIPT_SDK,
+                  copyLabel: "TypeScript code"
+                },
+                {
+                  id: "python",
+                  label: "Python",
+                  language: "python",
+                  value: PYTHON_SDK,
+                  copyLabel: "Python code"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "verify",
+      section: "verify",
+      title: "Run and verify",
+      actions: [
+        {
+          instruction: "Run a sandbox with the instrumentation in place. Its stdout and stderr should appear in Sazabi within a couple of minutes."
+        }
+      ]
     }
   ]
 };
@@ -9848,6 +9862,14 @@ var e2bSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual SDK setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "e2b",
+      label: "E2B",
+      subdomain: "e2b",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Stream your E2B sandbox logs directly to Sazabi for code execution observability.",
   features: ["Sandbox stdout/stderr capture"],
   evidenceHints: [
@@ -9949,8 +9971,8 @@ var elasticCloudConnectionless = {
         groups: [
           {
             id: "prepare-agent",
+            section: "config",
             title: "Prepare Elastic Agent",
-            description: "Use the embedded OpenTelemetry Collector rather than a Fleet output.",
             notes: [
               {
                 text: "Elastic Agent 8.13+ ships an embedded OpenTelemetry Collector (EDOT)."
@@ -9958,12 +9980,18 @@ var elasticCloudConnectionless = {
             ],
             actions: [
               {
-                instruction: "Point Elastic Agent at Sazabi through the embedded OTel Collector, not via a Fleet output — Fleet's **Outputs** UI does not expose an OTLP type."
+                instruction: "Point Elastic Agent at Sazabi through the embedded OTel Collector, not via a Fleet output.",
+                notes: [
+                  {
+                    text: "Fleet's **Outputs** UI does not expose an OTLP type."
+                  }
+                ]
               }
             ]
           },
           {
             id: "copy-config",
+            section: "config",
             title: "Copy Collector config",
             actions: [
               {
@@ -9982,8 +10010,8 @@ var elasticCloudConnectionless = {
           },
           {
             id: "run-agent",
+            section: "config",
             title: "Run and tune",
-            description: "Validate the config and tune receivers for your deployment.",
             actions: [
               {
                 instruction: "Run it standalone with `elastic-agent otel --config sazabi-otel.yml` after validating with `elastic-agent otel validate --config sazabi-otel.yml`, or attach an **OpenTelemetry input package** to a Fleet Agent Policy on 9.2+."
@@ -10009,8 +10037,8 @@ var elasticCloudConnectionless = {
         groups: [
           {
             id: "prepare-logstash",
+            section: "config",
             title: "Prepare Logstash",
-            description: "Run Logstash yourself; Elastic Cloud only stores centralized pipelines.",
             actions: [
               {
                 instruction: "Run Logstash 8.x or 9.x outside Elastic Cloud (Docker, sidecar, or self-managed).",
@@ -10024,10 +10052,11 @@ var elasticCloudConnectionless = {
           },
           {
             id: "copy-config",
+            section: "config",
             title: "Copy Logstash pipeline",
             actions: [
               {
-                instruction: "Copy this Logstash pipeline to poll Elastic logs, wrap them in an OTLP envelope, and post them to Sazabi.",
+                instruction: "Copy this Logstash pipeline into your Logstash configuration.",
                 payloads: [
                   {
                     kind: "code",
@@ -10036,17 +10065,7 @@ var elasticCloudConnectionless = {
                     copyLabel: "Logstash pipeline",
                     value: LOGSTASH_CONFIG
                   }
-                ]
-              }
-            ]
-          },
-          {
-            id: "update-endpoint",
-            title: "Update endpoint",
-            description: "Point the pipeline at your Elastic Cloud deployment.",
-            actions: [
-              {
-                instruction: "Replace `<your-deployment>` and `<region>` with your Elastic Cloud deployment's Elasticsearch endpoint, for example `https://acme.es.us-central1.gcp.cloud.es.io:443`.",
+                ],
                 notes: [
                   {
                     text: 'The pipeline polls the index every minute via the `schedule` setting, builds an OTLP/HTTP `resourceLogs` envelope in a `ruby` filter, and POSTs the raw JSON via the `http` output (using `format => "message"` so Logstash sends the exact body the filter builds).'
@@ -10055,6 +10074,16 @@ var elasticCloudConnectionless = {
                     text: "The `ruby` filter is included with Logstash by default."
                   }
                 ]
+              }
+            ]
+          },
+          {
+            id: "update-endpoint",
+            section: "config",
+            title: "Update endpoint",
+            actions: [
+              {
+                instruction: "Replace `<your-deployment>` and `<region>` with your Elastic Cloud deployment's Elasticsearch endpoint, for example `https://acme.es.us-central1.gcp.cloud.es.io:443`."
               }
             ]
           }
@@ -10072,6 +10101,14 @@ var elasticCloudSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual agent setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "elastic-cloud",
+      label: "Elastic Cloud",
+      subdomain: "elastic-cloud",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward logs from your Elastic Cloud deployment to Sazabi using Elastic Agent or Logstash.",
   features: [
     "Elastic Agent OTel Collector output",
@@ -10155,7 +10192,6 @@ var fluentBitConnectionless = {
       id: "restart",
       section: "verify",
       title: "Restart and verify",
-      description: "Restart Fluent Bit after changing the output configuration.",
       actions: [
         {
           instruction: "Restart Fluent Bit so it picks up the updated output configuration, then trigger some log activity.",
@@ -10178,6 +10214,14 @@ var fluentBitSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual agent setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "fluent-bit",
+      label: "Fluent Bit",
+      subdomain: "fluent-bit",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward logs from your Kubernetes cluster or any infrastructure to Sazabi using the Fluent Bit agent.",
   features: [
     "Kubernetes DaemonSet",
@@ -10204,7 +10248,6 @@ var flyIoManaged = {
     {
       id: "prepare",
       title: "Create token",
-      description: "Create a read-only Fly.io organization token.",
       actions: [
         {
           kind: "instruction",
@@ -10246,7 +10289,6 @@ var flyIoManaged = {
     {
       id: "credentials",
       title: "Enter credentials",
-      description: "Enter the token and organization slug Sazabi should use.",
       actions: [
         {
           id: "token",
@@ -10280,7 +10322,6 @@ var flyIoManaged = {
       }
     ],
     metadata: {
-      connectionMode: "managed",
       apiToken: "$token",
       organizationSlug: "$orgSlug"
     },
@@ -10297,7 +10338,7 @@ var flyIoConnectionless = {
       description: "Fly.io has no managed log-drain API, so you run a log shipper inside your Fly organization and point it at Sazabi.",
       notes: [
         {
-          text: "Fly forwards logs from its internal NATS log stream, so you deploy a shipper into the **same Fly organization** as the apps you want to monitor. The shipper is required either way — to also let Sazabi discover and verify your apps from a read-only token, connect your Fly.io account instead."
+          text: "The shipper reads Fly's internal NATS log stream, so it must run in the **same Fly organization** as the apps you want to monitor. The shipper is required either way — to also let Sazabi discover and verify your apps from a read-only token, connect your Fly.io account instead."
         }
       ],
       actions: [
@@ -10308,18 +10349,12 @@ var flyIoConnectionless = {
     },
     {
       id: "endpoint",
-      section: "endpoint",
+      section: "config",
       title: "Set the shipper secrets",
       actions: [
         {
-          instruction: "Paste these into the fly-log-shipper app (Option A). The `/fly-log-shipper` path tells Sazabi to parse Fly's native event format.",
+          instruction: "Set the fly-log-shipper secrets (Option A): `HTTP_URL` is your intake URL (above); `HTTP_TOKEN` is the key below.",
           payloads: [
-            {
-              kind: "copyable",
-              label: "`HTTP_URL`",
-              value: "https://${context.ingestHost}/fly-log-shipper",
-              description: "The `/fly-log-shipper` path suffix is required — it routes the payload to the Fly event parser."
-            },
             {
               kind: "copyable",
               label: "`HTTP_TOKEN`",
@@ -10335,13 +10370,12 @@ var flyIoConnectionless = {
           ]
         },
         {
-          instruction: "If you chose the dedicated OTLP shipper (Option B), POST OTLP `resourceLogs` to the endpoint below — with the same public key as a bearer token — instead of setting the two secrets above. The full `Dockerfile` and `vector.toml` are in the setup guide.",
+          instruction: "If you chose the dedicated OTLP shipper (Option B), POST OTLP `resourceLogs` to the endpoint below — with the same public key as a bearer token — instead of setting the two secrets above.",
           payloads: [
             {
               kind: "showIngestUrl",
               label: "OTLP endpoint (Option B)",
-              pathSuffix: "/v1/logs",
-              description: "POST OTLP `resourceLogs` here, with your Sazabi public key as a bearer token."
+              pathSuffix: "/v1/logs"
             }
           ]
         }
@@ -10351,7 +10385,6 @@ var flyIoConnectionless = {
       id: "verify",
       section: "verify",
       title: "Deploy and verify",
-      description: "Confirm logs arrive in Sazabi.",
       actions: [
         {
           instruction: "Deploy the shipper, then trigger activity — deploy an app or hit a deployed route. Logs appear in Sazabi within a few minutes."
@@ -10383,6 +10416,12 @@ var flyIoStreams = {
 
 // ../data-sources/src/sources/fly-io/spec.ts
 var flyIoSensitiveFields = ["apiToken"];
+var flyIoIntakeDeclaration = {
+  id: "fly-io",
+  label: "Fly.io",
+  subdomain: "fly-io",
+  transform: "otlp-with-fly-log-shipper"
+};
 var flyIoSpec = {
   id: "fly_io",
   name: "Fly.io",
@@ -10392,6 +10431,7 @@ var flyIoSpec = {
   delivery: ["push"],
   lifecycleEligible: true,
   sensitiveFields: flyIoSensitiveFields,
+  intake: [flyIoIntakeDeclaration],
   subtitle: "Forward your Fly.io application logs directly to Sazabi for global monitoring.",
   features: ["Log shipping", "Multi-region logs", "Machine monitoring"],
   evidenceHints: [
@@ -10436,16 +10476,12 @@ var gcpManaged = {
             id: "prepare",
             title: "Prepare access",
             description: "Create a service account key with permissions for log forwarding.",
-            actions: [
+            notes: [
               {
-                kind: "instruction",
-                instruction: "Provide a GCP service account key with permissions to enable APIs and create log sinks, Pub/Sub topics, and pull subscriptions.",
-                notes: [
-                  {
-                    text: "Sazabi turns on the required APIs and sets up the log pipeline in your GCP project automatically."
-                  }
-                ]
-              },
+                text: "Sazabi turns on the required APIs and sets up the log pipeline in your GCP project automatically."
+              }
+            ],
+            actions: [
               {
                 kind: "instruction",
                 instruction: "Grant the service account the following roles on the target GCP project(s).",
@@ -10458,6 +10494,11 @@ var gcpManaged = {
                       { value: "roles/pubsub.admin" },
                       { value: "roles/browser" }
                     ]
+                  },
+                  {
+                    kind: "external-link",
+                    label: "Enable the Service Usage API",
+                    href: "https://console.cloud.google.com/apis/library/serviceusage.googleapis.com"
                   }
                 ],
                 notes: [
@@ -10474,11 +10515,6 @@ var gcpManaged = {
                     kind: "external-link",
                     label: "Open service accounts in GCP Console",
                     href: "https://console.cloud.google.com/iam-admin/serviceaccounts"
-                  },
-                  {
-                    kind: "external-link",
-                    label: "Enable the Service Usage API",
-                    href: "https://console.cloud.google.com/apis/library/serviceusage.googleapis.com"
                   }
                 ]
               }
@@ -10487,7 +10523,6 @@ var gcpManaged = {
           {
             id: "credentials",
             title: "Enter service account key",
-            description: "Enter the service account JSON so Sazabi can validate it.",
             actions: [
               {
                 id: "key",
@@ -10514,8 +10549,7 @@ var gcpManaged = {
             }
           ],
           metadata: {
-            serviceAccountKey: "$key",
-            connectionMode: "managed"
+            serviceAccountKey: "$key"
           },
           displayName: "GCP $validateKey.projectId",
           button: CONNECT_BUTTON
@@ -10572,9 +10606,6 @@ var gcpConnectionless = {
         {
           variant: "requirement",
           text: "Required GCP permissions: the person performing these steps needs a role that grants `logging.sinks.create` (e.g. `roles/logging.configWriter`) and `pubsub.topics.setIamPolicy` (e.g. `roles/pubsub.admin`)."
-        },
-        {
-          text: "To forward Google Cloud Logging data to Sazabi, create a log sink that routes logs to a Pub/Sub topic, then deploy an OpenTelemetry Collector with a `googlecloudpubsub` receiver that subscribes to that topic and exports to Sazabi."
         }
       ],
       actions: [
@@ -10589,24 +10620,6 @@ var gcpConnectionless = {
         },
         {
           instruction: "Ensure the collector's service account has the `roles/pubsub.subscriber` IAM role on the subscription."
-        }
-      ]
-    },
-    {
-      id: "values",
-      section: "endpoint",
-      title: "Copy Sazabi values",
-      actions: [
-        {
-          instruction: "Use these values in the collector exporter configuration.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "`OTLP endpoint`",
-              value: "https://${context.ingestHost}",
-              copyLabel: "OTLP endpoint"
-            }
-          ]
         }
       ]
     },
@@ -10657,10 +10670,9 @@ service:
       id: "run",
       section: "verify",
       title: "Run and verify",
-      description: "Deploy the collector and generate logs in the GCP project.",
       actions: [
         {
-          instruction: "After the collector is running, write a test log entry in the project and check for delivery errors on the collector and Pub/Sub subscription."
+          instruction: "Deploy the collector, then write a test log entry in the project and check for delivery errors on the collector and Pub/Sub subscription."
         }
       ]
     }
@@ -10669,6 +10681,12 @@ service:
 
 // ../data-sources/src/sources/gcp/spec.ts
 var gcpSensitiveFields = ["serviceAccountKey"];
+var gcpIntakeDeclaration = {
+  id: "gcp",
+  label: "Google Cloud Platform",
+  subdomain: "gcp",
+  transform: "gcp-pubsub-push"
+};
 var gcpSpec = {
   id: "gcp",
   name: "GCP",
@@ -10678,6 +10696,7 @@ var gcpSpec = {
   delivery: ["pull"],
   lifecycleEligible: true,
   sensitiveFields: gcpSensitiveFields,
+  intake: [gcpIntakeDeclaration],
   subtitle: "Connect your GCP logs to Sazabi for AI-powered observability. Automatically provision log sinks with a service account, or run your own collector.",
   features: ["Log forwarding", "Real-time streaming", "Log sink support"],
   evidenceHints: [
@@ -10801,7 +10820,6 @@ var grafanaAlloyConnectionless = {
       id: "wire-receivers",
       section: "config",
       title: "Wire receivers",
-      description: "Connect the exporter to the receivers that match your telemetry sources.",
       actions: [
         {
           instruction: "Replace `otelcol.receiver.otlp` with the OpenTelemetry receiver(s) that match your sources, such as `otelcol.receiver.filelog` for log files or `otelcol.receiver.jaeger` for Jaeger traces."
@@ -10822,6 +10840,14 @@ var grafanaAlloySpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual agent setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "grafana-alloy",
+      label: "Grafana Alloy",
+      subdomain: "grafana-alloy",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward logs and traces from your infrastructure to Sazabi using Grafana Alloy.",
   features: [
     "Kubernetes DaemonSet",
@@ -10855,7 +10881,6 @@ var inngestConnectionless = {
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
-      description: "Restart the application runtime so the OpenTelemetry SDK reads the new variables.",
       actions: [
         {
           instruction: "Redeploy or restart the application that serves your Inngest functions, then invoke a function to generate fresh telemetry."
@@ -10873,6 +10898,14 @@ var inngestSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual SDK setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "inngest",
+      label: "Inngest",
+      subdomain: "inngest",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward your Inngest function logs directly to Sazabi for workflow observability.",
   features: ["Function logs", "Event tracing", "Step monitoring"],
   evidenceHints: [
@@ -10889,14 +10922,8 @@ var inngestSpec = {
 
 // ../data-sources/src/sources/langchain/setup.ts
 var langchainOtlpEnvironmentAction = {
-  instruction: "Set the following environment variables in your application environment.",
+  instruction: "Set the following environment variables in your application environment so they are present when the process starts — `OTEL_EXPORTER_OTLP_ENDPOINT` is your intake URL (above).",
   payloads: [
-    {
-      kind: "copyable",
-      label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
-      value: "https://${context.ingestHost}",
-      copyLabel: "OTLP endpoint"
-    },
     {
       kind: "copyable",
       label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
@@ -10906,57 +10933,37 @@ var langchainOtlpEnvironmentAction = {
   ]
 };
 var langchainConnectionless = {
-  kind: "choice",
-  title: "Choose LangChain runtime",
-  description: "LangChain doesn't send OpenTelemetry traces on its own, so choose the runtime you want to instrument with OpenInference.",
-  options: [
+  groups: [
     {
-      id: "python",
-      label: "Python",
-      description: "Install OpenInference and initialize tracing before importing LangChain.",
-      flow: {
-        groups: [
-          {
-            id: "prepare",
-            title: "Prepare instrumentation",
-            description: "Set OTLP environment variables before the process starts, then initialize tracing once at startup.",
-            actions: [
-              {
-                instruction: "Set the OTLP environment variables later in this flow so they are present when the process starts."
-              }
-            ]
-          },
-          {
-            id: "install",
-            title: "Install instrumentation",
-            actions: [
-              {
-                instruction: "Install OpenInference and the OpenTelemetry HTTP exporter.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "Python install command",
-                    language: "bash",
-                    copyLabel: "Python install command",
-                    value: "pip install openinference-instrumentation-langchain \\\n  opentelemetry-sdk \\\n  opentelemetry-exporter-otlp-proto-http"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "initialize",
-            title: "Initialize tracer",
-            actions: [
-              {
-                instruction: "Run this once at startup before importing LangChain.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "Python init snippet",
-                    language: "python",
-                    copyLabel: "Python init snippet",
-                    value: `from opentelemetry import trace
+      id: "install-initialize",
+      section: "config",
+      title: "Install and initialize OpenInference",
+      description: "LangChain doesn't send OpenTelemetry traces on its own; OpenInference instruments it.",
+      actions: [
+        {
+          instruction: "Install OpenInference for your LangChain runtime, then run the init snippet once at startup before importing LangChain.",
+          payloads: [
+            {
+              kind: "options",
+              options: [
+                {
+                  id: "python",
+                  label: "Python",
+                  description: "Install OpenInference and initialize tracing before importing LangChain.",
+                  payloads: [
+                    {
+                      kind: "code",
+                      label: "Python install command",
+                      language: "bash",
+                      copyLabel: "Python install command",
+                      value: "pip install openinference-instrumentation-langchain \\\n  opentelemetry-sdk \\\n  opentelemetry-exporter-otlp-proto-http"
+                    },
+                    {
+                      kind: "code",
+                      label: "Python init snippet",
+                      language: "python",
+                      copyLabel: "Python init snippet",
+                      value: `from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
@@ -10968,72 +10975,27 @@ provider.add_span_processor(BatchSpanProcessor(OTLPSpanExporter()))
 trace.set_tracer_provider(provider)
 
 LangChainInstrumentor().instrument()`
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "environment",
-            title: "Set OTLP environment",
-            description: "The OpenTelemetry SDK reads these variables automatically.",
-            actions: [langchainOtlpEnvironmentAction]
-          }
-        ]
-      }
-    },
-    {
-      id: "typescript",
-      label: "TypeScript",
-      description: "Install OpenInference and wire the LangChain.js callbacks manager manually.",
-      flow: {
-        groups: [
-          {
-            id: "prepare",
-            title: "Prepare instrumentation",
-            description: "Set OTLP environment variables before the process starts, then initialize tracing once at startup.",
-            notes: [
-              {
-                text: "LangChain.js has no module structure that OpenInference can auto-instrument, so you wire in the callbacks manager by hand."
-              }
-            ],
-            actions: [
-              {
-                instruction: "Set the OTLP environment variables later in this flow so they are present when the process starts."
-              }
-            ]
-          },
-          {
-            id: "install",
-            title: "Install instrumentation",
-            actions: [
-              {
-                instruction: "Install OpenInference, OpenTelemetry, and the LangChain core callbacks package.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "TypeScript install command",
-                    language: "bash",
-                    copyLabel: "TypeScript install command",
-                    value: "npm install @arizeai/openinference-instrumentation-langchain \\\n  @opentelemetry/sdk-trace-node \\\n  @opentelemetry/exporter-trace-otlp-proto \\\n  @langchain/core"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "initialize",
-            title: "Initialize tracer",
-            actions: [
-              {
-                instruction: "Run this once at startup before importing LangChain.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "TypeScript init snippet",
-                    language: "typescript",
-                    copyLabel: "TypeScript init snippet",
-                    value: `import { NodeTracerProvider, BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
+                    }
+                  ]
+                },
+                {
+                  id: "typescript",
+                  label: "TypeScript",
+                  description: "Install OpenInference and wire the LangChain.js callbacks manager manually.",
+                  payloads: [
+                    {
+                      kind: "code",
+                      label: "TypeScript install command",
+                      language: "bash",
+                      copyLabel: "TypeScript install command",
+                      value: "npm install @arizeai/openinference-instrumentation-langchain \\\n  @opentelemetry/sdk-trace-node \\\n  @opentelemetry/exporter-trace-otlp-proto \\\n  @langchain/core"
+                    },
+                    {
+                      kind: "code",
+                      label: "TypeScript init snippet",
+                      language: "typescript",
+                      copyLabel: "TypeScript init snippet",
+                      value: `import { NodeTracerProvider, BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-proto";
 import { Resource } from "@opentelemetry/resources";
 import { LangChainInstrumentation } from "@arizeai/openinference-instrumentation-langchain";
@@ -11048,19 +11010,36 @@ provider.register();
 // LangChain.js has no traditional auto-instrumentable module structure, so the
 // callbacks manager must be wired in by hand.
 new LangChainInstrumentation().manuallyInstrument(CallbackManagerModule);`
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "environment",
-            title: "Set OTLP environment",
-            description: "The OpenTelemetry SDK reads these variables automatically.",
-            actions: [langchainOtlpEnvironmentAction]
-          }
-        ]
-      }
+                    }
+                  ],
+                  notes: [
+                    {
+                      text: "LangChain.js has no module structure that OpenInference can auto-instrument, so you wire in the callbacks manager by hand."
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "environment",
+      section: "config",
+      title: "Set OTLP environment",
+      description: "The OpenTelemetry SDK reads these variables automatically.",
+      actions: [langchainOtlpEnvironmentAction]
+    },
+    {
+      id: "verify",
+      section: "verify",
+      title: "Run and verify",
+      actions: [
+        {
+          instruction: "Run a chain or agent invocation, then confirm traces arrive in Sazabi within a few minutes."
+        }
+      ]
     }
   ]
 };
@@ -11073,6 +11052,14 @@ var langchainSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual SDK setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "langchain",
+      label: "LangChain",
+      subdomain: "langchain",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward LangChain traces to Sazabi for end-to-end LLM observability.",
   features: ["Chain tracing", "Tool & agent traces", "LLM call traces"],
   evidenceHints: [
@@ -11092,19 +11079,11 @@ var mastraConnectionless = {
   groups: [
     {
       id: "environment",
-      section: "endpoint",
-      title: "Copy intake URL",
+      section: "config",
+      title: "Set intake URL",
       actions: [
         {
-          instruction: "Set the keyed intake URL in the application that initializes Mastra.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "`SAZABI_INTAKE_URL`",
-              value: "https://${context.ingestHost}/v1/traces",
-              copyLabel: "Intake URL"
-            }
-          ]
+          instruction: "Set `SAZABI_INTAKE_URL` to your intake URL (above) in the application that initializes Mastra."
         }
       ]
     },
@@ -11159,7 +11138,6 @@ const response = await agent.generate("Hello, world!");`
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
-      description: "Restart the app so Mastra loads the new exporter configuration.",
       actions: [
         {
           instruction: "Redeploy or restart the service, then run an agent, tool, or workflow to generate a trace."
@@ -11177,6 +11155,14 @@ var mastraSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual SDK setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "mastra",
+      label: "Mastra",
+      subdomain: "mastra",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Stream your Mastra agent traces directly to Sazabi for AI workflow observability.",
   features: ["Agent traces", "Tool tracing", "Workflow monitoring"],
   evidenceHints: [
@@ -11231,13 +11217,12 @@ var neonConnectionless = {
       id: "select-data",
       section: "config",
       title: "Select exported data",
-      description: "Enable Postgres logs only before filling in Sazabi values.",
       actions: [
         {
           instruction: "In **Select data to export**, enable `Postgres logs` and leave `Metrics` disabled. Neon does not expose a traces export for this integration."
         },
         {
-          instruction: "Choose the `HTTP` protocol. Neon appends `/v1/logs` automatically for log export."
+          instruction: "Choose the `HTTP` protocol."
         },
         {
           instruction: "Configure authentication as `Bearer`. Neon adds the `Bearer` prefix to outgoing requests automatically."
@@ -11246,19 +11231,12 @@ var neonConnectionless = {
     },
     {
       id: "values",
-      section: "endpoint",
-      title: "Copy integration values",
+      section: "config",
+      title: "Set integration values",
       actions: [
         {
-          instruction: "Paste these values into the Neon OpenTelemetry configuration sidebar.",
+          instruction: "Paste your Sazabi intake URL (above) into the **OTLP endpoint URL** field, then paste these values into the Neon OpenTelemetry configuration sidebar.",
           payloads: [
-            {
-              kind: "copyable",
-              label: "OTLP endpoint URL",
-              value: "https://${context.ingestHost}",
-              copyLabel: "Neon OTLP endpoint URL",
-              description: "Use the base URL in Neon. Neon will send logs to this URL with `/v1/logs` appended."
-            },
             {
               kind: "copyable",
               label: "Connection protocol",
@@ -11296,10 +11274,9 @@ var neonConnectionless = {
       id: "save",
       section: "verify",
       title: "Save and verify",
-      description: "Save the integration and check for incoming Postgres logs.",
       actions: [
         {
-          instruction: "Wait a few minutes for logs to start arriving; if the compute has Scale to Zero enabled and is currently suspended, run a query against the database to wake it and begin log delivery."
+          instruction: "Save the integration, then wait a few minutes for logs to start arriving; if the compute has Scale to Zero enabled and is currently suspended, run a query against the database to wake it and begin log delivery."
         },
         {
           instruction: "If logs do not arrive after a few minutes, check the Neon integration's status panel for OTLP export errors."
@@ -11319,6 +11296,14 @@ var neonSpec = {
   delivery: ["push"],
   sensitiveFields: neonSensitiveFields,
   lifecycleSkipReason: "Manual OTLP setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "neon",
+      label: "Neon",
+      subdomain: "neon",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward Neon Postgres logs to Sazabi for database observability without sending metrics or traces.",
   features: ["Postgres logs", "Connection events", "Error and warning logs"],
   evidenceHints: [
@@ -11340,7 +11325,6 @@ var netlifyConnectionless = {
       id: "open-form",
       section: "config",
       title: "Open log drain form",
-      description: "Create a General HTTP endpoint drain from the Netlify site settings.",
       notes: [
         {
           variant: "requirement",
@@ -11358,17 +11342,12 @@ var netlifyConnectionless = {
     },
     {
       id: "values",
-      section: "endpoint",
-      title: "Copy drain values",
+      section: "config",
+      title: "Set drain values",
       actions: [
         {
-          instruction: "Paste these values into the Netlify log drain form.",
+          instruction: "Paste your Sazabi intake URL (above) into the **Full URL** field, and set the log drain format below.",
           payloads: [
-            {
-              kind: "copyable",
-              label: "Full URL",
-              value: "https://${context.ingestHost}"
-            },
             {
               kind: "copyable",
               label: "Log drain format",
@@ -11382,10 +11361,9 @@ var netlifyConnectionless = {
       id: "save",
       section: "verify",
       title: "Save and verify",
-      description: "Save the drain and generate fresh site traffic.",
       actions: [
         {
-          instruction: "After saving the drain, deploy or request the site so Netlify emits fresh logs."
+          instruction: "Save the drain, then deploy or request the site so Netlify emits fresh logs."
         }
       ]
     }
@@ -11401,6 +11379,14 @@ var netlifySpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual drain setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "netlify",
+      label: "Netlify",
+      subdomain: "netlify",
+      transform: "netlify-drain"
+    }
+  ],
   subtitle: "Forward your Netlify deployment logs directly to Sazabi for Jamstack observability.",
   features: ["Build logs", "Function logs", "Edge handler logs"],
   evidenceHints: [
@@ -11422,7 +11408,6 @@ var openrouterConnectionless = {
       id: "open-form",
       section: "config",
       title: "Open observability settings",
-      description: "Enable broadcast and edit the OpenTelemetry Collector destination.",
       actions: [
         {
           instruction: "In the OpenRouter dashboard, open **Settings > Observability**, toggle **Enable Broadcast** on, then click the edit icon next to **OpenTelemetry Collector**.",
@@ -11438,19 +11423,11 @@ var openrouterConnectionless = {
     },
     {
       id: "values",
-      section: "endpoint",
-      title: "Copy destination values",
+      section: "config",
+      title: "Set destination values",
       actions: [
         {
-          instruction: "Paste these values into the OpenTelemetry Collector destination form.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Endpoint",
-              value: "https://${context.ingestHost}/v1/traces",
-              copyLabel: "Endpoint"
-            }
-          ]
+          instruction: "Paste your Sazabi intake URL (above) into the **Endpoint** field of the OpenTelemetry Collector destination form."
         }
       ]
     },
@@ -11482,6 +11459,14 @@ var openrouterSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "OpenRouter Broadcast destination setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "openrouter",
+      label: "OpenRouter",
+      subdomain: "openrouter",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward OpenRouter trace spans to Sazabi from the OpenRouter dashboard.",
   features: [
     "Trace spans per generation",
@@ -11508,11 +11493,7 @@ var otelConnectionless = {
       id: "instrument",
       section: "config",
       title: "Instrument application",
-      description: "Configure your application to export OpenTelemetry logs and traces to Sazabi.",
       notes: [
-        {
-          text: "These variables work with any OpenTelemetry SDK (Node.js, Python, Go, Java, .NET, etc.)."
-        },
         {
           text: "Metrics sent to the endpoint aren't stored yet."
         }
@@ -11523,31 +11504,27 @@ var otelConnectionless = {
         },
         {
           instruction: "Initialize the OpenTelemetry SDK in your application and configure the OTLP exporters for the signals you want (logs and/or traces)."
-        },
-        {
-          instruction: "Set the environment variables in the next step so the SDK sends logs and traces to Sazabi."
         }
       ]
     },
     {
       id: "environment",
-      section: "endpoint",
-      title: "Copy OTLP environment",
+      section: "config",
+      title: "Set OTLP environment",
       actions: [
         {
-          instruction: "Set these variables in the environment that runs your application.",
+          instruction: "Set these variables in the environment that runs your application — `OTEL_EXPORTER_OTLP_ENDPOINT` is your intake URL (above).",
           payloads: [
-            {
-              kind: "copyable",
-              label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
-              value: "https://${context.ingestHost}",
-              copyLabel: "OTLP endpoint"
-            },
             {
               kind: "copyable",
               label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
               value: "http/protobuf",
               copyLabel: "OTLP protocol"
+            }
+          ],
+          notes: [
+            {
+              text: "These variables work with any OpenTelemetry SDK (Node.js, Python, Go, Java, .NET, etc.)."
             }
           ]
         }
@@ -11557,7 +11534,6 @@ var otelConnectionless = {
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
-      description: "Restart the application so the OpenTelemetry SDK reads the new variables.",
       actions: [
         {
           instruction: "Restart or redeploy the application, then generate a test log or trace to confirm Sazabi receives telemetry."
@@ -11568,6 +11544,13 @@ var otelConnectionless = {
 };
 
 // ../data-sources/src/sources/otel/spec.ts
+var otelTraceIntakeDeclaration = {
+  id: "otel-trace",
+  label: "OpenTelemetry Traces",
+  subdomain: "otel-trace",
+  aliases: ["mastra", "otlp-trace", "otlp-traces", "otel-traces"],
+  transform: "otlp-traces-only"
+};
 var otelSpec = {
   id: "otel",
   name: "OpenTelemetry",
@@ -11575,6 +11558,16 @@ var otelSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "otel",
+      label: "OpenTelemetry",
+      subdomain: "otel",
+      aliases: ["gcl", "otlp"],
+      transform: "otlp-passthrough"
+    },
+    otelTraceIntakeDeclaration
+  ],
   lifecycleSkipReason: "Manual OTLP setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Send OpenTelemetry logs and traces directly to Sazabi's OTLP-compatible intake for AI-powered observability.",
   features: ["OTLP log export", "OTLP trace export", "Any OTEL SDK"],
@@ -11683,6 +11676,14 @@ var otelCollectorSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual agent setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "otel-collector",
+      label: "OpenTelemetry Collector",
+      subdomain: "otel-collector",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward logs and traces from your infrastructure to Sazabi using the OpenTelemetry Collector.",
   features: [
     "Kubernetes DaemonSet",
@@ -11710,11 +11711,7 @@ var otelMetricsConnectionless = {
       id: "instrument",
       section: "config",
       title: "Instrument application",
-      description: "Configure your application or OpenTelemetry Collector to export OTLP metrics to Sazabi.",
       notes: [
-        {
-          text: "These variables work with any OpenTelemetry SDK or Collector that exports OTLP metrics."
-        },
         {
           text: "Sazabi stores each incoming metric data point as a log record, so you can search metrics alongside your logs and traces and line them up with each other."
         }
@@ -11722,34 +11719,27 @@ var otelMetricsConnectionless = {
       actions: [
         {
           instruction: "Add or enable the OpenTelemetry metrics SDK in your application, or configure the OTLP metrics exporter on your OpenTelemetry Collector."
-        },
-        {
-          instruction: "Point the OTLP metrics exporter at the Sazabi endpoint in the next step."
-        },
-        {
-          instruction: "Set the environment variables so the exporter sends metrics to Sazabi."
         }
       ]
     },
     {
       id: "environment",
-      section: "endpoint",
-      title: "Copy OTLP metrics environment",
+      section: "config",
+      title: "Set OTLP metrics environment",
       actions: [
         {
-          instruction: "Set these variables in the environment that runs your application or Collector.",
+          instruction: "Set these variables in the environment that runs your application or Collector — `OTEL_EXPORTER_OTLP_METRICS_ENDPOINT` is your intake URL (above).",
           payloads: [
-            {
-              kind: "copyable",
-              label: "`OTEL_EXPORTER_OTLP_METRICS_ENDPOINT`",
-              value: "https://${context.ingestHost}/v1/metrics",
-              copyLabel: "OTLP metrics endpoint"
-            },
             {
               kind: "copyable",
               label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
               value: "http/protobuf",
               copyLabel: "OTLP protocol"
+            }
+          ],
+          notes: [
+            {
+              text: "These variables work with any OpenTelemetry SDK or Collector that exports OTLP metrics."
             }
           ]
         }
@@ -11759,7 +11749,6 @@ var otelMetricsConnectionless = {
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
-      description: "Restart the application or Collector so the OpenTelemetry exporter reads the new variables.",
       actions: [
         {
           instruction: "Restart or redeploy, then generate a metric to confirm Sazabi receives it as a log record."
@@ -11782,6 +11771,15 @@ var otelMetricsSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "otel-metrics",
+      label: "OpenTelemetry Metrics",
+      subdomain: "otel-metrics",
+      aliases: ["otlp-metrics"],
+      transform: "otlp-metrics-as-logs"
+    }
+  ],
   lifecycleSkipReason: "Manual OTLP metrics setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Send OpenTelemetry metrics to Sazabi's OTLP intake and store them as searchable log records.",
   features: [
@@ -11809,7 +11807,6 @@ var plainManaged = {
     {
       id: "prepare",
       title: "Create API key",
-      description: "Create a Plain API key with webhook permissions.",
       actions: [
         {
           kind: "instruction",
@@ -11831,7 +11828,6 @@ var plainManaged = {
     {
       id: "credentials",
       title: "Enter API key",
-      description: "Enter the API key so Sazabi can validate workspace access.",
       actions: [
         {
           id: "apiKey",
@@ -11854,7 +11850,6 @@ var plainManaged = {
       }
     ],
     metadata: {
-      connectionMode: "managed",
       plainApiKey: "$apiKey"
     },
     displayName: "$workspace.workspaceName",
@@ -11868,7 +11863,6 @@ var plainConnectionless = {
       id: "open-webhooks",
       section: "config",
       title: "Open Plain webhooks",
-      description: "Add a webhook target in the Plain dashboard.",
       actions: [
         {
           instruction: "In your [Plain workspace](https://app.plain.com/settings/webhooks), go to **Settings > Webhooks** and click **Create webhook target**.",
@@ -11882,23 +11876,11 @@ var plainConnectionless = {
     },
     {
       id: "endpoint",
-      section: "endpoint",
-      title: "Copy webhook URL",
+      section: "config",
+      title: "Set webhook URL",
       actions: [
         {
-          instruction: "Paste your Sazabi intake URL (above) into the webhook target configuration.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Webhook URL",
-              value: "https://${context.ingestHost}"
-            }
-          ],
-          notes: [
-            {
-              text: "Your key is embedded in the hostname, so the webhook needs no custom headers or query parameters."
-            }
-          ]
+          instruction: "Paste your Sazabi intake URL (above) into the webhook target configuration."
         },
         {
           instruction: "Enable the target and select the event types you want to forward."
@@ -11909,7 +11891,6 @@ var plainConnectionless = {
       id: "verify",
       section: "verify",
       title: "Save and verify",
-      description: "Confirm events arrive in Sazabi.",
       actions: [
         {
           instruction: "Save the webhook target, then trigger a subscribed event in Plain (for example create or update a thread). Events appear in Sazabi within a few minutes."
@@ -11953,6 +11934,12 @@ var plainStreams = {
 
 // ../data-sources/src/sources/plain/spec.ts
 var plainSensitiveFields = ["plainApiKey"];
+var plainIntakeDeclaration = {
+  id: "plain",
+  label: "Plain",
+  subdomain: "plain",
+  transform: "plain-webhook"
+};
 var plainSpec = {
   id: "plain",
   name: "Plain",
@@ -11963,6 +11950,7 @@ var plainSpec = {
   lifecycleEligible: false,
   lifecycleSkipReason: "No automated integration fixture yet: Plain has no sandbox workspace API for minting disposable API keys and webhook targets in CI.",
   sensitiveFields: plainSensitiveFields,
+  intake: [plainIntakeDeclaration],
   subtitle: "Stream Plain customer support events into Sazabi for unified observability of your support workflows.",
   features: [
     "Webhook event streaming",
@@ -12014,29 +12002,21 @@ var porterConnectionless = {
       id: "send-telemetry",
       section: "config",
       title: "Send OpenTelemetry",
-      description: "Export OTLP telemetry to Sazabi from your Porter app or a collector running in Porter.",
       actions: [
         {
-          instruction: "Porter does not provide a generic log drain. Send OTLP telemetry to Sazabi directly from your app, or from a collector running in Porter.",
+          instruction: "Send OTLP telemetry to Sazabi directly from your app, or from a collector running in Porter.",
           payloads: [
             {
               kind: "external-link",
               label: "Open Porter dashboard",
               href: "https://dashboard.porter.run"
             }
+          ],
+          notes: [
+            {
+              text: "Porter does not provide a generic log drain."
+            }
           ]
-        },
-        {
-          instruction: "Add the environment variables below to the Porter service you want to monitor. You can also put shared values in a Porter environment group."
-        },
-        {
-          instruction: "For Node.js apps, add an `instrumentation.cjs` (below) and load it from your start command with `NODE_OPTIONS='--require ./instrumentation.cjs' <start command>`. For other runtimes, initialize OpenTelemetry before the app handles requests, or run an OpenTelemetry Collector, Vector, or Fluent Bit service in Porter."
-        },
-        {
-          instruction: "Redeploy the Porter service, then generate a request or test log line."
-        },
-        {
-          instruction: "Return to Sazabi and check for incoming logs or traces. If nothing appears, check the Porter logs for OpenTelemetry exporter errors."
         }
       ]
     },
@@ -12044,7 +12024,6 @@ var porterConnectionless = {
       id: "configure-exporter",
       section: "config",
       title: "Configure the exporter",
-      description: "Set the OTLP environment variables and initialize the OpenTelemetry SDK.",
       actions: [
         {
           instruction: "Set these environment variables on the Porter service you want to monitor.",
@@ -12060,10 +12039,15 @@ OTEL_SERVICE_NAME=$PORTER_APP_SERVICE_NAME
 OTEL_RESOURCE_ATTRIBUTES=service.version=$PORTER_IMAGE_TAG,porter.revision=$PORTER_POD_REVISION,porter.pod.name=$PORTER_POD_NAME`,
               copyLabel: "Porter environment variables"
             }
+          ],
+          notes: [
+            {
+              text: "You can also put shared values in a Porter environment group."
+            }
           ]
         },
         {
-          instruction: "Install the OpenTelemetry SDK if your app does not already initialize OpenTelemetry. Node.js apps then add the `instrumentation.cjs` shown below.",
+          instruction: "Install the OpenTelemetry SDK if your app does not already initialize OpenTelemetry.",
           payloads: [
             {
               kind: "code-tabs",
@@ -12088,6 +12072,11 @@ opentelemetry-instrument python app.py`,
                   copyLabel: "Python OpenTelemetry bootstrap"
                 }
               ]
+            }
+          ],
+          notes: [
+            {
+              text: "For other runtimes, initialize OpenTelemetry before the app handles requests, or run an OpenTelemetry Collector, Vector, or Fluent Bit service in Porter."
             }
           ]
         },
@@ -12131,6 +12120,12 @@ try {
               collapsible: true
             }
           ]
+        },
+        {
+          instruction: "Redeploy the Porter service, then generate a request or test log line."
+        },
+        {
+          instruction: "Return to Sazabi and check for incoming logs or traces. If nothing appears, check the Porter logs for OpenTelemetry exporter errors."
         }
       ]
     }
@@ -12146,6 +12141,14 @@ var porterSpec = {
   delivery: ["push"],
   lifecycleEligible: false,
   lifecycleSkipReason: "Manual OTEL setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "porter",
+      label: "Porter",
+      subdomain: "porter",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward your Porter application logs and traces directly to Sazabi for real-time monitoring.",
   features: ["Application logs", "Deployment logs", "Service monitoring"],
   evidenceHints: [
@@ -12167,7 +12170,6 @@ var posthogManaged = {
     {
       id: "prepare",
       title: "Create key",
-      description: "Create a PostHog personal API key with the required scopes.",
       actions: [
         {
           kind: "instruction",
@@ -12182,7 +12184,6 @@ var posthogManaged = {
     {
       id: "credentials",
       title: "Enter API key",
-      description: "Enter the API key so Sazabi can validate the organization.",
       actions: [
         {
           id: "token",
@@ -12216,8 +12217,7 @@ var posthogManaged = {
       posthogPersonalApiKey: "$token",
       posthogApiRegion: "$validate.posthogApiRegion",
       posthogOrganizationId: "$validate.posthogOrganizationId",
-      posthogOrganizationName: "$validate.posthogOrganizationName",
-      connectionMode: "managed"
+      posthogOrganizationName: "$validate.posthogOrganizationName"
     },
     button: CONNECT_BUTTON
   },
@@ -12261,29 +12261,20 @@ var posthogConnectionless = {
       id: "prepare",
       section: "config",
       title: "Open destination form",
-      description: "Create an HTTP Webhook destination in PostHog.",
       actions: [
         {
           instruction: "Configure an [HTTP Webhook destination](https://${context.posthogRegion}.posthog.com/pipeline/new/hog-template-webhook) in PostHog under **Data Pipeline > Destinations**."
-        },
-        {
-          instruction: "Use the values in the next step and set your webhook body template to the default event and person payload."
         }
       ]
     },
     {
       id: "values",
-      section: "endpoint",
-      title: "Copy destination values",
+      section: "config",
+      title: "Set destination values",
       actions: [
         {
-          instruction: "Paste these values into the PostHog HTTP Webhook destination form.",
+          instruction: "Paste your Sazabi intake URL (above) into the **Destination URL** field, then set these values in the PostHog HTTP Webhook destination form.",
           payloads: [
-            {
-              kind: "copyable",
-              label: "Destination URL",
-              value: "https://${context.ingestHost}"
-            },
             {
               kind: "copyable",
               label: "Method",
@@ -12307,7 +12298,6 @@ var posthogConnectionless = {
       id: "verify",
       section: "verify",
       title: "Save and verify",
-      description: "Save the destination and confirm events arrive in Sazabi.",
       actions: [
         {
           instruction: "Save the PostHog destination, send a test event, and check Sazabi for the incoming product event."
@@ -12319,6 +12309,12 @@ var posthogConnectionless = {
 
 // ../data-sources/src/sources/posthog/spec.ts
 var posthogSensitiveFields = ["posthogPersonalApiKey"];
+var posthogIntakeDeclaration = {
+  id: "posthog",
+  label: "PostHog",
+  subdomain: "posthog",
+  transform: "posthog-cdp"
+};
 var posthogSpec = {
   id: "posthog",
   name: "PostHog",
@@ -12327,6 +12323,7 @@ var posthogSpec = {
   delivery: ["push"],
   lifecycleEligible: true,
   sensitiveFields: posthogSensitiveFields,
+  intake: [posthogIntakeDeclaration],
   subtitle: "Forward your PostHog events directly to Sazabi for real-time product and error observability.",
   features: [
     "CDP webhook forwarding",
@@ -12376,7 +12373,6 @@ var posthogSdkConnectionless = {
       id: "plan-proxy",
       section: "config",
       title: "Plan reverse proxy",
-      description: "Send capture traffic to Sazabi and keep PostHog config and assets going to PostHog.",
       actions: [
         {
           instruction: "Configure posthog-js to use a reverse proxy as `api_host`."
@@ -12393,19 +12389,11 @@ var posthogSdkConnectionless = {
     },
     {
       id: "target",
-      section: "endpoint",
-      title: "Copy capture target",
+      section: "config",
+      title: "Set capture target",
       actions: [
         {
-          instruction: "Use this as the upstream destination for capture-path proxy rules.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Sazabi capture target",
-              value: "https://${context.ingestHost}",
-              copyLabel: "URL"
-            }
-          ]
+          instruction: "Use your Sazabi intake URL (above) as the upstream destination for capture-path proxy rules."
         }
       ]
     },
@@ -12518,6 +12506,14 @@ var posthogSdkSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "posthog-sdk",
+      label: "PostHog SDK",
+      subdomain: "posthog-sdk",
+      transform: "posthog-sdk"
+    }
+  ],
   lifecycleSkipReason: "Manual SDK setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Forward PostHog SDK analytics and session replay to Sazabi by repointing posthog-js api_host.",
   features: ["Session replay forwarding", "Event capture", "SDK integration"],
@@ -12565,7 +12561,10 @@ var prometheusConnectionless = {
       notes: [
         {
           variant: "requirement",
-          text: "Requires the OpenTelemetry Collector (Contrib distribution) with the `prometheus` receiver and `otlphttp` exporter. Sazabi ingests each metric data point as a searchable log record, so there are no dashboards to configure."
+          text: "Requires the OpenTelemetry Collector (Contrib distribution) with the `prometheus` receiver and `otlphttp` exporter."
+        },
+        {
+          text: "Sazabi ingests each metric data point as a searchable log record, so there are no dashboards to configure."
         }
       ],
       actions: [
@@ -12588,7 +12587,6 @@ var prometheusConnectionless = {
       id: "restart",
       section: "verify",
       title: "Restart and verify",
-      description: "Restart the OpenTelemetry Collector after updating its configuration.",
       actions: [
         {
           instruction: "Restart or redeploy the Collector so the new metrics pipeline is loaded."
@@ -12608,6 +12606,14 @@ var prometheusSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "prometheus",
+      label: "Prometheus",
+      subdomain: "prometheus",
+      transform: "otlp-metrics-as-logs"
+    }
+  ],
   lifecycleSkipReason: "Manual agent setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Forward Prometheus metrics to Sazabi as searchable log records via the OpenTelemetry Collector.",
   features: [
@@ -12647,21 +12653,15 @@ opentelemetry-bootstrap -a install
 # Railway start command example:
 opentelemetry-instrument python app.py`;
 var railwayEnvironmentAction = {
-  instruction: "Add these variables in the Railway service Variables page.",
+  instruction: "Add these variables in the Railway service Variables page — `OTEL_EXPORTER_OTLP_ENDPOINT` is your intake URL (above).",
   payloads: [
     {
       kind: "code",
       label: "Railway Raw Editor variables",
-      description: "Paste this into the Railway service's Variables Raw Editor. Railway fills in the `${{...}}` references from its own service and deployment metadata.",
+      description: "Railway fills in the `${{...}}` references from its own service and deployment metadata.",
       language: "bash",
       value: RAILWAY_RAW_EDITOR_VARIABLES,
       copyLabel: "Railway environment variables"
-    },
-    {
-      kind: "copyable",
-      label: "`OTEL_EXPORTER_OTLP_ENDPOINT`",
-      value: "https://${context.ingestHost}",
-      copyLabel: "OTLP endpoint"
     },
     {
       kind: "copyable",
@@ -12684,147 +12684,80 @@ var railwayEnvironmentAction = {
   ]
 };
 var railwayConnectionless = {
-  kind: "choice",
-  title: "Choose Railway runtime",
-  description: "Railway has no managed external OTLP drain, so choose how the service will send OpenTelemetry data directly to Sazabi.",
-  options: [
+  groups: [
     {
-      id: "node",
-      label: "Node.js",
-      description: "Use Node auto-instrumentation and load it early with `NODE_OPTIONS`.",
-      flow: {
-        groups: [
-          {
-            id: "prepare",
-            title: "Prepare service",
-            description: "Add OpenTelemetry to the Railway service you want to monitor.",
-            actions: [
-              {
-                instruction: "Set up each Railway service you want to monitor so the application sends OpenTelemetry data directly to Sazabi.",
-                payloads: [
-                  {
-                    kind: "external-link",
-                    label: "Open Railway dashboard",
-                    href: "https://railway.com/dashboard"
-                  }
-                ],
-                notes: [
-                  {
-                    text: "If you cannot add the SDK, run a log forwarder such as Vector or Fluent Bit as its own Railway service and point it at the same OTLP endpoint."
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "environment",
-            title: "Set Railway variables",
-            actions: [railwayEnvironmentAction]
-          },
-          {
-            id: "bootstrap",
-            title: "Bootstrap Node.js",
-            actions: [
-              {
-                instruction: "Install the SDK and exporter packages, then load auto-instrumentation early.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "Node.js OpenTelemetry bootstrap",
-                    language: "bash",
-                    value: NODE_BOOTSTRAP,
-                    copyLabel: "Node.js OpenTelemetry bootstrap"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "deploy",
-            title: "Redeploy and verify",
-            description: "Deploy the staged variable changes, then send some traffic to the service.",
-            actions: [
-              {
-                instruction: "Railway stages variable changes, so review and deploy the change set when prompted.",
-                notes: [
-                  {
-                    text: "If nothing appears, check the Railway deployment logs for OpenTelemetry exporter errors and confirm your app is sending through OpenTelemetry, not only to stdout."
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      id: "prepare",
+      section: "config",
+      title: "Prepare service",
+      actions: [
+        {
+          instruction: "Set up each Railway service you want to monitor so the application sends OpenTelemetry data directly to Sazabi.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Railway dashboard",
+              href: "https://railway.com/dashboard"
+            }
+          ],
+          notes: [
+            {
+              text: "Railway has no managed external OTLP drain. If you cannot add the SDK, run a log forwarder such as Vector or Fluent Bit as its own Railway service and point it at the same OTLP endpoint."
+            }
+          ]
+        }
+      ]
     },
     {
-      id: "python",
-      label: "Python",
-      description: "Use OpenTelemetry distro auto-instrumentation around your Python start command.",
-      flow: {
-        groups: [
-          {
-            id: "prepare",
-            title: "Prepare service",
-            description: "Add OpenTelemetry to the Railway service you want to monitor.",
-            actions: [
-              {
-                instruction: "Set up each Railway service you want to monitor so the application sends OpenTelemetry data directly to Sazabi.",
-                payloads: [
-                  {
-                    kind: "external-link",
-                    label: "Open Railway dashboard",
-                    href: "https://railway.com/dashboard"
-                  }
-                ],
-                notes: [
-                  {
-                    text: "If you cannot add the SDK, run a log forwarder such as Vector or Fluent Bit as its own Railway service and point it at the same OTLP endpoint."
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "environment",
-            title: "Set Railway variables",
-            actions: [railwayEnvironmentAction]
-          },
-          {
-            id: "bootstrap",
-            title: "Bootstrap Python",
-            actions: [
-              {
-                instruction: "Install OpenTelemetry distro packages and wrap the start command.",
-                payloads: [
-                  {
-                    kind: "code",
-                    label: "Python OpenTelemetry bootstrap",
-                    language: "bash",
-                    value: PYTHON_BOOTSTRAP,
-                    copyLabel: "Python OpenTelemetry bootstrap"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "deploy",
-            title: "Redeploy and verify",
-            description: "Deploy the staged variable changes, then send some traffic to the service.",
-            actions: [
-              {
-                instruction: "Railway stages variable changes, so review and deploy the change set when prompted.",
-                notes: [
-                  {
-                    text: "If nothing appears, check the Railway deployment logs for OpenTelemetry exporter errors and confirm your app is sending through OpenTelemetry, not only to stdout."
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
+      id: "environment",
+      section: "config",
+      title: "Set Railway variables",
+      actions: [railwayEnvironmentAction]
+    },
+    {
+      id: "bootstrap",
+      section: "config",
+      title: "Bootstrap the runtime",
+      actions: [
+        {
+          instruction: "Install the OpenTelemetry packages for your runtime and load auto-instrumentation at startup.",
+          payloads: [
+            {
+              kind: "code-tabs",
+              tabs: [
+                {
+                  id: "node",
+                  label: "Node.js",
+                  language: "bash",
+                  value: NODE_BOOTSTRAP,
+                  copyLabel: "Node.js OpenTelemetry bootstrap"
+                },
+                {
+                  id: "python",
+                  label: "Python",
+                  language: "bash",
+                  value: PYTHON_BOOTSTRAP,
+                  copyLabel: "Python OpenTelemetry bootstrap"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "deploy",
+      section: "verify",
+      title: "Redeploy and verify",
+      actions: [
+        {
+          instruction: "Review and deploy the staged variable change set when prompted, then send some traffic to the service.",
+          notes: [
+            {
+              text: "If nothing appears, check the Railway deployment logs for OpenTelemetry exporter errors and confirm your app is sending through OpenTelemetry, not only to stdout."
+            }
+          ]
+        }
+      ]
     }
   ]
 };
@@ -12837,6 +12770,14 @@ var railwaySpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual drain setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "railway",
+      label: "Railway",
+      subdomain: "railway",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward your Railway deployment logs directly to Sazabi for real-time monitoring.",
   features: ["Log drains", "Deployment logs", "Service monitoring"],
   evidenceHints: [
@@ -12858,7 +12799,6 @@ var renderManaged = {
     {
       id: "credentials",
       title: "Enter API key",
-      description: "Enter a Render API key.",
       actions: [
         {
           kind: "instruction",
@@ -12876,13 +12816,12 @@ var renderManaged = {
     {
       id: "workspace",
       title: "Choose workspace",
-      description: "Pick the Render workspace whose services Sazabi should list.",
       actions: [
         {
           id: "workspace",
           kind: "select",
           label: "Workspace",
-          instruction: "Select your Render workspace below.",
+          instruction: "Select the Render workspace whose services Sazabi should list.",
           placeholder: "Select a workspace",
           optionsAction: "options",
           optionsInput: { token: "$token" },
@@ -12895,7 +12834,6 @@ var renderManaged = {
   ],
   submit: {
     metadata: {
-      connectionMode: "managed",
       apiToken: "$token",
       ownerId: "$workspace.id",
       ownerName: "$workspace.name"
@@ -12908,8 +12846,8 @@ var renderConnectionless = {
   groups: [
     {
       id: "open-log-streams",
+      section: "config",
       title: "Open Log Streams",
-      description: "Add a log stream in the Render dashboard.",
       actions: [
         {
           instruction: "In your [Render dashboard](https://dashboard.render.com), open the workspace you want to forward, then go to **Workspace Settings > Log Streams** and add a log stream.",
@@ -12923,31 +12861,18 @@ var renderConnectionless = {
     },
     {
       id: "endpoint",
+      section: "config",
       title: "Set endpoint and token",
       actions: [
         {
-          instruction: "Paste these values into the log stream form.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Endpoint",
-              value: "${context.projectRegion}.otel.${context.intakeDomain}:6514",
-              description: "A syslog endpoint (host and port, no scheme). Render sends logs here as RFC5424 syslog over TLS."
-            },
-            {
-              kind: "copyable",
-              label: "Token",
-              value: "${context.publicKey}",
-              description: "Render adds this token to every log line so Sazabi can verify the stream."
-            }
-          ]
+          instruction: "Paste the endpoint and token (above) into the log stream form."
         }
       ]
     },
     {
       id: "verify",
+      section: "verify",
       title: "Save and verify",
-      description: "Confirm logs arrive in Sazabi.",
       actions: [
         {
           instruction: "Save the log stream, then trigger activity — deploy a service or hit an application route. Logs appear in Sazabi within a few minutes."
@@ -12986,6 +12911,12 @@ var renderStreams = {
 
 // ../data-sources/src/sources/render/spec.ts
 var renderSensitiveFields = ["apiToken"];
+var renderIntakeDeclaration = {
+  id: "render-syslog",
+  label: "Render",
+  subdomain: "render-syslog",
+  transform: "otlp-key-stripping-logs"
+};
 var renderSpec = {
   id: "render",
   name: "Render",
@@ -12994,6 +12925,7 @@ var renderSpec = {
   delivery: ["push"],
   lifecycleEligible: true,
   sensitiveFields: renderSensitiveFields,
+  intake: [renderIntakeDeclaration],
   subtitle: "Forward your Render service logs directly to Sazabi for real-time monitoring.",
   features: ["Log forwarding", "Service monitoring", "Environment filtering"],
   evidenceHints: [
@@ -13035,27 +12967,11 @@ var respanConnectionless = {
   groups: [
     {
       id: "environment",
-      section: "endpoint",
-      title: "Copy your Respan base URL",
+      section: "config",
+      title: "Set your Respan base URL",
       actions: [
         {
-          instruction: "Copy the keyed Respan base URL for this project.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "`RESPAN_BASE_URL`",
-              value: "https://${context.ingestHost}",
-              copyLabel: "Respan base URL"
-            }
-          ],
-          notes: [
-            {
-              text: "The public key is embedded in the hostname, so no auth header is needed."
-            },
-            {
-              text: "The Respan SDK appends its own `/api/v2/traces` path, so use this base host (no path)."
-            }
-          ]
+          instruction: "Set `RESPAN_BASE_URL` to your intake URL (above) in the app you want to trace."
         }
       ]
     },
@@ -13143,7 +13059,6 @@ await respan.initialize();
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
-      description: "Restart the app so it loads the new Respan configuration.",
       actions: [
         {
           instruction: "Redeploy or restart the service, then run an LLM or agent workload to generate a trace."
@@ -13160,6 +13075,17 @@ var respanSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "respan",
+      label: "Respan",
+      subdomain: "respan",
+      transform: "otlp-passthrough",
+      transformOptions: {
+        tracePathSuffixes: ["/api/v2/traces", "/v1/traces"]
+      }
+    }
+  ],
   lifecycleSkipReason: "Manual SDK setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Stream your Respan LLM traces directly to Sazabi for AI application observability.",
   features: [
@@ -13192,29 +13118,12 @@ var sentryConnectionless = {
       flow: {
         groups: [
           {
-            id: "dsn",
-            title: "Copy Sazabi DSN",
-            actions: [
-              {
-                instruction: "Use this DSN in place of the Sentry project DSN for the app you want to monitor.",
-                payloads: [
-                  {
-                    kind: "copyable",
-                    label: "Sentry DSN",
-                    value: "https://sazabi@${context.ingestHost}/0",
-                    copyLabel: "DSN"
-                  }
-                ]
-              }
-            ]
-          },
-          {
             id: "configure",
+            section: "config",
             title: "Initialize SDK",
-            description: "Pick how you want events routed, then use the matching snippet.",
             actions: [
               {
-                instruction: "Initialize the SDK with the snippet matching how you want events routed.",
+                instruction: "Pick how you want events routed, then initialize the SDK with the matching snippet.",
                 payloads: [
                   {
                     kind: "options",
@@ -13264,14 +13173,14 @@ Sentry.init({
   ),
 });`
                           }
+                        ],
+                        notes: [
+                          {
+                            text: "`makeMultiplexedTransport` is part of the official Sentry JavaScript SDK. In the browser, import `makeFetchTransport` from `@sentry/browser` and pass it in place of `Sentry.makeNodeTransport`."
+                          }
                         ]
                       }
                     ]
-                  }
-                ],
-                notes: [
-                  {
-                    text: "`makeMultiplexedTransport` is part of the official Sentry JavaScript SDK. In the browser, import `makeFetchTransport` from `@sentry/browser` and pass it in place of `Sentry.makeNodeTransport`."
                   }
                 ]
               }
@@ -13279,11 +13188,19 @@ Sentry.init({
           },
           {
             id: "verify",
+            section: "verify",
             title: "Verify telemetry",
-            description: "Restart the app, send a test exception, and write a structured log.",
             actions: [
               {
-                instruction: "Turn on structured logging in the SDK first. This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
+                instruction: "Restart the app, then send a test exception and write a structured log to confirm they arrive in Sazabi.",
+                notes: [
+                  {
+                    text: "The snippet above already enables structured logging (`enableLogs: true`)."
+                  },
+                  {
+                    text: "This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
+                  }
+                ]
               }
             ]
           }
@@ -13297,29 +13214,12 @@ Sentry.init({
       flow: {
         groups: [
           {
-            id: "dsn",
-            title: "Copy Sazabi DSN",
-            actions: [
-              {
-                instruction: "Use this DSN in place of the Sentry project DSN for the app you want to monitor.",
-                payloads: [
-                  {
-                    kind: "copyable",
-                    label: "Sentry DSN",
-                    value: "https://sazabi@${context.ingestHost}/0",
-                    copyLabel: "DSN"
-                  }
-                ]
-              }
-            ]
-          },
-          {
             id: "configure",
+            section: "config",
             title: "Initialize SDK",
-            description: "Pick how you want events routed, then use the matching snippet.",
             actions: [
               {
-                instruction: "Initialize the SDK with the snippet matching how you want events routed.",
+                instruction: "Pick how you want events routed, then initialize the SDK with the matching snippet.",
                 payloads: [
                   {
                     kind: "options",
@@ -13345,7 +13245,7 @@ sentry_sdk.init(
                       {
                         id: "multiplex",
                         label: "Multiplex (send to both)",
-                        description: "Keeps your existing Sentry project receiving events — so its dashboards and alerting stay intact — and also streams to Sazabi. The Python SDK has no built-in multiplexed transport, so a second `Client` plus a `before_send` hook forwards a copy of each event to Sazabi; returning `event` keeps your primary Sentry project receiving it.",
+                        description: "Keeps your existing Sentry project receiving events — so its dashboards and alerting stay intact — and also streams to Sazabi.",
                         payloads: [
                           {
                             kind: "code",
@@ -13367,8 +13267,17 @@ def _forward_to_sazabi(event, hint):
 # Primary init keeps your Sentry project (and its alerting) working.
 sentry_sdk.init(
     dsn=SENTRY_DSN,
+    enable_logs=True,
     before_send=_forward_to_sazabi,
 )`
+                          }
+                        ],
+                        notes: [
+                          {
+                            text: "The Python SDK has no built-in multiplexed transport, so a second `Client` plus a `before_send` hook forwards a copy of each event to Sazabi; returning `event` keeps your primary Sentry project receiving it."
+                          },
+                          {
+                            text: "`before_send` forwards error events only — structured logs stay on your primary Sentry project on this path. Verify Sazabi delivery with a test exception."
                           }
                         ]
                       }
@@ -13380,11 +13289,19 @@ sentry_sdk.init(
           },
           {
             id: "verify",
+            section: "verify",
             title: "Verify telemetry",
-            description: "Restart the app, send a test exception, and write a structured log.",
             actions: [
               {
-                instruction: "Turn on structured logging in the SDK first. This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
+                instruction: "Restart the app, then send a test exception and write a structured log to confirm they arrive in Sazabi.",
+                notes: [
+                  {
+                    text: "The snippet above already enables structured logging (`enable_logs=True`)."
+                  },
+                  {
+                    text: "This DSN also works with other official Sentry SDKs including Go, Ruby, Java, and .NET."
+                  }
+                ]
               }
             ]
           }
@@ -13402,6 +13319,14 @@ var sentrySpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "sentry-dsn",
+      label: "Sentry SDK",
+      subdomain: "sentry-dsn",
+      transform: "sentry-envelope"
+    }
+  ],
   lifecycleSkipReason: "Manual SDK setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Forward Sentry SDK errors, structured logs, and envelope telemetry directly to Sazabi.",
   features: [
@@ -13429,7 +13354,6 @@ var sentryPlatformManaged = {
     {
       id: "prepare",
       title: "Create token",
-      description: "Create a Sentry user auth token with org write access.",
       notes: [
         {
           variant: "requirement",
@@ -13439,12 +13363,17 @@ var sentryPlatformManaged = {
       actions: [
         {
           kind: "instruction",
-          instruction: "Create a Sentry user auth token with **Organization: Read & Write** (`org:write`), **Project: Read**, and **Issue & Event: Read**. The `org:write` scope only lets Sazabi create the Internal Integration; the integration itself only receives read-level webhook events.",
+          instruction: "Create a Sentry user auth token with **Organization: Read & Write** (`org:write`), **Project: Read**, and **Issue & Event: Read**.",
           payloads: [
             {
               kind: "external-link",
               label: "Open Sentry auth token settings",
               href: "https://sentry.io/settings/account/api/auth-tokens/new-token/"
+            }
+          ],
+          notes: [
+            {
+              text: "The `org:write` scope only lets Sazabi create the Internal Integration; the integration itself only receives read-level webhook events."
             }
           ]
         },
@@ -13457,7 +13386,6 @@ var sentryPlatformManaged = {
     {
       id: "credentials",
       title: "Enter credentials",
-      description: "Enter the auth token and organization slug, then Sazabi validates them.",
       actions: [
         {
           id: "token",
@@ -13490,7 +13418,6 @@ var sentryPlatformManaged = {
       }
     ],
     metadata: {
-      connectionMode: "managed",
       sentryAuthToken: "$token",
       organizationSlug: "$organizationSlug"
     },
@@ -13504,7 +13431,6 @@ var sentryPlatformConnectionless = {
       id: "create-integration",
       section: "config",
       title: "Create the Internal Integration",
-      description: "Create a Sentry Internal Integration in your organization's developer settings.",
       notes: [
         {
           variant: "requirement",
@@ -13529,23 +13455,11 @@ var sentryPlatformConnectionless = {
     },
     {
       id: "endpoint",
-      section: "endpoint",
+      section: "config",
       title: "Set the webhook URL",
       actions: [
         {
-          instruction: "Paste this URL into the Internal Integration's Webhook URL field.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Webhook URL",
-              value: "https://${context.ingestHost}"
-            }
-          ],
-          notes: [
-            {
-              text: "Your key sits inside the hostname, so the webhook needs no custom headers."
-            }
-          ]
+          instruction: "Paste your Sazabi intake URL (above) into the Internal Integration's Webhook URL field."
         },
         {
           instruction: "Save the integration."
@@ -13556,13 +13470,12 @@ var sentryPlatformConnectionless = {
       id: "verify",
       section: "verify",
       title: "Verify",
-      description: "Confirm events arrive in Sazabi.",
       actions: [
         {
           instruction: "Do something in Sentry to trigger an event — comment on an issue, change an issue's status, or create a fresh issue by throwing an exception in an instrumented project. `issue` and `comment` webhooks arrive within a few minutes."
         },
         {
-          instruction: "**Alerts are opt-in.** To stream `event_alert` / `metric_alert` webhooks, edit each Issue Alert or Metric Alert rule in Sentry and add this integration as a notification destination."
+          instruction: "To stream `event_alert` / `metric_alert` webhooks, edit each Issue Alert or Metric Alert rule in Sentry and add this integration as a notification destination — alerts are opt-in."
         }
       ]
     }
@@ -13572,6 +13485,12 @@ var sentryPlatformConnectionless = {
 
 // ../data-sources/src/sources/sentry-platform/spec.ts
 var sentryPlatformSensitiveFields = ["sentryAuthToken"];
+var sentryPlatformIntakeDeclaration = {
+  id: "sentry-platform",
+  label: "Sentry Platform",
+  subdomain: "sentry-platform",
+  transform: "sentry-platform-webhook"
+};
 var sentryPlatformSpec = {
   id: "sentry_platform",
   name: "Sentry",
@@ -13580,6 +13499,7 @@ var sentryPlatformSpec = {
   delivery: ["push"],
   streamCardinality: "single",
   sensitiveFields: sentryPlatformSensitiveFields,
+  intake: [sentryPlatformIntakeDeclaration],
   subtitle: "Connect your Sentry organization to stream errors, issues, and alerts to Sazabi in real-time.",
   features: [
     "Error streaming",
@@ -13615,7 +13535,6 @@ var supabaseConnectionless = {
       id: "open-form",
       section: "config",
       title: "Open log drain form",
-      description: "Create an OTLP log drain in the Supabase project settings.",
       notes: [
         {
           variant: "requirement",
@@ -13632,7 +13551,6 @@ var supabaseConnectionless = {
       id: "fields",
       section: "config",
       title: "Copy drain fields",
-      description: "Fill in these fields in order. Each one matches a field in the Supabase form.",
       actions: [
         {
           instruction: "Fill in the **Name** and **Description** fields.",
@@ -13656,18 +13574,11 @@ var supabaseConnectionless = {
     },
     {
       id: "otlp-endpoint",
-      section: "endpoint",
+      section: "config",
       title: "OTLP Endpoint",
       actions: [
         {
-          instruction: "Paste your Sazabi intake URL (above) into the **OTLP Endpoint** field.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "OTLP Endpoint",
-              value: "https://${context.ingestHost}/v1/logs"
-            }
-          ]
+          instruction: "Paste your Sazabi intake URL (above) into the **OTLP Endpoint** field."
         }
       ]
     },
@@ -13675,7 +13586,6 @@ var supabaseConnectionless = {
       id: "delivery-fields",
       section: "config",
       title: "Finish drain fields",
-      description: "Complete the remaining fields in the Supabase form.",
       actions: [
         {
           instruction: "Fill in the **Protocol** field.",
@@ -13696,7 +13606,6 @@ var supabaseConnectionless = {
       id: "save",
       section: "verify",
       title: "Save and verify",
-      description: "Save the drain and generate fresh Supabase logs.",
       actions: [
         {
           instruction: "Save the log drain, then trigger activity — run a query or hit your project's API. Logs appear in Sazabi within a few minutes."
@@ -13714,6 +13623,14 @@ var supabaseSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "supabase",
+      label: "Supabase",
+      subdomain: "supabase",
+      transform: "supabase-drain"
+    }
+  ],
   lifecycleSkipReason: "Manual drain setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Stream your Supabase project logs directly to Sazabi for unified observability.",
   features: ["Database logs", "Auth events", "Edge Function logs"],
@@ -13743,7 +13660,6 @@ var temporalConnectionless = {
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
-      description: "Restart your workers so the OpenTelemetry SDK picks up the new variables.",
       actions: [
         {
           instruction: "Redeploy or restart your Temporal workers, then run a workflow or activity to generate fresh telemetry."
@@ -13761,6 +13677,14 @@ var temporalSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual worker setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "temporal",
+      label: "Temporal",
+      subdomain: "temporal",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward OpenTelemetry logs and traces from your Temporal workers to Sazabi for durable execution observability.",
   features: ["Worker logs", "Workflow and activity traces"],
   evidenceHints: [
@@ -13783,34 +13707,12 @@ var triggerDevConnectionless = {
       id: "prepare",
       section: "config",
       title: "Prepare Trigger.dev project",
-      description: "Install the OTLP logs exporter and decide where to set it up.",
       actions: [
         {
           instruction: "Install `@opentelemetry/exporter-logs-otlp-http` in the package that owns your `trigger.config.ts` file."
         },
         {
-          instruction: "Set `telemetry.logExporters` directly in `trigger.config.ts`. Trigger.dev reserves `OTEL_*` environment variables for its own internal telemetry, so do not use them for this integration."
-        },
-        {
           instruction: "If your project already sets up OpenTelemetry in code, reuse the Sazabi log intake URL in that setup instead of adding a second exporter."
-        }
-      ]
-    },
-    {
-      id: "values",
-      section: "endpoint",
-      title: "Copy Sazabi values",
-      actions: [
-        {
-          instruction: "Use this keyed intake URL in your Trigger.dev config.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Sazabi log intake URL",
-              value: "https://${context.ingestHost}/v1/logs",
-              copyLabel: "Sazabi log intake URL"
-            }
-          ]
         }
       ]
     },
@@ -13842,6 +13744,11 @@ export default defineConfig({
 `,
               copyLabel: "Trigger.dev config snippet"
             }
+          ],
+          notes: [
+            {
+              text: "Trigger.dev reserves `OTEL_*` environment variables for its own internal telemetry, so do not use them for this integration."
+            }
           ]
         }
       ]
@@ -13850,7 +13757,6 @@ export default defineConfig({
       id: "redeploy",
       section: "verify",
       title: "Redeploy and verify",
-      description: "Redeploy Trigger.dev so it starts sending task logs to Sazabi.",
       actions: [
         {
           instruction: "Redeploy Trigger.dev so it picks up the new log exporter, then run a task to confirm its logs arrive in Sazabi.",
@@ -13873,6 +13779,14 @@ var triggerDevSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual trigger.config.ts setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "trigger-dev",
+      label: "Trigger.dev",
+      subdomain: "trigger-dev",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Stream your Trigger.dev job logs directly to Sazabi for background job monitoring.",
   features: ["Task logs", "Run failure logs", "Background job monitoring"],
   evidenceHints: [
@@ -14010,7 +13924,6 @@ var vectorConnectionless = {
       id: "wire-sources",
       section: "config",
       title: "Wire sources",
-      description: "Point the remap transform at the log sources you actually want to forward.",
       actions: [
         {
           instruction: 'Replace `inputs: ["*"]` on the `remap` transform with your specific source or transform IDs in production. `["*"]` also matches `internal_metrics` and other unrelated components.',
@@ -14030,18 +13943,18 @@ var vectorConnectionless = {
       id: "traces",
       section: "config",
       title: "Forward traces (optional)",
-      description: "Add a separate traces sink only when your source is already OTLP-shaped.",
       actions: [
         {
           instruction: 'Add a second `opentelemetry` sink with `uri` ending in `/v1/traces` and explicit `inputs` referencing an already-OTLP-shaped source, typically an `opentelemetry` Vector source with `use_otlp_decoding.traces: true` (use `inputs: ["otlp_in.traces"]`).',
           notes: [
             {
               text: "No remap is needed for traces."
+            },
+            {
+              variant: "requirement",
+              text: 'Do not wire `["*"]` into a traces sink.'
             }
           ]
-        },
-        {
-          instruction: 'Do not wire `["*"]` into a traces sink.'
         }
       ]
     }
@@ -14056,6 +13969,14 @@ var vectorSpec = {
   auth: [],
   delivery: ["push"],
   lifecycleSkipReason: "Manual agent setup is not exercised by automated lifecycle tests yet.",
+  intake: [
+    {
+      id: "vector",
+      label: "Vector",
+      subdomain: "vector",
+      transform: "otlp-passthrough"
+    }
+  ],
   subtitle: "Forward logs and traces from your infrastructure to Sazabi using the Vector observability pipeline.",
   features: [
     "Kubernetes DaemonSet",
@@ -14082,18 +14003,21 @@ var vercelManaged = {
     {
       id: "prepare",
       title: "Create token",
-      description: "Create a Vercel API token for the account or team to connect.",
       actions: [
         {
           kind: "instruction",
-          instruction: "Create a full-access API token in your [Vercel account settings](https://vercel.com/account/tokens). A token gets the same permissions as your account; for team accounts, create the token while scoped to the correct team."
+          instruction: "Create a full-access API token in your [Vercel account settings](https://vercel.com/account/tokens). For team accounts, create the token while scoped to the correct team.",
+          notes: [
+            {
+              text: "A token gets the same permissions as your account."
+            }
+          ]
         }
       ]
     },
     {
       id: "credentials",
       title: "Enter token",
-      description: "Enter the token so Sazabi can check the Vercel account.",
       actions: [
         {
           id: "token",
@@ -14115,7 +14039,6 @@ var vercelManaged = {
       }
     ],
     metadata: {
-      connectionMode: "managed",
       vercelApiToken: "$token",
       vercelTeamId: "$validate.teamId",
       vercelTeamName: "$validate.teamName"
@@ -14129,7 +14052,6 @@ var vercelConnectionless = {
       id: "open-drains",
       section: "config",
       title: "Open Drains",
-      description: "Create a log drain in the Vercel dashboard.",
       notes: [
         {
           variant: "requirement",
@@ -14141,29 +14063,22 @@ var vercelConnectionless = {
           instruction: "In your [Vercel dashboard](https://vercel.com/dashboard), go to **Team Settings > Drains** and create a new drain."
         },
         {
-          instruction: "Choose **Logs** as the data to deliver. This path covers logs only — to send traces or Web Analytics events, connect your Vercel account instead and Sazabi creates those drains for you."
+          instruction: "Choose **Logs** as the data to deliver.",
+          notes: [
+            {
+              text: "This path covers logs only — to send traces or Web Analytics events, connect your Vercel account instead and Sazabi creates those drains for you."
+            }
+          ]
         }
       ]
     },
     {
       id: "endpoint",
-      section: "endpoint",
-      title: "Copy endpoint URL",
+      section: "config",
+      title: "Set the endpoint",
       actions: [
         {
-          instruction: "Paste your Sazabi intake URL (above) into the drain's endpoint field.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Endpoint URL",
-              value: "https://${context.ingestHost}"
-            }
-          ],
-          notes: [
-            {
-              text: "The hostname already includes your key, so the drain needs no custom headers."
-            }
-          ]
+          instruction: "Paste your Sazabi intake URL (above) into the drain's endpoint field."
         }
       ]
     },
@@ -14171,13 +14086,22 @@ var vercelConnectionless = {
       id: "delivery-settings",
       section: "config",
       title: "Set delivery options",
-      description: "Deliver JSON from every log source you want to send.",
       actions: [
         {
-          instruction: "Set the delivery format to **JSON**. Sazabi does not parse NDJSON on this endpoint."
+          instruction: "Set the delivery format to **JSON**.",
+          notes: [
+            {
+              text: "Sazabi does not parse NDJSON on this endpoint."
+            }
+          ]
         },
         {
-          instruction: "Pick the projects, environments, and log sources to send. Sazabi accepts every Vercel log source (Static, Lambda, Edge, Build, External, Firewall, Redirect)."
+          instruction: "Pick the projects, environments, and log sources to send.",
+          notes: [
+            {
+              text: "Sazabi accepts every Vercel log source (Static, Lambda, Edge, Build, External, Firewall, Redirect)."
+            }
+          ]
         }
       ]
     },
@@ -14185,7 +14109,6 @@ var vercelConnectionless = {
       id: "verify",
       section: "verify",
       title: "Save and verify",
-      description: "Confirm logs arrive in Sazabi.",
       actions: [
         {
           instruction: "Save the drain, then send some traffic — push a deployment or hit an application route. Logs show up in Sazabi within a few minutes."
@@ -14293,6 +14216,18 @@ var vercelStreams = {
 
 // ../data-sources/src/sources/vercel/spec.ts
 var vercelSensitiveFields = ["vercelApiToken"];
+var vercelIntakeDeclaration = {
+  id: "vercel",
+  label: "Vercel",
+  subdomain: "vercel",
+  transform: "vercel-drain"
+};
+var vercelAnalyticsIntakeDeclaration = {
+  id: "vercel-analytics",
+  label: "Vercel Analytics",
+  subdomain: "vercel-analytics",
+  transform: "vercel-analytics-drain"
+};
 var vercelSpec = {
   id: "vercel",
   name: "Vercel",
@@ -14301,6 +14236,7 @@ var vercelSpec = {
   delivery: ["push"],
   lifecycleEligible: true,
   sensitiveFields: vercelSensitiveFields,
+  intake: [vercelIntakeDeclaration, vercelAnalyticsIntakeDeclaration],
   subtitle: "Forward your Vercel deployment logs, traces, and Web Analytics events directly to Sazabi for real-time analysis and alerting.",
   features: [
     "Log forwarding",
@@ -14353,21 +14289,15 @@ var webhookEventsConnectionless = {
   groups: [
     {
       id: "endpoint",
-      section: "endpoint",
-      title: "Copy your webhook URL",
-      description: "Each stream has its own keyed URL. The key is embedded in the hostname, so no extra headers or secrets are needed — treat the URL itself as the credential.",
+      section: "config",
+      title: "Send events",
       actions: [
         {
-          instruction: "Send an HTTP `POST` with a JSON body. A single JSON object is stored as one event; a JSON array of objects is stored as one event per element.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Webhook URL",
-              value: "https://${context.ingestHost}",
-              copyLabel: "Webhook URL"
-            }
-          ],
+          instruction: "Send an HTTP `POST` with a JSON body to your webhook URL (above).",
           notes: [
+            {
+              text: "A single JSON object is stored as one event; a JSON array of objects is stored as one event per element."
+            },
             {
               text: "You can append any path — for example `/deploys` — to record the event's origin; the path is passed through and stored as `webhook.path`."
             }
@@ -14379,7 +14309,6 @@ var webhookEventsConnectionless = {
       id: "configure-vendor",
       section: "config",
       title: "Paste the URL into your vendor",
-      description: "Add the URL as a webhook or event-notification destination in whatever system emits the events.",
       actions: [
         {
           instruction: "Open your vendor's webhook or outbound-event settings, add a new endpoint, and paste the URL above. Choose JSON as the payload format if the vendor offers a choice.",
@@ -14395,10 +14324,9 @@ var webhookEventsConnectionless = {
       id: "verify",
       section: "verify",
       title: "Send a test event and verify",
-      description: "Trigger an event from your vendor, or send one yourself, then confirm it arrives.",
       actions: [
         {
-          instruction: "Most webhook settings pages have a “Send test” button. If not, POST a sample event yourself and watch for it below.",
+          instruction: "Trigger a test event from your vendor — most webhook settings pages have a “Send test” button — or POST a sample event yourself, then watch for it below.",
           payloads: [
             {
               kind: "code",
@@ -14432,6 +14360,14 @@ var webhookEventsSpec = {
   capabilities: ["connectionless"],
   auth: [],
   delivery: ["push"],
+  intake: [
+    {
+      id: "webhook-events",
+      label: "Webhook Events",
+      subdomain: "webhook-events",
+      transform: "webhook-events"
+    }
+  ],
   lifecycleSkipReason: "Manual webhook setup is not exercised by automated lifecycle tests yet.",
   subtitle: "Point any vendor's webhooks at Sazabi. Arbitrary JSON events land as searchable log records with zero vendor-specific configuration.",
   features: [
@@ -14660,6 +14596,19 @@ var DataSourceTypeInfoSchema = z4.object({
   metadataFields: z4.array(MetadataFieldSchema).describe("Fields required in the metadata object when creating a connection."),
   setupSkill: z4.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
 });
+var DataSourceEndpointCardSchema = z4.object({
+  kind: z4.enum(["url", "hostPort"]).describe("Card shape. `url` = a complete keyed URL whose hostname authenticates; `hostPort` = a non-keyed listener host + port whose credential travels separately."),
+  label: z4.string().optional().describe("Card label. Present when a source exposes several endpoints (e.g. separate logs and traces destinations)."),
+  url: z4.string().optional().describe("The complete keyed intake URL. Present when kind is `url`."),
+  host: z4.string().optional().describe("The regional listener hostname (no scheme). Present when kind is `hostPort`."),
+  port: z4.number().int().optional().describe("The listener port. Present when kind is `hostPort`."),
+  description: z4.string().optional().describe("Vendor-specific guidance rendered under the value."),
+  extraCredential: z4.object({
+    label: z4.string(),
+    value: z4.string(),
+    description: z4.string().optional()
+  }).optional().describe("The credential the sender must attach when the hostname alone does not authenticate. Present when kind is `hostPort`.")
+});
 var DataSourceConnectionSchema = z4.object({
   id: z4.string().uuid(),
   projectId: z4.string().uuid(),
@@ -14669,13 +14618,15 @@ var DataSourceConnectionSchema = z4.object({
 });
 var DataSourceStreamSchema = z4.object({
   id: z4.string().uuid(),
-  connectionId: z4.string().uuid().nullable().describe("Backing connection ID. Null for connectionless streams, which ingest directly without a managed connection."),
+  instanceId: z4.string().uuid().describe("Root instance ID. Every stream roots on exactly one data source instance (managed or connectionless)."),
+  connectionId: z4.string().uuid().nullable().describe("Backing connection ID, resolved from the stream's instance. Null for connectionless streams, which ingest directly without a managed connection."),
   displayName: z4.string(),
   config: z4.record(z4.string(), z4.unknown()),
   status: StreamStatusEnum,
   errorMessage: z4.string().nullable(),
   enabled: z4.boolean().describe("Whether the stream is currently ingesting. Independent of provisioning status: a paused stream stays configured but stops accepting new data."),
-  createdAt: z4.string().datetime()
+  createdAt: z4.string().datetime(),
+  endpointCards: z4.array(DataSourceEndpointCardSchema).optional().describe("Server-computed endpoint card(s) for this stream's delivery key — where to point the sender. Present only for streams that carry their own intake key (connectionless-lifecycle streams).")
 });
 var ListDataSourceTypesInputSchema = z4.object({});
 var ListDataSourceTypesOutputSchema = z4.object({
@@ -14798,7 +14749,8 @@ var CreateDataSourceConnectionInputSchema = z4.object({
 });
 var CreateDataSourceConnectionOutputSchema = z4.object({
   connectionId: z4.string().uuid().describe("ID of the created connection."),
-  publicKey: z4.string().describe("Auto-generated public key for this connection. Store this securely — it is only shown once.")
+  publicKey: z4.string().describe("Auto-generated public key for this connection. Store this securely — it is only shown once."),
+  endpointCards: z4.array(DataSourceEndpointCardSchema).optional().describe("Server-computed endpoint card(s) for the minted key — where to point the sender. Present for sources that ingest through a Sazabi endpoint (connectionless lifecycle).")
 });
 var createDataSourceConnection = defineOperation({
   operationId: "dataSources.createConnection",
@@ -14858,7 +14810,7 @@ var listDataSourceInstanceStreams = defineOperation({
   async: "sync"
 });
 var CreateDataSourceStreamInputSchema = z4.object({
-  connectionId: z4.string().uuid().describe("Connection ID to create the stream under."),
+  instanceId: z4.string().uuid().describe("Instance ID to create the stream under."),
   displayName: z4.string().describe("Resource name, e.g. service or app name."),
   config: z4.record(z4.string(), z4.unknown()).describe("Platform-specific stream configuration.")
 });
@@ -14868,11 +14820,11 @@ var CreateDataSourceStreamOutputSchema = z4.object({
 });
 var createDataSourceStream = defineOperation({
   operationId: "dataSources.createStream",
-  description: "Create a new stream for a data source connection. Triggers async provisioning.",
+  description: "Create a new stream under a data source instance. Triggers async provisioning.",
   backend: "api",
   route: {
     method: "POST",
-    path: "/data-sources/connections/{connectionId}/streams",
+    path: "/data-sources/instances/{instanceId}/streams",
     successStatus: 201,
     tags: ["Data Sources"]
   },
@@ -21926,21 +21878,225 @@ var membersContract = {
   remove: removeMember.contract
 };
 
+// ../public-api-contracts/src/memory.ts
+import { z as z18 } from "zod";
+var MEMORY_CURATED_KINDS = ["note", "runbook"];
+var MEMORY_KINDS = ["note", "runbook", "change"];
+var MemoryKindSchema = z18.enum(MEMORY_KINDS);
+var MemoryCuratedKindSchema = z18.enum(MEMORY_CURATED_KINDS);
+var MemoryPathSchema = z18.string().min(1).max(512).refine((value) => !value.startsWith("/"), {
+  message: "Path must be relative without a leading slash."
+}).describe("Relative memory path, for example AGENTS.md or notes/architecture.md.");
+var MEMORY_BODY_MAX_BYTES = 4194304;
+var MemoryBodySchema = z18.string().min(1).refine((value) => new TextEncoder().encode(value).length <= MEMORY_BODY_MAX_BYTES, {
+  message: `Memory body must be at most ${MEMORY_BODY_MAX_BYTES} bytes (4 MiB).`
+}).describe("Document body stored in project memory.");
+var MemoryDurationSchema = z18.string().regex(/^(\d+)(s|m|h|d)$/u, "Duration must use s, m, h, or d units, for example 7d or 30m.").describe("Relative time window, for example 7d or 30m.");
+var parseKindFilter = (value) => {
+  const kinds = value.split(",").map((part) => part.trim()).filter(Boolean);
+  const parsed = z18.array(MemoryKindSchema).safeParse(kinds);
+  if (!parsed.success) {
+    throw new Error("Kind filter must be a comma-separated list of note, runbook, or change.");
+  }
+  return parsed.data;
+};
+var MemoryKindFilterSchema = z18.string().min(1).transform(parseKindFilter).describe("Comma-separated kinds, for example note,runbook.");
+var MemoryDocumentSchema = z18.object({
+  id: z18.string().uuid(),
+  projectId: z18.string().uuid(),
+  kind: MemoryKindSchema,
+  managed: z18.boolean(),
+  path: z18.string().nullable(),
+  title: z18.string().nullable(),
+  contentHash: z18.string(),
+  attrs: z18.record(z18.string(), z18.unknown()),
+  createdAt: z18.string().datetime(),
+  updatedAt: z18.string().datetime()
+});
+var MemoryDocumentDetailSchema = MemoryDocumentSchema.extend({
+  body: MemoryBodySchema
+});
+var PutProjectMemoryInputSchema = z18.object({
+  projectId: z18.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+  path: MemoryPathSchema.describe("Relative path for the curated document."),
+  body: MemoryBodySchema,
+  kind: MemoryCuratedKindSchema.default("note").describe("Curated document kind. Only note and runbook may be written through the API."),
+  title: z18.string().max(500).optional().describe("Optional display title. Defaults to the path basename.")
+});
+var PutProjectMemoryOutputSchema = z18.object({
+  document: MemoryDocumentDetailSchema
+});
+var GetProjectMemoryInputSchema = z18.object({
+  projectId: z18.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+  id: z18.string().uuid().optional().describe("Document id."),
+  path: MemoryPathSchema.optional().describe("Relative curated path.")
+}).superRefine((value, ctx) => {
+  const hasId = value.id !== undefined;
+  const hasPath = value.path !== undefined;
+  if (hasId === hasPath) {
+    ctx.addIssue({
+      code: "custom",
+      message: "Provide exactly one of id or path."
+    });
+  }
+});
+var GetProjectMemoryOutputSchema = z18.object({
+  document: MemoryDocumentDetailSchema
+});
+var ListProjectMemoryInputSchema = z18.object({
+  projectId: z18.string().uuid().optional().describe("Project to list memory for. Auto-filled from CLI and SDK context when omitted."),
+  kind: MemoryKindFilterSchema.optional(),
+  since: MemoryDurationSchema.optional().describe("Only return documents updated within this window, for example 7d."),
+  service: z18.string().min(1).optional().describe("Filter to documents whose attrs.services contains this value."),
+  pathPrefix: z18.string().min(1).optional().describe("Filter to paths starting with this prefix."),
+  managed: z18.coerce.boolean().optional(),
+  cursor: z18.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  limit: z18.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of documents to return per page.")
+});
+var ListProjectMemoryOutputSchema = z18.object({
+  documents: z18.array(MemoryDocumentSchema),
+  nextCursor: z18.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+});
+var MemorySearchHitSchema = z18.object({
+  documentId: z18.string().uuid(),
+  kind: MemoryKindSchema,
+  managed: z18.boolean(),
+  path: z18.string().nullable(),
+  title: z18.string().nullable(),
+  snippet: z18.string(),
+  score: z18.number()
+});
+var MemorySearchEmptyVerdictSchema = z18.object({
+  calibrated: z18.literal(true),
+  minScoreThreshold: z18.number(),
+  queryTerms: z18.array(z18.string()),
+  message: z18.string()
+});
+var SearchProjectMemoryInputSchema = z18.object({
+  projectId: z18.string().uuid().optional().describe("Project to search memory for. Auto-filled from CLI and SDK context when omitted."),
+  query: z18.string().trim().min(1).max(500).describe("Natural-language search query."),
+  kind: MemoryKindFilterSchema.optional(),
+  since: MemoryDurationSchema.optional(),
+  service: z18.string().min(1).optional(),
+  pathPrefix: z18.string().min(1).optional(),
+  managed: z18.coerce.boolean().optional(),
+  limit: z18.coerce.number().int().min(1).max(50).default(10).describe("Maximum ranked search hits to return.")
+});
+var SearchProjectMemoryOutputSchema = z18.object({
+  hits: z18.array(MemorySearchHitSchema),
+  emptyVerdict: MemorySearchEmptyVerdictSchema.nullable()
+});
+var DeleteProjectMemoryInputSchema = z18.object({
+  projectId: z18.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+  id: z18.string().uuid().optional().describe("Document id."),
+  path: MemoryPathSchema.optional()
+}).superRefine((value, ctx) => {
+  const hasId = value.id !== undefined;
+  const hasPath = value.path !== undefined;
+  if (hasId === hasPath) {
+    ctx.addIssue({
+      code: "custom",
+      message: "Provide exactly one of id or path."
+    });
+  }
+});
+var DeleteProjectMemoryOutputSchema = z18.object({
+  deleted: z18.boolean()
+});
+var putProjectMemory = defineOperation({
+  operationId: "memory.put",
+  description: "Create or replace a curated project memory document. Embeds on success.",
+  backend: "api",
+  route: {
+    method: "PUT",
+    path: "/memory",
+    tags: ["Memory"]
+  },
+  input: PutProjectMemoryInputSchema,
+  output: PutProjectMemoryOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var getProjectMemory = defineOperation({
+  operationId: "memory.get",
+  description: "Get one project memory document by id or path.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/memory/document",
+    tags: ["Memory"]
+  },
+  input: GetProjectMemoryInputSchema,
+  output: GetProjectMemoryOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var listProjectMemory = defineOperation({
+  operationId: "memory.list",
+  description: "List project memory catalog rows without embedding search.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/memory",
+    tags: ["Memory"]
+  },
+  input: ListProjectMemoryInputSchema,
+  output: ListProjectMemoryOutputSchema,
+  pagination: "cursor",
+  async: "sync"
+});
+var searchProjectMemory = defineOperation({
+  operationId: "memory.search",
+  description: "Hybrid semantic and keyword search over project memory documents.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/memory/search",
+    tags: ["Memory"]
+  },
+  input: SearchProjectMemoryInputSchema,
+  output: SearchProjectMemoryOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var deleteProjectMemory = defineOperation({
+  operationId: "memory.delete",
+  description: "Soft-delete a curated project memory document by id or path.",
+  backend: "api",
+  route: {
+    method: "DELETE",
+    path: "/memory/document",
+    successStatus: 204,
+    tags: ["Memory"]
+  },
+  input: DeleteProjectMemoryInputSchema,
+  output: DeleteProjectMemoryOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var memoryContract = {
+  put: putProjectMemory.contract,
+  get: getProjectMemory.contract,
+  list: listProjectMemory.contract,
+  search: searchProjectMemory.contract,
+  delete: deleteProjectMemory.contract
+};
+
 // ../public-api-contracts/src/messages.ts
-import { z as z20 } from "zod";
+import { z as z21 } from "zod";
 
 // ../public-api-contracts/src/runs.ts
-import { z as z18 } from "zod";
-var RunStatusSchema = z18.enum(["processing", "completed", "aborted", "error"]);
-var RunSchema = z18.object({
-  id: z18.string().uuid(),
-  threadId: z18.string().uuid(),
-  userMessageId: z18.string().uuid().nullable(),
-  assistantMessageId: z18.string().uuid().nullable(),
-  parentRunId: z18.string().uuid().nullable(),
-  workflowRunId: z18.string().nullable(),
+import { z as z19 } from "zod";
+var RunStatusSchema = z19.enum(["processing", "completed", "aborted", "error"]);
+var RunSchema = z19.object({
+  id: z19.string().uuid(),
+  threadId: z19.string().uuid(),
+  userMessageId: z19.string().uuid().nullable(),
+  assistantMessageId: z19.string().uuid().nullable(),
+  parentRunId: z19.string().uuid().nullable(),
+  workflowRunId: z19.string().nullable(),
   status: RunStatusSchema,
-  source: z18.enum([
+  source: z19.enum([
     "app",
     "api",
     "mcp",
@@ -21951,45 +22107,45 @@ var RunSchema = z18.object({
     "agent",
     "cli"
   ]),
-  createdAt: z18.string().datetime(),
-  updatedAt: z18.string().datetime(),
-  completedAt: z18.string().datetime().nullable()
+  createdAt: z19.string().datetime(),
+  updatedAt: z19.string().datetime(),
+  completedAt: z19.string().datetime().nullable()
 });
-var ListRunsInputSchema = z18.object({
-  projectId: z18.string().uuid().optional().describe("Project ID to list runs for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z18.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
-  cursor: z18.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListRunsInputSchema = z19.object({
+  projectId: z19.string().uuid().optional().describe("Project ID to list runs for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z19.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
+  cursor: z19.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListRunsOutputSchema = z18.object({
-  runs: z18.array(RunSchema),
-  nextCursor: z18.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListRunsOutputSchema = z19.object({
+  runs: z19.array(RunSchema),
+  nextCursor: z19.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var ListThreadRunsInputSchema = z18.object({
-  threadId: z18.string().uuid().describe("Thread ID to list runs for."),
-  limit: z18.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
-  cursor: z18.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListThreadRunsInputSchema = z19.object({
+  threadId: z19.string().uuid().describe("Thread ID to list runs for."),
+  limit: z19.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
+  cursor: z19.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListThreadRunsOutputSchema = z18.object({
-  runs: z18.array(RunSchema),
-  nextCursor: z18.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListThreadRunsOutputSchema = z19.object({
+  runs: z19.array(RunSchema),
+  nextCursor: z19.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetRunInputSchema = z18.object({
-  runId: z18.string().uuid().describe("Run ID returned by a deferred operation.")
+var GetRunInputSchema = z19.object({
+  runId: z19.string().uuid().describe("Run ID returned by a deferred operation.")
 });
-var RunResultSchema = z18.object({
-  completed: z18.boolean().describe("Whether the run has reached a terminal status."),
-  threadId: z18.string().uuid().describe("Thread ID associated with the run."),
-  runId: z18.string().uuid().describe("Run ID for subsequent polling."),
-  messageId: z18.string().uuid().optional().describe("ID of the user message that triggered this run."),
+var RunResultSchema = z19.object({
+  completed: z19.boolean().describe("Whether the run has reached a terminal status."),
+  threadId: z19.string().uuid().describe("Thread ID associated with the run."),
+  runId: z19.string().uuid().describe("Run ID for subsequent polling."),
+  messageId: z19.string().uuid().optional().describe("ID of the user message that triggered this run."),
   status: RunStatusSchema.describe("Current run lifecycle status."),
-  response: z18.string().nullable().describe("Assistant response text when the run has completed.")
+  response: z19.string().nullable().describe("Assistant response text when the run has completed.")
 });
 var GetRunOutputSchema = RunResultSchema.describe("Current run state and, when complete, the assistant response.");
-var CancelRunInputSchema = z18.object({
-  runId: z18.string().uuid().describe("Run ID of the in-flight run to request cancellation for.")
+var CancelRunInputSchema = z19.object({
+  runId: z19.string().uuid().describe("Run ID of the in-flight run to request cancellation for.")
 });
-var CancelRunOutputSchema = z18.object({
-  success: z18.literal(true).describe("Always true when the cancellation request was accepted.")
+var CancelRunOutputSchema = z19.object({
+  success: z19.literal(true).describe("Always true when the cancellation request was accepted.")
 });
 var listRuns = defineOperation({
   operationId: "runs.list",
@@ -22109,8 +22265,8 @@ var validatePublicThreadAmbientMarker = (ambientServiceRun, automationId, ctx) =
 };
 
 // ../public-api-contracts/src/threads.ts
-import { z as z19 } from "zod";
-var MessageSourceSchema = z19.enum([
+import { z as z20 } from "zod";
+var MessageSourceSchema = z20.enum([
   "slack",
   "teams",
   "linear",
@@ -22121,36 +22277,36 @@ var MessageSourceSchema = z19.enum([
   "api",
   "cli"
 ]);
-var ThreadSchema = z19.object({
-  id: z19.string().uuid(),
-  projectId: z19.string().uuid(),
-  title: z19.string().nullable(),
-  status: z19.enum(["regular", "archived"]),
+var ThreadSchema = z20.object({
+  id: z20.string().uuid(),
+  projectId: z20.string().uuid(),
+  title: z20.string().nullable(),
+  status: z20.enum(["regular", "archived"]),
   source: MessageSourceSchema.nullable(),
-  createdAt: z19.string().datetime(),
-  updatedAt: z19.string().datetime()
+  createdAt: z20.string().datetime(),
+  updatedAt: z20.string().datetime()
 });
-var MessagePartSchema = z19.object({
-  type: z19.literal("message"),
-  message: z19.string()
+var MessagePartSchema = z20.object({
+  type: z20.literal("message"),
+  message: z20.string()
 });
-var ReasoningPartSchema = z19.object({
-  type: z19.literal("reasoning"),
-  reasoning: z19.string(),
-  status: z19.enum(["in_progress", "complete"]).optional()
+var ReasoningPartSchema = z20.object({
+  type: z20.literal("reasoning"),
+  reasoning: z20.string(),
+  status: z20.enum(["in_progress", "complete"]).optional()
 });
-var ToolCallPartSchema = z19.object({
-  type: z19.literal("tool_call"),
-  name: z19.string(),
-  params: z19.any().optional(),
-  result: z19.any().optional(),
-  status: z19.enum(["in_progress", "success", "error", "unknown"]).optional(),
-  toolCallId: z19.string().optional(),
-  durationMs: z19.number().nonnegative().optional()
+var ToolCallPartSchema = z20.object({
+  type: z20.literal("tool_call"),
+  name: z20.string(),
+  params: z20.any().optional(),
+  result: z20.any().optional(),
+  status: z20.enum(["in_progress", "success", "error", "unknown"]).optional(),
+  toolCallId: z20.string().optional(),
+  durationMs: z20.number().nonnegative().optional()
 });
-var ArtifactPartSchema = z19.object({
-  type: z19.literal("artifact"),
-  name: z19.enum([
+var ArtifactPartSchema = z20.object({
+  type: z20.literal("artifact"),
+  name: z20.enum([
     "timeseries",
     "table",
     "log_detail",
@@ -22159,35 +22315,35 @@ var ArtifactPartSchema = z19.object({
     "issue_card",
     "mdx"
   ]),
-  data: z19.any(),
-  toolCallId: z19.string().optional()
+  data: z20.any(),
+  toolCallId: z20.string().optional()
 });
-var ForkPartSchema = z19.object({
-  type: z19.literal("fork"),
-  sourceThreadId: z19.string(),
-  sourceMessageId: z19.string(),
-  sourceThreadTitle: z19.string().nullable()
+var ForkPartSchema = z20.object({
+  type: z20.literal("fork"),
+  sourceThreadId: z20.string(),
+  sourceMessageId: z20.string(),
+  sourceThreadTitle: z20.string().nullable()
 });
-var SummaryPartSchema = z19.object({
-  type: z19.literal("summary"),
-  summary: z19.string()
+var SummaryPartSchema = z20.object({
+  type: z20.literal("summary"),
+  summary: z20.string()
 });
-var SlackContextPartSchema = z19.object({
-  type: z19.literal("slack_context"),
-  channelId: z19.string(),
-  isTruncated: z19.boolean().optional(),
-  messages: z19.array(z19.object({
-    timestamp: z19.string(),
-    slackUserId: z19.string().optional(),
-    displayName: z19.string(),
-    text: z19.string(),
-    isBot: z19.boolean(),
-    files: z19.array(z19.object({
-      name: z19.string(),
-      mimetype: z19.string(),
-      size: z19.number().optional(),
-      attachmentId: z19.string().uuid().optional(),
-      ingestionStatus: z19.enum([
+var SlackContextPartSchema = z20.object({
+  type: z20.literal("slack_context"),
+  channelId: z20.string(),
+  isTruncated: z20.boolean().optional(),
+  messages: z20.array(z20.object({
+    timestamp: z20.string(),
+    slackUserId: z20.string().optional(),
+    displayName: z20.string(),
+    text: z20.string(),
+    isBot: z20.boolean(),
+    files: z20.array(z20.object({
+      name: z20.string(),
+      mimetype: z20.string(),
+      size: z20.number().optional(),
+      attachmentId: z20.string().uuid().optional(),
+      ingestionStatus: z20.enum([
         "attached",
         "unsupported",
         "oversized",
@@ -22197,19 +22353,19 @@ var SlackContextPartSchema = z19.object({
     })).optional()
   }))
 });
-var TeamsContextPartSchema = z19.object({
-  type: z19.literal("teams_context"),
-  conversationId: z19.string(),
-  isTruncated: z19.boolean().optional(),
-  messages: z19.array(z19.object({
-    activityId: z19.string().optional(),
-    displayName: z19.string(),
-    text: z19.string(),
-    isBot: z19.boolean(),
-    createdDateTime: z19.string().optional()
+var TeamsContextPartSchema = z20.object({
+  type: z20.literal("teams_context"),
+  conversationId: z20.string(),
+  isTruncated: z20.boolean().optional(),
+  messages: z20.array(z20.object({
+    activityId: z20.string().optional(),
+    displayName: z20.string(),
+    text: z20.string(),
+    isBot: z20.boolean(),
+    createdDateTime: z20.string().optional()
   }))
 });
-var ContentPartSchema = z19.union([
+var ContentPartSchema = z20.union([
   MessagePartSchema,
   ReasoningPartSchema,
   ToolCallPartSchema,
@@ -22219,60 +22375,60 @@ var ContentPartSchema = z19.union([
   SlackContextPartSchema,
   TeamsContextPartSchema
 ]);
-var MessageSchema = z19.object({
-  id: z19.string().uuid(),
-  role: z19.enum(["user", "assistant"]),
-  content: z19.array(ContentPartSchema),
+var MessageSchema = z20.object({
+  id: z20.string().uuid(),
+  role: z20.enum(["user", "assistant"]),
+  content: z20.array(ContentPartSchema),
   source: MessageSourceSchema,
-  createdAt: z19.string().datetime()
+  createdAt: z20.string().datetime()
 });
-var ListThreadsInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project to list threads for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z19.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of threads to return per page."),
-  cursor: z19.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  status: z19.enum(["regular", "archived"]).optional().describe("Filter by thread status. 'regular' returns active threads, 'archived' returns archived threads.")
+var ListThreadsInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project to list threads for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z20.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of threads to return per page."),
+  cursor: z20.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  status: z20.enum(["regular", "archived"]).optional().describe("Filter by thread status. 'regular' returns active threads, 'archived' returns archived threads.")
 });
-var ListThreadsOutputSchema = z19.object({
-  threads: z19.array(ThreadSchema).describe("The page of threads matching the query."),
-  nextCursor: z19.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListThreadsOutputSchema = z20.object({
+  threads: z20.array(ThreadSchema).describe("The page of threads matching the query."),
+  nextCursor: z20.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetThreadInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID returned by threads.list or threads.create.")
+var GetThreadInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID returned by threads.list or threads.create.")
 });
-var GetThreadOutputSchema = z19.object({
+var GetThreadOutputSchema = z20.object({
   thread: ThreadSchema.describe("The requested thread."),
-  messages: z19.array(MessageSchema).describe("Messages currently stored on the thread in chronological order.")
+  messages: z20.array(MessageSchema).describe("Messages currently stored on the thread in chronological order.")
 });
-var CreateThreadInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project to create the thread in. Auto-filled from CLI and SDK context when omitted."),
-  message: z19.string().min(1, "Message cannot be empty").describe("Initial user message that starts the thread."),
-  wait: z19.boolean().default(true).describe("Whether the server should wait for the agent run before responding."),
-  timeoutSeconds: z19.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
-  automationId: z19.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
-  ambientServiceRun: z19.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
+var CreateThreadInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project to create the thread in. Auto-filled from CLI and SDK context when omitted."),
+  message: z20.string().min(1, "Message cannot be empty").describe("Initial user message that starts the thread."),
+  wait: z20.boolean().default(true).describe("Whether the server should wait for the agent run before responding."),
+  timeoutSeconds: z20.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
+  automationId: z20.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
+  ambientServiceRun: z20.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
 }).superRefine((input, ctx) => {
   validatePublicThreadMessageLength(input.message, input.automationId, ctx);
   validatePublicThreadAmbientMarker(input.ambientServiceRun, input.automationId, ctx);
 });
 var CreateThreadOutputSchema = RunResultSchema.describe("Deferred run result for creating a thread.");
-var GetThreadStatusInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID whose current processing status should be returned.")
+var GetThreadStatusInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID whose current processing status should be returned.")
 });
-var GetThreadStatusOutputSchema = z19.object({
-  status: z19.enum(["idle", "processing"]),
-  lastRunStatus: z19.enum(["error"]).nullable()
+var GetThreadStatusOutputSchema = z20.object({
+  status: z20.enum(["idle", "processing"]),
+  lastRunStatus: z20.enum(["error"]).nullable()
 });
-var StopThreadInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID whose active run should be stopped.")
+var StopThreadInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID whose active run should be stopped.")
 });
-var StopThreadOutputSchema = z19.object({
-  success: z19.literal(true).describe("Always true when the stop request was accepted.")
+var StopThreadOutputSchema = z20.object({
+  success: z20.literal(true).describe("Always true when the stop request was accepted.")
 });
-var UpdateThreadInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID of the thread to update."),
-  status: z19.enum(["regular", "archived"]).describe("New status for the thread. 'archived' hides the thread from the sidebar.")
+var UpdateThreadInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID of the thread to update."),
+  status: z20.enum(["regular", "archived"]).describe("New status for the thread. 'archived' hides the thread from the sidebar.")
 });
-var UpdateThreadOutputSchema = z19.object({
+var UpdateThreadOutputSchema = z20.object({
   thread: ThreadSchema.describe("The updated thread.")
 });
 var listThreads = defineOperation({
@@ -22445,44 +22601,44 @@ var updateThread = defineOperation({
     }
   ]
 });
-var ThreadVisibilitySchema = z19.enum(["private", "organization"]);
-var ForkThreadInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID of the source thread to fork."),
-  messageId: z19.string().uuid().describe("Message ID in the source thread to fork from. The new thread copies messages up to and including this message.")
+var ThreadVisibilitySchema = z20.enum(["private", "organization"]);
+var ForkThreadInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID of the source thread to fork."),
+  messageId: z20.string().uuid().describe("Message ID in the source thread to fork from. The new thread copies messages up to and including this message.")
 });
-var ForkThreadOutputSchema = z19.object({
+var ForkThreadOutputSchema = z20.object({
   thread: ThreadSchema.describe("The newly created forked thread.")
 });
-var SetThreadVisibilityInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID of the thread to update."),
+var SetThreadVisibilityInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID of the thread to update."),
   visibility: ThreadVisibilitySchema.describe("New visibility. 'private' restricts the thread to its owner; 'organization' shares it with the organization.")
 });
-var SetThreadVisibilityOutputSchema = z19.object({
+var SetThreadVisibilityOutputSchema = z20.object({
   thread: ThreadSchema.describe("The updated thread."),
   visibility: ThreadVisibilitySchema.describe("The thread's resulting visibility.")
 });
-var ThreadShareLinkSchema = z19.object({
-  shareId: z19.string().uuid().describe("Unique identifier for the snapshot."),
-  threadId: z19.string().uuid().describe("Thread the snapshot was taken from."),
-  url: z19.string().describe("Public read-only URL for the snapshot."),
-  createdAt: z19.string().datetime()
+var ThreadShareLinkSchema = z20.object({
+  shareId: z20.string().uuid().describe("Unique identifier for the snapshot."),
+  threadId: z20.string().uuid().describe("Thread the snapshot was taken from."),
+  url: z20.string().describe("Public read-only URL for the snapshot."),
+  createdAt: z20.string().datetime()
 });
-var CreateThreadShareLinkInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID to create a public read-only snapshot for.")
+var CreateThreadShareLinkInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID to create a public read-only snapshot for.")
 });
-var CreateThreadShareLinkOutputSchema = z19.object({
+var CreateThreadShareLinkOutputSchema = z20.object({
   share: ThreadShareLinkSchema.describe("The created share link.")
 });
-var RevokeThreadShareLinkInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID the snapshot belongs to."),
-  shareId: z19.string().uuid().describe("Snapshot ID to revoke.")
+var RevokeThreadShareLinkInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID the snapshot belongs to."),
+  shareId: z20.string().uuid().describe("Snapshot ID to revoke.")
 });
-var RevokeThreadShareLinkOutputSchema = z19.void();
-var ListThreadShareLinksInputSchema = z19.object({
-  threadId: z19.string().uuid().describe("Thread ID to list public snapshots for.")
+var RevokeThreadShareLinkOutputSchema = z20.void();
+var ListThreadShareLinksInputSchema = z20.object({
+  threadId: z20.string().uuid().describe("Thread ID to list public snapshots for.")
 });
-var ListThreadShareLinksOutputSchema = z19.object({
-  shares: z19.array(ThreadShareLinkSchema).describe("Active share links for the thread.")
+var ListThreadShareLinksOutputSchema = z20.object({
+  shares: z20.array(ThreadShareLinkSchema).describe("Active share links for the thread.")
 });
 var SAMPLE_THREAD_ID = "22222222-2222-4222-8222-222222222222";
 var SAMPLE_PROJECT_ID = "11111111-1111-4111-8111-111111111111";
@@ -22651,22 +22807,22 @@ var threadsContract = {
 };
 
 // ../public-api-contracts/src/messages.ts
-var ListMessagesInputSchema = z20.object({
-  threadId: z20.string().uuid().describe("Thread ID to list messages for."),
-  limit: z20.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of messages to return per page."),
-  cursor: z20.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListMessagesInputSchema = z21.object({
+  threadId: z21.string().uuid().describe("Thread ID to list messages for."),
+  limit: z21.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of messages to return per page."),
+  cursor: z21.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListMessagesOutputSchema = z20.object({
-  messages: z20.array(MessageSchema),
-  nextCursor: z20.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListMessagesOutputSchema = z21.object({
+  messages: z21.array(MessageSchema),
+  nextCursor: z21.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var AppendMessageInputSchema = z20.object({
-  threadId: z20.string().uuid().describe("Thread ID to append the message to."),
-  message: z20.string().min(1, "Message cannot be empty").describe("Message body to append to the thread."),
-  wait: z20.boolean().default(true).describe("Whether the server should wait for the appended message run before responding."),
-  timeoutSeconds: z20.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
-  automationId: z20.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
-  ambientServiceRun: z20.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
+var AppendMessageInputSchema = z21.object({
+  threadId: z21.string().uuid().describe("Thread ID to append the message to."),
+  message: z21.string().min(1, "Message cannot be empty").describe("Message body to append to the thread."),
+  wait: z21.boolean().default(true).describe("Whether the server should wait for the appended message run before responding."),
+  timeoutSeconds: z21.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
+  automationId: z21.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
+  ambientServiceRun: z21.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
 }).superRefine((input, ctx) => {
   validatePublicThreadMessageLength(input.message, input.automationId, ctx);
   validatePublicThreadAmbientMarker(input.ambientServiceRun, input.automationId, ctx);
@@ -23077,10 +23233,10 @@ var NOTIFICATION_CHANNEL_VALUES = [
   "victorops"
 ];
 // ../notifications/src/events.ts
-import { z as z21 } from "zod";
-var NotificationChannelSchema = z21.enum(ALL_NOTIFICATION_CHANNELS);
-var ProjectNotificationChannelSchema = z21.enum(PROJECT_NOTIFICATION_CHANNELS);
-var NotificationTypeSchema = z21.enum(ALL_NOTIFICATION_TYPES);
+import { z as z22 } from "zod";
+var NotificationChannelSchema = z22.enum(ALL_NOTIFICATION_CHANNELS);
+var ProjectNotificationChannelSchema = z22.enum(PROJECT_NOTIFICATION_CHANNELS);
+var NotificationTypeSchema = z22.enum(ALL_NOTIFICATION_TYPES);
 // ../notifications/src/project-notification-channel-cards.ts
 var PROJECT_SHARED_NOTIFICATION_TYPE_DEFINITIONS = PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES.map((notificationType) => ({
   notificationType,
@@ -23176,65 +23332,65 @@ if (configuredChannels.size !== ALL_NOTIFICATION_CHANNELS.length || ALL_NOTIFICA
   throw new Error("Notification channel card definitions must represent every channel");
 }
 // ../public-api-contracts/src/notification-channels.ts
-import { z as z22 } from "zod";
-var NotificationChannelPrerequisiteStatusSchema = z22.enum([
+import { z as z23 } from "zod";
+var NotificationChannelPrerequisiteStatusSchema = z23.enum([
   "ready",
   "missing",
   "degraded",
   "unavailable"
 ]);
-var NotificationChannelDestinationSchema = z22.object({
-  id: z22.string(),
-  label: z22.string(),
-  status: z22.enum(["active", "inactive", "degraded"]),
-  statusLabel: z22.string()
+var NotificationChannelDestinationSchema = z23.object({
+  id: z23.string(),
+  label: z23.string(),
+  status: z23.enum(["active", "inactive", "degraded"]),
+  statusLabel: z23.string()
 });
-var NotificationChannelCardSchema = z22.object({
+var NotificationChannelCardSchema = z23.object({
   channel: NotificationChannelSchema,
-  name: z22.string(),
-  description: z22.string(),
-  scope: z22.enum(["personal", "project"]),
-  enabled: z22.boolean().nullable(),
-  preferenceId: z22.string().nullable(),
-  prerequisite: z22.object({
+  name: z23.string(),
+  description: z23.string(),
+  scope: z23.enum(["personal", "project"]),
+  enabled: z23.boolean().nullable(),
+  preferenceId: z23.string().nullable(),
+  prerequisite: z23.object({
     status: NotificationChannelPrerequisiteStatusSchema,
-    statusLabel: z22.string(),
-    message: z22.string()
+    statusLabel: z23.string(),
+    message: z23.string()
   }),
-  action: z22.object({
-    label: z22.string(),
-    href: z22.string()
+  action: z23.object({
+    label: z23.string(),
+    href: z23.string()
   }).nullable(),
-  destinations: z22.array(NotificationChannelDestinationSchema),
-  destinationManagement: z22.enum([
+  destinations: z23.array(NotificationChannelDestinationSchema),
+  destinationManagement: z23.enum([
     "none",
     "slack_channels",
     "teams_channels",
     "integration_connections",
     "webhook_endpoints"
   ]),
-  canCreateDestinations: z22.boolean(),
-  supportedNotificationTypes: z22.array(NotificationTypeSchema)
+  canCreateDestinations: z23.boolean(),
+  supportedNotificationTypes: z23.array(NotificationTypeSchema)
 });
-var ProjectNotificationChannelPreferenceSchema = z22.object({
+var ProjectNotificationChannelPreferenceSchema = z23.object({
   channel: ProjectNotificationChannelSchema,
-  enabled: z22.boolean(),
-  preferenceId: z22.string().nullable()
+  enabled: z23.boolean(),
+  preferenceId: z23.string().nullable()
 });
-var ProjectNotificationTypePreferenceSchema = z22.object({
+var ProjectNotificationTypePreferenceSchema = z23.object({
   channel: ProjectNotificationChannelSchema,
   notificationType: NotificationTypeSchema,
-  enabled: z22.boolean(),
-  preferenceId: z22.string()
+  enabled: z23.boolean(),
+  preferenceId: z23.string()
 });
-var GetProjectNotificationChannelsInputSchema = z22.object({
-  projectId: z22.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
+var GetProjectNotificationChannelsInputSchema = z23.object({
+  projectId: z23.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
 });
-var GetProjectNotificationChannelsOutputSchema = z22.object({
-  channelCards: z22.array(NotificationChannelCardSchema).length(10),
-  channels: z22.array(ProjectNotificationChannelPreferenceSchema),
-  notificationTypePreferences: z22.array(ProjectNotificationTypePreferenceSchema),
-  issueNotificationMinSeverity: z22.enum(["low", "medium", "high", "critical"])
+var GetProjectNotificationChannelsOutputSchema = z23.object({
+  channelCards: z23.array(NotificationChannelCardSchema).length(10),
+  channels: z23.array(ProjectNotificationChannelPreferenceSchema),
+  notificationTypePreferences: z23.array(ProjectNotificationTypePreferenceSchema),
+  issueNotificationMinSeverity: z23.enum(["low", "medium", "high", "critical"])
 });
 var getProjectNotificationChannels = defineOperation({
   operationId: "notificationChannels.getProject",
@@ -23256,61 +23412,61 @@ var notificationChannelsContract = {
 };
 
 // ../public-api-contracts/src/notification-delivery-rules.ts
-import { z as z23 } from "zod";
-var DeliveryRuleConditionSchema = z23.object({
-  minSeverity: z23.enum(["medium", "high", "critical"]).optional().describe("Suppress rules only: suppress deliveries whose issue severity is below this threshold."),
-  component: z23.string().min(1).max(200).optional().describe("Match the component the agent records on issue metadata (exact match).")
+import { z as z24 } from "zod";
+var DeliveryRuleConditionSchema = z24.object({
+  minSeverity: z24.enum(["medium", "high", "critical"]).optional().describe("Suppress rules only: suppress deliveries whose issue severity is below this threshold."),
+  component: z24.string().min(1).max(200).optional().describe("Match the component the agent records on issue metadata (exact match).")
 }).strict();
-var DeliveryRuleDestinationSchema = z23.object({
-  id: z23.string().uuid(),
-  channel: z23.string(),
-  destinationKey: z23.string(),
-  displayName: z23.string().nullable()
+var DeliveryRuleDestinationSchema = z24.object({
+  id: z24.string().uuid(),
+  channel: z24.string(),
+  destinationKey: z24.string(),
+  displayName: z24.string().nullable()
 });
-var RouteRuleDestinationInputSchema = z23.object({
-  channel: z23.enum(["slack_channel", "teams_channel"]),
-  destinationKey: z23.string().min(1).describe("The stable destination id — the Slack channel id or Microsoft Teams channel id. Must be one of the project's configured notification channels.")
+var RouteRuleDestinationInputSchema = z24.object({
+  channel: z24.enum(["slack_channel", "teams_channel"]),
+  destinationKey: z24.string().min(1).describe("The stable destination id — the Slack channel id or Microsoft Teams channel id. Must be one of the project's configured notification channels.")
 });
-var ProjectDeliveryRuleSchema = z23.object({
-  id: z23.string().uuid(),
-  projectId: z23.string().uuid(),
+var ProjectDeliveryRuleSchema = z24.object({
+  id: z24.string().uuid(),
+  projectId: z24.string().uuid(),
   channel: NotificationChannelSchema.nullable().describe("Channel the rule targets; null means all channels."),
   notificationType: NotificationTypeSchema.nullable().describe("Notification type the rule targets; null means all types."),
-  priority: z23.number().int().describe("Route-pass evaluation order; suppress rules are unordered."),
+  priority: z24.number().int().describe("Route-pass evaluation order; suppress rules are unordered."),
   condition: DeliveryRuleConditionSchema,
-  outcome: z23.enum(["suppress", "route"]),
-  enabled: z23.boolean(),
-  destinations: z23.array(DeliveryRuleDestinationSchema),
-  createdAt: z23.string().datetime(),
-  updatedAt: z23.string().datetime()
+  outcome: z24.enum(["suppress", "route"]),
+  enabled: z24.boolean(),
+  destinations: z24.array(DeliveryRuleDestinationSchema),
+  createdAt: z24.string().datetime(),
+  updatedAt: z24.string().datetime()
 });
-var ListDeliveryRulesInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
+var ListDeliveryRulesInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListDeliveryRulesOutputSchema = z23.object({
-  rules: z23.array(ProjectDeliveryRuleSchema)
+var ListDeliveryRulesOutputSchema = z24.object({
+  rules: z24.array(ProjectDeliveryRuleSchema)
 });
-var CreateDeliveryRuleInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project that owns the rule. Auto-filled from CLI and SDK context when omitted."),
-  outcome: z23.enum(["suppress", "route"]).describe("suppress gates matching deliveries; route sends them to a destination subset."),
+var CreateDeliveryRuleInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project that owns the rule. Auto-filled from CLI and SDK context when omitted."),
+  outcome: z24.enum(["suppress", "route"]).describe("suppress gates matching deliveries; route sends them to a destination subset."),
   channel: NotificationChannelSchema.nullable().describe("Channel to target; null targets all channels (suppress rules only)."),
   notificationType: NotificationTypeSchema.nullable().describe("Notification type to target; null targets all types."),
   condition: DeliveryRuleConditionSchema,
-  destinations: z23.array(RouteRuleDestinationInputSchema).default([]).describe("Route rules only: the destinations to select.")
+  destinations: z24.array(RouteRuleDestinationInputSchema).default([]).describe("Route rules only: the destinations to select.")
 });
 var CreateDeliveryRuleOutputSchema = ProjectDeliveryRuleSchema;
-var SetDeliveryRuleEnabledInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project that owns the rule. Auto-filled from CLI and SDK context when omitted."),
-  ruleId: z23.string().uuid().describe("The delivery rule to update."),
-  enabled: z23.boolean()
+var SetDeliveryRuleEnabledInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project that owns the rule. Auto-filled from CLI and SDK context when omitted."),
+  ruleId: z24.string().uuid().describe("The delivery rule to update."),
+  enabled: z24.boolean()
 });
 var SetDeliveryRuleEnabledOutputSchema = ProjectDeliveryRuleSchema;
-var DeleteDeliveryRuleInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project that owns the rule. Auto-filled from CLI and SDK context when omitted."),
-  ruleId: z23.string().uuid().describe("The delivery rule to delete.")
+var DeleteDeliveryRuleInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project that owns the rule. Auto-filled from CLI and SDK context when omitted."),
+  ruleId: z24.string().uuid().describe("The delivery rule to delete.")
 });
-var DeleteDeliveryRuleOutputSchema = z23.object({
-  removed: z23.boolean()
+var DeleteDeliveryRuleOutputSchema = z24.object({
+  removed: z24.boolean()
 });
 var listDeliveryRules = defineOperation({
   operationId: "notificationDeliveryRules.list",
@@ -23376,8 +23532,8 @@ var notificationDeliveryRulesContract = {
 };
 
 // ../public-api-contracts/src/onboarding.ts
-import { z as z24 } from "zod";
-var OnboardingStepIdSchema = z24.enum([
+import { z as z25 } from "zod";
+var OnboardingStepIdSchema = z25.enum([
   "accept-invite",
   "create-organization",
   "billing",
@@ -23391,45 +23547,45 @@ var OnboardingStepIdSchema = z24.enum([
   "confirm-issue",
   "finish"
 ]);
-var OnboardingGateSchema = z24.enum([
+var OnboardingGateSchema = z25.enum([
   "needs-onboarding",
   "blocked",
   "ready"
 ]);
-var OnboardingCompletionStatusSchema = z24.enum([
+var OnboardingCompletionStatusSchema = z25.enum([
   "incomplete",
   "complete",
   "skipped"
 ]);
-var OnboardingInvitationSchema = z24.object({
-  invitationId: z24.string(),
-  organizationId: z24.string(),
-  organizationName: z24.string(),
-  organizationSlug: z24.string(),
-  organizationImageUrl: z24.string().nullable(),
-  inviterName: z24.string().nullable()
+var OnboardingInvitationSchema = z25.object({
+  invitationId: z25.string(),
+  organizationId: z25.string(),
+  organizationName: z25.string(),
+  organizationSlug: z25.string(),
+  organizationImageUrl: z25.string().nullable(),
+  inviterName: z25.string().nullable()
 });
-var OnboardingSnapshotSchema = z24.object({
+var OnboardingSnapshotSchema = z25.object({
   gate: OnboardingGateSchema,
   canonicalStep: OnboardingStepIdSchema.nullable(),
-  organizationId: z24.string().nullable(),
-  projectId: z24.string().nullable(),
-  completionByStep: z24.record(OnboardingStepIdSchema, OnboardingCompletionStatusSchema),
-  githubSkipped: z24.boolean(),
-  githubAppSkipped: z24.boolean(),
-  slackSkipped: z24.boolean(),
-  sampleIssueId: z24.string().nullable(),
-  actorRole: z24.enum(["admin", "member"]).nullable(),
-  requiredStep: z24.union([OnboardingStepIdSchema, z24.literal("select-organization")]).nullable(),
-  isCompleted: z24.boolean(),
-  onboardingRecommendationsThreadId: z24.string().nullable(),
-  hasOrganizations: z24.boolean(),
-  hasPaidBillingSubscription: z24.boolean(),
-  billingStepEnabled: z24.boolean(),
-  pendingInvitations: z24.array(OnboardingInvitationSchema)
+  organizationId: z25.string().nullable(),
+  projectId: z25.string().nullable(),
+  completionByStep: z25.record(OnboardingStepIdSchema, OnboardingCompletionStatusSchema),
+  githubSkipped: z25.boolean(),
+  githubAppSkipped: z25.boolean(),
+  slackSkipped: z25.boolean(),
+  sampleIssueId: z25.string().nullable(),
+  actorRole: z25.enum(["admin", "member"]).nullable(),
+  requiredStep: z25.union([OnboardingStepIdSchema, z25.literal("select-organization")]).nullable(),
+  isCompleted: z25.boolean(),
+  onboardingRecommendationsThreadId: z25.string().nullable(),
+  hasOrganizations: z25.boolean(),
+  hasPaidBillingSubscription: z25.boolean(),
+  billingStepEnabled: z25.boolean(),
+  pendingInvitations: z25.array(OnboardingInvitationSchema)
 });
-var GetOnboardingStateInputSchema = z24.object({});
-var GetOnboardingStateOutputSchema = z24.object({
+var GetOnboardingStateInputSchema = z25.object({});
+var GetOnboardingStateOutputSchema = z25.object({
   onboarding: OnboardingSnapshotSchema
 });
 var getOnboardingState = defineOperation({
@@ -23446,11 +23602,11 @@ var getOnboardingState = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingIntegrationInputSchema = z24.object({
-  integration: z24.enum(["github", "slack"]).describe("Integration onboarding step to skip.")
+var SkipOnboardingIntegrationInputSchema = z25.object({
+  integration: z25.enum(["github", "slack"]).describe("Integration onboarding step to skip.")
 });
-var SkipOnboardingIntegrationOutputSchema = z24.object({
-  skipped: z24.literal(true)
+var SkipOnboardingIntegrationOutputSchema = z25.object({
+  skipped: z25.literal(true)
 });
 var skipOnboardingIntegration = defineOperation({
   operationId: "onboarding.skipIntegration",
@@ -23466,9 +23622,9 @@ var skipOnboardingIntegration = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingGithubAppInstallationInputSchema = z24.object({});
-var SkipOnboardingGithubAppInstallationOutputSchema = z24.object({
-  skipped: z24.literal(true)
+var SkipOnboardingGithubAppInstallationInputSchema = z25.object({});
+var SkipOnboardingGithubAppInstallationOutputSchema = z25.object({
+  skipped: z25.literal(true)
 });
 var skipOnboardingGithubAppInstallation = defineOperation({
   operationId: "onboarding.skipGithubAppInstallation",
@@ -23485,9 +23641,9 @@ var skipOnboardingGithubAppInstallation = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingSampleIssueInputSchema = z24.object({});
-var SkipOnboardingSampleIssueOutputSchema = z24.object({
-  skipped: z24.literal(true)
+var SkipOnboardingSampleIssueInputSchema = z25.object({});
+var SkipOnboardingSampleIssueOutputSchema = z25.object({
+  skipped: z25.literal(true)
 });
 var skipOnboardingSampleIssue = defineOperation({
   operationId: "onboarding.skipSampleIssue",
@@ -23504,11 +23660,11 @@ var skipOnboardingSampleIssue = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var FinishOnboardingInputSchema = z24.object({
-  projectId: z24.string().uuid().describe("Project that completed onboarding.")
+var FinishOnboardingInputSchema = z25.object({
+  projectId: z25.string().uuid().describe("Project that completed onboarding.")
 });
-var FinishOnboardingOutputSchema = z24.object({
-  completed: z24.boolean()
+var FinishOnboardingOutputSchema = z25.object({
+  completed: z25.boolean()
 });
 var finishOnboarding = defineOperation({
   operationId: "onboarding.finish",
@@ -23533,38 +23689,38 @@ var onboardingContract = {
 };
 
 // ../public-api-contracts/src/organizations.ts
-import { z as z25 } from "zod";
-var OrganizationSchema = z25.object({
-  id: z25.string().min(1),
-  name: z25.string(),
-  slug: z25.string(),
-  logo: z25.string().nullable().optional()
+import { z as z26 } from "zod";
+var OrganizationSchema = z26.object({
+  id: z26.string().min(1),
+  name: z26.string(),
+  slug: z26.string(),
+  logo: z26.string().nullable().optional()
 });
 var ListedOrganizationSchema = OrganizationSchema.extend({
   role: OrganizationMembershipRoleSchema.optional()
 });
-var ListOrganizationsInputSchema = z25.object({});
-var ListOrganizationsOutputSchema = z25.object({
-  organizations: z25.array(ListedOrganizationSchema).describe("Organizations available to the current credential.")
+var ListOrganizationsInputSchema = z26.object({});
+var ListOrganizationsOutputSchema = z26.object({
+  organizations: z26.array(ListedOrganizationSchema).describe("Organizations available to the current credential.")
 });
-var GetOrganizationInputSchema = z25.object({
-  organizationId: z25.string().min(1).describe("Organization ID to fetch.")
+var GetOrganizationInputSchema = z26.object({
+  organizationId: z26.string().min(1).describe("Organization ID to fetch.")
 });
-var GetOrganizationOutputSchema = z25.object({
+var GetOrganizationOutputSchema = z26.object({
   organization: OrganizationSchema
 });
-var UpdateOrganizationInputSchema = z25.object({
-  organizationId: z25.string().min(1).describe("Organization ID to update. SDK and CLI callers can auto-fill this before dispatch."),
-  name: z25.string().trim().min(1).max(100).describe("New organization name.")
+var UpdateOrganizationInputSchema = z26.object({
+  organizationId: z26.string().min(1).describe("Organization ID to update. SDK and CLI callers can auto-fill this before dispatch."),
+  name: z26.string().trim().min(1).max(100).describe("New organization name.")
 });
-var UpdateOrganizationOutputSchema = z25.object({
+var UpdateOrganizationOutputSchema = z26.object({
   organization: OrganizationSchema.describe("Updated organization.")
 });
-var OrganizationNameSchema = z25.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
-var CreateOrganizationInputSchema = z25.object({
+var OrganizationNameSchema = z26.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
+var CreateOrganizationInputSchema = z26.object({
   name: OrganizationNameSchema.describe("Organization display name.")
 });
-var CreateOrganizationOutputSchema = z25.object({
+var CreateOrganizationOutputSchema = z26.object({
   organization: OrganizationSchema
 });
 var createOrganization = defineOperation({
@@ -23649,8 +23805,8 @@ var organizationsContract = {
 };
 
 // ../public-api-contracts/src/project.ts
-import { z as z26 } from "zod";
-var ProjectRegionSchema = z26.enum([
+import { z as z27 } from "zod";
+var ProjectRegionSchema = z27.enum([
   "us-east-1",
   "us-east-2",
   "us-west-1",
@@ -23664,31 +23820,31 @@ var ProjectRegionSchema = z26.enum([
   "eu-west-2",
   "eu-west-3"
 ]);
-var ProjectSchema = z26.object({
-  id: z26.string().uuid(),
-  organizationId: z26.string().min(1),
-  name: z26.string(),
+var ProjectSchema = z27.object({
+  id: z27.string().uuid(),
+  organizationId: z27.string().min(1),
+  name: z27.string(),
   region: ProjectRegionSchema
 });
-var ListProjectsInputSchema = z26.object({
-  organizationId: z26.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted.")
+var ListProjectsInputSchema = z27.object({
+  organizationId: z27.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListProjectsOutputSchema = z26.object({
-  projects: z26.array(ProjectSchema).describe("Projects visible within the selected organization.")
+var ListProjectsOutputSchema = z27.object({
+  projects: z27.array(ProjectSchema).describe("Projects visible within the selected organization.")
 });
-var GetProjectInputSchema = z26.object({
-  projectId: z26.string().uuid().describe("Project ID to fetch.")
+var GetProjectInputSchema = z27.object({
+  projectId: z27.string().uuid().describe("Project ID to fetch.")
 });
-var ProjectNameSchema = z26.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
-var CreateProjectInputSchema = z26.object({
-  organizationId: z26.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted."),
+var ProjectNameSchema = z27.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
+var CreateProjectInputSchema = z27.object({
+  organizationId: z27.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted."),
   name: ProjectNameSchema.describe("Project name."),
   region: ProjectRegionSchema.optional().default("us-west-2").describe("AWS region where the new project should be created.")
 });
-var CreateProjectOutputSchema = z26.object({
+var CreateProjectOutputSchema = z27.object({
   project: ProjectSchema
 });
-var GetProjectDetailsOutputSchema = z26.object({
+var GetProjectDetailsOutputSchema = z27.object({
   project: ProjectSchema
 });
 var listProjects = defineOperation({
@@ -23734,11 +23890,11 @@ var createProject = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpdateProjectInputSchema = z26.object({
-  projectId: z26.string().uuid().describe("Project ID to update."),
+var UpdateProjectInputSchema = z27.object({
+  projectId: z27.string().uuid().describe("Project ID to update."),
   name: ProjectNameSchema.optional().describe("New project name.")
 });
-var UpdateProjectOutputSchema = z26.object({
+var UpdateProjectOutputSchema = z27.object({
   project: ProjectSchema
 });
 var updateProject = defineOperation({
@@ -23755,10 +23911,10 @@ var updateProject = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteProjectInputSchema = z26.object({
-  projectId: z26.string().uuid().describe("Project ID to delete.")
+var DeleteProjectInputSchema = z27.object({
+  projectId: z27.string().uuid().describe("Project ID to delete.")
 });
-var DeleteProjectOutputSchema = z26.void();
+var DeleteProjectOutputSchema = z27.void();
 var deleteProject = defineOperation({
   operationId: "projects.delete",
   description: "Delete one project by ID. User credentials require the `settings:write` organization permission (admin or owner role).",
@@ -23783,49 +23939,49 @@ var projectsContract = {
 };
 
 // ../public-api-contracts/src/pull-requests.ts
-import { z as z27 } from "zod";
-var PullRequestStatusSchema = z27.enum(["open", "merged", "closed"]);
-var PullRequestReviewStateSchema = z27.enum([
+import { z as z28 } from "zod";
+var PullRequestStatusSchema = z28.enum(["open", "merged", "closed"]);
+var PullRequestReviewStateSchema = z28.enum([
   "review_required",
   "approved",
   "changes_requested"
 ]);
-var PullRequestChecksStateSchema = z27.enum([
+var PullRequestChecksStateSchema = z28.enum([
   "passing",
   "failing",
   "pending"
 ]);
-var PullRequestSchema = z27.object({
-  id: z27.string().uuid(),
-  projectId: z27.string().uuid(),
-  repositoryFullName: z27.string(),
-  pullRequestId: z27.string().describe("Provider-native pull request identifier (GitHub PR number or Bitbucket PR id), serialized as a string."),
-  githubPullRequestId: z27.number().int().describe("Deprecated: use pullRequestId. Numeric form of the provider-native pull request identifier; kept for backward compatibility."),
-  title: z27.string().nullable(),
-  url: z27.string().nullable(),
+var PullRequestSchema = z28.object({
+  id: z28.string().uuid(),
+  projectId: z28.string().uuid(),
+  repositoryFullName: z28.string(),
+  pullRequestId: z28.string().describe("Provider-native pull request identifier (GitHub PR number or Bitbucket PR id), serialized as a string."),
+  githubPullRequestId: z28.number().int().describe("Deprecated: use pullRequestId. Numeric form of the provider-native pull request identifier; kept for backward compatibility."),
+  title: z28.string().nullable(),
+  url: z28.string().nullable(),
   status: PullRequestStatusSchema.nullable(),
   reviewState: PullRequestReviewStateSchema.nullable(),
   checksState: PullRequestChecksStateSchema.nullable(),
-  requestedByUserId: z27.string().nullable(),
-  authorLogin: z27.string().nullable().describe("Forge login that authored the pull request (often the Sazabi app identity)."),
-  githubAuthorLogin: z27.string().nullable().describe("Deprecated: use authorLogin. Kept for backward compatibility."),
-  threadId: z27.string().uuid().nullable(),
-  runId: z27.string().uuid().nullable(),
-  createdAt: z27.string().datetime(),
-  mergedAt: z27.string().datetime().nullable(),
-  closedAt: z27.string().datetime().nullable()
+  requestedByUserId: z28.string().nullable(),
+  authorLogin: z28.string().nullable().describe("Forge login that authored the pull request (often the Sazabi app identity)."),
+  githubAuthorLogin: z28.string().nullable().describe("Deprecated: use authorLogin. Kept for backward compatibility."),
+  threadId: z28.string().uuid().nullable(),
+  runId: z28.string().uuid().nullable(),
+  createdAt: z28.string().datetime(),
+  mergedAt: z28.string().datetime().nullable(),
+  closedAt: z28.string().datetime().nullable()
 });
-var ListPullRequestsInputSchema = z27.object({
-  projectId: z27.string().uuid().optional().describe("Project to list pull requests for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z27.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of pull requests to return per page."),
-  cursor: z27.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+var ListPullRequestsInputSchema = z28.object({
+  projectId: z28.string().uuid().optional().describe("Project to list pull requests for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z28.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of pull requests to return per page."),
+  cursor: z28.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
   status: PullRequestStatusSchema.optional().describe("Filter by pull request status (open, merged, or closed)."),
-  repositoryFullName: z27.string().trim().optional().describe("Filter by repository full name, for example owner/repo. Case-insensitive."),
-  requestedByUserId: z27.string().trim().optional().describe("Filter by the Sazabi user who requested the pull request. Pass 'me' to filter to the authenticated user.")
+  repositoryFullName: z28.string().trim().optional().describe("Filter by repository full name, for example owner/repo. Case-insensitive."),
+  requestedByUserId: z28.string().trim().optional().describe("Filter by the Sazabi user who requested the pull request. Pass 'me' to filter to the authenticated user.")
 });
-var ListPullRequestsOutputSchema = z27.object({
-  pullRequests: z27.array(PullRequestSchema),
-  nextCursor: z27.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListPullRequestsOutputSchema = z28.object({
+  pullRequests: z28.array(PullRequestSchema),
+  nextCursor: z28.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
 var listPullRequests = defineOperation({
   operationId: "pullRequests.list",
@@ -23842,26 +23998,26 @@ var pullRequestsContract = {
 };
 
 // ../public-api-contracts/src/recommendations.ts
-import { z as z28 } from "zod";
-var RecommendationKindSchema = z28.enum([
+import { z as z29 } from "zod";
+var RecommendationKindSchema = z29.enum([
   "data_source",
   "mcp_connector",
   "sandbox_cli",
   "integration"
 ]);
-var RecommendationStatusSchema = z28.enum(["connected", "recommended"]);
-var RecommendationSchema = z28.object({
+var RecommendationStatusSchema = z29.enum(["connected", "recommended"]);
+var RecommendationSchema = z29.object({
   kind: RecommendationKindSchema.describe("What the recommendation targets: a data source, MCP connector, sandbox CLI, or integration."),
-  targetId: z28.string().describe("Exact catalog id for the kind (data source type, MCP provider id, sandbox CLI preset type, or integration provider id)."),
+  targetId: z29.string().describe("Exact catalog id for the kind (data source type, MCP provider id, sandbox CLI preset type, or integration provider id)."),
   status: RecommendationStatusSchema.describe("Resolved live against current connections: connected (already set up) or recommended (suggested, not yet connected)."),
-  roiScore: z28.number().int().min(0).max(100).describe("Intrinsic ROI score, 0–100 — a normalized blend of how valuable, how easy to connect, and how proven the item is. A pure function of the item; computed live on read, never stored."),
-  priority: z28.number().int().min(1).describe("1-based rank within this list, sorted by roiScore (best first). Items are already returned in priority order; the field lets consumers recover the rank without trusting array position.")
+  roiScore: z29.number().int().min(0).max(100).describe("Intrinsic ROI score, 0–100 — a normalized blend of how valuable, how easy to connect, and how proven the item is. A pure function of the item; computed live on read, never stored."),
+  priority: z29.number().int().min(1).describe("1-based rank within this list, sorted by roiScore (best first). Items are already returned in priority order; the field lets consumers recover the rank without trusting array position.")
 });
-var ListRecommendationsInputSchema = z28.object({
-  projectId: z28.string().uuid().optional().describe("Project to list recommendations for. Auto-filled from CLI and SDK context when omitted.")
+var ListRecommendationsInputSchema = z29.object({
+  projectId: z29.string().uuid().optional().describe("Project to list recommendations for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListRecommendationsOutputSchema = z28.object({
-  recommendations: z28.array(RecommendationSchema).describe("The project's configuration recommendations, deduped by (kind, targetId), with status resolved live and each item's ROI score. Returned in priority order (highest roiScore first).")
+var ListRecommendationsOutputSchema = z29.object({
+  recommendations: z29.array(RecommendationSchema).describe("The project's configuration recommendations, deduped by (kind, targetId), with status resolved live and each item's ROI score. Returned in priority order (highest roiScore first).")
 });
 var listRecommendations = defineOperation({
   operationId: "recommendations.list",
@@ -23879,17 +24035,17 @@ var listRecommendations = defineOperation({
 });
 
 // ../public-api-contracts/src/sandbox-presets.ts
-import { z as z29 } from "zod";
-var SandboxPresetTypeInfoSchema = z29.object({
-  type: z29.string().describe("Preset type identifier."),
-  label: z29.string().describe("Human-readable display name."),
-  executableNames: z29.array(z29.string()).describe("CLI binary names installed by this preset."),
-  envVarKeys: z29.array(z29.string()).describe("Environment variables required for authentication."),
-  setupSkill: z29.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
+import { z as z30 } from "zod";
+var SandboxPresetTypeInfoSchema = z30.object({
+  type: z30.string().describe("Preset type identifier."),
+  label: z30.string().describe("Human-readable display name."),
+  executableNames: z30.array(z30.string()).describe("CLI binary names installed by this preset."),
+  envVarKeys: z30.array(z30.string()).describe("Environment variables required for authentication."),
+  setupSkill: z30.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
 });
-var ListSandboxPresetTypesInputSchema = z29.object({});
-var ListSandboxPresetTypesOutputSchema = z29.object({
-  types: z29.array(SandboxPresetTypeInfoSchema)
+var ListSandboxPresetTypesInputSchema = z30.object({});
+var ListSandboxPresetTypesOutputSchema = z30.object({
+  types: z30.array(SandboxPresetTypeInfoSchema)
 });
 var listSandboxPresetTypes = defineOperation({
   operationId: "sandboxPresets.listTypes",
@@ -23905,23 +24061,23 @@ var listSandboxPresetTypes = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SandboxPresetCredentialSourceSchema = z29.enum([
+var SandboxPresetCredentialSourceSchema = z30.enum([
   "github_app",
   "personal_access_token",
   "stored_credentials"
 ]);
-var SandboxPresetConnectionSchema = z29.object({
-  presetType: z29.string().describe("Preset type identifier."),
+var SandboxPresetConnectionSchema = z30.object({
+  presetType: z30.string().describe("Preset type identifier."),
   credentialSource: SandboxPresetCredentialSourceSchema.describe("Authoritative credential source for the preset."),
-  isSystemManaged: z29.boolean().describe("Whether the connection follows an integration lifecycle."),
-  fallbackConfigured: z29.boolean().describe("Whether user-provided fallback credentials are stored for this preset."),
-  envVarKeys: z29.array(z29.string()).describe("Stored environment variable names. Secret values are omitted.")
+  isSystemManaged: z30.boolean().describe("Whether the connection follows an integration lifecycle."),
+  fallbackConfigured: z30.boolean().describe("Whether user-provided fallback credentials are stored for this preset."),
+  envVarKeys: z30.array(z30.string()).describe("Stored environment variable names. Secret values are omitted.")
 });
-var ListSandboxPresetConnectionsInputSchema = z29.object({
-  projectId: z29.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
+var ListSandboxPresetConnectionsInputSchema = z30.object({
+  projectId: z30.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
 });
-var ListSandboxPresetConnectionsOutputSchema = z29.object({
-  connections: z29.array(SandboxPresetConnectionSchema)
+var ListSandboxPresetConnectionsOutputSchema = z30.object({
+  connections: z30.array(SandboxPresetConnectionSchema)
 });
 var listSandboxPresetConnections = defineOperation({
   operationId: "sandboxPresets.listConnections",
@@ -23937,19 +24093,19 @@ var listSandboxPresetConnections = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SandboxPresetEnvVarSchema = z29.object({
-  key: z29.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must match /^[A-Za-z_][A-Za-z0-9_]*$/.").describe("Environment variable name (e.g. KUBECONFIG_CONTENTS)."),
-  value: z29.string().max(10 * 1024).describe("Secret value. Encrypted at rest; never returned by any API response.")
+var SandboxPresetEnvVarSchema = z30.object({
+  key: z30.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must match /^[A-Za-z_][A-Za-z0-9_]*$/.").describe("Environment variable name (e.g. KUBECONFIG_CONTENTS)."),
+  value: z30.string().max(10 * 1024).describe("Secret value. Encrypted at rest; never returned by any API response.")
 });
-var UpsertSandboxPresetInputSchema = z29.object({
-  projectId: z29.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  presetType: z29.string().min(1).describe("Preset type identifier (e.g. kubectl, aws, github)."),
-  environmentVariables: z29.array(SandboxPresetEnvVarSchema).max(100).describe("Full set of env vars for this preset. Replaces any previously stored values for the preset.")
+var UpsertSandboxPresetInputSchema = z30.object({
+  projectId: z30.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  presetType: z30.string().min(1).describe("Preset type identifier (e.g. kubectl, aws, github)."),
+  environmentVariables: z30.array(SandboxPresetEnvVarSchema).max(100).describe("Full set of env vars for this preset. Replaces any previously stored values for the preset.")
 });
-var UpsertSandboxPresetOutputSchema = z29.object({
-  projectId: z29.string().uuid().describe("Project the preset was written to."),
-  presetType: z29.string().describe("Preset type that was upserted."),
-  envVarKeys: z29.array(z29.string()).describe("Env var key names now stored for this preset. Values are never returned.")
+var UpsertSandboxPresetOutputSchema = z30.object({
+  projectId: z30.string().uuid().describe("Project the preset was written to."),
+  presetType: z30.string().describe("Preset type that was upserted."),
+  envVarKeys: z30.array(z30.string()).describe("Env var key names now stored for this preset. Values are never returned.")
 });
 var upsertSandboxPreset = defineOperation({
   operationId: "sandboxPresets.upsertPreset",
@@ -23973,57 +24129,198 @@ var sandboxPresetsContract = {
   upsertPreset: upsertSandboxPreset.contract
 };
 
+// ../public-api-contracts/src/scripts.ts
+import { z as z31 } from "zod";
+var ProjectScriptNameSchema = z31.string().min(1).max(64).regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/, "Name must start with a letter or digit and contain only letters, digits, underscores, and hyphens (max 64 characters).").describe("Script name. Must be unique within the project among non-deleted scripts.");
+var PROJECT_SCRIPT_CONTENT_MAX_BYTES = 1024 * 1024;
+var ProjectScriptContentSchema = z31.string().min(1).refine((value) => new TextEncoder().encode(value).length <= PROJECT_SCRIPT_CONTENT_MAX_BYTES, {
+  message: `Script content must be at most ${PROJECT_SCRIPT_CONTENT_MAX_BYTES} bytes (1 MiB).`
+}).describe("Bash script body materialized as /home/sazabi/scripts/<name>.sh in the sandbox.");
+var ProjectScriptSchema = z31.object({
+  id: z31.string().uuid(),
+  projectId: z31.string().uuid(),
+  name: z31.string(),
+  description: z31.string().nullable(),
+  contentHash: z31.string().describe("sha256 hex digest of the script content."),
+  createdAt: z31.string().datetime(),
+  updatedAt: z31.string().datetime()
+});
+var ProjectScriptDetailSchema = ProjectScriptSchema.extend({
+  content: ProjectScriptContentSchema
+});
+var ListProjectScriptsInputSchema = z31.object({
+  projectId: z31.string().uuid().optional().describe("Project to list scripts for. Auto-filled from CLI and SDK context when omitted."),
+  search: z31.string().optional().describe("Case-insensitive partial match on script name."),
+  cursor: z31.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  limit: z31.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of scripts to return per page.")
+});
+var ListProjectScriptsOutputSchema = z31.object({
+  scripts: z31.array(ProjectScriptSchema),
+  nextCursor: z31.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+});
+var GetProjectScriptInputSchema = z31.object({
+  name: ProjectScriptNameSchema.describe("Script name to fetch."),
+  projectId: z31.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
+});
+var GetProjectScriptOutputSchema = z31.object({
+  script: ProjectScriptDetailSchema
+});
+var CreateProjectScriptInputSchema = z31.object({
+  projectId: z31.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
+  name: ProjectScriptNameSchema.describe("Script name. Must be unique within the project among non-deleted scripts."),
+  content: ProjectScriptContentSchema,
+  description: z31.string().max(500).nullable().optional().describe("Optional human-readable description.")
+});
+var CreateProjectScriptOutputSchema = z31.object({
+  script: ProjectScriptDetailSchema
+});
+var UpdateProjectScriptInputSchema = z31.object({
+  name: ProjectScriptNameSchema.describe("Script to update."),
+  projectId: z31.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
+  content: ProjectScriptContentSchema.optional().describe("New script body. Omit to leave content unchanged."),
+  description: z31.string().max(500).nullable().optional().describe("New description, or null to clear it. Omit to leave unchanged.")
+});
+var UpdateProjectScriptOutputSchema = z31.object({
+  script: ProjectScriptDetailSchema
+});
+var DeleteProjectScriptInputSchema = z31.object({
+  name: ProjectScriptNameSchema.describe("Script to delete."),
+  projectId: z31.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
+});
+var DeleteProjectScriptOutputSchema = z31.object({
+  deleted: z31.boolean()
+});
+var listProjectScripts = defineOperation({
+  operationId: "scripts.list",
+  description: "List durable bash scripts stored for a project.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/scripts",
+    tags: ["Scripts"]
+  },
+  input: ListProjectScriptsInputSchema,
+  output: ListProjectScriptsOutputSchema,
+  pagination: "cursor",
+  async: "sync"
+});
+var getProjectScript = defineOperation({
+  operationId: "scripts.get",
+  description: "Get a single project script by name, including its body.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/scripts/{name}",
+    tags: ["Scripts"]
+  },
+  input: GetProjectScriptInputSchema,
+  output: GetProjectScriptOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var createProjectScript = defineOperation({
+  operationId: "scripts.create",
+  description: "Create a durable bash script for a project.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/scripts",
+    successStatus: 201,
+    tags: ["Scripts"]
+  },
+  input: CreateProjectScriptInputSchema,
+  output: CreateProjectScriptOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var updateProjectScript = defineOperation({
+  operationId: "scripts.update",
+  description: "Update a project script's body and/or description.",
+  backend: "api",
+  route: {
+    method: "PATCH",
+    path: "/scripts/{name}",
+    tags: ["Scripts"]
+  },
+  input: UpdateProjectScriptInputSchema,
+  output: UpdateProjectScriptOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var deleteProjectScript = defineOperation({
+  operationId: "scripts.delete",
+  description: "Soft-delete a project script by name.",
+  backend: "api",
+  route: {
+    method: "DELETE",
+    path: "/scripts/{name}",
+    successStatus: 204,
+    tags: ["Scripts"]
+  },
+  input: DeleteProjectScriptInputSchema,
+  output: DeleteProjectScriptOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var scriptsContract = {
+  list: listProjectScripts.contract,
+  get: getProjectScript.contract,
+  create: createProjectScript.contract,
+  update: updateProjectScript.contract,
+  delete: deleteProjectScript.contract
+};
+
 // ../public-api-contracts/src/search.ts
-import { z as z30 } from "zod";
-var SearchInputSchema = z30.object({
-  projectId: z30.string().uuid().optional().describe("Project to search within. Auto-filled from CLI and SDK context when omitted."),
-  query: z30.string().trim().min(1, "Query must be at least 1 character").max(500, "Query must be at most 500 characters"),
-  limit: z30.coerce.number().min(1).max(100).default(20).describe("Maximum number of search results to return."),
-  page: z30.coerce.number().min(1).default(1).describe("One-based page number.")
+import { z as z32 } from "zod";
+var SearchInputSchema = z32.object({
+  projectId: z32.string().uuid().optional().describe("Project to search within. Auto-filled from CLI and SDK context when omitted."),
+  query: z32.string().trim().min(1, "Query must be at least 1 character").max(500, "Query must be at most 500 characters"),
+  limit: z32.coerce.number().min(1).max(100).default(20).describe("Maximum number of search results to return."),
+  page: z32.coerce.number().min(1).default(1).describe("One-based page number.")
 });
 var SearchThreadsInputSchema = SearchInputSchema.extend({
-  status: z30.enum(["regular", "archived"]).optional().describe("Optional thread status filter.")
+  status: z32.enum(["regular", "archived"]).optional().describe("Optional thread status filter.")
 });
 var SearchMessagesInputSchema = SearchInputSchema.extend({
-  threadId: z30.string().uuid().optional().describe("Optional thread restriction for message search."),
-  role: z30.enum(["user", "assistant"]).optional().describe("Optional message role filter.")
+  threadId: z32.string().uuid().optional().describe("Optional thread restriction for message search."),
+  role: z32.enum(["user", "assistant"]).optional().describe("Optional message role filter.")
 });
-var SearchThreadsOutputSchema = z30.object({
-  threads: z30.array(z30.object({
-    id: z30.string().uuid(),
-    projectId: z30.string().uuid().optional(),
-    title: z30.string(),
-    status: z30.enum(["regular", "archived"]),
-    labels: z30.array(z30.string()),
-    createdAt: z30.string().datetime(),
-    updatedAt: z30.string().datetime(),
-    highlights: z30.array(z30.string()),
-    score: z30.number().optional()
+var SearchThreadsOutputSchema = z32.object({
+  threads: z32.array(z32.object({
+    id: z32.string().uuid(),
+    projectId: z32.string().uuid().optional(),
+    title: z32.string(),
+    status: z32.enum(["regular", "archived"]),
+    labels: z32.array(z32.string()),
+    createdAt: z32.string().datetime(),
+    updatedAt: z32.string().datetime(),
+    highlights: z32.array(z32.string()),
+    score: z32.number().optional()
   })),
-  pagination: z30.object({
-    page: z30.number(),
-    limit: z30.number(),
-    totalResults: z30.number(),
-    totalPages: z30.number()
+  pagination: z32.object({
+    page: z32.number(),
+    limit: z32.number(),
+    totalResults: z32.number(),
+    totalPages: z32.number()
   }).describe("Page-based pagination metadata for the current search result.")
 });
-var SearchMessagesOutputSchema = z30.object({
-  messages: z30.array(z30.object({
-    id: z30.string().uuid(),
-    threadId: z30.string().uuid(),
-    threadTitle: z30.string(),
-    role: z30.enum(["user", "assistant"]),
-    content: z30.string(),
-    createdAt: z30.string().datetime(),
-    updatedAt: z30.string().datetime(),
-    highlights: z30.array(z30.string()),
-    score: z30.number().optional()
+var SearchMessagesOutputSchema = z32.object({
+  messages: z32.array(z32.object({
+    id: z32.string().uuid(),
+    threadId: z32.string().uuid(),
+    threadTitle: z32.string(),
+    role: z32.enum(["user", "assistant"]),
+    content: z32.string(),
+    createdAt: z32.string().datetime(),
+    updatedAt: z32.string().datetime(),
+    highlights: z32.array(z32.string()),
+    score: z32.number().optional()
   })),
-  pagination: z30.object({
-    page: z30.number(),
-    limit: z30.number(),
-    totalResults: z30.number(),
-    totalPages: z30.number()
+  pagination: z32.object({
+    page: z32.number(),
+    limit: z32.number(),
+    totalResults: z32.number(),
+    totalPages: z32.number()
   }).describe("Page-based pagination metadata for the current search result.")
 });
 var searchThreads = defineOperation({
@@ -24126,46 +24423,46 @@ var searchContract = {
 };
 
 // ../public-api-contracts/src/status-components.ts
-import { z as z31 } from "zod";
-var StatusComponentSchema = z31.object({
-  id: z31.string().uuid(),
-  projectId: z31.string().uuid(),
-  name: z31.string(),
-  description: z31.string().nullable(),
-  currentStatus: z31.enum(["operational", "degraded", "outage"]).describe("Current health status of this component."),
-  firstSeenAt: z31.string().datetime(),
-  lastSeenAt: z31.string().datetime(),
-  deletedAt: z31.string().datetime().nullable().describe("Timestamp when this component was deregistered, if any.")
+import { z as z33 } from "zod";
+var StatusComponentSchema = z33.object({
+  id: z33.string().uuid(),
+  projectId: z33.string().uuid(),
+  name: z33.string(),
+  description: z33.string().nullable(),
+  currentStatus: z33.enum(["operational", "degraded", "outage"]).describe("Current health status of this component."),
+  firstSeenAt: z33.string().datetime(),
+  lastSeenAt: z33.string().datetime(),
+  deletedAt: z33.string().datetime().nullable().describe("Timestamp when this component was deregistered, if any.")
 });
-var ListStatusComponentsInputSchema = z31.object({
-  projectId: z31.string().uuid().optional().describe("Project to list status components for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z31.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of components to return per page."),
-  cursor: z31.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  includeDeleted: z31.union([z31.boolean(), z31.stringbool()]).default(false).describe("When true, include removed components in the response.")
+var ListStatusComponentsInputSchema = z33.object({
+  projectId: z33.string().uuid().optional().describe("Project to list status components for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z33.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of components to return per page."),
+  cursor: z33.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  includeDeleted: z33.union([z33.boolean(), z33.stringbool()]).default(false).describe("When true, include removed components in the response.")
 });
-var ListStatusComponentsOutputSchema = z31.object({
-  statusComponents: z31.array(StatusComponentSchema),
-  nextCursor: z31.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListStatusComponentsOutputSchema = z33.object({
+  statusComponents: z33.array(StatusComponentSchema),
+  nextCursor: z33.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetStatusComponentInputSchema = z31.object({
-  componentId: z31.string().uuid().describe("Status component ID to retrieve.")
+var GetStatusComponentInputSchema = z33.object({
+  componentId: z33.string().uuid().describe("Status component ID to retrieve.")
 });
-var GetStatusComponentOutputSchema = z31.object({
+var GetStatusComponentOutputSchema = z33.object({
   statusComponent: StatusComponentSchema
 });
-var RegisterStatusComponentInputSchema = z31.object({
-  projectId: z31.string().uuid().optional().describe("Project to register the status component in. Auto-filled from CLI and SDK context when omitted."),
-  name: z31.string().trim().min(1, "Name is required").describe("Evidence-backed component name to register."),
-  description: z31.string().trim().min(1, "Description cannot be empty").optional().describe("Optional component description.")
+var RegisterStatusComponentInputSchema = z33.object({
+  projectId: z33.string().uuid().optional().describe("Project to register the status component in. Auto-filled from CLI and SDK context when omitted."),
+  name: z33.string().trim().min(1, "Name is required").describe("Evidence-backed component name to register."),
+  description: z33.string().trim().min(1, "Description cannot be empty").optional().describe("Optional component description.")
 });
-var RegisterStatusComponentOutputSchema = z31.object({
+var RegisterStatusComponentOutputSchema = z33.object({
   statusComponent: StatusComponentSchema
 });
-var DeregisterStatusComponentInputSchema = z31.object({
-  componentId: z31.string().uuid().describe("Status component ID to deregister."),
-  reason: z31.string().trim().min(1, "Reason cannot be empty").optional().describe("Optional reason for audit logging.")
+var DeregisterStatusComponentInputSchema = z33.object({
+  componentId: z33.string().uuid().describe("Status component ID to deregister."),
+  reason: z33.string().trim().min(1, "Reason cannot be empty").optional().describe("Optional reason for audit logging.")
 });
-var DeregisterStatusComponentOutputSchema = z31.object({
+var DeregisterStatusComponentOutputSchema = z33.object({
   statusComponent: StatusComponentSchema
 });
 var listStatusComponents = defineOperation({
@@ -24224,42 +24521,42 @@ var deregisterStatusComponent = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var StatusIncidentSeveritySchema = z31.enum(["degraded", "outage"]).describe("Severity of a status-page incident. 'outage' marks the component down; 'degraded' marks partial impact.");
-var StatusIncidentSchema = z31.object({
-  id: z31.string().uuid(),
-  componentId: z31.string().uuid(),
-  projectId: z31.string().uuid(),
+var StatusIncidentSeveritySchema = z33.enum(["degraded", "outage"]).describe("Severity of a status-page incident. 'outage' marks the component down; 'degraded' marks partial impact.");
+var StatusIncidentSchema = z33.object({
+  id: z33.string().uuid(),
+  componentId: z33.string().uuid(),
+  projectId: z33.string().uuid(),
   severity: StatusIncidentSeveritySchema,
-  summary: z31.string().describe("Human-readable summary of the status-page issue."),
-  startedAt: z31.string().datetime().describe("When the incident began affecting the component."),
-  resolvedAt: z31.string().datetime().nullable().describe("When the incident was resolved, or null while ongoing.")
+  summary: z33.string().describe("Human-readable summary of the status-page issue."),
+  startedAt: z33.string().datetime().describe("When the incident began affecting the component."),
+  resolvedAt: z33.string().datetime().nullable().describe("When the incident was resolved, or null while ongoing.")
 });
-var ListStatusIncidentsInputSchema = z31.object({
-  projectId: z31.string().uuid().optional().describe("Project to list status-page issues for. Auto-filled from CLI and SDK context when omitted."),
-  componentId: z31.string().uuid().optional().describe("Restrict results to a single component."),
-  activeOnly: z31.union([z31.boolean(), z31.stringbool()]).default(false).describe("When true, return only unresolved (ongoing) issues."),
-  limit: z31.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of issues to return per page."),
-  cursor: z31.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListStatusIncidentsInputSchema = z33.object({
+  projectId: z33.string().uuid().optional().describe("Project to list status-page issues for. Auto-filled from CLI and SDK context when omitted."),
+  componentId: z33.string().uuid().optional().describe("Restrict results to a single component."),
+  activeOnly: z33.union([z33.boolean(), z33.stringbool()]).default(false).describe("When true, return only unresolved (ongoing) issues."),
+  limit: z33.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of issues to return per page."),
+  cursor: z33.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListStatusIncidentsOutputSchema = z31.object({
-  incidents: z31.array(StatusIncidentSchema),
-  nextCursor: z31.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListStatusIncidentsOutputSchema = z33.object({
+  incidents: z33.array(StatusIncidentSchema),
+  nextCursor: z33.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var StatusTimelineEntrySchema = z31.object({
-  timestamp: z31.string().datetime(),
-  status: z31.enum(["operational", "degraded", "outage", "unknown"]).describe("Worst component status observed during this timeline bucket.")
+var StatusTimelineEntrySchema = z33.object({
+  timestamp: z33.string().datetime(),
+  status: z33.enum(["operational", "degraded", "outage", "unknown"]).describe("Worst component status observed during this timeline bucket.")
 });
-var GetStatusTimelineInputSchema = z31.object({
-  componentId: z31.string().uuid().describe("Status component to build the timeline for."),
-  windowStart: z31.string().datetime({ offset: true }).optional().describe("Start of the timeline window. Defaults to 7 days before windowEnd."),
-  windowEnd: z31.string().datetime({ offset: true }).optional().describe("End of the timeline window. Defaults to now.")
+var GetStatusTimelineInputSchema = z33.object({
+  componentId: z33.string().uuid().describe("Status component to build the timeline for."),
+  windowStart: z33.string().datetime({ offset: true }).optional().describe("Start of the timeline window. Defaults to 7 days before windowEnd."),
+  windowEnd: z33.string().datetime({ offset: true }).optional().describe("End of the timeline window. Defaults to now.")
 });
-var GetStatusTimelineOutputSchema = z31.object({
-  componentId: z31.string().uuid(),
-  windowStart: z31.string().datetime(),
-  windowEnd: z31.string().datetime(),
-  timeline: z31.array(StatusTimelineEntrySchema),
-  incidents: z31.array(StatusIncidentSchema)
+var GetStatusTimelineOutputSchema = z33.object({
+  componentId: z33.string().uuid(),
+  windowStart: z33.string().datetime(),
+  windowEnd: z33.string().datetime(),
+  timeline: z33.array(StatusTimelineEntrySchema),
+  incidents: z33.array(StatusIncidentSchema)
 });
 var listStatusIncidents = defineOperation({
   operationId: "statusComponents.incidents.list",
@@ -24304,22 +24601,22 @@ var statusComponentsContract = {
 var TASK_CATEGORIES = ["onboarding", "setup"];
 
 // ../public-api-contracts/src/tasks.ts
-import { z as z32 } from "zod";
-var TaskCategorySchema = z32.enum(TASK_CATEGORIES);
-var TaskSchema2 = z32.object({
-  id: z32.string().describe("Unique task identifier (e.g. install_github_app)."),
-  label: z32.string().describe("Short human-readable task name."),
-  description: z32.string().describe("Explanation of what needs to be completed to satisfy this task."),
-  instructions: z32.string().describe("Step-by-step instructions for completing this task."),
-  completed: z32.boolean().describe("Whether the task has been completed."),
-  completedAt: z32.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
+import { z as z34 } from "zod";
+var TaskCategorySchema = z34.enum(TASK_CATEGORIES);
+var TaskSchema2 = z34.object({
+  id: z34.string().describe("Unique task identifier (e.g. install_github_app)."),
+  label: z34.string().describe("Short human-readable task name."),
+  description: z34.string().describe("Explanation of what needs to be completed to satisfy this task."),
+  instructions: z34.string().describe("Step-by-step instructions for completing this task."),
+  completed: z34.boolean().describe("Whether the task has been completed."),
+  completedAt: z34.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
   category: TaskCategorySchema.describe("Task category: onboarding (core setup steps) or setup (additional configuration).")
 });
-var ListTasksInputSchema = z32.object({
-  projectId: z32.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
+var ListTasksInputSchema = z34.object({
+  projectId: z34.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListTasksOutputSchema = z32.object({
-  tasks: z32.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
+var ListTasksOutputSchema = z34.object({
+  tasks: z34.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
 });
 var listTasks = defineOperation({
   operationId: "tasks.list",
@@ -24342,6 +24639,8 @@ var publicApiContract = {
   automations: {
     list: listAutomations.contract,
     get: getAutomation.contract,
+    create: createAutomation.contract,
+    update: updateAutomation.contract,
     enable: enableAutomation.contract,
     disable: disableAutomation.contract,
     runs: {
@@ -24396,6 +24695,20 @@ var publicApiContract = {
     listConnections: listSandboxPresetConnections.contract,
     listTypes: listSandboxPresetTypes.contract,
     upsertPreset: upsertSandboxPreset.contract
+  },
+  scripts: {
+    list: listProjectScripts.contract,
+    get: getProjectScript.contract,
+    create: createProjectScript.contract,
+    update: updateProjectScript.contract,
+    delete: deleteProjectScript.contract
+  },
+  memory: {
+    put: putProjectMemory.contract,
+    get: getProjectMemory.contract,
+    list: listProjectMemory.contract,
+    search: searchProjectMemory.contract,
+    delete: deleteProjectMemory.contract
   },
   onboarding: {
     getState: getOnboardingState.contract,
@@ -24821,41 +25134,41 @@ var toStreamError = (error) => {
 import { ORPCError } from "@orpc/client";
 
 // ../tail-ws-contracts/src/index.ts
-import { z as z33 } from "zod";
-var LogFiltersSchema = z33.object({
-  severities: z33.array(z33.string()).optional().describe("Limit results to the listed severities."),
-  services: z33.array(z33.string()).optional().describe("Limit results to the listed service names."),
-  environments: z33.array(z33.string()).optional().describe("Limit results to the listed deployment environments."),
-  searchTerm: z33.string().optional().describe("Case-insensitive substring match against the log body."),
-  traceId: z33.string().optional().describe("Limit results to one trace ID.")
+import { z as z35 } from "zod";
+var LogFiltersSchema = z35.object({
+  severities: z35.array(z35.string()).optional().describe("Limit results to the listed severities."),
+  services: z35.array(z35.string()).optional().describe("Limit results to the listed service names."),
+  environments: z35.array(z35.string()).optional().describe("Limit results to the listed deployment environments."),
+  searchTerm: z35.string().optional().describe("Case-insensitive substring match against the log body."),
+  traceId: z35.string().optional().describe("Limit results to one trace ID.")
 });
-var WebSocketLogResourceSchema = z33.object({
-  service: z33.string(),
-  namespace: z33.string(),
-  environment: z33.string(),
-  host: z33.string(),
-  container: z33.string(),
-  pod: z33.string()
+var WebSocketLogResourceSchema = z35.object({
+  service: z35.string(),
+  namespace: z35.string(),
+  environment: z35.string(),
+  host: z35.string(),
+  container: z35.string(),
+  pod: z35.string()
 });
-var WebSocketLogEntrySchema = z33.object({
-  id: z33.string(),
-  timestamp: z33.string().datetime(),
-  severity: z33.string(),
-  body: z33.string(),
-  service: z33.string(),
-  traceId: z33.string(),
-  spanId: z33.string(),
-  attributes: z33.record(z33.string(), z33.string()),
+var WebSocketLogEntrySchema = z35.object({
+  id: z35.string(),
+  timestamp: z35.string().datetime(),
+  severity: z35.string(),
+  body: z35.string(),
+  service: z35.string(),
+  traceId: z35.string(),
+  spanId: z35.string(),
+  attributes: z35.record(z35.string(), z35.string()),
   resource: WebSocketLogResourceSchema
 });
-var WebSocketLogMessageSchema = z33.object({
-  type: z33.literal("logs"),
-  timestamp: z33.string().datetime(),
-  data: z33.array(WebSocketLogEntrySchema)
+var WebSocketLogMessageSchema = z35.object({
+  type: z35.literal("logs"),
+  timestamp: z35.string().datetime(),
+  data: z35.array(WebSocketLogEntrySchema)
 });
 
 // src/log-transports.ts
-import { z as z34 } from "zod";
+import { z as z36 } from "zod";
 var DEFAULT_INTAKE_BASE_URL = "https://{region}.intake.sazabi.com";
 var DEFAULT_TAIL_BASE_URL = "https://{region}.tail.sazabi.com";
 var TAIL_RECONNECT_BASE_DELAY_MS = 500;
@@ -24870,17 +25183,17 @@ var isLoopbackHostname = (hostname) => {
   const normalizedHostname = normalizeLoopbackHostname(hostname);
   return normalizedHostname === "localhost" || normalizedHostname === "127.0.0.1" || normalizedHostname === "::1";
 };
-var TailLogsInputSchema = z34.object({
-  projectId: z34.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
+var TailLogsInputSchema = z36.object({
+  projectId: z36.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
   filters: LogFiltersSchema.optional().describe("Optional filters applied by the tail SSE service.")
 });
-var ForwardLogsInputSchema = z34.object({
-  publicKey: z34.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
-  logs: z34.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
+var ForwardLogsInputSchema = z36.object({
+  publicKey: z36.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
+  logs: z36.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
 });
-var ForwardLogsOutputSchema = z34.object({
-  forwardedCount: z34.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
-  failedCount: z34.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
+var ForwardLogsOutputSchema = z36.object({
+  forwardedCount: z36.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
+  failedCount: z36.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
 });
 var forwardLogsExamples = [
   {
@@ -25579,6 +25892,8 @@ var createClient = (options) => {
     automations: {
       list: async (input = {}) => raw.automations.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "automations.list")),
       get: async (input) => raw.automations.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "automations.get")),
+      create: async (input) => raw.automations.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "automations.create")),
+      update: async (input) => raw.automations.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "automations.update")),
       enable: async (input) => raw.automations.enable(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "automations.enable")),
       disable: async (input) => raw.automations.disable(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "automations.disable")),
       runs: {
@@ -25708,6 +26023,20 @@ var createClient = (options) => {
     sandboxPresets: {
       listConnections: async (input = {}) => raw.sandboxPresets.listConnections(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listSandboxPresetConnections.operationId)),
       listTypes: async () => raw.sandboxPresets.listTypes({})
+    },
+    memory: {
+      list: async (input = {}) => raw.memory.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listProjectMemory.operationId)),
+      get: async (input) => raw.memory.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, getProjectMemory.operationId)),
+      put: async (input) => raw.memory.put(await resolveRequiredProjectScopedInput(options.credentialProvider, input, putProjectMemory.operationId)),
+      search: async (input) => raw.memory.search(await resolveRequiredProjectScopedInput(options.credentialProvider, input, searchProjectMemory.operationId)),
+      delete: async (input) => raw.memory.delete(await resolveRequiredProjectScopedInput(options.credentialProvider, input, deleteProjectMemory.operationId))
+    },
+    scripts: {
+      list: async (input = {}) => raw.scripts.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.list")),
+      get: async (input) => raw.scripts.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.get")),
+      create: async (input) => raw.scripts.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.create")),
+      update: async (input) => raw.scripts.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.update")),
+      delete: async (input) => raw.scripts.delete(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.delete"))
     },
     issues: {
       count: async (input = {}) => raw.issues.count(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "issues.count")),

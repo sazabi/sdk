@@ -79,6 +79,8 @@ export declare const AutomationSchema: z.ZodObject<{
     kind: z.ZodEnum<{
         script: "script";
     }>;
+    scriptId: z.ZodNullable<z.ZodString>;
+    scriptName: z.ZodNullable<z.ZodString>;
     source: z.ZodEnum<{
         custom: "custom";
         sazabi_managed: "sazabi_managed";
@@ -119,6 +121,8 @@ export declare const AutomationDetailSchema: z.ZodObject<{
     kind: z.ZodEnum<{
         script: "script";
     }>;
+    scriptId: z.ZodNullable<z.ZodString>;
+    scriptName: z.ZodNullable<z.ZodString>;
     source: z.ZodEnum<{
         custom: "custom";
         sazabi_managed: "sazabi_managed";
@@ -191,6 +195,8 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -239,6 +245,8 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -278,6 +286,126 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetAutomationOutput = z.infer<typeof GetAutomationOutputSchema>;
+export declare const CreateAutomationInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    name: z.ZodString;
+    description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    scriptId: z.ZodOptional<z.ZodString>;
+    script: z.ZodOptional<z.ZodString>;
+    cronExpression: z.ZodOptional<z.ZodString>;
+    timezone: z.ZodOptional<z.ZodString>;
+    timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
+    enabled: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>;
+export type CreateAutomationInput = z.infer<typeof CreateAutomationInputSchema>;
+export declare const CreateAutomationOutputSchema: z.ZodObject<{
+    automation: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        kind: z.ZodEnum<{
+            script: "script";
+        }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
+        source: z.ZodEnum<{
+            custom: "custom";
+            sazabi_managed: "sazabi_managed";
+        }>;
+        enabled: z.ZodBoolean;
+        cronExpression: z.ZodNullable<z.ZodString>;
+        timezone: z.ZodString;
+        timeoutSeconds: z.ZodNullable<z.ZodNumber>;
+        health: z.ZodEnum<{
+            failing: "failing";
+            healthy: "healthy";
+            never_run: "never_run";
+        }>;
+        lastRun: z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            automationRunKey: z.ZodString;
+            status: z.ZodEnum<{
+                cancelled: "cancelled";
+                failed: "failed";
+                running: "running";
+                succeeded: "succeeded";
+                timed_out: "timed_out";
+            }>;
+            startedAt: z.ZodString;
+            completedAt: z.ZodNullable<z.ZodString>;
+            durationMs: z.ZodNullable<z.ZodNumber>;
+            exitCode: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>>;
+        successRate: z.ZodNullable<z.ZodNumber>;
+        runCount: z.ZodNumber;
+        failedRunCount: z.ZodNumber;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        recordedHistoryStartsAt: z.ZodString;
+        scriptIdentifier: z.ZodNullable<z.ZodString>;
+        canToggle: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type CreateAutomationOutput = z.infer<typeof CreateAutomationOutputSchema>;
+export declare const UpdateAutomationInputSchema: z.ZodObject<{
+    automationId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+    name: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    cronExpression: z.ZodOptional<z.ZodString>;
+    timezone: z.ZodOptional<z.ZodString>;
+    timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
+}, z.core.$strip>;
+export type UpdateAutomationInput = z.infer<typeof UpdateAutomationInputSchema>;
+export declare const UpdateAutomationOutputSchema: z.ZodObject<{
+    automation: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        kind: z.ZodEnum<{
+            script: "script";
+        }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
+        source: z.ZodEnum<{
+            custom: "custom";
+            sazabi_managed: "sazabi_managed";
+        }>;
+        enabled: z.ZodBoolean;
+        cronExpression: z.ZodNullable<z.ZodString>;
+        timezone: z.ZodString;
+        timeoutSeconds: z.ZodNullable<z.ZodNumber>;
+        health: z.ZodEnum<{
+            failing: "failing";
+            healthy: "healthy";
+            never_run: "never_run";
+        }>;
+        lastRun: z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            automationRunKey: z.ZodString;
+            status: z.ZodEnum<{
+                cancelled: "cancelled";
+                failed: "failed";
+                running: "running";
+                succeeded: "succeeded";
+                timed_out: "timed_out";
+            }>;
+            startedAt: z.ZodString;
+            completedAt: z.ZodNullable<z.ZodString>;
+            durationMs: z.ZodNullable<z.ZodNumber>;
+            exitCode: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>>;
+        successRate: z.ZodNullable<z.ZodNumber>;
+        runCount: z.ZodNumber;
+        failedRunCount: z.ZodNumber;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        recordedHistoryStartsAt: z.ZodString;
+        scriptIdentifier: z.ZodNullable<z.ZodString>;
+        canToggle: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type UpdateAutomationOutput = z.infer<typeof UpdateAutomationOutputSchema>;
 export declare const EnableAutomationInputSchema: z.ZodObject<{
     automationId: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
@@ -291,6 +419,8 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -343,6 +473,8 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -414,6 +546,8 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -459,6 +593,122 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
+        source: z.ZodEnum<{
+            custom: "custom";
+            sazabi_managed: "sazabi_managed";
+        }>;
+        enabled: z.ZodBoolean;
+        cronExpression: z.ZodNullable<z.ZodString>;
+        timezone: z.ZodString;
+        timeoutSeconds: z.ZodNullable<z.ZodNumber>;
+        health: z.ZodEnum<{
+            failing: "failing";
+            healthy: "healthy";
+            never_run: "never_run";
+        }>;
+        lastRun: z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            automationRunKey: z.ZodString;
+            status: z.ZodEnum<{
+                cancelled: "cancelled";
+                failed: "failed";
+                running: "running";
+                succeeded: "succeeded";
+                timed_out: "timed_out";
+            }>;
+            startedAt: z.ZodString;
+            completedAt: z.ZodNullable<z.ZodString>;
+            durationMs: z.ZodNullable<z.ZodNumber>;
+            exitCode: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>>;
+        successRate: z.ZodNullable<z.ZodNumber>;
+        runCount: z.ZodNumber;
+        failedRunCount: z.ZodNumber;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        recordedHistoryStartsAt: z.ZodString;
+        scriptIdentifier: z.ZodNullable<z.ZodString>;
+        canToggle: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const createAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    name: z.ZodString;
+    description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    scriptId: z.ZodOptional<z.ZodString>;
+    script: z.ZodOptional<z.ZodString>;
+    cronExpression: z.ZodOptional<z.ZodString>;
+    timezone: z.ZodOptional<z.ZodString>;
+    timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
+    enabled: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>, z.ZodObject<{
+    automation: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        kind: z.ZodEnum<{
+            script: "script";
+        }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
+        source: z.ZodEnum<{
+            custom: "custom";
+            sazabi_managed: "sazabi_managed";
+        }>;
+        enabled: z.ZodBoolean;
+        cronExpression: z.ZodNullable<z.ZodString>;
+        timezone: z.ZodString;
+        timeoutSeconds: z.ZodNullable<z.ZodNumber>;
+        health: z.ZodEnum<{
+            failing: "failing";
+            healthy: "healthy";
+            never_run: "never_run";
+        }>;
+        lastRun: z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            automationRunKey: z.ZodString;
+            status: z.ZodEnum<{
+                cancelled: "cancelled";
+                failed: "failed";
+                running: "running";
+                succeeded: "succeeded";
+                timed_out: "timed_out";
+            }>;
+            startedAt: z.ZodString;
+            completedAt: z.ZodNullable<z.ZodString>;
+            durationMs: z.ZodNullable<z.ZodNumber>;
+            exitCode: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>>;
+        successRate: z.ZodNullable<z.ZodNumber>;
+        runCount: z.ZodNumber;
+        failedRunCount: z.ZodNumber;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        recordedHistoryStartsAt: z.ZodString;
+        scriptIdentifier: z.ZodNullable<z.ZodString>;
+        canToggle: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const updateAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    automationId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+    name: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    cronExpression: z.ZodOptional<z.ZodString>;
+    timezone: z.ZodOptional<z.ZodString>;
+    timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
+}, z.core.$strip>, z.ZodObject<{
+    automation: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        kind: z.ZodEnum<{
+            script: "script";
+        }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -508,6 +758,8 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -557,6 +809,8 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         kind: z.ZodEnum<{
             script: "script";
         }>;
+        scriptId: z.ZodNullable<z.ZodString>;
+        scriptName: z.ZodNullable<z.ZodString>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -847,6 +1101,8 @@ export declare const automationsContract: {
             kind: z.ZodEnum<{
                 script: "script";
             }>;
+            scriptId: z.ZodNullable<z.ZodString>;
+            scriptName: z.ZodNullable<z.ZodString>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -892,6 +1148,122 @@ export declare const automationsContract: {
             kind: z.ZodEnum<{
                 script: "script";
             }>;
+            scriptId: z.ZodNullable<z.ZodString>;
+            scriptName: z.ZodNullable<z.ZodString>;
+            source: z.ZodEnum<{
+                custom: "custom";
+                sazabi_managed: "sazabi_managed";
+            }>;
+            enabled: z.ZodBoolean;
+            cronExpression: z.ZodNullable<z.ZodString>;
+            timezone: z.ZodString;
+            timeoutSeconds: z.ZodNullable<z.ZodNumber>;
+            health: z.ZodEnum<{
+                failing: "failing";
+                healthy: "healthy";
+                never_run: "never_run";
+            }>;
+            lastRun: z.ZodNullable<z.ZodObject<{
+                id: z.ZodString;
+                automationRunKey: z.ZodString;
+                status: z.ZodEnum<{
+                    cancelled: "cancelled";
+                    failed: "failed";
+                    running: "running";
+                    succeeded: "succeeded";
+                    timed_out: "timed_out";
+                }>;
+                startedAt: z.ZodString;
+                completedAt: z.ZodNullable<z.ZodString>;
+                durationMs: z.ZodNullable<z.ZodNumber>;
+                exitCode: z.ZodNullable<z.ZodNumber>;
+            }, z.core.$strip>>;
+            successRate: z.ZodNullable<z.ZodNumber>;
+            runCount: z.ZodNumber;
+            failedRunCount: z.ZodNumber;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+            recordedHistoryStartsAt: z.ZodString;
+            scriptIdentifier: z.ZodNullable<z.ZodString>;
+            canToggle: z.ZodBoolean;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        name: z.ZodString;
+        description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        scriptId: z.ZodOptional<z.ZodString>;
+        script: z.ZodOptional<z.ZodString>;
+        cronExpression: z.ZodOptional<z.ZodString>;
+        timezone: z.ZodOptional<z.ZodString>;
+        timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
+        enabled: z.ZodOptional<z.ZodBoolean>;
+    }, z.core.$strip>, z.ZodObject<{
+        automation: z.ZodObject<{
+            id: z.ZodString;
+            projectId: z.ZodString;
+            name: z.ZodString;
+            kind: z.ZodEnum<{
+                script: "script";
+            }>;
+            scriptId: z.ZodNullable<z.ZodString>;
+            scriptName: z.ZodNullable<z.ZodString>;
+            source: z.ZodEnum<{
+                custom: "custom";
+                sazabi_managed: "sazabi_managed";
+            }>;
+            enabled: z.ZodBoolean;
+            cronExpression: z.ZodNullable<z.ZodString>;
+            timezone: z.ZodString;
+            timeoutSeconds: z.ZodNullable<z.ZodNumber>;
+            health: z.ZodEnum<{
+                failing: "failing";
+                healthy: "healthy";
+                never_run: "never_run";
+            }>;
+            lastRun: z.ZodNullable<z.ZodObject<{
+                id: z.ZodString;
+                automationRunKey: z.ZodString;
+                status: z.ZodEnum<{
+                    cancelled: "cancelled";
+                    failed: "failed";
+                    running: "running";
+                    succeeded: "succeeded";
+                    timed_out: "timed_out";
+                }>;
+                startedAt: z.ZodString;
+                completedAt: z.ZodNullable<z.ZodString>;
+                durationMs: z.ZodNullable<z.ZodNumber>;
+                exitCode: z.ZodNullable<z.ZodNumber>;
+            }, z.core.$strip>>;
+            successRate: z.ZodNullable<z.ZodNumber>;
+            runCount: z.ZodNumber;
+            failedRunCount: z.ZodNumber;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+            recordedHistoryStartsAt: z.ZodString;
+            scriptIdentifier: z.ZodNullable<z.ZodString>;
+            canToggle: z.ZodBoolean;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        automationId: z.ZodString;
+        projectId: z.ZodOptional<z.ZodString>;
+        name: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        cronExpression: z.ZodOptional<z.ZodString>;
+        timezone: z.ZodOptional<z.ZodString>;
+        timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
+    }, z.core.$strip>, z.ZodObject<{
+        automation: z.ZodObject<{
+            id: z.ZodString;
+            projectId: z.ZodString;
+            name: z.ZodString;
+            kind: z.ZodEnum<{
+                script: "script";
+            }>;
+            scriptId: z.ZodNullable<z.ZodString>;
+            scriptName: z.ZodNullable<z.ZodString>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -941,6 +1313,8 @@ export declare const automationsContract: {
             kind: z.ZodEnum<{
                 script: "script";
             }>;
+            scriptId: z.ZodNullable<z.ZodString>;
+            scriptName: z.ZodNullable<z.ZodString>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -990,6 +1364,8 @@ export declare const automationsContract: {
             kind: z.ZodEnum<{
                 script: "script";
             }>;
+            scriptId: z.ZodNullable<z.ZodString>;
+            scriptName: z.ZodNullable<z.ZodString>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
