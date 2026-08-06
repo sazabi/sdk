@@ -64,6 +64,7 @@ export declare const RegisterStatusComponentInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     description: z.ZodOptional<z.ZodString>;
+    requestId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type RegisterStatusComponentInput = z.infer<typeof RegisterStatusComponentInputSchema>;
 export declare const RegisterStatusComponentOutputSchema: z.ZodObject<{
@@ -88,22 +89,69 @@ export declare const DeregisterStatusComponentInputSchema: z.ZodObject<{
     reason: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type DeregisterStatusComponentInput = z.infer<typeof DeregisterStatusComponentInputSchema>;
-export declare const DeregisterStatusComponentOutputSchema: z.ZodObject<{
-    statusComponent: z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        description: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
-            degraded: "degraded";
-            operational: "operational";
-            outage: "outage";
-        }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
+export declare const ComponentRetirementPreviewSchema: z.ZodObject<{
+    requestedComponentId: z.ZodString;
+    canonicalComponentId: z.ZodString;
+    canonicalComponentName: z.ZodString;
+    lifecycle: z.ZodEnum<{
+        active: "active";
+        retired: "retired";
+    }>;
+    affectedComponentIds: z.ZodArray<z.ZodString>;
+    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+    requiresCanonicalGroupConfirmation: z.ZodBoolean;
+    recommendationScopeEnabled: z.ZodLiteral<false>;
+    dependents: z.ZodObject<{
+        openIssueIds: z.ZodArray<z.ZodString>;
+        activeComponentIssueIds: z.ZodArray<z.ZodString>;
+        automationBindingIds: z.ZodArray<z.ZodString>;
+        notificationRuleIds: z.ZodArray<z.ZodString>;
+        dataSourceMappingIds: z.ZodArray<z.ZodString>;
+        observationIds: z.ZodArray<z.ZodString>;
+        relationshipIds: z.ZodArray<z.ZodString>;
+        recommendationScopeIds: z.ZodArray<z.ZodString>;
+        externalIncidentIds: z.ZodArray<z.ZodString>;
+        authorizedDeliveryIds: z.ZodArray<z.ZodString>;
+        authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>;
+    counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
 }, z.core.$strip>;
+export type ComponentRetirementPreview = z.infer<typeof ComponentRetirementPreviewSchema>;
+export declare const DeregisterStatusComponentOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    status: z.ZodLiteral<"observation_withdrawn">;
+    componentId: z.ZodString;
+    sourceType: z.ZodLiteral<"secret_key">;
+    withdrawn: z.ZodBoolean;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"retirement_confirmation_required">;
+    preview: z.ZodObject<{
+        requestedComponentId: z.ZodString;
+        canonicalComponentId: z.ZodString;
+        canonicalComponentName: z.ZodString;
+        lifecycle: z.ZodEnum<{
+            active: "active";
+            retired: "retired";
+        }>;
+        affectedComponentIds: z.ZodArray<z.ZodString>;
+        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+        requiresCanonicalGroupConfirmation: z.ZodBoolean;
+        recommendationScopeEnabled: z.ZodLiteral<false>;
+        dependents: z.ZodObject<{
+            openIssueIds: z.ZodArray<z.ZodString>;
+            activeComponentIssueIds: z.ZodArray<z.ZodString>;
+            automationBindingIds: z.ZodArray<z.ZodString>;
+            notificationRuleIds: z.ZodArray<z.ZodString>;
+            dataSourceMappingIds: z.ZodArray<z.ZodString>;
+            observationIds: z.ZodArray<z.ZodString>;
+            relationshipIds: z.ZodArray<z.ZodString>;
+            recommendationScopeIds: z.ZodArray<z.ZodString>;
+            externalIncidentIds: z.ZodArray<z.ZodString>;
+            authorizedDeliveryIds: z.ZodArray<z.ZodString>;
+            authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>;
+        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
+    }, z.core.$strip>;
+}, z.core.$strip>], "status">;
 export type DeregisterStatusComponentOutput = z.infer<typeof DeregisterStatusComponentOutputSchema>;
 export declare const listStatusComponents: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
@@ -149,6 +197,7 @@ export declare const registerStatusComponent: import("../orpc-contracts/index.js
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     description: z.ZodOptional<z.ZodString>;
+    requestId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     statusComponent: z.ZodObject<{
         id: z.ZodString;
@@ -168,22 +217,41 @@ export declare const registerStatusComponent: import("../orpc-contracts/index.js
 export declare const deregisterStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
     reason: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+    status: z.ZodLiteral<"observation_withdrawn">;
+    componentId: z.ZodString;
+    sourceType: z.ZodLiteral<"secret_key">;
+    withdrawn: z.ZodBoolean;
 }, z.core.$strip>, z.ZodObject<{
-    statusComponent: z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        description: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
-            degraded: "degraded";
-            operational: "operational";
-            outage: "outage";
+    status: z.ZodLiteral<"retirement_confirmation_required">;
+    preview: z.ZodObject<{
+        requestedComponentId: z.ZodString;
+        canonicalComponentId: z.ZodString;
+        canonicalComponentName: z.ZodString;
+        lifecycle: z.ZodEnum<{
+            active: "active";
+            retired: "retired";
         }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
+        affectedComponentIds: z.ZodArray<z.ZodString>;
+        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+        requiresCanonicalGroupConfirmation: z.ZodBoolean;
+        recommendationScopeEnabled: z.ZodLiteral<false>;
+        dependents: z.ZodObject<{
+            openIssueIds: z.ZodArray<z.ZodString>;
+            activeComponentIssueIds: z.ZodArray<z.ZodString>;
+            automationBindingIds: z.ZodArray<z.ZodString>;
+            notificationRuleIds: z.ZodArray<z.ZodString>;
+            dataSourceMappingIds: z.ZodArray<z.ZodString>;
+            observationIds: z.ZodArray<z.ZodString>;
+            relationshipIds: z.ZodArray<z.ZodString>;
+            recommendationScopeIds: z.ZodArray<z.ZodString>;
+            externalIncidentIds: z.ZodArray<z.ZodString>;
+            authorizedDeliveryIds: z.ZodArray<z.ZodString>;
+            authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>;
+        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
     }, z.core.$strip>;
-}, z.core.$strip>, "api">;
+}, z.core.$strip>], "status">, "api">;
 export declare const StatusIncidentSeveritySchema: z.ZodEnum<{
     degraded: "degraded";
     outage: "outage";
@@ -365,6 +433,7 @@ export declare const statusComponentsContract: {
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodString;
         description: z.ZodOptional<z.ZodString>;
+        requestId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         statusComponent: z.ZodObject<{
             id: z.ZodString;
@@ -384,22 +453,41 @@ export declare const statusComponentsContract: {
     readonly deregister: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         componentId: z.ZodString;
         reason: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+        status: z.ZodLiteral<"observation_withdrawn">;
+        componentId: z.ZodString;
+        sourceType: z.ZodLiteral<"secret_key">;
+        withdrawn: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
-        statusComponent: z.ZodObject<{
-            id: z.ZodString;
-            projectId: z.ZodString;
-            name: z.ZodString;
-            description: z.ZodNullable<z.ZodString>;
-            currentStatus: z.ZodEnum<{
-                degraded: "degraded";
-                operational: "operational";
-                outage: "outage";
+        status: z.ZodLiteral<"retirement_confirmation_required">;
+        preview: z.ZodObject<{
+            requestedComponentId: z.ZodString;
+            canonicalComponentId: z.ZodString;
+            canonicalComponentName: z.ZodString;
+            lifecycle: z.ZodEnum<{
+                active: "active";
+                retired: "retired";
             }>;
-            firstSeenAt: z.ZodString;
-            lastSeenAt: z.ZodString;
-            deletedAt: z.ZodNullable<z.ZodString>;
+            affectedComponentIds: z.ZodArray<z.ZodString>;
+            componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+            requiresCanonicalGroupConfirmation: z.ZodBoolean;
+            recommendationScopeEnabled: z.ZodLiteral<false>;
+            dependents: z.ZodObject<{
+                openIssueIds: z.ZodArray<z.ZodString>;
+                activeComponentIssueIds: z.ZodArray<z.ZodString>;
+                automationBindingIds: z.ZodArray<z.ZodString>;
+                notificationRuleIds: z.ZodArray<z.ZodString>;
+                dataSourceMappingIds: z.ZodArray<z.ZodString>;
+                observationIds: z.ZodArray<z.ZodString>;
+                relationshipIds: z.ZodArray<z.ZodString>;
+                recommendationScopeIds: z.ZodArray<z.ZodString>;
+                externalIncidentIds: z.ZodArray<z.ZodString>;
+                authorizedDeliveryIds: z.ZodArray<z.ZodString>;
+                authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
+            }, z.core.$strip>;
+            counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
         }, z.core.$strip>;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    }, z.core.$strip>], "status">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly incidents: {
         readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
             projectId: z.ZodOptional<z.ZodString>;

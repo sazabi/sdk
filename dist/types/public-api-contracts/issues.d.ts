@@ -450,6 +450,42 @@ export declare const ReopenIssueOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type ReopenIssueOutput = z.infer<typeof ReopenIssueOutputSchema>;
+export declare const ReassignAndReopenIssueInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+    targetComponentId: z.ZodString;
+}, z.core.$strip>;
+export type ReassignAndReopenIssueInput = z.infer<typeof ReassignAndReopenIssueInputSchema>;
+export declare const ReassignAndReopenIssueOutputSchema: z.ZodObject<{
+    issue: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        status: z.ZodEnum<{
+            ignored: "ignored";
+            open: "open";
+            resolved: "resolved";
+        }>;
+        severity: z.ZodEnum<{
+            critical: "critical";
+            high: "high";
+            low: "low";
+            medium: "medium";
+        }>;
+        statusComponentId: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        resolvedAt: z.ZodNullable<z.ZodString>;
+        mutedAt: z.ZodNullable<z.ZodString>;
+        muteHitCount: z.ZodNumber;
+        lastActivityAt: z.ZodNullable<z.ZodString>;
+        lastDeliveredAt: z.ZodNullable<z.ZodString>;
+        locked: z.ZodBoolean;
+        redacted: z.ZodBoolean;
+    }, z.core.$strip>;
+    sourceComponentId: z.ZodString;
+    targetComponentId: z.ZodString;
+}, z.core.$strip>;
+export type ReassignAndReopenIssueOutput = z.infer<typeof ReassignAndReopenIssueOutputSchema>;
 export declare const MuteIssueInputSchema: z.ZodObject<{
     issueId: z.ZodString;
 }, z.core.$strip>;
@@ -822,6 +858,39 @@ export declare const reopenIssue: import("../orpc-contracts/index.js").Operation
         redacted: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const reassignAndReopenIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+    targetComponentId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    issue: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        status: z.ZodEnum<{
+            ignored: "ignored";
+            open: "open";
+            resolved: "resolved";
+        }>;
+        severity: z.ZodEnum<{
+            critical: "critical";
+            high: "high";
+            low: "low";
+            medium: "medium";
+        }>;
+        statusComponentId: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        resolvedAt: z.ZodNullable<z.ZodString>;
+        mutedAt: z.ZodNullable<z.ZodString>;
+        muteHitCount: z.ZodNumber;
+        lastActivityAt: z.ZodNullable<z.ZodString>;
+        lastDeliveredAt: z.ZodNullable<z.ZodString>;
+        locked: z.ZodBoolean;
+        redacted: z.ZodBoolean;
+    }, z.core.$strip>;
+    sourceComponentId: z.ZodString;
+    targetComponentId: z.ZodString;
+}, z.core.$strip>, "api">;
 export declare const muteIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
@@ -1158,6 +1227,69 @@ export declare const issuesContract: {
             locked: z.ZodBoolean;
             redacted: z.ZodBoolean;
         }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly reopen: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        issueId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        issue: z.ZodObject<{
+            id: z.ZodString;
+            projectId: z.ZodString;
+            name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
+            status: z.ZodEnum<{
+                ignored: "ignored";
+                open: "open";
+                resolved: "resolved";
+            }>;
+            severity: z.ZodEnum<{
+                critical: "critical";
+                high: "high";
+                low: "low";
+                medium: "medium";
+            }>;
+            statusComponentId: z.ZodNullable<z.ZodString>;
+            createdAt: z.ZodString;
+            resolvedAt: z.ZodNullable<z.ZodString>;
+            mutedAt: z.ZodNullable<z.ZodString>;
+            muteHitCount: z.ZodNumber;
+            lastActivityAt: z.ZodNullable<z.ZodString>;
+            lastDeliveredAt: z.ZodNullable<z.ZodString>;
+            locked: z.ZodBoolean;
+            redacted: z.ZodBoolean;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly reassignAndReopen: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        issueId: z.ZodString;
+        targetComponentId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        issue: z.ZodObject<{
+            id: z.ZodString;
+            projectId: z.ZodString;
+            name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
+            status: z.ZodEnum<{
+                ignored: "ignored";
+                open: "open";
+                resolved: "resolved";
+            }>;
+            severity: z.ZodEnum<{
+                critical: "critical";
+                high: "high";
+                low: "low";
+                medium: "medium";
+            }>;
+            statusComponentId: z.ZodNullable<z.ZodString>;
+            createdAt: z.ZodString;
+            resolvedAt: z.ZodNullable<z.ZodString>;
+            mutedAt: z.ZodNullable<z.ZodString>;
+            muteHitCount: z.ZodNumber;
+            lastActivityAt: z.ZodNullable<z.ZodString>;
+            lastDeliveredAt: z.ZodNullable<z.ZodString>;
+            locked: z.ZodBoolean;
+            redacted: z.ZodBoolean;
+        }, z.core.$strip>;
+        sourceComponentId: z.ZodString;
+        targetComponentId: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly mute: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         issueId: z.ZodString;

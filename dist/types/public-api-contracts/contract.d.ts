@@ -675,6 +675,10 @@ export declare const publicApiContract: {
             types: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 name: import("zod").ZodString;
+                modes: import("zod").ZodArray<import("zod").ZodEnum<{
+                    connectionless: "connectionless";
+                    managed: "managed";
+                }>>;
                 metadataFields: import("zod").ZodArray<import("zod").ZodObject<{
                     name: import("zod").ZodString;
                     type: import("zod").ZodString;
@@ -684,146 +688,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 setupSkill: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly listConnections: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            dataSourceType: import("zod").ZodOptional<import("zod").ZodEnum<{
-                cloudflare: "cloudflare";
-                cloudflare_workers: "cloudflare_workers";
-                cloudwatch: "cloudwatch";
-                convex: "convex";
-                datadog: "datadog";
-                daytona: "daytona";
-                digital_ocean: "digital_ocean";
-                e2b: "e2b";
-                elastic_cloud: "elastic_cloud";
-                fluent_bit: "fluent_bit";
-                fly_io: "fly_io";
-                gcp: "gcp";
-                grafana_alloy: "grafana_alloy";
-                inngest: "inngest";
-                langchain: "langchain";
-                mastra: "mastra";
-                neon: "neon";
-                netlify: "netlify";
-                openrouter: "openrouter";
-                otel: "otel";
-                otel_collector: "otel_collector";
-                otel_metrics: "otel_metrics";
-                plain: "plain";
-                porter: "porter";
-                posthog: "posthog";
-                posthog_sdk: "posthog_sdk";
-                prometheus: "prometheus";
-                railway: "railway";
-                render: "render";
-                respan: "respan";
-                sentry: "sentry";
-                sentry_platform: "sentry_platform";
-                supabase: "supabase";
-                temporal: "temporal";
-                trigger_dev: "trigger_dev";
-                vector: "vector";
-                vercel: "vercel";
-                webhook_events: "webhook_events";
-            }>>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            connections: import("zod").ZodArray<import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                dataSourceType: import("zod").ZodEnum<{
-                    cloudflare: "cloudflare";
-                    cloudflare_workers: "cloudflare_workers";
-                    cloudwatch: "cloudwatch";
-                    convex: "convex";
-                    datadog: "datadog";
-                    daytona: "daytona";
-                    digital_ocean: "digital_ocean";
-                    e2b: "e2b";
-                    elastic_cloud: "elastic_cloud";
-                    fluent_bit: "fluent_bit";
-                    fly_io: "fly_io";
-                    gcp: "gcp";
-                    grafana_alloy: "grafana_alloy";
-                    inngest: "inngest";
-                    langchain: "langchain";
-                    mastra: "mastra";
-                    neon: "neon";
-                    netlify: "netlify";
-                    openrouter: "openrouter";
-                    otel: "otel";
-                    otel_collector: "otel_collector";
-                    otel_metrics: "otel_metrics";
-                    plain: "plain";
-                    porter: "porter";
-                    posthog: "posthog";
-                    posthog_sdk: "posthog_sdk";
-                    prometheus: "prometheus";
-                    railway: "railway";
-                    render: "render";
-                    respan: "respan";
-                    sentry: "sentry";
-                    sentry_platform: "sentry_platform";
-                    supabase: "supabase";
-                    temporal: "temporal";
-                    trigger_dev: "trigger_dev";
-                    vector: "vector";
-                    vercel: "vercel";
-                    webhook_events: "webhook_events";
-                }>;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
-                createdAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly getConnection: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            connection: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                dataSourceType: import("zod").ZodEnum<{
-                    cloudflare: "cloudflare";
-                    cloudflare_workers: "cloudflare_workers";
-                    cloudwatch: "cloudwatch";
-                    convex: "convex";
-                    datadog: "datadog";
-                    daytona: "daytona";
-                    digital_ocean: "digital_ocean";
-                    e2b: "e2b";
-                    elastic_cloud: "elastic_cloud";
-                    fluent_bit: "fluent_bit";
-                    fly_io: "fly_io";
-                    gcp: "gcp";
-                    grafana_alloy: "grafana_alloy";
-                    inngest: "inngest";
-                    langchain: "langchain";
-                    mastra: "mastra";
-                    neon: "neon";
-                    netlify: "netlify";
-                    openrouter: "openrouter";
-                    otel: "otel";
-                    otel_collector: "otel_collector";
-                    otel_metrics: "otel_metrics";
-                    plain: "plain";
-                    porter: "porter";
-                    posthog: "posthog";
-                    posthog_sdk: "posthog_sdk";
-                    prometheus: "prometheus";
-                    railway: "railway";
-                    render: "render";
-                    respan: "respan";
-                    sentry: "sentry";
-                    sentry_platform: "sentry_platform";
-                    supabase: "supabase";
-                    temporal: "temporal";
-                    trigger_dev: "trigger_dev";
-                    vector: "vector";
-                    vercel: "vercel";
-                    webhook_events: "webhook_events";
-                }>;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
-                createdAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly listInstances: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -914,17 +778,59 @@ export declare const publicApiContract: {
                     connectionless: "connectionless";
                     managed: "managed";
                 }>;
-                label: import("zod").ZodNullable<import("zod").ZodString>;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
-                connectionDisplayName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
-                streamName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly getInstance: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            instanceId: import("zod").ZodString;
+        readonly createInstance: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            dataSourceType: import("zod").ZodEnum<{
+                cloudflare: "cloudflare";
+                cloudflare_workers: "cloudflare_workers";
+                cloudwatch: "cloudwatch";
+                convex: "convex";
+                datadog: "datadog";
+                daytona: "daytona";
+                digital_ocean: "digital_ocean";
+                e2b: "e2b";
+                elastic_cloud: "elastic_cloud";
+                fluent_bit: "fluent_bit";
+                fly_io: "fly_io";
+                gcp: "gcp";
+                grafana_alloy: "grafana_alloy";
+                inngest: "inngest";
+                langchain: "langchain";
+                mastra: "mastra";
+                neon: "neon";
+                netlify: "netlify";
+                openrouter: "openrouter";
+                otel: "otel";
+                otel_collector: "otel_collector";
+                otel_metrics: "otel_metrics";
+                plain: "plain";
+                porter: "porter";
+                posthog: "posthog";
+                posthog_sdk: "posthog_sdk";
+                prometheus: "prometheus";
+                railway: "railway";
+                render: "render";
+                respan: "respan";
+                sentry: "sentry";
+                sentry_platform: "sentry_platform";
+                supabase: "supabase";
+                temporal: "temporal";
+                trigger_dev: "trigger_dev";
+                vector: "vector";
+                vercel: "vercel";
+                webhook_events: "webhook_events";
+            }>;
+            mode: import("zod").ZodOptional<import("zod").ZodEnum<{
+                connectionless: "connectionless";
+                managed: "managed";
+            }>>;
+            name: import("zod").ZodOptional<import("zod").ZodString>;
+            metadata: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             instance: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -972,61 +878,12 @@ export declare const publicApiContract: {
                     connectionless: "connectionless";
                     managed: "managed";
                 }>;
-                label: import("zod").ZodNullable<import("zod").ZodString>;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
-                connectionDisplayName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
-                streamName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly createConnection: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            dataSourceType: import("zod").ZodEnum<{
-                cloudflare: "cloudflare";
-                cloudflare_workers: "cloudflare_workers";
-                cloudwatch: "cloudwatch";
-                convex: "convex";
-                datadog: "datadog";
-                daytona: "daytona";
-                digital_ocean: "digital_ocean";
-                e2b: "e2b";
-                elastic_cloud: "elastic_cloud";
-                fluent_bit: "fluent_bit";
-                fly_io: "fly_io";
-                gcp: "gcp";
-                grafana_alloy: "grafana_alloy";
-                inngest: "inngest";
-                langchain: "langchain";
-                mastra: "mastra";
-                neon: "neon";
-                netlify: "netlify";
-                openrouter: "openrouter";
-                otel: "otel";
-                otel_collector: "otel_collector";
-                otel_metrics: "otel_metrics";
-                plain: "plain";
-                porter: "porter";
-                posthog: "posthog";
-                posthog_sdk: "posthog_sdk";
-                prometheus: "prometheus";
-                railway: "railway";
-                render: "render";
-                respan: "respan";
-                sentry: "sentry";
-                sentry_platform: "sentry_platform";
-                supabase: "supabase";
-                temporal: "temporal";
-                trigger_dev: "trigger_dev";
-                vector: "vector";
-                vercel: "vercel";
-                webhook_events: "webhook_events";
-            }>;
-            metadata: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-            displayName: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
-            publicKey: import("zod").ZodString;
+            streamId: import("zod").ZodOptional<import("zod").ZodString>;
+            publicKey: import("zod").ZodOptional<import("zod").ZodString>;
             endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
                 kind: import("zod").ZodEnum<{
                     hostPort: "hostPort";
@@ -1044,57 +901,160 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly disconnectConnection: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
+        readonly getInstance: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            instanceId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            success: import("zod").ZodBoolean;
-            connectionTeardownError: import("zod").ZodNullable<import("zod").ZodString>;
+            instance: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                dataSourceType: import("zod").ZodEnum<{
+                    cloudflare: "cloudflare";
+                    cloudflare_workers: "cloudflare_workers";
+                    cloudwatch: "cloudwatch";
+                    convex: "convex";
+                    datadog: "datadog";
+                    daytona: "daytona";
+                    digital_ocean: "digital_ocean";
+                    e2b: "e2b";
+                    elastic_cloud: "elastic_cloud";
+                    fluent_bit: "fluent_bit";
+                    fly_io: "fly_io";
+                    gcp: "gcp";
+                    grafana_alloy: "grafana_alloy";
+                    inngest: "inngest";
+                    langchain: "langchain";
+                    mastra: "mastra";
+                    neon: "neon";
+                    netlify: "netlify";
+                    openrouter: "openrouter";
+                    otel: "otel";
+                    otel_collector: "otel_collector";
+                    otel_metrics: "otel_metrics";
+                    plain: "plain";
+                    porter: "porter";
+                    posthog: "posthog";
+                    posthog_sdk: "posthog_sdk";
+                    prometheus: "prometheus";
+                    railway: "railway";
+                    render: "render";
+                    respan: "respan";
+                    sentry: "sentry";
+                    sentry_platform: "sentry_platform";
+                    supabase: "supabase";
+                    temporal: "temporal";
+                    trigger_dev: "trigger_dev";
+                    vector: "vector";
+                    vercel: "vercel";
+                    webhook_events: "webhook_events";
+                }>;
+                mode: import("zod").ZodEnum<{
+                    connectionless: "connectionless";
+                    managed: "managed";
+                }>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
+                streamCount: import("zod").ZodNumber;
+                createdAt: import("zod").ZodString;
+                streams: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    instanceId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
+                    config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
+                    status: import("zod").ZodEnum<{
+                        active: "active";
+                        error: "error";
+                        pending: "pending";
+                        provisioning: "provisioning";
+                    }>;
+                    errorMessage: import("zod").ZodNullable<import("zod").ZodString>;
+                    enabled: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                    endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                        kind: import("zod").ZodEnum<{
+                            hostPort: "hostPort";
+                            url: "url";
+                        }>;
+                        label: import("zod").ZodOptional<import("zod").ZodString>;
+                        url: import("zod").ZodOptional<import("zod").ZodString>;
+                        host: import("zod").ZodOptional<import("zod").ZodString>;
+                        port: import("zod").ZodOptional<import("zod").ZodNumber>;
+                        description: import("zod").ZodOptional<import("zod").ZodString>;
+                        extraCredential: import("zod").ZodOptional<import("zod").ZodObject<{
+                            label: import("zod").ZodString;
+                            value: import("zod").ZodString;
+                            description: import("zod").ZodOptional<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly listStreams: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
+        readonly updateInstance: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            instanceId: import("zod").ZodString;
+            name: import("zod").ZodOptional<import("zod").ZodString>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            streams: import("zod").ZodArray<import("zod").ZodObject<{
+            instance: import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                instanceId: import("zod").ZodString;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
-                displayName: import("zod").ZodString;
-                config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-                status: import("zod").ZodEnum<{
-                    active: "active";
-                    error: "error";
-                    pending: "pending";
-                    provisioning: "provisioning";
+                dataSourceType: import("zod").ZodEnum<{
+                    cloudflare: "cloudflare";
+                    cloudflare_workers: "cloudflare_workers";
+                    cloudwatch: "cloudwatch";
+                    convex: "convex";
+                    datadog: "datadog";
+                    daytona: "daytona";
+                    digital_ocean: "digital_ocean";
+                    e2b: "e2b";
+                    elastic_cloud: "elastic_cloud";
+                    fluent_bit: "fluent_bit";
+                    fly_io: "fly_io";
+                    gcp: "gcp";
+                    grafana_alloy: "grafana_alloy";
+                    inngest: "inngest";
+                    langchain: "langchain";
+                    mastra: "mastra";
+                    neon: "neon";
+                    netlify: "netlify";
+                    openrouter: "openrouter";
+                    otel: "otel";
+                    otel_collector: "otel_collector";
+                    otel_metrics: "otel_metrics";
+                    plain: "plain";
+                    porter: "porter";
+                    posthog: "posthog";
+                    posthog_sdk: "posthog_sdk";
+                    prometheus: "prometheus";
+                    railway: "railway";
+                    render: "render";
+                    respan: "respan";
+                    sentry: "sentry";
+                    sentry_platform: "sentry_platform";
+                    supabase: "supabase";
+                    temporal: "temporal";
+                    trigger_dev: "trigger_dev";
+                    vector: "vector";
+                    vercel: "vercel";
+                    webhook_events: "webhook_events";
                 }>;
-                errorMessage: import("zod").ZodNullable<import("zod").ZodString>;
-                enabled: import("zod").ZodBoolean;
+                mode: import("zod").ZodEnum<{
+                    connectionless: "connectionless";
+                    managed: "managed";
+                }>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
+                streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
-                endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
-                    kind: import("zod").ZodEnum<{
-                        hostPort: "hostPort";
-                        url: "url";
-                    }>;
-                    label: import("zod").ZodOptional<import("zod").ZodString>;
-                    url: import("zod").ZodOptional<import("zod").ZodString>;
-                    host: import("zod").ZodOptional<import("zod").ZodString>;
-                    port: import("zod").ZodOptional<import("zod").ZodNumber>;
-                    description: import("zod").ZodOptional<import("zod").ZodString>;
-                    extraCredential: import("zod").ZodOptional<import("zod").ZodObject<{
-                        label: import("zod").ZodString;
-                        value: import("zod").ZodString;
-                        description: import("zod").ZodOptional<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>>;
-                }, import("zod/v4/core").$strip>>>;
-            }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly listInstanceStreams: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+        readonly deleteInstance: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            instanceId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            success: import("zod").ZodBoolean;
+            teardownError: import("zod").ZodNullable<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly listStreams: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             instanceId: import("zod").ZodString;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             streams: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 instanceId: import("zod").ZodString;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
                 displayName: import("zod").ZodString;
                 config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
                 status: import("zod").ZodEnum<{
@@ -1127,10 +1087,9 @@ export declare const publicApiContract: {
         readonly createStream: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             instanceId: import("zod").ZodString;
             displayName: import("zod").ZodString;
-            config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
+            config: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             streamId: import("zod").ZodString;
-            publicKey: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly getStream: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             streamId: import("zod").ZodString;
@@ -1138,7 +1097,43 @@ export declare const publicApiContract: {
             stream: import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 instanceId: import("zod").ZodString;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
+                displayName: import("zod").ZodString;
+                config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
+                status: import("zod").ZodEnum<{
+                    active: "active";
+                    error: "error";
+                    pending: "pending";
+                    provisioning: "provisioning";
+                }>;
+                errorMessage: import("zod").ZodNullable<import("zod").ZodString>;
+                enabled: import("zod").ZodBoolean;
+                createdAt: import("zod").ZodString;
+                endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    kind: import("zod").ZodEnum<{
+                        hostPort: "hostPort";
+                        url: "url";
+                    }>;
+                    label: import("zod").ZodOptional<import("zod").ZodString>;
+                    url: import("zod").ZodOptional<import("zod").ZodString>;
+                    host: import("zod").ZodOptional<import("zod").ZodString>;
+                    port: import("zod").ZodOptional<import("zod").ZodNumber>;
+                    description: import("zod").ZodOptional<import("zod").ZodString>;
+                    extraCredential: import("zod").ZodOptional<import("zod").ZodObject<{
+                        label: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                        description: import("zod").ZodOptional<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly updateStream: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            streamId: import("zod").ZodString;
+            displayName: import("zod").ZodOptional<import("zod").ZodString>;
+            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            stream: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                instanceId: import("zod").ZodString;
                 displayName: import("zod").ZodString;
                 config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
                 status: import("zod").ZodEnum<{
@@ -1477,299 +1472,205 @@ export declare const publicApiContract: {
             rules: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 projectId: import("zod").ZodString;
-                channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    email: "email";
-                    in_app: "in_app";
-                    incident_io: "incident_io";
-                    pagerduty: "pagerduty";
-                    rootly: "rootly";
-                    slack: "slack";
-                    slack_channel: "slack_channel";
-                    sms: "sms";
-                    teams_channel: "teams_channel";
-                    webhook: "webhook";
-                }>>;
-                notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    automation_finished: "automation_finished";
+                notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
-                    billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                    billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                    billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                    billing_credit_balance_low: "billing_credit_balance_low";
-                    billing_invoice_paid: "billing_invoice_paid";
-                    billing_negative_balance_collected: "billing_negative_balance_collected";
-                    billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                    billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                    billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                    billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                    code_repo_connected: "code_repo_connected";
-                    code_repo_disconnected: "code_repo_disconnected";
-                    data_source_connected: "data_source_connected";
-                    data_source_disconnected: "data_source_disconnected";
-                    github_connected: "github_connected";
-                    github_disconnected: "github_disconnected";
-                    integration_connected: "integration_connected";
-                    integration_disconnected: "integration_disconnected";
                     issue_ignored: "issue_ignored";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
-                    mcp_connector_added: "mcp_connector_added";
-                    mcp_connector_removed: "mcp_connector_removed";
-                    member_invited: "member_invited";
-                    project_created: "project_created";
-                    project_deleted: "project_deleted";
-                    public_key_deactivated: "public_key_deactivated";
-                    sandbox_created: "sandbox_created";
-                    sandbox_deleted: "sandbox_deleted";
-                    secret_key_created: "secret_key_created";
-                    secret_key_deleted: "secret_key_deleted";
-                    security_alert: "security_alert";
-                    user_removed: "user_removed";
                 }>>;
-                priority: import("zod").ZodNumber;
-                condition: import("zod").ZodObject<{
-                    minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
-                        critical: "critical";
-                        high: "high";
-                        medium: "medium";
-                    }>>;
-                    component: import("zod").ZodOptional<import("zod").ZodString>;
-                }, import("zod/v4/core").$strict>;
-                outcome: import("zod").ZodEnum<{
-                    route: "route";
-                    suppress: "suppress";
-                }>;
-                enabled: import("zod").ZodBoolean;
                 destinations: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
-                    channel: import("zod").ZodString;
+                    channel: import("zod").ZodEnum<{
+                        incident_io: "incident_io";
+                        pagerduty: "pagerduty";
+                        rootly: "rootly";
+                        slack_channel: "slack_channel";
+                        teams_channel: "teams_channel";
+                        webhook: "webhook";
+                    }>;
                     destinationKey: import("zod").ZodString;
-                    displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                    displayName: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                condition: import("zod").ZodObject<{
+                    componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        critical: "critical";
+                        high: "high";
+                        low: "low";
+                        medium: "medium";
+                    }>>>;
+                }, import("zod/v4/core").$strict>;
+                components: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    label: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+        readonly options: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            outcome: import("zod").ZodEnum<{
-                route: "route";
-                suppress: "suppress";
-            }>;
-            channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                email: "email";
-                in_app: "in_app";
-                incident_io: "incident_io";
-                pagerduty: "pagerduty";
-                rootly: "rootly";
-                slack: "slack";
-                slack_channel: "slack_channel";
-                sms: "sms";
-                teams_channel: "teams_channel";
-                webhook: "webhook";
-            }>>;
-            notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                automation_finished: "automation_finished";
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            destinations: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
+                destinationKey: import("zod").ZodString;
+                displayName: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodObject<{
+                notificationType: import("zod").ZodEnum<{
+                    automation_run_failed: "automation_run_failed";
+                    issue_ignored: "issue_ignored";
+                    issue_resolved: "issue_resolved";
+                    issue_triggered: "issue_triggered";
+                }>;
+                label: import("zod").ZodString;
+                conditions: import("zod").ZodArray<import("zod").ZodEnum<{
+                    component: "component";
+                    severity: "severity";
+                }>>;
+            }, import("zod/v4/core").$strip>>;
+            components: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            destinations: import("zod").ZodArray<import("zod").ZodObject<{
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
+                destinationKey: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
-                billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                billing_credit_balance_low: "billing_credit_balance_low";
-                billing_invoice_paid: "billing_invoice_paid";
-                billing_negative_balance_collected: "billing_negative_balance_collected";
-                billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                code_repo_connected: "code_repo_connected";
-                code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
-                github_connected: "github_connected";
-                github_disconnected: "github_disconnected";
-                integration_connected: "integration_connected";
-                integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
-                mcp_connector_added: "mcp_connector_added";
-                mcp_connector_removed: "mcp_connector_removed";
-                member_invited: "member_invited";
-                project_created: "project_created";
-                project_deleted: "project_deleted";
-                public_key_deactivated: "public_key_deactivated";
-                sandbox_created: "sandbox_created";
-                sandbox_deleted: "sandbox_deleted";
-                secret_key_created: "secret_key_created";
-                secret_key_deleted: "secret_key_deleted";
-                security_alert: "security_alert";
-                user_removed: "user_removed";
             }>>;
             condition: import("zod").ZodObject<{
-                minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
+                    low: "low";
                     medium: "medium";
-                }>>;
-                component: import("zod").ZodOptional<import("zod").ZodString>;
+                }>>>;
             }, import("zod/v4/core").$strict>;
-            destinations: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodObject<{
-                channel: import("zod").ZodEnum<{
-                    slack_channel: "slack_channel";
-                    teams_channel: "teams_channel";
-                }>;
-                destinationKey: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>>>;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             id: import("zod").ZodString;
             projectId: import("zod").ZodString;
-            channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                email: "email";
-                in_app: "in_app";
-                incident_io: "incident_io";
-                pagerduty: "pagerduty";
-                rootly: "rootly";
-                slack: "slack";
-                slack_channel: "slack_channel";
-                sms: "sms";
-                teams_channel: "teams_channel";
-                webhook: "webhook";
-            }>>;
-            notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                automation_finished: "automation_finished";
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
-                billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                billing_credit_balance_low: "billing_credit_balance_low";
-                billing_invoice_paid: "billing_invoice_paid";
-                billing_negative_balance_collected: "billing_negative_balance_collected";
-                billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                code_repo_connected: "code_repo_connected";
-                code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
-                github_connected: "github_connected";
-                github_disconnected: "github_disconnected";
-                integration_connected: "integration_connected";
-                integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
-                mcp_connector_added: "mcp_connector_added";
-                mcp_connector_removed: "mcp_connector_removed";
-                member_invited: "member_invited";
-                project_created: "project_created";
-                project_deleted: "project_deleted";
-                public_key_deactivated: "public_key_deactivated";
-                sandbox_created: "sandbox_created";
-                sandbox_deleted: "sandbox_deleted";
-                secret_key_created: "secret_key_created";
-                secret_key_deleted: "secret_key_deleted";
-                security_alert: "security_alert";
-                user_removed: "user_removed";
             }>>;
-            priority: import("zod").ZodNumber;
-            condition: import("zod").ZodObject<{
-                minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
-                    critical: "critical";
-                    high: "high";
-                    medium: "medium";
-                }>>;
-                component: import("zod").ZodOptional<import("zod").ZodString>;
-            }, import("zod/v4/core").$strict>;
-            outcome: import("zod").ZodEnum<{
-                route: "route";
-                suppress: "suppress";
-            }>;
-            enabled: import("zod").ZodBoolean;
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                channel: import("zod").ZodString;
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
                 destinationKey: import("zod").ZodString;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                displayName: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            condition: import("zod").ZodObject<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>;
+            components: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly setEnabled: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            ruleId: import("zod").ZodString;
-            enabled: import("zod").ZodBoolean;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            id: import("zod").ZodString;
-            projectId: import("zod").ZodString;
-            channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                email: "email";
-                in_app: "in_app";
-                incident_io: "incident_io";
-                pagerduty: "pagerduty";
-                rootly: "rootly";
-                slack: "slack";
-                slack_channel: "slack_channel";
-                sms: "sms";
-                teams_channel: "teams_channel";
-                webhook: "webhook";
-            }>>;
-            notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                automation_finished: "automation_finished";
+        readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            destinations: import("zod").ZodArray<import("zod").ZodObject<{
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
+                destinationKey: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
-                billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                billing_credit_balance_low: "billing_credit_balance_low";
-                billing_invoice_paid: "billing_invoice_paid";
-                billing_negative_balance_collected: "billing_negative_balance_collected";
-                billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                code_repo_connected: "code_repo_connected";
-                code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
-                github_connected: "github_connected";
-                github_disconnected: "github_disconnected";
-                integration_connected: "integration_connected";
-                integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
-                mcp_connector_added: "mcp_connector_added";
-                mcp_connector_removed: "mcp_connector_removed";
-                member_invited: "member_invited";
-                project_created: "project_created";
-                project_deleted: "project_deleted";
-                public_key_deactivated: "public_key_deactivated";
-                sandbox_created: "sandbox_created";
-                sandbox_deleted: "sandbox_deleted";
-                secret_key_created: "secret_key_created";
-                secret_key_deleted: "secret_key_deleted";
-                security_alert: "security_alert";
-                user_removed: "user_removed";
             }>>;
-            priority: import("zod").ZodNumber;
             condition: import("zod").ZodObject<{
-                minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
+                    low: "low";
                     medium: "medium";
-                }>>;
-                component: import("zod").ZodOptional<import("zod").ZodString>;
+                }>>>;
             }, import("zod/v4/core").$strict>;
-            outcome: import("zod").ZodEnum<{
-                route: "route";
-                suppress: "suppress";
-            }>;
-            enabled: import("zod").ZodBoolean;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            ruleId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            id: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
+                automation_run_failed: "automation_run_failed";
+                issue_ignored: "issue_ignored";
+                issue_resolved: "issue_resolved";
+                issue_triggered: "issue_triggered";
+            }>>;
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                channel: import("zod").ZodString;
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
                 destinationKey: import("zod").ZodString;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                displayName: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            condition: import("zod").ZodObject<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>;
+            components: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -3636,6 +3537,39 @@ export declare const publicApiContract: {
                 redacted: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly reassignAndReopen: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            issueId: import("zod").ZodString;
+            targetComponentId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            issue: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                description: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodEnum<{
+                    ignored: "ignored";
+                    open: "open";
+                    resolved: "resolved";
+                }>;
+                severity: import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>;
+                statusComponentId: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+                resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                mutedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                muteHitCount: import("zod").ZodNumber;
+                lastActivityAt: import("zod").ZodNullable<import("zod").ZodString>;
+                lastDeliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                locked: import("zod").ZodBoolean;
+                redacted: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>;
+            sourceComponentId: import("zod").ZodString;
+            targetComponentId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly mute: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -3886,6 +3820,7 @@ export declare const publicApiContract: {
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodString;
             description: import("zod").ZodOptional<import("zod").ZodString>;
+            requestId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             statusComponent: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -3905,22 +3840,41 @@ export declare const publicApiContract: {
         readonly deregister: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             componentId: import("zod").ZodString;
             reason: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+            status: import("zod").ZodLiteral<"observation_withdrawn">;
+            componentId: import("zod").ZodString;
+            sourceType: import("zod").ZodLiteral<"secret_key">;
+            withdrawn: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            statusComponent: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                description: import("zod").ZodNullable<import("zod").ZodString>;
-                currentStatus: import("zod").ZodEnum<{
-                    degraded: "degraded";
-                    operational: "operational";
-                    outage: "outage";
+            status: import("zod").ZodLiteral<"retirement_confirmation_required">;
+            preview: import("zod").ZodObject<{
+                requestedComponentId: import("zod").ZodString;
+                canonicalComponentId: import("zod").ZodString;
+                canonicalComponentName: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    retired: "retired";
                 }>;
-                firstSeenAt: import("zod").ZodString;
-                lastSeenAt: import("zod").ZodString;
-                deletedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                affectedComponentIds: import("zod").ZodArray<import("zod").ZodString>;
+                componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
+                requiresCanonicalGroupConfirmation: import("zod").ZodBoolean;
+                recommendationScopeEnabled: import("zod").ZodLiteral<false>;
+                dependents: import("zod").ZodObject<{
+                    openIssueIds: import("zod").ZodArray<import("zod").ZodString>;
+                    activeComponentIssueIds: import("zod").ZodArray<import("zod").ZodString>;
+                    automationBindingIds: import("zod").ZodArray<import("zod").ZodString>;
+                    notificationRuleIds: import("zod").ZodArray<import("zod").ZodString>;
+                    dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
+                    observationIds: import("zod").ZodArray<import("zod").ZodString>;
+                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
+                    recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
+                    externalIncidentIds: import("zod").ZodArray<import("zod").ZodString>;
+                    authorizedDeliveryIds: import("zod").ZodArray<import("zod").ZodString>;
+                    authorizedAutomationRunIds: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>;
+                counts: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
             }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        }, import("zod/v4/core").$strip>], "status">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly incidents: {
             readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
                 projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -4653,6 +4607,10 @@ export declare const publicApiOperations: {
             types: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 name: import("zod").ZodString;
+                modes: import("zod").ZodArray<import("zod").ZodEnum<{
+                    connectionless: "connectionless";
+                    managed: "managed";
+                }>>;
                 metadataFields: import("zod").ZodArray<import("zod").ZodObject<{
                     name: import("zod").ZodString;
                     type: import("zod").ZodString;
@@ -4662,146 +4620,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 setupSkill: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly listConnections: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            dataSourceType: import("zod").ZodOptional<import("zod").ZodEnum<{
-                cloudflare: "cloudflare";
-                cloudflare_workers: "cloudflare_workers";
-                cloudwatch: "cloudwatch";
-                convex: "convex";
-                datadog: "datadog";
-                daytona: "daytona";
-                digital_ocean: "digital_ocean";
-                e2b: "e2b";
-                elastic_cloud: "elastic_cloud";
-                fluent_bit: "fluent_bit";
-                fly_io: "fly_io";
-                gcp: "gcp";
-                grafana_alloy: "grafana_alloy";
-                inngest: "inngest";
-                langchain: "langchain";
-                mastra: "mastra";
-                neon: "neon";
-                netlify: "netlify";
-                openrouter: "openrouter";
-                otel: "otel";
-                otel_collector: "otel_collector";
-                otel_metrics: "otel_metrics";
-                plain: "plain";
-                porter: "porter";
-                posthog: "posthog";
-                posthog_sdk: "posthog_sdk";
-                prometheus: "prometheus";
-                railway: "railway";
-                render: "render";
-                respan: "respan";
-                sentry: "sentry";
-                sentry_platform: "sentry_platform";
-                supabase: "supabase";
-                temporal: "temporal";
-                trigger_dev: "trigger_dev";
-                vector: "vector";
-                vercel: "vercel";
-                webhook_events: "webhook_events";
-            }>>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            connections: import("zod").ZodArray<import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                dataSourceType: import("zod").ZodEnum<{
-                    cloudflare: "cloudflare";
-                    cloudflare_workers: "cloudflare_workers";
-                    cloudwatch: "cloudwatch";
-                    convex: "convex";
-                    datadog: "datadog";
-                    daytona: "daytona";
-                    digital_ocean: "digital_ocean";
-                    e2b: "e2b";
-                    elastic_cloud: "elastic_cloud";
-                    fluent_bit: "fluent_bit";
-                    fly_io: "fly_io";
-                    gcp: "gcp";
-                    grafana_alloy: "grafana_alloy";
-                    inngest: "inngest";
-                    langchain: "langchain";
-                    mastra: "mastra";
-                    neon: "neon";
-                    netlify: "netlify";
-                    openrouter: "openrouter";
-                    otel: "otel";
-                    otel_collector: "otel_collector";
-                    otel_metrics: "otel_metrics";
-                    plain: "plain";
-                    porter: "porter";
-                    posthog: "posthog";
-                    posthog_sdk: "posthog_sdk";
-                    prometheus: "prometheus";
-                    railway: "railway";
-                    render: "render";
-                    respan: "respan";
-                    sentry: "sentry";
-                    sentry_platform: "sentry_platform";
-                    supabase: "supabase";
-                    temporal: "temporal";
-                    trigger_dev: "trigger_dev";
-                    vector: "vector";
-                    vercel: "vercel";
-                    webhook_events: "webhook_events";
-                }>;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
-                createdAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly getConnection: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            connection: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                dataSourceType: import("zod").ZodEnum<{
-                    cloudflare: "cloudflare";
-                    cloudflare_workers: "cloudflare_workers";
-                    cloudwatch: "cloudwatch";
-                    convex: "convex";
-                    datadog: "datadog";
-                    daytona: "daytona";
-                    digital_ocean: "digital_ocean";
-                    e2b: "e2b";
-                    elastic_cloud: "elastic_cloud";
-                    fluent_bit: "fluent_bit";
-                    fly_io: "fly_io";
-                    gcp: "gcp";
-                    grafana_alloy: "grafana_alloy";
-                    inngest: "inngest";
-                    langchain: "langchain";
-                    mastra: "mastra";
-                    neon: "neon";
-                    netlify: "netlify";
-                    openrouter: "openrouter";
-                    otel: "otel";
-                    otel_collector: "otel_collector";
-                    otel_metrics: "otel_metrics";
-                    plain: "plain";
-                    porter: "porter";
-                    posthog: "posthog";
-                    posthog_sdk: "posthog_sdk";
-                    prometheus: "prometheus";
-                    railway: "railway";
-                    render: "render";
-                    respan: "respan";
-                    sentry: "sentry";
-                    sentry_platform: "sentry_platform";
-                    supabase: "supabase";
-                    temporal: "temporal";
-                    trigger_dev: "trigger_dev";
-                    vector: "vector";
-                    vercel: "vercel";
-                    webhook_events: "webhook_events";
-                }>;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
-                createdAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly listInstances: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -4892,17 +4710,59 @@ export declare const publicApiOperations: {
                     connectionless: "connectionless";
                     managed: "managed";
                 }>;
-                label: import("zod").ZodNullable<import("zod").ZodString>;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
-                connectionDisplayName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
-                streamName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly getInstance: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            instanceId: import("zod").ZodString;
+        readonly createInstance: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            dataSourceType: import("zod").ZodEnum<{
+                cloudflare: "cloudflare";
+                cloudflare_workers: "cloudflare_workers";
+                cloudwatch: "cloudwatch";
+                convex: "convex";
+                datadog: "datadog";
+                daytona: "daytona";
+                digital_ocean: "digital_ocean";
+                e2b: "e2b";
+                elastic_cloud: "elastic_cloud";
+                fluent_bit: "fluent_bit";
+                fly_io: "fly_io";
+                gcp: "gcp";
+                grafana_alloy: "grafana_alloy";
+                inngest: "inngest";
+                langchain: "langchain";
+                mastra: "mastra";
+                neon: "neon";
+                netlify: "netlify";
+                openrouter: "openrouter";
+                otel: "otel";
+                otel_collector: "otel_collector";
+                otel_metrics: "otel_metrics";
+                plain: "plain";
+                porter: "porter";
+                posthog: "posthog";
+                posthog_sdk: "posthog_sdk";
+                prometheus: "prometheus";
+                railway: "railway";
+                render: "render";
+                respan: "respan";
+                sentry: "sentry";
+                sentry_platform: "sentry_platform";
+                supabase: "supabase";
+                temporal: "temporal";
+                trigger_dev: "trigger_dev";
+                vector: "vector";
+                vercel: "vercel";
+                webhook_events: "webhook_events";
+            }>;
+            mode: import("zod").ZodOptional<import("zod").ZodEnum<{
+                connectionless: "connectionless";
+                managed: "managed";
+            }>>;
+            name: import("zod").ZodOptional<import("zod").ZodString>;
+            metadata: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             instance: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -4950,61 +4810,12 @@ export declare const publicApiOperations: {
                     connectionless: "connectionless";
                     managed: "managed";
                 }>;
-                label: import("zod").ZodNullable<import("zod").ZodString>;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
-                connectionDisplayName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
-                streamName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly createConnection: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            dataSourceType: import("zod").ZodEnum<{
-                cloudflare: "cloudflare";
-                cloudflare_workers: "cloudflare_workers";
-                cloudwatch: "cloudwatch";
-                convex: "convex";
-                datadog: "datadog";
-                daytona: "daytona";
-                digital_ocean: "digital_ocean";
-                e2b: "e2b";
-                elastic_cloud: "elastic_cloud";
-                fluent_bit: "fluent_bit";
-                fly_io: "fly_io";
-                gcp: "gcp";
-                grafana_alloy: "grafana_alloy";
-                inngest: "inngest";
-                langchain: "langchain";
-                mastra: "mastra";
-                neon: "neon";
-                netlify: "netlify";
-                openrouter: "openrouter";
-                otel: "otel";
-                otel_collector: "otel_collector";
-                otel_metrics: "otel_metrics";
-                plain: "plain";
-                porter: "porter";
-                posthog: "posthog";
-                posthog_sdk: "posthog_sdk";
-                prometheus: "prometheus";
-                railway: "railway";
-                render: "render";
-                respan: "respan";
-                sentry: "sentry";
-                sentry_platform: "sentry_platform";
-                supabase: "supabase";
-                temporal: "temporal";
-                trigger_dev: "trigger_dev";
-                vector: "vector";
-                vercel: "vercel";
-                webhook_events: "webhook_events";
-            }>;
-            metadata: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-            displayName: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
-            publicKey: import("zod").ZodString;
+            streamId: import("zod").ZodOptional<import("zod").ZodString>;
+            publicKey: import("zod").ZodOptional<import("zod").ZodString>;
             endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
                 kind: import("zod").ZodEnum<{
                     hostPort: "hostPort";
@@ -5022,57 +4833,160 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>>;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly disconnectConnection: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
+        readonly getInstance: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            instanceId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            success: import("zod").ZodBoolean;
-            connectionTeardownError: import("zod").ZodNullable<import("zod").ZodString>;
+            instance: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                dataSourceType: import("zod").ZodEnum<{
+                    cloudflare: "cloudflare";
+                    cloudflare_workers: "cloudflare_workers";
+                    cloudwatch: "cloudwatch";
+                    convex: "convex";
+                    datadog: "datadog";
+                    daytona: "daytona";
+                    digital_ocean: "digital_ocean";
+                    e2b: "e2b";
+                    elastic_cloud: "elastic_cloud";
+                    fluent_bit: "fluent_bit";
+                    fly_io: "fly_io";
+                    gcp: "gcp";
+                    grafana_alloy: "grafana_alloy";
+                    inngest: "inngest";
+                    langchain: "langchain";
+                    mastra: "mastra";
+                    neon: "neon";
+                    netlify: "netlify";
+                    openrouter: "openrouter";
+                    otel: "otel";
+                    otel_collector: "otel_collector";
+                    otel_metrics: "otel_metrics";
+                    plain: "plain";
+                    porter: "porter";
+                    posthog: "posthog";
+                    posthog_sdk: "posthog_sdk";
+                    prometheus: "prometheus";
+                    railway: "railway";
+                    render: "render";
+                    respan: "respan";
+                    sentry: "sentry";
+                    sentry_platform: "sentry_platform";
+                    supabase: "supabase";
+                    temporal: "temporal";
+                    trigger_dev: "trigger_dev";
+                    vector: "vector";
+                    vercel: "vercel";
+                    webhook_events: "webhook_events";
+                }>;
+                mode: import("zod").ZodEnum<{
+                    connectionless: "connectionless";
+                    managed: "managed";
+                }>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
+                streamCount: import("zod").ZodNumber;
+                createdAt: import("zod").ZodString;
+                streams: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    instanceId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
+                    config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
+                    status: import("zod").ZodEnum<{
+                        active: "active";
+                        error: "error";
+                        pending: "pending";
+                        provisioning: "provisioning";
+                    }>;
+                    errorMessage: import("zod").ZodNullable<import("zod").ZodString>;
+                    enabled: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                    endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                        kind: import("zod").ZodEnum<{
+                            hostPort: "hostPort";
+                            url: "url";
+                        }>;
+                        label: import("zod").ZodOptional<import("zod").ZodString>;
+                        url: import("zod").ZodOptional<import("zod").ZodString>;
+                        host: import("zod").ZodOptional<import("zod").ZodString>;
+                        port: import("zod").ZodOptional<import("zod").ZodNumber>;
+                        description: import("zod").ZodOptional<import("zod").ZodString>;
+                        extraCredential: import("zod").ZodOptional<import("zod").ZodObject<{
+                            label: import("zod").ZodString;
+                            value: import("zod").ZodString;
+                            description: import("zod").ZodOptional<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly listStreams: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            connectionId: import("zod").ZodString;
+        readonly updateInstance: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            instanceId: import("zod").ZodString;
+            name: import("zod").ZodOptional<import("zod").ZodString>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            streams: import("zod").ZodArray<import("zod").ZodObject<{
+            instance: import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                instanceId: import("zod").ZodString;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
-                displayName: import("zod").ZodString;
-                config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-                status: import("zod").ZodEnum<{
-                    active: "active";
-                    error: "error";
-                    pending: "pending";
-                    provisioning: "provisioning";
+                dataSourceType: import("zod").ZodEnum<{
+                    cloudflare: "cloudflare";
+                    cloudflare_workers: "cloudflare_workers";
+                    cloudwatch: "cloudwatch";
+                    convex: "convex";
+                    datadog: "datadog";
+                    daytona: "daytona";
+                    digital_ocean: "digital_ocean";
+                    e2b: "e2b";
+                    elastic_cloud: "elastic_cloud";
+                    fluent_bit: "fluent_bit";
+                    fly_io: "fly_io";
+                    gcp: "gcp";
+                    grafana_alloy: "grafana_alloy";
+                    inngest: "inngest";
+                    langchain: "langchain";
+                    mastra: "mastra";
+                    neon: "neon";
+                    netlify: "netlify";
+                    openrouter: "openrouter";
+                    otel: "otel";
+                    otel_collector: "otel_collector";
+                    otel_metrics: "otel_metrics";
+                    plain: "plain";
+                    porter: "porter";
+                    posthog: "posthog";
+                    posthog_sdk: "posthog_sdk";
+                    prometheus: "prometheus";
+                    railway: "railway";
+                    render: "render";
+                    respan: "respan";
+                    sentry: "sentry";
+                    sentry_platform: "sentry_platform";
+                    supabase: "supabase";
+                    temporal: "temporal";
+                    trigger_dev: "trigger_dev";
+                    vector: "vector";
+                    vercel: "vercel";
+                    webhook_events: "webhook_events";
                 }>;
-                errorMessage: import("zod").ZodNullable<import("zod").ZodString>;
-                enabled: import("zod").ZodBoolean;
+                mode: import("zod").ZodEnum<{
+                    connectionless: "connectionless";
+                    managed: "managed";
+                }>;
+                name: import("zod").ZodNullable<import("zod").ZodString>;
+                streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
-                endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
-                    kind: import("zod").ZodEnum<{
-                        hostPort: "hostPort";
-                        url: "url";
-                    }>;
-                    label: import("zod").ZodOptional<import("zod").ZodString>;
-                    url: import("zod").ZodOptional<import("zod").ZodString>;
-                    host: import("zod").ZodOptional<import("zod").ZodString>;
-                    port: import("zod").ZodOptional<import("zod").ZodNumber>;
-                    description: import("zod").ZodOptional<import("zod").ZodString>;
-                    extraCredential: import("zod").ZodOptional<import("zod").ZodObject<{
-                        label: import("zod").ZodString;
-                        value: import("zod").ZodString;
-                        description: import("zod").ZodOptional<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>>;
-                }, import("zod/v4/core").$strip>>>;
-            }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly listInstanceStreams: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+        readonly deleteInstance: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            instanceId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            success: import("zod").ZodBoolean;
+            teardownError: import("zod").ZodNullable<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly listStreams: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             instanceId: import("zod").ZodString;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             streams: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 instanceId: import("zod").ZodString;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
                 displayName: import("zod").ZodString;
                 config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
                 status: import("zod").ZodEnum<{
@@ -5105,10 +5019,9 @@ export declare const publicApiOperations: {
         readonly createStream: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             instanceId: import("zod").ZodString;
             displayName: import("zod").ZodString;
-            config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
+            config: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             streamId: import("zod").ZodString;
-            publicKey: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly getStream: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             streamId: import("zod").ZodString;
@@ -5116,7 +5029,43 @@ export declare const publicApiOperations: {
             stream: import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 instanceId: import("zod").ZodString;
-                connectionId: import("zod").ZodNullable<import("zod").ZodString>;
+                displayName: import("zod").ZodString;
+                config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
+                status: import("zod").ZodEnum<{
+                    active: "active";
+                    error: "error";
+                    pending: "pending";
+                    provisioning: "provisioning";
+                }>;
+                errorMessage: import("zod").ZodNullable<import("zod").ZodString>;
+                enabled: import("zod").ZodBoolean;
+                createdAt: import("zod").ZodString;
+                endpointCards: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    kind: import("zod").ZodEnum<{
+                        hostPort: "hostPort";
+                        url: "url";
+                    }>;
+                    label: import("zod").ZodOptional<import("zod").ZodString>;
+                    url: import("zod").ZodOptional<import("zod").ZodString>;
+                    host: import("zod").ZodOptional<import("zod").ZodString>;
+                    port: import("zod").ZodOptional<import("zod").ZodNumber>;
+                    description: import("zod").ZodOptional<import("zod").ZodString>;
+                    extraCredential: import("zod").ZodOptional<import("zod").ZodObject<{
+                        label: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                        description: import("zod").ZodOptional<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly updateStream: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            streamId: import("zod").ZodString;
+            displayName: import("zod").ZodOptional<import("zod").ZodString>;
+            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            stream: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                instanceId: import("zod").ZodString;
                 displayName: import("zod").ZodString;
                 config: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
                 status: import("zod").ZodEnum<{
@@ -5455,299 +5404,205 @@ export declare const publicApiOperations: {
             rules: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 projectId: import("zod").ZodString;
-                channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    email: "email";
-                    in_app: "in_app";
-                    incident_io: "incident_io";
-                    pagerduty: "pagerduty";
-                    rootly: "rootly";
-                    slack: "slack";
-                    slack_channel: "slack_channel";
-                    sms: "sms";
-                    teams_channel: "teams_channel";
-                    webhook: "webhook";
-                }>>;
-                notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    automation_finished: "automation_finished";
+                notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
-                    billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                    billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                    billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                    billing_credit_balance_low: "billing_credit_balance_low";
-                    billing_invoice_paid: "billing_invoice_paid";
-                    billing_negative_balance_collected: "billing_negative_balance_collected";
-                    billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                    billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                    billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                    billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                    code_repo_connected: "code_repo_connected";
-                    code_repo_disconnected: "code_repo_disconnected";
-                    data_source_connected: "data_source_connected";
-                    data_source_disconnected: "data_source_disconnected";
-                    github_connected: "github_connected";
-                    github_disconnected: "github_disconnected";
-                    integration_connected: "integration_connected";
-                    integration_disconnected: "integration_disconnected";
                     issue_ignored: "issue_ignored";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
-                    mcp_connector_added: "mcp_connector_added";
-                    mcp_connector_removed: "mcp_connector_removed";
-                    member_invited: "member_invited";
-                    project_created: "project_created";
-                    project_deleted: "project_deleted";
-                    public_key_deactivated: "public_key_deactivated";
-                    sandbox_created: "sandbox_created";
-                    sandbox_deleted: "sandbox_deleted";
-                    secret_key_created: "secret_key_created";
-                    secret_key_deleted: "secret_key_deleted";
-                    security_alert: "security_alert";
-                    user_removed: "user_removed";
                 }>>;
-                priority: import("zod").ZodNumber;
-                condition: import("zod").ZodObject<{
-                    minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
-                        critical: "critical";
-                        high: "high";
-                        medium: "medium";
-                    }>>;
-                    component: import("zod").ZodOptional<import("zod").ZodString>;
-                }, import("zod/v4/core").$strict>;
-                outcome: import("zod").ZodEnum<{
-                    route: "route";
-                    suppress: "suppress";
-                }>;
-                enabled: import("zod").ZodBoolean;
                 destinations: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
-                    channel: import("zod").ZodString;
+                    channel: import("zod").ZodEnum<{
+                        incident_io: "incident_io";
+                        pagerduty: "pagerduty";
+                        rootly: "rootly";
+                        slack_channel: "slack_channel";
+                        teams_channel: "teams_channel";
+                        webhook: "webhook";
+                    }>;
                     destinationKey: import("zod").ZodString;
-                    displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                    displayName: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                condition: import("zod").ZodObject<{
+                    componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        critical: "critical";
+                        high: "high";
+                        low: "low";
+                        medium: "medium";
+                    }>>>;
+                }, import("zod/v4/core").$strict>;
+                components: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    label: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+        readonly options: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            outcome: import("zod").ZodEnum<{
-                route: "route";
-                suppress: "suppress";
-            }>;
-            channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                email: "email";
-                in_app: "in_app";
-                incident_io: "incident_io";
-                pagerduty: "pagerduty";
-                rootly: "rootly";
-                slack: "slack";
-                slack_channel: "slack_channel";
-                sms: "sms";
-                teams_channel: "teams_channel";
-                webhook: "webhook";
-            }>>;
-            notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                automation_finished: "automation_finished";
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            destinations: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
+                destinationKey: import("zod").ZodString;
+                displayName: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodObject<{
+                notificationType: import("zod").ZodEnum<{
+                    automation_run_failed: "automation_run_failed";
+                    issue_ignored: "issue_ignored";
+                    issue_resolved: "issue_resolved";
+                    issue_triggered: "issue_triggered";
+                }>;
+                label: import("zod").ZodString;
+                conditions: import("zod").ZodArray<import("zod").ZodEnum<{
+                    component: "component";
+                    severity: "severity";
+                }>>;
+            }, import("zod/v4/core").$strip>>;
+            components: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            destinations: import("zod").ZodArray<import("zod").ZodObject<{
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
+                destinationKey: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
-                billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                billing_credit_balance_low: "billing_credit_balance_low";
-                billing_invoice_paid: "billing_invoice_paid";
-                billing_negative_balance_collected: "billing_negative_balance_collected";
-                billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                code_repo_connected: "code_repo_connected";
-                code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
-                github_connected: "github_connected";
-                github_disconnected: "github_disconnected";
-                integration_connected: "integration_connected";
-                integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
-                mcp_connector_added: "mcp_connector_added";
-                mcp_connector_removed: "mcp_connector_removed";
-                member_invited: "member_invited";
-                project_created: "project_created";
-                project_deleted: "project_deleted";
-                public_key_deactivated: "public_key_deactivated";
-                sandbox_created: "sandbox_created";
-                sandbox_deleted: "sandbox_deleted";
-                secret_key_created: "secret_key_created";
-                secret_key_deleted: "secret_key_deleted";
-                security_alert: "security_alert";
-                user_removed: "user_removed";
             }>>;
             condition: import("zod").ZodObject<{
-                minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
+                    low: "low";
                     medium: "medium";
-                }>>;
-                component: import("zod").ZodOptional<import("zod").ZodString>;
+                }>>>;
             }, import("zod/v4/core").$strict>;
-            destinations: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodObject<{
-                channel: import("zod").ZodEnum<{
-                    slack_channel: "slack_channel";
-                    teams_channel: "teams_channel";
-                }>;
-                destinationKey: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>>>;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             id: import("zod").ZodString;
             projectId: import("zod").ZodString;
-            channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                email: "email";
-                in_app: "in_app";
-                incident_io: "incident_io";
-                pagerduty: "pagerduty";
-                rootly: "rootly";
-                slack: "slack";
-                slack_channel: "slack_channel";
-                sms: "sms";
-                teams_channel: "teams_channel";
-                webhook: "webhook";
-            }>>;
-            notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                automation_finished: "automation_finished";
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
-                billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                billing_credit_balance_low: "billing_credit_balance_low";
-                billing_invoice_paid: "billing_invoice_paid";
-                billing_negative_balance_collected: "billing_negative_balance_collected";
-                billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                code_repo_connected: "code_repo_connected";
-                code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
-                github_connected: "github_connected";
-                github_disconnected: "github_disconnected";
-                integration_connected: "integration_connected";
-                integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
-                mcp_connector_added: "mcp_connector_added";
-                mcp_connector_removed: "mcp_connector_removed";
-                member_invited: "member_invited";
-                project_created: "project_created";
-                project_deleted: "project_deleted";
-                public_key_deactivated: "public_key_deactivated";
-                sandbox_created: "sandbox_created";
-                sandbox_deleted: "sandbox_deleted";
-                secret_key_created: "secret_key_created";
-                secret_key_deleted: "secret_key_deleted";
-                security_alert: "security_alert";
-                user_removed: "user_removed";
             }>>;
-            priority: import("zod").ZodNumber;
-            condition: import("zod").ZodObject<{
-                minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
-                    critical: "critical";
-                    high: "high";
-                    medium: "medium";
-                }>>;
-                component: import("zod").ZodOptional<import("zod").ZodString>;
-            }, import("zod/v4/core").$strict>;
-            outcome: import("zod").ZodEnum<{
-                route: "route";
-                suppress: "suppress";
-            }>;
-            enabled: import("zod").ZodBoolean;
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                channel: import("zod").ZodString;
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
                 destinationKey: import("zod").ZodString;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                displayName: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            condition: import("zod").ZodObject<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>;
+            components: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly setEnabled: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            ruleId: import("zod").ZodString;
-            enabled: import("zod").ZodBoolean;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            id: import("zod").ZodString;
-            projectId: import("zod").ZodString;
-            channel: import("zod").ZodNullable<import("zod").ZodEnum<{
-                email: "email";
-                in_app: "in_app";
-                incident_io: "incident_io";
-                pagerduty: "pagerduty";
-                rootly: "rootly";
-                slack: "slack";
-                slack_channel: "slack_channel";
-                sms: "sms";
-                teams_channel: "teams_channel";
-                webhook: "webhook";
-            }>>;
-            notificationType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                automation_finished: "automation_finished";
+        readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            destinations: import("zod").ZodArray<import("zod").ZodObject<{
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
+                destinationKey: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
-                billing_auto_top_up_failed: "billing_auto_top_up_failed";
-                billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
-                billing_credit_balance_depleted: "billing_credit_balance_depleted";
-                billing_credit_balance_low: "billing_credit_balance_low";
-                billing_invoice_paid: "billing_invoice_paid";
-                billing_negative_balance_collected: "billing_negative_balance_collected";
-                billing_negative_balance_collection_failed: "billing_negative_balance_collection_failed";
-                billing_plan_downgrade_applied: "billing_plan_downgrade_applied";
-                billing_plan_downgrade_scheduled: "billing_plan_downgrade_scheduled";
-                billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
-                code_repo_connected: "code_repo_connected";
-                code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
-                github_connected: "github_connected";
-                github_disconnected: "github_disconnected";
-                integration_connected: "integration_connected";
-                integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
-                mcp_connector_added: "mcp_connector_added";
-                mcp_connector_removed: "mcp_connector_removed";
-                member_invited: "member_invited";
-                project_created: "project_created";
-                project_deleted: "project_deleted";
-                public_key_deactivated: "public_key_deactivated";
-                sandbox_created: "sandbox_created";
-                sandbox_deleted: "sandbox_deleted";
-                secret_key_created: "secret_key_created";
-                secret_key_deleted: "secret_key_deleted";
-                security_alert: "security_alert";
-                user_removed: "user_removed";
             }>>;
-            priority: import("zod").ZodNumber;
             condition: import("zod").ZodObject<{
-                minSeverity: import("zod").ZodOptional<import("zod").ZodEnum<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
+                    low: "low";
                     medium: "medium";
-                }>>;
-                component: import("zod").ZodOptional<import("zod").ZodString>;
+                }>>>;
             }, import("zod/v4/core").$strict>;
-            outcome: import("zod").ZodEnum<{
-                route: "route";
-                suppress: "suppress";
-            }>;
-            enabled: import("zod").ZodBoolean;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            ruleId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            id: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
+                automation_run_failed: "automation_run_failed";
+                issue_ignored: "issue_ignored";
+                issue_resolved: "issue_resolved";
+                issue_triggered: "issue_triggered";
+            }>>;
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                channel: import("zod").ZodString;
+                channel: import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>;
                 destinationKey: import("zod").ZodString;
-                displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                displayName: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            condition: import("zod").ZodObject<{
+                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>;
+            components: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -7566,6 +7421,39 @@ export declare const publicApiOperations: {
                 redacted: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
+        readonly reassignAndReopen: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            issueId: import("zod").ZodString;
+            targetComponentId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            issue: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                description: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodEnum<{
+                    ignored: "ignored";
+                    open: "open";
+                    resolved: "resolved";
+                }>;
+                severity: import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>;
+                statusComponentId: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+                resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                mutedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                muteHitCount: import("zod").ZodNumber;
+                lastActivityAt: import("zod").ZodNullable<import("zod").ZodString>;
+                lastDeliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                locked: import("zod").ZodBoolean;
+                redacted: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>;
+            sourceComponentId: import("zod").ZodString;
+            targetComponentId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, "api">;
         readonly mute: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -7864,6 +7752,7 @@ export declare const publicApiOperations: {
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodString;
             description: import("zod").ZodOptional<import("zod").ZodString>;
+            requestId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             statusComponent: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -7883,22 +7772,41 @@ export declare const publicApiOperations: {
         readonly deregister: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             componentId: import("zod").ZodString;
             reason: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+            status: import("zod").ZodLiteral<"observation_withdrawn">;
+            componentId: import("zod").ZodString;
+            sourceType: import("zod").ZodLiteral<"secret_key">;
+            withdrawn: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            statusComponent: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                description: import("zod").ZodNullable<import("zod").ZodString>;
-                currentStatus: import("zod").ZodEnum<{
-                    degraded: "degraded";
-                    operational: "operational";
-                    outage: "outage";
+            status: import("zod").ZodLiteral<"retirement_confirmation_required">;
+            preview: import("zod").ZodObject<{
+                requestedComponentId: import("zod").ZodString;
+                canonicalComponentId: import("zod").ZodString;
+                canonicalComponentName: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    retired: "retired";
                 }>;
-                firstSeenAt: import("zod").ZodString;
-                lastSeenAt: import("zod").ZodString;
-                deletedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                affectedComponentIds: import("zod").ZodArray<import("zod").ZodString>;
+                componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
+                requiresCanonicalGroupConfirmation: import("zod").ZodBoolean;
+                recommendationScopeEnabled: import("zod").ZodLiteral<false>;
+                dependents: import("zod").ZodObject<{
+                    openIssueIds: import("zod").ZodArray<import("zod").ZodString>;
+                    activeComponentIssueIds: import("zod").ZodArray<import("zod").ZodString>;
+                    automationBindingIds: import("zod").ZodArray<import("zod").ZodString>;
+                    notificationRuleIds: import("zod").ZodArray<import("zod").ZodString>;
+                    dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
+                    observationIds: import("zod").ZodArray<import("zod").ZodString>;
+                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
+                    recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
+                    externalIncidentIds: import("zod").ZodArray<import("zod").ZodString>;
+                    authorizedDeliveryIds: import("zod").ZodArray<import("zod").ZodString>;
+                    authorizedAutomationRunIds: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>;
+                counts: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
             }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, "api">;
+        }, import("zod/v4/core").$strip>], "status">, "api">;
         readonly incidents: {
             readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
                 projectId: import("zod").ZodOptional<import("zod").ZodString>;
