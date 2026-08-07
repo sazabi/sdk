@@ -1492,7 +1492,6 @@ export declare const publicApiContract: {
                     displayName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 condition: import("zod").ZodObject<{
-                    componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                     severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                         critical: "critical";
                         high: "high";
@@ -1500,9 +1499,27 @@ export declare const publicApiContract: {
                         medium: "medium";
                     }>>>;
                 }, import("zod/v4/core").$strict>;
+                component: import("zod").ZodNullable<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    label: import("zod").ZodString;
+                    lifecycle: import("zod").ZodEnum<{
+                        active: "active";
+                        merged: "merged";
+                        retired: "retired";
+                    }>;
+                }, import("zod/v4/core").$strip>>;
+                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                includeDescendants: import("zod").ZodBoolean;
+                suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
                 components: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     label: import("zod").ZodString;
+                    lifecycle: import("zod").ZodEnum<{
+                        active: "active";
+                        merged: "merged";
+                        retired: "retired";
+                    }>;
                 }, import("zod/v4/core").$strip>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
@@ -1540,6 +1557,11 @@ export declare const publicApiContract: {
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -1560,7 +1582,16 @@ export declare const publicApiContract: {
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
             }>>;
-            condition: import("zod").ZodObject<{
+            componentId: import("zod").ZodOptional<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -1568,7 +1599,7 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>>>;
-            }, import("zod/v4/core").$strict>;
+            }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             id: import("zod").ZodString;
@@ -1593,7 +1624,6 @@ export declare const publicApiContract: {
                 displayName: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             condition: import("zod").ZodObject<{
-                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
@@ -1601,9 +1631,27 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>>;
             }, import("zod/v4/core").$strict>;
+            component: import("zod").ZodNullable<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
+            }, import("zod/v4/core").$strip>>;
+            componentId: import("zod").ZodNullable<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodBoolean;
+            suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
+            suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -1626,7 +1674,16 @@ export declare const publicApiContract: {
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
             }>>;
-            condition: import("zod").ZodObject<{
+            componentId: import("zod").ZodOptional<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -1634,7 +1691,7 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>>>;
-            }, import("zod/v4/core").$strict>;
+            }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             ruleId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -1660,7 +1717,6 @@ export declare const publicApiContract: {
                 displayName: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             condition: import("zod").ZodObject<{
-                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
@@ -1668,9 +1724,27 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>>;
             }, import("zod/v4/core").$strict>;
+            component: import("zod").ZodNullable<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
+            }, import("zod/v4/core").$strip>>;
+            componentId: import("zod").ZodNullable<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodBoolean;
+            suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
+            suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -5424,7 +5498,6 @@ export declare const publicApiOperations: {
                     displayName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 condition: import("zod").ZodObject<{
-                    componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                     severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                         critical: "critical";
                         high: "high";
@@ -5432,9 +5505,27 @@ export declare const publicApiOperations: {
                         medium: "medium";
                     }>>>;
                 }, import("zod/v4/core").$strict>;
+                component: import("zod").ZodNullable<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    label: import("zod").ZodString;
+                    lifecycle: import("zod").ZodEnum<{
+                        active: "active";
+                        merged: "merged";
+                        retired: "retired";
+                    }>;
+                }, import("zod/v4/core").$strip>>;
+                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                includeDescendants: import("zod").ZodBoolean;
+                suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
                 components: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     label: import("zod").ZodString;
+                    lifecycle: import("zod").ZodEnum<{
+                        active: "active";
+                        merged: "merged";
+                        retired: "retired";
+                    }>;
                 }, import("zod/v4/core").$strip>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
@@ -5472,6 +5563,11 @@ export declare const publicApiOperations: {
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -5492,7 +5588,16 @@ export declare const publicApiOperations: {
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
             }>>;
-            condition: import("zod").ZodObject<{
+            componentId: import("zod").ZodOptional<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -5500,7 +5605,7 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>>>;
-            }, import("zod/v4/core").$strict>;
+            }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             id: import("zod").ZodString;
@@ -5525,7 +5630,6 @@ export declare const publicApiOperations: {
                 displayName: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             condition: import("zod").ZodObject<{
-                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
@@ -5533,9 +5637,27 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>>;
             }, import("zod/v4/core").$strict>;
+            component: import("zod").ZodNullable<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
+            }, import("zod/v4/core").$strip>>;
+            componentId: import("zod").ZodNullable<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodBoolean;
+            suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
+            suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -5558,7 +5680,16 @@ export declare const publicApiOperations: {
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
             }>>;
-            condition: import("zod").ZodObject<{
+            componentId: import("zod").ZodOptional<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>>>;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -5566,7 +5697,7 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>>>;
-            }, import("zod/v4/core").$strict>;
+            }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             ruleId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -5592,7 +5723,6 @@ export declare const publicApiOperations: {
                 displayName: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             condition: import("zod").ZodObject<{
-                componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
                     high: "high";
@@ -5600,9 +5730,27 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>>;
             }, import("zod/v4/core").$strict>;
+            component: import("zod").ZodNullable<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
+            }, import("zod/v4/core").$strip>>;
+            componentId: import("zod").ZodNullable<import("zod").ZodString>;
+            includeDescendants: import("zod").ZodBoolean;
+            suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
+            suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 label: import("zod").ZodString;
+                lifecycle: import("zod").ZodEnum<{
+                    active: "active";
+                    merged: "merged";
+                    retired: "retired";
+                }>;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;

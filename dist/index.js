@@ -19034,6 +19034,67 @@ The Context Company hosts a Streamable HTTP MCP server at \`https://api.theconte
 - A The Context Company account
 - A read-only API key from the [MCP access documentation](https://docs.thecontext.company/access-data/mcp)
 `.trim();
+var composio = `
+## Overview
+
+Connect Composio to Sazabi agents to use tools from your configured Composio toolkits and connected apps — many SaaS integrations behind one hosted MCP endpoint.
+
+## How it works
+
+Composio hosts an MCP server at \`https://connect.composio.dev/mcp\` that authenticates with a Composio API key. Sazabi stores your key securely and sends it as the \`x-consumer-api-key\` header on each request. Agents can then call the tools exposed by your Composio toolkits; write tools are governed by the per-connection read-only toggle and your organization's tool policy.
+
+## Features
+
+- Call tools from your configured Composio toolkits and connected apps
+- Reach many SaaS integrations through a single connection
+- Write operations gated by the read-only toggle and tool policy
+
+## Requirements
+
+- A Composio account with a configured toolkit or connected apps
+- A Composio API key, created in the Composio dashboard
+`.trim();
+var notionMcp = `
+## Overview
+
+Connect Notion to Sazabi agents to search and work with your Notion pages, databases, and workspace content from your workflow.
+
+## How it works
+
+Notion hosts a remote MCP server at \`https://mcp.notion.com/mcp\` over streamable HTTP. Sazabi authenticates via OAuth using Notion's dynamic client registration — you approve access once in the browser and Sazabi refreshes the token thereafter. Agents can then search and act on the workspace content your grant covers. Write tools are gated by the per-connection read-only toggle and your organization's tool policy.
+
+## Features
+
+- Search pages, databases, and workspace content
+- Read page and database contents from agent conversations
+- Create and update content where your grant allows, subject to write gating
+
+## Requirements
+
+- A Notion workspace
+- Permission to authorize third-party integrations for that workspace
+`.trim();
+var onepassword = `
+## Overview
+
+Connect 1Password so Sazabi agents can work with your vaults and secrets through 1Password's documented secure AI access options.
+
+## How it works
+
+1Password's MCP integration is currently scoped to 1Password Environments and specific agent runtimes, and does not yet publish a general-purpose hosted MCP server that third-party hosted clients can register against. The supported path for reaching 1Password from a Sazabi agent today is the 1Password CLI preset, authenticated with a service-account token.
+
+## Features
+
+- Access 1Password items from agent workflows via the 1Password CLI (\`op\`) sandbox preset, authenticated with a service-account token
+
+## Requirements
+
+- A 1Password account with permission to create a service account
+
+## Availability
+
+1Password does not yet offer a hosted MCP endpoint Sazabi can connect to, so this connector is listed but not yet connectable from settings. Use the 1Password CLI sandbox preset for agent access today.
+`.trim();
 // ../mcp-connector-provider/src/providers/lib/mcp-provider.ts
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19768,7 +19829,7 @@ var cloudflareApiToken2 = defineMcpPreset({
 });
 
 // ../mcp-connector-provider/src/providers/composio.ts
-var composio = defineMcpPreset({
+var composio2 = defineMcpPreset({
   id: "composio",
   label: "Composio",
   iconKey: "composio",
@@ -20681,7 +20742,7 @@ var notion = defineMcpPreset({
 });
 
 // ../mcp-connector-provider/src/providers/onepassword.ts
-var onepassword = defineMcpPreset({
+var onepassword2 = defineMcpPreset({
   id: "1password",
   label: "1Password",
   iconKey: "onepassword",
@@ -21503,7 +21564,7 @@ var MCP_PROVIDERS = [
   cloudflare2,
   cloudflareApiToken2,
   circleback2,
-  composio,
+  composio2,
   contextDev2,
   elasticCloud2,
   exa2,
@@ -21522,7 +21583,7 @@ var MCP_PROVIDERS = [
   mercury2,
   neon2,
   notion,
-  onepassword,
+  onepassword2,
   paper2,
   plain2,
   planetscale2,
@@ -23419,7 +23480,10 @@ var DeliveryRuleSeveritySchema = z25.enum([
   "critical"
 ]);
 var DeliveryRuleConditionSchema = z25.object({
-  componentIds: z25.array(z25.string().uuid()).min(1).optional(),
+  severities: z25.array(DeliveryRuleSeveritySchema).min(1).optional()
+}).strict();
+var LegacyDeliveryRuleConditionSchema = z25.object({
+  componentIds: z25.array(z25.string().uuid()).min(1).max(1).optional(),
   severities: z25.array(DeliveryRuleSeveritySchema).min(1).optional()
 }).strict();
 var DeliveryRuleDestinationInputSchema = z25.object({
@@ -23429,8 +23493,35 @@ var DeliveryRuleDestinationInputSchema = z25.object({
 var DeliveryRuleDefinitionSchema = z25.object({
   destinations: z25.array(DeliveryRuleDestinationInputSchema).min(1),
   notificationTypes: z25.array(z25.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+  componentId: z25.string().uuid().optional().describe("Stable component registry ID matched by this rule."),
+  includeDescendants: z25.boolean().default(false).describe("Whether the rule also matches descendant components."),
   condition: DeliveryRuleConditionSchema
 });
+var LegacyDeliveryRuleDefinitionSchema = z25.object({
+  destinations: z25.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z25.array(z25.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+  condition: LegacyDeliveryRuleConditionSchema
+});
+var DeliveryRuleDefinitionInputObjectSchema = z25.object({
+  destinations: z25.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z25.array(z25.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+  componentId: z25.string().uuid().optional().describe("Stable component registry ID matched by this rule."),
+  includeDescendants: z25.boolean().default(false).describe("Whether the rule also matches descendant components."),
+  condition: z25.union([
+    DeliveryRuleConditionSchema,
+    LegacyDeliveryRuleConditionSchema
+  ])
+});
+var rejectConflictingComponentInputs = (input, context) => {
+  if (input.componentId && "componentIds" in input.condition && input.condition.componentIds?.length) {
+    context.addIssue({
+      code: "custom",
+      path: ["condition", "componentIds"],
+      message: "Use componentId instead of legacy condition.componentIds."
+    });
+  }
+};
+var DeliveryRuleDefinitionInputSchema = DeliveryRuleDefinitionInputObjectSchema.superRefine(rejectConflictingComponentInputs);
 var DeliveryRuleDestinationSchema = z25.object({
   id: z25.string(),
   channel: ProjectNotificationChannelSchema,
@@ -23439,7 +23530,8 @@ var DeliveryRuleDestinationSchema = z25.object({
 });
 var DeliveryRuleComponentSchema = z25.object({
   id: z25.string().uuid(),
-  label: z25.string()
+  label: z25.string(),
+  lifecycle: z25.enum(["active", "retired", "merged"])
 });
 var ProjectDeliveryRuleSchema = z25.object({
   id: z25.string().uuid(),
@@ -23447,7 +23539,12 @@ var ProjectDeliveryRuleSchema = z25.object({
   notificationTypes: z25.array(z25.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)),
   destinations: z25.array(DeliveryRuleDestinationSchema),
   condition: DeliveryRuleConditionSchema,
-  components: z25.array(DeliveryRuleComponentSchema),
+  component: DeliveryRuleComponentSchema.nullable(),
+  componentId: z25.string().uuid().nullable(),
+  includeDescendants: z25.boolean(),
+  suspendedAt: z25.string().datetime().nullable(),
+  suspensionReason: z25.string().nullable(),
+  components: z25.array(DeliveryRuleComponentSchema).max(1),
   createdAt: z25.string().datetime(),
   updatedAt: z25.string().datetime()
 });
@@ -23468,11 +23565,12 @@ var DeliveryRuleOptionsOutputSchema = z25.object({
   })),
   components: z25.array(DeliveryRuleComponentSchema)
 });
-var CreateDeliveryRuleInputSchema = ProjectScopeSchema.extend(DeliveryRuleDefinitionSchema.shape);
+var CreateDeliveryRuleInputSchema = ProjectScopeSchema.extend(DeliveryRuleDefinitionInputObjectSchema.shape).superRefine(rejectConflictingComponentInputs);
 var CreateDeliveryRuleOutputSchema = ProjectDeliveryRuleSchema;
-var UpdateDeliveryRuleInputSchema = CreateDeliveryRuleInputSchema.extend({
+var UpdateDeliveryRuleInputSchema = ProjectScopeSchema.extend({
+  ...DeliveryRuleDefinitionInputObjectSchema.shape,
   ruleId: DeliveryRuleIdSchema
-});
+}).superRefine(rejectConflictingComponentInputs);
 var UpdateDeliveryRuleOutputSchema = ProjectDeliveryRuleSchema;
 var DeleteDeliveryRuleInputSchema = ProjectScopeSchema.extend({
   ruleId: DeliveryRuleIdSchema
