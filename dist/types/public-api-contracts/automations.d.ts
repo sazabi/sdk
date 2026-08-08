@@ -72,15 +72,29 @@ export declare const AutomationRunDetailSchema: z.ZodObject<{
     automationId: z.ZodString;
 }, z.core.$strip>;
 export type AutomationRunDetail = z.infer<typeof AutomationRunDetailSchema>;
+export declare const AutomationKindSchema: z.ZodEnum<{
+    log_match: "log_match";
+    script: "script";
+}>;
+export type AutomationKind = z.infer<typeof AutomationKindSchema>;
+export declare const AutomationSignalTypeSchema: z.ZodEnum<{
+    expression_matched: "expression_matched";
+}>;
+export type AutomationSignalType = z.infer<typeof AutomationSignalTypeSchema>;
 export declare const AutomationSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
     name: z.ZodString;
     kind: z.ZodEnum<{
+        log_match: "log_match";
         script: "script";
     }>;
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
+    logMatchExpressionId: z.ZodNullable<z.ZodString>;
+    signalType: z.ZodNullable<z.ZodEnum<{
+        expression_matched: "expression_matched";
+    }>>;
     source: z.ZodEnum<{
         custom: "custom";
         sazabi_managed: "sazabi_managed";
@@ -119,10 +133,15 @@ export declare const AutomationDetailSchema: z.ZodObject<{
     projectId: z.ZodString;
     name: z.ZodString;
     kind: z.ZodEnum<{
+        log_match: "log_match";
         script: "script";
     }>;
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
+    logMatchExpressionId: z.ZodNullable<z.ZodString>;
+    signalType: z.ZodNullable<z.ZodEnum<{
+        expression_matched: "expression_matched";
+    }>>;
     source: z.ZodEnum<{
         custom: "custom";
         sazabi_managed: "sazabi_managed";
@@ -193,10 +212,15 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -243,10 +267,15 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -292,6 +321,7 @@ export declare const CreateAutomationInputSchema: z.ZodObject<{
     description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     scriptId: z.ZodOptional<z.ZodString>;
     script: z.ZodOptional<z.ZodString>;
+    expressionId: z.ZodOptional<z.ZodString>;
     cronExpression: z.ZodOptional<z.ZodString>;
     timezone: z.ZodOptional<z.ZodString>;
     timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
@@ -304,10 +334,15 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -363,10 +398,15 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -417,10 +457,15 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -471,10 +516,15 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -544,10 +594,15 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -591,10 +646,15 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -639,6 +699,7 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
     description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     scriptId: z.ZodOptional<z.ZodString>;
     script: z.ZodOptional<z.ZodString>;
+    expressionId: z.ZodOptional<z.ZodString>;
     cronExpression: z.ZodOptional<z.ZodString>;
     timezone: z.ZodOptional<z.ZodString>;
     timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
@@ -649,10 +710,15 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -705,10 +771,15 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -756,10 +827,15 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -807,10 +883,15 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         projectId: z.ZodString;
         name: z.ZodString;
         kind: z.ZodEnum<{
+            log_match: "log_match";
             script: "script";
         }>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
+        logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalType: z.ZodNullable<z.ZodEnum<{
+            expression_matched: "expression_matched";
+        }>>;
         source: z.ZodEnum<{
             custom: "custom";
             sazabi_managed: "sazabi_managed";
@@ -1099,10 +1180,15 @@ export declare const automationsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             kind: z.ZodEnum<{
+                log_match: "log_match";
                 script: "script";
             }>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
+            logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalType: z.ZodNullable<z.ZodEnum<{
+                expression_matched: "expression_matched";
+            }>>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -1146,10 +1232,15 @@ export declare const automationsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             kind: z.ZodEnum<{
+                log_match: "log_match";
                 script: "script";
             }>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
+            logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalType: z.ZodNullable<z.ZodEnum<{
+                expression_matched: "expression_matched";
+            }>>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -1194,6 +1285,7 @@ export declare const automationsContract: {
         description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         scriptId: z.ZodOptional<z.ZodString>;
         script: z.ZodOptional<z.ZodString>;
+        expressionId: z.ZodOptional<z.ZodString>;
         cronExpression: z.ZodOptional<z.ZodString>;
         timezone: z.ZodOptional<z.ZodString>;
         timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
@@ -1204,10 +1296,15 @@ export declare const automationsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             kind: z.ZodEnum<{
+                log_match: "log_match";
                 script: "script";
             }>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
+            logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalType: z.ZodNullable<z.ZodEnum<{
+                expression_matched: "expression_matched";
+            }>>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -1260,10 +1357,15 @@ export declare const automationsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             kind: z.ZodEnum<{
+                log_match: "log_match";
                 script: "script";
             }>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
+            logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalType: z.ZodNullable<z.ZodEnum<{
+                expression_matched: "expression_matched";
+            }>>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -1311,10 +1413,15 @@ export declare const automationsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             kind: z.ZodEnum<{
+                log_match: "log_match";
                 script: "script";
             }>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
+            logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalType: z.ZodNullable<z.ZodEnum<{
+                expression_matched: "expression_matched";
+            }>>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
@@ -1362,10 +1469,15 @@ export declare const automationsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             kind: z.ZodEnum<{
+                log_match: "log_match";
                 script: "script";
             }>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
+            logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalType: z.ZodNullable<z.ZodEnum<{
+                expression_matched: "expression_matched";
+            }>>;
             source: z.ZodEnum<{
                 custom: "custom";
                 sazabi_managed: "sazabi_managed";
