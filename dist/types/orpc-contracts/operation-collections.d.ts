@@ -2,8 +2,6 @@ import type { AnySchema } from "@orpc/contract";
 import type { OperationDefinition } from "./types.js";
 /**
  * One contract-first operation definition with erased schema parameters.
- * Narrows `@sazabi/orpc-contracts`' base collection type to this package's
- * `OperationBackend`; the structural guards below are shared with the base.
  */
 export type AnyOperationDefinition = OperationDefinition<AnySchema, AnySchema>;
 /**

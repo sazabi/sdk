@@ -16,6 +16,7 @@ export declare const TailLogsInputSchema: z.ZodObject<{
         environments: z.ZodOptional<z.ZodArray<z.ZodString>>;
         searchTerm: z.ZodOptional<z.ZodString>;
         traceId: z.ZodOptional<z.ZodString>;
+        attributes: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type TailLogsInput = z.infer<typeof TailLogsInputSchema>;

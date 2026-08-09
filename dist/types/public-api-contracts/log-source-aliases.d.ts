@@ -1,19 +1,19 @@
 import { z } from "zod";
 /** Supported data source type values derived from canonical catalog specs. */
-export declare const DATA_SOURCE_TYPE_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events"];
+export declare const LEGACY_LOG_SOURCE_TYPE_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex"];
 /**
  * Instance setup modes. `managed` instances hold vendor credentials that
  * Sazabi uses to provision delivery; `connectionless` instances mint a keyed
  * intake endpoint and the sender pushes to it directly.
  */
-export declare const DataSourceInstanceModeEnum: z.ZodEnum<{
+export declare const LegacyLogSourceModeEnum: z.ZodEnum<{
     connectionless: "connectionless";
     managed: "managed";
 }>;
 /**
  * A data source type with its supported setup modes and metadata requirements.
  */
-export declare const DataSourceTypeInfoSchema: z.ZodObject<{
+export declare const LegacyLogSourceTypeInfoSchema: z.ZodObject<{
     id: z.ZodString;
     name: z.ZodString;
     modes: z.ZodArray<z.ZodEnum<{
@@ -36,7 +36,7 @@ export declare const DataSourceTypeInfoSchema: z.ZodObject<{
  * complete keyed URL (the hostname authenticates); `hostPort` cards carry a
  * non-keyed listener plus the credential the sender must attach.
  */
-export declare const DataSourceEndpointCardSchema: z.ZodObject<{
+export declare const LegacyLogSourceEndpointCardSchema: z.ZodObject<{
     kind: z.ZodEnum<{
         hostPort: "hostPort";
         url: "url";
@@ -52,11 +52,11 @@ export declare const DataSourceEndpointCardSchema: z.ZodObject<{
         description: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export type DataSourceEndpointCard = z.infer<typeof DataSourceEndpointCardSchema>;
+export type LegacyLogSourceEndpointCard = z.infer<typeof LegacyLogSourceEndpointCardSchema>;
 /**
  * A data source stream record — one provisioned event flow under an instance.
  */
-export declare const DataSourceStreamSchema: z.ZodObject<{
+export declare const LegacyLogStreamSchema: z.ZodObject<{
     id: z.ZodString;
     instanceId: z.ZodString;
     displayName: z.ZodString;
@@ -93,12 +93,14 @@ export declare const DataSourceStreamSchema: z.ZodObject<{
  * provisions delivery) or `connectionless` (the sender pushes to a keyed
  * Sazabi intake endpoint).
  */
-export declare const DataSourceInstanceSchema: z.ZodObject<{
+export declare const LegacyLogSourceSchema: z.ZodObject<{
     id: z.ZodString;
     dataSourceType: z.ZodEnum<{
+        claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
+        codex: "codex";
         convex: "convex";
         datadog: "datadog";
         daytona: "daytona";
@@ -147,12 +149,14 @@ export declare const DataSourceInstanceSchema: z.ZodObject<{
  * A data source instance with its streams expanded. Streams that carry their
  * own delivery key include server-computed `endpointCards`.
  */
-export declare const DataSourceInstanceDetailSchema: z.ZodObject<{
+export declare const LegacyLogSourceDetailSchema: z.ZodObject<{
     id: z.ZodString;
     dataSourceType: z.ZodEnum<{
+        claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
+        codex: "codex";
         convex: "convex";
         datadog: "datadog";
         daytona: "daytona";
@@ -228,8 +232,8 @@ export declare const DataSourceInstanceDetailSchema: z.ZodObject<{
         }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export declare const ListDataSourceTypesInputSchema: z.ZodObject<{}, z.core.$strip>;
-export declare const ListDataSourceTypesOutputSchema: z.ZodObject<{
+export declare const ListLegacyLogSourceTypesInputSchema: z.ZodObject<{}, z.core.$strip>;
+export declare const ListLegacyLogSourceTypesOutputSchema: z.ZodObject<{
     types: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -247,8 +251,8 @@ export declare const ListDataSourceTypesOutputSchema: z.ZodObject<{
         setupSkill: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export type ListDataSourceTypesOutput = z.infer<typeof ListDataSourceTypesOutputSchema>;
-export declare const listDataSourceTypes: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
+export type ListLegacyLogSourceTypesOutput = z.infer<typeof ListLegacyLogSourceTypesOutputSchema>;
+export declare const listLegacyLogSourceTypes: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
     types: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -266,12 +270,14 @@ export declare const listDataSourceTypes: import("../orpc-contracts/index.js").O
         setupSkill: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
-export declare const ListDataSourceInstancesInputSchema: z.ZodObject<{
+export declare const ListLegacyLogSourcesInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     dataSourceType: z.ZodOptional<z.ZodEnum<{
+        claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
+        codex: "codex";
         convex: "convex";
         datadog: "datadog";
         daytona: "daytona";
@@ -309,13 +315,15 @@ export declare const ListDataSourceInstancesInputSchema: z.ZodObject<{
         webhook_events: "webhook_events";
     }>>;
 }, z.core.$strip>;
-export declare const ListDataSourceInstancesOutputSchema: z.ZodObject<{
+export declare const ListLegacyLogSourcesOutputSchema: z.ZodObject<{
     instances: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -361,14 +369,16 @@ export declare const ListDataSourceInstancesOutputSchema: z.ZodObject<{
         createdAt: z.ZodString;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export type ListDataSourceInstancesInput = z.infer<typeof ListDataSourceInstancesInputSchema>;
-export type ListDataSourceInstancesOutput = z.infer<typeof ListDataSourceInstancesOutputSchema>;
-export declare const listDataSourceInstances: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type ListLegacyLogSourcesInput = z.infer<typeof ListLegacyLogSourcesInputSchema>;
+export type ListLegacyLogSourcesOutput = z.infer<typeof ListLegacyLogSourcesOutputSchema>;
+export declare const listLegacyLogSources: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     dataSourceType: z.ZodOptional<z.ZodEnum<{
+        claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
+        codex: "codex";
         convex: "convex";
         datadog: "datadog";
         daytona: "daytona";
@@ -409,9 +419,11 @@ export declare const listDataSourceInstances: import("../orpc-contracts/index.js
     instances: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -457,12 +469,14 @@ export declare const listDataSourceInstances: import("../orpc-contracts/index.js
         createdAt: z.ZodString;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
-export declare const CreateDataSourceInstanceInputSchema: z.ZodObject<{
+export declare const CreateLegacyLogSourceInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     dataSourceType: z.ZodEnum<{
+        claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
+        codex: "codex";
         convex: "convex";
         datadog: "datadog";
         daytona: "daytona";
@@ -506,13 +520,15 @@ export declare const CreateDataSourceInstanceInputSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strip>;
-export declare const CreateDataSourceInstanceOutputSchema: z.ZodObject<{
+export declare const CreateLegacyLogSourceOutputSchema: z.ZodObject<{
     instance: z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -576,14 +592,16 @@ export declare const CreateDataSourceInstanceOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
     }, z.core.$strip>>>;
 }, z.core.$strip>;
-export type CreateDataSourceInstanceInput = z.infer<typeof CreateDataSourceInstanceInputSchema>;
-export type CreateDataSourceInstanceOutput = z.infer<typeof CreateDataSourceInstanceOutputSchema>;
-export declare const createDataSourceInstance: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type CreateLegacyLogSourceInput = z.infer<typeof CreateLegacyLogSourceInputSchema>;
+export type CreateLegacyLogSourceOutput = z.infer<typeof CreateLegacyLogSourceOutputSchema>;
+export declare const createLegacyLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     dataSourceType: z.ZodEnum<{
+        claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
+        codex: "codex";
         convex: "convex";
         datadog: "datadog";
         daytona: "daytona";
@@ -630,9 +648,11 @@ export declare const createDataSourceInstance: import("../orpc-contracts/index.j
     instance: z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -696,16 +716,18 @@ export declare const createDataSourceInstance: import("../orpc-contracts/index.j
         }, z.core.$strip>>;
     }, z.core.$strip>>>;
 }, z.core.$strip>, "api">;
-export declare const GetDataSourceInstanceInputSchema: z.ZodObject<{
+export declare const GetLegacyLogSourceInputSchema: z.ZodObject<{
     instanceId: z.ZodString;
 }, z.core.$strip>;
-export declare const GetDataSourceInstanceOutputSchema: z.ZodObject<{
+export declare const GetLegacyLogSourceOutputSchema: z.ZodObject<{
     instance: z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -782,17 +804,19 @@ export declare const GetDataSourceInstanceOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export type GetDataSourceInstanceInput = z.infer<typeof GetDataSourceInstanceInputSchema>;
-export type GetDataSourceInstanceOutput = z.infer<typeof GetDataSourceInstanceOutputSchema>;
-export declare const getDataSourceInstance: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type GetLegacyLogSourceInput = z.infer<typeof GetLegacyLogSourceInputSchema>;
+export type GetLegacyLogSourceOutput = z.infer<typeof GetLegacyLogSourceOutputSchema>;
+export declare const getLegacyLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     instanceId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     instance: z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -869,18 +893,20 @@ export declare const getDataSourceInstance: import("../orpc-contracts/index.js")
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const UpdateDataSourceInstanceInputSchema: z.ZodObject<{
+export declare const UpdateLegacyLogSourceInputSchema: z.ZodObject<{
     instanceId: z.ZodString;
     name: z.ZodOptional<z.ZodString>;
     enabled: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
-export declare const UpdateDataSourceInstanceOutputSchema: z.ZodObject<{
+export declare const UpdateLegacyLogSourceOutputSchema: z.ZodObject<{
     instance: z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -926,9 +952,9 @@ export declare const UpdateDataSourceInstanceOutputSchema: z.ZodObject<{
         createdAt: z.ZodString;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export type UpdateDataSourceInstanceInput = z.infer<typeof UpdateDataSourceInstanceInputSchema>;
-export type UpdateDataSourceInstanceOutput = z.infer<typeof UpdateDataSourceInstanceOutputSchema>;
-export declare const updateDataSourceInstance: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type UpdateLegacyLogSourceInput = z.infer<typeof UpdateLegacyLogSourceInputSchema>;
+export type UpdateLegacyLogSourceOutput = z.infer<typeof UpdateLegacyLogSourceOutputSchema>;
+export declare const updateLegacyLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     instanceId: z.ZodString;
     name: z.ZodOptional<z.ZodString>;
     enabled: z.ZodOptional<z.ZodBoolean>;
@@ -936,9 +962,11 @@ export declare const updateDataSourceInstance: import("../orpc-contracts/index.j
     instance: z.ZodObject<{
         id: z.ZodString;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -984,26 +1012,26 @@ export declare const updateDataSourceInstance: import("../orpc-contracts/index.j
         createdAt: z.ZodString;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const DeleteDataSourceInstanceInputSchema: z.ZodObject<{
+export declare const DeleteLegacyLogSourceInputSchema: z.ZodObject<{
     instanceId: z.ZodString;
 }, z.core.$strip>;
-export declare const DeleteDataSourceInstanceOutputSchema: z.ZodObject<{
+export declare const DeleteLegacyLogSourceOutputSchema: z.ZodObject<{
     success: z.ZodBoolean;
     teardownError: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
-export type DeleteDataSourceInstanceInput = z.infer<typeof DeleteDataSourceInstanceInputSchema>;
-export type DeleteDataSourceInstanceOutput = z.infer<typeof DeleteDataSourceInstanceOutputSchema>;
-export declare const deleteDataSourceInstance: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type DeleteLegacyLogSourceInput = z.infer<typeof DeleteLegacyLogSourceInputSchema>;
+export type DeleteLegacyLogSourceOutput = z.infer<typeof DeleteLegacyLogSourceOutputSchema>;
+export declare const deleteLegacyLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     instanceId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     success: z.ZodBoolean;
     teardownError: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
-export declare const ListDataSourceStreamsInputSchema: z.ZodObject<{
+export declare const ListLegacyLogStreamsInputSchema: z.ZodObject<{
     instanceId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
-export declare const ListDataSourceStreamsOutputSchema: z.ZodObject<{
+export declare const ListLegacyLogStreamsOutputSchema: z.ZodObject<{
     streams: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         instanceId: z.ZodString;
@@ -1036,9 +1064,9 @@ export declare const ListDataSourceStreamsOutputSchema: z.ZodObject<{
         }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export type ListDataSourceStreamsInput = z.infer<typeof ListDataSourceStreamsInputSchema>;
-export type ListDataSourceStreamsOutput = z.infer<typeof ListDataSourceStreamsOutputSchema>;
-export declare const listDataSourceStreams: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type ListLegacyLogStreamsInput = z.infer<typeof ListLegacyLogStreamsInputSchema>;
+export type ListLegacyLogStreamsOutput = z.infer<typeof ListLegacyLogStreamsOutputSchema>;
+export declare const listLegacyLogStreams: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     instanceId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
@@ -1074,27 +1102,27 @@ export declare const listDataSourceStreams: import("../orpc-contracts/index.js")
         }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
-export declare const CreateDataSourceStreamInputSchema: z.ZodObject<{
+export declare const CreateLegacyLogStreamInputSchema: z.ZodObject<{
     instanceId: z.ZodString;
     displayName: z.ZodString;
     config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strip>;
-export declare const CreateDataSourceStreamOutputSchema: z.ZodObject<{
+export declare const CreateLegacyLogStreamOutputSchema: z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>;
-export type CreateDataSourceStreamInput = z.infer<typeof CreateDataSourceStreamInputSchema>;
-export type CreateDataSourceStreamOutput = z.infer<typeof CreateDataSourceStreamOutputSchema>;
-export declare const createDataSourceStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type CreateLegacyLogStreamInput = z.infer<typeof CreateLegacyLogStreamInputSchema>;
+export type CreateLegacyLogStreamOutput = z.infer<typeof CreateLegacyLogStreamOutputSchema>;
+export declare const createLegacyLogStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     instanceId: z.ZodString;
     displayName: z.ZodString;
     config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strip>, z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>, "api">;
-export declare const GetDataSourceStreamInputSchema: z.ZodObject<{
+export declare const GetLegacyLogStreamInputSchema: z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>;
-export declare const GetDataSourceStreamOutputSchema: z.ZodObject<{
+export declare const GetLegacyLogStreamOutputSchema: z.ZodObject<{
     stream: z.ZodObject<{
         id: z.ZodString;
         instanceId: z.ZodString;
@@ -1127,9 +1155,9 @@ export declare const GetDataSourceStreamOutputSchema: z.ZodObject<{
         }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export type GetDataSourceStreamInput = z.infer<typeof GetDataSourceStreamInputSchema>;
-export type GetDataSourceStreamOutput = z.infer<typeof GetDataSourceStreamOutputSchema>;
-export declare const getDataSourceStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type GetLegacyLogStreamInput = z.infer<typeof GetLegacyLogStreamInputSchema>;
+export type GetLegacyLogStreamOutput = z.infer<typeof GetLegacyLogStreamOutputSchema>;
+export declare const getLegacyLogStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     stream: z.ZodObject<{
@@ -1164,12 +1192,12 @@ export declare const getDataSourceStream: import("../orpc-contracts/index.js").O
         }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const UpdateDataSourceStreamInputSchema: z.ZodObject<{
+export declare const UpdateLegacyLogStreamInputSchema: z.ZodObject<{
     streamId: z.ZodString;
     displayName: z.ZodOptional<z.ZodString>;
     enabled: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
-export declare const UpdateDataSourceStreamOutputSchema: z.ZodObject<{
+export declare const UpdateLegacyLogStreamOutputSchema: z.ZodObject<{
     stream: z.ZodObject<{
         id: z.ZodString;
         instanceId: z.ZodString;
@@ -1202,9 +1230,9 @@ export declare const UpdateDataSourceStreamOutputSchema: z.ZodObject<{
         }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export type UpdateDataSourceStreamInput = z.infer<typeof UpdateDataSourceStreamInputSchema>;
-export type UpdateDataSourceStreamOutput = z.infer<typeof UpdateDataSourceStreamOutputSchema>;
-export declare const updateDataSourceStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type UpdateLegacyLogStreamInput = z.infer<typeof UpdateLegacyLogStreamInputSchema>;
+export type UpdateLegacyLogStreamOutput = z.infer<typeof UpdateLegacyLogStreamOutputSchema>;
+export declare const updateLegacyLogStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     streamId: z.ZodString;
     displayName: z.ZodOptional<z.ZodString>;
     enabled: z.ZodOptional<z.ZodBoolean>;
@@ -1241,20 +1269,20 @@ export declare const updateDataSourceStream: import("../orpc-contracts/index.js"
         }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const DeleteDataSourceStreamInputSchema: z.ZodObject<{
+export declare const DeleteLegacyLogStreamInputSchema: z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>;
-export declare const DeleteDataSourceStreamOutputSchema: z.ZodObject<{
+export declare const DeleteLegacyLogStreamOutputSchema: z.ZodObject<{
     success: z.ZodBoolean;
 }, z.core.$strip>;
-export type DeleteDataSourceStreamInput = z.infer<typeof DeleteDataSourceStreamInputSchema>;
-export type DeleteDataSourceStreamOutput = z.infer<typeof DeleteDataSourceStreamOutputSchema>;
-export declare const deleteDataSourceStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type DeleteLegacyLogStreamInput = z.infer<typeof DeleteLegacyLogStreamInputSchema>;
+export type DeleteLegacyLogStreamOutput = z.infer<typeof DeleteLegacyLogStreamOutputSchema>;
+export declare const deleteLegacyLogStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     success: z.ZodBoolean;
 }, z.core.$strip>, "api">;
-export declare const dataSourcesContract: {
+export declare const legacyLogSourcesContract: {
     readonly listTypes: import("@orpc/contract").ContractProcedure<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
         types: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -1276,9 +1304,11 @@ export declare const dataSourcesContract: {
     readonly listInstances: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         dataSourceType: z.ZodOptional<z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -1319,9 +1349,11 @@ export declare const dataSourcesContract: {
         instances: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             dataSourceType: z.ZodEnum<{
+                claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
+                codex: "codex";
                 convex: "convex";
                 datadog: "datadog";
                 daytona: "daytona";
@@ -1370,9 +1402,11 @@ export declare const dataSourcesContract: {
     readonly createInstance: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         dataSourceType: z.ZodEnum<{
+            claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
+            codex: "codex";
             convex: "convex";
             datadog: "datadog";
             daytona: "daytona";
@@ -1419,9 +1453,11 @@ export declare const dataSourcesContract: {
         instance: z.ZodObject<{
             id: z.ZodString;
             dataSourceType: z.ZodEnum<{
+                claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
+                codex: "codex";
                 convex: "convex";
                 datadog: "datadog";
                 daytona: "daytona";
@@ -1491,9 +1527,11 @@ export declare const dataSourcesContract: {
         instance: z.ZodObject<{
             id: z.ZodString;
             dataSourceType: z.ZodEnum<{
+                claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
+                codex: "codex";
                 convex: "convex";
                 datadog: "datadog";
                 daytona: "daytona";
@@ -1578,9 +1616,11 @@ export declare const dataSourcesContract: {
         instance: z.ZodObject<{
             id: z.ZodString;
             dataSourceType: z.ZodEnum<{
+                claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
+                codex: "codex";
                 convex: "convex";
                 datadog: "datadog";
                 daytona: "daytona";

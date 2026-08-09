@@ -83,8 +83,6 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
         code_repo_connected: "code_repo_connected";
         code_repo_disconnected: "code_repo_disconnected";
-        data_source_connected: "data_source_connected";
-        data_source_disconnected: "data_source_disconnected";
         github_connected: "github_connected";
         github_disconnected: "github_disconnected";
         integration_connected: "integration_connected";
@@ -92,6 +90,8 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         issue_ignored: "issue_ignored";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        log_source_connected: "log_source_connected";
+        log_source_disconnected: "log_source_disconnected";
         mcp_connector_added: "mcp_connector_added";
         mcp_connector_removed: "mcp_connector_removed";
         member_invited: "member_invited";
@@ -142,8 +142,6 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
         code_repo_connected: "code_repo_connected";
         code_repo_disconnected: "code_repo_disconnected";
-        data_source_connected: "data_source_connected";
-        data_source_disconnected: "data_source_disconnected";
         github_connected: "github_connected";
         github_disconnected: "github_disconnected";
         integration_connected: "integration_connected";
@@ -151,6 +149,8 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         issue_ignored: "issue_ignored";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        log_source_connected: "log_source_connected";
+        log_source_disconnected: "log_source_disconnected";
         mcp_connector_added: "mcp_connector_added";
         mcp_connector_removed: "mcp_connector_removed";
         member_invited: "member_invited";
@@ -239,8 +239,6 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
-            data_source_connected: "data_source_connected";
-            data_source_disconnected: "data_source_disconnected";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -248,6 +246,8 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             issue_ignored: "issue_ignored";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            log_source_connected: "log_source_connected";
+            log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
             mcp_connector_removed: "mcp_connector_removed";
             member_invited: "member_invited";
@@ -298,8 +298,6 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
-            data_source_connected: "data_source_connected";
-            data_source_disconnected: "data_source_disconnected";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -307,6 +305,8 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             issue_ignored: "issue_ignored";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            log_source_connected: "log_source_connected";
+            log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
             mcp_connector_removed: "mcp_connector_removed";
             member_invited: "member_invited";
@@ -404,8 +404,6 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
-            data_source_connected: "data_source_connected";
-            data_source_disconnected: "data_source_disconnected";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -413,6 +411,8 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             issue_ignored: "issue_ignored";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            log_source_connected: "log_source_connected";
+            log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
             mcp_connector_removed: "mcp_connector_removed";
             member_invited: "member_invited";
@@ -463,8 +463,6 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
-            data_source_connected: "data_source_connected";
-            data_source_disconnected: "data_source_disconnected";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -472,6 +470,8 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             issue_ignored: "issue_ignored";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            log_source_connected: "log_source_connected";
+            log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
             mcp_connector_removed: "mcp_connector_removed";
             member_invited: "member_invited";
@@ -567,8 +567,6 @@ export declare const notificationChannelsContract: {
                 billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
                 code_repo_connected: "code_repo_connected";
                 code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
                 github_connected: "github_connected";
                 github_disconnected: "github_disconnected";
                 integration_connected: "integration_connected";
@@ -576,6 +574,8 @@ export declare const notificationChannelsContract: {
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
+                log_source_connected: "log_source_connected";
+                log_source_disconnected: "log_source_disconnected";
                 mcp_connector_added: "mcp_connector_added";
                 mcp_connector_removed: "mcp_connector_removed";
                 member_invited: "member_invited";
@@ -626,8 +626,6 @@ export declare const notificationChannelsContract: {
                 billing_plan_upgrade_applied: "billing_plan_upgrade_applied";
                 code_repo_connected: "code_repo_connected";
                 code_repo_disconnected: "code_repo_disconnected";
-                data_source_connected: "data_source_connected";
-                data_source_disconnected: "data_source_disconnected";
                 github_connected: "github_connected";
                 github_disconnected: "github_disconnected";
                 integration_connected: "integration_connected";
@@ -635,6 +633,8 @@ export declare const notificationChannelsContract: {
                 issue_ignored: "issue_ignored";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
+                log_source_connected: "log_source_connected";
+                log_source_disconnected: "log_source_disconnected";
                 mcp_connector_added: "mcp_connector_added";
                 mcp_connector_removed: "mcp_connector_removed";
                 member_invited: "member_invited";

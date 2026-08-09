@@ -1,10 +1,10 @@
-export declare const TASK_KEYS: readonly ["install_github_app", "configure_code_search", "install_slack_app", "configure_slack_alerts", "invite_team", "connect_data_sources", "add_mcp_connectors", "customize_sandbox", "send_message", "explore_integrations", "resolve_first_issue", "visit_status_page", "configure_auto_top_up"];
+export declare const TASK_KEYS: readonly ["install_github_app", "configure_code_search", "install_slack_app", "configure_slack_alerts", "invite_team", "connect_log_sources", "add_mcp_connectors", "customize_sandbox", "send_message", "explore_integrations", "resolve_first_issue", "visit_status_page", "configure_auto_top_up"];
 export type TaskKey = (typeof TASK_KEYS)[number];
 /** Task keys written to org_task_completions. */
 export declare const ORG_TASK_KEYS: readonly ["install_github_app", "install_slack_app", "configure_slack_alerts", "invite_team", "add_mcp_connectors", "configure_auto_top_up"];
 export type OrgTaskKey = (typeof ORG_TASK_KEYS)[number];
 /** Task keys written to project_task_completions. */
-export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "connect_data_sources", "customize_sandbox", "send_message", "explore_integrations", "resolve_first_issue", "visit_status_page"];
+export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "connect_log_sources", "customize_sandbox", "send_message", "explore_integrations", "resolve_first_issue", "visit_status_page"];
 export type ProjectTaskKey = (typeof PROJECT_TASK_KEYS)[number];
 export declare const TASK_CATEGORIES: readonly ["onboarding", "setup"];
 export type TaskCategory = (typeof TASK_CATEGORIES)[number];
@@ -49,7 +49,7 @@ export declare const TASK_METADATA: readonly [{
     readonly instructions: "Go to Settings > Members and click 'Invite member'. Enter your teammate's email address and select their role.";
     readonly category: "setup";
 }, {
-    readonly id: "connect_data_sources";
+    readonly id: "connect_log_sources";
     readonly label: "Connect data sources";
     readonly description: "Connect a telemetry data source such as Datadog, Sentry, or AWS CloudWatch so agents have access to your logs, metrics, and traces.";
     readonly instructions: "Go to Settings > Data Sources and click 'Add data source'. Choose a provider such as Datadog, Sentry, or AWS CloudWatch and follow the configuration steps.";
@@ -111,7 +111,7 @@ export type TaskChecklistStatus = {
     };
     other: {
         inviteTeam: boolean;
-        connectDataSources: boolean;
+        connectLogSources: boolean;
         addMcpConnectors: boolean;
         customizeSandbox: boolean;
         sendMessage: boolean;
