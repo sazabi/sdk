@@ -15,7 +15,7 @@ export declare const IssueSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
-    statusComponentId: z.ZodNullable<z.ZodString>;
+    componentId: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     resolvedAt: z.ZodNullable<z.ZodString>;
     mutedAt: z.ZodNullable<z.ZodString>;
@@ -50,7 +50,7 @@ export declare const IssueDetailSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
-    statusComponentId: z.ZodNullable<z.ZodString>;
+    componentId: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     resolvedAt: z.ZodNullable<z.ZodString>;
     mutedAt: z.ZodNullable<z.ZodString>;
@@ -84,7 +84,7 @@ export declare const IssueSearchItemSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
-    statusComponentId: z.ZodNullable<z.ZodString>;
+    componentId: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     resolvedAt: z.ZodNullable<z.ZodString>;
     mutedAt: z.ZodNullable<z.ZodString>;
@@ -106,7 +106,7 @@ export declare const CreateIssueInputObjectSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodString;
     statusStartedAt: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const CreateIssueInputSchema: z.ZodObject<{
@@ -119,7 +119,7 @@ export declare const CreateIssueInputSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodString;
     statusStartedAt: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type CreateIssueInput = z.infer<typeof CreateIssueInputSchema>;
@@ -140,7 +140,7 @@ export declare const CreateIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -168,7 +168,7 @@ export declare const ListIssuesInputSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type ListIssuesInput = z.infer<typeof ListIssuesInputSchema>;
 export declare const ListIssuesOutputSchema: z.ZodObject<{
@@ -188,7 +188,7 @@ export declare const ListIssuesOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -216,7 +216,7 @@ export declare const SearchIssuesInputSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     includeDeliveryMetadata: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>;
@@ -238,7 +238,7 @@ export declare const SearchIssuesOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -265,7 +265,7 @@ export declare const CountIssuesInputSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type CountIssuesInput = z.infer<typeof CountIssuesInputSchema>;
@@ -306,7 +306,7 @@ export declare const CountIssuesOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type CountIssuesOutput = z.infer<typeof CountIssuesOutputSchema>;
@@ -331,7 +331,7 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -372,7 +372,7 @@ export declare const ResolveIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -405,7 +405,7 @@ export declare const IgnoreIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -438,7 +438,7 @@ export declare const ReopenIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -472,7 +472,7 @@ export declare const ReassignAndReopenIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -507,7 +507,7 @@ export declare const MuteIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -540,7 +540,7 @@ export declare const UnmuteIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -562,7 +562,7 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodString;
     statusStartedAt: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     issue: z.ZodObject<{
@@ -581,7 +581,7 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -608,7 +608,7 @@ export declare const listIssues: import("../orpc-contracts/index.js").OperationD
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     issues: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -626,7 +626,7 @@ export declare const listIssues: import("../orpc-contracts/index.js").OperationD
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -653,7 +653,7 @@ export declare const searchIssues: import("../orpc-contracts/index.js").Operatio
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     includeDeliveryMetadata: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>, z.ZodObject<{
@@ -673,7 +673,7 @@ export declare const searchIssues: import("../orpc-contracts/index.js").Operatio
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -699,7 +699,7 @@ export declare const countIssues: import("../orpc-contracts/index.js").Operation
         low: "low";
         medium: "medium";
     }>>;
-    statusComponentId: z.ZodOptional<z.ZodString>;
+    componentId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     total: z.ZodNumber;
@@ -727,7 +727,7 @@ export declare const countIssues: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const getIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -749,7 +749,7 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -787,7 +787,7 @@ export declare const resolveIssue: import("../orpc-contracts/index.js").Operatio
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -817,7 +817,7 @@ export declare const ignoreIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -847,7 +847,7 @@ export declare const reopenIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -878,7 +878,7 @@ export declare const reassignAndReopenIssue: import("../orpc-contracts/index.js"
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -910,7 +910,7 @@ export declare const muteIssue: import("../orpc-contracts/index.js").OperationDe
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -940,7 +940,7 @@ export declare const unmuteIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
-        statusComponentId: z.ZodNullable<z.ZodString>;
+        componentId: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -965,7 +965,7 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>>;
-        statusComponentId: z.ZodOptional<z.ZodString>;
+        componentId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         total: z.ZodNumber;
@@ -993,7 +993,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -1006,7 +1006,7 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>>;
-        statusComponentId: z.ZodOptional<z.ZodString>;
+        componentId: z.ZodString;
         statusStartedAt: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         issue: z.ZodObject<{
@@ -1025,7 +1025,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1052,7 +1052,7 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>>;
-        statusComponentId: z.ZodOptional<z.ZodString>;
+        componentId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         issues: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -1070,7 +1070,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1097,7 +1097,7 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>>;
-        statusComponentId: z.ZodOptional<z.ZodString>;
+        componentId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
         includeDeliveryMetadata: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     }, z.core.$strip>, z.ZodObject<{
@@ -1117,7 +1117,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1149,7 +1149,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1187,7 +1187,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1217,7 +1217,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1247,7 +1247,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1278,7 +1278,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1310,7 +1310,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1340,7 +1340,7 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
-            statusComponentId: z.ZodNullable<z.ZodString>;
+            componentId: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;

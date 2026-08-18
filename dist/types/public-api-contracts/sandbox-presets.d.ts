@@ -38,6 +38,7 @@ export declare const listSandboxPresetTypes: import("../orpc-contracts/index.js"
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const SandboxPresetCredentialSourceSchema: z.ZodEnum<{
+    bitbucket_integration: "bitbucket_integration";
     github_app: "github_app";
     personal_access_token: "personal_access_token";
     stored_credentials: "stored_credentials";
@@ -45,6 +46,7 @@ export declare const SandboxPresetCredentialSourceSchema: z.ZodEnum<{
 export declare const SandboxPresetConnectionSchema: z.ZodObject<{
     presetType: z.ZodString;
     credentialSource: z.ZodEnum<{
+        bitbucket_integration: "bitbucket_integration";
         github_app: "github_app";
         personal_access_token: "personal_access_token";
         stored_credentials: "stored_credentials";
@@ -61,6 +63,7 @@ export declare const ListSandboxPresetConnectionsOutputSchema: z.ZodObject<{
     connections: z.ZodArray<z.ZodObject<{
         presetType: z.ZodString;
         credentialSource: z.ZodEnum<{
+            bitbucket_integration: "bitbucket_integration";
             github_app: "github_app";
             personal_access_token: "personal_access_token";
             stored_credentials: "stored_credentials";
@@ -78,6 +81,7 @@ export declare const listSandboxPresetConnections: import("../orpc-contracts/ind
     connections: z.ZodArray<z.ZodObject<{
         presetType: z.ZodString;
         credentialSource: z.ZodEnum<{
+            bitbucket_integration: "bitbucket_integration";
             github_app: "github_app";
             personal_access_token: "personal_access_token";
             stored_credentials: "stored_credentials";
@@ -135,6 +139,7 @@ export declare const sandboxPresetsContract: {
         connections: z.ZodArray<z.ZodObject<{
             presetType: z.ZodString;
             credentialSource: z.ZodEnum<{
+                bitbucket_integration: "bitbucket_integration";
                 github_app: "github_app";
                 personal_access_token: "personal_access_token";
                 stored_credentials: "stored_credentials";

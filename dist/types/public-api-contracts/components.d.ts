@@ -1,5 +1,5 @@
 import { z } from "zod";
-export declare const StatusComponentSchema: z.ZodObject<{
+export declare const ComponentSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
     name: z.ZodString;
@@ -34,16 +34,16 @@ export declare const StatusComponentSchema: z.ZodObject<{
     retirementReason: z.ZodNullable<z.ZodString>;
     legacyStateUnknown: z.ZodBoolean;
 }, z.core.$strip>;
-export type StatusComponent = z.infer<typeof StatusComponentSchema>;
-export declare const ListStatusComponentsInputSchema: z.ZodObject<{
+export type Component = z.infer<typeof ComponentSchema>;
+export declare const ListComponentsInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     cursor: z.ZodOptional<z.ZodString>;
     includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>;
-export type ListStatusComponentsInput = z.infer<typeof ListStatusComponentsInputSchema>;
-export declare const ListStatusComponentsOutputSchema: z.ZodObject<{
-    statusComponents: z.ZodArray<z.ZodObject<{
+export type ListComponentsInput = z.infer<typeof ListComponentsInputSchema>;
+export declare const ListComponentsOutputSchema: z.ZodObject<{
+    components: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -80,13 +80,13 @@ export declare const ListStatusComponentsOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
-export type ListStatusComponentsOutput = z.infer<typeof ListStatusComponentsOutputSchema>;
-export declare const GetStatusComponentInputSchema: z.ZodObject<{
+export type ListComponentsOutput = z.infer<typeof ListComponentsOutputSchema>;
+export declare const GetComponentInputSchema: z.ZodObject<{
     componentId: z.ZodString;
 }, z.core.$strip>;
-export type GetStatusComponentInput = z.infer<typeof GetStatusComponentInputSchema>;
-export declare const GetStatusComponentOutputSchema: z.ZodObject<{
-    statusComponent: z.ZodObject<{
+export type GetComponentInput = z.infer<typeof GetComponentInputSchema>;
+export declare const GetComponentOutputSchema: z.ZodObject<{
+    component: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -122,16 +122,20 @@ export declare const GetStatusComponentOutputSchema: z.ZodObject<{
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export type GetStatusComponentOutput = z.infer<typeof GetStatusComponentOutputSchema>;
-export declare const RegisterStatusComponentInputSchema: z.ZodObject<{
+export type GetComponentOutput = z.infer<typeof GetComponentOutputSchema>;
+export declare const RegisterComponentInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     description: z.ZodOptional<z.ZodString>;
     requestId: z.ZodOptional<z.ZodString>;
+    origin: z.ZodOptional<z.ZodEnum<{
+        code_detected: "code_detected";
+        log_observed: "log_observed";
+    }>>;
 }, z.core.$strip>;
-export type RegisterStatusComponentInput = z.infer<typeof RegisterStatusComponentInputSchema>;
-export declare const RegisterStatusComponentOutputSchema: z.ZodObject<{
-    statusComponent: z.ZodObject<{
+export type RegisterComponentInput = z.infer<typeof RegisterComponentInputSchema>;
+export declare const RegisterComponentOutputSchema: z.ZodObject<{
+    component: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -167,16 +171,16 @@ export declare const RegisterStatusComponentOutputSchema: z.ZodObject<{
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export type RegisterStatusComponentOutput = z.infer<typeof RegisterStatusComponentOutputSchema>;
-export declare const RenameStatusComponentInputSchema: z.ZodObject<{
+export type RegisterComponentOutput = z.infer<typeof RegisterComponentOutputSchema>;
+export declare const RenameComponentInputSchema: z.ZodObject<{
     componentId: z.ZodString;
     name: z.ZodString;
     requestId: z.ZodString;
     reason: z.ZodString;
 }, z.core.$strip>;
-export type RenameStatusComponentInput = z.infer<typeof RenameStatusComponentInputSchema>;
-export declare const RenameStatusComponentOutputSchema: z.ZodObject<{
-    statusComponent: z.ZodObject<{
+export type RenameComponentInput = z.infer<typeof RenameComponentInputSchema>;
+export declare const RenameComponentOutputSchema: z.ZodObject<{
+    component: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -212,12 +216,12 @@ export declare const RenameStatusComponentOutputSchema: z.ZodObject<{
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>;
-export type RenameStatusComponentOutput = z.infer<typeof RenameStatusComponentOutputSchema>;
-export declare const DeregisterStatusComponentInputSchema: z.ZodObject<{
+export type RenameComponentOutput = z.infer<typeof RenameComponentOutputSchema>;
+export declare const DeregisterComponentInputSchema: z.ZodObject<{
     componentId: z.ZodString;
     reason: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
-export type DeregisterStatusComponentInput = z.infer<typeof DeregisterStatusComponentInputSchema>;
+export type DeregisterComponentInput = z.infer<typeof DeregisterComponentInputSchema>;
 export declare const ComponentRetirementPreviewSchema: z.ZodObject<{
     requestedComponentId: z.ZodString;
     canonicalComponentId: z.ZodString;
@@ -246,7 +250,7 @@ export declare const ComponentRetirementPreviewSchema: z.ZodObject<{
     counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
 }, z.core.$strip>;
 export type ComponentRetirementPreview = z.infer<typeof ComponentRetirementPreviewSchema>;
-export declare const DeregisterStatusComponentOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+export declare const DeregisterComponentOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     status: z.ZodLiteral<"observation_withdrawn">;
     componentId: z.ZodString;
     sourceType: z.ZodLiteral<"secret_key">;
@@ -281,14 +285,14 @@ export declare const DeregisterStatusComponentOutputSchema: z.ZodDiscriminatedUn
         counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
     }, z.core.$strip>;
 }, z.core.$strip>], "status">;
-export type DeregisterStatusComponentOutput = z.infer<typeof DeregisterStatusComponentOutputSchema>;
-export declare const listStatusComponents: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type DeregisterComponentOutput = z.infer<typeof DeregisterComponentOutputSchema>;
+export declare const listComponents: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     cursor: z.ZodOptional<z.ZodString>;
     includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>, z.ZodObject<{
-    statusComponents: z.ZodArray<z.ZodObject<{
+    components: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -325,10 +329,10 @@ export declare const listStatusComponents: import("../orpc-contracts/index.js").
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
-export declare const getStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const getComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
-    statusComponent: z.ZodObject<{
+    component: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -364,13 +368,17 @@ export declare const getStatusComponent: import("../orpc-contracts/index.js").Op
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const registerStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const registerComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     description: z.ZodOptional<z.ZodString>;
     requestId: z.ZodOptional<z.ZodString>;
+    origin: z.ZodOptional<z.ZodEnum<{
+        code_detected: "code_detected";
+        log_observed: "log_observed";
+    }>>;
 }, z.core.$strip>, z.ZodObject<{
-    statusComponent: z.ZodObject<{
+    component: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -406,7 +414,7 @@ export declare const registerStatusComponent: import("../orpc-contracts/index.js
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const deregisterStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const deregisterComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
     reason: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -444,13 +452,13 @@ export declare const deregisterStatusComponent: import("../orpc-contracts/index.
         counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
     }, z.core.$strip>;
 }, z.core.$strip>], "status">, "api">;
-export declare const renameStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const renameComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
     name: z.ZodString;
     requestId: z.ZodString;
     reason: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
-    statusComponent: z.ZodObject<{
+    component: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
@@ -701,7 +709,7 @@ export declare const CommitComponentRestorationOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type CommitComponentRestorationOutput = z.infer<typeof CommitComponentRestorationOutputSchema>;
-export declare const previewStatusComponentRetirement: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const previewComponentRetirement: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     preview: z.ZodObject<{
@@ -732,7 +740,7 @@ export declare const previewStatusComponentRetirement: import("../orpc-contracts
         counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const retireStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const retireComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
     requestId: z.ZodString;
     reason: z.ZodString;
@@ -772,7 +780,7 @@ export declare const retireStatusComponent: import("../orpc-contracts/index.js")
         followups: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const previewStatusComponentRestoration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const previewComponentRestoration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
     retirementOperationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -791,7 +799,7 @@ export declare const previewStatusComponentRestoration: import("../orpc-contract
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const restoreStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const restoreComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
     retirementOperationId: z.ZodString;
     requestId: z.ZodString;
@@ -1975,7 +1983,7 @@ export declare const previewComponentMerge: import("../orpc-contracts/index.js")
         confirmationRequired: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const mergeStatusComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const mergeComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     sourceComponentId: z.ZodString;
     targetComponentId: z.ZodString;
@@ -2211,14 +2219,14 @@ export declare const getStatusTimeline: import("../orpc-contracts/index.js").Ope
         resolvedAt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
-export declare const statusComponentsContract: {
+export declare const componentsContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
         cursor: z.ZodOptional<z.ZodString>;
         includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     }, z.core.$strip>, z.ZodObject<{
-        statusComponents: z.ZodArray<z.ZodObject<{
+        components: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
@@ -2258,7 +2266,7 @@ export declare const statusComponentsContract: {
     readonly get: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         componentId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
-        statusComponent: z.ZodObject<{
+        component: z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
@@ -2299,8 +2307,12 @@ export declare const statusComponentsContract: {
         name: z.ZodString;
         description: z.ZodOptional<z.ZodString>;
         requestId: z.ZodOptional<z.ZodString>;
+        origin: z.ZodOptional<z.ZodEnum<{
+            code_detected: "code_detected";
+            log_observed: "log_observed";
+        }>>;
     }, z.core.$strip>, z.ZodObject<{
-        statusComponent: z.ZodObject<{
+        component: z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
@@ -2380,7 +2392,7 @@ export declare const statusComponentsContract: {
         requestId: z.ZodString;
         reason: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
-        statusComponent: z.ZodObject<{
+        component: z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;

@@ -349,40 +349,6 @@ export declare const LogsNativeQueryOutputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type LogsNativeQueryOutput = z.infer<typeof LogsNativeQueryOutputSchema>;
 /**
- * Input for natural-language logs search (experimental).
- */
-export declare const LogsSearchNaturalInputSchema: z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    query: z.ZodString;
-}, z.core.$strip>;
-export type LogsSearchNaturalInput = z.infer<typeof LogsSearchNaturalInputSchema>;
-/**
- * Output for natural-language logs search (experimental).
- */
-export declare const LogsSearchNaturalOutputSchema: z.ZodObject<{
-    answer: z.ZodString;
-    steps: z.ZodNumber;
-    toolCalls: z.ZodNumber;
-    compacted: z.ZodBoolean;
-    meta: z.ZodObject<{
-        backendId: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
-        took: z.ZodNumber;
-        modelProvider: z.ZodOptional<z.ZodString>;
-        modelId: z.ZodOptional<z.ZodString>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type LogsSearchNaturalOutput = z.infer<typeof LogsSearchNaturalOutputSchema>;
-/**
  * Pagination metadata in query response.
  */
 export declare const LogPaginationResponseSchema: z.ZodObject<{
@@ -610,38 +576,6 @@ export declare const logsNativeQuery: import("../orpc-contracts/index.js").Opera
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 /**
- * Contract definition for logs.searchNatural.
- *
- * Experimental: public-api proxies to durable-agent
- * (`POST /api/logs/search-natural`) so the nested Cerebras + ClickHouse loop
- * can be validated over HTTP before enabling the matching agent tool.
- */
-export declare const logsSearchNatural: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    query: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    answer: z.ZodString;
-    steps: z.ZodNumber;
-    toolCalls: z.ZodNumber;
-    compacted: z.ZodBoolean;
-    meta: z.ZodObject<{
-        backendId: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
-        took: z.ZodNumber;
-        modelProvider: z.ZodOptional<z.ZodString>;
-        modelId: z.ZodOptional<z.ZodString>;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-/**
  * Contract tree for log operations.
  */
 export declare const logsContract: {
@@ -824,31 +758,6 @@ export declare const logsContract: {
             }>;
             took: z.ZodNumber;
             truncated: z.ZodBoolean;
-        }, z.core.$strip>;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly searchNatural: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-        projectId: z.ZodOptional<z.ZodString>;
-        query: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
-        answer: z.ZodString;
-        steps: z.ZodNumber;
-        toolCalls: z.ZodNumber;
-        compacted: z.ZodBoolean;
-        meta: z.ZodObject<{
-            backendId: z.ZodEnum<{
-                axiom: "axiom";
-                "better-stack": "better-stack";
-                clickhouse: "clickhouse";
-                cloudwatch: "cloudwatch";
-                datadog: "datadog";
-                gcp: "gcp";
-                mezmo: "mezmo";
-                posthog: "posthog";
-                sentry: "sentry";
-            }>;
-            took: z.ZodNumber;
-            modelProvider: z.ZodOptional<z.ZodString>;
-            modelId: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };

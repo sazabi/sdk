@@ -1,5 +1,5 @@
 import type { ContractRouterClient } from "@orpc/contract";
-import { type AddComponentRelationshipInput, type AddTeamMemberInput, type AddTeamMemberOutput, type AssignComponentTeamInput, type AssignComponentTeamOutput, type CancelRunInput, type CancelRunOutput, type CommitComponentMergeInput, type CommitComponentMergeOutput, type CommitComponentRestorationInput, type CommitComponentRestorationOutput, type CommitComponentRetirementInput, type CommitComponentRetirementOutput, type ComponentRelationshipMutationOutput, type CountIssuesInput, type CountIssuesOutput, type CreateAutomationInput, type CreateAutomationOutput, type CreateIssueInput, type CreateIssueOutput, type CreateLegacyLogSourceInput, type CreateLegacyLogSourceOutput, type CreateLegacyLogStreamInput, type CreateLegacyLogStreamOutput, type CreateLogMatchExpressionInput, type CreateLogMatchExpressionOutput, type CreateLogSourceInput, type CreateLogSourceOutput, type CreateLogSourceStreamInput, type CreateLogSourceStreamOutput, type CreateProjectInput, type CreateProjectOutput, type CreateProjectScriptInput, type CreateProjectScriptOutput, type CreatePublicKeyOutput, type CreateSecretKeyInput, type CreateSecretKeyOutput, type CreateTeamInput, type CreateTeamOutput, type CreateThreadShareLinkInput, type CreateThreadShareLinkOutput, type DeactivatePublicKeyInput, type DeactivatePublicKeyOutput, type DeleteKeyOutput, type DeleteLegacyLogSourceInput, type DeleteLegacyLogSourceOutput, type DeleteLegacyLogStreamInput, type DeleteLegacyLogStreamOutput, type DeleteLogSourceInput, type DeleteLogSourceOutput, type DeleteLogSourceStreamInput, type DeleteLogSourceStreamOutput, type DeleteProjectMemoryInput, type DeleteProjectMemoryOutput, type DeleteProjectScriptInput, type DeleteProjectScriptOutput, type DeleteSecretKeyInput, type DeleteTeamInput, type DeleteTeamOutput, type DeregisterStatusComponentInput, type DeregisterStatusComponentOutput, type DisableAutomationInput, type DisableAutomationOutput, type DisableLogMatchExpressionInput, type DisableLogMatchExpressionOutput, type EnableAutomationInput, type EnableAutomationOutput, type EnsureLogForwardingPublicKeyInput, type ForkThreadInput, type ForkThreadOutput, type GetAutomationInput, type GetAutomationOutput, type GetAutomationRunInput, type GetAutomationRunLogsInput, type GetAutomationRunLogsOutput, type GetAutomationRunOutput, type GetBillingSummaryInput, type GetBillingSummaryOutput, type GetBillingUsageInput, type GetBillingUsageOutput, type GetIntegrationConnectionInput, type GetIntegrationConnectionOutput, type GetIssueInput, type GetIssueOutput, type GetKeyInput, type GetLegacyLogSourceInput, type GetLegacyLogSourceOutput, type GetLegacyLogStreamInput, type GetLegacyLogStreamOutput, type GetLogMatchExpressionInput, type GetLogMatchExpressionOutput, type GetLogSourceInput, type GetLogSourceOutput, type GetLogSourceStreamInput, type GetLogSourceStreamOutput, type GetMcpConnectorDetailsInput, type GetMcpConnectorDetailsOutput, type GetMcpConnectorInput, type GetMcpConnectorOutput, type GetOrganizationInput, type GetOrganizationOutput, type GetProjectDetailsOutput, type GetProjectInput, type GetProjectMemoryInput, type GetProjectMemoryOutput, type GetProjectScriptInput, type GetProjectScriptOutput, type GetPublicKeyOutput, type GetRunInput, type GetRunOutput, type GetSecretKeyInput, type GetSecretKeyOutput, type GetStatusComponentInput, type GetStatusComponentOutput, type GetStatusTimelineInput, type GetStatusTimelineOutput, type GetThreadInput, type GetThreadOutput, type GetThreadStatusInput, type GetThreadStatusOutput, type IgnoreIssueInput, type IgnoreIssueOutput, type ListAutomationRunsInput, type ListAutomationRunsOutput, type ListAutomationsInput, type ListAutomationsOutput, type ListBillingTransactionsInput, type ListBillingTransactionsOutput, type ListComponentRelationshipsInput, type ListComponentRelationshipsOutput, type ListIntegrationConnectionsInput, type ListIntegrationConnectionsOutput, type ListIntegrationProvidersInput, type ListIntegrationProvidersOutput, type ListIssuesInput, type ListIssuesOutput, type ListKeysInput, type ListLegacyLogSourcesInput, type ListLegacyLogSourcesOutput, type ListLegacyLogSourceTypesOutput, type ListLegacyLogStreamsInput, type ListLegacyLogStreamsOutput, type ListLogMatchExpressionsInput, type ListLogMatchExpressionsOutput, type ListLogSourceProvidersOutput, type ListLogSourceStreamsInput, type ListLogSourceStreamsOutput, type ListLogSourcesInput, type ListLogSourcesOutput, type ListMcpConnectorsInput, type ListMcpConnectorsOutput, type ListMcpProvidersOutput, type ListMembersInput, type ListMembersOutput, type ListMessagesInput, type ListMessagesOutput, type ListOrganizationsOutput, type ListProjectMemoryInput, type ListProjectMemoryOutput, type ListProjectScriptsInput, type ListProjectScriptsOutput, type ListProjectsInput, type ListProjectsOutput, type ListPublicKeysOutput, type ListPullRequestsInput, type ListPullRequestsOutput, type ListRecommendationsInput, type ListRecommendationsOutput, type ListRunsInput, type ListRunsOutput, type ListSandboxPresetConnectionsInput, type ListSandboxPresetConnectionsOutput, type ListSandboxPresetTypesOutput, type ListSecretKeysInput, type ListSecretKeysOutput, type ListStatusComponentsInput, type ListStatusComponentsOutput, type ListStatusIncidentsInput, type ListStatusIncidentsOutput, type ListTasksInput, type ListTasksOutput, type ListTeamMembersInput, type ListTeamMembersOutput, type ListTeamsInput, type ListTeamsOutput, type ListThreadRunsInput, type ListThreadRunsOutput, type ListThreadShareLinksInput, type ListThreadShareLinksOutput, type ListThreadsInput, type ListThreadsOutput, type LogsNativeQueryInput, type LogsNativeQueryOutput, type LogsPatternsInput, type LogsPatternsOutput, type LogsSchemaInput, type LogsSchemaOutput, type LogsVolumeInput, type LogsVolumeOutput, type MeOutput, type MuteIssueInput, type MuteIssueOutput, type PreviewComponentMergeInput, type PreviewComponentMergeOutput, type PreviewComponentRelationshipInput, type PreviewComponentRelationshipOutput, type PreviewComponentRestorationInput, type PreviewComponentRestorationOutput, type PreviewComponentRetirementInput, type PreviewComponentRetirementOutput, type PublicApiContract, type PutProjectMemoryInput, type PutProjectMemoryOutput, type QueryLogsInput, type QueryLogsOutput, type RegisterStatusComponentInput, type RegisterStatusComponentOutput, type RemoveComponentRelationshipInput, type RemoveMemberInput, type RemoveMemberOutput, type RemoveTeamMemberInput, type RemoveTeamMemberOutput, type RenameStatusComponentInput, type RenameStatusComponentOutput, type ReopenIssueInput, type ReopenIssueOutput, type ResolveIssueInput, type ResolveIssueOutput, type RevokeThreadShareLinkInput, type RevokeThreadShareLinkOutput, type RunResult, type SearchIssuesInput, type SearchIssuesOutput, type SearchMessagesInput, type SearchMessagesOutput, type SearchProjectMemoryInput, type SearchProjectMemoryOutput, type SearchThreadsInput, type SearchThreadsOutput, type SetThreadVisibilityInput, type SetThreadVisibilityOutput, type StopThreadInput, type StopThreadOutput, type UnmuteIssueInput, type UnmuteIssueOutput, type UpdateAutomationInput, type UpdateAutomationOutput, type UpdateKeyInput, type UpdateLegacyLogSourceInput, type UpdateLegacyLogSourceOutput, type UpdateLegacyLogStreamInput, type UpdateLegacyLogStreamOutput, type UpdateLogMatchExpressionInput, type UpdateLogMatchExpressionOutput, type UpdateLogSourceInput, type UpdateLogSourceOutput, type UpdateLogSourceStreamInput, type UpdateLogSourceStreamOutput, type UpdateMemberRoleInput, type UpdateMemberRoleOutput, type UpdateOrganizationInput, type UpdateOrganizationOutput, type UpdateProjectScriptInput, type UpdateProjectScriptOutput, type UpdateSecretKeyInput, type UpdateTeamInput, type UpdateTeamOutput, type UpdateThreadInput, type UpdateThreadOutput } from "../public-api-contracts/index.js";
+import { type AddComponentRelationshipInput, type AddTeamMemberInput, type AddTeamMemberOutput, type AssignComponentTeamInput, type AssignComponentTeamOutput, type BeginIntegrationConnectInput, type BeginIntegrationConnectOutput, type CallMcpConnectorToolInput, type CallMcpConnectorToolOutput, type CancelRunInput, type CancelRunOutput, type CommentOnWorkItemInput, type CommentOnWorkItemOutput, type CommitComponentMergeInput, type CommitComponentMergeOutput, type CommitComponentRestorationInput, type CommitComponentRestorationOutput, type CommitComponentRetirementInput, type CommitComponentRetirementOutput, type ComponentRelationshipMutationOutput, type CountIssuesInput, type CountIssuesOutput, type CreateAutomationInput, type CreateAutomationOutput, type CreateDeliveryRuleInput, type CreateDeliveryRuleOutput, type CreateIntegrationConnectionInput, type CreateIntegrationConnectionOutput, type CreateIssueInput, type CreateIssueOutput, type CreateLogMatchExpressionInput, type CreateLogMatchExpressionOutput, type CreateLogSourceInput, type CreateLogSourceOutput, type CreateLogStreamInput, type CreateLogStreamOutput, type CreateProjectInput, type CreateProjectOutput, type CreateProjectScriptInput, type CreateProjectScriptOutput, type CreatePublicKeyOutput, type CreateSecretKeyInput, type CreateSecretKeyOutput, type CreateTeamInput, type CreateTeamOutput, type CreateThreadShareLinkInput, type CreateThreadShareLinkOutput, type CreateWorkItemInput, type CreateWorkItemOutput, type DeactivatePublicKeyInput, type DeactivatePublicKeyOutput, type DeleteDeliveryRuleInput, type DeleteDeliveryRuleOutput, type DeleteKeyOutput, type DeleteLogSourceInput, type DeleteLogSourceOutput, type DeleteLogStreamInput, type DeleteLogStreamOutput, type DeleteProjectMemoryInput, type DeleteProjectMemoryOutput, type DeleteProjectScriptInput, type DeleteProjectScriptOutput, type DeleteSecretKeyInput, type DeleteTeamInput, type DeleteTeamOutput, type DeliveryRuleOptionsOutput, type DeregisterComponentInput, type DeregisterComponentOutput, type DescribeMcpConnectorToolInput, type DescribeMcpConnectorToolOutput, type DisableAutomationInput, type DisableAutomationOutput, type DisableLogMatchExpressionInput, type DisableLogMatchExpressionOutput, type DisconnectIntegrationConnectionInput, type DisconnectIntegrationConnectionOutput, type EnableAutomationInput, type EnableAutomationOutput, type EnsureLogForwardingPublicKeyInput, type ForkThreadInput, type ForkThreadOutput, type GetAutomationInput, type GetAutomationOutput, type GetAutomationRunInput, type GetAutomationRunLogsInput, type GetAutomationRunLogsOutput, type GetAutomationRunOutput, type GetBillingSummaryInput, type GetBillingSummaryOutput, type GetBillingUsageInput, type GetBillingUsageOutput, type GetComponentInput, type GetComponentOutput, type GetIntegrationConnectAttemptInput, type GetIntegrationConnectAttemptOutput, type GetIntegrationConnectionInput, type GetIntegrationConnectionOutput, type GetIssueInput, type GetIssueOutput, type GetKeyInput, type GetLogMatchExpressionInput, type GetLogMatchExpressionOutput, type GetLogSourceInput, type GetLogSourceOutput, type GetLogStreamInput, type GetLogStreamOutput, type GetMcpConnectorDetailsInput, type GetMcpConnectorDetailsOutput, type GetMcpConnectorInput, type GetMcpConnectorOutput, type GetOrganizationInput, type GetOrganizationOutput, type GetProjectDetailsOutput, type GetProjectInput, type GetProjectMemoryInput, type GetProjectMemoryOutput, type GetProjectNotificationChannelsInput, type GetProjectNotificationChannelsOutput, type GetProjectScriptInput, type GetProjectScriptOutput, type GetPublicKeyOutput, type GetRunInput, type GetRunOutput, type GetSecretKeyInput, type GetSecretKeyOutput, type GetStatusTimelineInput, type GetStatusTimelineOutput, type GetThreadInput, type GetThreadOutput, type GetThreadStatusInput, type GetThreadStatusOutput, type IgnoreIssueInput, type IgnoreIssueOutput, type ListAutomationRunsInput, type ListAutomationRunsOutput, type ListAutomationsInput, type ListAutomationsOutput, type ListBillingTransactionsInput, type ListBillingTransactionsOutput, type ListComponentRelationshipsInput, type ListComponentRelationshipsOutput, type ListComponentsInput, type ListComponentsOutput, type ListDeliveryRulesInput, type ListDeliveryRulesOutput, type ListIntegrationConnectionsInput, type ListIntegrationConnectionsOutput, type ListIntegrationProvidersInput, type ListIntegrationProvidersOutput, type ListIssuesInput, type ListIssuesOutput, type ListKeysInput, type ListLogMatchExpressionsInput, type ListLogMatchExpressionsOutput, type ListLogSourceProvidersOutput, type ListLogSourcesInput, type ListLogSourcesOutput, type ListLogStreamsInput, type ListLogStreamsOutput, type ListMcpConnectorsInput, type ListMcpConnectorsOutput, type ListMcpProvidersOutput, type ListMembersInput, type ListMembersOutput, type ListMessagesInput, type ListMessagesOutput, type ListOrganizationsOutput, type ListProjectMemoryInput, type ListProjectMemoryOutput, type ListProjectScriptsInput, type ListProjectScriptsOutput, type ListProjectsInput, type ListProjectsOutput, type ListPublicKeysOutput, type ListPullRequestsInput, type ListPullRequestsOutput, type ListRecommendationsInput, type ListRecommendationsOutput, type ListRunsInput, type ListRunsOutput, type ListSandboxPresetConnectionsInput, type ListSandboxPresetConnectionsOutput, type ListSandboxPresetTypesOutput, type ListSecretKeysInput, type ListSecretKeysOutput, type ListStatusIncidentsInput, type ListStatusIncidentsOutput, type ListTasksInput, type ListTasksOutput, type ListTeamMembersInput, type ListTeamMembersOutput, type ListTeamsInput, type ListTeamsOutput, type ListThreadRunsInput, type ListThreadRunsOutput, type ListThreadShareLinksInput, type ListThreadShareLinksOutput, type ListThreadsInput, type ListThreadsOutput, type LogsNativeQueryInput, type LogsNativeQueryOutput, type LogsPatternsInput, type LogsPatternsOutput, type LogsSchemaInput, type LogsSchemaOutput, type LogsVolumeInput, type LogsVolumeOutput, type MeOutput, type MuteIssueInput, type MuteIssueOutput, type PreviewComponentMergeInput, type PreviewComponentMergeOutput, type PreviewComponentRelationshipInput, type PreviewComponentRelationshipOutput, type PreviewComponentRestorationInput, type PreviewComponentRestorationOutput, type PreviewComponentRetirementInput, type PreviewComponentRetirementOutput, type PublicApiContract, type PutProjectMemoryInput, type PutProjectMemoryOutput, type QueryLogsInput, type QueryLogsOutput, type ReassignLogStreamInput, type ReassignLogStreamOutput, type RegisterComponentInput, type RegisterComponentOutput, type RemoveComponentRelationshipInput, type RemoveMemberInput, type RemoveMemberOutput, type RemoveTeamMemberInput, type RemoveTeamMemberOutput, type RenameComponentInput, type RenameComponentOutput, type ReopenIssueInput, type ReopenIssueOutput, type ResolveIssueInput, type ResolveIssueOutput, type RetryBillingOutstandingBalanceInput, type RetryBillingOutstandingBalanceOutput, type RevokeThreadShareLinkInput, type RevokeThreadShareLinkOutput, type RunResult, type SearchIssuesInput, type SearchIssuesOutput, type SearchMcpConnectorToolsInput, type SearchMcpConnectorToolsOutput, type SearchMessagesInput, type SearchMessagesOutput, type SearchProjectMemoryInput, type SearchProjectMemoryOutput, type SearchThreadsInput, type SearchThreadsOutput, type SetThreadVisibilityInput, type SetThreadVisibilityOutput, type StopThreadInput, type StopThreadOutput, type TransitionWorkItemInput, type TransitionWorkItemOutput, type UnmuteIssueInput, type UnmuteIssueOutput, type UpdateAutomationInput, type UpdateAutomationOutput, type UpdateDeliveryRuleInput, type UpdateDeliveryRuleOutput, type UpdateIntegrationConnectionCredentialsInput, type UpdateIntegrationConnectionCredentialsOutput, type UpdateKeyInput, type UpdateLogMatchExpressionInput, type UpdateLogMatchExpressionOutput, type UpdateLogSourceInput, type UpdateLogSourceOutput, type UpdateLogStreamInput, type UpdateLogStreamOutput, type UpdateMemberRoleInput, type UpdateMemberRoleOutput, type UpdateOrganizationInput, type UpdateOrganizationOutput, type UpdateProjectScriptInput, type UpdateProjectScriptOutput, type UpdateSecretKeyInput, type UpdateTeamInput, type UpdateTeamOutput, type UpdateThreadInput, type UpdateThreadOutput } from "../public-api-contracts/index.js";
 import { type AgentEventStream, type AgentRunStreamParams, type AgentThreadStreamParams } from "./agent-stream-transports.js";
 import { type ForwardLogsOutput, type ForwardLogsParams, type TailLogStream, type TailLogsParams } from "./log-transports.js";
 export type { AgentStreamControlFrame, AgentStreamCursor, PublicAgentStreamEvent, PublicAgentStreamEventType, } from "../public-api-contracts/index.js";
@@ -31,6 +31,8 @@ export interface CreateClientOptions {
      * flattening every SDK caller to "api". Omit for raw SDK/API callers.
      */
     clientSource?: string;
+    /** Opaque run-scoped actor descriptor injected into trusted sandboxes. */
+    sandboxActorDescriptor?: string;
 }
 /**
  * Caller-facing input for deferred thread creation.
@@ -226,23 +228,6 @@ export interface PublicSdkClient {
          */
         stream(input: AgentRunStreamParams): Promise<AgentEventStream>;
     };
-    dataSources: {
-        listTypes(): Promise<ListLegacyLogSourceTypesOutput>;
-        instances: {
-            list(input?: Partial<ListLegacyLogSourcesInput>): Promise<ListLegacyLogSourcesOutput>;
-            get(input: GetLegacyLogSourceInput): Promise<GetLegacyLogSourceOutput>;
-            create(input: Omit<CreateLegacyLogSourceInput, "projectId"> & Partial<Pick<CreateLegacyLogSourceInput, "projectId">>): Promise<CreateLegacyLogSourceOutput>;
-            update(input: UpdateLegacyLogSourceInput): Promise<UpdateLegacyLogSourceOutput>;
-            delete(input: DeleteLegacyLogSourceInput): Promise<DeleteLegacyLogSourceOutput>;
-        };
-        streams: {
-            list(input: ListLegacyLogStreamsInput): Promise<ListLegacyLogStreamsOutput>;
-            get(input: GetLegacyLogStreamInput): Promise<GetLegacyLogStreamOutput>;
-            create(input: CreateLegacyLogStreamInput): Promise<CreateLegacyLogStreamOutput>;
-            update(input: UpdateLegacyLogStreamInput): Promise<UpdateLegacyLogStreamOutput>;
-            delete(input: DeleteLegacyLogStreamInput): Promise<DeleteLegacyLogStreamOutput>;
-        };
-    };
     logSources: {
         listProviders(): Promise<ListLogSourceProvidersOutput>;
         list(input?: Partial<ListLogSourcesInput>): Promise<ListLogSourcesOutput>;
@@ -250,24 +235,33 @@ export interface PublicSdkClient {
         create(input: Omit<CreateLogSourceInput, "projectId"> & Partial<Pick<CreateLogSourceInput, "projectId">>): Promise<CreateLogSourceOutput>;
         update(input: UpdateLogSourceInput): Promise<UpdateLogSourceOutput>;
         delete(input: DeleteLogSourceInput): Promise<DeleteLogSourceOutput>;
-        streams: {
-            list(input: ListLogSourceStreamsInput): Promise<ListLogSourceStreamsOutput>;
-            get(input: GetLogSourceStreamInput): Promise<GetLogSourceStreamOutput>;
-            create(input: CreateLogSourceStreamInput): Promise<CreateLogSourceStreamOutput>;
-            update(input: UpdateLogSourceStreamInput): Promise<UpdateLogSourceStreamOutput>;
-            delete(input: DeleteLogSourceStreamInput): Promise<DeleteLogSourceStreamOutput>;
-        };
+    };
+    logStreams: {
+        list(input: ListLogStreamsInput): Promise<ListLogStreamsOutput>;
+        get(input: GetLogStreamInput): Promise<GetLogStreamOutput>;
+        create(input: CreateLogStreamInput): Promise<CreateLogStreamOutput>;
+        update(input: UpdateLogStreamInput): Promise<UpdateLogStreamOutput>;
+        delete(input: DeleteLogStreamInput): Promise<DeleteLogStreamOutput>;
+        reassign(input: ReassignLogStreamInput): Promise<ReassignLogStreamOutput>;
     };
     integrations: {
         listProviders(input?: Partial<ListIntegrationProvidersInput>): Promise<ListIntegrationProvidersOutput>;
         listConnections(input?: Partial<ListIntegrationConnectionsInput>): Promise<ListIntegrationConnectionsOutput>;
         getConnection(input: GetIntegrationConnectionInput): Promise<GetIntegrationConnectionOutput>;
+        createConnection(input: CreateIntegrationConnectionInput): Promise<CreateIntegrationConnectionOutput>;
+        beginConnect(input: BeginIntegrationConnectInput): Promise<BeginIntegrationConnectOutput>;
+        getConnectAttempt(input: GetIntegrationConnectAttemptInput): Promise<GetIntegrationConnectAttemptOutput>;
+        disconnectConnection(input: DisconnectIntegrationConnectionInput): Promise<DisconnectIntegrationConnectionOutput>;
+        updateConnectionCredentials(input: UpdateIntegrationConnectionCredentialsInput): Promise<UpdateIntegrationConnectionCredentialsOutput>;
     };
     mcpConnectors: {
         list(input?: Partial<ListMcpConnectorsInput>): Promise<ListMcpConnectorsOutput>;
         get(input: Omit<GetMcpConnectorInput, "projectId"> & Partial<Pick<GetMcpConnectorInput, "projectId">>): Promise<GetMcpConnectorOutput>;
         details(input: Omit<GetMcpConnectorDetailsInput, "projectId"> & Partial<Pick<GetMcpConnectorDetailsInput, "projectId">>): Promise<GetMcpConnectorDetailsOutput>;
         listProviders(): Promise<ListMcpProvidersOutput>;
+        search(input?: Partial<SearchMcpConnectorToolsInput>): Promise<SearchMcpConnectorToolsOutput>;
+        describe(input: Omit<DescribeMcpConnectorToolInput, "projectId"> & Partial<Pick<DescribeMcpConnectorToolInput, "projectId">>): Promise<DescribeMcpConnectorToolOutput>;
+        call(input: Omit<CallMcpConnectorToolInput, "projectId"> & Partial<Pick<CallMcpConnectorToolInput, "projectId">>): Promise<CallMcpConnectorToolOutput>;
     };
     sandboxPresets: {
         listConnections(input?: Partial<ListSandboxPresetConnectionsInput>): Promise<ListSandboxPresetConnectionsOutput>;
@@ -311,15 +305,20 @@ export interface PublicSdkClient {
         mute(input: MuteIssueInput): Promise<MuteIssueOutput>;
         unmute(input: UnmuteIssueInput): Promise<UnmuteIssueOutput>;
     };
+    workItems: {
+        create(input: Partial<CreateWorkItemInput> & Pick<CreateWorkItemInput, "container" | "title">): Promise<CreateWorkItemOutput>;
+        comment(input: CommentOnWorkItemInput): Promise<CommentOnWorkItemOutput>;
+        transition(input: TransitionWorkItemInput): Promise<TransitionWorkItemOutput>;
+    };
     pullRequests: {
         list(input?: Partial<ListPullRequestsInput>): Promise<ListPullRequestsOutput>;
     };
-    statusComponents: {
-        list(input?: Partial<ListStatusComponentsInput>): Promise<ListStatusComponentsOutput>;
-        get(input: GetStatusComponentInput): Promise<GetStatusComponentOutput>;
-        register(input: Omit<RegisterStatusComponentInput, "projectId"> & Partial<Pick<RegisterStatusComponentInput, "projectId">>): Promise<RegisterStatusComponentOutput>;
-        deregister(input: DeregisterStatusComponentInput): Promise<DeregisterStatusComponentOutput>;
-        rename(input: RenameStatusComponentInput): Promise<RenameStatusComponentOutput>;
+    components: {
+        list(input?: Partial<ListComponentsInput>): Promise<ListComponentsOutput>;
+        get(input: GetComponentInput): Promise<GetComponentOutput>;
+        register(input: Omit<RegisterComponentInput, "projectId"> & Partial<Pick<RegisterComponentInput, "projectId">>): Promise<RegisterComponentOutput>;
+        deregister(input: DeregisterComponentInput): Promise<DeregisterComponentOutput>;
+        rename(input: RenameComponentInput): Promise<RenameComponentOutput>;
         assignTeam(input: AssignComponentTeamInput): Promise<AssignComponentTeamOutput>;
         retirementPreview(input: PreviewComponentRetirementInput): Promise<PreviewComponentRetirementOutput>;
         retire(input: CommitComponentRetirementInput): Promise<CommitComponentRetirementOutput>;
@@ -342,12 +341,23 @@ export interface PublicSdkClient {
         getSummary(input?: Partial<GetBillingSummaryInput>): Promise<GetBillingSummaryOutput>;
         getUsage(input?: Partial<GetBillingUsageInput>): Promise<GetBillingUsageOutput>;
         listTransactions(input?: Partial<ListBillingTransactionsInput>): Promise<ListBillingTransactionsOutput>;
+        retryOutstandingBalance(input: Omit<RetryBillingOutstandingBalanceInput, "organizationId"> & Partial<Pick<RetryBillingOutstandingBalanceInput, "organizationId">>): Promise<RetryBillingOutstandingBalanceOutput>;
     };
     tasks: {
         list(input?: Partial<ListTasksInput>): Promise<ListTasksOutput>;
     };
     recommendations: {
         list(input?: Partial<ListRecommendationsInput>): Promise<ListRecommendationsOutput>;
+    };
+    notificationDeliveryRules: {
+        list(input?: Partial<ListDeliveryRulesInput>): Promise<ListDeliveryRulesOutput>;
+        options(input?: Partial<ListDeliveryRulesInput>): Promise<DeliveryRuleOptionsOutput>;
+        create(input: CreateDeliveryRuleInput): Promise<CreateDeliveryRuleOutput>;
+        update(input: UpdateDeliveryRuleInput): Promise<UpdateDeliveryRuleOutput>;
+        delete(input: DeleteDeliveryRuleInput): Promise<DeleteDeliveryRuleOutput>;
+    };
+    notificationChannels: {
+        getProject(input?: Partial<GetProjectNotificationChannelsInput>): Promise<GetProjectNotificationChannelsOutput>;
     };
 }
 /**

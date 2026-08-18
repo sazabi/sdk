@@ -295,6 +295,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
         }>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
+export type DeliveryRuleOptionsOutput = z.infer<typeof DeliveryRuleOptionsOutputSchema>;
 export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{

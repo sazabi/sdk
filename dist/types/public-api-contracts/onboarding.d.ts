@@ -12,6 +12,7 @@ export declare const OnboardingStepIdSchema: z.ZodEnum<{
     "install-github-app": "install-github-app";
     "install-slack-app": "install-slack-app";
     "trigger-issue": "trigger-issue";
+    "verify-email": "verify-email";
 }>;
 export declare const OnboardingGateSchema: z.ZodEnum<{
     blocked: "blocked";
@@ -50,6 +51,7 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
         "install-github-app": "install-github-app";
         "install-slack-app": "install-slack-app";
         "trigger-issue": "trigger-issue";
+        "verify-email": "verify-email";
     }>>;
     organizationId: z.ZodNullable<z.ZodString>;
     projectId: z.ZodNullable<z.ZodString>;
@@ -66,6 +68,7 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
         "install-github-app": "install-github-app";
         "install-slack-app": "install-slack-app";
         "trigger-issue": "trigger-issue";
+        "verify-email": "verify-email";
     }>, z.ZodEnum<{
         complete: "complete";
         incomplete: "incomplete";
@@ -92,6 +95,7 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
         "install-github-app": "install-github-app";
         "install-slack-app": "install-slack-app";
         "trigger-issue": "trigger-issue";
+        "verify-email": "verify-email";
     }>, z.ZodLiteral<"select-organization">]>>;
     isCompleted: z.ZodBoolean;
     onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;
@@ -128,6 +132,7 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
             "install-github-app": "install-github-app";
             "install-slack-app": "install-slack-app";
             "trigger-issue": "trigger-issue";
+            "verify-email": "verify-email";
         }>>;
         organizationId: z.ZodNullable<z.ZodString>;
         projectId: z.ZodNullable<z.ZodString>;
@@ -144,6 +149,7 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
             "install-github-app": "install-github-app";
             "install-slack-app": "install-slack-app";
             "trigger-issue": "trigger-issue";
+            "verify-email": "verify-email";
         }>, z.ZodEnum<{
             complete: "complete";
             incomplete: "incomplete";
@@ -170,6 +176,7 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
             "install-github-app": "install-github-app";
             "install-slack-app": "install-slack-app";
             "trigger-issue": "trigger-issue";
+            "verify-email": "verify-email";
         }>, z.ZodLiteral<"select-organization">]>>;
         isCompleted: z.ZodBoolean;
         onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;
@@ -206,6 +213,7 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
             "install-github-app": "install-github-app";
             "install-slack-app": "install-slack-app";
             "trigger-issue": "trigger-issue";
+            "verify-email": "verify-email";
         }>>;
         organizationId: z.ZodNullable<z.ZodString>;
         projectId: z.ZodNullable<z.ZodString>;
@@ -222,6 +230,7 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
             "install-github-app": "install-github-app";
             "install-slack-app": "install-slack-app";
             "trigger-issue": "trigger-issue";
+            "verify-email": "verify-email";
         }>, z.ZodEnum<{
             complete: "complete";
             incomplete: "incomplete";
@@ -248,6 +257,7 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
             "install-github-app": "install-github-app";
             "install-slack-app": "install-slack-app";
             "trigger-issue": "trigger-issue";
+            "verify-email": "verify-email";
         }>, z.ZodLiteral<"select-organization">]>>;
         isCompleted: z.ZodBoolean;
         onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;
@@ -327,6 +337,7 @@ export declare const onboardingContract: {
                 "install-github-app": "install-github-app";
                 "install-slack-app": "install-slack-app";
                 "trigger-issue": "trigger-issue";
+                "verify-email": "verify-email";
             }>>;
             organizationId: z.ZodNullable<z.ZodString>;
             projectId: z.ZodNullable<z.ZodString>;
@@ -343,6 +354,7 @@ export declare const onboardingContract: {
                 "install-github-app": "install-github-app";
                 "install-slack-app": "install-slack-app";
                 "trigger-issue": "trigger-issue";
+                "verify-email": "verify-email";
             }>, z.ZodEnum<{
                 complete: "complete";
                 incomplete: "incomplete";
@@ -369,6 +381,7 @@ export declare const onboardingContract: {
                 "install-github-app": "install-github-app";
                 "install-slack-app": "install-slack-app";
                 "trigger-issue": "trigger-issue";
+                "verify-email": "verify-email";
             }>, z.ZodLiteral<"select-organization">]>>;
             isCompleted: z.ZodBoolean;
             onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;

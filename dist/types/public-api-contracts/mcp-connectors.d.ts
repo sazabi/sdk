@@ -1,9 +1,9 @@
 /**
- * Public API contracts for MCP connector inspection.
+ * Public API contracts for MCP connector inspection and tool dispatch.
  *
- * These operations are read-only. They expose the configured MCP connectors
- * for a project, their connection status and enabled-tool surface, without
- * returning any secret material (auth headers, OAuth tokens, granted scopes).
+ * List, get, details, providers, search, and describe expose configured
+ * connectors and their executable tool surface without secret material.
+ * `call` invokes one vendor tool through that connection's own credential.
  */
 import { z } from "zod";
 /** Install status values mirroring the MCP connection lifecycle. */
@@ -83,7 +83,7 @@ export declare const McpConnectorToolSchema: z.ZodObject<{
 export type McpConnectorTool = z.infer<typeof McpConnectorToolSchema>;
 export declare const ListMcpConnectorsInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    connectedOnly: z.ZodOptional<z.ZodBoolean>;
+    connectedOnly: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>;
 export declare const ListMcpConnectorsOutputSchema: z.ZodObject<{
     connectors: z.ZodArray<z.ZodObject<{
@@ -142,7 +142,7 @@ export type ListMcpConnectorsInput = z.infer<typeof ListMcpConnectorsInputSchema
 export type ListMcpConnectorsOutput = z.infer<typeof ListMcpConnectorsOutputSchema>;
 export declare const listMcpConnectors: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    connectedOnly: z.ZodOptional<z.ZodBoolean>;
+    connectedOnly: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>, z.ZodObject<{
     connectors: z.ZodArray<z.ZodObject<{
         connectionId: z.ZodString;
@@ -498,10 +498,169 @@ export declare const listMcpProviders: import("../orpc-contracts/index.js").Oper
         setupSkill: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
+export declare const McpConnectorIndexEntrySchema: z.ZodObject<{
+    connectionKey: z.ZodString;
+    displayName: z.ZodString;
+    providerId: z.ZodString;
+    toolCount: z.ZodNumber;
+}, z.core.$strip>;
+export type McpConnectorIndexEntry = z.infer<typeof McpConnectorIndexEntrySchema>;
+export declare const McpConnectorToolSearchHitSchema: z.ZodObject<{
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+    providerId: z.ZodString;
+    displayName: z.ZodString;
+    isReadOnly: z.ZodBoolean;
+    description: z.ZodString;
+    score: z.ZodNumber;
+    inputSchema: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+}, z.core.$strip>;
+export type McpConnectorToolSearchHit = z.infer<typeof McpConnectorToolSearchHitSchema>;
+export declare const SearchMcpConnectorToolsInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    query: z.ZodOptional<z.ZodString>;
+    namespace: z.ZodOptional<z.ZodString>;
+    limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
+    offset: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
+    includeInputSchema: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
+}, z.core.$strip>;
+export declare const SearchMcpConnectorToolsOutputSchema: z.ZodObject<{
+    kind: z.ZodEnum<{
+        connectors: "connectors";
+        tools: "tools";
+    }>;
+    total: z.ZodNumber;
+    connectors: z.ZodArray<z.ZodObject<{
+        connectionKey: z.ZodString;
+        displayName: z.ZodString;
+        providerId: z.ZodString;
+        toolCount: z.ZodNumber;
+    }, z.core.$strip>>;
+    tools: z.ZodArray<z.ZodObject<{
+        connectionKey: z.ZodString;
+        toolName: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        isReadOnly: z.ZodBoolean;
+        description: z.ZodString;
+        score: z.ZodNumber;
+        inputSchema: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type SearchMcpConnectorToolsInput = z.infer<typeof SearchMcpConnectorToolsInputSchema>;
+export type SearchMcpConnectorToolsOutput = z.infer<typeof SearchMcpConnectorToolsOutputSchema>;
+export declare const searchMcpConnectorTools: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    query: z.ZodOptional<z.ZodString>;
+    namespace: z.ZodOptional<z.ZodString>;
+    limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
+    offset: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
+    includeInputSchema: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
+}, z.core.$strip>, z.ZodObject<{
+    kind: z.ZodEnum<{
+        connectors: "connectors";
+        tools: "tools";
+    }>;
+    total: z.ZodNumber;
+    connectors: z.ZodArray<z.ZodObject<{
+        connectionKey: z.ZodString;
+        displayName: z.ZodString;
+        providerId: z.ZodString;
+        toolCount: z.ZodNumber;
+    }, z.core.$strip>>;
+    tools: z.ZodArray<z.ZodObject<{
+        connectionKey: z.ZodString;
+        toolName: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        isReadOnly: z.ZodBoolean;
+        description: z.ZodString;
+        score: z.ZodNumber;
+        inputSchema: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const DescribeMcpConnectorToolInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+}, z.core.$strip>;
+export declare const DescribeMcpConnectorToolOutputSchema: z.ZodObject<{
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+    providerId: z.ZodString;
+    displayName: z.ZodString;
+    title: z.ZodString;
+    description: z.ZodString;
+    isReadOnly: z.ZodBoolean;
+    inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+}, z.core.$strip>;
+export type DescribeMcpConnectorToolInput = z.infer<typeof DescribeMcpConnectorToolInputSchema>;
+export type DescribeMcpConnectorToolOutput = z.infer<typeof DescribeMcpConnectorToolOutputSchema>;
+export declare const describeMcpConnectorTool: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+    providerId: z.ZodString;
+    displayName: z.ZodString;
+    title: z.ZodString;
+    description: z.ZodString;
+    isReadOnly: z.ZodBoolean;
+    inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+}, z.core.$strip>, "api">;
+export declare const CallMcpConnectorToolInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+    arguments: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+}, z.core.$strip>;
+export declare const CallMcpConnectorToolOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    ok: z.ZodLiteral<true>;
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+    result: z.ZodUnknown;
+    structuredContent: z.ZodOptional<z.ZodUnknown>;
+    content: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    text: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    ok: z.ZodLiteral<false>;
+    code: z.ZodEnum<{
+        MCP_ERROR: "MCP_ERROR";
+        READ_ONLY: "READ_ONLY";
+        TOOL_NOT_ENABLED: "TOOL_NOT_ENABLED";
+    }>;
+    message: z.ZodString;
+}, z.core.$strip>], "ok">;
+export type CallMcpConnectorToolInput = z.infer<typeof CallMcpConnectorToolInputSchema>;
+export type CallMcpConnectorToolOutput = z.infer<typeof CallMcpConnectorToolOutputSchema>;
+export declare const callMcpConnectorTool: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+    arguments: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+}, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+    ok: z.ZodLiteral<true>;
+    connectionKey: z.ZodString;
+    toolName: z.ZodString;
+    result: z.ZodUnknown;
+    structuredContent: z.ZodOptional<z.ZodUnknown>;
+    content: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    text: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    ok: z.ZodLiteral<false>;
+    code: z.ZodEnum<{
+        MCP_ERROR: "MCP_ERROR";
+        READ_ONLY: "READ_ONLY";
+        TOOL_NOT_ENABLED: "TOOL_NOT_ENABLED";
+    }>;
+    message: z.ZodString;
+}, z.core.$strip>], "ok">, "api">;
 export declare const mcpConnectorsContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
-        connectedOnly: z.ZodOptional<z.ZodBoolean>;
+        connectedOnly: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     }, z.core.$strip>, z.ZodObject<{
         connectors: z.ZodArray<z.ZodObject<{
             connectionId: z.ZodString;
@@ -692,4 +851,70 @@ export declare const mcpConnectorsContract: {
             setupSkill: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly search: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        query: z.ZodOptional<z.ZodString>;
+        namespace: z.ZodOptional<z.ZodString>;
+        limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
+        offset: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
+        includeInputSchema: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
+    }, z.core.$strip>, z.ZodObject<{
+        kind: z.ZodEnum<{
+            connectors: "connectors";
+            tools: "tools";
+        }>;
+        total: z.ZodNumber;
+        connectors: z.ZodArray<z.ZodObject<{
+            connectionKey: z.ZodString;
+            displayName: z.ZodString;
+            providerId: z.ZodString;
+            toolCount: z.ZodNumber;
+        }, z.core.$strip>>;
+        tools: z.ZodArray<z.ZodObject<{
+            connectionKey: z.ZodString;
+            toolName: z.ZodString;
+            providerId: z.ZodString;
+            displayName: z.ZodString;
+            isReadOnly: z.ZodBoolean;
+            description: z.ZodString;
+            score: z.ZodNumber;
+            inputSchema: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly describe: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        connectionKey: z.ZodString;
+        toolName: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        connectionKey: z.ZodString;
+        toolName: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        title: z.ZodString;
+        description: z.ZodString;
+        isReadOnly: z.ZodBoolean;
+        inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly call: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        connectionKey: z.ZodString;
+        toolName: z.ZodString;
+        arguments: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    }, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+        ok: z.ZodLiteral<true>;
+        connectionKey: z.ZodString;
+        toolName: z.ZodString;
+        result: z.ZodUnknown;
+        structuredContent: z.ZodOptional<z.ZodUnknown>;
+        content: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+        text: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        ok: z.ZodLiteral<false>;
+        code: z.ZodEnum<{
+            MCP_ERROR: "MCP_ERROR";
+            READ_ONLY: "READ_ONLY";
+            TOOL_NOT_ENABLED: "TOOL_NOT_ENABLED";
+        }>;
+        message: z.ZodString;
+    }, z.core.$strip>], "ok">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };

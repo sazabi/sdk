@@ -25,6 +25,21 @@ export declare const GetBillingSummaryInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type GetBillingSummaryInput = z.infer<typeof GetBillingSummaryInputSchema>;
+export declare const BillingCollectionSummarySchema: z.ZodObject<{
+    status: z.ZodEnum<{
+        current: "current";
+        delinquent: "delinquent";
+        payment_retrying: "payment_retrying";
+    }>;
+    outstandingCredits: z.ZodNullable<z.ZodString>;
+    outstandingAmount: z.ZodNullable<z.ZodString>;
+    currency: z.ZodNullable<z.ZodString>;
+    scheduledAttemptsMade: z.ZodNumber;
+    nextRetryAt: z.ZodNullable<z.ZodString>;
+    billingInvoiceId: z.ZodNullable<z.ZodString>;
+    hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type BillingCollectionSummary = z.infer<typeof BillingCollectionSummarySchema>;
 export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
     billingModel: z.ZodEnum<{
         "credit-balance-v1": "credit-balance-v1";
@@ -65,6 +80,20 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
         priceBookId: z.ZodString;
         cycleType: z.ZodString;
     }, z.core.$strip>>;
+    collection: z.ZodObject<{
+        status: z.ZodEnum<{
+            current: "current";
+            delinquent: "delinquent";
+            payment_retrying: "payment_retrying";
+        }>;
+        outstandingCredits: z.ZodNullable<z.ZodString>;
+        outstandingAmount: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        scheduledAttemptsMade: z.ZodNumber;
+        nextRetryAt: z.ZodNullable<z.ZodString>;
+        billingInvoiceId: z.ZodNullable<z.ZodString>;
+        hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetBillingSummaryOutput = z.infer<typeof GetBillingSummaryOutputSchema>;
 export declare const GetBillingUsageInputSchema: z.ZodObject<{
@@ -168,6 +197,17 @@ export declare const ListBillingTransactionsOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type ListBillingTransactionsOutput = z.infer<typeof ListBillingTransactionsOutputSchema>;
+export declare const RetryBillingOutstandingBalanceInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    idempotencyKey: z.ZodString;
+}, z.core.$strip>;
+export type RetryBillingOutstandingBalanceInput = z.infer<typeof RetryBillingOutstandingBalanceInputSchema>;
+export declare const RetryBillingOutstandingBalanceOutputSchema: z.ZodObject<{
+    accepted: z.ZodLiteral<true>;
+    workflowId: z.ZodString;
+    runId: z.ZodString;
+}, z.core.$strip>;
+export type RetryBillingOutstandingBalanceOutput = z.infer<typeof RetryBillingOutstandingBalanceOutputSchema>;
 export declare const getBillingSummary: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -210,6 +250,20 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
         priceBookId: z.ZodString;
         cycleType: z.ZodString;
     }, z.core.$strip>>;
+    collection: z.ZodObject<{
+        status: z.ZodEnum<{
+            current: "current";
+            delinquent: "delinquent";
+            payment_retrying: "payment_retrying";
+        }>;
+        outstandingCredits: z.ZodNullable<z.ZodString>;
+        outstandingAmount: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        scheduledAttemptsMade: z.ZodNumber;
+        nextRetryAt: z.ZodNullable<z.ZodString>;
+        billingInvoiceId: z.ZodNullable<z.ZodString>;
+        hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const getBillingUsage: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
@@ -271,6 +325,14 @@ export declare const listBillingTransactions: import("../orpc-contracts/index.js
         hasPrev: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const retryBillingOutstandingBalance: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    idempotencyKey: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    accepted: z.ZodLiteral<true>;
+    workflowId: z.ZodString;
+    runId: z.ZodString;
+}, z.core.$strip>, "api">;
 export declare const billingContract: {
     readonly getSummary: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
@@ -314,6 +376,20 @@ export declare const billingContract: {
             priceBookId: z.ZodString;
             cycleType: z.ZodString;
         }, z.core.$strip>>;
+        collection: z.ZodObject<{
+            status: z.ZodEnum<{
+                current: "current";
+                delinquent: "delinquent";
+                payment_retrying: "payment_retrying";
+            }>;
+            outstandingCredits: z.ZodNullable<z.ZodString>;
+            outstandingAmount: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            scheduledAttemptsMade: z.ZodNumber;
+            nextRetryAt: z.ZodNullable<z.ZodString>;
+            billingInvoiceId: z.ZodNullable<z.ZodString>;
+            hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly getUsage: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
@@ -374,5 +450,13 @@ export declare const billingContract: {
             hasNext: z.ZodBoolean;
             hasPrev: z.ZodBoolean;
         }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly retryOutstandingBalance: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        idempotencyKey: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        accepted: z.ZodLiteral<true>;
+        workflowId: z.ZodString;
+        runId: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };
