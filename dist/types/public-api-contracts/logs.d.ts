@@ -181,11 +181,25 @@ export declare const LogBackendKindSchema: z.ZodEnum<{
 export type LogBackendKind = z.infer<typeof LogBackendKindSchema>;
 /**
  * Shared project-scoped input for log metadata operations.
+ *
+ * When `question` is set, the API retrieves question-conditioned schema
+ * bundles. When omitted, callers get the legacy recent-key / service hints
+ * (compatible with `sazabi logs schema --json` skill invocations).
  */
 export declare const LogsSchemaInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
+    question: z.ZodOptional<z.ZodString>;
+    topK: z.ZodOptional<z.ZodNumber>;
 }, z.core.$strip>;
 export type LogsSchemaInput = z.infer<typeof LogsSchemaInputSchema>;
+export declare const LogsSchemaBundleSchema: z.ZodObject<{
+    id: z.ZodString;
+    service: z.ZodString;
+    keys: z.ZodArray<z.ZodString>;
+    rowCount: z.ZodNumber;
+    score: z.ZodOptional<z.ZodNumber>;
+}, z.core.$strip>;
+export type LogsSchemaBundle = z.infer<typeof LogsSchemaBundleSchema>;
 export declare const LogsSchemaOutputSchema: z.ZodObject<{
     backend: z.ZodObject<{
         id: z.ZodEnum<{
@@ -215,8 +229,23 @@ export declare const LogsSchemaOutputSchema: z.ZodObject<{
     }>>;
     queryableFields: z.ZodArray<z.ZodString>;
     searchableFields: z.ZodArray<z.ZodString>;
+    question: z.ZodOptional<z.ZodString>;
+    selectedBundles: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        service: z.ZodString;
+        keys: z.ZodArray<z.ZodString>;
+        rowCount: z.ZodNumber;
+        score: z.ZodOptional<z.ZodNumber>;
+    }, z.core.$strip>>;
+    selectedAttributeKeys: z.ZodArray<z.ZodString>;
     observedServiceNames: z.ZodArray<z.ZodString>;
     observedAttributeKeys: z.ZodArray<z.ZodString>;
+    indexStatus: z.ZodEnum<{
+        empty: "empty";
+        ready: "ready";
+        skipped: "skipped";
+        unavailable: "unavailable";
+    }>;
     schemaContext: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
 }, z.core.$strip>;
 export type LogsSchemaOutput = z.infer<typeof LogsSchemaOutputSchema>;
@@ -438,6 +467,8 @@ export declare const queryLogs: import("../orpc-contracts/index.js").OperationDe
  */
 export declare const logsSchema: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
+    question: z.ZodOptional<z.ZodString>;
+    topK: z.ZodOptional<z.ZodNumber>;
 }, z.core.$strip>, z.ZodObject<{
     backend: z.ZodObject<{
         id: z.ZodEnum<{
@@ -467,8 +498,23 @@ export declare const logsSchema: import("../orpc-contracts/index.js").OperationD
     }>>;
     queryableFields: z.ZodArray<z.ZodString>;
     searchableFields: z.ZodArray<z.ZodString>;
+    question: z.ZodOptional<z.ZodString>;
+    selectedBundles: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        service: z.ZodString;
+        keys: z.ZodArray<z.ZodString>;
+        rowCount: z.ZodNumber;
+        score: z.ZodOptional<z.ZodNumber>;
+    }, z.core.$strip>>;
+    selectedAttributeKeys: z.ZodArray<z.ZodString>;
     observedServiceNames: z.ZodArray<z.ZodString>;
     observedAttributeKeys: z.ZodArray<z.ZodString>;
+    indexStatus: z.ZodEnum<{
+        empty: "empty";
+        ready: "ready";
+        skipped: "skipped";
+        unavailable: "unavailable";
+    }>;
     schemaContext: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
 }, z.core.$strip>, "api">;
 /**
@@ -632,6 +678,8 @@ export declare const logsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly schema: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
+        question: z.ZodOptional<z.ZodString>;
+        topK: z.ZodOptional<z.ZodNumber>;
     }, z.core.$strip>, z.ZodObject<{
         backend: z.ZodObject<{
             id: z.ZodEnum<{
@@ -661,8 +709,23 @@ export declare const logsContract: {
         }>>;
         queryableFields: z.ZodArray<z.ZodString>;
         searchableFields: z.ZodArray<z.ZodString>;
+        question: z.ZodOptional<z.ZodString>;
+        selectedBundles: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            service: z.ZodString;
+            keys: z.ZodArray<z.ZodString>;
+            rowCount: z.ZodNumber;
+            score: z.ZodOptional<z.ZodNumber>;
+        }, z.core.$strip>>;
+        selectedAttributeKeys: z.ZodArray<z.ZodString>;
         observedServiceNames: z.ZodArray<z.ZodString>;
         observedAttributeKeys: z.ZodArray<z.ZodString>;
+        indexStatus: z.ZodEnum<{
+            empty: "empty";
+            ready: "ready";
+            skipped: "skipped";
+            unavailable: "unavailable";
+        }>;
         schemaContext: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly volume: import("@orpc/contract").ContractProcedure<z.ZodObject<{

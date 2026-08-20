@@ -1,8 +1,8 @@
 {
-  "sourceSha": "b66154976cd1826e41c99a541d895971737ff636",
-  "sourceRunId": "32167504813",
-  "builtAt": "2026-08-18T17:48:46Z",
-  "distSha256": "4ca4dcabb2b8a8d9fe7c756d75301507e9c7620b2d9cc4a29595d34bf3fa993f",
+  "sourceSha": "0a0fc804c2c394b1efd5f2e691c405e7ee1110eb",
+  "sourceRunId": "32394897686",
+  "builtAt": "2026-08-20T16:58:16Z",
+  "distSha256": "0561be143fcf0491211eef4502978de3f9742cdf757f45bbb8640d9d83939d14",
   "baseVersion": "0.1.1",
   "syncFiles": [
     "dist",

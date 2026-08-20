@@ -547,6 +547,8 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly schema: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            question: import("zod").ZodOptional<import("zod").ZodString>;
+            topK: import("zod").ZodOptional<import("zod").ZodNumber>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             backend: import("zod").ZodObject<{
                 id: import("zod").ZodEnum<{
@@ -576,8 +578,23 @@ export declare const publicApiContract: {
             }>>;
             queryableFields: import("zod").ZodArray<import("zod").ZodString>;
             searchableFields: import("zod").ZodArray<import("zod").ZodString>;
+            question: import("zod").ZodOptional<import("zod").ZodString>;
+            selectedBundles: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                service: import("zod").ZodString;
+                keys: import("zod").ZodArray<import("zod").ZodString>;
+                rowCount: import("zod").ZodNumber;
+                score: import("zod").ZodOptional<import("zod").ZodNumber>;
+            }, import("zod/v4/core").$strip>>;
+            selectedAttributeKeys: import("zod").ZodArray<import("zod").ZodString>;
             observedServiceNames: import("zod").ZodArray<import("zod").ZodString>;
             observedAttributeKeys: import("zod").ZodArray<import("zod").ZodString>;
+            indexStatus: import("zod").ZodEnum<{
+                empty: "empty";
+                ready: "ready";
+                skipped: "skipped";
+                unavailable: "unavailable";
+            }>;
             schemaContext: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly volume: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -2779,7 +2796,7 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly updateRole: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
-            userId: import("zod").ZodString;
+            member: import("zod").ZodString;
             role: import("zod").ZodEnum<{
                 admin: "admin";
                 member: "member";
@@ -2800,23 +2817,78 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly remove: import("@orpc/contract").ContractProcedure<import("zod").ZodPipe<import("zod").ZodObject<{
             params: import("zod").ZodObject<{
-                userId: import("zod").ZodString;
+                member: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
             query: import("zod").ZodObject<{
                 organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
-            userId: string;
+            member: string;
             organizationId?: string | undefined;
         }, {
             params: {
-                userId: string;
+                member: string;
             };
             query: {
                 organizationId?: string | undefined;
             };
         }>>, import("zod").ZodObject<{
             removedUserId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly invite: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            email: import("zod").ZodString;
+            role: import("zod").ZodDefault<import("zod").ZodOptional<import("zod").ZodEnum<{
+                admin: "admin";
+                member: "member";
+            }>>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            invitation: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                email: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    admin: "admin";
+                    member: "member";
+                }>;
+                status: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly listInvitations: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            invitations: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                email: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    admin: "admin";
+                    member: "member";
+                }>;
+                status: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly revokeInvitation: import("@orpc/contract").ContractProcedure<import("zod").ZodPipe<import("zod").ZodObject<{
+            params: import("zod").ZodObject<{
+                invitationId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+            query: import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
+            invitationId: string;
+            organizationId?: string | undefined;
+        }, {
+            params: {
+                invitationId: string;
+            };
+            query: {
+                organizationId?: string | undefined;
+            };
+        }>>, import("zod").ZodObject<{
+            revokedInvitationId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
     readonly teams: {
@@ -5809,6 +5881,8 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly schema: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            question: import("zod").ZodOptional<import("zod").ZodString>;
+            topK: import("zod").ZodOptional<import("zod").ZodNumber>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             backend: import("zod").ZodObject<{
                 id: import("zod").ZodEnum<{
@@ -5838,8 +5912,23 @@ export declare const publicApiOperations: {
             }>>;
             queryableFields: import("zod").ZodArray<import("zod").ZodString>;
             searchableFields: import("zod").ZodArray<import("zod").ZodString>;
+            question: import("zod").ZodOptional<import("zod").ZodString>;
+            selectedBundles: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                service: import("zod").ZodString;
+                keys: import("zod").ZodArray<import("zod").ZodString>;
+                rowCount: import("zod").ZodNumber;
+                score: import("zod").ZodOptional<import("zod").ZodNumber>;
+            }, import("zod/v4/core").$strip>>;
+            selectedAttributeKeys: import("zod").ZodArray<import("zod").ZodString>;
             observedServiceNames: import("zod").ZodArray<import("zod").ZodString>;
             observedAttributeKeys: import("zod").ZodArray<import("zod").ZodString>;
+            indexStatus: import("zod").ZodEnum<{
+                empty: "empty";
+                ready: "ready";
+                skipped: "skipped";
+                unavailable: "unavailable";
+            }>;
             schemaContext: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodAny>>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly volume: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -8041,7 +8130,7 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly updateRole: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
-            userId: import("zod").ZodString;
+            member: import("zod").ZodString;
             role: import("zod").ZodEnum<{
                 admin: "admin";
                 member: "member";
@@ -8062,23 +8151,78 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly remove: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodPipe<import("zod").ZodObject<{
             params: import("zod").ZodObject<{
-                userId: import("zod").ZodString;
+                member: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
             query: import("zod").ZodObject<{
                 organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
-            userId: string;
+            member: string;
             organizationId?: string | undefined;
         }, {
             params: {
-                userId: string;
+                member: string;
             };
             query: {
                 organizationId?: string | undefined;
             };
         }>>, import("zod").ZodObject<{
             removedUserId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly invite: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            email: import("zod").ZodString;
+            role: import("zod").ZodDefault<import("zod").ZodOptional<import("zod").ZodEnum<{
+                admin: "admin";
+                member: "member";
+            }>>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            invitation: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                email: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    admin: "admin";
+                    member: "member";
+                }>;
+                status: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly listInvitations: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            invitations: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                email: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    admin: "admin";
+                    member: "member";
+                }>;
+                status: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly revokeInvitation: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodPipe<import("zod").ZodObject<{
+            params: import("zod").ZodObject<{
+                invitationId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+            query: import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
+            invitationId: string;
+            organizationId?: string | undefined;
+        }, {
+            params: {
+                invitationId: string;
+            };
+            query: {
+                organizationId?: string | undefined;
+            };
+        }>>, import("zod").ZodObject<{
+            revokedInvitationId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, "api">;
     };
     readonly teams: {

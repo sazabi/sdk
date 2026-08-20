@@ -40588,7 +40588,16 @@ var LogBackendIdSchema = z11.enum([
 ]);
 var LogBackendKindSchema = z11.enum(["native", "external"]);
 var LogsSchemaInputSchema = z11.object({
-  projectId: z11.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z11.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted."),
+  question: z11.string().trim().min(1).max(2000).optional().describe("Optional natural-language question used to retrieve coherent schema bundles."),
+  topK: z11.number().int().min(1).max(32).optional().describe("Max schema bundles to return when question is set (default 8)")
+});
+var LogsSchemaBundleSchema = z11.object({
+  id: z11.string().describe("Stable schema-bundle document id"),
+  service: z11.string().describe("Emitting service for this co-occurrence shape"),
+  keys: z11.array(z11.string()).describe("Co-occurring otel_log_attributes keys in this bundle"),
+  rowCount: z11.number().nonnegative().describe("Observed row count when the bundle was compiled"),
+  score: z11.number().optional().describe("Retrieval rank score when returned from vector search")
 });
 var LogsSchemaOutputSchema = z11.object({
   backend: z11.object({
@@ -40600,8 +40609,12 @@ var LogsSchemaOutputSchema = z11.object({
   commands: z11.array(z11.enum(["schema", "query", "volume", "patterns", "nativeQuery"])).describe("CLI/API commands available for this backend"),
   queryableFields: z11.array(z11.string()).describe("Fields accepted by the normalized logs.query contract"),
   searchableFields: z11.array(z11.string()).describe("Fields accepted by logs.query full-text search"),
+  question: z11.string().optional().describe("Echo of the question used for retrieval when provided"),
+  selectedBundles: z11.array(LogsSchemaBundleSchema).describe("Question-conditioned coherent schema bundles (empty when question omitted)"),
+  selectedAttributeKeys: z11.array(z11.string()).describe("Flattened attribute keys from selectedBundles, or recent keys when question omitted"),
   observedServiceNames: z11.array(z11.string()).describe("Recently observed service names for this project"),
-  observedAttributeKeys: z11.array(z11.string()).describe("Recently observed log attribute keys for this project"),
+  observedAttributeKeys: z11.array(z11.string()).describe("Observed / selected attribute keys for agent and CLI schema discovery"),
+  indexStatus: z11.enum(["ready", "empty", "unavailable", "skipped"]).describe("ready: bundles retrieved; empty: index missing/empty; unavailable: retrieval failed; skipped: no question (legacy path)"),
   schemaContext: z11.record(z11.string(), z11.any()).optional().describe("Backend-specific schema guidance and examples")
 });
 var LogsVolumeIntervalSchema = z11.enum(["1m", "5m", "15m", "1h"]);
@@ -43413,6 +43426,29 @@ Pylon's MCP server authenticates via OAuth with dynamic client registration. Onc
 - An active Pylon account
 - Permission to authorize third-party OAuth applications in your Pylon workspace
 `.trim();
+var secureframe = `
+## Overview
+
+Connect Secureframe to Sazabi agents to query and manage compliance data, controls, automated tests, framework requirements, vendors, risks, and evidence.
+
+## How it works
+
+Secureframe's MCP server authenticates via OAuth with dynamic client registration, supporting workspaces in the US and UK regions. Once connected, agents can query compliance frameworks, inspect controls and automated tests, monitor vendor security posture and risks, verify employee and device compliance, and track evidence collection. Write operations are governed by the per-connection read-only toggle.
+
+## Features
+
+- Query compliance frameworks (SOC 2, ISO 27001, HIPAA, PCI DSS, NIST, GDPR) and control status
+- Run and inspect automated compliance tests and remediation steps
+- Audit vendor security posture, questionnaires, and risk tiers
+- Monitor personnel onboarding, security training, MFA, and device endpoint compliance
+- Track manual evidence collection, compliance tasks, and System Security Plan (SSP) details
+
+## Requirements
+
+- An active Secureframe account in the US or UK region
+- An active membership in your company with admin privileges, API key creation permissions, or an active API key
+- Select the **United States (US)** or **United Kingdom (UK)** region when connecting
+`.trim();
 var sentry = `
 ## Overview
 
@@ -44231,6 +44267,7 @@ var MCP_PROVIDER_ICON_KEYS = [
   "resend",
   "respan",
   "salesforce",
+  "secureframe",
   "sentry",
   "signoz",
   "slack",
@@ -46294,6 +46331,64 @@ var salesforce2 = defineMcpPreset({
   helpText: "Query Salesforce data and metadata, and run Apex invocable actions and Flows exposed by a hosted MCP server. Coming soon — a Salesforce admin registers an External Client App in your org and Sazabi provisions its credentials, so it isn't self-serve connectable yet."
 });
 
+// ../mcp-connector-provider/src/providers/secureframe.ts
+var secureframe2 = defineMcpPreset({
+  id: "secureframe",
+  label: "Secureframe",
+  iconKey: "secureframe",
+  defaultServerUrl: "https://mcp.secureframe.com",
+  transport: "streamable-http",
+  authMode: "oauth",
+  availability: "enabled",
+  oauth: {
+    providerConfigKey: "secureframe",
+    callbackPathSegment: "secureframe",
+    authorizationUrl: "https://mcp.secureframe.com/oauth/authorize",
+    tokenUrl: "https://mcp.secureframe.com/oauth/token",
+    resourceUrl: "https://mcp.secureframe.com",
+    dynamicClientRegistration: {
+      registrationEndpoint: "https://mcp.secureframe.com/register",
+      tokenEndpointAuthMethod: "none"
+    }
+  },
+  getAvailableScopes: async () => [
+    {
+      value: "mcp",
+      label: "MCP Access",
+      description: "Query and manage Secureframe compliance data, controls, tests, vendors, risks, and framework requirements."
+    }
+  ],
+  scopesUserSelectable: false,
+  regions: [
+    {
+      label: "United States (US)",
+      serverUrl: "https://mcp.secureframe.com"
+    },
+    {
+      label: "United Kingdom (UK)",
+      serverUrl: "https://mcp-uk.secureframe.com",
+      authorizationUrl: "https://mcp-uk.secureframe.com/oauth/authorize",
+      tokenUrl: "https://mcp-uk.secureframe.com/oauth/token",
+      resourceUrl: "https://mcp-uk.secureframe.com",
+      dynamicClientRegistration: {
+        registrationEndpoint: "https://mcp-uk.secureframe.com/register",
+        tokenEndpointAuthMethod: "none"
+      }
+    }
+  ],
+  capabilityOverrides: {
+    allowWriteTools: true
+  },
+  evidenceHints: [
+    "secureframe.com URLs, SECUREFRAME_API_KEY / SECUREFRAME_API_SECRET environment variables",
+    "SOC 2, ISO 27001, HIPAA, PCI DSS, GDPR, or NIST compliance frameworks and controls",
+    "README/docs or compliance runbooks naming Secureframe for automated compliance and continuous monitoring"
+  ],
+  helpText: "Query and manage Secureframe compliance data, controls, automated tests, vendors, risks, and framework requirements. Choose the US or UK region when connecting.",
+  skill: "secureframe",
+  setupSkill: "secureframe-setup"
+});
+
 // ../mcp-connector-provider/src/providers/sentry.ts
 var sentry2 = defineMcpPreset({
   id: "sentry",
@@ -46738,6 +46833,7 @@ var MCP_PROVIDERS = [
   resend2,
   respan2,
   salesforce2,
+  secureframe2,
   sentry2,
   signoz2,
   slack2,
@@ -47075,6 +47171,15 @@ var OrganizationMemberSchema = z20.object({
   role: OrganizationMembershipRoleSchema.describe("Organization role."),
   createdAt: z20.string().datetime().describe("When the membership was created.")
 });
+var OrganizationInvitationSchema = z20.object({
+  id: z20.string().min(1).describe("Invitation ID."),
+  email: z20.string().email().describe("Invited email address."),
+  role: OrganizationMembershipRoleSchema.describe("Role the invitee will receive when they accept."),
+  status: z20.string().min(1).describe('Invitation status (e.g. "pending").'),
+  createdAt: z20.string().datetime().describe("When the invitation was created."),
+  expiresAt: z20.string().datetime().describe("When the invitation expires.")
+});
+var MemberSelectorSchema = z20.string().min(1).describe("A user ID, or a URL-encoded email address, of the member.");
 var ListMembersInputSchema = z20.object({
   organizationId: z20.string().min(1).optional().describe("Organization to list members for. Auto-filled from CLI and SDK context when omitted.")
 });
@@ -47083,7 +47188,7 @@ var ListMembersOutputSchema = z20.object({
 });
 var UpdateMemberRoleInputSchema = z20.object({
   organizationId: z20.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted."),
-  userId: z20.string().min(1).describe("User ID of the member to update."),
+  member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to update."),
   role: OrganizationMembershipRoleSchema.describe("Role to assign.")
 });
 var UpdateMemberRoleOutputSchema = z20.object({
@@ -47091,7 +47196,7 @@ var UpdateMemberRoleOutputSchema = z20.object({
 });
 var RemoveMemberInputSchema = z20.object({
   params: z20.object({
-    userId: z20.string().min(1).describe("User ID of the member to remove.")
+    member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to remove.")
   }),
   query: z20.object({
     organizationId: z20.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted.")
@@ -47144,7 +47249,7 @@ var updateMemberRole = defineOperation({
   backend: "api",
   route: {
     method: "PATCH",
-    path: "/members/{userId}/role",
+    path: "/members/{member}/role",
     tags: ["Members"]
   },
   input: UpdateMemberRoleInputSchema,
@@ -47156,7 +47261,7 @@ var updateMemberRole = defineOperation({
       name: "promote-member",
       input: {
         organizationId: "organization-123",
-        userId: "user-456",
+        member: "user-456",
         role: "admin"
       },
       output: {
@@ -47179,7 +47284,7 @@ var removeMember = defineOperation({
   backend: "api",
   route: {
     method: "DELETE",
-    path: "/members/{userId}",
+    path: "/members/{member}",
     tags: ["Members"],
     inputStructure: "detailed"
   },
@@ -47188,10 +47293,125 @@ var removeMember = defineOperation({
   pagination: "none",
   async: "sync"
 });
+var InviteMemberInputSchema = z20.object({
+  organizationId: z20.string().min(1).optional().describe("Organization to invite into. Auto-filled from CLI and SDK context when omitted."),
+  email: z20.string().email().describe("Email address to invite."),
+  role: OrganizationMembershipRoleSchema.optional().default("member").describe('Role to grant on acceptance. Defaults to "member".')
+});
+var InviteMemberOutputSchema = z20.object({
+  invitation: OrganizationInvitationSchema.describe("The created pending invitation.")
+});
+var ListInvitationsInputSchema = z20.object({
+  organizationId: z20.string().min(1).optional().describe("Organization to list invitations for. Auto-filled from CLI and SDK context when omitted.")
+});
+var ListInvitationsOutputSchema = z20.object({
+  invitations: z20.array(OrganizationInvitationSchema).describe("Pending invitations visible within the selected organization.")
+});
+var RevokeInvitationInputSchema = z20.object({
+  params: z20.object({
+    invitationId: z20.string().min(1).describe("ID of the invitation to revoke.")
+  }),
+  query: z20.object({
+    organizationId: z20.string().min(1).optional().describe("Organization containing the invitation. Auto-filled from CLI and SDK context when omitted.")
+  })
+}).transform(({ params, query }) => ({
+  ...query,
+  ...params
+}));
+var RevokeInvitationOutputSchema = z20.object({
+  revokedInvitationId: z20.string().min(1).describe("ID of the revoked invitation.")
+});
+var inviteMember = defineOperation({
+  operationId: "members.invite",
+  description: "Invite a person to the organization by email.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/members/invitations",
+    tags: ["Members"],
+    successStatus: 201
+  },
+  input: InviteMemberInputSchema,
+  output: InviteMemberOutputSchema,
+  pagination: "none",
+  async: "sync",
+  examples: [
+    {
+      name: "invite-member",
+      input: {
+        organizationId: "organization-123",
+        email: "newhire@example.com",
+        role: "member"
+      },
+      output: {
+        invitation: {
+          id: "invitation-123",
+          email: "newhire@example.com",
+          role: "member",
+          status: "pending",
+          createdAt: "2026-01-01T00:00:00.000Z",
+          expiresAt: "2026-01-08T00:00:00.000Z"
+        }
+      }
+    }
+  ]
+});
+var listInvitations = defineOperation({
+  operationId: "members.listInvitations",
+  description: "List pending invitations for an organization.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/members/invitations",
+    tags: ["Members"]
+  },
+  input: ListInvitationsInputSchema,
+  output: ListInvitationsOutputSchema,
+  pagination: "none",
+  async: "sync",
+  examples: [
+    {
+      name: "organization-invitations",
+      input: {
+        organizationId: "organization-123"
+      },
+      output: {
+        invitations: [
+          {
+            id: "invitation-123",
+            email: "newhire@example.com",
+            role: "member",
+            status: "pending",
+            createdAt: "2026-01-01T00:00:00.000Z",
+            expiresAt: "2026-01-08T00:00:00.000Z"
+          }
+        ]
+      }
+    }
+  ]
+});
+var revokeInvitation = defineOperation({
+  operationId: "members.revokeInvitation",
+  description: "Revoke a pending invitation.",
+  backend: "api",
+  route: {
+    method: "DELETE",
+    path: "/members/invitations/{invitationId}",
+    tags: ["Members"],
+    inputStructure: "detailed"
+  },
+  input: RevokeInvitationInputSchema,
+  output: RevokeInvitationOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
 var membersContract = {
   list: listMembers.contract,
   updateRole: updateMemberRole.contract,
-  remove: removeMember.contract
+  remove: removeMember.contract,
+  invite: inviteMember.contract,
+  listInvitations: listInvitations.contract,
+  revokeInvitation: revokeInvitation.contract
 };
 
 // ../public-api-contracts/src/memory.ts
@@ -50230,7 +50450,10 @@ var publicApiContract = {
   members: {
     list: listMembers.contract,
     updateRole: updateMemberRole.contract,
-    remove: removeMember.contract
+    remove: removeMember.contract,
+    invite: inviteMember.contract,
+    listInvitations: listInvitations.contract,
+    revokeInvitation: revokeInvitation.contract
   },
   teams: {
     list: listTeams.contract,
@@ -51460,7 +51683,20 @@ var createClient = (options) => {
         const resolvedInput = await resolveOrganizationScopedInput(options.credentialProvider, input);
         return raw.members.remove({
           params: {
-            userId: resolvedInput.userId
+            member: resolvedInput.member
+          },
+          query: {
+            organizationId: resolvedInput.organizationId
+          }
+        });
+      },
+      invite: async (input) => raw.members.invite(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      listInvitations: async (input = {}) => raw.members.listInvitations(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      revokeInvitation: async (input) => {
+        const resolvedInput = await resolveOrganizationScopedInput(options.credentialProvider, input);
+        return raw.members.revokeInvitation({
+          params: {
+            invitationId: resolvedInput.invitationId
           },
           query: {
             organizationId: resolvedInput.organizationId
