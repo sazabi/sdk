@@ -48451,7 +48451,7 @@ init_src();
 
 // ../notifications/src/catalog/registry.ts
 var registeredDefinitionsByValue = new Map;
-var definitionsEqual = (left, right) => left.value === right.value && left.label === right.label && left.scope === right.scope && left.role === right.role && left.defaultOff === right.defaultOff && left.email?.template === right.email?.template && left.email?.ctaLabel === right.email?.ctaLabel && (left.deliveryConditions ?? []).join(",") === (right.deliveryConditions ?? []).join(",");
+var definitionsEqual = (left, right) => left.value === right.value && left.label === right.label && left.scope === right.scope && left.role === right.role && left.defaultOff === right.defaultOff && (left.defaultOffChannels ?? []).join(",") === (right.defaultOffChannels ?? []).join(",") && left.email?.template === right.email?.template && left.email?.ctaLabel === right.email?.ctaLabel && (left.deliveryConditions ?? []).join(",") === (right.deliveryConditions ?? []).join(",");
 var registerNotificationTypes = (definitions) => {
   for (const definition of Object.values(definitions)) {
     const existing = registeredDefinitionsByValue.get(definition.value);
@@ -48466,6 +48466,9 @@ var registerNotificationTypes = (definitions) => {
     }
     if (definition.email && definition.email.ctaLabel.trim().length === 0) {
       throw new Error(`Notification email presentation needs a CTA label: ${definition.value}`);
+    }
+    if (definition.defaultOff && definition.defaultOffChannels) {
+      throw new Error(`Notification type declares both defaultOff and defaultOffChannels: ${definition.value}`);
     }
     registeredDefinitionsByValue.set(definition.value, definition);
   }
@@ -48622,12 +48625,14 @@ var ISSUE_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
     value: "issue_resolved",
     label: "Issue resolved",
     scope: "project",
+    defaultOffChannels: ["email"],
     deliveryConditions: ["component", "severity"]
   },
   ISSUE_IGNORED: {
     value: "issue_ignored",
     label: "Issue ignored",
     scope: "project",
+    defaultOffChannels: ["email"],
     deliveryConditions: ["component", "severity"]
   }
 });
