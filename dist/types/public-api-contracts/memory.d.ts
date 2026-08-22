@@ -202,9 +202,7 @@ export declare const DeleteProjectMemoryInputSchema: z.ZodObject<{
     path: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type DeleteProjectMemoryInput = z.infer<typeof DeleteProjectMemoryInputSchema>;
-export declare const DeleteProjectMemoryOutputSchema: z.ZodObject<{
-    deleted: z.ZodBoolean;
-}, z.core.$strip>;
+export declare const DeleteProjectMemoryOutputSchema: z.ZodVoid;
 export type DeleteProjectMemoryOutput = z.infer<typeof DeleteProjectMemoryOutputSchema>;
 export declare const putProjectMemory: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
@@ -319,9 +317,7 @@ export declare const deleteProjectMemory: import("../orpc-contracts/index.js").O
     projectId: z.ZodOptional<z.ZodString>;
     id: z.ZodOptional<z.ZodString>;
     path: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>, z.ZodObject<{
-    deleted: z.ZodBoolean;
-}, z.core.$strip>, "api">;
+}, z.core.$strip>, z.ZodVoid, "api">;
 export declare const memoryContract: {
     readonly put: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
@@ -436,7 +432,5 @@ export declare const memoryContract: {
         projectId: z.ZodOptional<z.ZodString>;
         id: z.ZodOptional<z.ZodString>;
         path: z.ZodOptional<z.ZodString>;
-    }, z.core.$strip>, z.ZodObject<{
-        deleted: z.ZodBoolean;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };

@@ -99,28 +99,30 @@ export type IssueSearchItem = z.infer<typeof IssueSearchItemSchema>;
 export declare const CreateIssueInputObjectSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
-    contentMdx: z.ZodString;
+    contentMdx: z.ZodOptional<z.ZodString>;
     severity: z.ZodDefault<z.ZodEnum<{
         critical: "critical";
         high: "high";
         low: "low";
         medium: "medium";
     }>>;
-    componentId: z.ZodString;
+    componentId: z.ZodOptional<z.ZodString>;
     statusStartedAt: z.ZodOptional<z.ZodString>;
+    sample: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 export declare const CreateIssueInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
-    contentMdx: z.ZodString;
+    contentMdx: z.ZodOptional<z.ZodString>;
     severity: z.ZodDefault<z.ZodEnum<{
         critical: "critical";
         high: "high";
         low: "low";
         medium: "medium";
     }>>;
-    componentId: z.ZodString;
+    componentId: z.ZodOptional<z.ZodString>;
     statusStartedAt: z.ZodOptional<z.ZodString>;
+    sample: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 export type CreateIssueInput = z.infer<typeof CreateIssueInputSchema>;
 export declare const CreateIssueOutputSchema: z.ZodObject<{
@@ -555,15 +557,16 @@ export type UnmuteIssueOutput = z.infer<typeof UnmuteIssueOutputSchema>;
 export declare const createIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
-    contentMdx: z.ZodString;
+    contentMdx: z.ZodOptional<z.ZodString>;
     severity: z.ZodDefault<z.ZodEnum<{
         critical: "critical";
         high: "high";
         low: "low";
         medium: "medium";
     }>>;
-    componentId: z.ZodString;
+    componentId: z.ZodOptional<z.ZodString>;
     statusStartedAt: z.ZodOptional<z.ZodString>;
+    sample: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     issue: z.ZodObject<{
         id: z.ZodString;
@@ -999,15 +1002,16 @@ export declare const issuesContract: {
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
-        contentMdx: z.ZodString;
+        contentMdx: z.ZodOptional<z.ZodString>;
         severity: z.ZodDefault<z.ZodEnum<{
             critical: "critical";
             high: "high";
             low: "low";
             medium: "medium";
         }>>;
-        componentId: z.ZodString;
+        componentId: z.ZodOptional<z.ZodString>;
         statusStartedAt: z.ZodOptional<z.ZodString>;
+        sample: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodObject<{
         issue: z.ZodObject<{
             id: z.ZodString;

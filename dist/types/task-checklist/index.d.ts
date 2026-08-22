@@ -50,7 +50,7 @@ export declare const TASK_METADATA: readonly [{
     readonly category: "setup";
 }, {
     readonly id: "connect_log_sources";
-    readonly label: "Connect data sources";
+    readonly label: "Connect log sources";
     readonly description: "Connect a telemetry data source such as Datadog, Sentry, or AWS CloudWatch so agents have access to your logs, metrics, and traces.";
     readonly instructions: "Go to Settings > Data Sources and click 'Add data source'. Choose a provider such as Datadog, Sentry, or AWS CloudWatch and follow the configuration steps.";
     readonly category: "setup";

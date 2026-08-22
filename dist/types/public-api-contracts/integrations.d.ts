@@ -841,3 +841,116 @@ export declare const updateConnectionExternalIdentityJitPolicy: import("../orpc-
     connectionEnabled: z.ZodBoolean;
     effectiveEnabled: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const SlackConfigurationSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
+    acknowledgementMessage: z.ZodBoolean;
+}, z.core.$strip>;
+export type SlackConfiguration = z.infer<typeof SlackConfigurationSchema>;
+export declare const GetSlackConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export type GetSlackConfigurationInput = z.infer<typeof GetSlackConfigurationInputSchema>;
+export type GetSlackConfigurationOutput = z.infer<typeof SlackConfigurationSchema>;
+export declare const getSlackConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
+    acknowledgementMessage: z.ZodBoolean;
+}, z.core.$strip>, "api">;
+export declare const UpdateSlackConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    automaticResponses: z.ZodOptional<z.ZodBoolean>;
+    acknowledgementMessage: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>;
+export type UpdateSlackConfigurationInput = z.infer<typeof UpdateSlackConfigurationInputSchema>;
+export type UpdateSlackConfigurationOutput = z.infer<typeof SlackConfigurationSchema>;
+export declare const updateSlackConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    automaticResponses: z.ZodOptional<z.ZodBoolean>;
+    acknowledgementMessage: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
+    acknowledgementMessage: z.ZodBoolean;
+}, z.core.$strip>, "api">;
+export declare const SlackChannelProjectMappingSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    slackChannelId: z.ZodString;
+    slackChannelName: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>;
+export type SlackChannelProjectMapping = z.infer<typeof SlackChannelProjectMappingSchema>;
+export declare const ListSlackChannelProjectMappingsInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export declare const ListSlackChannelProjectMappingsOutputSchema: z.ZodObject<{
+    mappings: z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        slackChannelId: z.ZodString;
+        slackChannelName: z.ZodString;
+        projectId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type ListSlackChannelProjectMappingsInput = z.infer<typeof ListSlackChannelProjectMappingsInputSchema>;
+export type ListSlackChannelProjectMappingsOutput = z.infer<typeof ListSlackChannelProjectMappingsOutputSchema>;
+export declare const listSlackChannelProjectMappings: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    mappings: z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        slackChannelId: z.ZodString;
+        slackChannelName: z.ZodString;
+        projectId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const SetSlackChannelProjectMappingInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    slackChannelId: z.ZodString;
+    slackChannelName: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodString;
+}, z.core.$strip>;
+export type SetSlackChannelProjectMappingInput = z.infer<typeof SetSlackChannelProjectMappingInputSchema>;
+export type SetSlackChannelProjectMappingOutput = z.infer<typeof SlackChannelProjectMappingSchema>;
+export declare const setSlackChannelProjectMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    slackChannelId: z.ZodString;
+    slackChannelName: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    slackChannelId: z.ZodString;
+    slackChannelName: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const DeleteSlackChannelProjectMappingInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    slackChannelId: z.ZodString;
+}, z.core.$strip>;
+export declare const DeleteSlackChannelProjectMappingOutputSchema: z.ZodObject<{
+    success: z.ZodBoolean;
+}, z.core.$strip>;
+export type DeleteSlackChannelProjectMappingInput = z.infer<typeof DeleteSlackChannelProjectMappingInputSchema>;
+export type DeleteSlackChannelProjectMappingOutput = z.infer<typeof DeleteSlackChannelProjectMappingOutputSchema>;
+export declare const deleteSlackChannelProjectMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    slackChannelId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    success: z.ZodBoolean;
+}, z.core.$strip>, "api">;

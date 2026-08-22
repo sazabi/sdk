@@ -1,7 +1,7 @@
 import { z } from "zod";
 export declare const RecommendationKindSchema: z.ZodEnum<{
-    data_source: "data_source";
     integration: "integration";
+    log_source: "log_source";
     mcp_connector: "mcp_connector";
     sandbox_cli: "sandbox_cli";
 }>;
@@ -13,8 +13,8 @@ export declare const RecommendationStatusSchema: z.ZodEnum<{
 export type RecommendationStatus = z.infer<typeof RecommendationStatusSchema>;
 export declare const RecommendationSchema: z.ZodObject<{
     kind: z.ZodEnum<{
-        data_source: "data_source";
         integration: "integration";
+        log_source: "log_source";
         mcp_connector: "mcp_connector";
         sandbox_cli: "sandbox_cli";
     }>;
@@ -34,8 +34,8 @@ export type ListRecommendationsInput = z.infer<typeof ListRecommendationsInputSc
 export declare const ListRecommendationsOutputSchema: z.ZodObject<{
     recommendations: z.ZodArray<z.ZodObject<{
         kind: z.ZodEnum<{
-            data_source: "data_source";
             integration: "integration";
+            log_source: "log_source";
             mcp_connector: "mcp_connector";
             sandbox_cli: "sandbox_cli";
         }>;
@@ -54,8 +54,8 @@ export declare const listRecommendations: import("../orpc-contracts/index.js").O
 }, z.core.$strip>, z.ZodObject<{
     recommendations: z.ZodArray<z.ZodObject<{
         kind: z.ZodEnum<{
-            data_source: "data_source";
             integration: "integration";
+            log_source: "log_source";
             mcp_connector: "mcp_connector";
             sandbox_cli: "sandbox_cli";
         }>;

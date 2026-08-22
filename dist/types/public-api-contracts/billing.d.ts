@@ -3,6 +3,7 @@ export declare const BillingUsageDimensionSchema: z.ZodEnum<{
     automation_runs_completed: "automation_runs_completed";
     input_tokens: "input_tokens";
     issues_created: "issues_created";
+    logs_accepted_bytes: "logs_accepted_bytes";
     logs_ingested_bytes: "logs_ingested_bytes";
     output_tokens: "output_tokens";
     pull_request_reviews_completed: "pull_request_reviews_completed";
@@ -79,6 +80,8 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
         billingPlanId: z.ZodString;
         priceBookId: z.ZodString;
         cycleType: z.ZodString;
+        cancelAt: z.ZodNullable<z.ZodString>;
+        canceledAt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     collection: z.ZodObject<{
         status: z.ZodEnum<{
@@ -94,6 +97,29 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
         billingInvoiceId: z.ZodNullable<z.ZodString>;
         hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
+    currentPlan: z.ZodNullable<z.ZodObject<{
+        slug: z.ZodString;
+        name: z.ZodString;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        subscriptionStatus: z.ZodString;
+        cycleStartsAt: z.ZodNullable<z.ZodString>;
+        cycleEndsAt: z.ZodNullable<z.ZodString>;
+        renewalAt: z.ZodNullable<z.ZodString>;
+        pendingSwitch: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        pendingCancellation: z.ZodNullable<z.ZodObject<{
+            effectiveAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
 }, z.core.$strip>;
 export type GetBillingSummaryOutput = z.infer<typeof GetBillingSummaryOutputSchema>;
 export declare const GetBillingUsageInputSchema: z.ZodObject<{
@@ -109,6 +135,7 @@ export declare const BillingUsageRowSchema: z.ZodObject<{
         automation_runs_completed: "automation_runs_completed";
         input_tokens: "input_tokens";
         issues_created: "issues_created";
+        logs_accepted_bytes: "logs_accepted_bytes";
         logs_ingested_bytes: "logs_ingested_bytes";
         output_tokens: "output_tokens";
         pull_request_reviews_completed: "pull_request_reviews_completed";
@@ -131,6 +158,7 @@ export declare const GetBillingUsageOutputSchema: z.ZodObject<{
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             output_tokens: "output_tokens";
             pull_request_reviews_completed: "pull_request_reviews_completed";
@@ -197,17 +225,6 @@ export declare const ListBillingTransactionsOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type ListBillingTransactionsOutput = z.infer<typeof ListBillingTransactionsOutputSchema>;
-export declare const RetryBillingOutstandingBalanceInputSchema: z.ZodObject<{
-    organizationId: z.ZodOptional<z.ZodString>;
-    idempotencyKey: z.ZodString;
-}, z.core.$strip>;
-export type RetryBillingOutstandingBalanceInput = z.infer<typeof RetryBillingOutstandingBalanceInputSchema>;
-export declare const RetryBillingOutstandingBalanceOutputSchema: z.ZodObject<{
-    accepted: z.ZodLiteral<true>;
-    workflowId: z.ZodString;
-    runId: z.ZodString;
-}, z.core.$strip>;
-export type RetryBillingOutstandingBalanceOutput = z.infer<typeof RetryBillingOutstandingBalanceOutputSchema>;
 export declare const getBillingSummary: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -249,6 +266,8 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
         billingPlanId: z.ZodString;
         priceBookId: z.ZodString;
         cycleType: z.ZodString;
+        cancelAt: z.ZodNullable<z.ZodString>;
+        canceledAt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     collection: z.ZodObject<{
         status: z.ZodEnum<{
@@ -264,6 +283,29 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
         billingInvoiceId: z.ZodNullable<z.ZodString>;
         hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
+    currentPlan: z.ZodNullable<z.ZodObject<{
+        slug: z.ZodString;
+        name: z.ZodString;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        subscriptionStatus: z.ZodString;
+        cycleStartsAt: z.ZodNullable<z.ZodString>;
+        cycleEndsAt: z.ZodNullable<z.ZodString>;
+        renewalAt: z.ZodNullable<z.ZodString>;
+        pendingSwitch: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        pendingCancellation: z.ZodNullable<z.ZodObject<{
+            effectiveAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const getBillingUsage: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
@@ -282,6 +324,7 @@ export declare const getBillingUsage: import("../orpc-contracts/index.js").Opera
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             output_tokens: "output_tokens";
             pull_request_reviews_completed: "pull_request_reviews_completed";
@@ -325,13 +368,588 @@ export declare const listBillingTransactions: import("../orpc-contracts/index.js
         hasPrev: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const retryBillingOutstandingBalance: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const GetAutoTopUpInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type GetAutoTopUpInput = z.infer<typeof GetAutoTopUpInputSchema>;
+export declare const AutoTopUpSettingsSchema: z.ZodObject<{
+    supported: z.ZodBoolean;
+    enabled: z.ZodBoolean;
+    triggerCreditBalance: z.ZodString;
+    topUpAmount: z.ZodString;
+    cycleSpendingLimit: z.ZodString;
+    currency: z.ZodString;
+    creditsToGrant: z.ZodNullable<z.ZodString>;
+    status: z.ZodString;
+}, z.core.$strip>;
+export type AutoTopUpSettings = z.infer<typeof AutoTopUpSettingsSchema>;
+export declare const UpdateAutoTopUpInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    enabled: z.ZodBoolean;
+    triggerCreditBalance: z.ZodString;
+    topUpAmount: z.ZodString;
+    cycleSpendingLimit: z.ZodString;
+}, z.core.$strip>;
+export type UpdateAutoTopUpInput = z.infer<typeof UpdateAutoTopUpInputSchema>;
+export declare const PurchaseCreditsInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    amount: z.ZodString;
+    idempotencyKey: z.ZodString;
+}, z.core.$strip>;
+export type PurchaseCreditsInput = z.infer<typeof PurchaseCreditsInputSchema>;
+export declare const PurchaseCreditsOutputSchema: z.ZodObject<{
+    status: z.ZodEnum<{
+        paid: "paid";
+        pending_payment: "pending_payment";
+    }>;
+    billingInvoiceId: z.ZodString;
+    topUpAmount: z.ZodString;
+    creditsToGrant: z.ZodString;
+    currency: z.ZodString;
+}, z.core.$strip>;
+export type PurchaseCreditsOutput = z.infer<typeof PurchaseCreditsOutputSchema>;
+export declare const ListPlansInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type ListPlansInput = z.infer<typeof ListPlansInputSchema>;
+export declare const BillingPlanSchema: z.ZodObject<{
+    slug: z.ZodString;
+    billingModel: z.ZodString;
+    name: z.ZodString;
+    description: z.ZodString;
+    bestFor: z.ZodNullable<z.ZodString>;
+    price: z.ZodString;
+    currency: z.ZodString;
+    targetCreditBalance: z.ZodNullable<z.ZodString>;
+    logsIncludedBytes: z.ZodString;
+    inputTokensIncluded: z.ZodString;
+    outputTokensIncluded: z.ZodString;
+}, z.core.$strip>;
+export type BillingPlan = z.infer<typeof BillingPlanSchema>;
+export declare const ListPlansOutputSchema: z.ZodObject<{
+    billingModel: z.ZodString;
+    currentPlanSlug: z.ZodNullable<z.ZodString>;
+    hasActiveStripeBilling: z.ZodBoolean;
+    plans: z.ZodArray<z.ZodObject<{
+        slug: z.ZodString;
+        billingModel: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodString;
+        bestFor: z.ZodNullable<z.ZodString>;
+        price: z.ZodString;
+        currency: z.ZodString;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        logsIncludedBytes: z.ZodString;
+        inputTokensIncluded: z.ZodString;
+        outputTokensIncluded: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type ListPlansOutput = z.infer<typeof ListPlansOutputSchema>;
+export declare const PreviewPlanChangeInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    planSlug: z.ZodString;
+}, z.core.$strip>;
+export type PreviewPlanChangeInput = z.infer<typeof PreviewPlanChangeInputSchema>;
+export declare const PreviewPlanChangeOutputSchema: z.ZodObject<{
+    calculatedAt: z.ZodString;
+    type: z.ZodEnum<{
+        downgrade: "downgrade";
+        upgrade: "upgrade";
+    }>;
+    effectiveAt: z.ZodString;
+    currency: z.ZodString;
+    currentPlanSlug: z.ZodString;
+    targetPlanSlug: z.ZodString;
+    currentPlanName: z.ZodString;
+    targetPlanName: z.ZodString;
+    currentPlanPrice: z.ZodString;
+    targetPlanPrice: z.ZodString;
+    currentTargetCreditBalance: z.ZodString;
+    targetCreditBalance: z.ZodString;
+    creditDeficitAmount: z.ZodString;
+    creditDeficitChargeAmount: z.ZodString;
+    additionalCreditPrice: z.ZodString;
+    immediateChargeAmount: z.ZodString;
+    subscriptionChargeAmount: z.ZodString;
+    proratedCreditGrantAmount: z.ZodString;
+    remainingCycleFraction: z.ZodString;
+    nextCycleChargeAmount: z.ZodString;
+}, z.core.$strip>;
+export type PreviewPlanChangeOutput = z.infer<typeof PreviewPlanChangeOutputSchema>;
+export declare const ChangePlanInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    planSlug: z.ZodString;
+}, z.core.$strip>;
+export type ChangePlanInput = z.infer<typeof ChangePlanInputSchema>;
+export declare const ChangePlanOutputSchema: z.ZodObject<{
+    billingSubscriptionChangeId: z.ZodString;
+    billingSubscriptionId: z.ZodString;
+    status: z.ZodString;
+    type: z.ZodString;
+    effectiveAt: z.ZodString;
+    invoiceId: z.ZodNullable<z.ZodString>;
+    creditDeficitAmount: z.ZodOptional<z.ZodString>;
+    creditDeficitChargeAmount: z.ZodOptional<z.ZodString>;
+    creditTopUpAmount: z.ZodOptional<z.ZodString>;
+    immediateChargeAmount: z.ZodOptional<z.ZodString>;
+    subscriptionChargeAmount: z.ZodOptional<z.ZodString>;
+    proratedCreditGrantAmount: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type ChangePlanOutput = z.infer<typeof ChangePlanOutputSchema>;
+export declare const CreateCheckoutSessionInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    planSlug: z.ZodString;
+}, z.core.$strip>;
+export type CreateCheckoutSessionInput = z.infer<typeof CreateCheckoutSessionInputSchema>;
+export declare const CreateCheckoutSessionOutputSchema: z.ZodObject<{
+    sessionId: z.ZodString;
+    checkoutUrl: z.ZodString;
+}, z.core.$strip>;
+export type CreateCheckoutSessionOutput = z.infer<typeof CreateCheckoutSessionOutputSchema>;
+export declare const GetCheckoutSessionStatusInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    sessionId: z.ZodString;
+}, z.core.$strip>;
+export type GetCheckoutSessionStatusInput = z.infer<typeof GetCheckoutSessionStatusInputSchema>;
+export declare const CheckoutSessionStatusSchema: z.ZodObject<{
+    status: z.ZodEnum<{
+        active: "active";
+        expired: "expired";
+        pending: "pending";
+    }>;
+}, z.core.$strip>;
+export type CheckoutSessionStatus = z.infer<typeof CheckoutSessionStatusSchema>;
+export declare const CreatePortalSessionInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type CreatePortalSessionInput = z.infer<typeof CreatePortalSessionInputSchema>;
+export declare const CreatePortalSessionOutputSchema: z.ZodObject<{
+    portalUrl: z.ZodString;
+}, z.core.$strip>;
+export type CreatePortalSessionOutput = z.infer<typeof CreatePortalSessionOutputSchema>;
+export declare const GetPaymentMethodInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type GetPaymentMethodInput = z.infer<typeof GetPaymentMethodInputSchema>;
+export declare const PaymentMethodSummarySchema: z.ZodObject<{
+    hasPaymentMethod: z.ZodBoolean;
+    brand: z.ZodNullable<z.ZodString>;
+    last4: z.ZodNullable<z.ZodString>;
+    type: z.ZodNullable<z.ZodString>;
+    expiryMonth: z.ZodNullable<z.ZodNumber>;
+    expiryYear: z.ZodNullable<z.ZodNumber>;
+    isDefault: z.ZodBoolean;
+    display: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type PaymentMethodSummary = z.infer<typeof PaymentMethodSummarySchema>;
+export declare const BillingCurrentPlanSchema: z.ZodObject<{
+    slug: z.ZodString;
+    name: z.ZodString;
+    price: z.ZodNullable<z.ZodString>;
+    currency: z.ZodNullable<z.ZodString>;
+    targetCreditBalance: z.ZodNullable<z.ZodString>;
+    subscriptionStatus: z.ZodString;
+    cycleStartsAt: z.ZodNullable<z.ZodString>;
+    cycleEndsAt: z.ZodNullable<z.ZodString>;
+    renewalAt: z.ZodNullable<z.ZodString>;
+    pendingSwitch: z.ZodNullable<z.ZodObject<{
+        billingSubscriptionChangeId: z.ZodString;
+        effectiveAt: z.ZodString;
+        planSlug: z.ZodNullable<z.ZodString>;
+        planName: z.ZodNullable<z.ZodString>;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    pendingCancellation: z.ZodNullable<z.ZodObject<{
+        effectiveAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const SubscriptionCancellationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const SubscriptionCancellationPreviewSchema: z.ZodObject<{
+    currentPlan: z.ZodObject<{
+        slug: z.ZodString;
+        name: z.ZodString;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        subscriptionStatus: z.ZodString;
+        cycleStartsAt: z.ZodNullable<z.ZodString>;
+        cycleEndsAt: z.ZodNullable<z.ZodString>;
+        renewalAt: z.ZodNullable<z.ZodString>;
+        pendingSwitch: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        pendingCancellation: z.ZodNullable<z.ZodObject<{
+            effectiveAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+    effectiveAt: z.ZodString;
+    currentBalance: z.ZodString;
+    servicePolicy: z.ZodLiteral<"active_until_period_end">;
+    creditPolicy: z.ZodLiteral<"dormant_until_resubscription">;
+    scheduledFinalCharge: z.ZodNullable<z.ZodString>;
+    autoTopUpEnabled: z.ZodBoolean;
+    pendingDowngrade: z.ZodNullable<z.ZodObject<{
+        billingSubscriptionChangeId: z.ZodString;
+        effectiveAt: z.ZodString;
+        planSlug: z.ZodNullable<z.ZodString>;
+        planName: z.ZodNullable<z.ZodString>;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    collectionState: z.ZodObject<{
+        status: z.ZodEnum<{
+            current: "current";
+            delinquent: "delinquent";
+            payment_retrying: "payment_retrying";
+        }>;
+        outstandingCredits: z.ZodNullable<z.ZodString>;
+        outstandingAmount: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        scheduledAttemptsMade: z.ZodNumber;
+        nextRetryAt: z.ZodNullable<z.ZodString>;
+        billingInvoiceId: z.ZodNullable<z.ZodString>;
+        hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+    calculatedAt: z.ZodString;
+}, z.core.$strip>;
+export declare const ScheduleSubscriptionCancellationOutputSchema: z.ZodObject<{
+    currentPlan: z.ZodObject<{
+        slug: z.ZodString;
+        name: z.ZodString;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        subscriptionStatus: z.ZodString;
+        cycleStartsAt: z.ZodNullable<z.ZodString>;
+        cycleEndsAt: z.ZodNullable<z.ZodString>;
+        renewalAt: z.ZodNullable<z.ZodString>;
+        pendingSwitch: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        pendingCancellation: z.ZodNullable<z.ZodObject<{
+            effectiveAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+    effectiveAt: z.ZodString;
+    currentBalance: z.ZodString;
+    servicePolicy: z.ZodLiteral<"active_until_period_end">;
+    creditPolicy: z.ZodLiteral<"dormant_until_resubscription">;
+    scheduledFinalCharge: z.ZodNullable<z.ZodString>;
+    autoTopUpEnabled: z.ZodBoolean;
+    pendingDowngrade: z.ZodNullable<z.ZodObject<{
+        billingSubscriptionChangeId: z.ZodString;
+        effectiveAt: z.ZodString;
+        planSlug: z.ZodNullable<z.ZodString>;
+        planName: z.ZodNullable<z.ZodString>;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    collectionState: z.ZodObject<{
+        status: z.ZodEnum<{
+            current: "current";
+            delinquent: "delinquent";
+            payment_retrying: "payment_retrying";
+        }>;
+        outstandingCredits: z.ZodNullable<z.ZodString>;
+        outstandingAmount: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        scheduledAttemptsMade: z.ZodNumber;
+        nextRetryAt: z.ZodNullable<z.ZodString>;
+        billingInvoiceId: z.ZodNullable<z.ZodString>;
+        hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+    calculatedAt: z.ZodString;
+    billingSubscriptionChangeId: z.ZodString;
+    alreadyScheduled: z.ZodBoolean;
+}, z.core.$strip>;
+export declare const ResumeSubscriptionCancellationOutputSchema: z.ZodObject<{
+    billingSubscriptionId: z.ZodString;
+    resumed: z.ZodLiteral<true>;
+}, z.core.$strip>;
+export type SubscriptionCancellationInput = z.infer<typeof SubscriptionCancellationInputSchema>;
+export type SubscriptionCancellationPreview = z.infer<typeof SubscriptionCancellationPreviewSchema>;
+export type ScheduleSubscriptionCancellationOutput = z.infer<typeof ScheduleSubscriptionCancellationOutputSchema>;
+export type ResumeSubscriptionCancellationOutput = z.infer<typeof ResumeSubscriptionCancellationOutputSchema>;
+export declare const getAutoTopUp: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    supported: z.ZodBoolean;
+    enabled: z.ZodBoolean;
+    triggerCreditBalance: z.ZodString;
+    topUpAmount: z.ZodString;
+    cycleSpendingLimit: z.ZodString;
+    currency: z.ZodString;
+    creditsToGrant: z.ZodNullable<z.ZodString>;
+    status: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const updateAutoTopUp: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    enabled: z.ZodBoolean;
+    triggerCreditBalance: z.ZodString;
+    topUpAmount: z.ZodString;
+    cycleSpendingLimit: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    supported: z.ZodBoolean;
+    enabled: z.ZodBoolean;
+    triggerCreditBalance: z.ZodString;
+    topUpAmount: z.ZodString;
+    cycleSpendingLimit: z.ZodString;
+    currency: z.ZodString;
+    creditsToGrant: z.ZodNullable<z.ZodString>;
+    status: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const purchaseCredits: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    amount: z.ZodString;
     idempotencyKey: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
-    accepted: z.ZodLiteral<true>;
-    workflowId: z.ZodString;
-    runId: z.ZodString;
+    status: z.ZodEnum<{
+        paid: "paid";
+        pending_payment: "pending_payment";
+    }>;
+    billingInvoiceId: z.ZodString;
+    topUpAmount: z.ZodString;
+    creditsToGrant: z.ZodString;
+    currency: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const listPlans: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    billingModel: z.ZodString;
+    currentPlanSlug: z.ZodNullable<z.ZodString>;
+    hasActiveStripeBilling: z.ZodBoolean;
+    plans: z.ZodArray<z.ZodObject<{
+        slug: z.ZodString;
+        billingModel: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodString;
+        bestFor: z.ZodNullable<z.ZodString>;
+        price: z.ZodString;
+        currency: z.ZodString;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        logsIncludedBytes: z.ZodString;
+        inputTokensIncluded: z.ZodString;
+        outputTokensIncluded: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const previewPlanChange: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    planSlug: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    calculatedAt: z.ZodString;
+    type: z.ZodEnum<{
+        downgrade: "downgrade";
+        upgrade: "upgrade";
+    }>;
+    effectiveAt: z.ZodString;
+    currency: z.ZodString;
+    currentPlanSlug: z.ZodString;
+    targetPlanSlug: z.ZodString;
+    currentPlanName: z.ZodString;
+    targetPlanName: z.ZodString;
+    currentPlanPrice: z.ZodString;
+    targetPlanPrice: z.ZodString;
+    currentTargetCreditBalance: z.ZodString;
+    targetCreditBalance: z.ZodString;
+    creditDeficitAmount: z.ZodString;
+    creditDeficitChargeAmount: z.ZodString;
+    additionalCreditPrice: z.ZodString;
+    immediateChargeAmount: z.ZodString;
+    subscriptionChargeAmount: z.ZodString;
+    proratedCreditGrantAmount: z.ZodString;
+    remainingCycleFraction: z.ZodString;
+    nextCycleChargeAmount: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const changePlan: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    planSlug: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    billingSubscriptionChangeId: z.ZodString;
+    billingSubscriptionId: z.ZodString;
+    status: z.ZodString;
+    type: z.ZodString;
+    effectiveAt: z.ZodString;
+    invoiceId: z.ZodNullable<z.ZodString>;
+    creditDeficitAmount: z.ZodOptional<z.ZodString>;
+    creditDeficitChargeAmount: z.ZodOptional<z.ZodString>;
+    creditTopUpAmount: z.ZodOptional<z.ZodString>;
+    immediateChargeAmount: z.ZodOptional<z.ZodString>;
+    subscriptionChargeAmount: z.ZodOptional<z.ZodString>;
+    proratedCreditGrantAmount: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, "api">;
+export declare const createCheckoutSession: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    planSlug: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    sessionId: z.ZodString;
+    checkoutUrl: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const getCheckoutSessionStatus: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    sessionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodEnum<{
+        active: "active";
+        expired: "expired";
+        pending: "pending";
+    }>;
+}, z.core.$strip>, "api">;
+export declare const createPortalSession: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    portalUrl: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const getPaymentMethod: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    hasPaymentMethod: z.ZodBoolean;
+    brand: z.ZodNullable<z.ZodString>;
+    last4: z.ZodNullable<z.ZodString>;
+    type: z.ZodNullable<z.ZodString>;
+    expiryMonth: z.ZodNullable<z.ZodNumber>;
+    expiryYear: z.ZodNullable<z.ZodNumber>;
+    isDefault: z.ZodBoolean;
+    display: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, "api">;
+export declare const previewSubscriptionCancellation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    currentPlan: z.ZodObject<{
+        slug: z.ZodString;
+        name: z.ZodString;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        subscriptionStatus: z.ZodString;
+        cycleStartsAt: z.ZodNullable<z.ZodString>;
+        cycleEndsAt: z.ZodNullable<z.ZodString>;
+        renewalAt: z.ZodNullable<z.ZodString>;
+        pendingSwitch: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        pendingCancellation: z.ZodNullable<z.ZodObject<{
+            effectiveAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+    effectiveAt: z.ZodString;
+    currentBalance: z.ZodString;
+    servicePolicy: z.ZodLiteral<"active_until_period_end">;
+    creditPolicy: z.ZodLiteral<"dormant_until_resubscription">;
+    scheduledFinalCharge: z.ZodNullable<z.ZodString>;
+    autoTopUpEnabled: z.ZodBoolean;
+    pendingDowngrade: z.ZodNullable<z.ZodObject<{
+        billingSubscriptionChangeId: z.ZodString;
+        effectiveAt: z.ZodString;
+        planSlug: z.ZodNullable<z.ZodString>;
+        planName: z.ZodNullable<z.ZodString>;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    collectionState: z.ZodObject<{
+        status: z.ZodEnum<{
+            current: "current";
+            delinquent: "delinquent";
+            payment_retrying: "payment_retrying";
+        }>;
+        outstandingCredits: z.ZodNullable<z.ZodString>;
+        outstandingAmount: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        scheduledAttemptsMade: z.ZodNumber;
+        nextRetryAt: z.ZodNullable<z.ZodString>;
+        billingInvoiceId: z.ZodNullable<z.ZodString>;
+        hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+    calculatedAt: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const scheduleSubscriptionCancellation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    currentPlan: z.ZodObject<{
+        slug: z.ZodString;
+        name: z.ZodString;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+        subscriptionStatus: z.ZodString;
+        cycleStartsAt: z.ZodNullable<z.ZodString>;
+        cycleEndsAt: z.ZodNullable<z.ZodString>;
+        renewalAt: z.ZodNullable<z.ZodString>;
+        pendingSwitch: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        pendingCancellation: z.ZodNullable<z.ZodObject<{
+            effectiveAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+    effectiveAt: z.ZodString;
+    currentBalance: z.ZodString;
+    servicePolicy: z.ZodLiteral<"active_until_period_end">;
+    creditPolicy: z.ZodLiteral<"dormant_until_resubscription">;
+    scheduledFinalCharge: z.ZodNullable<z.ZodString>;
+    autoTopUpEnabled: z.ZodBoolean;
+    pendingDowngrade: z.ZodNullable<z.ZodObject<{
+        billingSubscriptionChangeId: z.ZodString;
+        effectiveAt: z.ZodString;
+        planSlug: z.ZodNullable<z.ZodString>;
+        planName: z.ZodNullable<z.ZodString>;
+        price: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        targetCreditBalance: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    collectionState: z.ZodObject<{
+        status: z.ZodEnum<{
+            current: "current";
+            delinquent: "delinquent";
+            payment_retrying: "payment_retrying";
+        }>;
+        outstandingCredits: z.ZodNullable<z.ZodString>;
+        outstandingAmount: z.ZodNullable<z.ZodString>;
+        currency: z.ZodNullable<z.ZodString>;
+        scheduledAttemptsMade: z.ZodNumber;
+        nextRetryAt: z.ZodNullable<z.ZodString>;
+        billingInvoiceId: z.ZodNullable<z.ZodString>;
+        hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+    calculatedAt: z.ZodString;
+    billingSubscriptionChangeId: z.ZodString;
+    alreadyScheduled: z.ZodBoolean;
+}, z.core.$strip>, "api">;
+export declare const resumeSubscriptionCancellation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    billingSubscriptionId: z.ZodString;
+    resumed: z.ZodLiteral<true>;
 }, z.core.$strip>, "api">;
 export declare const billingContract: {
     readonly getSummary: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -375,6 +993,8 @@ export declare const billingContract: {
             billingPlanId: z.ZodString;
             priceBookId: z.ZodString;
             cycleType: z.ZodString;
+            cancelAt: z.ZodNullable<z.ZodString>;
+            canceledAt: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         collection: z.ZodObject<{
             status: z.ZodEnum<{
@@ -390,6 +1010,29 @@ export declare const billingContract: {
             billingInvoiceId: z.ZodNullable<z.ZodString>;
             hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>;
+        currentPlan: z.ZodNullable<z.ZodObject<{
+            slug: z.ZodString;
+            name: z.ZodString;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+            subscriptionStatus: z.ZodString;
+            cycleStartsAt: z.ZodNullable<z.ZodString>;
+            cycleEndsAt: z.ZodNullable<z.ZodString>;
+            renewalAt: z.ZodNullable<z.ZodString>;
+            pendingSwitch: z.ZodNullable<z.ZodObject<{
+                billingSubscriptionChangeId: z.ZodString;
+                effectiveAt: z.ZodString;
+                planSlug: z.ZodNullable<z.ZodString>;
+                planName: z.ZodNullable<z.ZodString>;
+                price: z.ZodNullable<z.ZodString>;
+                currency: z.ZodNullable<z.ZodString>;
+                targetCreditBalance: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            pendingCancellation: z.ZodNullable<z.ZodObject<{
+                effectiveAt: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly getUsage: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
@@ -408,6 +1051,7 @@ export declare const billingContract: {
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 output_tokens: "output_tokens";
                 pull_request_reviews_completed: "pull_request_reviews_completed";
@@ -451,12 +1095,267 @@ export declare const billingContract: {
             hasPrev: z.ZodBoolean;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly retryOutstandingBalance: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+    readonly getAutoTopUp: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        supported: z.ZodBoolean;
+        enabled: z.ZodBoolean;
+        triggerCreditBalance: z.ZodString;
+        topUpAmount: z.ZodString;
+        cycleSpendingLimit: z.ZodString;
+        currency: z.ZodString;
+        creditsToGrant: z.ZodNullable<z.ZodString>;
+        status: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly updateAutoTopUp: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        enabled: z.ZodBoolean;
+        triggerCreditBalance: z.ZodString;
+        topUpAmount: z.ZodString;
+        cycleSpendingLimit: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        supported: z.ZodBoolean;
+        enabled: z.ZodBoolean;
+        triggerCreditBalance: z.ZodString;
+        topUpAmount: z.ZodString;
+        cycleSpendingLimit: z.ZodString;
+        currency: z.ZodString;
+        creditsToGrant: z.ZodNullable<z.ZodString>;
+        status: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly purchaseCredits: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        amount: z.ZodString;
         idempotencyKey: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
-        accepted: z.ZodLiteral<true>;
-        workflowId: z.ZodString;
-        runId: z.ZodString;
+        status: z.ZodEnum<{
+            paid: "paid";
+            pending_payment: "pending_payment";
+        }>;
+        billingInvoiceId: z.ZodString;
+        topUpAmount: z.ZodString;
+        creditsToGrant: z.ZodString;
+        currency: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly listPlans: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        billingModel: z.ZodString;
+        currentPlanSlug: z.ZodNullable<z.ZodString>;
+        hasActiveStripeBilling: z.ZodBoolean;
+        plans: z.ZodArray<z.ZodObject<{
+            slug: z.ZodString;
+            billingModel: z.ZodString;
+            name: z.ZodString;
+            description: z.ZodString;
+            bestFor: z.ZodNullable<z.ZodString>;
+            price: z.ZodString;
+            currency: z.ZodString;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+            logsIncludedBytes: z.ZodString;
+            inputTokensIncluded: z.ZodString;
+            outputTokensIncluded: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly previewPlanChange: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        planSlug: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        calculatedAt: z.ZodString;
+        type: z.ZodEnum<{
+            downgrade: "downgrade";
+            upgrade: "upgrade";
+        }>;
+        effectiveAt: z.ZodString;
+        currency: z.ZodString;
+        currentPlanSlug: z.ZodString;
+        targetPlanSlug: z.ZodString;
+        currentPlanName: z.ZodString;
+        targetPlanName: z.ZodString;
+        currentPlanPrice: z.ZodString;
+        targetPlanPrice: z.ZodString;
+        currentTargetCreditBalance: z.ZodString;
+        targetCreditBalance: z.ZodString;
+        creditDeficitAmount: z.ZodString;
+        creditDeficitChargeAmount: z.ZodString;
+        additionalCreditPrice: z.ZodString;
+        immediateChargeAmount: z.ZodString;
+        subscriptionChargeAmount: z.ZodString;
+        proratedCreditGrantAmount: z.ZodString;
+        remainingCycleFraction: z.ZodString;
+        nextCycleChargeAmount: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly changePlan: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        planSlug: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        billingSubscriptionChangeId: z.ZodString;
+        billingSubscriptionId: z.ZodString;
+        status: z.ZodString;
+        type: z.ZodString;
+        effectiveAt: z.ZodString;
+        invoiceId: z.ZodNullable<z.ZodString>;
+        creditDeficitAmount: z.ZodOptional<z.ZodString>;
+        creditDeficitChargeAmount: z.ZodOptional<z.ZodString>;
+        creditTopUpAmount: z.ZodOptional<z.ZodString>;
+        immediateChargeAmount: z.ZodOptional<z.ZodString>;
+        subscriptionChargeAmount: z.ZodOptional<z.ZodString>;
+        proratedCreditGrantAmount: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly createCheckoutSession: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        planSlug: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        sessionId: z.ZodString;
+        checkoutUrl: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly getCheckoutSessionStatus: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        sessionId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        status: z.ZodEnum<{
+            active: "active";
+            expired: "expired";
+            pending: "pending";
+        }>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly createPortalSession: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        portalUrl: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly getPaymentMethod: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        hasPaymentMethod: z.ZodBoolean;
+        brand: z.ZodNullable<z.ZodString>;
+        last4: z.ZodNullable<z.ZodString>;
+        type: z.ZodNullable<z.ZodString>;
+        expiryMonth: z.ZodNullable<z.ZodNumber>;
+        expiryYear: z.ZodNullable<z.ZodNumber>;
+        isDefault: z.ZodBoolean;
+        display: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly previewSubscriptionCancellation: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        currentPlan: z.ZodObject<{
+            slug: z.ZodString;
+            name: z.ZodString;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+            subscriptionStatus: z.ZodString;
+            cycleStartsAt: z.ZodNullable<z.ZodString>;
+            cycleEndsAt: z.ZodNullable<z.ZodString>;
+            renewalAt: z.ZodNullable<z.ZodString>;
+            pendingSwitch: z.ZodNullable<z.ZodObject<{
+                billingSubscriptionChangeId: z.ZodString;
+                effectiveAt: z.ZodString;
+                planSlug: z.ZodNullable<z.ZodString>;
+                planName: z.ZodNullable<z.ZodString>;
+                price: z.ZodNullable<z.ZodString>;
+                currency: z.ZodNullable<z.ZodString>;
+                targetCreditBalance: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            pendingCancellation: z.ZodNullable<z.ZodObject<{
+                effectiveAt: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>;
+        effectiveAt: z.ZodString;
+        currentBalance: z.ZodString;
+        servicePolicy: z.ZodLiteral<"active_until_period_end">;
+        creditPolicy: z.ZodLiteral<"dormant_until_resubscription">;
+        scheduledFinalCharge: z.ZodNullable<z.ZodString>;
+        autoTopUpEnabled: z.ZodBoolean;
+        pendingDowngrade: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        collectionState: z.ZodObject<{
+            status: z.ZodEnum<{
+                current: "current";
+                delinquent: "delinquent";
+                payment_retrying: "payment_retrying";
+            }>;
+            outstandingCredits: z.ZodNullable<z.ZodString>;
+            outstandingAmount: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            scheduledAttemptsMade: z.ZodNumber;
+            nextRetryAt: z.ZodNullable<z.ZodString>;
+            billingInvoiceId: z.ZodNullable<z.ZodString>;
+            hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>;
+        calculatedAt: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly scheduleSubscriptionCancellation: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        currentPlan: z.ZodObject<{
+            slug: z.ZodString;
+            name: z.ZodString;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+            subscriptionStatus: z.ZodString;
+            cycleStartsAt: z.ZodNullable<z.ZodString>;
+            cycleEndsAt: z.ZodNullable<z.ZodString>;
+            renewalAt: z.ZodNullable<z.ZodString>;
+            pendingSwitch: z.ZodNullable<z.ZodObject<{
+                billingSubscriptionChangeId: z.ZodString;
+                effectiveAt: z.ZodString;
+                planSlug: z.ZodNullable<z.ZodString>;
+                planName: z.ZodNullable<z.ZodString>;
+                price: z.ZodNullable<z.ZodString>;
+                currency: z.ZodNullable<z.ZodString>;
+                targetCreditBalance: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            pendingCancellation: z.ZodNullable<z.ZodObject<{
+                effectiveAt: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>;
+        effectiveAt: z.ZodString;
+        currentBalance: z.ZodString;
+        servicePolicy: z.ZodLiteral<"active_until_period_end">;
+        creditPolicy: z.ZodLiteral<"dormant_until_resubscription">;
+        scheduledFinalCharge: z.ZodNullable<z.ZodString>;
+        autoTopUpEnabled: z.ZodBoolean;
+        pendingDowngrade: z.ZodNullable<z.ZodObject<{
+            billingSubscriptionChangeId: z.ZodString;
+            effectiveAt: z.ZodString;
+            planSlug: z.ZodNullable<z.ZodString>;
+            planName: z.ZodNullable<z.ZodString>;
+            price: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            targetCreditBalance: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        collectionState: z.ZodObject<{
+            status: z.ZodEnum<{
+                current: "current";
+                delinquent: "delinquent";
+                payment_retrying: "payment_retrying";
+            }>;
+            outstandingCredits: z.ZodNullable<z.ZodString>;
+            outstandingAmount: z.ZodNullable<z.ZodString>;
+            currency: z.ZodNullable<z.ZodString>;
+            scheduledAttemptsMade: z.ZodNumber;
+            nextRetryAt: z.ZodNullable<z.ZodString>;
+            billingInvoiceId: z.ZodNullable<z.ZodString>;
+            hostedInvoiceUrl: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>;
+        calculatedAt: z.ZodString;
+        billingSubscriptionChangeId: z.ZodString;
+        alreadyScheduled: z.ZodBoolean;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly resumeSubscriptionCancellation: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        billingSubscriptionId: z.ZodString;
+        resumed: z.ZodLiteral<true>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };

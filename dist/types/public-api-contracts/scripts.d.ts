@@ -107,9 +107,7 @@ export declare const DeleteProjectScriptInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type DeleteProjectScriptInput = z.infer<typeof DeleteProjectScriptInputSchema>;
-export declare const DeleteProjectScriptOutputSchema: z.ZodObject<{
-    deleted: z.ZodBoolean;
-}, z.core.$strip>;
+export declare const DeleteProjectScriptOutputSchema: z.ZodVoid;
 export type DeleteProjectScriptOutput = z.infer<typeof DeleteProjectScriptOutputSchema>;
 export declare const listProjectScripts: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
@@ -180,9 +178,7 @@ export declare const updateProjectScript: import("../orpc-contracts/index.js").O
 export declare const deleteProjectScript: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     name: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>, z.ZodObject<{
-    deleted: z.ZodBoolean;
-}, z.core.$strip>, "api">;
+}, z.core.$strip>, z.ZodVoid, "api">;
 export declare const scriptsContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
@@ -253,7 +249,5 @@ export declare const scriptsContract: {
     readonly delete: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         name: z.ZodString;
         projectId: z.ZodOptional<z.ZodString>;
-    }, z.core.$strip>, z.ZodObject<{
-        deleted: z.ZodBoolean;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };

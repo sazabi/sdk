@@ -132,7 +132,69 @@ export declare const upsertSandboxPreset: import("../orpc-contracts/index.js").O
     presetType: z.ZodString;
     envVarKeys: z.ZodArray<z.ZodString>;
 }, z.core.$strip>, "api">;
+export declare const DeleteSandboxPresetInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    presetType: z.ZodString;
+}, z.core.$strip>;
+export declare const DeleteSandboxPresetOutputSchema: z.ZodObject<{
+    projectId: z.ZodString;
+    presetType: z.ZodString;
+    deleted: z.ZodBoolean;
+}, z.core.$strip>;
+export type DeleteSandboxPresetInput = z.infer<typeof DeleteSandboxPresetInputSchema>;
+export type DeleteSandboxPresetOutput = z.infer<typeof DeleteSandboxPresetOutputSchema>;
+export declare const deleteSandboxPreset: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    presetType: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    projectId: z.ZodString;
+    presetType: z.ZodString;
+    deleted: z.ZodBoolean;
+}, z.core.$strip>, "api">;
+export declare const TestSandboxPresetInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    presetType: z.ZodString;
+    environmentVariables: z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        value: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const TestSandboxPresetOutputSchema: z.ZodObject<{
+    status: z.ZodEnum<{
+        failed: "failed";
+        success: "success";
+    }>;
+    message: z.ZodNullable<z.ZodString>;
+    stdout: z.ZodString;
+    stderr: z.ZodString;
+}, z.core.$strip>;
+export type TestSandboxPresetInput = z.infer<typeof TestSandboxPresetInputSchema>;
+export type TestSandboxPresetOutput = z.infer<typeof TestSandboxPresetOutputSchema>;
+export declare const testSandboxPreset: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    presetType: z.ZodString;
+    environmentVariables: z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        value: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodEnum<{
+        failed: "failed";
+        success: "success";
+    }>;
+    message: z.ZodNullable<z.ZodString>;
+    stdout: z.ZodString;
+    stderr: z.ZodString;
+}, z.core.$strip>, "api">;
 export declare const sandboxPresetsContract: {
+    readonly deletePreset: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        presetType: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        projectId: z.ZodString;
+        presetType: z.ZodString;
+        deleted: z.ZodBoolean;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly listConnections: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
@@ -157,6 +219,22 @@ export declare const sandboxPresetsContract: {
             envVarKeys: z.ZodArray<z.ZodString>;
             setupSkill: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly testPreset: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        presetType: z.ZodString;
+        environmentVariables: z.ZodArray<z.ZodObject<{
+            key: z.ZodString;
+            value: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, z.ZodObject<{
+        status: z.ZodEnum<{
+            failed: "failed";
+            success: "success";
+        }>;
+        message: z.ZodNullable<z.ZodString>;
+        stdout: z.ZodString;
+        stderr: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly upsertPreset: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;

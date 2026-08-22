@@ -38,6 +38,8 @@ export declare const UserMeSchema: z.ZodObject<{
         email: z.ZodString;
     }, z.core.$strip>;
     activeOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedProjectId: z.ZodNullable<z.ZodString>;
     organizations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -87,6 +89,8 @@ export declare const MeOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         email: z.ZodString;
     }, z.core.$strip>;
     activeOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedProjectId: z.ZodNullable<z.ZodString>;
     organizations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -124,6 +128,8 @@ export declare const me: import("../orpc-contracts/index.js").OperationDefinitio
         email: z.ZodString;
     }, z.core.$strip>;
     activeOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedProjectId: z.ZodNullable<z.ZodString>;
     organizations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -161,6 +167,8 @@ export declare const meContract: import("@orpc/contract").ContractProcedure<z.Zo
         email: z.ZodString;
     }, z.core.$strip>;
     activeOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedOrganizationId: z.ZodNullable<z.ZodString>;
+    authorizedProjectId: z.ZodNullable<z.ZodString>;
     organizations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;

@@ -1,9 +1,10 @@
 /**
- * Public API contracts for MCP connector inspection and tool dispatch.
+ * Public API contracts for MCP connector inspection, management, and tool dispatch.
  *
  * List, get, details, providers, search, and describe expose configured
  * connectors and their executable tool surface without secret material.
  * `call` invokes one vendor tool through that connection's own credential.
+ * Create, update, disconnect, setReadOnly, and OAuth endpoints mutate connectors.
  */
 import { z } from "zod";
 /** Install status values mirroring the MCP connection lifecycle. */
@@ -657,6 +658,594 @@ export declare const callMcpConnectorTool: import("../orpc-contracts/index.js").
     }>;
     message: z.ZodString;
 }, z.core.$strip>], "ok">, "api">;
+export declare const McpConnectorHeaderSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    value: z.ZodString;
+}, z.core.$strip>;
+export type McpConnectorHeader = z.infer<typeof McpConnectorHeaderSchema>;
+export declare const McpConnectorAwsSigV4Schema: z.ZodObject<{
+    accessKeyId: z.ZodString;
+    secretAccessKey: z.ZodString;
+    sessionToken: z.ZodOptional<z.ZodString>;
+    region: z.ZodString;
+}, z.core.$strip>;
+export type McpConnectorAwsSigV4 = z.infer<typeof McpConnectorAwsSigV4Schema>;
+export declare const CreateMcpConnectorInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    serverUrl: z.ZodString;
+    transport: z.ZodEnum<{
+        sse: "sse";
+        "streamable-http": "streamable-http";
+    }>;
+    headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        value: z.ZodString;
+    }, z.core.$strip>>>;
+    awsSigV4: z.ZodOptional<z.ZodObject<{
+        accessKeyId: z.ZodString;
+        secretAccessKey: z.ZodString;
+        sessionToken: z.ZodOptional<z.ZodString>;
+        region: z.ZodString;
+    }, z.core.$strip>>;
+    providerId: z.ZodString;
+    readOnly: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>;
+export declare const CreateMcpConnectorOutputSchema: z.ZodObject<{
+    connector: z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type CreateMcpConnectorInput = z.infer<typeof CreateMcpConnectorInputSchema>;
+export type CreateMcpConnectorOutput = z.infer<typeof CreateMcpConnectorOutputSchema>;
+export declare const createMcpConnector: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    serverUrl: z.ZodString;
+    transport: z.ZodEnum<{
+        sse: "sse";
+        "streamable-http": "streamable-http";
+    }>;
+    headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        value: z.ZodString;
+    }, z.core.$strip>>>;
+    awsSigV4: z.ZodOptional<z.ZodObject<{
+        accessKeyId: z.ZodString;
+        secretAccessKey: z.ZodString;
+        sessionToken: z.ZodOptional<z.ZodString>;
+        region: z.ZodString;
+    }, z.core.$strip>>;
+    providerId: z.ZodString;
+    readOnly: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>, z.ZodObject<{
+    connector: z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const UpdateMcpConnectorInputSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+    serverUrl: z.ZodOptional<z.ZodString>;
+    transport: z.ZodOptional<z.ZodEnum<{
+        sse: "sse";
+        "streamable-http": "streamable-http";
+    }>>;
+    headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        value: z.ZodString;
+    }, z.core.$strip>>>;
+    awsSigV4: z.ZodOptional<z.ZodObject<{
+        accessKeyId: z.ZodString;
+        secretAccessKey: z.ZodString;
+        sessionToken: z.ZodOptional<z.ZodString>;
+        region: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const UpdateMcpConnectorOutputSchema: z.ZodObject<{
+    connector: z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type UpdateMcpConnectorInput = z.infer<typeof UpdateMcpConnectorInputSchema>;
+export type UpdateMcpConnectorOutput = z.infer<typeof UpdateMcpConnectorOutputSchema>;
+export declare const updateMcpConnector: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+    serverUrl: z.ZodOptional<z.ZodString>;
+    transport: z.ZodOptional<z.ZodEnum<{
+        sse: "sse";
+        "streamable-http": "streamable-http";
+    }>>;
+    headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        value: z.ZodString;
+    }, z.core.$strip>>>;
+    awsSigV4: z.ZodOptional<z.ZodObject<{
+        accessKeyId: z.ZodString;
+        secretAccessKey: z.ZodString;
+        sessionToken: z.ZodOptional<z.ZodString>;
+        region: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, z.ZodObject<{
+    connector: z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const DisconnectMcpConnectorInputSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const DisconnectMcpConnectorOutputSchema: z.ZodVoid;
+export type DisconnectMcpConnectorInput = z.infer<typeof DisconnectMcpConnectorInputSchema>;
+export declare const disconnectMcpConnector: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodVoid, "api">;
+export declare const SetMcpConnectorReadOnlyInputSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+    readOnly: z.ZodBoolean;
+}, z.core.$strip>;
+export declare const SetMcpConnectorReadOnlyOutputSchema: z.ZodObject<{
+    connector: z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type SetMcpConnectorReadOnlyInput = z.infer<typeof SetMcpConnectorReadOnlyInputSchema>;
+export type SetMcpConnectorReadOnlyOutput = z.infer<typeof SetMcpConnectorReadOnlyOutputSchema>;
+export declare const setMcpConnectorReadOnly: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+    readOnly: z.ZodBoolean;
+}, z.core.$strip>, z.ZodObject<{
+    connector: z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const BeginMcpOAuthInstallInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    providerId: z.ZodString;
+    requestedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    serverUrl: z.ZodOptional<z.ZodString>;
+    readOnly: z.ZodOptional<z.ZodBoolean>;
+    returnTo: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const BeginMcpOAuthInstallOutputSchema: z.ZodObject<{
+    authorizationUrl: z.ZodString;
+    connectionId: z.ZodString;
+    expiresAt: z.ZodString;
+}, z.core.$strip>;
+export type BeginMcpOAuthInstallInput = z.infer<typeof BeginMcpOAuthInstallInputSchema>;
+export type BeginMcpOAuthInstallOutput = z.infer<typeof BeginMcpOAuthInstallOutputSchema>;
+export declare const beginMcpOAuthInstall: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    providerId: z.ZodString;
+    requestedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    serverUrl: z.ZodOptional<z.ZodString>;
+    readOnly: z.ZodOptional<z.ZodBoolean>;
+    returnTo: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    authorizationUrl: z.ZodString;
+    connectionId: z.ZodString;
+    expiresAt: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const GetMcpOAuthInstallAttemptInputSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const GetMcpOAuthInstallAttemptOutputSchema: z.ZodObject<{
+    status: z.ZodEnum<{
+        authorizing: "authorizing";
+        connected: "connected";
+        error: "error";
+    }>;
+    connector: z.ZodOptional<z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type GetMcpOAuthInstallAttemptInput = z.infer<typeof GetMcpOAuthInstallAttemptInputSchema>;
+export type GetMcpOAuthInstallAttemptOutput = z.infer<typeof GetMcpOAuthInstallAttemptOutputSchema>;
+export declare const getMcpOAuthInstallAttempt: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodEnum<{
+        authorizing: "authorizing";
+        connected: "connected";
+        error: "error";
+    }>;
+    connector: z.ZodOptional<z.ZodObject<{
+        connectionId: z.ZodString;
+        connectionKey: z.ZodString;
+        providerId: z.ZodString;
+        displayName: z.ZodString;
+        source: z.ZodEnum<{
+            custom: "custom";
+            preset: "preset";
+        }>;
+        installStatus: z.ZodEnum<{
+            authorizing: "authorizing";
+            configured: "configured";
+            connected: "connected";
+            error: "error";
+        }>;
+        authMode: z.ZodEnum<{
+            "aws-sigv4": "aws-sigv4";
+            headers: "headers";
+            none: "none";
+            oauth: "oauth";
+        }>;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        serverUrl: z.ZodString;
+        readOnly: z.ZodBoolean;
+        management: z.ZodObject<{
+            mode: z.ZodEnum<{
+                system: "system";
+                user: "user";
+            }>;
+            managedBy: z.ZodNullable<z.ZodObject<{
+                type: z.ZodLiteral<"integration">;
+                id: z.ZodString;
+                displayName: z.ZodString;
+                iconKey: z.ZodString;
+            }, z.core.$strip>>;
+            capabilities: z.ZodObject<{
+                canRename: z.ZodBoolean;
+                canEditCredentials: z.ZodBoolean;
+                canSetReadOnly: z.ZodBoolean;
+                canConfigureTools: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        enabledToolCount: z.ZodNumber;
+        connectedAt: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
 export declare const mcpConnectorsContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
@@ -917,4 +1506,283 @@ export declare const mcpConnectorsContract: {
         }>;
         message: z.ZodString;
     }, z.core.$strip>], "ok">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        serverUrl: z.ZodString;
+        transport: z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>;
+        headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            value: z.ZodString;
+        }, z.core.$strip>>>;
+        awsSigV4: z.ZodOptional<z.ZodObject<{
+            accessKeyId: z.ZodString;
+            secretAccessKey: z.ZodString;
+            sessionToken: z.ZodOptional<z.ZodString>;
+            region: z.ZodString;
+        }, z.core.$strip>>;
+        providerId: z.ZodString;
+        readOnly: z.ZodOptional<z.ZodBoolean>;
+    }, z.core.$strip>, z.ZodObject<{
+        connector: z.ZodObject<{
+            connectionId: z.ZodString;
+            connectionKey: z.ZodString;
+            providerId: z.ZodString;
+            displayName: z.ZodString;
+            source: z.ZodEnum<{
+                custom: "custom";
+                preset: "preset";
+            }>;
+            installStatus: z.ZodEnum<{
+                authorizing: "authorizing";
+                configured: "configured";
+                connected: "connected";
+                error: "error";
+            }>;
+            authMode: z.ZodEnum<{
+                "aws-sigv4": "aws-sigv4";
+                headers: "headers";
+                none: "none";
+                oauth: "oauth";
+            }>;
+            transport: z.ZodEnum<{
+                sse: "sse";
+                "streamable-http": "streamable-http";
+            }>;
+            serverUrl: z.ZodString;
+            readOnly: z.ZodBoolean;
+            management: z.ZodObject<{
+                mode: z.ZodEnum<{
+                    system: "system";
+                    user: "user";
+                }>;
+                managedBy: z.ZodNullable<z.ZodObject<{
+                    type: z.ZodLiteral<"integration">;
+                    id: z.ZodString;
+                    displayName: z.ZodString;
+                    iconKey: z.ZodString;
+                }, z.core.$strip>>;
+                capabilities: z.ZodObject<{
+                    canRename: z.ZodBoolean;
+                    canEditCredentials: z.ZodBoolean;
+                    canSetReadOnly: z.ZodBoolean;
+                    canConfigureTools: z.ZodBoolean;
+                    canDisconnect: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>;
+            enabledToolCount: z.ZodNumber;
+            connectedAt: z.ZodNullable<z.ZodString>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        connectionId: z.ZodString;
+        projectId: z.ZodOptional<z.ZodString>;
+        serverUrl: z.ZodOptional<z.ZodString>;
+        transport: z.ZodOptional<z.ZodEnum<{
+            sse: "sse";
+            "streamable-http": "streamable-http";
+        }>>;
+        headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            value: z.ZodString;
+        }, z.core.$strip>>>;
+        awsSigV4: z.ZodOptional<z.ZodObject<{
+            accessKeyId: z.ZodString;
+            secretAccessKey: z.ZodString;
+            sessionToken: z.ZodOptional<z.ZodString>;
+            region: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, z.ZodObject<{
+        connector: z.ZodObject<{
+            connectionId: z.ZodString;
+            connectionKey: z.ZodString;
+            providerId: z.ZodString;
+            displayName: z.ZodString;
+            source: z.ZodEnum<{
+                custom: "custom";
+                preset: "preset";
+            }>;
+            installStatus: z.ZodEnum<{
+                authorizing: "authorizing";
+                configured: "configured";
+                connected: "connected";
+                error: "error";
+            }>;
+            authMode: z.ZodEnum<{
+                "aws-sigv4": "aws-sigv4";
+                headers: "headers";
+                none: "none";
+                oauth: "oauth";
+            }>;
+            transport: z.ZodEnum<{
+                sse: "sse";
+                "streamable-http": "streamable-http";
+            }>;
+            serverUrl: z.ZodString;
+            readOnly: z.ZodBoolean;
+            management: z.ZodObject<{
+                mode: z.ZodEnum<{
+                    system: "system";
+                    user: "user";
+                }>;
+                managedBy: z.ZodNullable<z.ZodObject<{
+                    type: z.ZodLiteral<"integration">;
+                    id: z.ZodString;
+                    displayName: z.ZodString;
+                    iconKey: z.ZodString;
+                }, z.core.$strip>>;
+                capabilities: z.ZodObject<{
+                    canRename: z.ZodBoolean;
+                    canEditCredentials: z.ZodBoolean;
+                    canSetReadOnly: z.ZodBoolean;
+                    canConfigureTools: z.ZodBoolean;
+                    canDisconnect: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>;
+            enabledToolCount: z.ZodNumber;
+            connectedAt: z.ZodNullable<z.ZodString>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly disconnect: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        connectionId: z.ZodString;
+        projectId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly setReadOnly: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        connectionId: z.ZodString;
+        projectId: z.ZodOptional<z.ZodString>;
+        readOnly: z.ZodBoolean;
+    }, z.core.$strip>, z.ZodObject<{
+        connector: z.ZodObject<{
+            connectionId: z.ZodString;
+            connectionKey: z.ZodString;
+            providerId: z.ZodString;
+            displayName: z.ZodString;
+            source: z.ZodEnum<{
+                custom: "custom";
+                preset: "preset";
+            }>;
+            installStatus: z.ZodEnum<{
+                authorizing: "authorizing";
+                configured: "configured";
+                connected: "connected";
+                error: "error";
+            }>;
+            authMode: z.ZodEnum<{
+                "aws-sigv4": "aws-sigv4";
+                headers: "headers";
+                none: "none";
+                oauth: "oauth";
+            }>;
+            transport: z.ZodEnum<{
+                sse: "sse";
+                "streamable-http": "streamable-http";
+            }>;
+            serverUrl: z.ZodString;
+            readOnly: z.ZodBoolean;
+            management: z.ZodObject<{
+                mode: z.ZodEnum<{
+                    system: "system";
+                    user: "user";
+                }>;
+                managedBy: z.ZodNullable<z.ZodObject<{
+                    type: z.ZodLiteral<"integration">;
+                    id: z.ZodString;
+                    displayName: z.ZodString;
+                    iconKey: z.ZodString;
+                }, z.core.$strip>>;
+                capabilities: z.ZodObject<{
+                    canRename: z.ZodBoolean;
+                    canEditCredentials: z.ZodBoolean;
+                    canSetReadOnly: z.ZodBoolean;
+                    canConfigureTools: z.ZodBoolean;
+                    canDisconnect: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>;
+            enabledToolCount: z.ZodNumber;
+            connectedAt: z.ZodNullable<z.ZodString>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly beginOAuthInstall: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        providerId: z.ZodString;
+        requestedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        serverUrl: z.ZodOptional<z.ZodString>;
+        readOnly: z.ZodOptional<z.ZodBoolean>;
+        returnTo: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        authorizationUrl: z.ZodString;
+        connectionId: z.ZodString;
+        expiresAt: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly getOAuthInstallAttempt: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        connectionId: z.ZodString;
+        projectId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        status: z.ZodEnum<{
+            authorizing: "authorizing";
+            connected: "connected";
+            error: "error";
+        }>;
+        connector: z.ZodOptional<z.ZodObject<{
+            connectionId: z.ZodString;
+            connectionKey: z.ZodString;
+            providerId: z.ZodString;
+            displayName: z.ZodString;
+            source: z.ZodEnum<{
+                custom: "custom";
+                preset: "preset";
+            }>;
+            installStatus: z.ZodEnum<{
+                authorizing: "authorizing";
+                configured: "configured";
+                connected: "connected";
+                error: "error";
+            }>;
+            authMode: z.ZodEnum<{
+                "aws-sigv4": "aws-sigv4";
+                headers: "headers";
+                none: "none";
+                oauth: "oauth";
+            }>;
+            transport: z.ZodEnum<{
+                sse: "sse";
+                "streamable-http": "streamable-http";
+            }>;
+            serverUrl: z.ZodString;
+            readOnly: z.ZodBoolean;
+            management: z.ZodObject<{
+                mode: z.ZodEnum<{
+                    system: "system";
+                    user: "user";
+                }>;
+                managedBy: z.ZodNullable<z.ZodObject<{
+                    type: z.ZodLiteral<"integration">;
+                    id: z.ZodString;
+                    displayName: z.ZodString;
+                    iconKey: z.ZodString;
+                }, z.core.$strip>>;
+                capabilities: z.ZodObject<{
+                    canRename: z.ZodBoolean;
+                    canEditCredentials: z.ZodBoolean;
+                    canSetReadOnly: z.ZodBoolean;
+                    canConfigureTools: z.ZodBoolean;
+                    canDisconnect: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>;
+            enabledToolCount: z.ZodNumber;
+            connectedAt: z.ZodNullable<z.ZodString>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };
