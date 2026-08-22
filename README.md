@@ -25,6 +25,7 @@ const threads = await client.threads.list({ limit: 10 });
 This is a **release mirror**, not the development repository. The SDK is
 developed in the Sazabi monorepo; each release lands here as the exact
 content published to npm via [trusted publishing (OIDC)](https://docs.npmjs.com/trusted-publishers/).
+Pull requests run the `Public Repo Conformance` check before merge.
 
 Channels map to npm dist-tags:
 
