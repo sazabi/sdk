@@ -32003,7 +32003,8 @@ var AutomationSchema = z3.object({
   kind: AutomationKindSchema.describe("Automation kind: a scheduled script or a log-match investigation."),
   scriptId: z3.string().uuid().nullable().describe("ID of the project_scripts row this automation runs, for DB-backed script automations. Null for legacy script_path automations and for log-match automations."),
   scriptName: z3.string().nullable().describe("Name of the project_scripts row this automation runs (see scriptId). Null when scriptId is null."),
-  logMatchExpressionId: z3.string().uuid().nullable().describe("Log-match expression bound to this automation. Null for script automations."),
+  logMatchExpressionId: z3.string().uuid().nullable().describe("Deprecated: use signalDefinitionId. Log-match expression bound to this automation. Null for script automations."),
+  signalDefinitionId: z3.string().uuid().nullable().describe("Signal definition bound to this automation. Null for script automations."),
   signalType: AutomationSignalTypeSchema.nullable().describe("Signal trigger type for log-match automations. Null for script automations."),
   source: z3.enum(["sazabi_managed", "custom"]).describe("Whether the automation is Sazabi-managed or customer-defined."),
   enabled: z3.boolean(),
@@ -50906,26 +50907,181 @@ var searchContract = {
   messages: searchMessages.contract
 };
 
+// ../public-api-contracts/src/signal-definitions.ts
+import { z as z39 } from "zod";
+var SignalDefinitionIdSchema = z39.string().uuid().describe("Signal definition ID.");
+var SignalDefinitionNameSchema = z39.string().min(1).max(200).describe("Human-readable expression name.");
+var SignalDefinitionCelExpressionSchema = z39.string().min(1).max(8192).describe("CEL expression evaluated against ingested log events.");
+var SignalDefinitionSchema = z39.object({
+  id: z39.string().uuid(),
+  projectId: z39.string().uuid(),
+  name: z39.string(),
+  expression: SignalDefinitionCelExpressionSchema,
+  enabled: z39.boolean(),
+  compiledVersion: z39.number().int(),
+  linkedAutomationIds: z39.array(z39.string().uuid()).optional().describe("Automations bound to this expression. Included on list/get when available."),
+  createdAt: z39.string().datetime(),
+  updatedAt: z39.string().datetime()
+});
+var ListSignalDefinitionsInputSchema = z39.object({
+  projectId: z39.string().uuid().optional().describe("Project to list signal definitions for. Auto-filled from CLI and SDK context when omitted.")
+});
+var ListSignalDefinitionsOutputSchema = z39.object({
+  signalDefinitions: z39.array(SignalDefinitionSchema)
+});
+var GetSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+});
+var GetSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var CreateSignalDefinitionInputSchema = z39.object({
+  projectId: z39.string().uuid().optional().describe("Project to create the expression in. Auto-filled from CLI and SDK context when omitted."),
+  name: SignalDefinitionNameSchema,
+  expression: SignalDefinitionCelExpressionSchema,
+  enabled: z39.boolean().optional().describe("Whether the expression starts enabled. Defaults to true.")
+});
+var CreateSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var UpdateSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted."),
+  name: SignalDefinitionNameSchema.optional(),
+  expression: SignalDefinitionCelExpressionSchema.optional(),
+  enabled: z39.boolean().optional().describe("Whether the expression is enabled.")
+});
+var UpdateSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var DisableSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
+});
+var DisableSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var listSignalDefinitions = defineOperation({
+  operationId: "signalDefinitions.list",
+  description: "List signal definitions in a project.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/signal-definitions",
+    tags: ["Signal definitions"]
+  },
+  input: ListSignalDefinitionsInputSchema,
+  output: ListSignalDefinitionsOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var getSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.get",
+  description: "Get a single signal definition by ID.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/signal-definitions/{signalDefinitionId}",
+    tags: ["Signal definitions"]
+  },
+  input: GetSignalDefinitionInputSchema,
+  output: GetSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var createSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.create",
+  description: "Create a CEL signal definition for a project.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/signal-definitions",
+    successStatus: 201,
+    tags: ["Signal definitions"]
+  },
+  input: CreateSignalDefinitionInputSchema,
+  output: CreateSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var updateSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.update",
+  description: "Update a signal definition's name, CEL body, or enabled state.",
+  backend: "api",
+  route: {
+    method: "PATCH",
+    path: "/signal-definitions/{signalDefinitionId}",
+    tags: ["Signal definitions"]
+  },
+  input: UpdateSignalDefinitionInputSchema,
+  output: UpdateSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var disableSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.disable",
+  description: "Disable a signal definition so it stops matching logs.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/signal-definitions/{signalDefinitionId}/disable",
+    tags: ["Signal definitions"]
+  },
+  input: DisableSignalDefinitionInputSchema,
+  output: DisableSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var DeleteSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+});
+var DeleteSignalDefinitionOutputSchema = z39.void();
+var deleteSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.delete",
+  description: "Permanently delete a signal definition.",
+  backend: "api",
+  route: {
+    method: "DELETE",
+    path: "/signal-definitions/{signalDefinitionId}",
+    successStatus: 204,
+    tags: ["Signal definitions"]
+  },
+  input: DeleteSignalDefinitionInputSchema,
+  output: DeleteSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var signalDefinitionsContract = {
+  list: listSignalDefinitions.contract,
+  get: getSignalDefinition.contract,
+  create: createSignalDefinition.contract,
+  update: updateSignalDefinition.contract,
+  disable: disableSignalDefinition.contract,
+  delete: deleteSignalDefinition.contract
+};
+
 // ../task-checklist/src/index.ts
 var TASK_CATEGORIES = ["onboarding", "setup"];
 
 // ../public-api-contracts/src/tasks.ts
-import { z as z39 } from "zod";
-var TaskCategorySchema = z39.enum(TASK_CATEGORIES);
-var TaskSchema2 = z39.object({
-  id: z39.string().describe("Unique task identifier (e.g. install_github_app)."),
-  label: z39.string().describe("Short human-readable task name."),
-  description: z39.string().describe("Explanation of what needs to be completed to satisfy this task."),
-  instructions: z39.string().describe("Step-by-step instructions for completing this task."),
-  completed: z39.boolean().describe("Whether the task has been completed."),
-  completedAt: z39.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
+import { z as z40 } from "zod";
+var TaskCategorySchema = z40.enum(TASK_CATEGORIES);
+var TaskSchema2 = z40.object({
+  id: z40.string().describe("Unique task identifier (e.g. install_github_app)."),
+  label: z40.string().describe("Short human-readable task name."),
+  description: z40.string().describe("Explanation of what needs to be completed to satisfy this task."),
+  instructions: z40.string().describe("Step-by-step instructions for completing this task."),
+  completed: z40.boolean().describe("Whether the task has been completed."),
+  completedAt: z40.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
   category: TaskCategorySchema.describe("Task category: onboarding (core setup steps) or setup (additional configuration).")
 });
-var ListTasksInputSchema = z39.object({
-  projectId: z39.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
+var ListTasksInputSchema = z40.object({
+  projectId: z40.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListTasksOutputSchema = z39.object({
-  tasks: z39.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
+var ListTasksOutputSchema = z40.object({
+  tasks: z40.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
 });
 var listTasks = defineOperation({
   operationId: "tasks.list",
@@ -50943,87 +51099,87 @@ var listTasks = defineOperation({
 });
 
 // ../public-api-contracts/src/teams.ts
-import { z as z40 } from "zod";
-var TeamSchema = z40.object({
-  id: z40.string().uuid().describe("Team ID."),
-  name: z40.string().describe("Team name, unique among the org's active teams."),
-  description: z40.string().nullable().describe("Optional team description."),
-  createdAt: z40.string().datetime().describe("When the team was created."),
-  memberCount: z40.number().int().nonnegative().describe("Number of active members in the team.")
+import { z as z41 } from "zod";
+var TeamSchema = z41.object({
+  id: z41.string().uuid().describe("Team ID."),
+  name: z41.string().describe("Team name, unique among the org's active teams."),
+  description: z41.string().nullable().describe("Optional team description."),
+  createdAt: z41.string().datetime().describe("When the team was created."),
+  memberCount: z41.number().int().nonnegative().describe("Number of active members in the team.")
 });
-var TeamMemberSchema = z40.object({
-  userId: z40.string().min(1).describe("User ID of the team member."),
-  name: z40.string().nullable().describe("Display name for the member, when available."),
-  email: z40.string().email().describe("Email address for the member."),
-  addedAt: z40.string().datetime().describe("When the member was added to the team.")
+var TeamMemberSchema = z41.object({
+  userId: z41.string().min(1).describe("User ID of the team member."),
+  name: z41.string().nullable().describe("Display name for the member, when available."),
+  email: z41.string().email().describe("Email address for the member."),
+  addedAt: z41.string().datetime().describe("When the member was added to the team.")
 });
-var OrganizationIdInputSchema2 = z40.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted.");
-var ListTeamsInputSchema = z40.object({
+var OrganizationIdInputSchema2 = z41.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted.");
+var ListTeamsInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2
 });
-var ListTeamsOutputSchema = z40.object({
-  teams: z40.array(TeamSchema).describe("Active teams in the organization.")
+var ListTeamsOutputSchema = z41.object({
+  teams: z41.array(TeamSchema).describe("Active teams in the organization.")
 });
-var CreateTeamInputSchema = z40.object({
+var CreateTeamInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  name: z40.string().trim().min(1).describe("Team name."),
-  description: z40.string().trim().min(1).optional().describe("Optional team description.")
+  name: z41.string().trim().min(1).describe("Team name."),
+  description: z41.string().trim().min(1).optional().describe("Optional team description.")
 });
-var CreateTeamOutputSchema = z40.object({
-  id: z40.string().uuid().describe("ID of the created team.")
+var CreateTeamOutputSchema = z41.object({
+  id: z41.string().uuid().describe("ID of the created team.")
 });
-var UpdateTeamInputSchema = z40.object({
+var UpdateTeamInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z40.string().uuid().describe("Team to update."),
-  name: z40.string().trim().min(1).optional().describe("New team name."),
-  description: z40.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
+  teamId: z41.string().uuid().describe("Team to update."),
+  name: z41.string().trim().min(1).optional().describe("New team name."),
+  description: z41.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
 });
-var UpdateTeamOutputSchema = z40.object({
-  id: z40.string().uuid().describe("ID of the updated team.")
+var UpdateTeamOutputSchema = z41.object({
+  id: z41.string().uuid().describe("ID of the updated team.")
 });
-var DeleteTeamInputSchema = z40.object({
-  params: z40.object({
-    teamId: z40.string().uuid().describe("Team to delete.")
+var DeleteTeamInputSchema = z41.object({
+  params: z41.object({
+    teamId: z41.string().uuid().describe("Team to delete.")
   }),
-  query: z40.object({
+  query: z41.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var DeleteTeamOutputSchema = z40.object({
-  success: z40.literal(true).describe("The team and its memberships were removed.")
+var DeleteTeamOutputSchema = z41.object({
+  success: z41.literal(true).describe("The team and its memberships were removed.")
 });
-var AddTeamMemberInputSchema = z40.object({
+var AddTeamMemberInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z40.string().uuid().describe("Team to add the member to."),
-  userId: z40.string().min(1).describe("User ID of an active organization member to add.")
+  teamId: z41.string().uuid().describe("Team to add the member to."),
+  userId: z41.string().min(1).describe("User ID of an active organization member to add.")
 });
-var AddTeamMemberOutputSchema = z40.object({
-  id: z40.string().uuid().describe("ID of the team membership.")
+var AddTeamMemberOutputSchema = z41.object({
+  id: z41.string().uuid().describe("ID of the team membership.")
 });
-var RemoveTeamMemberInputSchema = z40.object({
-  params: z40.object({
-    teamId: z40.string().uuid().describe("Team to remove the member from."),
-    userId: z40.string().min(1).describe("User ID of the member to remove.")
+var RemoveTeamMemberInputSchema = z41.object({
+  params: z41.object({
+    teamId: z41.string().uuid().describe("Team to remove the member from."),
+    userId: z41.string().min(1).describe("User ID of the member to remove.")
   }),
-  query: z40.object({
+  query: z41.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RemoveTeamMemberOutputSchema = z40.object({
-  success: z40.literal(true).describe("The membership was removed.")
+var RemoveTeamMemberOutputSchema = z41.object({
+  success: z41.literal(true).describe("The membership was removed.")
 });
-var ListTeamMembersInputSchema = z40.object({
+var ListTeamMembersInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z40.string().uuid().describe("Team to list members for.")
+  teamId: z41.string().uuid().describe("Team to list members for.")
 });
-var ListTeamMembersOutputSchema = z40.object({
-  members: z40.array(TeamMemberSchema).describe("Active members of the team.")
+var ListTeamMembersOutputSchema = z41.object({
+  members: z41.array(TeamMemberSchema).describe("Active members of the team.")
 });
 var listTeams = defineOperation({
   operationId: "teams.list",
@@ -51157,28 +51313,28 @@ var teamsContract = {
 };
 
 // ../public-api-contracts/src/work-items.ts
-import { z as z41 } from "zod";
-var WorkItemAttributionSchema = z41.object({
-  kind: z41.enum(["user", "workspace"]),
-  name: z41.string().optional(),
-  email: z41.string().optional()
+import { z as z42 } from "zod";
+var WorkItemAttributionSchema = z42.object({
+  kind: z42.enum(["user", "workspace"]),
+  name: z42.string().optional(),
+  email: z42.string().optional()
 });
-var CreateWorkItemInputSchema = z41.object({
-  container: z41.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
-  title: z41.string().min(1),
-  bodyMarkdown: z41.string().optional(),
-  state: z41.string().optional(),
-  itemType: z41.string().optional(),
-  organizationId: z41.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization."),
-  clientRequestId: z41.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
+var CreateWorkItemInputSchema = z42.object({
+  container: z42.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
+  title: z42.string().min(1),
+  bodyMarkdown: z42.string().optional(),
+  state: z42.string().optional(),
+  itemType: z42.string().optional(),
+  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization."),
+  clientRequestId: z42.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
 }).strict();
-var CreateWorkItemOutputSchema = z41.object({
-  identifier: z41.string(),
-  title: z41.string(),
-  url: z41.string(),
-  state: z41.string(),
+var CreateWorkItemOutputSchema = z42.object({
+  identifier: z42.string(),
+  title: z42.string(),
+  url: z42.string(),
+  state: z42.string(),
   attribution: WorkItemAttributionSchema.optional(),
-  reused: z41.boolean()
+  reused: z42.boolean()
 });
 var createWorkItem = defineOperation({
   operationId: "work-items.create",
@@ -51195,14 +51351,14 @@ var createWorkItem = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var CommentOnWorkItemInputSchema = z41.object({
-  itemId: z41.string().min(1).describe("The work item to comment on."),
-  bodyMarkdown: z41.string().min(1),
-  organizationId: z41.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization.")
+var CommentOnWorkItemInputSchema = z42.object({
+  itemId: z42.string().min(1).describe("The work item to comment on."),
+  bodyMarkdown: z42.string().min(1),
+  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization.")
 }).strict();
-var CommentOnWorkItemOutputSchema = z41.object({
-  identifier: z41.string(),
-  url: z41.string()
+var CommentOnWorkItemOutputSchema = z42.object({
+  identifier: z42.string(),
+  url: z42.string()
 });
 var commentOnWorkItem = defineOperation({
   operationId: "work-items.comment",
@@ -51218,17 +51374,17 @@ var commentOnWorkItem = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var TransitionWorkItemInputSchema = z41.object({
-  itemId: z41.string().min(1).describe("The work item to transition."),
-  state: z41.string().min(1).describe("The target workflow state."),
-  organizationId: z41.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization.")
+var TransitionWorkItemInputSchema = z42.object({
+  itemId: z42.string().min(1).describe("The work item to transition."),
+  state: z42.string().min(1).describe("The target workflow state."),
+  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization.")
 }).strict();
-var TransitionWorkItemOutputSchema = z41.object({
-  identifier: z41.string(),
-  title: z41.string(),
-  url: z41.string(),
-  state: z41.string(),
-  changed: z41.boolean()
+var TransitionWorkItemOutputSchema = z42.object({
+  identifier: z42.string(),
+  title: z42.string(),
+  url: z42.string(),
+  state: z42.string(),
+  changed: z42.boolean()
 });
 var transitionWorkItem = defineOperation({
   operationId: "work-items.transition",
@@ -51359,6 +51515,14 @@ var publicApiContract = {
     create: createLogMatchExpression.contract,
     update: updateLogMatchExpression.contract,
     disable: disableLogMatchExpression.contract
+  },
+  signalDefinitions: {
+    list: listSignalDefinitions.contract,
+    get: getSignalDefinition.contract,
+    create: createSignalDefinition.contract,
+    update: updateSignalDefinition.contract,
+    disable: disableSignalDefinition.contract,
+    delete: deleteSignalDefinition.contract
   },
   memory: {
     put: putProjectMemory.contract,
@@ -51841,42 +52005,42 @@ var toStreamError = (error) => {
 import { ORPCError } from "@orpc/client";
 
 // ../tail-ws-contracts/src/index.ts
-import { z as z42 } from "zod";
-var LogFiltersSchema = z42.object({
-  severities: z42.array(z42.string()).optional().describe("Limit results to the listed severities."),
-  services: z42.array(z42.string()).optional().describe("Limit results to the listed service names."),
-  environments: z42.array(z42.string()).optional().describe("Limit results to the listed deployment environments."),
-  searchTerm: z42.string().optional().describe("Case-insensitive substring match against the log body."),
-  traceId: z42.string().optional().describe("Limit results to one trace ID."),
-  attributes: z42.record(z42.string(), z42.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
+import { z as z43 } from "zod";
+var LogFiltersSchema = z43.object({
+  severities: z43.array(z43.string()).optional().describe("Limit results to the listed severities."),
+  services: z43.array(z43.string()).optional().describe("Limit results to the listed service names."),
+  environments: z43.array(z43.string()).optional().describe("Limit results to the listed deployment environments."),
+  searchTerm: z43.string().optional().describe("Case-insensitive substring match against the log body."),
+  traceId: z43.string().optional().describe("Limit results to one trace ID."),
+  attributes: z43.record(z43.string(), z43.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
 });
-var WebSocketLogResourceSchema = z42.object({
-  service: z42.string(),
-  namespace: z42.string(),
-  environment: z42.string(),
-  host: z42.string(),
-  container: z42.string(),
-  pod: z42.string()
+var WebSocketLogResourceSchema = z43.object({
+  service: z43.string(),
+  namespace: z43.string(),
+  environment: z43.string(),
+  host: z43.string(),
+  container: z43.string(),
+  pod: z43.string()
 });
-var WebSocketLogEntrySchema = z42.object({
-  id: z42.string(),
-  timestamp: z42.string().datetime(),
-  severity: z42.string(),
-  body: z42.string(),
-  service: z42.string(),
-  traceId: z42.string(),
-  spanId: z42.string(),
-  attributes: z42.record(z42.string(), z42.string()),
+var WebSocketLogEntrySchema = z43.object({
+  id: z43.string(),
+  timestamp: z43.string().datetime(),
+  severity: z43.string(),
+  body: z43.string(),
+  service: z43.string(),
+  traceId: z43.string(),
+  spanId: z43.string(),
+  attributes: z43.record(z43.string(), z43.string()),
   resource: WebSocketLogResourceSchema
 });
-var WebSocketLogMessageSchema = z42.object({
-  type: z42.literal("logs"),
-  timestamp: z42.string().datetime(),
-  data: z42.array(WebSocketLogEntrySchema)
+var WebSocketLogMessageSchema = z43.object({
+  type: z43.literal("logs"),
+  timestamp: z43.string().datetime(),
+  data: z43.array(WebSocketLogEntrySchema)
 });
 
 // src/log-transports.ts
-import { z as z43 } from "zod";
+import { z as z44 } from "zod";
 var DEFAULT_INTAKE_BASE_URL = "https://{region}.intake.sazabi.com";
 var DEFAULT_TAIL_BASE_URL = "https://{region}.tail.sazabi.com";
 var TAIL_RECONNECT_BASE_DELAY_MS = 500;
@@ -51891,17 +52055,17 @@ var isLoopbackHostname = (hostname) => {
   const normalizedHostname = normalizeLoopbackHostname(hostname);
   return normalizedHostname === "localhost" || normalizedHostname === "127.0.0.1" || normalizedHostname === "::1";
 };
-var TailLogsInputSchema = z43.object({
-  projectId: z43.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
+var TailLogsInputSchema = z44.object({
+  projectId: z44.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
   filters: LogFiltersSchema.optional().describe("Optional filters applied by the tail SSE service.")
 });
-var ForwardLogsInputSchema = z43.object({
-  publicKey: z43.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
-  logs: z43.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
+var ForwardLogsInputSchema = z44.object({
+  publicKey: z44.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
+  logs: z44.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
 });
-var ForwardLogsOutputSchema = z43.object({
-  forwardedCount: z43.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
-  failedCount: z43.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
+var ForwardLogsOutputSchema = z44.object({
+  forwardedCount: z44.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
+  failedCount: z44.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
 });
 var forwardLogsExamples = [
   {
@@ -52825,6 +52989,13 @@ var createClient = (options) => {
       create: async (input) => raw.logMatchExpressions.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.create")),
       update: async (input) => raw.logMatchExpressions.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.update")),
       disable: async (input) => raw.logMatchExpressions.disable(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.disable"))
+    },
+    signalDefinitions: {
+      list: async (input = {}) => raw.signalDefinitions.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.list")),
+      get: async (input) => raw.signalDefinitions.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.get")),
+      create: async (input) => raw.signalDefinitions.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.create")),
+      update: async (input) => raw.signalDefinitions.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.update")),
+      disable: async (input) => raw.signalDefinitions.disable(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.disable"))
     },
     scripts: {
       list: async (input = {}) => raw.scripts.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.list")),
