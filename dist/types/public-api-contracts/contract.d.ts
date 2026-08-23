@@ -75,6 +75,7 @@ export declare const publicApiContract: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -127,6 +128,7 @@ export declare const publicApiContract: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -191,6 +193,7 @@ export declare const publicApiContract: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -252,6 +255,7 @@ export declare const publicApiContract: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -308,6 +312,7 @@ export declare const publicApiContract: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -364,6 +369,7 @@ export declare const publicApiContract: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -2923,6 +2929,96 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
+    readonly signalDefinitions: {
+        readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinitions: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            name: import("zod").ZodString;
+            expression: import("zod").ZodString;
+            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            name: import("zod").ZodOptional<import("zod").ZodString>;
+            expression: import("zod").ZodOptional<import("zod").ZodString>;
+            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly disable: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
     readonly memory: {
         readonly put: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -3041,6 +3137,7 @@ export declare const publicApiContract: {
     };
     readonly onboarding: {
         readonly getState: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             onboarding: import("zod").ZodObject<{
@@ -3128,16 +3225,19 @@ export declare const publicApiContract: {
                 github: "github";
                 slack: "slack";
             }>;
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             skipped: import("zod").ZodLiteral<true>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly skipGithubAppInstallation: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             skipped: import("zod").ZodLiteral<true>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly skipSampleIssue: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             skipped: import("zod").ZodLiteral<true>;
@@ -3493,6 +3593,7 @@ export declare const publicApiContract: {
     };
     readonly secretKeys: {
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
             cursor: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -3508,6 +3609,7 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             keyId: import("zod").ZodString;
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             secretKey: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -3519,6 +3621,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodString;
             expiresAt: import("zod").ZodOptional<import("zod").ZodString>;
@@ -3535,6 +3638,7 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             keyId: import("zod").ZodString;
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodOptional<import("zod").ZodString>;
             expiresAt: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -3551,11 +3655,18 @@ export declare const publicApiContract: {
             params: import("zod").ZodObject<{
                 keyId: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
+            query: import("zod").ZodDefault<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
             keyId: string;
+            organizationId?: string | undefined;
         }, {
             params: {
                 keyId: string;
+            };
+            query: {
+                organizationId?: string | undefined;
             };
         }>>, import("zod").ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
@@ -5252,6 +5363,12 @@ export declare const publicApiContract: {
             repos: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 accessSourceId: import("zod").ZodString;
+                source: import("zod").ZodEnum<{
+                    githubApp: "githubApp";
+                    integration: "integration";
+                    personal: "personal";
+                }>;
+                sourceLabel: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
                     bitbucket: "bitbucket";
                     github: "github";
@@ -5271,6 +5388,12 @@ export declare const publicApiContract: {
             repos: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 accessSourceId: import("zod").ZodString;
+                source: import("zod").ZodEnum<{
+                    githubApp: "githubApp";
+                    integration: "integration";
+                    personal: "personal";
+                }>;
+                sourceLabel: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
                     bitbucket: "bitbucket";
                     github: "github";
@@ -6150,6 +6273,7 @@ export declare const publicApiOperations: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -6202,6 +6326,7 @@ export declare const publicApiOperations: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -6266,6 +6391,7 @@ export declare const publicApiOperations: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -6327,6 +6453,7 @@ export declare const publicApiOperations: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -6383,6 +6510,7 @@ export declare const publicApiOperations: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -6439,6 +6567,7 @@ export declare const publicApiOperations: {
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
                 logMatchExpressionId: import("zod").ZodNullable<import("zod").ZodString>;
+                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
                 signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
                     expression_matched: "expression_matched";
                 }>>;
@@ -8998,6 +9127,96 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
     };
+    readonly signalDefinitions: {
+        readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinitions: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            name: import("zod").ZodString;
+            expression: import("zod").ZodString;
+            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            name: import("zod").ZodOptional<import("zod").ZodString>;
+            expression: import("zod").ZodOptional<import("zod").ZodString>;
+            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly disable: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            signalDefinition: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                expression: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                compiledVersion: import("zod").ZodNumber;
+                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            signalDefinitionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodVoid, "api">;
+    };
     readonly memory: {
         readonly put: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -9161,6 +9380,7 @@ export declare const publicApiOperations: {
     };
     readonly onboarding: {
         readonly getState: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             onboarding: import("zod").ZodObject<{
@@ -9248,16 +9468,19 @@ export declare const publicApiOperations: {
                 github: "github";
                 slack: "slack";
             }>;
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             skipped: import("zod").ZodLiteral<true>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly skipGithubAppInstallation: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             skipped: import("zod").ZodLiteral<true>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly skipSampleIssue: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             skipped: import("zod").ZodLiteral<true>;
@@ -9568,6 +9791,7 @@ export declare const publicApiOperations: {
     };
     readonly secretKeys: {
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
             cursor: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -9583,6 +9807,7 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             keyId: import("zod").ZodString;
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             secretKey: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -9594,6 +9819,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodString;
             expiresAt: import("zod").ZodOptional<import("zod").ZodString>;
@@ -9610,6 +9836,7 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             keyId: import("zod").ZodString;
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodOptional<import("zod").ZodString>;
             expiresAt: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -9626,11 +9853,18 @@ export declare const publicApiOperations: {
             params: import("zod").ZodObject<{
                 keyId: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
+            query: import("zod").ZodDefault<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
             keyId: string;
+            organizationId?: string | undefined;
         }, {
             params: {
                 keyId: string;
+            };
+            query: {
+                organizationId?: string | undefined;
             };
         }>>, import("zod").ZodVoid, "api">;
     };
@@ -11327,6 +11561,12 @@ export declare const publicApiOperations: {
             repos: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 accessSourceId: import("zod").ZodString;
+                source: import("zod").ZodEnum<{
+                    githubApp: "githubApp";
+                    integration: "integration";
+                    personal: "personal";
+                }>;
+                sourceLabel: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
                     bitbucket: "bitbucket";
                     github: "github";
@@ -11346,6 +11586,12 @@ export declare const publicApiOperations: {
             repos: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 accessSourceId: import("zod").ZodString;
+                source: import("zod").ZodEnum<{
+                    githubApp: "githubApp";
+                    integration: "integration";
+                    personal: "personal";
+                }>;
+                sourceLabel: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
                     bitbucket: "bitbucket";
                     github: "github";

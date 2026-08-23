@@ -92,6 +92,7 @@ export declare const AutomationSchema: z.ZodObject<{
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
     logMatchExpressionId: z.ZodNullable<z.ZodString>;
+    signalDefinitionId: z.ZodNullable<z.ZodString>;
     signalType: z.ZodNullable<z.ZodEnum<{
         expression_matched: "expression_matched";
     }>>;
@@ -139,6 +140,7 @@ export declare const AutomationDetailSchema: z.ZodObject<{
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
     logMatchExpressionId: z.ZodNullable<z.ZodString>;
+    signalDefinitionId: z.ZodNullable<z.ZodString>;
     signalType: z.ZodNullable<z.ZodEnum<{
         expression_matched: "expression_matched";
     }>>;
@@ -218,6 +220,7 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -273,6 +276,7 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -340,6 +344,7 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -404,6 +409,7 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -463,6 +469,7 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -522,6 +529,7 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -600,6 +608,7 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -652,6 +661,7 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -716,6 +726,7 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -777,6 +788,7 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -833,6 +845,7 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -889,6 +902,7 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         logMatchExpressionId: z.ZodNullable<z.ZodString>;
+        signalDefinitionId: z.ZodNullable<z.ZodString>;
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
@@ -1186,6 +1200,7 @@ export declare const automationsContract: {
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalDefinitionId: z.ZodNullable<z.ZodString>;
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
@@ -1238,6 +1253,7 @@ export declare const automationsContract: {
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalDefinitionId: z.ZodNullable<z.ZodString>;
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
@@ -1302,6 +1318,7 @@ export declare const automationsContract: {
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalDefinitionId: z.ZodNullable<z.ZodString>;
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
@@ -1363,6 +1380,7 @@ export declare const automationsContract: {
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalDefinitionId: z.ZodNullable<z.ZodString>;
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
@@ -1419,6 +1437,7 @@ export declare const automationsContract: {
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalDefinitionId: z.ZodNullable<z.ZodString>;
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
@@ -1475,6 +1494,7 @@ export declare const automationsContract: {
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             logMatchExpressionId: z.ZodNullable<z.ZodString>;
+            signalDefinitionId: z.ZodNullable<z.ZodString>;
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;

@@ -7,6 +7,12 @@ export type RepoProvider = z.infer<typeof RepoProviderSchema>;
 export declare const RepoSchema: z.ZodObject<{
     id: z.ZodString;
     accessSourceId: z.ZodString;
+    source: z.ZodEnum<{
+        githubApp: "githubApp";
+        integration: "integration";
+        personal: "personal";
+    }>;
+    sourceLabel: z.ZodString;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
         github: "github";
@@ -27,6 +33,12 @@ export declare const ListReposOutputSchema: z.ZodObject<{
     repos: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         accessSourceId: z.ZodString;
+        source: z.ZodEnum<{
+            githubApp: "githubApp";
+            integration: "integration";
+            personal: "personal";
+        }>;
+        sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
             github: "github";
@@ -49,6 +61,12 @@ export declare const AddReposOutputSchema: z.ZodObject<{
     repos: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         accessSourceId: z.ZodString;
+        source: z.ZodEnum<{
+            githubApp: "githubApp";
+            integration: "integration";
+            personal: "personal";
+        }>;
+        sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
             github: "github";
@@ -75,6 +93,12 @@ export declare const listRepos: import("../orpc-contracts/index.js").OperationDe
     repos: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         accessSourceId: z.ZodString;
+        source: z.ZodEnum<{
+            githubApp: "githubApp";
+            integration: "integration";
+            personal: "personal";
+        }>;
+        sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
             github: "github";
@@ -94,6 +118,12 @@ export declare const addRepos: import("../orpc-contracts/index.js").OperationDef
     repos: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         accessSourceId: z.ZodString;
+        source: z.ZodEnum<{
+            githubApp: "githubApp";
+            integration: "integration";
+            personal: "personal";
+        }>;
+        sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
             github: "github";

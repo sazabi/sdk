@@ -112,6 +112,7 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export declare const GetOnboardingStateInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
@@ -196,6 +197,7 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const getOnboardingState: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     onboarding: z.ZodObject<{
@@ -283,6 +285,7 @@ export declare const SkipOnboardingIntegrationInputSchema: z.ZodObject<{
         github: "github";
         slack: "slack";
     }>;
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const SkipOnboardingIntegrationOutputSchema: z.ZodObject<{
@@ -293,28 +296,33 @@ export declare const skipOnboardingIntegration: import("../orpc-contracts/index.
         github: "github";
         slack: "slack";
     }>;
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     skipped: z.ZodLiteral<true>;
 }, z.core.$strip>, "api">;
 export declare const SkipOnboardingGithubAppInstallationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const SkipOnboardingGithubAppInstallationOutputSchema: z.ZodObject<{
     skipped: z.ZodLiteral<true>;
 }, z.core.$strip>;
 export declare const skipOnboardingGithubAppInstallation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     skipped: z.ZodLiteral<true>;
 }, z.core.$strip>, "api">;
 export declare const SkipOnboardingSampleIssueInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const SkipOnboardingSampleIssueOutputSchema: z.ZodObject<{
     skipped: z.ZodLiteral<true>;
 }, z.core.$strip>;
 export declare const skipOnboardingSampleIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     skipped: z.ZodLiteral<true>;
@@ -332,6 +340,7 @@ export declare const finishOnboarding: import("../orpc-contracts/index.js").Oper
 }, z.core.$strip>, "api">;
 export declare const onboardingContract: {
     readonly getState: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         onboarding: z.ZodObject<{
@@ -419,16 +428,19 @@ export declare const onboardingContract: {
             github: "github";
             slack: "slack";
         }>;
+        organizationId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         skipped: z.ZodLiteral<true>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly skipGithubAppInstallation: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         skipped: z.ZodLiteral<true>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly skipSampleIssue: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         skipped: z.ZodLiteral<true>;

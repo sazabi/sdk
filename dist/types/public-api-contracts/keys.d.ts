@@ -186,6 +186,7 @@ export declare const DeleteKeyOutputSchema: z.ZodVoid;
  * Input schema for listing secret keys (org-scoped).
  */
 export declare const ListSecretKeysInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     cursor: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -194,11 +195,13 @@ export declare const ListSecretKeysInputSchema: z.ZodObject<{
  */
 export declare const GetSecretKeyInputSchema: z.ZodObject<{
     keyId: z.ZodString;
+    organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 /**
  * Input schema for creating a secret key (org-scoped, optionally project-scoped).
  */
 export declare const CreateSecretKeyInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     expiresAt: z.ZodOptional<z.ZodString>;
@@ -208,6 +211,7 @@ export declare const CreateSecretKeyInputSchema: z.ZodObject<{
  */
 export declare const UpdateSecretKeyInputSchema: z.ZodObject<{
     keyId: z.ZodString;
+    organizationId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     expiresAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
@@ -218,11 +222,18 @@ export declare const DeleteSecretKeyInputSchema: z.ZodPipe<z.ZodObject<{
     params: z.ZodObject<{
         keyId: z.ZodString;
     }, z.core.$strip>;
+    query: z.ZodDefault<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
 }, z.core.$strip>, z.ZodTransform<{
     keyId: string;
+    organizationId?: string | undefined;
 }, {
     params: {
         keyId: string;
+    };
+    query: {
+        organizationId?: string | undefined;
     };
 }>>;
 /**
@@ -337,6 +348,7 @@ export declare const deactivatePublicKey: import("../orpc-contracts/index.js").O
  * Contract-first secretKeys.list operation.
  */
 export declare const listSecretKeys: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     cursor: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -355,6 +367,7 @@ export declare const listSecretKeys: import("../orpc-contracts/index.js").Operat
  */
 export declare const getSecretKey: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     keyId: z.ZodString;
+    organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     secretKey: z.ZodObject<{
         id: z.ZodString;
@@ -369,6 +382,7 @@ export declare const getSecretKey: import("../orpc-contracts/index.js").Operatio
  * Contract-first secretKeys.create operation.
  */
 export declare const createSecretKey: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
     expiresAt: z.ZodOptional<z.ZodString>;
@@ -388,6 +402,7 @@ export declare const createSecretKey: import("../orpc-contracts/index.js").Opera
  */
 export declare const updateSecretKey: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     keyId: z.ZodString;
+    organizationId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     expiresAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
@@ -407,11 +422,18 @@ export declare const deleteSecretKey: import("../orpc-contracts/index.js").Opera
     params: z.ZodObject<{
         keyId: z.ZodString;
     }, z.core.$strip>;
+    query: z.ZodDefault<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>>;
 }, z.core.$strip>, z.ZodTransform<{
     keyId: string;
+    organizationId?: string | undefined;
 }, {
     params: {
         keyId: string;
+    };
+    query: {
+        organizationId?: string | undefined;
     };
 }>>, z.ZodVoid, "api">;
 /**
@@ -517,6 +539,7 @@ export declare const publicKeysContract: {
  */
 export declare const secretKeysContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
         limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
         cursor: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
@@ -532,6 +555,7 @@ export declare const secretKeysContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly get: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         keyId: z.ZodString;
+        organizationId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         secretKey: z.ZodObject<{
             id: z.ZodString;
@@ -543,6 +567,7 @@ export declare const secretKeysContract: {
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodString;
         expiresAt: z.ZodOptional<z.ZodString>;
@@ -559,6 +584,7 @@ export declare const secretKeysContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         keyId: z.ZodString;
+        organizationId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
         expiresAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>, z.ZodObject<{
@@ -575,11 +601,18 @@ export declare const secretKeysContract: {
         params: z.ZodObject<{
             keyId: z.ZodString;
         }, z.core.$strip>;
+        query: z.ZodDefault<z.ZodObject<{
+            organizationId: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>, z.ZodTransform<{
         keyId: string;
+        organizationId?: string | undefined;
     }, {
         params: {
             keyId: string;
+        };
+        query: {
+            organizationId?: string | undefined;
         };
     }>>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };

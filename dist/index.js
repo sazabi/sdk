@@ -32003,7 +32003,8 @@ var AutomationSchema = z3.object({
   kind: AutomationKindSchema.describe("Automation kind: a scheduled script or a log-match investigation."),
   scriptId: z3.string().uuid().nullable().describe("ID of the project_scripts row this automation runs, for DB-backed script automations. Null for legacy script_path automations and for log-match automations."),
   scriptName: z3.string().nullable().describe("Name of the project_scripts row this automation runs (see scriptId). Null when scriptId is null."),
-  logMatchExpressionId: z3.string().uuid().nullable().describe("Log-match expression bound to this automation. Null for script automations."),
+  logMatchExpressionId: z3.string().uuid().nullable().describe("Deprecated: use signalDefinitionId. Log-match expression bound to this automation. Null for script automations."),
+  signalDefinitionId: z3.string().uuid().nullable().describe("Signal definition bound to this automation. Null for script automations."),
   signalType: AutomationSignalTypeSchema.nullable().describe("Signal trigger type for log-match automations. Null for script automations."),
   source: z3.enum(["sazabi_managed", "custom"]).describe("Whether the automation is Sazabi-managed or customer-defined."),
   enabled: z3.boolean(),
@@ -32368,7 +32369,7 @@ var BillingSubscriptionSchema = z4.object({
   canceledAt: z4.string().datetime().nullable()
 });
 var GetBillingSummaryInputSchema = z4.object({
-  organizationId: z4.string().min(1).optional().describe("Organization to query billing for. Auto-filled from CLI and SDK context when omitted.")
+  organizationId: z4.string().min(1).optional().describe("Organization to query billing for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var BillingCollectionSummarySchema = z4.object({
   status: z4.enum(["current", "payment_retrying", "delinquent"]).describe("Negative-balance collection state. `current` means no open collection case; `payment_retrying` means a scheduled retry cadence is running; `delinquent` means retries are exhausted and intake is denied until payment settles the balance."),
@@ -32410,7 +32411,7 @@ var GetBillingSummaryOutputSchema = z4.object({
   }).nullable()
 });
 var GetBillingUsageInputSchema = z4.object({
-  organizationId: z4.string().min(1).optional().describe("Organization to query usage for. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z4.string().min(1).optional().describe("Organization to query usage for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   cycle: z4.enum(["current", "previous"]).default("current").describe("Which billing cycle to report usage for.")
 });
 var BillingUsageRowSchema = z4.object({
@@ -32425,7 +32426,7 @@ var GetBillingUsageOutputSchema = z4.object({
   usage: z4.array(BillingUsageRowSchema)
 });
 var ListBillingTransactionsInputSchema = z4.object({
-  organizationId: z4.string().min(1).optional().describe("Organization to query transactions for. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z4.string().min(1).optional().describe("Organization to query transactions for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   limit: z4.coerce.number().int().min(1).max(100).default(10).describe("Maximum number of transactions to return per page."),
   page: z4.coerce.number().int().min(1).default(1).describe("Page number for pagination (1-indexed).")
 });
@@ -32490,7 +32491,7 @@ var listBillingTransactions = defineOperation({
   pagination: "page",
   async: "sync"
 });
-var OrganizationIdInputSchema = z4.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted.");
+var OrganizationIdInputSchema = z4.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.");
 var billingDecimalSchema = z4.string().trim().regex(/^\d+(?:\.\d{1,6})?$/, "Expected a decimal with up to 6 places");
 var billingMoneyDecimalSchema = billingDecimalSchema.refine((value) => {
   const [, fractionalPart = ""] = value.split(".");
@@ -32858,7 +32859,7 @@ var CONNECTED_ACCOUNT_PROVIDER_VALUES = [
 ];
 var ConnectedAccountProviderEnum = z5.enum(CONNECTED_ACCOUNT_PROVIDER_VALUES);
 var BeginConnectedAccountConnectInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization to connect within. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z5.string().min(1).optional().describe("Organization to connect within. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   provider: ConnectedAccountProviderEnum.describe("Connected-account provider to connect.")
 });
 var BeginConnectedAccountConnectOutputSchema = z5.object({
@@ -32888,7 +32889,7 @@ var ConnectedAccountConnectAttemptStatusEnum = z5.enum([
   "expired"
 ]);
 var GetConnectedAccountConnectAttemptInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z5.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   attemptId: z5.string().uuid().describe("Connect attempt ID to poll.")
 });
 var GetConnectedAccountConnectAttemptOutputSchema = z5.object({
@@ -32910,7 +32911,7 @@ var getConnectedAccountConnectAttempt = defineOperation({
   async: "sync"
 });
 var ListConnectedAccountsInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization to list accounts for. Auto-filled from CLI and SDK context when omitted.")
+  organizationId: z5.string().min(1).optional().describe("Organization to list accounts for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var ConnectedAccountSchema = z5.object({
   provider: z5.string().describe("Provider identifier."),
@@ -32938,7 +32939,7 @@ var listConnectedAccounts = defineOperation({
   async: "sync"
 });
 var DisconnectConnectedAccountInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization the account belongs to. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z5.string().min(1).optional().describe("Organization the account belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   provider: ConnectedAccountProviderEnum.describe("Provider to disconnect.")
 });
 var DisconnectConnectedAccountOutputSchema = z5.object({
@@ -33037,7 +33038,7 @@ var ExternalIdentityJitPolicySchema = z6.object({
   effectiveEnabled: z6.boolean().describe("True only when both stored policies are enabled.")
 });
 var ListIntegrationProvidersInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to list providers for. Auto-filled from CLI and SDK context when omitted.")
+  organizationId: z6.string().min(1).optional().describe("Organization to list providers for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var ListIntegrationProvidersOutputSchema = z6.object({
   providers: z6.array(IntegrationProviderSchema)
@@ -33057,7 +33058,7 @@ var listIntegrationProviders = defineOperation({
   async: "sync"
 });
 var ListIntegrationConnectionsInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to list connections for. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization to list connections for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   provider: IntegrationProviderEnum.optional().describe("Filter connections by provider.")
 });
 var ListIntegrationConnectionsOutputSchema = z6.object({
@@ -33078,7 +33079,7 @@ var listIntegrationConnections = defineOperation({
   async: "sync"
 });
 var GetIntegrationConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   connectionId: z6.string().uuid().describe("Connection ID to fetch.")
 });
 var GetIntegrationConnectionOutputSchema = z6.object({
@@ -33099,7 +33100,7 @@ var getIntegrationConnection = defineOperation({
   async: "sync"
 });
 var CreateIntegrationConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   provider: IntegrationProviderEnum.describe("Integration provider to connect. Must use api_key auth (see `authType` in the provider catalog)."),
   displayName: z6.string().trim().min(1).max(255).optional().describe("Optional display name for the connection."),
   credentials: z6.record(z6.string(), z6.unknown()).describe("Vendor credentials. Fields vary by provider (see `credentialFields` on the provider catalog). Validated against the vendor before the connection is created; never returned.")
@@ -33123,7 +33124,7 @@ var createIntegrationConnection = defineOperation({
   async: "sync"
 });
 var BeginIntegrationConnectInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   provider: IntegrationProviderEnum.describe("Browser-auth provider to connect (oauth or app_installation). Must report `browserConnectSupported: true` in the provider catalog."),
   displayName: z6.string().trim().min(1).max(255).optional().describe("Optional display name for the resulting connection."),
   projectId: z6.string().trim().min(1).optional().describe("Project the completed connection defaults its routing to. Must belong to the organization.")
@@ -33156,7 +33157,7 @@ var IntegrationConnectAttemptStatusEnum = z6.enum([
   "expired"
 ]);
 var GetIntegrationConnectAttemptInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   attemptId: z6.string().uuid().describe("Connect attempt ID to poll.")
 });
 var GetIntegrationConnectAttemptOutputSchema = z6.object({
@@ -33179,7 +33180,7 @@ var getIntegrationConnectAttempt = defineOperation({
   async: "sync"
 });
 var DisconnectIntegrationConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   connectionId: z6.string().uuid().describe("Connection ID to disconnect.")
 });
 var DisconnectIntegrationConnectionOutputSchema = z6.object({
@@ -33200,7 +33201,7 @@ var disconnectIntegrationConnection = defineOperation({
   async: "sync"
 });
 var UpdateIntegrationConnectionCredentialsInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   connectionId: z6.string().uuid().describe("Connection ID to update."),
   credentials: z6.record(z6.string(), z6.unknown()).describe("Replacement vendor credentials for an api_key connection. Validated against the vendor; resets the connection's health state on success.")
 });
@@ -33222,7 +33223,7 @@ var updateIntegrationConnectionCredentials = defineOperation({
   async: "sync"
 });
 var ExternalIdentityJitOrganizationInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional()
+  organizationId: z6.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var ExternalIdentityJitOrganizationPolicySchema = z6.object({
   organizationEnabled: z6.boolean(),
@@ -33292,7 +33293,7 @@ var updateConnectionExternalIdentityJitPolicy = defineOperation({
   async: "sync"
 });
 var SlackConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   connectionId: z6.string().uuid().describe("Slack integration connection ID (the `integration_connections.id`, not the Slack team id).")
 });
 var SlackConfigurationSchema = z6.object({
@@ -33794,28 +33795,36 @@ var DeactivatePublicKeyInputSchema = z8.object({
 var DeactivatePublicKeyOutputSchema = GetPublicKeyOutputSchema;
 var DeleteKeyOutputSchema = z8.void();
 var ListSecretKeysInputSchema = z8.object({
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   limit: z8.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of keys to return per page."),
   cursor: z8.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
 var GetSecretKeyInputSchema = z8.object({
-  keyId: z8.string().uuid().describe("Key ID to fetch.")
+  keyId: z8.string().uuid().describe("Key ID to fetch."),
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var CreateSecretKeyInputSchema = z8.object({
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   projectId: z8.string().uuid().optional().describe("Project to scope this key to. When set, the key can only access resources within this project. Omit for organization-wide access."),
   name: z8.string().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(KEY_NAME_REGEX, "Name can only contain letters, numbers, spaces, hyphens, and underscores").describe("Human-readable name for the key."),
   expiresAt: z8.string().datetime().optional().describe("Optional expiration timestamp for the key.")
 });
 var UpdateSecretKeyInputSchema = z8.object({
   keyId: z8.string().uuid().describe("Key ID to update."),
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   name: z8.string().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(KEY_NAME_REGEX, "Name can only contain letters, numbers, spaces, hyphens, and underscores").optional().describe("New human-readable name for the key."),
   expiresAt: z8.string().datetime().nullable().optional().describe("New expiration timestamp for the key, or null to clear it.")
 });
 var DeleteSecretKeyInputSchema = z8.object({
   params: z8.object({
     keyId: z8.string().uuid().describe("Key ID to delete.")
-  })
-}).transform(({ params }) => ({
-  ...params
+  }),
+  query: z8.object({
+    organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  }).default({})
+}).transform(({ params, query }) => ({
+  ...params,
+  ...query.organizationId !== undefined ? { organizationId: query.organizationId } : {}
 }));
 var listPublicKeys = defineOperation({
   operationId: "publicKeys.list",
@@ -47894,7 +47903,7 @@ var AuthUserSchema = z20.object({
 var UserMeSchema = z20.object({
   credentialType: z20.literal("user"),
   user: AuthUserSchema,
-  activeOrganizationId: z20.string().min(1).nullable(),
+  activeOrganizationId: z20.string().min(1).nullable().describe("Deprecated: reflects the browser session's last-active organization, not API routing; this field will be removed."),
   authorizedOrganizationId: z20.string().min(1).nullable(),
   authorizedProjectId: z20.string().min(1).nullable(),
   organizations: z20.array(AuthOrganizationSchema).describe("Organizations the user belongs to, including membership role.")
@@ -47959,13 +47968,13 @@ var OrganizationInvitationSchema = z21.object({
 });
 var MemberSelectorSchema = z21.string().min(1).describe("A user ID, or a URL-encoded email address, of the member.");
 var ListMembersInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization to list members for. Auto-filled from CLI and SDK context when omitted.")
+  organizationId: z21.string().min(1).optional().describe("Organization to list members for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var ListMembersOutputSchema = z21.object({
   members: z21.array(OrganizationMemberSchema).describe("Members visible within the selected organization.")
 });
 var UpdateMemberRoleInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z21.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to update."),
   role: OrganizationMembershipRoleSchema.describe("Role to assign.")
 });
@@ -47977,7 +47986,7 @@ var RemoveMemberInputSchema = z21.object({
     member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to remove.")
   }),
   query: z21.object({
-    organizationId: z21.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted.")
+    organizationId: z21.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
   })
 }).transform(({ params, query }) => ({
   ...query,
@@ -48072,7 +48081,7 @@ var removeMember = defineOperation({
   async: "sync"
 });
 var InviteMemberInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization to invite into. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z21.string().min(1).optional().describe("Organization to invite into. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   email: z21.string().email().describe("Email address to invite."),
   role: OrganizationMembershipRoleSchema.optional().default("member").describe('Role to grant on acceptance. Defaults to "member".')
 });
@@ -48080,7 +48089,7 @@ var InviteMemberOutputSchema = z21.object({
   invitation: OrganizationInvitationSchema.describe("The created pending invitation.")
 });
 var ListInvitationsInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization to list invitations for. Auto-filled from CLI and SDK context when omitted.")
+  organizationId: z21.string().min(1).optional().describe("Organization to list invitations for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var ListInvitationsOutputSchema = z21.object({
   invitations: z21.array(OrganizationInvitationSchema).describe("Pending invitations visible within the selected organization.")
@@ -48090,7 +48099,7 @@ var RevokeInvitationInputSchema = z21.object({
     invitationId: z21.string().min(1).describe("ID of the invitation to revoke.")
   }),
   query: z21.object({
-    organizationId: z21.string().min(1).optional().describe("Organization containing the invitation. Auto-filled from CLI and SDK context when omitted.")
+    organizationId: z21.string().min(1).optional().describe("Organization containing the invitation. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
   })
 }).transform(({ params, query }) => ({
   ...query,
@@ -49935,6 +49944,7 @@ var OnboardingSnapshotSchema = z30.object({
   pendingInvitations: z30.array(OnboardingInvitationSchema)
 });
 var GetOnboardingStateInputSchema = z30.object({
+  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   projectId: z30.string().uuid().optional().describe("Project whose onboarding state to bind (sample-issue attempt and project-scoped facts). Auto-filled from CLI and SDK context when omitted.")
 });
 var GetOnboardingStateOutputSchema = z30.object({
@@ -49956,6 +49966,7 @@ var getOnboardingState = defineOperation({
 });
 var SkipOnboardingIntegrationInputSchema = z30.object({
   integration: z30.enum(["github", "slack"]).describe("Integration onboarding step to skip."),
+  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   projectId: z30.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
 var SkipOnboardingIntegrationOutputSchema = z30.object({
@@ -49976,6 +49987,7 @@ var skipOnboardingIntegration = defineOperation({
   async: "sync"
 });
 var SkipOnboardingGithubAppInstallationInputSchema = z30.object({
+  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   projectId: z30.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
 var SkipOnboardingGithubAppInstallationOutputSchema = z30.object({
@@ -49997,6 +50009,7 @@ var skipOnboardingGithubAppInstallation = defineOperation({
   async: "sync"
 });
 var SkipOnboardingSampleIssueInputSchema = z30.object({
+  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   projectId: z30.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
 var SkipOnboardingSampleIssueOutputSchema = z30.object({
@@ -50184,7 +50197,7 @@ var ProjectSchema = z32.object({
   region: ProjectRegionSchema
 });
 var ListProjectsInputSchema = z32.object({
-  organizationId: z32.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted.")
+  organizationId: z32.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
 });
 var ListProjectsOutputSchema = z32.object({
   projects: z32.array(ProjectSchema).describe("Projects visible within the selected organization.")
@@ -50194,7 +50207,7 @@ var GetProjectInputSchema = z32.object({
 });
 var ProjectNameSchema = z32.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
 var CreateProjectInputSchema = z32.object({
-  organizationId: z32.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted."),
+  organizationId: z32.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
   name: ProjectNameSchema.describe("Project name."),
   region: ProjectRegionSchema.optional().default("us-west-2").describe("AWS region where the new project should be created.")
 });
@@ -50397,6 +50410,8 @@ var RepoProviderSchema = z35.enum(["github", "bitbucket"]);
 var RepoSchema = z35.object({
   id: z35.string().uuid().describe("Repository row id — stable across access sources; use it as the path id for repos.remove."),
   accessSourceId: z35.string().uuid().describe("Access source granting this view of the repository (GitHub App installation, personal connection, or integration). Pass to repos.add to link the repository through this source."),
+  source: z35.enum(["githubApp", "personal", "integration"]).describe("Kind of access source granting this view: an organization GitHub App installation, the caller's personal forge connection, or an organization integration."),
+  sourceLabel: z35.string().describe('Display label for the access source (e.g. "GitHub app", "Personal").'),
   provider: RepoProviderSchema.describe("Forge hosting the repository."),
   owner: z35.string().describe("Repository owner (user or organization)."),
   name: z35.string().describe("Repository name without the owner."),
@@ -50906,26 +50921,181 @@ var searchContract = {
   messages: searchMessages.contract
 };
 
+// ../public-api-contracts/src/signal-definitions.ts
+import { z as z39 } from "zod";
+var SignalDefinitionIdSchema = z39.string().uuid().describe("Signal definition ID.");
+var SignalDefinitionNameSchema = z39.string().min(1).max(200).describe("Human-readable expression name.");
+var SignalDefinitionCelExpressionSchema = z39.string().min(1).max(8192).describe("CEL expression evaluated against ingested log events.");
+var SignalDefinitionSchema = z39.object({
+  id: z39.string().uuid(),
+  projectId: z39.string().uuid(),
+  name: z39.string(),
+  expression: SignalDefinitionCelExpressionSchema,
+  enabled: z39.boolean(),
+  compiledVersion: z39.number().int(),
+  linkedAutomationIds: z39.array(z39.string().uuid()).optional().describe("Automations bound to this expression. Included on list/get when available."),
+  createdAt: z39.string().datetime(),
+  updatedAt: z39.string().datetime()
+});
+var ListSignalDefinitionsInputSchema = z39.object({
+  projectId: z39.string().uuid().optional().describe("Project to list signal definitions for. Auto-filled from CLI and SDK context when omitted.")
+});
+var ListSignalDefinitionsOutputSchema = z39.object({
+  signalDefinitions: z39.array(SignalDefinitionSchema)
+});
+var GetSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+});
+var GetSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var CreateSignalDefinitionInputSchema = z39.object({
+  projectId: z39.string().uuid().optional().describe("Project to create the expression in. Auto-filled from CLI and SDK context when omitted."),
+  name: SignalDefinitionNameSchema,
+  expression: SignalDefinitionCelExpressionSchema,
+  enabled: z39.boolean().optional().describe("Whether the expression starts enabled. Defaults to true.")
+});
+var CreateSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var UpdateSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted."),
+  name: SignalDefinitionNameSchema.optional(),
+  expression: SignalDefinitionCelExpressionSchema.optional(),
+  enabled: z39.boolean().optional().describe("Whether the expression is enabled.")
+});
+var UpdateSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var DisableSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
+});
+var DisableSignalDefinitionOutputSchema = z39.object({
+  signalDefinition: SignalDefinitionSchema
+});
+var listSignalDefinitions = defineOperation({
+  operationId: "signalDefinitions.list",
+  description: "List signal definitions in a project.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/signal-definitions",
+    tags: ["Signal definitions"]
+  },
+  input: ListSignalDefinitionsInputSchema,
+  output: ListSignalDefinitionsOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var getSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.get",
+  description: "Get a single signal definition by ID.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/signal-definitions/{signalDefinitionId}",
+    tags: ["Signal definitions"]
+  },
+  input: GetSignalDefinitionInputSchema,
+  output: GetSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var createSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.create",
+  description: "Create a CEL signal definition for a project.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/signal-definitions",
+    successStatus: 201,
+    tags: ["Signal definitions"]
+  },
+  input: CreateSignalDefinitionInputSchema,
+  output: CreateSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var updateSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.update",
+  description: "Update a signal definition's name, CEL body, or enabled state.",
+  backend: "api",
+  route: {
+    method: "PATCH",
+    path: "/signal-definitions/{signalDefinitionId}",
+    tags: ["Signal definitions"]
+  },
+  input: UpdateSignalDefinitionInputSchema,
+  output: UpdateSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var disableSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.disable",
+  description: "Disable a signal definition so it stops matching logs.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/signal-definitions/{signalDefinitionId}/disable",
+    tags: ["Signal definitions"]
+  },
+  input: DisableSignalDefinitionInputSchema,
+  output: DisableSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var DeleteSignalDefinitionInputSchema = z39.object({
+  signalDefinitionId: SignalDefinitionIdSchema,
+  projectId: z39.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+});
+var DeleteSignalDefinitionOutputSchema = z39.void();
+var deleteSignalDefinition = defineOperation({
+  operationId: "signalDefinitions.delete",
+  description: "Permanently delete a signal definition.",
+  backend: "api",
+  route: {
+    method: "DELETE",
+    path: "/signal-definitions/{signalDefinitionId}",
+    successStatus: 204,
+    tags: ["Signal definitions"]
+  },
+  input: DeleteSignalDefinitionInputSchema,
+  output: DeleteSignalDefinitionOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var signalDefinitionsContract = {
+  list: listSignalDefinitions.contract,
+  get: getSignalDefinition.contract,
+  create: createSignalDefinition.contract,
+  update: updateSignalDefinition.contract,
+  disable: disableSignalDefinition.contract,
+  delete: deleteSignalDefinition.contract
+};
+
 // ../task-checklist/src/index.ts
 var TASK_CATEGORIES = ["onboarding", "setup"];
 
 // ../public-api-contracts/src/tasks.ts
-import { z as z39 } from "zod";
-var TaskCategorySchema = z39.enum(TASK_CATEGORIES);
-var TaskSchema2 = z39.object({
-  id: z39.string().describe("Unique task identifier (e.g. install_github_app)."),
-  label: z39.string().describe("Short human-readable task name."),
-  description: z39.string().describe("Explanation of what needs to be completed to satisfy this task."),
-  instructions: z39.string().describe("Step-by-step instructions for completing this task."),
-  completed: z39.boolean().describe("Whether the task has been completed."),
-  completedAt: z39.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
+import { z as z40 } from "zod";
+var TaskCategorySchema = z40.enum(TASK_CATEGORIES);
+var TaskSchema2 = z40.object({
+  id: z40.string().describe("Unique task identifier (e.g. install_github_app)."),
+  label: z40.string().describe("Short human-readable task name."),
+  description: z40.string().describe("Explanation of what needs to be completed to satisfy this task."),
+  instructions: z40.string().describe("Step-by-step instructions for completing this task."),
+  completed: z40.boolean().describe("Whether the task has been completed."),
+  completedAt: z40.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
   category: TaskCategorySchema.describe("Task category: onboarding (core setup steps) or setup (additional configuration).")
 });
-var ListTasksInputSchema = z39.object({
-  projectId: z39.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
+var ListTasksInputSchema = z40.object({
+  projectId: z40.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListTasksOutputSchema = z39.object({
-  tasks: z39.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
+var ListTasksOutputSchema = z40.object({
+  tasks: z40.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
 });
 var listTasks = defineOperation({
   operationId: "tasks.list",
@@ -50943,87 +51113,87 @@ var listTasks = defineOperation({
 });
 
 // ../public-api-contracts/src/teams.ts
-import { z as z40 } from "zod";
-var TeamSchema = z40.object({
-  id: z40.string().uuid().describe("Team ID."),
-  name: z40.string().describe("Team name, unique among the org's active teams."),
-  description: z40.string().nullable().describe("Optional team description."),
-  createdAt: z40.string().datetime().describe("When the team was created."),
-  memberCount: z40.number().int().nonnegative().describe("Number of active members in the team.")
+import { z as z41 } from "zod";
+var TeamSchema = z41.object({
+  id: z41.string().uuid().describe("Team ID."),
+  name: z41.string().describe("Team name, unique among the org's active teams."),
+  description: z41.string().nullable().describe("Optional team description."),
+  createdAt: z41.string().datetime().describe("When the team was created."),
+  memberCount: z41.number().int().nonnegative().describe("Number of active members in the team.")
 });
-var TeamMemberSchema = z40.object({
-  userId: z40.string().min(1).describe("User ID of the team member."),
-  name: z40.string().nullable().describe("Display name for the member, when available."),
-  email: z40.string().email().describe("Email address for the member."),
-  addedAt: z40.string().datetime().describe("When the member was added to the team.")
+var TeamMemberSchema = z41.object({
+  userId: z41.string().min(1).describe("User ID of the team member."),
+  name: z41.string().nullable().describe("Display name for the member, when available."),
+  email: z41.string().email().describe("Email address for the member."),
+  addedAt: z41.string().datetime().describe("When the member was added to the team.")
 });
-var OrganizationIdInputSchema2 = z40.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted.");
-var ListTeamsInputSchema = z40.object({
+var OrganizationIdInputSchema2 = z41.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.");
+var ListTeamsInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2
 });
-var ListTeamsOutputSchema = z40.object({
-  teams: z40.array(TeamSchema).describe("Active teams in the organization.")
+var ListTeamsOutputSchema = z41.object({
+  teams: z41.array(TeamSchema).describe("Active teams in the organization.")
 });
-var CreateTeamInputSchema = z40.object({
+var CreateTeamInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  name: z40.string().trim().min(1).describe("Team name."),
-  description: z40.string().trim().min(1).optional().describe("Optional team description.")
+  name: z41.string().trim().min(1).describe("Team name."),
+  description: z41.string().trim().min(1).optional().describe("Optional team description.")
 });
-var CreateTeamOutputSchema = z40.object({
-  id: z40.string().uuid().describe("ID of the created team.")
+var CreateTeamOutputSchema = z41.object({
+  id: z41.string().uuid().describe("ID of the created team.")
 });
-var UpdateTeamInputSchema = z40.object({
+var UpdateTeamInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z40.string().uuid().describe("Team to update."),
-  name: z40.string().trim().min(1).optional().describe("New team name."),
-  description: z40.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
+  teamId: z41.string().uuid().describe("Team to update."),
+  name: z41.string().trim().min(1).optional().describe("New team name."),
+  description: z41.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
 });
-var UpdateTeamOutputSchema = z40.object({
-  id: z40.string().uuid().describe("ID of the updated team.")
+var UpdateTeamOutputSchema = z41.object({
+  id: z41.string().uuid().describe("ID of the updated team.")
 });
-var DeleteTeamInputSchema = z40.object({
-  params: z40.object({
-    teamId: z40.string().uuid().describe("Team to delete.")
+var DeleteTeamInputSchema = z41.object({
+  params: z41.object({
+    teamId: z41.string().uuid().describe("Team to delete.")
   }),
-  query: z40.object({
+  query: z41.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var DeleteTeamOutputSchema = z40.object({
-  success: z40.literal(true).describe("The team and its memberships were removed.")
+var DeleteTeamOutputSchema = z41.object({
+  success: z41.literal(true).describe("The team and its memberships were removed.")
 });
-var AddTeamMemberInputSchema = z40.object({
+var AddTeamMemberInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z40.string().uuid().describe("Team to add the member to."),
-  userId: z40.string().min(1).describe("User ID of an active organization member to add.")
+  teamId: z41.string().uuid().describe("Team to add the member to."),
+  userId: z41.string().min(1).describe("User ID of an active organization member to add.")
 });
-var AddTeamMemberOutputSchema = z40.object({
-  id: z40.string().uuid().describe("ID of the team membership.")
+var AddTeamMemberOutputSchema = z41.object({
+  id: z41.string().uuid().describe("ID of the team membership.")
 });
-var RemoveTeamMemberInputSchema = z40.object({
-  params: z40.object({
-    teamId: z40.string().uuid().describe("Team to remove the member from."),
-    userId: z40.string().min(1).describe("User ID of the member to remove.")
+var RemoveTeamMemberInputSchema = z41.object({
+  params: z41.object({
+    teamId: z41.string().uuid().describe("Team to remove the member from."),
+    userId: z41.string().min(1).describe("User ID of the member to remove.")
   }),
-  query: z40.object({
+  query: z41.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RemoveTeamMemberOutputSchema = z40.object({
-  success: z40.literal(true).describe("The membership was removed.")
+var RemoveTeamMemberOutputSchema = z41.object({
+  success: z41.literal(true).describe("The membership was removed.")
 });
-var ListTeamMembersInputSchema = z40.object({
+var ListTeamMembersInputSchema = z41.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z40.string().uuid().describe("Team to list members for.")
+  teamId: z41.string().uuid().describe("Team to list members for.")
 });
-var ListTeamMembersOutputSchema = z40.object({
-  members: z40.array(TeamMemberSchema).describe("Active members of the team.")
+var ListTeamMembersOutputSchema = z41.object({
+  members: z41.array(TeamMemberSchema).describe("Active members of the team.")
 });
 var listTeams = defineOperation({
   operationId: "teams.list",
@@ -51157,28 +51327,28 @@ var teamsContract = {
 };
 
 // ../public-api-contracts/src/work-items.ts
-import { z as z41 } from "zod";
-var WorkItemAttributionSchema = z41.object({
-  kind: z41.enum(["user", "workspace"]),
-  name: z41.string().optional(),
-  email: z41.string().optional()
+import { z as z42 } from "zod";
+var WorkItemAttributionSchema = z42.object({
+  kind: z42.enum(["user", "workspace"]),
+  name: z42.string().optional(),
+  email: z42.string().optional()
 });
-var CreateWorkItemInputSchema = z41.object({
-  container: z41.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
-  title: z41.string().min(1),
-  bodyMarkdown: z41.string().optional(),
-  state: z41.string().optional(),
-  itemType: z41.string().optional(),
-  organizationId: z41.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization."),
-  clientRequestId: z41.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
+var CreateWorkItemInputSchema = z42.object({
+  container: z42.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
+  title: z42.string().min(1),
+  bodyMarkdown: z42.string().optional(),
+  state: z42.string().optional(),
+  itemType: z42.string().optional(),
+  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers."),
+  clientRequestId: z42.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
 }).strict();
-var CreateWorkItemOutputSchema = z41.object({
-  identifier: z41.string(),
-  title: z41.string(),
-  url: z41.string(),
-  state: z41.string(),
+var CreateWorkItemOutputSchema = z42.object({
+  identifier: z42.string(),
+  title: z42.string(),
+  url: z42.string(),
+  state: z42.string(),
   attribution: WorkItemAttributionSchema.optional(),
-  reused: z41.boolean()
+  reused: z42.boolean()
 });
 var createWorkItem = defineOperation({
   operationId: "work-items.create",
@@ -51195,14 +51365,14 @@ var createWorkItem = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var CommentOnWorkItemInputSchema = z41.object({
-  itemId: z41.string().min(1).describe("The work item to comment on."),
-  bodyMarkdown: z41.string().min(1),
-  organizationId: z41.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization.")
+var CommentOnWorkItemInputSchema = z42.object({
+  itemId: z42.string().min(1).describe("The work item to comment on."),
+  bodyMarkdown: z42.string().min(1),
+  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
 }).strict();
-var CommentOnWorkItemOutputSchema = z41.object({
-  identifier: z41.string(),
-  url: z41.string()
+var CommentOnWorkItemOutputSchema = z42.object({
+  identifier: z42.string(),
+  url: z42.string()
 });
 var commentOnWorkItem = defineOperation({
   operationId: "work-items.comment",
@@ -51218,17 +51388,17 @@ var commentOnWorkItem = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var TransitionWorkItemInputSchema = z41.object({
-  itemId: z41.string().min(1).describe("The work item to transition."),
-  state: z41.string().min(1).describe("The target workflow state."),
-  organizationId: z41.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Defaults to the credential's active organization.")
+var TransitionWorkItemInputSchema = z42.object({
+  itemId: z42.string().min(1).describe("The work item to transition."),
+  state: z42.string().min(1).describe("The target workflow state."),
+  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
 }).strict();
-var TransitionWorkItemOutputSchema = z41.object({
-  identifier: z41.string(),
-  title: z41.string(),
-  url: z41.string(),
-  state: z41.string(),
-  changed: z41.boolean()
+var TransitionWorkItemOutputSchema = z42.object({
+  identifier: z42.string(),
+  title: z42.string(),
+  url: z42.string(),
+  state: z42.string(),
+  changed: z42.boolean()
 });
 var transitionWorkItem = defineOperation({
   operationId: "work-items.transition",
@@ -51359,6 +51529,14 @@ var publicApiContract = {
     create: createLogMatchExpression.contract,
     update: updateLogMatchExpression.contract,
     disable: disableLogMatchExpression.contract
+  },
+  signalDefinitions: {
+    list: listSignalDefinitions.contract,
+    get: getSignalDefinition.contract,
+    create: createSignalDefinition.contract,
+    update: updateSignalDefinition.contract,
+    disable: disableSignalDefinition.contract,
+    delete: deleteSignalDefinition.contract
   },
   memory: {
     put: putProjectMemory.contract,
@@ -51841,42 +52019,42 @@ var toStreamError = (error) => {
 import { ORPCError } from "@orpc/client";
 
 // ../tail-ws-contracts/src/index.ts
-import { z as z42 } from "zod";
-var LogFiltersSchema = z42.object({
-  severities: z42.array(z42.string()).optional().describe("Limit results to the listed severities."),
-  services: z42.array(z42.string()).optional().describe("Limit results to the listed service names."),
-  environments: z42.array(z42.string()).optional().describe("Limit results to the listed deployment environments."),
-  searchTerm: z42.string().optional().describe("Case-insensitive substring match against the log body."),
-  traceId: z42.string().optional().describe("Limit results to one trace ID."),
-  attributes: z42.record(z42.string(), z42.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
+import { z as z43 } from "zod";
+var LogFiltersSchema = z43.object({
+  severities: z43.array(z43.string()).optional().describe("Limit results to the listed severities."),
+  services: z43.array(z43.string()).optional().describe("Limit results to the listed service names."),
+  environments: z43.array(z43.string()).optional().describe("Limit results to the listed deployment environments."),
+  searchTerm: z43.string().optional().describe("Case-insensitive substring match against the log body."),
+  traceId: z43.string().optional().describe("Limit results to one trace ID."),
+  attributes: z43.record(z43.string(), z43.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
 });
-var WebSocketLogResourceSchema = z42.object({
-  service: z42.string(),
-  namespace: z42.string(),
-  environment: z42.string(),
-  host: z42.string(),
-  container: z42.string(),
-  pod: z42.string()
+var WebSocketLogResourceSchema = z43.object({
+  service: z43.string(),
+  namespace: z43.string(),
+  environment: z43.string(),
+  host: z43.string(),
+  container: z43.string(),
+  pod: z43.string()
 });
-var WebSocketLogEntrySchema = z42.object({
-  id: z42.string(),
-  timestamp: z42.string().datetime(),
-  severity: z42.string(),
-  body: z42.string(),
-  service: z42.string(),
-  traceId: z42.string(),
-  spanId: z42.string(),
-  attributes: z42.record(z42.string(), z42.string()),
+var WebSocketLogEntrySchema = z43.object({
+  id: z43.string(),
+  timestamp: z43.string().datetime(),
+  severity: z43.string(),
+  body: z43.string(),
+  service: z43.string(),
+  traceId: z43.string(),
+  spanId: z43.string(),
+  attributes: z43.record(z43.string(), z43.string()),
   resource: WebSocketLogResourceSchema
 });
-var WebSocketLogMessageSchema = z42.object({
-  type: z42.literal("logs"),
-  timestamp: z42.string().datetime(),
-  data: z42.array(WebSocketLogEntrySchema)
+var WebSocketLogMessageSchema = z43.object({
+  type: z43.literal("logs"),
+  timestamp: z43.string().datetime(),
+  data: z43.array(WebSocketLogEntrySchema)
 });
 
 // src/log-transports.ts
-import { z as z43 } from "zod";
+import { z as z44 } from "zod";
 var DEFAULT_INTAKE_BASE_URL = "https://{region}.intake.sazabi.com";
 var DEFAULT_TAIL_BASE_URL = "https://{region}.tail.sazabi.com";
 var TAIL_RECONNECT_BASE_DELAY_MS = 500;
@@ -51891,17 +52069,17 @@ var isLoopbackHostname = (hostname) => {
   const normalizedHostname = normalizeLoopbackHostname(hostname);
   return normalizedHostname === "localhost" || normalizedHostname === "127.0.0.1" || normalizedHostname === "::1";
 };
-var TailLogsInputSchema = z43.object({
-  projectId: z43.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
+var TailLogsInputSchema = z44.object({
+  projectId: z44.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
   filters: LogFiltersSchema.optional().describe("Optional filters applied by the tail SSE service.")
 });
-var ForwardLogsInputSchema = z43.object({
-  publicKey: z43.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
-  logs: z43.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
+var ForwardLogsInputSchema = z44.object({
+  publicKey: z44.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
+  logs: z44.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
 });
-var ForwardLogsOutputSchema = z43.object({
-  forwardedCount: z43.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
-  failedCount: z43.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
+var ForwardLogsOutputSchema = z44.object({
+  forwardedCount: z44.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
+  failedCount: z44.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
 });
 var forwardLogsExamples = [
   {
@@ -52624,21 +52802,21 @@ var createClient = (options) => {
       nativeQuery: async (input) => raw.logs.nativeQuery(await resolveRequiredProjectScopedInput(options.credentialProvider, input, logsNativeQuery.operationId))
     },
     onboarding: {
-      getState: async (input = {}) => raw.onboarding.getState(await resolveProjectScopedInput(options.credentialProvider, input)),
-      skipSampleIssue: async (input) => raw.onboarding.skipSampleIssue(input ?? {}),
+      getState: async (input = {}) => raw.onboarding.getState(await resolveOrganizationScopedInput(options.credentialProvider, await resolveProjectScopedInput(options.credentialProvider, input))),
+      skipSampleIssue: async (input) => raw.onboarding.skipSampleIssue(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       finish: async (input) => raw.onboarding.finish(input)
     },
     organizations: {
       list: async () => raw.organizations.list({}),
       get: async (input) => raw.organizations.get(input),
       create: async (input) => raw.organizations.create(input),
-      update: async (input) => raw.organizations.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input))
+      update: async (input) => raw.organizations.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "organizations.update"))
     },
     members: {
-      list: async (input = {}) => raw.members.list(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      updateRole: async (input) => raw.members.updateRole(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      list: async (input = {}) => raw.members.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "members.list")),
+      updateRole: async (input) => raw.members.updateRole(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "members.updateRole")),
       remove: async (input) => {
-        const resolvedInput = await resolveOrganizationScopedInput(options.credentialProvider, input);
+        const resolvedInput = await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "members.remove");
         return raw.members.remove({
           params: {
             member: resolvedInput.member
@@ -52648,10 +52826,10 @@ var createClient = (options) => {
           }
         });
       },
-      invite: async (input) => raw.members.invite(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      listInvitations: async (input = {}) => raw.members.listInvitations(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      invite: async (input) => raw.members.invite(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "members.invite")),
+      listInvitations: async (input = {}) => raw.members.listInvitations(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "members.listInvitations")),
       revokeInvitation: async (input) => {
-        const resolvedInput = await resolveOrganizationScopedInput(options.credentialProvider, input);
+        const resolvedInput = await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "members.revokeInvitation");
         return raw.members.revokeInvitation({
           params: {
             invitationId: resolvedInput.invitationId
@@ -52663,11 +52841,11 @@ var createClient = (options) => {
       }
     },
     teams: {
-      list: async (input = {}) => raw.teams.list(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      create: async (input) => raw.teams.create(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      update: async (input) => raw.teams.update(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      list: async (input = {}) => raw.teams.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.list")),
+      create: async (input) => raw.teams.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.create")),
+      update: async (input) => raw.teams.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.update")),
       delete: async (input) => {
-        const resolvedInput = await resolveOrganizationScopedInput(options.credentialProvider, input);
+        const resolvedInput = await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.delete");
         return raw.teams.delete({
           params: {
             teamId: resolvedInput.teamId
@@ -52677,9 +52855,9 @@ var createClient = (options) => {
           }
         });
       },
-      addMember: async (input) => raw.teams.addMember(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      addMember: async (input) => raw.teams.addMember(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.addMember")),
       removeMember: async (input) => {
-        const resolvedInput = await resolveOrganizationScopedInput(options.credentialProvider, input);
+        const resolvedInput = await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.removeMember");
         return raw.teams.removeMember({
           params: {
             teamId: resolvedInput.teamId,
@@ -52690,7 +52868,7 @@ var createClient = (options) => {
           }
         });
       },
-      listMembers: async (input) => raw.teams.listMembers(await resolveOrganizationScopedInput(options.credentialProvider, input))
+      listMembers: async (input) => raw.teams.listMembers(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.listMembers"))
     },
     publicKeys: {
       list: async (input = {}) => raw.publicKeys.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listPublicKeys.operationId)),
@@ -52710,15 +52888,17 @@ var createClient = (options) => {
       }
     },
     secretKeys: {
-      list: async (input = {}) => raw.secretKeys.list(input),
-      get: async (input) => raw.secretKeys.get(input),
-      create: async (input) => raw.secretKeys.create(input),
-      update: async (input) => raw.secretKeys.update(input),
+      list: async (input = {}) => raw.secretKeys.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "secretKeys.list")),
+      get: async (input) => raw.secretKeys.get(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "secretKeys.get")),
+      create: async (input) => raw.secretKeys.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "secretKeys.create")),
+      update: async (input) => raw.secretKeys.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "secretKeys.update")),
       delete: async (input) => {
+        const { organizationId } = await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "secretKeys.delete");
         await raw.secretKeys.delete({
           params: {
             keyId: input.keyId
-          }
+          },
+          query: { organizationId }
         });
       }
     },
@@ -52729,7 +52909,7 @@ var createClient = (options) => {
     projects: {
       list: async (input = {}) => raw.projects.list(await resolveListProjectsInput(options.credentialProvider, input)),
       get: async (input) => raw.projects.get(input),
-      create: async (input) => raw.projects.create(await resolveOrganizationScopedInput(options.credentialProvider, input))
+      create: async (input) => raw.projects.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "projects.create"))
     },
     messages: {
       list: async (input) => raw.messages.list(input),
@@ -52773,20 +52953,20 @@ var createClient = (options) => {
       reassign: async (input) => raw.logStreams.reassign(input)
     },
     connectedAccounts: {
-      beginConnect: async (input) => raw.connectedAccounts.beginConnect(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      getConnectAttempt: async (input) => raw.connectedAccounts.getConnectAttempt(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      list: async (input = {}) => raw.connectedAccounts.list(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      disconnect: async (input) => raw.connectedAccounts.disconnect(await resolveOrganizationScopedInput(options.credentialProvider, input))
+      beginConnect: async (input) => raw.connectedAccounts.beginConnect(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "connectedAccounts.beginConnect")),
+      getConnectAttempt: async (input) => raw.connectedAccounts.getConnectAttempt(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "connectedAccounts.getConnectAttempt")),
+      list: async (input = {}) => raw.connectedAccounts.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "connectedAccounts.list")),
+      disconnect: async (input) => raw.connectedAccounts.disconnect(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "connectedAccounts.disconnect"))
     },
     integrations: {
-      listProviders: async (input = {}) => raw.integrations.listProviders(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      listConnections: async (input = {}) => raw.integrations.listConnections(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      getConnection: async (input) => raw.integrations.getConnection(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      createConnection: async (input) => raw.integrations.createConnection(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      beginConnect: async (input) => raw.integrations.beginConnect(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      getConnectAttempt: async (input) => raw.integrations.getConnectAttempt(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      disconnectConnection: async (input) => raw.integrations.disconnectConnection(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      updateConnectionCredentials: async (input) => raw.integrations.updateConnectionCredentials(await resolveOrganizationScopedInput(options.credentialProvider, input))
+      listProviders: async (input = {}) => raw.integrations.listProviders(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.listProviders")),
+      listConnections: async (input = {}) => raw.integrations.listConnections(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.listConnections")),
+      getConnection: async (input) => raw.integrations.getConnection(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getConnection")),
+      createConnection: async (input) => raw.integrations.createConnection(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.createConnection")),
+      beginConnect: async (input) => raw.integrations.beginConnect(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.beginConnect")),
+      getConnectAttempt: async (input) => raw.integrations.getConnectAttempt(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getConnectAttempt")),
+      disconnectConnection: async (input) => raw.integrations.disconnectConnection(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.disconnectConnection")),
+      updateConnectionCredentials: async (input) => raw.integrations.updateConnectionCredentials(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.updateConnectionCredentials"))
     },
     mcpConnectors: {
       list: async (input = {}) => raw.mcpConnectors.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listMcpConnectors.operationId)),
@@ -52826,6 +53006,13 @@ var createClient = (options) => {
       update: async (input) => raw.logMatchExpressions.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.update")),
       disable: async (input) => raw.logMatchExpressions.disable(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.disable"))
     },
+    signalDefinitions: {
+      list: async (input = {}) => raw.signalDefinitions.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.list")),
+      get: async (input) => raw.signalDefinitions.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.get")),
+      create: async (input) => raw.signalDefinitions.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.create")),
+      update: async (input) => raw.signalDefinitions.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.update")),
+      disable: async (input) => raw.signalDefinitions.disable(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.disable"))
+    },
     scripts: {
       list: async (input = {}) => raw.scripts.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.list")),
       get: async (input) => raw.scripts.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.get")),
@@ -52846,9 +53033,9 @@ var createClient = (options) => {
       unmute: async (input) => raw.issues.unmute(input)
     },
     workItems: {
-      create: async (input) => raw.workItems.create(input),
-      comment: async (input) => raw.workItems.comment(input),
-      transition: async (input) => raw.workItems.transition(input)
+      create: async (input) => raw.workItems.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "work-items.create")),
+      comment: async (input) => raw.workItems.comment(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "work-items.comment")),
+      transition: async (input) => raw.workItems.transition(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "work-items.transition"))
     },
     pullRequests: {
       list: async (input = {}) => raw.pullRequests.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "pullRequests.list"))
@@ -52881,22 +53068,22 @@ var createClient = (options) => {
       timeline: async (input) => raw.components.timeline(input)
     },
     billing: {
-      getSummary: async (input = {}) => raw.billing.getSummary(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      getUsage: async (input = {}) => raw.billing.getUsage(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      listTransactions: async (input = {}) => raw.billing.listTransactions(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      previewSubscriptionCancellation: async (input = {}) => raw.billing.previewSubscriptionCancellation(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      scheduleSubscriptionCancellation: async (input = {}) => raw.billing.scheduleSubscriptionCancellation(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      resumeSubscriptionCancellation: async (input = {}) => raw.billing.resumeSubscriptionCancellation(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      getAutoTopUp: async (input = {}) => raw.billing.getAutoTopUp(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      updateAutoTopUp: async (input) => raw.billing.updateAutoTopUp(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      purchaseCredits: async (input) => raw.billing.purchaseCredits(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      listPlans: async (input = {}) => raw.billing.listPlans(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      previewPlanChange: async (input) => raw.billing.previewPlanChange(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      changePlan: async (input) => raw.billing.changePlan(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      createCheckoutSession: async (input) => raw.billing.createCheckoutSession(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      getCheckoutSessionStatus: async (input) => raw.billing.getCheckoutSessionStatus(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      createPortalSession: async (input = {}) => raw.billing.createPortalSession(await resolveOrganizationScopedInput(options.credentialProvider, input)),
-      getPaymentMethod: async (input = {}) => raw.billing.getPaymentMethod(await resolveOrganizationScopedInput(options.credentialProvider, input))
+      getSummary: async (input = {}) => raw.billing.getSummary(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getSummary")),
+      getUsage: async (input = {}) => raw.billing.getUsage(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getUsage")),
+      listTransactions: async (input = {}) => raw.billing.listTransactions(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.listTransactions")),
+      previewSubscriptionCancellation: async (input = {}) => raw.billing.previewSubscriptionCancellation(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.previewSubscriptionCancellation")),
+      scheduleSubscriptionCancellation: async (input = {}) => raw.billing.scheduleSubscriptionCancellation(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.scheduleSubscriptionCancellation")),
+      resumeSubscriptionCancellation: async (input = {}) => raw.billing.resumeSubscriptionCancellation(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.resumeSubscriptionCancellation")),
+      getAutoTopUp: async (input = {}) => raw.billing.getAutoTopUp(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getAutoTopUp")),
+      updateAutoTopUp: async (input) => raw.billing.updateAutoTopUp(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.updateAutoTopUp")),
+      purchaseCredits: async (input) => raw.billing.purchaseCredits(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.purchaseCredits")),
+      listPlans: async (input = {}) => raw.billing.listPlans(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.listPlans")),
+      previewPlanChange: async (input) => raw.billing.previewPlanChange(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.previewPlanChange")),
+      changePlan: async (input) => raw.billing.changePlan(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.changePlan")),
+      createCheckoutSession: async (input) => raw.billing.createCheckoutSession(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.createCheckoutSession")),
+      getCheckoutSessionStatus: async (input) => raw.billing.getCheckoutSessionStatus(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getCheckoutSessionStatus")),
+      createPortalSession: async (input = {}) => raw.billing.createPortalSession(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.createPortalSession")),
+      getPaymentMethod: async (input = {}) => raw.billing.getPaymentMethod(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getPaymentMethod"))
     },
     tasks: {
       list: async (input = {}) => raw.tasks.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listTasks.operationId))
@@ -53007,19 +53194,19 @@ var withAuthPath = (apiBaseUrl, path) => {
   return `${normalizedBaseUrl}/api/auth${path}`;
 };
 var resolveListProjectsInput = async (credentialProvider, input) => {
-  return resolveOrganizationScopedInput(credentialProvider, input);
+  return resolveRequiredOrganizationScopedInput(credentialProvider, input, "projects.list");
 };
 var resolveOrganizationScopedInput = async (credentialProvider, input) => {
   const organizationId = input.organizationId ?? await credentialProvider.getOrganizationId?.();
   return organizationId ? { ...input, organizationId } : input;
 };
-var resolveRequiredOrganizationScopedInput = async (credentialProvider, input) => {
+var resolveRequiredOrganizationScopedInput = async (credentialProvider, input, operationId) => {
   const organizationId = input.organizationId ?? await credentialProvider.getOrganizationId?.();
   if (!organizationId) {
     throw new ORPCError2("BAD_REQUEST", {
       message: "Organization ID is required",
       data: {
-        operationId: "organizations.update",
+        operationId,
         missingContext: ["organizationId"]
       },
       status: 400
