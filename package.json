@@ -1,7 +1,7 @@
 {
   "name": "@sazabi/sdk",
   "description": "TypeScript SDK for the Sazabi public API",
-  "version": "1.0.0",
+  "version": "1.0.0-dev.g75025e4",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/types/public-sdk/index.d.ts",
@@ -19,7 +19,7 @@
   "engines": {
     "node": ">=18"
   },
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "homepage": "https://github.com/sazabi/sdk",
   "repository": {
     "type": "git",

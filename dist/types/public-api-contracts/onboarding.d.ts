@@ -15,6 +15,7 @@ export declare const OnboardingStepIdSchema: z.ZodEnum<{
     "verify-email": "verify-email";
 }>;
 export declare const OnboardingGateSchema: z.ZodEnum<{
+    "access-denied": "access-denied";
     blocked: "blocked";
     "needs-onboarding": "needs-onboarding";
     ready: "ready";
@@ -34,6 +35,7 @@ export declare const OnboardingInvitationSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const OnboardingSnapshotSchema: z.ZodObject<{
     gate: z.ZodEnum<{
+        "access-denied": "access-denied";
         blocked: "blocked";
         "needs-onboarding": "needs-onboarding";
         ready: "ready";
@@ -118,6 +120,7 @@ export declare const GetOnboardingStateInputSchema: z.ZodObject<{
 export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
     onboarding: z.ZodObject<{
         gate: z.ZodEnum<{
+            "access-denied": "access-denied";
             blocked: "blocked";
             "needs-onboarding": "needs-onboarding";
             ready: "ready";
@@ -202,6 +205,7 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
 }, z.core.$strip>, z.ZodObject<{
     onboarding: z.ZodObject<{
         gate: z.ZodEnum<{
+            "access-denied": "access-denied";
             blocked: "blocked";
             "needs-onboarding": "needs-onboarding";
             ready: "ready";
@@ -345,6 +349,7 @@ export declare const onboardingContract: {
     }, z.core.$strip>, z.ZodObject<{
         onboarding: z.ZodObject<{
             gate: z.ZodEnum<{
+                "access-denied": "access-denied";
                 blocked: "blocked";
                 "needs-onboarding": "needs-onboarding";
                 ready: "ready";

@@ -408,6 +408,223 @@ export declare const QueryLogsOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type QueryLogsOutput = z.infer<typeof QueryLogsOutputSchema>;
+export declare const SearchLogsInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    question: z.ZodString;
+}, z.core.$strip>;
+export type SearchLogsInput = z.infer<typeof SearchLogsInputSchema>;
+export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    status: z.ZodLiteral<"no_match">;
+    explanation: z.ZodString;
+    data: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        candidateCount: z.ZodNumber;
+        familyCount: z.ZodNumber;
+        plannerModel: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"query">;
+    explanation: z.ZodString;
+    spec: z.ZodObject<{
+        version: z.ZodLiteral<1>;
+        pattern: z.ZodObject<{
+            query: z.ZodString;
+        }, z.core.$strict>;
+        timeRange: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"absolute">;
+            from: z.ZodISODateTime;
+            to: z.ZodISODateTime;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"relative">;
+            lookbackSeconds: z.ZodNumber;
+        }, z.core.$strict>], "kind">;
+        filters: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>]>;
+            operator: z.ZodEnum<{
+                contains: "contains";
+                eq: "eq";
+                neq: "neq";
+            }>;
+            value: z.ZodString;
+        }, z.core.$strict>, z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>]>;
+            operator: z.ZodLiteral<"in">;
+            values: z.ZodArray<z.ZodString>;
+        }, z.core.$strict>, z.ZodObject<{
+            field: z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>;
+            operator: z.ZodLiteral<"exists">;
+        }, z.core.$strict>, z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
+                kind: z.ZodLiteral<"severity_number">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>]>;
+            operator: z.ZodEnum<{
+                gt: "gt";
+                gte: "gte";
+                lt: "lt";
+                lte: "lte";
+            }>;
+            value: z.ZodNumber;
+        }, z.core.$strict>], "operator">>>;
+        result: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"details">;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"aggregate">;
+            measure: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                operation: z.ZodLiteral<"count">;
+            }, z.core.$strict>, z.ZodObject<{
+                operation: z.ZodEnum<{
+                    avg: "avg";
+                    max: "max";
+                    min: "min";
+                    p50: "p50";
+                    p95: "p95";
+                    p99: "p99";
+                    sum: "sum";
+                }>;
+                field: z.ZodUnion<readonly [z.ZodObject<{
+                    kind: z.ZodLiteral<"severity_number">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>]>;
+            }, z.core.$strict>], "operation">;
+            groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"severity_number">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>], "kind">>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"timeseries">;
+            bucket: z.ZodEnum<{
+                day: "day";
+                hour: "hour";
+                minute: "minute";
+            }>;
+            measure: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                operation: z.ZodLiteral<"count">;
+            }, z.core.$strict>, z.ZodObject<{
+                operation: z.ZodEnum<{
+                    avg: "avg";
+                    max: "max";
+                    min: "min";
+                    p50: "p50";
+                    p95: "p95";
+                    p99: "p99";
+                    sum: "sum";
+                }>;
+                field: z.ZodUnion<readonly [z.ZodObject<{
+                    kind: z.ZodLiteral<"severity_number">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>]>;
+            }, z.core.$strict>], "operation">;
+            groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"severity_number">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>], "kind">>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, z.core.$strict>], "kind">;
+    }, z.core.$strict>;
+    resolution: z.ZodObject<{
+        version: z.ZodLiteral<1>;
+        definitionHash: z.ZodString;
+        catalogRevision: z.ZodString;
+        familyIds: z.ZodArray<z.ZodUUID>;
+        resolvedAt: z.ZodISODateTime;
+    }, z.core.$strict>;
+    resolvedTimeRange: z.ZodObject<{
+        from: z.ZodString;
+        to: z.ZodString;
+    }, z.core.$strip>;
+    coverage: z.ZodObject<{
+        status: z.ZodLiteral<"complete">;
+        available: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>;
+    data: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        candidateCount: z.ZodNumber;
+        familyCount: z.ZodNumber;
+        plannerModel: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>], "status">;
+export type SearchLogsOutput = z.infer<typeof SearchLogsOutputSchema>;
 /**
  * Contract definition for logs.query.
  */
@@ -462,6 +679,220 @@ export declare const queryLogs: import("../orpc-contracts/index.js").OperationDe
         took: z.ZodNumber;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const searchLogs: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    question: z.ZodString;
+}, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+    status: z.ZodLiteral<"no_match">;
+    explanation: z.ZodString;
+    data: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        candidateCount: z.ZodNumber;
+        familyCount: z.ZodNumber;
+        plannerModel: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"query">;
+    explanation: z.ZodString;
+    spec: z.ZodObject<{
+        version: z.ZodLiteral<1>;
+        pattern: z.ZodObject<{
+            query: z.ZodString;
+        }, z.core.$strict>;
+        timeRange: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"absolute">;
+            from: z.ZodISODateTime;
+            to: z.ZodISODateTime;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"relative">;
+            lookbackSeconds: z.ZodNumber;
+        }, z.core.$strict>], "kind">;
+        filters: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>]>;
+            operator: z.ZodEnum<{
+                contains: "contains";
+                eq: "eq";
+                neq: "neq";
+            }>;
+            value: z.ZodString;
+        }, z.core.$strict>, z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>]>;
+            operator: z.ZodLiteral<"in">;
+            values: z.ZodArray<z.ZodString>;
+        }, z.core.$strict>, z.ZodObject<{
+            field: z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>;
+            operator: z.ZodLiteral<"exists">;
+        }, z.core.$strict>, z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
+                kind: z.ZodLiteral<"severity_number">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>]>;
+            operator: z.ZodEnum<{
+                gt: "gt";
+                gte: "gte";
+                lt: "lt";
+                lte: "lte";
+            }>;
+            value: z.ZodNumber;
+        }, z.core.$strict>], "operator">>>;
+        result: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"details">;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"aggregate">;
+            measure: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                operation: z.ZodLiteral<"count">;
+            }, z.core.$strict>, z.ZodObject<{
+                operation: z.ZodEnum<{
+                    avg: "avg";
+                    max: "max";
+                    min: "min";
+                    p50: "p50";
+                    p95: "p95";
+                    p99: "p99";
+                    sum: "sum";
+                }>;
+                field: z.ZodUnion<readonly [z.ZodObject<{
+                    kind: z.ZodLiteral<"severity_number">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>]>;
+            }, z.core.$strict>], "operation">;
+            groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"severity_number">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>], "kind">>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"timeseries">;
+            bucket: z.ZodEnum<{
+                day: "day";
+                hour: "hour";
+                minute: "minute";
+            }>;
+            measure: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                operation: z.ZodLiteral<"count">;
+            }, z.core.$strict>, z.ZodObject<{
+                operation: z.ZodEnum<{
+                    avg: "avg";
+                    max: "max";
+                    min: "min";
+                    p50: "p50";
+                    p95: "p95";
+                    p99: "p99";
+                    sum: "sum";
+                }>;
+                field: z.ZodUnion<readonly [z.ZodObject<{
+                    kind: z.ZodLiteral<"severity_number">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>]>;
+            }, z.core.$strict>], "operation">;
+            groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"service">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"severity_number">;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"attribute">;
+                source: z.ZodEnum<{
+                    log: "log";
+                    resource: "resource";
+                    scope: "scope";
+                }>;
+                key: z.ZodString;
+            }, z.core.$strict>], "kind">>>;
+            limit: z.ZodDefault<z.ZodNumber>;
+        }, z.core.$strict>], "kind">;
+    }, z.core.$strict>;
+    resolution: z.ZodObject<{
+        version: z.ZodLiteral<1>;
+        definitionHash: z.ZodString;
+        catalogRevision: z.ZodString;
+        familyIds: z.ZodArray<z.ZodUUID>;
+        resolvedAt: z.ZodISODateTime;
+    }, z.core.$strict>;
+    resolvedTimeRange: z.ZodObject<{
+        from: z.ZodString;
+        to: z.ZodString;
+    }, z.core.$strip>;
+    coverage: z.ZodObject<{
+        status: z.ZodLiteral<"complete">;
+        available: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>;
+    data: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        candidateCount: z.ZodNumber;
+        familyCount: z.ZodNumber;
+        plannerModel: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>], "status">, "api">;
 /**
  * Contract definition for logs.schema.
  */
@@ -676,6 +1107,220 @@ export declare const logsContract: {
             took: z.ZodNumber;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly search: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        question: z.ZodString;
+    }, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+        status: z.ZodLiteral<"no_match">;
+        explanation: z.ZodString;
+        data: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        meta: z.ZodObject<{
+            took: z.ZodNumber;
+            retrievalMs: z.ZodNumber;
+            planningMs: z.ZodNumber;
+            executionMs: z.ZodNumber;
+            candidateCount: z.ZodNumber;
+            familyCount: z.ZodNumber;
+            plannerModel: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, z.ZodObject<{
+        status: z.ZodLiteral<"query">;
+        explanation: z.ZodString;
+        spec: z.ZodObject<{
+            version: z.ZodLiteral<1>;
+            pattern: z.ZodObject<{
+                query: z.ZodString;
+            }, z.core.$strict>;
+            timeRange: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"absolute">;
+                from: z.ZodISODateTime;
+                to: z.ZodISODateTime;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"relative">;
+                lookbackSeconds: z.ZodNumber;
+            }, z.core.$strict>], "kind">;
+            filters: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                field: z.ZodUnion<readonly [z.ZodObject<{
+                    kind: z.ZodLiteral<"service">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>]>;
+                operator: z.ZodEnum<{
+                    contains: "contains";
+                    eq: "eq";
+                    neq: "neq";
+                }>;
+                value: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                field: z.ZodUnion<readonly [z.ZodObject<{
+                    kind: z.ZodLiteral<"service">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>]>;
+                operator: z.ZodLiteral<"in">;
+                values: z.ZodArray<z.ZodString>;
+            }, z.core.$strict>, z.ZodObject<{
+                field: z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>;
+                operator: z.ZodLiteral<"exists">;
+            }, z.core.$strict>, z.ZodObject<{
+                field: z.ZodUnion<readonly [z.ZodObject<{
+                    kind: z.ZodLiteral<"severity_number">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>]>;
+                operator: z.ZodEnum<{
+                    gt: "gt";
+                    gte: "gte";
+                    lt: "lt";
+                    lte: "lte";
+                }>;
+                value: z.ZodNumber;
+            }, z.core.$strict>], "operator">>>;
+            result: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"details">;
+                limit: z.ZodDefault<z.ZodNumber>;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"aggregate">;
+                measure: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    operation: z.ZodLiteral<"count">;
+                }, z.core.$strict>, z.ZodObject<{
+                    operation: z.ZodEnum<{
+                        avg: "avg";
+                        max: "max";
+                        min: "min";
+                        p50: "p50";
+                        p95: "p95";
+                        p99: "p99";
+                        sum: "sum";
+                    }>;
+                    field: z.ZodUnion<readonly [z.ZodObject<{
+                        kind: z.ZodLiteral<"severity_number">;
+                    }, z.core.$strict>, z.ZodObject<{
+                        kind: z.ZodLiteral<"attribute">;
+                        source: z.ZodEnum<{
+                            log: "log";
+                            resource: "resource";
+                            scope: "scope";
+                        }>;
+                        key: z.ZodString;
+                    }, z.core.$strict>]>;
+                }, z.core.$strict>], "operation">;
+                groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    kind: z.ZodLiteral<"service">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"severity_number">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>], "kind">>>;
+                limit: z.ZodDefault<z.ZodNumber>;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"timeseries">;
+                bucket: z.ZodEnum<{
+                    day: "day";
+                    hour: "hour";
+                    minute: "minute";
+                }>;
+                measure: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    operation: z.ZodLiteral<"count">;
+                }, z.core.$strict>, z.ZodObject<{
+                    operation: z.ZodEnum<{
+                        avg: "avg";
+                        max: "max";
+                        min: "min";
+                        p50: "p50";
+                        p95: "p95";
+                        p99: "p99";
+                        sum: "sum";
+                    }>;
+                    field: z.ZodUnion<readonly [z.ZodObject<{
+                        kind: z.ZodLiteral<"severity_number">;
+                    }, z.core.$strict>, z.ZodObject<{
+                        kind: z.ZodLiteral<"attribute">;
+                        source: z.ZodEnum<{
+                            log: "log";
+                            resource: "resource";
+                            scope: "scope";
+                        }>;
+                        key: z.ZodString;
+                    }, z.core.$strict>]>;
+                }, z.core.$strict>], "operation">;
+                groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    kind: z.ZodLiteral<"service">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"severity_number">;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"attribute">;
+                    source: z.ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: z.ZodString;
+                }, z.core.$strict>], "kind">>>;
+                limit: z.ZodDefault<z.ZodNumber>;
+            }, z.core.$strict>], "kind">;
+        }, z.core.$strict>;
+        resolution: z.ZodObject<{
+            version: z.ZodLiteral<1>;
+            definitionHash: z.ZodString;
+            catalogRevision: z.ZodString;
+            familyIds: z.ZodArray<z.ZodUUID>;
+            resolvedAt: z.ZodISODateTime;
+        }, z.core.$strict>;
+        resolvedTimeRange: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+        coverage: z.ZodObject<{
+            status: z.ZodLiteral<"complete">;
+            available: z.ZodObject<{
+                from: z.ZodString;
+                to: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>;
+        data: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+        meta: z.ZodObject<{
+            took: z.ZodNumber;
+            retrievalMs: z.ZodNumber;
+            planningMs: z.ZodNumber;
+            executionMs: z.ZodNumber;
+            candidateCount: z.ZodNumber;
+            familyCount: z.ZodNumber;
+            plannerModel: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>], "status">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly schema: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         question: z.ZodOptional<z.ZodString>;

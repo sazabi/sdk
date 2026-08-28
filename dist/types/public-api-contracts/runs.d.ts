@@ -4,7 +4,6 @@ export declare const RunSchema: z.ZodObject<{
     threadId: z.ZodString;
     userMessageId: z.ZodNullable<z.ZodString>;
     assistantMessageId: z.ZodNullable<z.ZodString>;
-    parentRunId: z.ZodNullable<z.ZodString>;
     workflowRunId: z.ZodNullable<z.ZodString>;
     status: z.ZodEnum<{
         aborted: "aborted";
@@ -42,7 +41,6 @@ export declare const ListRunsOutputSchema: z.ZodObject<{
         threadId: z.ZodString;
         userMessageId: z.ZodNullable<z.ZodString>;
         assistantMessageId: z.ZodNullable<z.ZodString>;
-        parentRunId: z.ZodNullable<z.ZodString>;
         workflowRunId: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             aborted: "aborted";
@@ -82,7 +80,6 @@ export declare const ListThreadRunsOutputSchema: z.ZodObject<{
         threadId: z.ZodString;
         userMessageId: z.ZodNullable<z.ZodString>;
         assistantMessageId: z.ZodNullable<z.ZodString>;
-        parentRunId: z.ZodNullable<z.ZodString>;
         workflowRunId: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             aborted: "aborted";
@@ -183,7 +180,6 @@ export declare const listRuns: import("../orpc-contracts/index.js").OperationDef
         threadId: z.ZodString;
         userMessageId: z.ZodNullable<z.ZodString>;
         assistantMessageId: z.ZodNullable<z.ZodString>;
-        parentRunId: z.ZodNullable<z.ZodString>;
         workflowRunId: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             aborted: "aborted";
@@ -225,7 +221,6 @@ export declare const listThreadRuns: import("../orpc-contracts/index.js").Operat
         threadId: z.ZodString;
         userMessageId: z.ZodNullable<z.ZodString>;
         assistantMessageId: z.ZodNullable<z.ZodString>;
-        parentRunId: z.ZodNullable<z.ZodString>;
         workflowRunId: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             aborted: "aborted";
@@ -294,7 +289,6 @@ export declare const runsContract: {
             threadId: z.ZodString;
             userMessageId: z.ZodNullable<z.ZodString>;
             assistantMessageId: z.ZodNullable<z.ZodString>;
-            parentRunId: z.ZodNullable<z.ZodString>;
             workflowRunId: z.ZodNullable<z.ZodString>;
             status: z.ZodEnum<{
                 aborted: "aborted";
@@ -333,7 +327,6 @@ export declare const runsContract: {
             threadId: z.ZodString;
             userMessageId: z.ZodNullable<z.ZodString>;
             assistantMessageId: z.ZodNullable<z.ZodString>;
-            parentRunId: z.ZodNullable<z.ZodString>;
             workflowRunId: z.ZodNullable<z.ZodString>;
             status: z.ZodEnum<{
                 aborted: "aborted";

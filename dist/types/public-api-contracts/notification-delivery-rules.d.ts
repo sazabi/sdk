@@ -138,8 +138,8 @@ export declare const DeliveryRuleComponentSchema: z.ZodObject<{
     label: z.ZodString;
     lifecycle: z.ZodEnum<{
         active: "active";
+        inactive: "inactive";
         merged: "merged";
-        retired: "retired";
     }>;
 }, z.core.$strip>;
 export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
@@ -177,8 +177,8 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
@@ -190,8 +190,8 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
@@ -237,8 +237,8 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
@@ -250,8 +250,8 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
@@ -290,8 +290,8 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
@@ -370,8 +370,8 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
@@ -383,8 +383,8 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
@@ -465,8 +465,8 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
@@ -478,8 +478,8 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
@@ -538,8 +538,8 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
@@ -551,8 +551,8 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
@@ -593,8 +593,8 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
@@ -671,8 +671,8 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
@@ -684,8 +684,8 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
@@ -765,8 +765,8 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
@@ -778,8 +778,8 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
         label: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
@@ -830,8 +830,8 @@ export declare const notificationDeliveryRulesContract: {
                 label: z.ZodString;
                 lifecycle: z.ZodEnum<{
                     active: "active";
+                    inactive: "inactive";
                     merged: "merged";
-                    retired: "retired";
                 }>;
             }, z.core.$strip>>;
             componentId: z.ZodNullable<z.ZodString>;
@@ -843,8 +843,8 @@ export declare const notificationDeliveryRulesContract: {
                 label: z.ZodString;
                 lifecycle: z.ZodEnum<{
                     active: "active";
+                    inactive: "inactive";
                     merged: "merged";
-                    retired: "retired";
                 }>;
             }, z.core.$strip>>;
             createdAt: z.ZodString;
@@ -885,8 +885,8 @@ export declare const notificationDeliveryRulesContract: {
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -963,8 +963,8 @@ export declare const notificationDeliveryRulesContract: {
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
@@ -976,8 +976,8 @@ export declare const notificationDeliveryRulesContract: {
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
@@ -1057,8 +1057,8 @@ export declare const notificationDeliveryRulesContract: {
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
@@ -1070,8 +1070,8 @@ export declare const notificationDeliveryRulesContract: {
             label: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
