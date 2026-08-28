@@ -2,7 +2,7 @@ import { z } from "zod";
 /**
  * Supported log source provider values derived from canonical catalog specs.
  */
-export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex"];
+export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk"];
 /**
  * Log source setup modes. `managed` log sources hold vendor credentials that
  * Sazabi uses to provision delivery; `connectionless` log sources mint a keyed
@@ -130,6 +130,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        sazabi_browser_sdk: "sazabi_browser_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -186,6 +187,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        sazabi_browser_sdk: "sazabi_browser_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -307,6 +309,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        sazabi_browser_sdk: "sazabi_browser_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -353,6 +356,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -408,6 +412,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         railway: "railway";
         render: "render";
         respan: "respan";
+        sazabi_browser_sdk: "sazabi_browser_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -453,6 +458,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -506,6 +512,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        sazabi_browser_sdk: "sazabi_browser_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -557,6 +564,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -630,6 +638,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         railway: "railway";
         render: "render";
         respan: "respan";
+        sazabi_browser_sdk: "sazabi_browser_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -680,6 +689,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -755,6 +765,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -844,6 +855,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -933,6 +945,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -992,6 +1005,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1079,6 +1093,7 @@ export declare const logSourcesContract: {
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1124,6 +1139,7 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                sazabi_browser_sdk: "sazabi_browser_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -1177,6 +1193,7 @@ export declare const logSourcesContract: {
             railway: "railway";
             render: "render";
             respan: "respan";
+            sazabi_browser_sdk: "sazabi_browser_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1227,6 +1244,7 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                sazabi_browser_sdk: "sazabi_browser_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -1301,6 +1319,7 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                sazabi_browser_sdk: "sazabi_browser_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -1389,6 +1408,7 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                sazabi_browser_sdk: "sazabi_browser_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";

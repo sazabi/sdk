@@ -62,6 +62,7 @@ export declare const GetConnectedAccountConnectAttemptOutputSchema: z.ZodObject<
         failed: "failed";
         pending: "pending";
     }>;
+    conflictPending: z.ZodOptional<z.ZodBoolean>;
     errorCode: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type GetConnectedAccountConnectAttemptInput = z.infer<typeof GetConnectedAccountConnectAttemptInputSchema>;
@@ -76,6 +77,7 @@ export declare const getConnectedAccountConnectAttempt: import("../orpc-contract
         failed: "failed";
         pending: "pending";
     }>;
+    conflictPending: z.ZodOptional<z.ZodBoolean>;
     errorCode: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const ListConnectedAccountsInputSchema: z.ZodObject<{

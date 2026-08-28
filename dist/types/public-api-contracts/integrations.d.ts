@@ -884,6 +884,162 @@ export declare const updateSlackConfiguration: import("../orpc-contracts/index.j
     automaticResponses: z.ZodBoolean;
     acknowledgementMessage: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const LinearSeverityActionSchema: z.ZodEnum<{
+    create: "create";
+    skip: "skip";
+}>;
+export declare const LinearSeverityRulesSchema: z.ZodObject<{
+    low: z.ZodEnum<{
+        create: "create";
+        skip: "skip";
+    }>;
+    medium: z.ZodEnum<{
+        create: "create";
+        skip: "skip";
+    }>;
+    high: z.ZodEnum<{
+        create: "create";
+        skip: "skip";
+    }>;
+    critical: z.ZodEnum<{
+        create: "create";
+        skip: "skip";
+    }>;
+}, z.core.$strip>;
+export type LinearSeverityRules = z.infer<typeof LinearSeverityRulesSchema>;
+export declare const LinearAutomationConfigurationSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    enabled: z.ZodBoolean;
+    teamId: z.ZodNullable<z.ZodString>;
+    projectId: z.ZodNullable<z.ZodString>;
+    severityRules: z.ZodObject<{
+        low: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        medium: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        high: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        critical: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type LinearAutomationConfiguration = z.infer<typeof LinearAutomationConfigurationSchema>;
+export declare const GetLinearAutomationConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export type GetLinearAutomationConfigurationInput = z.infer<typeof GetLinearAutomationConfigurationInputSchema>;
+export type GetLinearAutomationConfigurationOutput = LinearAutomationConfiguration;
+export declare const getLinearAutomationConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    enabled: z.ZodBoolean;
+    teamId: z.ZodNullable<z.ZodString>;
+    projectId: z.ZodNullable<z.ZodString>;
+    severityRules: z.ZodObject<{
+        low: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        medium: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        high: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        critical: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const UpdateLinearAutomationConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    enabled: z.ZodBoolean;
+    teamId: z.ZodNullable<z.ZodString>;
+    projectId: z.ZodNullable<z.ZodString>;
+    severityRules: z.ZodObject<{
+        low: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        medium: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        high: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        critical: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type UpdateLinearAutomationConfigurationInput = z.infer<typeof UpdateLinearAutomationConfigurationInputSchema>;
+export type UpdateLinearAutomationConfigurationOutput = LinearAutomationConfiguration;
+export declare const updateLinearAutomationConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    enabled: z.ZodBoolean;
+    teamId: z.ZodNullable<z.ZodString>;
+    projectId: z.ZodNullable<z.ZodString>;
+    severityRules: z.ZodObject<{
+        low: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        medium: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        high: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        critical: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    enabled: z.ZodBoolean;
+    teamId: z.ZodNullable<z.ZodString>;
+    projectId: z.ZodNullable<z.ZodString>;
+    severityRules: z.ZodObject<{
+        low: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        medium: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        high: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+        critical: z.ZodEnum<{
+            create: "create";
+            skip: "skip";
+        }>;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
 export declare const SlackChannelProjectMappingSchema: z.ZodObject<{
     connectionId: z.ZodString;
     slackChannelId: z.ZodString;

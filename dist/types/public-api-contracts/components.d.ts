@@ -11,8 +11,8 @@ export declare const ComponentSchema: z.ZodObject<{
     }>;
     lifecycle: z.ZodEnum<{
         active: "active";
+        inactive: "inactive";
         merged: "merged";
-        retired: "retired";
     }>;
     observationState: z.ZodEnum<{
         observed: "observed";
@@ -30,8 +30,8 @@ export declare const ComponentSchema: z.ZodObject<{
     firstSeenAt: z.ZodString;
     lastSeenAt: z.ZodString;
     deletedAt: z.ZodNullable<z.ZodString>;
-    retiredAt: z.ZodNullable<z.ZodString>;
-    retirementReason: z.ZodNullable<z.ZodString>;
+    inactiveAt: z.ZodNullable<z.ZodString>;
+    inactiveReason: z.ZodNullable<z.ZodString>;
     legacyStateUnknown: z.ZodBoolean;
 }, z.core.$strip>;
 export type Component = z.infer<typeof ComponentSchema>;
@@ -55,8 +55,8 @@ export declare const ListComponentsOutputSchema: z.ZodObject<{
         }>;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
         observationState: z.ZodEnum<{
             observed: "observed";
@@ -74,8 +74,8 @@ export declare const ListComponentsOutputSchema: z.ZodObject<{
         firstSeenAt: z.ZodString;
         lastSeenAt: z.ZodString;
         deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
@@ -98,8 +98,8 @@ export declare const GetComponentOutputSchema: z.ZodObject<{
         }>;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
         observationState: z.ZodEnum<{
             observed: "observed";
@@ -117,8 +117,8 @@ export declare const GetComponentOutputSchema: z.ZodObject<{
         firstSeenAt: z.ZodString;
         lastSeenAt: z.ZodString;
         deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -147,8 +147,8 @@ export declare const RegisterComponentOutputSchema: z.ZodObject<{
         }>;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
         observationState: z.ZodEnum<{
             observed: "observed";
@@ -166,8 +166,8 @@ export declare const RegisterComponentOutputSchema: z.ZodObject<{
         firstSeenAt: z.ZodString;
         lastSeenAt: z.ZodString;
         deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -192,8 +192,8 @@ export declare const RenameComponentOutputSchema: z.ZodObject<{
         }>;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
         observationState: z.ZodEnum<{
             observed: "observed";
@@ -211,8 +211,8 @@ export declare const RenameComponentOutputSchema: z.ZodObject<{
         firstSeenAt: z.ZodString;
         lastSeenAt: z.ZodString;
         deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
         legacyStateUnknown: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -220,15 +220,18 @@ export type RenameComponentOutput = z.infer<typeof RenameComponentOutputSchema>;
 export declare const DeregisterComponentInputSchema: z.ZodObject<{
     componentId: z.ZodString;
     reason: z.ZodOptional<z.ZodString>;
+    requestId: z.ZodOptional<z.ZodString>;
+    componentRevisions: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodNumber>>;
+    confirmCanonicalGroup: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
 export type DeregisterComponentInput = z.infer<typeof DeregisterComponentInputSchema>;
-export declare const ComponentRetirementPreviewSchema: z.ZodObject<{
+export declare const ComponentDeregistrationPreviewSchema: z.ZodObject<{
     requestedComponentId: z.ZodString;
     canonicalComponentId: z.ZodString;
     canonicalComponentName: z.ZodString;
     lifecycle: z.ZodEnum<{
         active: "active";
-        retired: "retired";
+        inactive: "inactive";
     }>;
     affectedComponentIds: z.ZodArray<z.ZodString>;
     componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
@@ -249,311 +252,16 @@ export declare const ComponentRetirementPreviewSchema: z.ZodObject<{
     }, z.core.$strip>;
     counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
 }, z.core.$strip>;
-export type ComponentRetirementPreview = z.infer<typeof ComponentRetirementPreviewSchema>;
-export declare const DeregisterComponentOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
-    status: z.ZodLiteral<"observation_withdrawn">;
-    componentId: z.ZodString;
-    sourceType: z.ZodLiteral<"secret_key">;
-    withdrawn: z.ZodBoolean;
-}, z.core.$strip>, z.ZodObject<{
-    status: z.ZodLiteral<"retirement_confirmation_required">;
-    preview: z.ZodObject<{
-        requestedComponentId: z.ZodString;
-        canonicalComponentId: z.ZodString;
-        canonicalComponentName: z.ZodString;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            retired: "retired";
-        }>;
-        affectedComponentIds: z.ZodArray<z.ZodString>;
-        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        requiresCanonicalGroupConfirmation: z.ZodBoolean;
-        recommendationScopeEnabled: z.ZodLiteral<false>;
-        dependents: z.ZodObject<{
-            openIssueIds: z.ZodArray<z.ZodString>;
-            activeComponentIssueIds: z.ZodArray<z.ZodString>;
-            automationBindingIds: z.ZodArray<z.ZodString>;
-            notificationRuleIds: z.ZodArray<z.ZodString>;
-            dataSourceMappingIds: z.ZodArray<z.ZodString>;
-            observationIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
-            recommendationScopeIds: z.ZodArray<z.ZodString>;
-            externalIncidentIds: z.ZodArray<z.ZodString>;
-            authorizedDeliveryIds: z.ZodArray<z.ZodString>;
-            authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>;
-        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    }, z.core.$strip>;
-}, z.core.$strip>], "status">;
-export type DeregisterComponentOutput = z.infer<typeof DeregisterComponentOutputSchema>;
-export declare const listComponents: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
-    cursor: z.ZodOptional<z.ZodString>;
-    includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
-}, z.core.$strip>, z.ZodObject<{
-    components: z.ZodArray<z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        description: z.ZodNullable<z.ZodString>;
-        origin: z.ZodEnum<{
-            code_detected: "code_detected";
-            log_observed: "log_observed";
-            user_declared: "user_declared";
-        }>;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            merged: "merged";
-            retired: "retired";
-        }>;
-        observationState: z.ZodEnum<{
-            observed: "observed";
-            stale: "stale";
-            unobserved: "unobserved";
-        }>;
-        registryRevision: z.ZodNumber;
-        canonicalComponentId: z.ZodString;
-        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
-            degraded: "degraded";
-            operational: "operational";
-            outage: "outage";
-        }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
-        legacyStateUnknown: z.ZodBoolean;
-    }, z.core.$strip>>;
-    nextCursor: z.ZodNullable<z.ZodString>;
-}, z.core.$strip>, "api">;
-export declare const getComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    componentId: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    component: z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        description: z.ZodNullable<z.ZodString>;
-        origin: z.ZodEnum<{
-            code_detected: "code_detected";
-            log_observed: "log_observed";
-            user_declared: "user_declared";
-        }>;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            merged: "merged";
-            retired: "retired";
-        }>;
-        observationState: z.ZodEnum<{
-            observed: "observed";
-            stale: "stale";
-            unobserved: "unobserved";
-        }>;
-        registryRevision: z.ZodNumber;
-        canonicalComponentId: z.ZodString;
-        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
-            degraded: "degraded";
-            operational: "operational";
-            outage: "outage";
-        }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
-        legacyStateUnknown: z.ZodBoolean;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-export declare const registerComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    name: z.ZodString;
-    description: z.ZodOptional<z.ZodString>;
-    requestId: z.ZodOptional<z.ZodString>;
-    origin: z.ZodOptional<z.ZodEnum<{
-        code_detected: "code_detected";
-        log_observed: "log_observed";
-    }>>;
-}, z.core.$strip>, z.ZodObject<{
-    component: z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        description: z.ZodNullable<z.ZodString>;
-        origin: z.ZodEnum<{
-            code_detected: "code_detected";
-            log_observed: "log_observed";
-            user_declared: "user_declared";
-        }>;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            merged: "merged";
-            retired: "retired";
-        }>;
-        observationState: z.ZodEnum<{
-            observed: "observed";
-            stale: "stale";
-            unobserved: "unobserved";
-        }>;
-        registryRevision: z.ZodNumber;
-        canonicalComponentId: z.ZodString;
-        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
-            degraded: "degraded";
-            operational: "operational";
-            outage: "outage";
-        }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
-        legacyStateUnknown: z.ZodBoolean;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-export declare const deregisterComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    componentId: z.ZodString;
-    reason: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
-    status: z.ZodLiteral<"observation_withdrawn">;
-    componentId: z.ZodString;
-    sourceType: z.ZodLiteral<"secret_key">;
-    withdrawn: z.ZodBoolean;
-}, z.core.$strip>, z.ZodObject<{
-    status: z.ZodLiteral<"retirement_confirmation_required">;
-    preview: z.ZodObject<{
-        requestedComponentId: z.ZodString;
-        canonicalComponentId: z.ZodString;
-        canonicalComponentName: z.ZodString;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            retired: "retired";
-        }>;
-        affectedComponentIds: z.ZodArray<z.ZodString>;
-        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        requiresCanonicalGroupConfirmation: z.ZodBoolean;
-        recommendationScopeEnabled: z.ZodLiteral<false>;
-        dependents: z.ZodObject<{
-            openIssueIds: z.ZodArray<z.ZodString>;
-            activeComponentIssueIds: z.ZodArray<z.ZodString>;
-            automationBindingIds: z.ZodArray<z.ZodString>;
-            notificationRuleIds: z.ZodArray<z.ZodString>;
-            dataSourceMappingIds: z.ZodArray<z.ZodString>;
-            observationIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
-            recommendationScopeIds: z.ZodArray<z.ZodString>;
-            externalIncidentIds: z.ZodArray<z.ZodString>;
-            authorizedDeliveryIds: z.ZodArray<z.ZodString>;
-            authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>;
-        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    }, z.core.$strip>;
-}, z.core.$strip>], "status">, "api">;
-export declare const renameComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    componentId: z.ZodString;
-    name: z.ZodString;
-    requestId: z.ZodString;
-    reason: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    component: z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        description: z.ZodNullable<z.ZodString>;
-        origin: z.ZodEnum<{
-            code_detected: "code_detected";
-            log_observed: "log_observed";
-            user_declared: "user_declared";
-        }>;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            merged: "merged";
-            retired: "retired";
-        }>;
-        observationState: z.ZodEnum<{
-            observed: "observed";
-            stale: "stale";
-            unobserved: "unobserved";
-        }>;
-        registryRevision: z.ZodNumber;
-        canonicalComponentId: z.ZodString;
-        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
-            degraded: "degraded";
-            operational: "operational";
-            outage: "outage";
-        }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
-        retiredAt: z.ZodNullable<z.ZodString>;
-        retirementReason: z.ZodNullable<z.ZodString>;
-        legacyStateUnknown: z.ZodBoolean;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-export declare const AssignComponentTeamInputSchema: z.ZodObject<{
-    componentId: z.ZodString;
-    teamId: z.ZodNullable<z.ZodString>;
-}, z.core.$strip>;
-export type AssignComponentTeamInput = z.infer<typeof AssignComponentTeamInputSchema>;
-export declare const AssignComponentTeamOutputSchema: z.ZodObject<{
-    componentId: z.ZodString;
-    teamId: z.ZodNullable<z.ZodString>;
-}, z.core.$strip>;
-export type AssignComponentTeamOutput = z.infer<typeof AssignComponentTeamOutputSchema>;
-export declare const assignComponentTeam: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    componentId: z.ZodString;
-    teamId: z.ZodNullable<z.ZodString>;
-}, z.core.$strip>, z.ZodObject<{
-    componentId: z.ZodString;
-    teamId: z.ZodNullable<z.ZodString>;
-}, z.core.$strip>, "api">;
-export declare const PreviewComponentRetirementInputSchema: z.ZodObject<{
-    componentId: z.ZodString;
-}, z.core.$strip>;
-export type PreviewComponentRetirementInput = z.infer<typeof PreviewComponentRetirementInputSchema>;
-export declare const PreviewComponentRetirementOutputSchema: z.ZodObject<{
-    preview: z.ZodObject<{
-        requestedComponentId: z.ZodString;
-        canonicalComponentId: z.ZodString;
-        canonicalComponentName: z.ZodString;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            retired: "retired";
-        }>;
-        affectedComponentIds: z.ZodArray<z.ZodString>;
-        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        requiresCanonicalGroupConfirmation: z.ZodBoolean;
-        recommendationScopeEnabled: z.ZodLiteral<false>;
-        dependents: z.ZodObject<{
-            openIssueIds: z.ZodArray<z.ZodString>;
-            activeComponentIssueIds: z.ZodArray<z.ZodString>;
-            automationBindingIds: z.ZodArray<z.ZodString>;
-            notificationRuleIds: z.ZodArray<z.ZodString>;
-            dataSourceMappingIds: z.ZodArray<z.ZodString>;
-            observationIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
-            recommendationScopeIds: z.ZodArray<z.ZodString>;
-            externalIncidentIds: z.ZodArray<z.ZodString>;
-            authorizedDeliveryIds: z.ZodArray<z.ZodString>;
-            authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>;
-        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type PreviewComponentRetirementOutput = z.infer<typeof PreviewComponentRetirementOutputSchema>;
-export declare const CommitComponentRetirementInputSchema: z.ZodObject<{
+export type ComponentDeregistrationPreview = z.infer<typeof ComponentDeregistrationPreviewSchema>;
+export declare const CommitComponentDeregistrationInputSchema: z.ZodObject<{
     componentId: z.ZodString;
     requestId: z.ZodString;
     reason: z.ZodString;
     componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
     confirmCanonicalGroup: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
-export type CommitComponentRetirementInput = z.infer<typeof CommitComponentRetirementInputSchema>;
-export declare const ComponentRetirementResultSchema: z.ZodObject<{
+export type CommitComponentDeregistrationInput = z.infer<typeof CommitComponentDeregistrationInputSchema>;
+export declare const ComponentDeregistrationResultSchema: z.ZodObject<{
     operationId: z.ZodString;
     status: z.ZodEnum<{
         committed: "committed";
@@ -585,140 +293,21 @@ export declare const ComponentRetirementResultSchema: z.ZodObject<{
     }, z.core.$strip>;
     followups: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strip>;
-export type ComponentRetirementResult = z.infer<typeof ComponentRetirementResultSchema>;
-export declare const CommitComponentRetirementOutputSchema: z.ZodObject<{
-    result: z.ZodObject<{
-        operationId: z.ZodString;
-        status: z.ZodEnum<{
-            committed: "committed";
-            complete: "complete";
-            followup_failed: "followup_failed";
-        }>;
-        requestedComponentId: z.ZodString;
-        canonicalComponentId: z.ZodString;
-        affectedComponentIds: z.ZodArray<z.ZodString>;
-        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        authorizedDeliveryIds: z.ZodArray<z.ZodString>;
-        authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
-        manualExternalIncidentIds: z.ZodArray<z.ZodString>;
-        issueAutomationSuppressions: z.ZodNumber;
-        outboxEffectCount: z.ZodNumber;
-        manifest: z.ZodObject<{
-            notificationRules: z.ZodArray<z.ZodObject<{
-                id: z.ZodString;
-                rowRevision: z.ZodNumber;
-            }, z.core.$strip>>;
-            automationBindings: z.ZodArray<z.ZodObject<{
-                id: z.ZodString;
-                rowRevision: z.ZodNumber;
-            }, z.core.$strip>>;
-            relationships: z.ZodArray<z.ZodObject<{
-                id: z.ZodString;
-                rowRevision: z.ZodNumber;
-            }, z.core.$strip>>;
-        }, z.core.$strip>;
-        followups: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type CommitComponentRetirementOutput = z.infer<typeof CommitComponentRetirementOutputSchema>;
-export declare const PreviewComponentRestorationInputSchema: z.ZodObject<{
+export type ComponentDeregistrationResult = z.infer<typeof ComponentDeregistrationResultSchema>;
+export declare const DeregisterComponentOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    status: z.ZodLiteral<"observation_withdrawn">;
     componentId: z.ZodString;
-    retirementOperationId: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>;
-export type PreviewComponentRestorationInput = z.infer<typeof PreviewComponentRestorationInputSchema>;
-export declare const ComponentRestorationPreviewSchema: z.ZodObject<{
-    requestedComponentId: z.ZodString;
-    canonicalComponentId: z.ZodString;
-    canonicalComponentName: z.ZodString;
-    retirementOperationId: z.ZodString;
-    affectedComponentIds: z.ZodArray<z.ZodString>;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    eligible: z.ZodObject<{
-        notificationRuleIds: z.ZodArray<z.ZodString>;
-        automationBindingIds: z.ZodArray<z.ZodString>;
-        recommendationScopeIds: z.ZodArray<z.ZodString>;
-        relationshipIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type ComponentRestorationPreview = z.infer<typeof ComponentRestorationPreviewSchema>;
-export declare const PreviewComponentRestorationOutputSchema: z.ZodObject<{
-    preview: z.ZodObject<{
-        requestedComponentId: z.ZodString;
-        canonicalComponentId: z.ZodString;
-        canonicalComponentName: z.ZodString;
-        retirementOperationId: z.ZodString;
-        affectedComponentIds: z.ZodArray<z.ZodString>;
-        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        eligible: z.ZodObject<{
-            notificationRuleIds: z.ZodArray<z.ZodString>;
-            automationBindingIds: z.ZodArray<z.ZodString>;
-            recommendationScopeIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type PreviewComponentRestorationOutput = z.infer<typeof PreviewComponentRestorationOutputSchema>;
-export declare const ComponentRestorationSelectionsSchema: z.ZodObject<{
-    notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-    automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-    recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-    relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-}, z.core.$strip>;
-export type ComponentRestorationSelections = z.infer<typeof ComponentRestorationSelectionsSchema>;
-export declare const CommitComponentRestorationInputSchema: z.ZodObject<{
-    componentId: z.ZodString;
-    retirementOperationId: z.ZodString;
-    requestId: z.ZodString;
-    reason: z.ZodString;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    selections: z.ZodDefault<z.ZodObject<{
-        notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-    }, z.core.$strip>>;
-}, z.core.$strip>;
-export type CommitComponentRestorationInput = z.infer<typeof CommitComponentRestorationInputSchema>;
-export declare const ComponentRestorationResultSchema: z.ZodObject<{
-    operationId: z.ZodString;
-    status: z.ZodLiteral<"complete">;
-    requestedComponentId: z.ZodString;
-    canonicalComponentId: z.ZodString;
-    affectedComponentIds: z.ZodArray<z.ZodString>;
-    restored: z.ZodObject<{
-        notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type ComponentRestorationResult = z.infer<typeof ComponentRestorationResultSchema>;
-export declare const CommitComponentRestorationOutputSchema: z.ZodObject<{
-    result: z.ZodObject<{
-        operationId: z.ZodString;
-        status: z.ZodLiteral<"complete">;
-        requestedComponentId: z.ZodString;
-        canonicalComponentId: z.ZodString;
-        affectedComponentIds: z.ZodArray<z.ZodString>;
-        restored: z.ZodObject<{
-            notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-            automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-            recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-            relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        }, z.core.$strip>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type CommitComponentRestorationOutput = z.infer<typeof CommitComponentRestorationOutputSchema>;
-export declare const previewComponentRetirement: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    componentId: z.ZodString;
+    sourceType: z.ZodLiteral<"secret_key">;
+    withdrawn: z.ZodBoolean;
 }, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"deregistration_confirmation_required">;
     preview: z.ZodObject<{
         requestedComponentId: z.ZodString;
         canonicalComponentId: z.ZodString;
         canonicalComponentName: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
-            retired: "retired";
+            inactive: "inactive";
         }>;
         affectedComponentIds: z.ZodArray<z.ZodString>;
         componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
@@ -739,14 +328,8 @@ export declare const previewComponentRetirement: import("../orpc-contracts/index
         }, z.core.$strip>;
         counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
     }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-export declare const retireComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    componentId: z.ZodString;
-    requestId: z.ZodString;
-    reason: z.ZodString;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    confirmCanonicalGroup: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"deregistered">;
     result: z.ZodObject<{
         operationId: z.ZodString;
         status: z.ZodEnum<{
@@ -779,16 +362,367 @@ export declare const retireComponent: import("../orpc-contracts/index.js").Opera
         }, z.core.$strip>;
         followups: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     }, z.core.$strip>;
+}, z.core.$strip>], "status">;
+export type DeregisterComponentOutput = z.infer<typeof DeregisterComponentOutputSchema>;
+export declare const listComponents: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
+    cursor: z.ZodOptional<z.ZodString>;
+    includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
+}, z.core.$strip>, z.ZodObject<{
+    components: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        origin: z.ZodEnum<{
+            code_detected: "code_detected";
+            log_observed: "log_observed";
+            user_declared: "user_declared";
+        }>;
+        lifecycle: z.ZodEnum<{
+            active: "active";
+            inactive: "inactive";
+            merged: "merged";
+        }>;
+        observationState: z.ZodEnum<{
+            observed: "observed";
+            stale: "stale";
+            unobserved: "unobserved";
+        }>;
+        registryRevision: z.ZodNumber;
+        canonicalComponentId: z.ZodString;
+        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
+        currentStatus: z.ZodEnum<{
+            degraded: "degraded";
+            operational: "operational";
+            outage: "outage";
+        }>;
+        firstSeenAt: z.ZodString;
+        lastSeenAt: z.ZodString;
+        deletedAt: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
+        legacyStateUnknown: z.ZodBoolean;
+    }, z.core.$strip>>;
+    nextCursor: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
-export declare const previewComponentRestoration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const getComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
-    retirementOperationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    component: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        origin: z.ZodEnum<{
+            code_detected: "code_detected";
+            log_observed: "log_observed";
+            user_declared: "user_declared";
+        }>;
+        lifecycle: z.ZodEnum<{
+            active: "active";
+            inactive: "inactive";
+            merged: "merged";
+        }>;
+        observationState: z.ZodEnum<{
+            observed: "observed";
+            stale: "stale";
+            unobserved: "unobserved";
+        }>;
+        registryRevision: z.ZodNumber;
+        canonicalComponentId: z.ZodString;
+        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
+        currentStatus: z.ZodEnum<{
+            degraded: "degraded";
+            operational: "operational";
+            outage: "outage";
+        }>;
+        firstSeenAt: z.ZodString;
+        lastSeenAt: z.ZodString;
+        deletedAt: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
+        legacyStateUnknown: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const registerComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    name: z.ZodString;
+    description: z.ZodOptional<z.ZodString>;
+    requestId: z.ZodOptional<z.ZodString>;
+    origin: z.ZodOptional<z.ZodEnum<{
+        code_detected: "code_detected";
+        log_observed: "log_observed";
+    }>>;
+}, z.core.$strip>, z.ZodObject<{
+    component: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        origin: z.ZodEnum<{
+            code_detected: "code_detected";
+            log_observed: "log_observed";
+            user_declared: "user_declared";
+        }>;
+        lifecycle: z.ZodEnum<{
+            active: "active";
+            inactive: "inactive";
+            merged: "merged";
+        }>;
+        observationState: z.ZodEnum<{
+            observed: "observed";
+            stale: "stale";
+            unobserved: "unobserved";
+        }>;
+        registryRevision: z.ZodNumber;
+        canonicalComponentId: z.ZodString;
+        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
+        currentStatus: z.ZodEnum<{
+            degraded: "degraded";
+            operational: "operational";
+            outage: "outage";
+        }>;
+        firstSeenAt: z.ZodString;
+        lastSeenAt: z.ZodString;
+        deletedAt: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
+        legacyStateUnknown: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const deregisterComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    componentId: z.ZodString;
+    reason: z.ZodOptional<z.ZodString>;
+    requestId: z.ZodOptional<z.ZodString>;
+    componentRevisions: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodNumber>>;
+    confirmCanonicalGroup: z.ZodDefault<z.ZodBoolean>;
+}, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+    status: z.ZodLiteral<"observation_withdrawn">;
+    componentId: z.ZodString;
+    sourceType: z.ZodLiteral<"secret_key">;
+    withdrawn: z.ZodBoolean;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"deregistration_confirmation_required">;
+    preview: z.ZodObject<{
+        requestedComponentId: z.ZodString;
+        canonicalComponentId: z.ZodString;
+        canonicalComponentName: z.ZodString;
+        lifecycle: z.ZodEnum<{
+            active: "active";
+            inactive: "inactive";
+        }>;
+        affectedComponentIds: z.ZodArray<z.ZodString>;
+        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+        requiresCanonicalGroupConfirmation: z.ZodBoolean;
+        recommendationScopeEnabled: z.ZodLiteral<false>;
+        dependents: z.ZodObject<{
+            openIssueIds: z.ZodArray<z.ZodString>;
+            activeComponentIssueIds: z.ZodArray<z.ZodString>;
+            automationBindingIds: z.ZodArray<z.ZodString>;
+            notificationRuleIds: z.ZodArray<z.ZodString>;
+            dataSourceMappingIds: z.ZodArray<z.ZodString>;
+            observationIds: z.ZodArray<z.ZodString>;
+            relationshipIds: z.ZodArray<z.ZodString>;
+            recommendationScopeIds: z.ZodArray<z.ZodString>;
+            externalIncidentIds: z.ZodArray<z.ZodString>;
+            authorizedDeliveryIds: z.ZodArray<z.ZodString>;
+            authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>;
+        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"deregistered">;
+    result: z.ZodObject<{
+        operationId: z.ZodString;
+        status: z.ZodEnum<{
+            committed: "committed";
+            complete: "complete";
+            followup_failed: "followup_failed";
+        }>;
+        requestedComponentId: z.ZodString;
+        canonicalComponentId: z.ZodString;
+        affectedComponentIds: z.ZodArray<z.ZodString>;
+        counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
+        authorizedDeliveryIds: z.ZodArray<z.ZodString>;
+        authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
+        manualExternalIncidentIds: z.ZodArray<z.ZodString>;
+        issueAutomationSuppressions: z.ZodNumber;
+        outboxEffectCount: z.ZodNumber;
+        manifest: z.ZodObject<{
+            notificationRules: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                rowRevision: z.ZodNumber;
+            }, z.core.$strip>>;
+            automationBindings: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                rowRevision: z.ZodNumber;
+            }, z.core.$strip>>;
+            relationships: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                rowRevision: z.ZodNumber;
+            }, z.core.$strip>>;
+        }, z.core.$strip>;
+        followups: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    }, z.core.$strip>;
+}, z.core.$strip>], "status">, "api">;
+export declare const renameComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    componentId: z.ZodString;
+    name: z.ZodString;
+    requestId: z.ZodString;
+    reason: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    component: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        origin: z.ZodEnum<{
+            code_detected: "code_detected";
+            log_observed: "log_observed";
+            user_declared: "user_declared";
+        }>;
+        lifecycle: z.ZodEnum<{
+            active: "active";
+            inactive: "inactive";
+            merged: "merged";
+        }>;
+        observationState: z.ZodEnum<{
+            observed: "observed";
+            stale: "stale";
+            unobserved: "unobserved";
+        }>;
+        registryRevision: z.ZodNumber;
+        canonicalComponentId: z.ZodString;
+        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
+        currentStatus: z.ZodEnum<{
+            degraded: "degraded";
+            operational: "operational";
+            outage: "outage";
+        }>;
+        firstSeenAt: z.ZodString;
+        lastSeenAt: z.ZodString;
+        deletedAt: z.ZodNullable<z.ZodString>;
+        inactiveAt: z.ZodNullable<z.ZodString>;
+        inactiveReason: z.ZodNullable<z.ZodString>;
+        legacyStateUnknown: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const AssignComponentTeamInputSchema: z.ZodObject<{
+    componentId: z.ZodString;
+    teamId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type AssignComponentTeamInput = z.infer<typeof AssignComponentTeamInputSchema>;
+export declare const AssignComponentTeamOutputSchema: z.ZodObject<{
+    componentId: z.ZodString;
+    teamId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type AssignComponentTeamOutput = z.infer<typeof AssignComponentTeamOutputSchema>;
+export declare const assignComponentTeam: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    componentId: z.ZodString;
+    teamId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    componentId: z.ZodString;
+    teamId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, "api">;
+export declare const PreviewComponentReactivationInputSchema: z.ZodObject<{
+    componentId: z.ZodString;
+    deregistrationOperationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type PreviewComponentReactivationInput = z.infer<typeof PreviewComponentReactivationInputSchema>;
+export declare const ComponentReactivationPreviewSchema: z.ZodObject<{
+    requestedComponentId: z.ZodString;
+    canonicalComponentId: z.ZodString;
+    canonicalComponentName: z.ZodString;
+    deregistrationOperationId: z.ZodString;
+    affectedComponentIds: z.ZodArray<z.ZodString>;
+    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+    eligible: z.ZodObject<{
+        notificationRuleIds: z.ZodArray<z.ZodString>;
+        automationBindingIds: z.ZodArray<z.ZodString>;
+        recommendationScopeIds: z.ZodArray<z.ZodString>;
+        relationshipIds: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type ComponentReactivationPreview = z.infer<typeof ComponentReactivationPreviewSchema>;
+export declare const PreviewComponentReactivationOutputSchema: z.ZodObject<{
+    preview: z.ZodObject<{
+        requestedComponentId: z.ZodString;
+        canonicalComponentId: z.ZodString;
+        canonicalComponentName: z.ZodString;
+        deregistrationOperationId: z.ZodString;
+        affectedComponentIds: z.ZodArray<z.ZodString>;
+        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+        eligible: z.ZodObject<{
+            notificationRuleIds: z.ZodArray<z.ZodString>;
+            automationBindingIds: z.ZodArray<z.ZodString>;
+            recommendationScopeIds: z.ZodArray<z.ZodString>;
+            relationshipIds: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type PreviewComponentReactivationOutput = z.infer<typeof PreviewComponentReactivationOutputSchema>;
+export declare const ComponentReactivationSelectionsSchema: z.ZodObject<{
+    notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+}, z.core.$strip>;
+export type ComponentReactivationSelections = z.infer<typeof ComponentReactivationSelectionsSchema>;
+export declare const CommitComponentReactivationInputSchema: z.ZodObject<{
+    componentId: z.ZodString;
+    deregistrationOperationId: z.ZodString;
+    requestId: z.ZodString;
+    reason: z.ZodString;
+    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
+    selections: z.ZodDefault<z.ZodObject<{
+        notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type CommitComponentReactivationInput = z.infer<typeof CommitComponentReactivationInputSchema>;
+export declare const ComponentReactivationResultSchema: z.ZodObject<{
+    operationId: z.ZodString;
+    status: z.ZodLiteral<"complete">;
+    requestedComponentId: z.ZodString;
+    canonicalComponentId: z.ZodString;
+    affectedComponentIds: z.ZodArray<z.ZodString>;
+    reactivated: z.ZodObject<{
+        notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type ComponentReactivationResult = z.infer<typeof ComponentReactivationResultSchema>;
+export declare const CommitComponentReactivationOutputSchema: z.ZodObject<{
+    result: z.ZodObject<{
+        operationId: z.ZodString;
+        status: z.ZodLiteral<"complete">;
+        requestedComponentId: z.ZodString;
+        canonicalComponentId: z.ZodString;
+        affectedComponentIds: z.ZodArray<z.ZodString>;
+        reactivated: z.ZodObject<{
+            notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+            automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+            recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+            relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
+        }, z.core.$strip>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type CommitComponentReactivationOutput = z.infer<typeof CommitComponentReactivationOutputSchema>;
+export declare const previewComponentReactivation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    componentId: z.ZodString;
+    deregistrationOperationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     preview: z.ZodObject<{
         requestedComponentId: z.ZodString;
         canonicalComponentId: z.ZodString;
         canonicalComponentName: z.ZodString;
-        retirementOperationId: z.ZodString;
+        deregistrationOperationId: z.ZodString;
         affectedComponentIds: z.ZodArray<z.ZodString>;
         componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
         eligible: z.ZodObject<{
@@ -799,9 +733,9 @@ export declare const previewComponentRestoration: import("../orpc-contracts/inde
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
-export declare const restoreComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export declare const reactivateComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     componentId: z.ZodString;
-    retirementOperationId: z.ZodString;
+    deregistrationOperationId: z.ZodString;
     requestId: z.ZodString;
     reason: z.ZodString;
     componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
@@ -818,7 +752,7 @@ export declare const restoreComponent: import("../orpc-contracts/index.js").Oper
         requestedComponentId: z.ZodString;
         canonicalComponentId: z.ZodString;
         affectedComponentIds: z.ZodArray<z.ZodString>;
-        restored: z.ZodObject<{
+        reactivated: z.ZodObject<{
             notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
@@ -842,8 +776,8 @@ export declare const ComponentRelationshipEndpointSchema: z.ZodObject<{
     name: z.ZodString;
     lifecycle: z.ZodEnum<{
         active: "active";
+        inactive: "inactive";
         merged: "merged";
-        retired: "retired";
     }>;
     observationState: z.ZodEnum<{
         observed: "observed";
@@ -859,8 +793,8 @@ export declare const ComponentRelationshipSchema: z.ZodObject<{
         name: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
         observationState: z.ZodEnum<{
             observed: "observed";
@@ -874,8 +808,8 @@ export declare const ComponentRelationshipSchema: z.ZodObject<{
         name: z.ZodString;
         lifecycle: z.ZodEnum<{
             active: "active";
+            inactive: "inactive";
             merged: "merged";
-            retired: "retired";
         }>;
         observationState: z.ZodEnum<{
             observed: "observed";
@@ -907,8 +841,8 @@ export declare const ListComponentRelationshipsOutputSchema: z.ZodObject<{
             name: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
             observationState: z.ZodEnum<{
                 observed: "observed";
@@ -922,8 +856,8 @@ export declare const ListComponentRelationshipsOutputSchema: z.ZodObject<{
             name: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
             observationState: z.ZodEnum<{
                 observed: "observed";
@@ -1148,8 +1082,8 @@ export declare const listComponentRelationships: import("../orpc-contracts/index
             name: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
             observationState: z.ZodEnum<{
                 observed: "observed";
@@ -1163,8 +1097,8 @@ export declare const listComponentRelationships: import("../orpc-contracts/index
             name: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
             observationState: z.ZodEnum<{
                 observed: "observed";
@@ -2238,8 +2172,8 @@ export declare const componentsContract: {
             }>;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
             observationState: z.ZodEnum<{
                 observed: "observed";
@@ -2257,8 +2191,8 @@ export declare const componentsContract: {
             firstSeenAt: z.ZodString;
             lastSeenAt: z.ZodString;
             deletedAt: z.ZodNullable<z.ZodString>;
-            retiredAt: z.ZodNullable<z.ZodString>;
-            retirementReason: z.ZodNullable<z.ZodString>;
+            inactiveAt: z.ZodNullable<z.ZodString>;
+            inactiveReason: z.ZodNullable<z.ZodString>;
             legacyStateUnknown: z.ZodBoolean;
         }, z.core.$strip>>;
         nextCursor: z.ZodNullable<z.ZodString>;
@@ -2278,8 +2212,8 @@ export declare const componentsContract: {
             }>;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
             observationState: z.ZodEnum<{
                 observed: "observed";
@@ -2297,8 +2231,8 @@ export declare const componentsContract: {
             firstSeenAt: z.ZodString;
             lastSeenAt: z.ZodString;
             deletedAt: z.ZodNullable<z.ZodString>;
-            retiredAt: z.ZodNullable<z.ZodString>;
-            retirementReason: z.ZodNullable<z.ZodString>;
+            inactiveAt: z.ZodNullable<z.ZodString>;
+            inactiveReason: z.ZodNullable<z.ZodString>;
             legacyStateUnknown: z.ZodBoolean;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -2324,8 +2258,8 @@ export declare const componentsContract: {
             }>;
             lifecycle: z.ZodEnum<{
                 active: "active";
+                inactive: "inactive";
                 merged: "merged";
-                retired: "retired";
             }>;
             observationState: z.ZodEnum<{
                 observed: "observed";
@@ -2343,28 +2277,31 @@ export declare const componentsContract: {
             firstSeenAt: z.ZodString;
             lastSeenAt: z.ZodString;
             deletedAt: z.ZodNullable<z.ZodString>;
-            retiredAt: z.ZodNullable<z.ZodString>;
-            retirementReason: z.ZodNullable<z.ZodString>;
+            inactiveAt: z.ZodNullable<z.ZodString>;
+            inactiveReason: z.ZodNullable<z.ZodString>;
             legacyStateUnknown: z.ZodBoolean;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly deregister: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         componentId: z.ZodString;
         reason: z.ZodOptional<z.ZodString>;
+        requestId: z.ZodOptional<z.ZodString>;
+        componentRevisions: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodNumber>>;
+        confirmCanonicalGroup: z.ZodDefault<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
         status: z.ZodLiteral<"observation_withdrawn">;
         componentId: z.ZodString;
         sourceType: z.ZodLiteral<"secret_key">;
         withdrawn: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
-        status: z.ZodLiteral<"retirement_confirmation_required">;
+        status: z.ZodLiteral<"deregistration_confirmation_required">;
         preview: z.ZodObject<{
             requestedComponentId: z.ZodString;
             canonicalComponentId: z.ZodString;
             canonicalComponentName: z.ZodString;
             lifecycle: z.ZodEnum<{
                 active: "active";
-                retired: "retired";
+                inactive: "inactive";
             }>;
             affectedComponentIds: z.ZodArray<z.ZodString>;
             componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
@@ -2385,94 +2322,8 @@ export declare const componentsContract: {
             }, z.core.$strip>;
             counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
         }, z.core.$strip>;
-    }, z.core.$strip>], "status">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly rename: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-        componentId: z.ZodString;
-        name: z.ZodString;
-        requestId: z.ZodString;
-        reason: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
-        component: z.ZodObject<{
-            id: z.ZodString;
-            projectId: z.ZodString;
-            name: z.ZodString;
-            description: z.ZodNullable<z.ZodString>;
-            origin: z.ZodEnum<{
-                code_detected: "code_detected";
-                log_observed: "log_observed";
-                user_declared: "user_declared";
-            }>;
-            lifecycle: z.ZodEnum<{
-                active: "active";
-                merged: "merged";
-                retired: "retired";
-            }>;
-            observationState: z.ZodEnum<{
-                observed: "observed";
-                stale: "stale";
-                unobserved: "unobserved";
-            }>;
-            registryRevision: z.ZodNumber;
-            canonicalComponentId: z.ZodString;
-            mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-            currentStatus: z.ZodEnum<{
-                degraded: "degraded";
-                operational: "operational";
-                outage: "outage";
-            }>;
-            firstSeenAt: z.ZodString;
-            lastSeenAt: z.ZodString;
-            deletedAt: z.ZodNullable<z.ZodString>;
-            retiredAt: z.ZodNullable<z.ZodString>;
-            retirementReason: z.ZodNullable<z.ZodString>;
-            legacyStateUnknown: z.ZodBoolean;
-        }, z.core.$strip>;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly assignTeam: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-        componentId: z.ZodString;
-        teamId: z.ZodNullable<z.ZodString>;
-    }, z.core.$strip>, z.ZodObject<{
-        componentId: z.ZodString;
-        teamId: z.ZodNullable<z.ZodString>;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly retirementPreview: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-        componentId: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
-        preview: z.ZodObject<{
-            requestedComponentId: z.ZodString;
-            canonicalComponentId: z.ZodString;
-            canonicalComponentName: z.ZodString;
-            lifecycle: z.ZodEnum<{
-                active: "active";
-                retired: "retired";
-            }>;
-            affectedComponentIds: z.ZodArray<z.ZodString>;
-            componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-            requiresCanonicalGroupConfirmation: z.ZodBoolean;
-            recommendationScopeEnabled: z.ZodLiteral<false>;
-            dependents: z.ZodObject<{
-                openIssueIds: z.ZodArray<z.ZodString>;
-                activeComponentIssueIds: z.ZodArray<z.ZodString>;
-                automationBindingIds: z.ZodArray<z.ZodString>;
-                notificationRuleIds: z.ZodArray<z.ZodString>;
-                dataSourceMappingIds: z.ZodArray<z.ZodString>;
-                observationIds: z.ZodArray<z.ZodString>;
-                relationshipIds: z.ZodArray<z.ZodString>;
-                recommendationScopeIds: z.ZodArray<z.ZodString>;
-                externalIncidentIds: z.ZodArray<z.ZodString>;
-                authorizedDeliveryIds: z.ZodArray<z.ZodString>;
-                authorizedAutomationRunIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>;
-            counts: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        }, z.core.$strip>;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly retire: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-        componentId: z.ZodString;
-        requestId: z.ZodString;
-        reason: z.ZodString;
-        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        confirmCanonicalGroup: z.ZodDefault<z.ZodBoolean>;
-    }, z.core.$strip>, z.ZodObject<{
+        status: z.ZodLiteral<"deregistered">;
         result: z.ZodObject<{
             operationId: z.ZodString;
             status: z.ZodEnum<{
@@ -2505,16 +2356,65 @@ export declare const componentsContract: {
             }, z.core.$strip>;
             followups: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
         }, z.core.$strip>;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly restorationPreview: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+    }, z.core.$strip>], "status">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly rename: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         componentId: z.ZodString;
-        retirementOperationId: z.ZodOptional<z.ZodString>;
+        name: z.ZodString;
+        requestId: z.ZodString;
+        reason: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        component: z.ZodObject<{
+            id: z.ZodString;
+            projectId: z.ZodString;
+            name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
+            origin: z.ZodEnum<{
+                code_detected: "code_detected";
+                log_observed: "log_observed";
+                user_declared: "user_declared";
+            }>;
+            lifecycle: z.ZodEnum<{
+                active: "active";
+                inactive: "inactive";
+                merged: "merged";
+            }>;
+            observationState: z.ZodEnum<{
+                observed: "observed";
+                stale: "stale";
+                unobserved: "unobserved";
+            }>;
+            registryRevision: z.ZodNumber;
+            canonicalComponentId: z.ZodString;
+            mergedIntoComponentId: z.ZodNullable<z.ZodString>;
+            currentStatus: z.ZodEnum<{
+                degraded: "degraded";
+                operational: "operational";
+                outage: "outage";
+            }>;
+            firstSeenAt: z.ZodString;
+            lastSeenAt: z.ZodString;
+            deletedAt: z.ZodNullable<z.ZodString>;
+            inactiveAt: z.ZodNullable<z.ZodString>;
+            inactiveReason: z.ZodNullable<z.ZodString>;
+            legacyStateUnknown: z.ZodBoolean;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly assignTeam: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        componentId: z.ZodString;
+        teamId: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        componentId: z.ZodString;
+        teamId: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly reactivationPreview: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        componentId: z.ZodString;
+        deregistrationOperationId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         preview: z.ZodObject<{
             requestedComponentId: z.ZodString;
             canonicalComponentId: z.ZodString;
             canonicalComponentName: z.ZodString;
-            retirementOperationId: z.ZodString;
+            deregistrationOperationId: z.ZodString;
             affectedComponentIds: z.ZodArray<z.ZodString>;
             componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
             eligible: z.ZodObject<{
@@ -2525,9 +2425,9 @@ export declare const componentsContract: {
             }, z.core.$strip>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly restore: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+    readonly reactivate: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         componentId: z.ZodString;
-        retirementOperationId: z.ZodString;
+        deregistrationOperationId: z.ZodString;
         requestId: z.ZodString;
         reason: z.ZodString;
         componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
@@ -2544,7 +2444,7 @@ export declare const componentsContract: {
             requestedComponentId: z.ZodString;
             canonicalComponentId: z.ZodString;
             affectedComponentIds: z.ZodArray<z.ZodString>;
-            restored: z.ZodObject<{
+            reactivated: z.ZodObject<{
                 notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
                 automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
                 recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
@@ -2778,8 +2678,8 @@ export declare const componentsContract: {
                     name: z.ZodString;
                     lifecycle: z.ZodEnum<{
                         active: "active";
+                        inactive: "inactive";
                         merged: "merged";
-                        retired: "retired";
                     }>;
                     observationState: z.ZodEnum<{
                         observed: "observed";
@@ -2793,8 +2693,8 @@ export declare const componentsContract: {
                     name: z.ZodString;
                     lifecycle: z.ZodEnum<{
                         active: "active";
+                        inactive: "inactive";
                         merged: "merged";
-                        retired: "retired";
                     }>;
                     observationState: z.ZodEnum<{
                         observed: "observed";

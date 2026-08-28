@@ -5246,12 +5246,12 @@ var require_core = __commonJS(function(exports) {
         return this;
       }
       keywordMetaschema.call(this, def);
-      const definition = {
+      const definition2 = {
         ...def,
         type: (0, dataType_1.getJSONTypes)(def.type),
         schemaType: (0, dataType_1.getJSONTypes)(def.schemaType)
       };
-      (0, util_1.eachItem)(keyword, definition.type.length === 0 ? (k) => addRule.call(this, k, definition) : (k) => definition.type.forEach((t) => addRule.call(this, k, definition, t)));
+      (0, util_1.eachItem)(keyword, definition2.type.length === 0 ? (k) => addRule.call(this, k, definition2) : (k) => definition2.type.forEach((t) => addRule.call(this, k, definition2, t)));
       return this;
     }
     getKeyword(keyword) {
@@ -5439,9 +5439,9 @@ var require_core = __commonJS(function(exports) {
       throw new Error('$data keyword must have "code" or "validate" function');
     }
   }
-  function addRule(keyword, definition, dataType) {
+  function addRule(keyword, definition2, dataType) {
     var _a;
-    const post = definition === null || definition === undefined ? undefined : definition.post;
+    const post = definition2 === null || definition2 === undefined ? undefined : definition2.post;
     if (dataType && post)
       throw new Error('keyword with "post" flag cannot have "type"');
     const { RULES } = this;
@@ -5451,22 +5451,22 @@ var require_core = __commonJS(function(exports) {
       RULES.rules.push(ruleGroup);
     }
     RULES.keywords[keyword] = true;
-    if (!definition)
+    if (!definition2)
       return;
     const rule = {
       keyword,
       definition: {
-        ...definition,
-        type: (0, dataType_1.getJSONTypes)(definition.type),
-        schemaType: (0, dataType_1.getJSONTypes)(definition.schemaType)
+        ...definition2,
+        type: (0, dataType_1.getJSONTypes)(definition2.type),
+        schemaType: (0, dataType_1.getJSONTypes)(definition2.schemaType)
       }
     };
-    if (definition.before)
-      addBeforeRule.call(this, ruleGroup, rule, definition.before);
+    if (definition2.before)
+      addBeforeRule.call(this, ruleGroup, rule, definition2.before);
     else
       ruleGroup.rules.push(rule);
     RULES.all[keyword] = rule;
-    (_a = definition.implements) === null || _a === undefined || _a.forEach((kwd) => this.addKeyword(kwd));
+    (_a = definition2.implements) === null || _a === undefined || _a.forEach((kwd) => this.addKeyword(kwd));
   }
   function addBeforeRule(ruleGroup, rule, before) {
     const i = ruleGroup.rules.findIndex((_rule) => _rule.keyword === before);
@@ -30991,7 +30991,7 @@ ${captureLines}` : capture.stack;
 });
 
 // ../notification-channels/src/index.ts
-import { z as z26 } from "zod";
+import { z as z27 } from "zod";
 var NOTIFICATION_CHANNELS, PERSONAL_NOTIFICATION_CHANNELS, PROJECT_NOTIFICATION_CHANNELS, ALL_NOTIFICATION_CHANNELS, NOTIFICATION_CHANNEL_VALUES, NotificationChannelSchema, ProjectNotificationChannelSchema, NOTIFICATION_CHANNEL_DEFINITIONS, registeredChannels;
 var init_src = __esm(() => {
   NOTIFICATION_CHANNELS = {
@@ -31025,8 +31025,8 @@ var init_src = __esm(() => {
     ...ALL_NOTIFICATION_CHANNELS,
     "victorops"
   ];
-  NotificationChannelSchema = z26.enum(ALL_NOTIFICATION_CHANNELS);
-  ProjectNotificationChannelSchema = z26.enum(PROJECT_NOTIFICATION_CHANNELS);
+  NotificationChannelSchema = z27.enum(ALL_NOTIFICATION_CHANNELS);
+  ProjectNotificationChannelSchema = z27.enum(PROJECT_NOTIFICATION_CHANNELS);
   NOTIFICATION_CHANNEL_DEFINITIONS = [
     {
       channel: "in_app",
@@ -31261,7 +31261,7 @@ var ComponentSchema = z2.object({
   name: z2.string(),
   description: z2.string().nullable(),
   origin: z2.enum(["user_declared", "code_detected", "log_observed"]),
-  lifecycle: z2.enum(["active", "retired", "merged"]),
+  lifecycle: z2.enum(["active", "inactive", "merged"]),
   observationState: z2.enum(["observed", "stale", "unobserved"]),
   registryRevision: z2.number().int().nonnegative(),
   canonicalComponentId: z2.string().uuid(),
@@ -31269,16 +31269,16 @@ var ComponentSchema = z2.object({
   currentStatus: z2.enum(["operational", "degraded", "outage"]).describe("Current health status of this component."),
   firstSeenAt: z2.string().datetime(),
   lastSeenAt: z2.string().datetime(),
-  deletedAt: z2.string().datetime().nullable().describe("Timestamp when this component was retired, if any."),
-  retiredAt: z2.string().datetime().nullable(),
-  retirementReason: z2.string().nullable(),
-  legacyStateUnknown: z2.boolean().describe("True only for migration-era inactive rows whose retirement authority is unknown.")
+  deletedAt: z2.string().datetime().nullable().describe("Timestamp when this component became inactive or was deleted, if any."),
+  inactiveAt: z2.string().datetime().nullable().describe("Timestamp when this component became inactive, if any."),
+  inactiveReason: z2.string().nullable().describe("Reason recorded when this component became inactive."),
+  legacyStateUnknown: z2.boolean().describe("True only for migration-era inactive rows whose deactivation authority is unknown.")
 });
 var ListComponentsInputSchema = z2.object({
   projectId: z2.string().uuid().optional().describe("Project to list components for. Auto-filled from CLI and SDK context when omitted."),
   limit: z2.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of components to return per page."),
   cursor: z2.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  includeDeleted: z2.union([z2.boolean(), z2.stringbool()]).default(false).describe("When true, include retired and merged components.")
+  includeDeleted: z2.union([z2.boolean(), z2.stringbool()]).default(false).describe("When true, include inactive and merged components.")
 });
 var ListComponentsOutputSchema = z2.object({
   components: z2.array(ComponentSchema),
@@ -31311,9 +31311,12 @@ var RenameComponentOutputSchema = z2.object({
 });
 var DeregisterComponentInputSchema = z2.object({
   componentId: z2.string().uuid().describe("Component ID to deregister."),
-  reason: z2.string().trim().min(1, "Reason cannot be empty").optional().describe("Optional reason for audit logging.")
+  reason: z2.string().trim().min(1, "Reason cannot be empty").optional().describe("Reason for audit logging. Required when confirming a deregistration."),
+  requestId: z2.string().uuid().optional().describe("Project-scoped idempotency key. Required when confirming a deregistration."),
+  componentRevisions: z2.record(z2.string().uuid(), z2.number().int().nonnegative()).optional().describe("Exact canonical-group revisions returned by the deregistration preview. Presence confirms the deregistration; omit to receive a preview."),
+  confirmCanonicalGroup: z2.boolean().default(false).describe("Explicitly confirm deregistering the complete canonical group when the request used a merged source.")
 });
-var RetirementDependentIdsSchema = z2.object({
+var DeregistrationDependentIdsSchema = z2.object({
   openIssueIds: z2.array(z2.string().uuid()),
   activeComponentIssueIds: z2.array(z2.string().uuid()),
   automationBindingIds: z2.array(z2.string().uuid()),
@@ -31326,17 +31329,49 @@ var RetirementDependentIdsSchema = z2.object({
   authorizedDeliveryIds: z2.array(z2.string().uuid()),
   authorizedAutomationRunIds: z2.array(z2.string().uuid())
 });
-var ComponentRetirementPreviewSchema = z2.object({
+var ComponentDeregistrationPreviewSchema = z2.object({
   requestedComponentId: z2.string().uuid(),
   canonicalComponentId: z2.string().uuid(),
   canonicalComponentName: z2.string(),
-  lifecycle: z2.enum(["active", "retired"]),
+  lifecycle: z2.enum(["active", "inactive"]),
   affectedComponentIds: z2.array(z2.string().uuid()),
   componentRevisions: z2.record(z2.string().uuid(), z2.number().int().nonnegative()),
   requiresCanonicalGroupConfirmation: z2.boolean(),
   recommendationScopeEnabled: z2.literal(false),
-  dependents: RetirementDependentIdsSchema,
+  dependents: DeregistrationDependentIdsSchema,
   counts: z2.record(z2.string(), z2.number().int().nonnegative())
+});
+var ComponentRevisionConfirmationSchema = z2.record(z2.string().uuid(), z2.number().int().nonnegative());
+var ComponentDeregistrationManifestEntrySchema = z2.object({
+  id: z2.string().uuid(),
+  rowRevision: z2.number().int().nonnegative()
+});
+var ComponentDeregistrationManifestSchema = z2.object({
+  notificationRules: z2.array(ComponentDeregistrationManifestEntrySchema),
+  automationBindings: z2.array(ComponentDeregistrationManifestEntrySchema),
+  relationships: z2.array(ComponentDeregistrationManifestEntrySchema)
+});
+var CommitComponentDeregistrationInputSchema = z2.object({
+  componentId: z2.string().uuid().describe("Component or merged-source ID confirmed by the preview."),
+  requestId: z2.string().uuid().describe("Project-scoped idempotency key for this exact deregistration."),
+  reason: z2.string().trim().min(1, "Reason cannot be empty").describe("Customer-visible audit reason for deregistering the component."),
+  componentRevisions: ComponentRevisionConfirmationSchema.describe("Exact canonical-group revisions returned by the deregistration preview."),
+  confirmCanonicalGroup: z2.boolean().default(false).describe("Explicitly confirm deregistering the complete canonical group when the request used a merged source.")
+});
+var ComponentDeregistrationResultSchema = z2.object({
+  operationId: z2.string().uuid(),
+  status: z2.enum(["committed", "complete", "followup_failed"]),
+  requestedComponentId: z2.string().uuid(),
+  canonicalComponentId: z2.string().uuid(),
+  affectedComponentIds: z2.array(z2.string().uuid()),
+  counts: z2.record(z2.string(), z2.number().int().nonnegative()),
+  authorizedDeliveryIds: z2.array(z2.string().uuid()),
+  authorizedAutomationRunIds: z2.array(z2.string().uuid()),
+  manualExternalIncidentIds: z2.array(z2.string().uuid()),
+  issueAutomationSuppressions: z2.number().int().nonnegative(),
+  outboxEffectCount: z2.number().int().nonnegative(),
+  manifest: ComponentDeregistrationManifestSchema,
+  followups: z2.record(z2.string(), z2.unknown()).optional()
 });
 var DeregisterComponentOutputSchema = z2.discriminatedUnion("status", [
   z2.object({
@@ -31346,12 +31381,17 @@ var DeregisterComponentOutputSchema = z2.discriminatedUnion("status", [
     withdrawn: z2.boolean()
   }),
   z2.object({
-    status: z2.literal("retirement_confirmation_required"),
-    preview: ComponentRetirementPreviewSchema
+    status: z2.literal("deregistration_confirmation_required"),
+    preview: ComponentDeregistrationPreviewSchema
+  }),
+  z2.object({
+    status: z2.literal("deregistered"),
+    result: ComponentDeregistrationResultSchema
   })
 ]);
 var listComponents = defineOperation({
   operationId: "components.list",
+  summary: "List components",
   description: "List status page components in a project.",
   backend: "api",
   route: {
@@ -31366,6 +31406,7 @@ var listComponents = defineOperation({
 });
 var getComponent = defineOperation({
   operationId: "components.get",
+  summary: "Get a component",
   description: "Get a single component by ID.",
   backend: "api",
   route: {
@@ -31380,6 +31421,7 @@ var getComponent = defineOperation({
 });
 var registerComponent = defineOperation({
   operationId: "components.register",
+  summary: "Register a component",
   description: "Register a status page component in a project, or refresh an existing active component with the same name.",
   backend: "api",
   route: {
@@ -31394,7 +31436,8 @@ var registerComponent = defineOperation({
 });
 var deregisterComponent = defineOperation({
   operationId: "components.deregister",
-  description: "Withdraw this credential's component observation, or return a retirement preview for a human caller.",
+  summary: "Deregister a component",
+  description: "Withdraw this credential's component observation, or — for a human caller — preview the deregistration and confirm it by resubmitting with the previewed componentRevisions.",
   backend: "api",
   route: {
     method: "POST",
@@ -31408,6 +31451,7 @@ var deregisterComponent = defineOperation({
 });
 var renameComponent = defineOperation({
   operationId: "components.rename",
+  summary: "Rename a component",
   description: "Rename an active component while reserving its previous exact name as an alias.",
   backend: "api",
   route: {
@@ -31430,6 +31474,7 @@ var AssignComponentTeamOutputSchema = z2.object({
 });
 var assignComponentTeam = defineOperation({
   operationId: "components.assignTeam",
+  summary: "Assign a component to a team",
   description: "Assign a component to an owning team, reassign it, or unassign it. A component is owned by at most one team.",
   backend: "api",
   route: {
@@ -31442,152 +31487,85 @@ var assignComponentTeam = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var PreviewComponentRetirementInputSchema = z2.object({
-  componentId: z2.string().uuid().describe("Component or merged-source ID whose canonical group to retire.")
-});
-var PreviewComponentRetirementOutputSchema = z2.object({
-  preview: ComponentRetirementPreviewSchema
-});
-var ComponentRevisionConfirmationSchema = z2.record(z2.string().uuid(), z2.number().int().nonnegative());
-var ComponentRetirementManifestEntrySchema = z2.object({
-  id: z2.string().uuid(),
-  rowRevision: z2.number().int().nonnegative()
-});
-var ComponentRetirementManifestSchema = z2.object({
-  notificationRules: z2.array(ComponentRetirementManifestEntrySchema),
-  automationBindings: z2.array(ComponentRetirementManifestEntrySchema),
-  relationships: z2.array(ComponentRetirementManifestEntrySchema)
-});
-var CommitComponentRetirementInputSchema = z2.object({
-  componentId: z2.string().uuid().describe("Component or merged-source ID confirmed by the preview."),
-  requestId: z2.string().uuid().describe("Project-scoped idempotency key for this exact retirement."),
-  reason: z2.string().trim().min(1, "Reason cannot be empty").describe("Customer-visible audit reason for retiring the component."),
-  componentRevisions: ComponentRevisionConfirmationSchema.describe("Exact canonical-group revisions returned by retirementPreview."),
-  confirmCanonicalGroup: z2.boolean().default(false).describe("Explicitly confirm retiring the complete canonical group when the request used a merged source.")
-});
-var ComponentRetirementResultSchema = z2.object({
-  operationId: z2.string().uuid(),
-  status: z2.enum(["committed", "complete", "followup_failed"]),
-  requestedComponentId: z2.string().uuid(),
-  canonicalComponentId: z2.string().uuid(),
-  affectedComponentIds: z2.array(z2.string().uuid()),
-  counts: z2.record(z2.string(), z2.number().int().nonnegative()),
-  authorizedDeliveryIds: z2.array(z2.string().uuid()),
-  authorizedAutomationRunIds: z2.array(z2.string().uuid()),
-  manualExternalIncidentIds: z2.array(z2.string().uuid()),
-  issueAutomationSuppressions: z2.number().int().nonnegative(),
-  outboxEffectCount: z2.number().int().nonnegative(),
-  manifest: ComponentRetirementManifestSchema,
-  followups: z2.record(z2.string(), z2.unknown()).optional()
-});
-var CommitComponentRetirementOutputSchema = z2.object({
-  result: ComponentRetirementResultSchema
-});
-var ComponentRestorationEligibleDependentsSchema = z2.object({
+var ComponentReactivationEligibleDependentsSchema = z2.object({
   notificationRuleIds: z2.array(z2.string().uuid()),
   automationBindingIds: z2.array(z2.string().uuid()),
   recommendationScopeIds: z2.array(z2.string().uuid()),
   relationshipIds: z2.array(z2.string().uuid())
 });
-var PreviewComponentRestorationInputSchema = z2.object({
-  componentId: z2.string().uuid().describe("Retired component or merged-source ID to inspect."),
-  retirementOperationId: z2.string().uuid().optional().describe("Optional retirement operation to verify; defaults to the component's current retirement.")
+var PreviewComponentReactivationInputSchema = z2.object({
+  componentId: z2.string().uuid().describe("Inactive component or merged-source ID to inspect."),
+  deregistrationOperationId: z2.string().uuid().optional().describe("Optional deregistration operation to verify; defaults to the component's current deregistration.")
 });
-var ComponentRestorationPreviewSchema = z2.object({
+var ComponentReactivationPreviewSchema = z2.object({
   requestedComponentId: z2.string().uuid(),
   canonicalComponentId: z2.string().uuid(),
   canonicalComponentName: z2.string(),
-  retirementOperationId: z2.string().uuid(),
+  deregistrationOperationId: z2.string().uuid(),
   affectedComponentIds: z2.array(z2.string().uuid()),
   componentRevisions: ComponentRevisionConfirmationSchema,
-  eligible: ComponentRestorationEligibleDependentsSchema
+  eligible: ComponentReactivationEligibleDependentsSchema
 });
-var PreviewComponentRestorationOutputSchema = z2.object({
-  preview: ComponentRestorationPreviewSchema
+var PreviewComponentReactivationOutputSchema = z2.object({
+  preview: ComponentReactivationPreviewSchema
 });
-var ComponentRestorationSelectionsSchema = z2.object({
+var ComponentReactivationSelectionsSchema = z2.object({
   notificationRuleIds: z2.array(z2.string().uuid()).default([]),
   automationBindingIds: z2.array(z2.string().uuid()).default([]),
   recommendationScopeIds: z2.array(z2.string().uuid()).default([]),
   relationshipIds: z2.array(z2.string().uuid()).default([])
 });
-var CommitComponentRestorationInputSchema = z2.object({
-  componentId: z2.string().uuid().describe("Retired component or merged-source ID confirmed by preview."),
-  retirementOperationId: z2.string().uuid().describe("Retirement operation whose unchanged dependents may be restored."),
-  requestId: z2.string().uuid().describe("Project-scoped idempotency key for this exact restoration."),
-  reason: z2.string().trim().min(1, "Reason cannot be empty").describe("Customer-visible audit reason for restoring the component."),
-  componentRevisions: ComponentRevisionConfirmationSchema.describe("Exact canonical-group revisions returned by restorationPreview."),
-  selections: ComponentRestorationSelectionsSchema.default({
+var CommitComponentReactivationInputSchema = z2.object({
+  componentId: z2.string().uuid().describe("Inactive component or merged-source ID confirmed by preview."),
+  deregistrationOperationId: z2.string().uuid().describe("Deregistration operation whose unchanged dependents may be reactivated."),
+  requestId: z2.string().uuid().describe("Project-scoped idempotency key for this exact reactivation."),
+  reason: z2.string().trim().min(1, "Reason cannot be empty").describe("Customer-visible audit reason for reactivating the component."),
+  componentRevisions: ComponentRevisionConfirmationSchema.describe("Exact canonical-group revisions returned by the reactivation preview."),
+  selections: ComponentReactivationSelectionsSchema.default({
     notificationRuleIds: [],
     automationBindingIds: [],
     recommendationScopeIds: [],
     relationshipIds: []
-  }).describe("Only these still-eligible dependents are restored; omitted selections restore none.")
+  }).describe("Only these still-eligible dependents are reattached; omitted selections reattach none.")
 });
-var ComponentRestorationResultSchema = z2.object({
+var ComponentReactivationResultSchema = z2.object({
   operationId: z2.string().uuid(),
   status: z2.literal("complete"),
   requestedComponentId: z2.string().uuid(),
   canonicalComponentId: z2.string().uuid(),
   affectedComponentIds: z2.array(z2.string().uuid()),
-  restored: ComponentRestorationSelectionsSchema
+  reactivated: ComponentReactivationSelectionsSchema
 });
-var CommitComponentRestorationOutputSchema = z2.object({
-  result: ComponentRestorationResultSchema
+var CommitComponentReactivationOutputSchema = z2.object({
+  result: ComponentReactivationResultSchema
 });
-var previewComponentRetirement = defineOperation({
-  operationId: "components.retirementPreview",
-  description: "Preview every synchronous and follow-up consequence of retiring a canonical component group.",
+var previewComponentReactivation = defineOperation({
+  operationId: "components.reactivationPreview",
+  summary: "Preview a component reactivation",
+  description: "Preview unchanged deregistration-owned dependents that remain eligible for explicit reactivation.",
   backend: "api",
   route: {
     method: "POST",
-    path: "/components/{componentId}/retirement/preview",
+    path: "/components/{componentId}/reactivation/preview",
     tags: ["Components"]
   },
-  input: PreviewComponentRetirementInputSchema,
-  output: PreviewComponentRetirementOutputSchema,
+  input: PreviewComponentReactivationInputSchema,
+  output: PreviewComponentReactivationOutputSchema,
   pagination: "none",
   async: "sync"
 });
-var retireComponent = defineOperation({
-  operationId: "components.retire",
-  description: "Atomically retire a confirmed canonical component group and durably enqueue lifecycle follow-ups.",
+var reactivateComponent = defineOperation({
+  operationId: "components.reactivate",
+  summary: "Reactivate a component",
+  description: "Reactivate an inactive canonical component and only the explicitly selected eligible dependents. Prior rules, automations, and relationships stay detached unless explicitly selected.",
   backend: "api",
   route: {
     method: "POST",
-    path: "/components/{componentId}/retire",
+    path: "/components/{componentId}/reactivate",
     tags: ["Components"]
   },
-  input: CommitComponentRetirementInputSchema,
-  output: CommitComponentRetirementOutputSchema,
-  pagination: "none",
-  async: "sync"
-});
-var previewComponentRestoration = defineOperation({
-  operationId: "components.restorationPreview",
-  description: "Preview unchanged retirement-owned dependents that remain eligible for explicit restoration.",
-  backend: "api",
-  route: {
-    method: "POST",
-    path: "/components/{componentId}/restoration/preview",
-    tags: ["Components"]
-  },
-  input: PreviewComponentRestorationInputSchema,
-  output: PreviewComponentRestorationOutputSchema,
-  pagination: "none",
-  async: "sync"
-});
-var restoreComponent = defineOperation({
-  operationId: "components.restore",
-  description: "Restore a retired canonical component and only the explicitly selected eligible dependents.",
-  backend: "api",
-  route: {
-    method: "POST",
-    path: "/components/{componentId}/restore",
-    tags: ["Components"]
-  },
-  input: CommitComponentRestorationInputSchema,
-  output: CommitComponentRestorationOutputSchema,
+  input: CommitComponentReactivationInputSchema,
+  output: CommitComponentReactivationOutputSchema,
   pagination: "none",
   async: "sync"
 });
@@ -31601,7 +31579,7 @@ var ComponentRelationshipEndpointSchema = z2.object({
   originalComponentId: z2.string().uuid(),
   effectiveComponentId: z2.string().uuid(),
   name: z2.string(),
-  lifecycle: z2.enum(["active", "retired", "merged"]),
+  lifecycle: z2.enum(["active", "inactive", "merged"]),
   observationState: ComponentObservationStateSchema
 });
 var ComponentRelationshipSchema = z2.object({
@@ -31683,6 +31661,7 @@ var ComponentRelationshipMutationOutputSchema = z2.object({
 });
 var listComponentRelationships = defineOperation({
   operationId: "components.relationships.list",
+  summary: "List component relationships",
   description: "List active or historical component topology edges.",
   backend: "api",
   route: {
@@ -31697,6 +31676,7 @@ var listComponentRelationships = defineOperation({
 });
 var previewComponentRelationship = defineOperation({
   operationId: "components.relationships.preview",
+  summary: "Preview a component relationship change",
   description: "Preview descendant-scoped notification and automation impact for a topology change.",
   backend: "api",
   route: {
@@ -31711,6 +31691,7 @@ var previewComponentRelationship = defineOperation({
 });
 var addComponentRelationship = defineOperation({
   operationId: "components.relationships.add",
+  summary: "Add a component relationship",
   description: "Add a confirmed, tenant-safe component topology edge.",
   backend: "api",
   route: {
@@ -31725,6 +31706,7 @@ var addComponentRelationship = defineOperation({
 });
 var removeComponentRelationship = defineOperation({
   operationId: "components.relationships.remove",
+  summary: "Remove a component relationship",
   description: "Historically end a confirmed component topology edge.",
   backend: "api",
   route: {
@@ -31788,7 +31770,7 @@ var ComponentMergeInventorySchema = z2.object({
   recommendationScopeIds: z2.array(z2.string().uuid())
 });
 var ComponentMergeIdentitySchema = z2.object({
-  sourceComponentId: z2.string().uuid().describe("Active or retired component whose independent grain is removed."),
+  sourceComponentId: z2.string().uuid().describe("Active or inactive component whose independent grain is removed."),
   targetComponentId: z2.string().uuid().describe("Active terminal component that becomes the canonical target.")
 });
 var PreviewComponentMergeInputSchema = ComponentRelationshipScopeSchema.merge(ComponentMergeIdentitySchema);
@@ -31854,6 +31836,7 @@ var CommitComponentMergeOutputSchema = z2.object({
 });
 var previewComponentMerge = defineOperation({
   operationId: "components.mergePreview",
+  summary: "Preview a component merge",
   description: "Preview one-hop redirects, historical preservation, operational rebinding, topology contraction, and policy dispositions for component consolidation.",
   backend: "api",
   route: {
@@ -31868,6 +31851,7 @@ var previewComponentMerge = defineOperation({
 });
 var mergeComponent = defineOperation({
   operationId: "components.merge",
+  summary: "Merge a component",
   description: "Consolidate a source into an active terminal target without rewriting historical issue or observation attribution.",
   backend: "api",
   route: {
@@ -31919,6 +31903,7 @@ var GetStatusTimelineOutputSchema = z2.object({
 });
 var listStatusIncidents = defineOperation({
   operationId: "components.incidents.list",
+  summary: "List status-page issues",
   description: "List status-page issues in a project.",
   backend: "api",
   route: {
@@ -31933,6 +31918,7 @@ var listStatusIncidents = defineOperation({
 });
 var getStatusTimeline = defineOperation({
   operationId: "components.timeline",
+  summary: "Get a component status timeline",
   description: "Get the dense status timeline and incidents for a component over a time window.",
   backend: "api",
   route: {
@@ -31952,10 +31938,8 @@ var componentsContract = {
   deregister: deregisterComponent.contract,
   rename: renameComponent.contract,
   assignTeam: assignComponentTeam.contract,
-  retirementPreview: previewComponentRetirement.contract,
-  retire: retireComponent.contract,
-  restorationPreview: previewComponentRestoration.contract,
-  restore: restoreComponent.contract,
+  reactivationPreview: previewComponentReactivation.contract,
+  reactivate: reactivateComponent.contract,
   mergePreview: previewComponentMerge.contract,
   merge: mergeComponent.contract,
   relationships: {
@@ -32005,7 +31989,6 @@ var AutomationSchema = z3.object({
   kind: AutomationKindSchema.describe("Automation kind: a scheduled script or a log-match investigation."),
   scriptId: z3.string().uuid().nullable().describe("ID of the project_scripts row this automation runs, for DB-backed script automations. Null for legacy script_path automations and for log-match automations."),
   scriptName: z3.string().nullable().describe("Name of the project_scripts row this automation runs (see scriptId). Null when scriptId is null."),
-  logMatchExpressionId: z3.string().uuid().nullable().describe("Deprecated: use signalDefinitionId. Log-match expression bound to this automation. Null for script automations."),
   signalDefinitionId: z3.string().uuid().nullable().describe("Signal definition bound to this automation. Null for script automations."),
   signalType: AutomationSignalTypeSchema.nullable().describe("Signal trigger type for log-match automations. Null for script automations."),
   source: z3.enum(["sazabi_managed", "custom"]).describe("Whether the automation is Sazabi-managed or customer-defined."),
@@ -32133,6 +32116,7 @@ var DisableAutomationOutputSchema = z3.object({
 });
 var listAutomations = defineOperation({
   operationId: "automations.list",
+  summary: "List automations",
   description: "List scheduled automations in a project, with run health and recent run stats.",
   backend: "api",
   route: {
@@ -32147,6 +32131,7 @@ var listAutomations = defineOperation({
 });
 var getAutomation = defineOperation({
   operationId: "automations.get",
+  summary: "Get an automation",
   description: "Get a single automation by ID.",
   backend: "api",
   route: {
@@ -32161,7 +32146,8 @@ var getAutomation = defineOperation({
 });
 var createAutomation = defineOperation({
   operationId: "automations.create",
-  description: "Create an automation: either a cron-driven project script (see scripts.create) or a log-match investigation bound to an expression (see logMatchExpressions.create).",
+  summary: "Create an automation",
+  description: "Create an automation: either a cron-driven project script (see scripts.create) or a signal investigation bound to a signal definition (see signalDefinitions.create).",
   backend: "api",
   route: {
     method: "POST",
@@ -32176,6 +32162,7 @@ var createAutomation = defineOperation({
 });
 var updateAutomation = defineOperation({
   operationId: "automations.update",
+  summary: "Update an automation",
   description: "Update an automation's name, description, or schedule. Does not change which script it runs.",
   backend: "api",
   route: {
@@ -32190,6 +32177,7 @@ var updateAutomation = defineOperation({
 });
 var enableAutomation = defineOperation({
   operationId: "automations.enable",
+  summary: "Enable an automation",
   description: "Enable an automation so it runs on its schedule.",
   backend: "api",
   route: {
@@ -32204,6 +32192,7 @@ var enableAutomation = defineOperation({
 });
 var disableAutomation = defineOperation({
   operationId: "automations.disable",
+  summary: "Disable an automation",
   description: "Disable an automation so it stops running on its schedule.",
   backend: "api",
   route: {
@@ -32238,6 +32227,7 @@ var GetAutomationRunOutputSchema = z3.object({
 });
 var listAutomationRuns = defineOperation({
   operationId: "automations.runs.list",
+  summary: "List automation runs",
   description: "List runs for an automation, most recent first.",
   backend: "api",
   route: {
@@ -32252,6 +32242,7 @@ var listAutomationRuns = defineOperation({
 });
 var getAutomationRun = defineOperation({
   operationId: "automations.runs.get",
+  summary: "Get an automation run",
   description: "Get a single automation run by ID.",
   backend: "api",
   route: {
@@ -32291,6 +32282,7 @@ var GetAutomationRunLogsOutputSchema = z3.object({
 });
 var getAutomationRunLogs = defineOperation({
   operationId: "automations.runs.logs",
+  summary: "Get automation run logs",
   description: "Get the captured stdout/stderr for a single automation run, reading the full output from durable storage when the inline preview was truncated.",
   backend: "api",
   route: {
@@ -32324,6 +32316,7 @@ var BillingUsageDimensionSchema = z4.enum([
   "logs_accepted_bytes",
   "input_tokens",
   "output_tokens",
+  "ai_tokens",
   "issues_created",
   "automation_runs_completed",
   "pull_requests_created",
@@ -32339,6 +32332,17 @@ var BillingTransactionTypeSchema = z4.enum([
   "adjustment",
   "migration_opening_balance",
   "void"
+]);
+var BillingTransactionDirectionSchema = z4.enum(["credit", "debit"]);
+var BillingTransactionReasonSchema = z4.enum([
+  "cycle_renewal",
+  "plan_upgrade",
+  "auto_purchase",
+  "one_off_purchase",
+  "deficit_settlement",
+  "usage",
+  "adjustment",
+  "migration_opening_balance"
 ]);
 var BillingCycleSchema = z4.object({
   startsAt: z4.string().datetime(),
@@ -32365,24 +32369,13 @@ var BillingSubscriptionSchema = z4.object({
   id: z4.string(),
   status: z4.string(),
   billingPlanId: z4.string(),
-  priceBookId: z4.string(),
   cycleType: z4.string(),
   cancelAt: z4.string().datetime().nullable(),
   canceledAt: z4.string().datetime().nullable()
 });
 var GetBillingSummaryInputSchema = z4.object({
-  organizationId: z4.string().min(1).optional().describe("Organization to query billing for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  organizationId: z4.string().min(1).optional().describe("Organization to query billing for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
-var BillingCollectionSummarySchema = z4.object({
-  status: z4.enum(["current", "payment_retrying", "delinquent"]).describe("Negative-balance collection state. `current` means no open collection case; `payment_retrying` means a scheduled retry cadence is running; `delinquent` means retries are exhausted and intake is denied until payment settles the balance."),
-  outstandingCredits: z4.string().nullable().describe("Credits owed (absolute value of the negative balance)."),
-  outstandingAmount: z4.string().nullable().describe("Amount owed in `currency` at the current additional-credit price."),
-  currency: z4.string().nullable(),
-  scheduledAttemptsMade: z4.number().int().describe("Scheduled collection attempts consumed by confirmed payment failures."),
-  nextRetryAt: z4.string().datetime().nullable(),
-  billingInvoiceId: z4.string().nullable(),
-  hostedInvoiceUrl: z4.string().nullable()
-}).describe("Read-only negative-balance collection state for the organization.");
 var GetBillingSummaryOutputSchema = z4.object({
   billingModel: z4.enum(["credit-balance-v1"]),
   billable: z4.boolean(),
@@ -32397,7 +32390,6 @@ var GetBillingSummaryOutputSchema = z4.object({
   currentPeriodEstimate: BillingPeriodEstimateSchema.nullable(),
   pendingDowngrade: BillingPendingDowngradeSchema.nullable(),
   subscription: BillingSubscriptionSchema.nullable(),
-  collection: BillingCollectionSummarySchema,
   currentPlan: z4.object({
     slug: z4.string(),
     name: z4.string(),
@@ -32413,7 +32405,7 @@ var GetBillingSummaryOutputSchema = z4.object({
   }).nullable()
 });
 var GetBillingUsageInputSchema = z4.object({
-  organizationId: z4.string().min(1).optional().describe("Organization to query usage for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z4.string().min(1).optional().describe("Organization to query usage for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   cycle: z4.enum(["current", "previous"]).default("current").describe("Which billing cycle to report usage for.")
 });
 var BillingUsageRowSchema = z4.object({
@@ -32428,7 +32420,7 @@ var GetBillingUsageOutputSchema = z4.object({
   usage: z4.array(BillingUsageRowSchema)
 });
 var ListBillingTransactionsInputSchema = z4.object({
-  organizationId: z4.string().min(1).optional().describe("Organization to query transactions for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z4.string().min(1).optional().describe("Organization to query transactions for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   limit: z4.coerce.number().int().min(1).max(100).default(10).describe("Maximum number of transactions to return per page."),
   page: z4.coerce.number().int().min(1).default(1).describe("Page number for pagination (1-indexed).")
 });
@@ -32436,6 +32428,9 @@ var BillingTransactionSchema = z4.object({
   id: z4.string(),
   transactionType: BillingTransactionTypeSchema,
   creditDelta: z4.string(),
+  direction: BillingTransactionDirectionSchema.describe("Which way this entry moved the balance. Derived from the business event, not from the amount: a zero-credit cycle renewal is still a credit."),
+  reason: BillingTransactionReasonSchema.describe("The business event that produced this entry."),
+  amount: z4.string().describe("Non-negative magnitude of the balance movement. Apply `direction` for the signed value."),
   balanceAfter: z4.string(),
   occurredAt: z4.string().datetime(),
   billingInvoiceId: z4.string().nullable()
@@ -32453,6 +32448,7 @@ var ListBillingTransactionsOutputSchema = z4.object({
 });
 var getBillingSummary = defineOperation({
   operationId: "billing.getSummary",
+  summary: "Get billing summary",
   description: "Get a billing summary for the current organization, including plan, balance, and cycle information.",
   backend: "api",
   route: {
@@ -32467,6 +32463,7 @@ var getBillingSummary = defineOperation({
 });
 var getBillingUsage = defineOperation({
   operationId: "billing.getUsage",
+  summary: "Get billing usage",
   description: "Get per-dimension usage breakdown for the current or previous billing cycle.",
   backend: "api",
   route: {
@@ -32481,6 +32478,7 @@ var getBillingUsage = defineOperation({
 });
 var listBillingTransactions = defineOperation({
   operationId: "billing.listTransactions",
+  summary: "List billing transactions",
   description: "List recent credit ledger transactions with pagination.",
   backend: "api",
   route: {
@@ -32493,7 +32491,7 @@ var listBillingTransactions = defineOperation({
   pagination: "page",
   async: "sync"
 });
-var OrganizationIdInputSchema = z4.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.");
+var OrganizationIdInputSchema = z4.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).");
 var billingDecimalSchema = z4.string().trim().regex(/^\d+(?:\.\d{1,6})?$/, "Expected a decimal with up to 6 places");
 var billingMoneyDecimalSchema = billingDecimalSchema.refine((value) => {
   const [, fractionalPart = ""] = value.split(".");
@@ -32545,8 +32543,7 @@ var BillingPlanSchema = z4.object({
   currency: z4.string(),
   targetCreditBalance: z4.string().nullable(),
   logsIncludedBytes: z4.string(),
-  inputTokensIncluded: z4.string(),
-  outputTokensIncluded: z4.string()
+  aiTokensIncluded: z4.string()
 });
 var ListPlansOutputSchema = z4.object({
   billingModel: z4.string(),
@@ -32657,7 +32654,6 @@ var SubscriptionCancellationPreviewSchema = z4.object({
   scheduledFinalCharge: z4.string().nullable(),
   autoTopUpEnabled: z4.boolean(),
   pendingDowngrade: BillingPendingDowngradeSchema.nullable(),
-  collectionState: BillingCollectionSummarySchema,
   calculatedAt: z4.string().datetime()
 });
 var ScheduleSubscriptionCancellationOutputSchema = SubscriptionCancellationPreviewSchema.extend({
@@ -32670,6 +32666,7 @@ var ResumeSubscriptionCancellationOutputSchema = z4.object({
 });
 var getAutoTopUp = defineOperation({
   operationId: "billing.getAutoTopUp",
+  summary: "Get auto top-up settings",
   description: "Get the organization's credit auto top-up settings (trigger balance, top-up amount, cycle spending limit).",
   backend: "api",
   route: { method: "GET", path: "/billing/auto-top-up", tags: ["Billing"] },
@@ -32680,6 +32677,7 @@ var getAutoTopUp = defineOperation({
 });
 var updateAutoTopUp = defineOperation({
   operationId: "billing.updateAutoTopUp",
+  summary: "Update auto top-up settings",
   description: "Enable/disable and configure credit auto top-up. Requires a user credential with `billing:manage`.",
   backend: "api",
   route: { method: "PUT", path: "/billing/auto-top-up", tags: ["Billing"] },
@@ -32690,6 +32688,7 @@ var updateAutoTopUp = defineOperation({
 });
 var purchaseCredits = defineOperation({
   operationId: "billing.purchaseCredits",
+  summary: "Purchase credits",
   description: "Purchase a one-time amount of credits against the saved payment method. Requires a user credential with `billing:manage` and a stable idempotency key.",
   backend: "api",
   route: {
@@ -32704,6 +32703,7 @@ var purchaseCredits = defineOperation({
 });
 var listPlans = defineOperation({
   operationId: "billing.listPlans",
+  summary: "List plans",
   description: "List the self-serve credit plans available for checkout, including the current plan.",
   backend: "api",
   route: { method: "GET", path: "/billing/plans", tags: ["Billing"] },
@@ -32714,6 +32714,7 @@ var listPlans = defineOperation({
 });
 var previewPlanChange = defineOperation({
   operationId: "billing.previewPlanChange",
+  summary: "Preview a plan change",
   description: "Preview the cost and effect of changing to a plan without applying it. Requires a user credential with `billing:manage`.",
   backend: "api",
   route: {
@@ -32728,6 +32729,7 @@ var previewPlanChange = defineOperation({
 });
 var changePlan = defineOperation({
   operationId: "billing.changePlan",
+  summary: "Change the plan",
   description: "Apply a plan upgrade or schedule a downgrade. Requires a user credential with `billing:manage`.",
   backend: "api",
   route: { method: "POST", path: "/billing/plan-change", tags: ["Billing"] },
@@ -32738,6 +32740,7 @@ var changePlan = defineOperation({
 });
 var createCheckoutSession = defineOperation({
   operationId: "billing.createCheckoutSession",
+  summary: "Create a checkout session",
   description: "Create a hosted Stripe Checkout session for first-time subscribe from the terminal. Requires a user credential with `billing:manage`.",
   backend: "api",
   route: {
@@ -32752,6 +32755,7 @@ var createCheckoutSession = defineOperation({
 });
 var getCheckoutSessionStatus = defineOperation({
   operationId: "billing.getCheckoutSessionStatus",
+  summary: "Get checkout session status",
   description: "Poll the completion status of a checkout session created by this organization.",
   backend: "api",
   route: {
@@ -32766,6 +32770,7 @@ var getCheckoutSessionStatus = defineOperation({
 });
 var createPortalSession = defineOperation({
   operationId: "billing.createPortalSession",
+  summary: "Create a billing portal session",
   description: "Create a Stripe Customer Portal session for updating the payment method. Requires a user credential with `billing:manage`.",
   backend: "api",
   route: {
@@ -32780,6 +32785,7 @@ var createPortalSession = defineOperation({
 });
 var getPaymentMethod = defineOperation({
   operationId: "billing.getPaymentMethod",
+  summary: "Get the payment method",
   description: "Get a summary of the organization's saved payment method (brand and last 4 digits).",
   backend: "api",
   route: { method: "GET", path: "/billing/payment-method", tags: ["Billing"] },
@@ -32790,6 +32796,7 @@ var getPaymentMethod = defineOperation({
 });
 var previewSubscriptionCancellation = defineOperation({
   operationId: "billing.previewSubscriptionCancellation",
+  summary: "Preview subscription cancellation",
   description: "Preview period-end subscription cancellation without changing billing state.",
   backend: "api",
   route: {
@@ -32804,6 +32811,7 @@ var previewSubscriptionCancellation = defineOperation({
 });
 var scheduleSubscriptionCancellation = defineOperation({
   operationId: "billing.scheduleSubscriptionCancellation",
+  summary: "Schedule subscription cancellation",
   description: "Schedule cancellation at the end of the paid billing cycle.",
   backend: "api",
   route: {
@@ -32818,6 +32826,7 @@ var scheduleSubscriptionCancellation = defineOperation({
 });
 var resumeSubscriptionCancellation = defineOperation({
   operationId: "billing.resumeSubscriptionCancellation",
+  summary: "Resume subscription renewal",
   description: "Resume renewal before a scheduled cancellation takes effect.",
   backend: "api",
   route: {
@@ -32830,9 +32839,79 @@ var resumeSubscriptionCancellation = defineOperation({
   pagination: "none",
   async: "sync"
 });
+var BillingUsageInvoiceLineItemSchema = z4.object({
+  productKey: BillingUsageDimensionSchema.describe("Product the line bills, keyed by the usage dimension vocabulary."),
+  displayName: z4.string(),
+  meteredQuantity: z4.string().describe("Metered units (count, bytes) summed over the cycle window."),
+  includedQuantity: z4.string(),
+  overageQuantity: z4.string(),
+  unitPrice: z4.string().describe("Currency per rated unit, decimal."),
+  amount: z4.string().describe("Currency at six-decimal precision.")
+});
+var BillingUsageInvoiceSchema = z4.object({
+  id: z4.string(),
+  cycleStartsAt: z4.string().datetime(),
+  cycleEndsAt: z4.string().datetime(),
+  status: z4.string().describe("Invoice status: preview, finalized, pending_payment, paid, failed, void, or uncollectible. A zero-total settlement is written paid with no charge."),
+  currency: z4.string(),
+  subtotalAmount: z4.string(),
+  totalAmount: z4.string(),
+  lineItems: z4.array(BillingUsageInvoiceLineItemSchema),
+  hostedInvoiceUrl: z4.string().nullable().describe("Stripe-hosted invoice page; null for zero-total settlements."),
+  finalizedAt: z4.string().datetime().nullable(),
+  createdAt: z4.string().datetime()
+});
+var ListUsageInvoicesInputSchema = z4.object({
+  organizationId: z4.string().min(1).optional().describe("Organization to list usage invoices for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z4.coerce.number().int().min(1).max(100).default(24).describe("Maximum invoices to return, newest cycle first.")
+});
+var ListUsageInvoicesOutputSchema = z4.object({
+  items: z4.array(BillingUsageInvoiceSchema)
+});
+var listUsageInvoices = defineOperation({
+  operationId: "billing.listUsageInvoices",
+  summary: "List usage invoices",
+  description: "List cycle-end usage invoices — the local settlement record, one per settled billing cycle, zero-total settlements included.",
+  backend: "api",
+  route: { method: "GET", path: "/billing/usage-invoices", tags: ["Billing"] },
+  input: ListUsageInvoicesInputSchema,
+  output: ListUsageInvoicesOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var GetAccruedUsageChargesInputSchema = z4.object({
+  organizationId: z4.string().min(1).optional().describe("Organization to query accrued charges for. Auto-filled from CLI and SDK context when omitted.")
+});
+var GetAccruedUsageChargesOutputSchema = z4.object({
+  cycle: z4.object({
+    startsAt: z4.string().datetime(),
+    endsAt: z4.string().datetime()
+  }).nullable().describe("The open billing cycle the charges accrue in; null when the account has no open stamped cycle."),
+  currency: z4.string().nullable(),
+  settlesInCents: z4.boolean().describe("Whether the open cycle's plan settles any product as a cycle-end currency charge."),
+  lineItems: z4.array(BillingUsageInvoiceLineItemSchema),
+  totalAmount: z4.string()
+});
+var getAccruedUsageCharges = defineOperation({
+  operationId: "billing.getAccruedUsageCharges",
+  summary: "Get accrued usage charges",
+  description: "Get usage charges accrued so far in the open billing cycle, priced under the cycle's plan terms. These settle on the cycle-end usage invoice.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/billing/usage-charges/accrued",
+    tags: ["Billing"]
+  },
+  input: GetAccruedUsageChargesInputSchema,
+  output: GetAccruedUsageChargesOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
 var billingContract = {
   getSummary: getBillingSummary.contract,
   getUsage: getBillingUsage.contract,
+  getAccruedUsageCharges: getAccruedUsageCharges.contract,
+  listUsageInvoices: listUsageInvoices.contract,
   listTransactions: listBillingTransactions.contract,
   getAutoTopUp: getAutoTopUp.contract,
   updateAutoTopUp: updateAutoTopUp.contract,
@@ -32861,7 +32940,7 @@ var CONNECTED_ACCOUNT_PROVIDER_VALUES = [
 ];
 var ConnectedAccountProviderEnum = z5.enum(CONNECTED_ACCOUNT_PROVIDER_VALUES);
 var BeginConnectedAccountConnectInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization to connect within. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z5.string().min(1).optional().describe("Organization to connect within. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   provider: ConnectedAccountProviderEnum.describe("Connected-account provider to connect.")
 });
 var BeginConnectedAccountConnectOutputSchema = z5.object({
@@ -32871,6 +32950,7 @@ var BeginConnectedAccountConnectOutputSchema = z5.object({
 });
 var beginConnectedAccountConnect = defineOperation({
   operationId: "connectedAccounts.beginConnect",
+  summary: "Begin a connected account connect flow",
   description: "Begin a browser connect flow for a connected-account provider. Returns a vendor URL to open in a browser and an attempt to poll; the vendor exchange completes server-side and no token ever reaches the caller.",
   backend: "api",
   route: {
@@ -32891,15 +32971,17 @@ var ConnectedAccountConnectAttemptStatusEnum = z5.enum([
   "expired"
 ]);
 var GetConnectedAccountConnectAttemptInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z5.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   attemptId: z5.string().uuid().describe("Connect attempt ID to poll.")
 });
 var GetConnectedAccountConnectAttemptOutputSchema = z5.object({
   status: ConnectedAccountConnectAttemptStatusEnum.describe("Attempt state. `expired` means the browser flow did not complete in time — begin a new connect."),
+  conflictPending: z5.boolean().optional().describe("True while an identity-conflict transfer offer is awaiting the user's decision in the browser (the attempt stays pending until they choose)."),
   errorCode: z5.string().nullable().describe("Reason code when status is `failed` (the shared OAuth callback vocabulary, e.g. vendor_denied, not_authorized).")
 });
 var getConnectedAccountConnectAttempt = defineOperation({
   operationId: "connectedAccounts.getConnectAttempt",
+  summary: "Get a connect attempt",
   description: "Poll a browser connect attempt started with `connectedAccounts.beginConnect`. Visible only to the user who began it.",
   backend: "api",
   route: {
@@ -32913,7 +32995,7 @@ var getConnectedAccountConnectAttempt = defineOperation({
   async: "sync"
 });
 var ListConnectedAccountsInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization to list accounts for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  organizationId: z5.string().min(1).optional().describe("Organization to list accounts for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
 var ConnectedAccountSchema = z5.object({
   provider: z5.string().describe("Provider identifier."),
@@ -32928,6 +33010,7 @@ var ListConnectedAccountsOutputSchema = z5.object({
 });
 var listConnectedAccounts = defineOperation({
   operationId: "connectedAccounts.list",
+  summary: "List connected accounts",
   description: "List the calling user's connected accounts for the organization.",
   backend: "api",
   route: {
@@ -32941,7 +33024,7 @@ var listConnectedAccounts = defineOperation({
   async: "sync"
 });
 var DisconnectConnectedAccountInputSchema = z5.object({
-  organizationId: z5.string().min(1).optional().describe("Organization the account belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z5.string().min(1).optional().describe("Organization the account belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   provider: ConnectedAccountProviderEnum.describe("Provider to disconnect.")
 });
 var DisconnectConnectedAccountOutputSchema = z5.object({
@@ -32949,6 +33032,7 @@ var DisconnectConnectedAccountOutputSchema = z5.object({
 });
 var disconnectConnectedAccount = defineOperation({
   operationId: "connectedAccounts.disconnect",
+  summary: "Disconnect a connected account",
   description: "Disconnect the calling user's connected account for a provider (soft delete).",
   backend: "api",
   route: {
@@ -33040,13 +33124,14 @@ var ExternalIdentityJitPolicySchema = z6.object({
   effectiveEnabled: z6.boolean().describe("True only when both stored policies are enabled.")
 });
 var ListIntegrationProvidersInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to list providers for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  organizationId: z6.string().min(1).optional().describe("Organization to list providers for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
 var ListIntegrationProvidersOutputSchema = z6.object({
   providers: z6.array(IntegrationProviderSchema)
 });
 var listIntegrationProviders = defineOperation({
   operationId: "integrations.listProviders",
+  summary: "List integration providers",
   description: "List supported integration providers and how many connections the organization has for each.",
   backend: "api",
   route: {
@@ -33060,7 +33145,7 @@ var listIntegrationProviders = defineOperation({
   async: "sync"
 });
 var ListIntegrationConnectionsInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to list connections for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization to list connections for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   provider: IntegrationProviderEnum.optional().describe("Filter connections by provider.")
 });
 var ListIntegrationConnectionsOutputSchema = z6.object({
@@ -33068,6 +33153,7 @@ var ListIntegrationConnectionsOutputSchema = z6.object({
 });
 var listIntegrationConnections = defineOperation({
   operationId: "integrations.listConnections",
+  summary: "List integration connections",
   description: "List integration connections and their connection state for the organization.",
   backend: "api",
   route: {
@@ -33081,7 +33167,7 @@ var listIntegrationConnections = defineOperation({
   async: "sync"
 });
 var GetIntegrationConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   connectionId: z6.string().uuid().describe("Connection ID to fetch.")
 });
 var GetIntegrationConnectionOutputSchema = z6.object({
@@ -33089,6 +33175,7 @@ var GetIntegrationConnectionOutputSchema = z6.object({
 });
 var getIntegrationConnection = defineOperation({
   operationId: "integrations.getConnection",
+  summary: "Get an integration connection",
   description: "Get one integration connection by ID (non-secret config only).",
   backend: "api",
   route: {
@@ -33102,7 +33189,7 @@ var getIntegrationConnection = defineOperation({
   async: "sync"
 });
 var CreateIntegrationConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   provider: IntegrationProviderEnum.describe("Integration provider to connect. Must use api_key auth (see `authType` in the provider catalog)."),
   displayName: z6.string().trim().min(1).max(255).optional().describe("Optional display name for the connection."),
   credentials: z6.record(z6.string(), z6.unknown()).describe("Vendor credentials. Fields vary by provider (see `credentialFields` on the provider catalog). Validated against the vendor before the connection is created; never returned.")
@@ -33112,6 +33199,7 @@ var CreateIntegrationConnectionOutputSchema = z6.object({
 });
 var createIntegrationConnection = defineOperation({
   operationId: "integrations.createConnection",
+  summary: "Create an integration connection",
   description: "Create an integration connection for an api_key provider. Credentials are validated against the vendor, then stored encrypted.",
   backend: "api",
   route: {
@@ -33126,7 +33214,7 @@ var createIntegrationConnection = defineOperation({
   async: "sync"
 });
 var BeginIntegrationConnectInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization to connect in. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   provider: IntegrationProviderEnum.describe("Browser-auth provider to connect (oauth or app_installation). Must report `browserConnectSupported: true` in the provider catalog."),
   displayName: z6.string().trim().min(1).max(255).optional().describe("Optional display name for the resulting connection."),
   projectId: z6.string().trim().min(1).optional().describe("Project the completed connection defaults its routing to. Must belong to the organization.")
@@ -33138,6 +33226,7 @@ var BeginIntegrationConnectOutputSchema = z6.object({
 });
 var beginIntegrationConnect = defineOperation({
   operationId: "integrations.beginConnect",
+  summary: "Begin a browser connect flow",
   description: "Begin a browser connect flow for an OAuth or app-installation provider. Returns a vendor URL to open in a browser and an attempt to poll; the vendor exchange completes server-side and no token ever reaches the caller.",
   backend: "api",
   route: {
@@ -33159,7 +33248,7 @@ var IntegrationConnectAttemptStatusEnum = z6.enum([
   "expired"
 ]);
 var GetIntegrationConnectAttemptInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization the attempt belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   attemptId: z6.string().uuid().describe("Connect attempt ID to poll.")
 });
 var GetIntegrationConnectAttemptOutputSchema = z6.object({
@@ -33169,6 +33258,7 @@ var GetIntegrationConnectAttemptOutputSchema = z6.object({
 });
 var getIntegrationConnectAttempt = defineOperation({
   operationId: "integrations.getConnectAttempt",
+  summary: "Get a connect attempt",
   description: "Poll a browser connect attempt started with `integrations.beginConnect`. Visible only to the user who began it.",
   backend: "api",
   route: {
@@ -33182,7 +33272,7 @@ var getIntegrationConnectAttempt = defineOperation({
   async: "sync"
 });
 var DisconnectIntegrationConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   connectionId: z6.string().uuid().describe("Connection ID to disconnect.")
 });
 var DisconnectIntegrationConnectionOutputSchema = z6.object({
@@ -33190,6 +33280,7 @@ var DisconnectIntegrationConnectionOutputSchema = z6.object({
 });
 var disconnectIntegrationConnection = defineOperation({
   operationId: "integrations.disconnectConnection",
+  summary: "Disconnect an integration connection",
   description: "Disconnect an integration connection (soft delete). Always succeeds regardless of stored credential state; cached vendor catalogs and routing derived from the connection are removed.",
   backend: "api",
   route: {
@@ -33203,7 +33294,7 @@ var disconnectIntegrationConnection = defineOperation({
   async: "sync"
 });
 var UpdateIntegrationConnectionCredentialsInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   connectionId: z6.string().uuid().describe("Connection ID to update."),
   credentials: z6.record(z6.string(), z6.unknown()).describe("Replacement vendor credentials for an api_key connection. Validated against the vendor; resets the connection's health state on success.")
 });
@@ -33212,6 +33303,7 @@ var UpdateIntegrationConnectionCredentialsOutputSchema = z6.object({
 });
 var updateIntegrationConnectionCredentials = defineOperation({
   operationId: "integrations.updateConnectionCredentials",
+  summary: "Update integration connection credentials",
   description: "Replace an api_key connection's credentials in place — the reconnect path for a connection that needs attention. Keeps connection-scoped configuration.",
   backend: "api",
   route: {
@@ -33225,7 +33317,7 @@ var updateIntegrationConnectionCredentials = defineOperation({
   async: "sync"
 });
 var ExternalIdentityJitOrganizationInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  organizationId: z6.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
 var ExternalIdentityJitOrganizationPolicySchema = z6.object({
   organizationEnabled: z6.boolean(),
@@ -33236,6 +33328,7 @@ var ExternalIdentityJitConnectionInputSchema = ExternalIdentityJitOrganizationIn
 });
 var getOrganizationExternalIdentityJitPolicy = defineOperation({
   operationId: "integrations.getOrganizationExternalIdentityJitPolicy",
+  summary: "Get the organization external-identity JIT policy",
   description: "Read the organization's stored external-identity JIT policy.",
   backend: "api",
   route: {
@@ -33250,6 +33343,7 @@ var getOrganizationExternalIdentityJitPolicy = defineOperation({
 });
 var updateOrganizationExternalIdentityJitPolicy = defineOperation({
   operationId: "integrations.updateOrganizationExternalIdentityJitPolicy",
+  summary: "Update the organization external-identity JIT policy",
   description: "Enable or disable external-identity JIT across an organization.",
   backend: "api",
   route: {
@@ -33266,6 +33360,7 @@ var updateOrganizationExternalIdentityJitPolicy = defineOperation({
 });
 var getConnectionExternalIdentityJitPolicy = defineOperation({
   operationId: "integrations.getConnectionExternalIdentityJitPolicy",
+  summary: "Get a connection external-identity JIT policy",
   description: "Read stored and effective JIT policy for one connection.",
   backend: "api",
   route: {
@@ -33280,6 +33375,7 @@ var getConnectionExternalIdentityJitPolicy = defineOperation({
 });
 var updateConnectionExternalIdentityJitPolicy = defineOperation({
   operationId: "integrations.updateConnectionExternalIdentityJitPolicy",
+  summary: "Update a connection external-identity JIT policy",
   description: "Enable or disable external-identity JIT for one connection.",
   backend: "api",
   route: {
@@ -33295,7 +33391,7 @@ var updateConnectionExternalIdentityJitPolicy = defineOperation({
   async: "sync"
 });
 var SlackConnectionInputSchema = z6.object({
-  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   connectionId: z6.string().uuid().describe("Slack integration connection ID (the `integration_connections.id`, not the Slack team id).")
 });
 var SlackConfigurationSchema = z6.object({
@@ -33307,6 +33403,7 @@ var SlackConfigurationSchema = z6.object({
 var GetSlackConfigurationInputSchema = SlackConnectionInputSchema;
 var getSlackConfiguration = defineOperation({
   operationId: "integrations.getSlackConfiguration",
+  summary: "Get Slack connection configuration",
   description: "Read Slack connection configuration (default project, automatic responses, acknowledgement message).",
   backend: "api",
   route: {
@@ -33326,6 +33423,7 @@ var UpdateSlackConfigurationInputSchema = SlackConnectionInputSchema.extend({
 });
 var updateSlackConfiguration = defineOperation({
   operationId: "integrations.updateSlackConfiguration",
+  summary: "Update Slack connection configuration",
   description: "Update Slack connection configuration. Omitted fields are left unchanged.",
   backend: "api",
   route: {
@@ -33335,6 +33433,61 @@ var updateSlackConfiguration = defineOperation({
   },
   input: UpdateSlackConfigurationInputSchema,
   output: SlackConfigurationSchema,
+  pagination: "none",
+  async: "sync"
+});
+var LinearConnectionInputSchema = z6.object({
+  organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted."),
+  connectionId: z6.string().uuid().describe("Linear integration connection ID.")
+});
+var LinearSeverityActionSchema = z6.enum(["create", "skip"]);
+var LinearSeverityRulesSchema = z6.object({
+  low: LinearSeverityActionSchema,
+  medium: LinearSeverityActionSchema,
+  high: LinearSeverityActionSchema,
+  critical: LinearSeverityActionSchema
+});
+var LinearAutomationConfigurationSchema = z6.object({
+  connectionId: z6.string().uuid(),
+  enabled: z6.boolean(),
+  teamId: z6.string().nullable(),
+  projectId: z6.string().nullable(),
+  severityRules: LinearSeverityRulesSchema
+});
+var GetLinearAutomationConfigurationInputSchema = LinearConnectionInputSchema;
+var getLinearAutomationConfiguration = defineOperation({
+  operationId: "integrations.getLinearAutomationConfiguration",
+  summary: "Get Linear issue automation configuration",
+  description: "Read the Linear team, project, and severity rules used to automatically create tickets for detected issues.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/integrations/connections/{connectionId}/linear-automation",
+    tags: ["Integrations"]
+  },
+  input: GetLinearAutomationConfigurationInputSchema,
+  output: LinearAutomationConfigurationSchema,
+  pagination: "none",
+  async: "sync"
+});
+var UpdateLinearAutomationConfigurationInputSchema = LinearConnectionInputSchema.extend({
+  enabled: z6.boolean(),
+  teamId: z6.string().trim().min(1).nullable(),
+  projectId: z6.string().trim().min(1).nullable(),
+  severityRules: LinearSeverityRulesSchema
+});
+var updateLinearAutomationConfiguration = defineOperation({
+  operationId: "integrations.updateLinearAutomationConfiguration",
+  summary: "Update Linear issue automation configuration",
+  description: "Set the Linear team, optional project, and per-severity ticket creation rules for detected issues.",
+  backend: "api",
+  route: {
+    method: "PATCH",
+    path: "/integrations/connections/{connectionId}/linear-automation",
+    tags: ["Integrations"]
+  },
+  input: UpdateLinearAutomationConfigurationInputSchema,
+  output: LinearAutomationConfigurationSchema,
   pagination: "none",
   async: "sync"
 });
@@ -33350,6 +33503,7 @@ var ListSlackChannelProjectMappingsOutputSchema = z6.object({
 });
 var listSlackChannelProjectMappings = defineOperation({
   operationId: "integrations.listSlackChannelProjectMappings",
+  summary: "List Slack channel-to-project mappings",
   description: "List channel-to-project mappings for a Slack connection.",
   backend: "api",
   route: {
@@ -33369,6 +33523,7 @@ var SetSlackChannelProjectMappingInputSchema = SlackConnectionInputSchema.extend
 });
 var setSlackChannelProjectMapping = defineOperation({
   operationId: "integrations.setSlackChannelProjectMapping",
+  summary: "Set a Slack channel-to-project mapping",
   description: "Create or update the channel-to-project mapping for one Slack channel. Idempotent on (connection, channel).",
   backend: "api",
   route: {
@@ -33389,6 +33544,7 @@ var DeleteSlackChannelProjectMappingOutputSchema = z6.object({
 });
 var deleteSlackChannelProjectMapping = defineOperation({
   operationId: "integrations.deleteSlackChannelProjectMapping",
+  summary: "Delete a Slack channel-to-project mapping",
   description: "Delete a channel-to-project mapping.",
   backend: "api",
   route: {
@@ -33572,6 +33728,7 @@ var UnmuteIssueInputSchema = z7.object({
 var UnmuteIssueOutputSchema = z7.object({ issue: IssueSchema });
 var createIssue = defineOperation({
   operationId: "issues.create",
+  summary: "Create an issue",
   description: "Create an issue in a project, returning an existing open issue when root-cause deduplication finds a match.",
   backend: "api",
   route: {
@@ -33587,6 +33744,7 @@ var createIssue = defineOperation({
 });
 var listIssues = defineOperation({
   operationId: "issues.list",
+  summary: "List issues",
   description: "List issues in a project, optionally filtered by status and severity.",
   backend: "api",
   route: { method: "GET", path: "/issues", tags: ["Issues"] },
@@ -33597,6 +33755,7 @@ var listIssues = defineOperation({
 });
 var searchIssues = defineOperation({
   operationId: "issues.search",
+  summary: "Search issues",
   description: "Search issues in a project by name, status, and severity.",
   backend: "api",
   route: { method: "GET", path: "/issues/search", tags: ["Issues"] },
@@ -33607,6 +33766,7 @@ var searchIssues = defineOperation({
 });
 var countIssues = defineOperation({
   operationId: "issues.count",
+  summary: "Count issues",
   description: "Count issues in a project with status and severity breakdowns.",
   backend: "api",
   route: { method: "GET", path: "/issues/count", tags: ["Issues"] },
@@ -33617,6 +33777,7 @@ var countIssues = defineOperation({
 });
 var getIssue = defineOperation({
   operationId: "issues.get",
+  summary: "Get an issue",
   description: "Get a single issue by ID.",
   backend: "api",
   route: { method: "GET", path: "/issues/{issueId}", tags: ["Issues"] },
@@ -33627,6 +33788,7 @@ var getIssue = defineOperation({
 });
 var resolveIssue = defineOperation({
   operationId: "issues.resolve",
+  summary: "Resolve an issue",
   description: "Resolve an open issue.",
   backend: "api",
   route: {
@@ -33641,6 +33803,7 @@ var resolveIssue = defineOperation({
 });
 var ignoreIssue = defineOperation({
   operationId: "issues.ignore",
+  summary: "Ignore an issue",
   description: "Ignore an open issue.",
   backend: "api",
   route: {
@@ -33655,6 +33818,7 @@ var ignoreIssue = defineOperation({
 });
 var reopenIssue = defineOperation({
   operationId: "issues.reopen",
+  summary: "Reopen an issue",
   description: "Reopen a resolved or ignored issue.",
   backend: "api",
   route: {
@@ -33669,6 +33833,7 @@ var reopenIssue = defineOperation({
 });
 var reassignAndReopenIssue = defineOperation({
   operationId: "issues.reassignAndReopen",
+  summary: "Reassign and reopen an issue",
   description: "Atomically reassign a resolved or ignored issue to an active component and reopen it.",
   backend: "api",
   route: {
@@ -33683,6 +33848,7 @@ var reassignAndReopenIssue = defineOperation({
 });
 var muteIssue = defineOperation({
   operationId: "issues.mute",
+  summary: "Mute an issue",
   description: "Mute an issue, suppressing future re-fires without changing status.",
   backend: "api",
   route: {
@@ -33697,6 +33863,7 @@ var muteIssue = defineOperation({
 });
 var unmuteIssue = defineOperation({
   operationId: "issues.unmute",
+  summary: "Unmute an issue",
   description: "Unmute an issue, preserving its current status.",
   backend: "api",
   route: {
@@ -33797,23 +33964,23 @@ var DeactivatePublicKeyInputSchema = z8.object({
 var DeactivatePublicKeyOutputSchema = GetPublicKeyOutputSchema;
 var DeleteKeyOutputSchema = z8.void();
 var ListSecretKeysInputSchema = z8.object({
-  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   limit: z8.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of keys to return per page."),
   cursor: z8.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
 var GetSecretKeyInputSchema = z8.object({
   keyId: z8.string().uuid().describe("Key ID to fetch."),
-  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
 var CreateSecretKeyInputSchema = z8.object({
-  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   projectId: z8.string().uuid().optional().describe("Project to scope this key to. When set, the key can only access resources within this project. Omit for organization-wide access."),
   name: z8.string().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(KEY_NAME_REGEX, "Name can only contain letters, numbers, spaces, hyphens, and underscores").describe("Human-readable name for the key."),
   expiresAt: z8.string().datetime().optional().describe("Optional expiration timestamp for the key.")
 });
 var UpdateSecretKeyInputSchema = z8.object({
   keyId: z8.string().uuid().describe("Key ID to update."),
-  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+  organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   name: z8.string().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(KEY_NAME_REGEX, "Name can only contain letters, numbers, spaces, hyphens, and underscores").optional().describe("New human-readable name for the key."),
   expiresAt: z8.string().datetime().nullable().optional().describe("New expiration timestamp for the key, or null to clear it.")
 });
@@ -33822,7 +33989,7 @@ var DeleteSecretKeyInputSchema = z8.object({
     keyId: z8.string().uuid().describe("Key ID to delete.")
   }),
   query: z8.object({
-    organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+    organizationId: z8.string().min(1).optional().describe("Organization whose keys the operation targets. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
   }).default({})
 }).transform(({ params, query }) => ({
   ...params,
@@ -33830,6 +33997,7 @@ var DeleteSecretKeyInputSchema = z8.object({
 }));
 var listPublicKeys = defineOperation({
   operationId: "publicKeys.list",
+  summary: "List public keys",
   description: "List public keys within one project.",
   backend: "api",
   route: {
@@ -33868,6 +34036,7 @@ var listPublicKeys = defineOperation({
 });
 var getPublicKey = defineOperation({
   operationId: "publicKeys.get",
+  summary: "Get a public key",
   description: "Get one public key within one project.",
   backend: "api",
   route: {
@@ -33903,6 +34072,7 @@ var getPublicKey = defineOperation({
 });
 var ensureLogForwardingPublicKey = defineOperation({
   operationId: "publicKeys.ensureLogForwarding",
+  summary: "Ensure a log forwarding public key",
   description: "Ensure a reusable project-scoped public key exists for CLI log forwarding.",
   backend: "api",
   route: {
@@ -33938,6 +34108,7 @@ var ensureLogForwardingPublicKey = defineOperation({
 });
 var updatePublicKey = defineOperation({
   operationId: "publicKeys.update",
+  summary: "Update a public key",
   description: "Update one public key within one project.",
   backend: "api",
   route: {
@@ -33974,6 +34145,7 @@ var updatePublicKey = defineOperation({
 });
 var deactivatePublicKey = defineOperation({
   operationId: "publicKeys.deactivate",
+  summary: "Deactivate a public key",
   description: "Deactivate one public key within one project. Recently validated requests may continue to authenticate for a short period after deactivation.",
   backend: "api",
   route: {
@@ -33989,6 +34161,7 @@ var deactivatePublicKey = defineOperation({
 });
 var listSecretKeys = defineOperation({
   operationId: "secretKeys.list",
+  summary: "List secret keys",
   description: "List secret keys within the organization.",
   backend: "api",
   route: {
@@ -34024,6 +34197,7 @@ var listSecretKeys = defineOperation({
 });
 var getSecretKey = defineOperation({
   operationId: "secretKeys.get",
+  summary: "Get a secret key",
   description: "Get one secret key within the organization.",
   backend: "api",
   route: {
@@ -34056,6 +34230,7 @@ var getSecretKey = defineOperation({
 });
 var createSecretKey = defineOperation({
   operationId: "secretKeys.create",
+  summary: "Create a secret key",
   description: "Create one secret key within the organization.",
   backend: "api",
   route: {
@@ -34090,6 +34265,7 @@ var createSecretKey = defineOperation({
 });
 var updateSecretKey = defineOperation({
   operationId: "secretKeys.update",
+  summary: "Update a secret key",
   description: "Update one secret key within the organization.",
   backend: "api",
   route: {
@@ -34123,6 +34299,7 @@ var updateSecretKey = defineOperation({
 });
 var deleteSecretKey = defineOperation({
   operationId: "secretKeys.delete",
+  summary: "Delete a secret key",
   description: "Delete one secret key within the organization.",
   backend: "api",
   route: {
@@ -34150,140 +34327,6 @@ var secretKeysContract = {
   create: createSecretKey.contract,
   update: updateSecretKey.contract,
   delete: deleteSecretKey.contract
-};
-
-// ../public-api-contracts/src/log-match-expressions.ts
-import { z as z9 } from "zod";
-var ExpressionIdSchema = z9.string().uuid().describe("Log match expression ID.");
-var LogMatchExpressionNameSchema = z9.string().min(1).max(200).describe("Human-readable expression name.");
-var LogMatchCelExpressionSchema = z9.string().min(1).max(8192).describe("CEL expression evaluated against ingested log events.");
-var LogMatchExpressionSchema = z9.object({
-  id: z9.string().uuid(),
-  projectId: z9.string().uuid(),
-  name: z9.string(),
-  expression: LogMatchCelExpressionSchema,
-  enabled: z9.boolean(),
-  compiledVersion: z9.number().int(),
-  linkedAutomationIds: z9.array(z9.string().uuid()).optional().describe("Automations bound to this expression. Included on list/get when available."),
-  createdAt: z9.string().datetime(),
-  updatedAt: z9.string().datetime()
-});
-var ListLogMatchExpressionsInputSchema = z9.object({
-  projectId: z9.string().uuid().optional().describe("Project to list expressions for. Auto-filled from CLI and SDK context when omitted.")
-});
-var ListLogMatchExpressionsOutputSchema = z9.object({
-  expressions: z9.array(LogMatchExpressionSchema)
-});
-var GetLogMatchExpressionInputSchema = z9.object({
-  expressionId: ExpressionIdSchema,
-  projectId: z9.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
-});
-var GetLogMatchExpressionOutputSchema = z9.object({
-  expression: LogMatchExpressionSchema
-});
-var CreateLogMatchExpressionInputSchema = z9.object({
-  projectId: z9.string().uuid().optional().describe("Project to create the expression in. Auto-filled from CLI and SDK context when omitted."),
-  name: LogMatchExpressionNameSchema,
-  expression: LogMatchCelExpressionSchema,
-  enabled: z9.boolean().optional().describe("Whether the expression starts enabled. Defaults to true.")
-});
-var CreateLogMatchExpressionOutputSchema = z9.object({
-  expression: LogMatchExpressionSchema
-});
-var UpdateLogMatchExpressionInputSchema = z9.object({
-  expressionId: ExpressionIdSchema,
-  projectId: z9.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted."),
-  name: LogMatchExpressionNameSchema.optional(),
-  expression: LogMatchCelExpressionSchema.optional(),
-  enabled: z9.boolean().optional().describe("Whether the expression is enabled.")
-});
-var UpdateLogMatchExpressionOutputSchema = z9.object({
-  expression: LogMatchExpressionSchema
-});
-var DisableLogMatchExpressionInputSchema = z9.object({
-  expressionId: ExpressionIdSchema,
-  projectId: z9.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
-});
-var DisableLogMatchExpressionOutputSchema = z9.object({
-  expression: LogMatchExpressionSchema
-});
-var listLogMatchExpressions = defineOperation({
-  operationId: "logMatchExpressions.list",
-  description: "List CEL log-match expressions in a project.",
-  backend: "api",
-  route: {
-    method: "GET",
-    path: "/log-match-expressions",
-    tags: ["Log match expressions"]
-  },
-  input: ListLogMatchExpressionsInputSchema,
-  output: ListLogMatchExpressionsOutputSchema,
-  pagination: "none",
-  async: "sync"
-});
-var getLogMatchExpression = defineOperation({
-  operationId: "logMatchExpressions.get",
-  description: "Get a single log-match expression by ID.",
-  backend: "api",
-  route: {
-    method: "GET",
-    path: "/log-match-expressions/{expressionId}",
-    tags: ["Log match expressions"]
-  },
-  input: GetLogMatchExpressionInputSchema,
-  output: GetLogMatchExpressionOutputSchema,
-  pagination: "none",
-  async: "sync"
-});
-var createLogMatchExpression = defineOperation({
-  operationId: "logMatchExpressions.create",
-  description: "Create a CEL log-match expression for a project.",
-  backend: "api",
-  route: {
-    method: "POST",
-    path: "/log-match-expressions",
-    successStatus: 201,
-    tags: ["Log match expressions"]
-  },
-  input: CreateLogMatchExpressionInputSchema,
-  output: CreateLogMatchExpressionOutputSchema,
-  pagination: "none",
-  async: "sync"
-});
-var updateLogMatchExpression = defineOperation({
-  operationId: "logMatchExpressions.update",
-  description: "Update a log-match expression's name, CEL body, or enabled state.",
-  backend: "api",
-  route: {
-    method: "PATCH",
-    path: "/log-match-expressions/{expressionId}",
-    tags: ["Log match expressions"]
-  },
-  input: UpdateLogMatchExpressionInputSchema,
-  output: UpdateLogMatchExpressionOutputSchema,
-  pagination: "none",
-  async: "sync"
-});
-var disableLogMatchExpression = defineOperation({
-  operationId: "logMatchExpressions.disable",
-  description: "Disable a log-match expression so it stops matching logs.",
-  backend: "api",
-  route: {
-    method: "POST",
-    path: "/log-match-expressions/{expressionId}/disable",
-    tags: ["Log match expressions"]
-  },
-  input: DisableLogMatchExpressionInputSchema,
-  output: DisableLogMatchExpressionOutputSchema,
-  pagination: "none",
-  async: "sync"
-});
-var logMatchExpressionsContract = {
-  list: listLogMatchExpressions.contract,
-  get: getLogMatchExpression.contract,
-  create: createLogMatchExpression.contract,
-  update: updateLogMatchExpression.contract,
-  disable: disableLogMatchExpression.contract
 };
 // ../log-source-provider/src/sources/shared/types.ts
 var LOG_SOURCE_SETUP_SKILL_SPEC_VALUE = "available";
@@ -34381,237 +34424,10 @@ var claudeCodeSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/shared/setup-actions.ts
-var CONNECT_BUTTON = {
-  label: "Connect",
-  pendingLabel: "Connecting..."
-};
-var otelSetupActions = (noun, protocol = "http/protobuf") => [
-  {
-    instruction: `Add the OpenTelemetry SDK to your ${noun}.`,
-    notes: [
-      {
-        text: "Most languages have official OpenTelemetry SDKs available (e.g., `@opentelemetry/api` for Node.js, `opentelemetry-api` for Python, etc.)."
-      }
-    ]
-  },
-  {
-    instruction: `Initialize OpenTelemetry in your ${noun}.`
-  },
-  {
-    instruction: `Set the following environment variables in your ${noun} environment — \`OTEL_EXPORTER_OTLP_ENDPOINT\` is your intake URL (above).`,
-    payloads: [
-      {
-        kind: "copyable",
-        label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
-        value: protocol,
-        copyLabel: "OTLP protocol"
-      }
-    ],
-    notes: [otelSdkAutoDetectNote]
-  }
-];
-var otelSdkAutoDetectNote = {
-  text: "Most OpenTelemetry SDKs automatically detect these environment variables. If your SDK is already configured in code, use the same endpoint and protocol values there instead."
-};
-
-// ../log-source-provider/src/sources/cloudflare/setup.ts
-var cloudflareManaged = {
-  kind: "multi-step",
-  steps: [
-    {
-      id: "prepare",
-      title: "Create token",
-      notes: [
-        {
-          variant: "requirement",
-          text: "**Cloudflare Logpush is only available on the Enterprise plan.** Free, Pro, and Business accounts cannot create Logpush jobs."
-        }
-      ],
-      actions: [
-        {
-          kind: "instruction",
-          instruction: "Create a Cloudflare API token with **Account Settings: Read**, **Zone: Read**, and **Zone Logs: Edit** permissions.",
-          payloads: [
-            {
-              kind: "external-link",
-              label: "Open Cloudflare API token template",
-              href: "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22account_settings%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22account%22%7D%2C%7B%22key%22%3A%22logs%22%2C%22type%22%3A%22edit%22%2C%22scope%22%3A%22zone%22%7D%2C%7B%22key%22%3A%22zone%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22zone%22%7D%5D&name=Sazabi+Cloudflare+Logpush"
-            }
-          ]
-        },
-        {
-          kind: "instruction",
-          instruction: "Pick the account you want to connect, click **Continue to summary**, then **Create Token**, and copy the token for the next step."
-        }
-      ]
-    },
-    {
-      id: "credentials",
-      title: "Enter credentials",
-      actions: [
-        {
-          id: "token",
-          kind: "secret",
-          label: "Cloudflare API token",
-          instruction: "Enter your Cloudflare API token below.",
-          description: "Token with Account Settings Read, Zone Read, and Logs Edit permissions.",
-          placeholder: "Enter your Cloudflare API token"
-        },
-        {
-          id: "accountId",
-          kind: "text",
-          label: "Cloudflare account ID",
-          instruction: "Enter your Cloudflare account ID below.",
-          description: "The 32-character hex ID from your Cloudflare dashboard URL or account overview.",
-          placeholder: "e.g. a1b2c3d4e5f6...",
-          pattern: "^[a-f0-9]{32}$",
-          patternMessage: "Enter the 32-character Cloudflare account ID."
-        }
-      ]
-    }
-  ],
-  submit: {
-    actions: [
-      {
-        kind: "validate",
-        action: "validate",
-        input: { token: "$token", accountId: "$accountId" },
-        resultAs: "validate"
-      }
-    ],
-    metadata: {
-      cloudflareApiToken: "$token",
-      accountId: "$accountId",
-      accountName: "$validate.accountName"
-    },
-    button: CONNECT_BUTTON
-  },
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/cloudflare"
-};
-var cloudflareStreams = {
-  content: {
-    kind: "list",
-    listAction: "listLogpushDatasets",
-    listInput: { connectionId: "${context.connectionId}" },
-    columns: [
-      { field: "datasetName", header: "Dataset", cell: "badge" },
-      { field: "scopeDetail", header: "Scope" }
-    ],
-    searchPlaceholder: "Search datasets and zones...",
-    searchFields: ["datasetName", "scopeDetail"],
-    dedupeByConfigField: ["scope", "zoneId", "dataset"],
-    dedupeMissingFieldAsEmpty: true,
-    emptyState: {
-      noMatches: "No Logpush datasets match your search.",
-      allConfigured: "All Logpush datasets already have log streams configured."
-    },
-    toStreamItem: {
-      displayName: "$item.displayName",
-      config: {
-        scope: "$item.scope",
-        accountId: "$item.accountId",
-        zoneId: "$item.zoneId",
-        zoneName: "$item.zoneName",
-        dataset: "$item.dataset",
-        datasetName: "$item.datasetName"
-      }
-    }
-  }
-};
-var cloudflareConnectionless = {
-  groups: [
-    {
-      id: "open-logpush",
-      section: "config",
-      title: "Open Logpush",
-      notes: [
-        {
-          variant: "requirement",
-          text: "**Cloudflare Logpush is only available on the Enterprise plan.** Free, Pro, and Business accounts cannot create Logpush jobs."
-        }
-      ],
-      actions: [
-        {
-          instruction: "Create a Logpush job in your [Cloudflare dashboard](https://dash.cloudflare.com) under **Analytics & Logs > Logpush**, or via the Cloudflare API."
-        },
-        {
-          instruction: "Select **HTTP** as the destination type."
-        }
-      ]
-    },
-    {
-      id: "destination",
-      section: "config",
-      title: "Set the destination",
-      actions: [
-        {
-          instruction: "Paste your Sazabi intake URL (above) into the Logpush HTTP destination field."
-        }
-      ]
-    },
-    {
-      id: "output-options",
-      section: "config",
-      title: "Set output options",
-      actions: [
-        {
-          instruction: "In the Logpush job's **Output options**, set **Timestamp format** to **RFC3339** so Sazabi can parse event times accurately."
-        }
-      ]
-    }
-  ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/cloudflare"
-};
-
-// ../log-source-provider/src/sources/cloudflare/spec.ts
-var cloudflareSensitiveFields = ["cloudflareApiToken"];
-var cloudflareIntakeDeclaration = {
-  id: "cloudflare-logpush",
-  label: "Cloudflare Logpush",
-  transform: "cloudflare-logpush"
-};
-var cloudflareSpec = {
-  id: "cloudflare",
-  name: "Cloudflare Logpush",
-  searchAliases: ["cloudflare", "cf", "logpush"],
-  capabilities: ["connectionless", "managed"],
-  auth: ["apiToken"],
-  delivery: ["push"],
-  lifecycleEligible: true,
-  sensitiveFields: cloudflareSensitiveFields,
-  serverOwnedStreamConfigFields: ["logpushJobId"],
-  intake: [cloudflareIntakeDeclaration],
-  subtitle: "Stream your Cloudflare Logpush jobs to Sazabi for edge network observability.",
-  features: ["Zone Logpush", "Account Logpush", "Edge analytics"],
-  evidenceHints: [
-    "Cloudflare zones, account Logpush config, or Terraform cloudflare provider",
-    "CLOUDFLARE_* environment variables or scripts that call the Cloudflare API",
-    "README/docs naming Cloudflare for edge, DNS, CDN, firewall, or Workers traffic"
-  ],
-  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
-  dashboard: {
-    iconKey: "cloudflare",
-    intakeSourceId: "cloudflare-logpush",
-    streamSelectorLayout: "sidepanel",
-    actions: {
-      submit: {
-        validate: { procedure: "cloudflare.validateToken" }
-      },
-      list: {
-        listLogpushDatasets: {
-          procedure: "cloudflare.listLogpushDatasets",
-          itemsField: "items"
-        }
-      }
-    }
-  }
-};
-
 // ../log-source-provider/src/sources/cloudflare-workers/setup.ts
 var cloudflareWorkersConnectionless = {
   perStreamInstructions: true,
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/cloudflare-workers",
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/cloudflare-workers",
   groups: [
     {
       id: "open-telemetry",
@@ -34728,6 +34544,233 @@ var cloudflareWorkersSpec = {
     streamSelectorLayout: "sidepanel"
   },
   streamCardinality: "multi"
+};
+
+// ../log-source-provider/src/sources/shared/setup-actions.ts
+var CONNECT_BUTTON = {
+  label: "Connect",
+  pendingLabel: "Connecting..."
+};
+var otelSetupActions = (noun, protocol = "http/protobuf") => [
+  {
+    instruction: `Add the OpenTelemetry SDK to your ${noun}.`,
+    notes: [
+      {
+        text: "Most languages have official OpenTelemetry SDKs available (e.g., `@opentelemetry/api` for Node.js, `opentelemetry-api` for Python, etc.)."
+      }
+    ]
+  },
+  {
+    instruction: `Initialize OpenTelemetry in your ${noun}.`
+  },
+  {
+    instruction: `Set the following environment variables in your ${noun} environment — \`OTEL_EXPORTER_OTLP_ENDPOINT\` is your intake URL (above).`,
+    payloads: [
+      {
+        kind: "copyable",
+        label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
+        value: protocol,
+        copyLabel: "OTLP protocol"
+      }
+    ],
+    notes: [otelSdkAutoDetectNote]
+  }
+];
+var otelSdkAutoDetectNote = {
+  text: "Most OpenTelemetry SDKs automatically detect these environment variables. If your SDK is already configured in code, use the same endpoint and protocol values there instead."
+};
+
+// ../log-source-provider/src/sources/cloudflare/setup.ts
+var cloudflareManaged = {
+  kind: "multi-step",
+  steps: [
+    {
+      id: "prepare",
+      title: "Create token",
+      notes: [
+        {
+          variant: "requirement",
+          text: "**Cloudflare Logpush is only available on the Enterprise plan.** Free, Pro, and Business accounts cannot create Logpush jobs."
+        }
+      ],
+      actions: [
+        {
+          kind: "instruction",
+          instruction: "Create a Cloudflare API token with **Account Settings: Read**, **Zone: Read**, and **Zone Logs: Edit** permissions.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Cloudflare API token template",
+              href: "https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=%5B%7B%22key%22%3A%22account_settings%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22account%22%7D%2C%7B%22key%22%3A%22logs%22%2C%22type%22%3A%22edit%22%2C%22scope%22%3A%22zone%22%7D%2C%7B%22key%22%3A%22zone%22%2C%22type%22%3A%22read%22%2C%22scope%22%3A%22zone%22%7D%5D&name=Sazabi+Cloudflare+Logpush"
+            }
+          ]
+        },
+        {
+          kind: "instruction",
+          instruction: "Pick the account you want to connect, click **Continue to summary**, then **Create Token**, and copy the token for the next step."
+        }
+      ]
+    },
+    {
+      id: "credentials",
+      title: "Enter credentials",
+      actions: [
+        {
+          id: "token",
+          kind: "secret",
+          label: "Cloudflare API token",
+          instruction: "Enter your Cloudflare API token below.",
+          description: "Token with Account Settings Read, Zone Read, and Logs Edit permissions.",
+          placeholder: "Enter your Cloudflare API token"
+        },
+        {
+          id: "accountId",
+          kind: "text",
+          label: "Cloudflare account ID",
+          instruction: "Enter your Cloudflare account ID below.",
+          description: "The 32-character hex ID from your Cloudflare dashboard URL or account overview.",
+          placeholder: "e.g. a1b2c3d4e5f6...",
+          pattern: "^[a-f0-9]{32}$",
+          patternMessage: "Enter the 32-character Cloudflare account ID."
+        }
+      ]
+    }
+  ],
+  submit: {
+    actions: [
+      {
+        kind: "validate",
+        action: "validate",
+        input: { token: "$token", accountId: "$accountId" },
+        resultAs: "validate"
+      }
+    ],
+    metadata: {
+      cloudflareApiToken: "$token",
+      accountId: "$accountId",
+      accountName: "$validate.accountName"
+    },
+    button: CONNECT_BUTTON
+  },
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/cloudflare"
+};
+var cloudflareStreams = {
+  content: {
+    kind: "list",
+    listAction: "listLogpushDatasets",
+    listInput: { connectionId: "${context.connectionId}" },
+    columns: [
+      { field: "datasetName", header: "Dataset", cell: "badge" },
+      { field: "scopeDetail", header: "Scope" }
+    ],
+    searchPlaceholder: "Search datasets and zones...",
+    searchFields: ["datasetName", "scopeDetail"],
+    dedupeByConfigField: ["scope", "zoneId", "dataset"],
+    dedupeMissingFieldAsEmpty: true,
+    emptyState: {
+      noMatches: "No Logpush datasets match your search.",
+      allConfigured: "All Logpush datasets already have log streams configured."
+    },
+    toStreamItem: {
+      displayName: "$item.displayName",
+      config: {
+        scope: "$item.scope",
+        accountId: "$item.accountId",
+        zoneId: "$item.zoneId",
+        zoneName: "$item.zoneName",
+        dataset: "$item.dataset",
+        datasetName: "$item.datasetName"
+      }
+    }
+  }
+};
+var cloudflareConnectionless = {
+  groups: [
+    {
+      id: "open-logpush",
+      section: "config",
+      title: "Open Logpush",
+      notes: [
+        {
+          variant: "requirement",
+          text: "**Cloudflare Logpush is only available on the Enterprise plan.** Free, Pro, and Business accounts cannot create Logpush jobs."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Create a Logpush job in your [Cloudflare dashboard](https://dash.cloudflare.com) under **Analytics & Logs > Logpush**, or via the Cloudflare API."
+        },
+        {
+          instruction: "Select **HTTP** as the destination type."
+        }
+      ]
+    },
+    {
+      id: "destination",
+      section: "config",
+      title: "Set the destination",
+      actions: [
+        {
+          instruction: "Paste your Sazabi intake URL (above) into the Logpush HTTP destination field."
+        }
+      ]
+    },
+    {
+      id: "output-options",
+      section: "config",
+      title: "Set output options",
+      actions: [
+        {
+          instruction: "In the Logpush job's **Output options**, set **Timestamp format** to **RFC3339** so Sazabi can parse event times accurately."
+        }
+      ]
+    }
+  ],
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/cloudflare"
+};
+
+// ../log-source-provider/src/sources/cloudflare/spec.ts
+var cloudflareSensitiveFields = ["cloudflareApiToken"];
+var cloudflareIntakeDeclaration = {
+  id: "cloudflare-logpush",
+  label: "Cloudflare Logpush",
+  transform: "cloudflare-logpush"
+};
+var cloudflareSpec = {
+  id: "cloudflare",
+  name: "Cloudflare Logpush",
+  searchAliases: ["cloudflare", "cf", "logpush"],
+  capabilities: ["connectionless", "managed"],
+  auth: ["apiToken"],
+  delivery: ["push"],
+  lifecycleEligible: true,
+  sensitiveFields: cloudflareSensitiveFields,
+  serverOwnedStreamConfigFields: ["logpushJobId"],
+  intake: [cloudflareIntakeDeclaration],
+  subtitle: "Stream your Cloudflare Logpush jobs to Sazabi for edge network observability.",
+  features: ["Zone Logpush", "Account Logpush", "Edge analytics"],
+  evidenceHints: [
+    "Cloudflare zones, account Logpush config, or Terraform cloudflare provider",
+    "CLOUDFLARE_* environment variables or scripts that call the Cloudflare API",
+    "README/docs naming Cloudflare for edge, DNS, CDN, firewall, or Workers traffic"
+  ],
+  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
+  dashboard: {
+    iconKey: "cloudflare",
+    intakeSourceId: "cloudflare-logpush",
+    streamSelectorLayout: "sidepanel",
+    actions: {
+      submit: {
+        validate: { procedure: "cloudflare.validateToken" }
+      },
+      list: {
+        listLogpushDatasets: {
+          procedure: "cloudflare.listLogpushDatasets",
+          itemsField: "items"
+        }
+      }
+    }
+  }
 };
 
 // ../log-source-provider/src/sources/cloudwatch/setup.ts
@@ -34939,7 +34982,7 @@ aws iam get-role --role-name SazabiLogIngestion --query 'Role.Arn' --output text
       }
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/cloudwatch"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/cloudwatch"
 };
 var cloudwatchStreams = {
   content: {
@@ -35318,7 +35361,7 @@ var convexConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/convex"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/convex"
 };
 var convexStreams = {
   content: {
@@ -35395,7 +35438,7 @@ var convexSpec = {
 
 // ../log-source-provider/src/sources/datadog/setup.ts
 var datadogConnectionless = {
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/datadog",
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/datadog",
   perStreamInstructions: true,
   groups: [
     {
@@ -35636,7 +35679,7 @@ var daytonaConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/daytona"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/daytona"
 };
 
 // ../log-source-provider/src/sources/daytona/spec.ts
@@ -35717,10 +35760,10 @@ var digitalOceanManaged = {
     },
     button: CONNECT_BUTTON
   },
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/digitalocean"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/digitalocean"
 };
 var digitalOceanConnectionless = {
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/digital-ocean",
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/digital-ocean",
   groups: [
     {
       id: "open-log-forwarding",
@@ -35737,7 +35780,7 @@ var digitalOceanConnectionless = {
               text: "To add forwarding across an app in one step from a picker, connect your DigitalOcean account instead."
             },
             {
-              text: "App Platform Functions, Droplets, Spaces, Managed Databases, and Managed Kubernetes are not covered by this path — forward those with Sazabi's [OpenTelemetry endpoint](https://docs.sazabi.com/data/sources/endpoint/opentelemetry)."
+              text: "App Platform Functions, Droplets, Spaces, Managed Databases, and Managed Kubernetes are not covered by this path — forward those with Sazabi's [OpenTelemetry endpoint](https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/opentelemetry)."
             }
           ]
         }
@@ -36518,7 +36561,7 @@ var flyIoManaged = {
     },
     button: CONNECT_BUTTON
   },
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/fly-io"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/fly-io"
 };
 var flyIoConnectionless = {
   groups: [
@@ -36583,7 +36626,7 @@ var flyIoConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/fly-io"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/fly-io"
 };
 var flyIoStreams = {
   content: {
@@ -36754,7 +36797,7 @@ var gcpManaged = {
       flow: { kind: "connectionless" }
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/gcp"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/gcp"
 };
 var gcpStreams = {
   content: {
@@ -36787,7 +36830,7 @@ var gcpStreams = {
   }
 };
 var gcpConnectionless = {
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/gcp",
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/gcp",
   groups: [
     {
       id: "prepare",
@@ -37373,7 +37416,7 @@ var mastraSpec = {
 // ../log-source-provider/src/sources/neon/setup.ts
 var neonConnectionless = {
   perStreamInstructions: true,
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/neon",
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/neon",
   groups: [
     {
       id: "open-integration",
@@ -37560,7 +37603,7 @@ var netlifyConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/netlify"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/netlify"
 };
 
 // ../log-source-provider/src/sources/netlify/spec.ts
@@ -37639,7 +37682,7 @@ var openrouterConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/openrouter"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/openrouter"
 };
 
 // ../log-source-provider/src/sources/openrouter/spec.ts
@@ -37672,103 +37715,6 @@ var openrouterSpec = {
   dashboard: {
     iconKey: "openrouter",
     intakeSourceId: "openrouter"
-  }
-};
-
-// ../log-source-provider/src/sources/otel/setup.ts
-var otelConnectionless = {
-  perStreamInstructions: true,
-  groups: [
-    {
-      id: "instrument",
-      section: "config",
-      title: "Instrument application",
-      notes: [
-        {
-          text: "Metrics sent to the endpoint aren't stored yet."
-        }
-      ],
-      actions: [
-        {
-          instruction: "Add the OpenTelemetry SDK to your application. Most languages have official SDKs available (e.g., `@opentelemetry/api` for Node.js, `opentelemetry-api` for Python, etc.)."
-        },
-        {
-          instruction: "Initialize the OpenTelemetry SDK in your application and configure the OTLP exporters for the signals you want (logs and/or traces)."
-        }
-      ]
-    },
-    {
-      id: "environment",
-      section: "config",
-      title: "Set OTLP environment",
-      actions: [
-        {
-          instruction: "Set these variables in the environment that runs your application — `OTEL_EXPORTER_OTLP_ENDPOINT` is your intake URL (above).",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
-              value: "http/protobuf",
-              copyLabel: "OTLP protocol"
-            }
-          ],
-          notes: [
-            {
-              text: "These variables work with any OpenTelemetry SDK (Node.js, Python, Go, Java, .NET, etc.)."
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "redeploy",
-      section: "verify",
-      title: "Redeploy and verify",
-      actions: [
-        {
-          instruction: "Restart or redeploy the application, then generate a test log or trace to confirm Sazabi receives telemetry."
-        }
-      ]
-    }
-  ]
-};
-
-// ../log-source-provider/src/sources/otel/spec.ts
-var otelTraceIntakeDeclaration = {
-  id: "otel-trace",
-  label: "OpenTelemetry Traces",
-  aliases: ["mastra", "otlp-trace", "otlp-traces", "otel-traces"],
-  transform: "otlp-traces-only"
-};
-var otelSpec = {
-  id: "otel",
-  name: "OpenTelemetry",
-  searchAliases: ["otel", "open telemetry"],
-  capabilities: ["connectionless"],
-  auth: [],
-  delivery: ["push"],
-  intake: [
-    {
-      id: "otel",
-      label: "OpenTelemetry",
-      aliases: ["gcl", "otlp"],
-      transform: "otlp-passthrough"
-    },
-    otelTraceIntakeDeclaration
-  ],
-  lifecycleSkipReason: "Manual OTLP setup is not exercised by automated lifecycle tests yet.",
-  subtitle: "Send OpenTelemetry logs and traces directly to Sazabi's OTLP-compatible intake for AI-powered observability.",
-  features: ["OTLP log export", "OTLP trace export", "Any OTEL SDK"],
-  evidenceHints: [
-    "@opentelemetry packages, opentelemetry-* SDKs, or OTEL_* environment variables",
-    "OTLP exporter configuration in application code or deployment manifests",
-    "Existing OpenTelemetry instrumentation without a more specific Sazabi source"
-  ],
-  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
-  dashboard: {
-    slug: "opentelemetry",
-    iconKey: "opentelemetry",
-    intakeSourceId: "otel"
   }
 };
 
@@ -37986,6 +37932,103 @@ var otelMetricsSpec = {
   }
 };
 
+// ../log-source-provider/src/sources/otel/setup.ts
+var otelConnectionless = {
+  perStreamInstructions: true,
+  groups: [
+    {
+      id: "instrument",
+      section: "config",
+      title: "Instrument application",
+      notes: [
+        {
+          text: "Metrics sent to the endpoint aren't stored yet."
+        }
+      ],
+      actions: [
+        {
+          instruction: "Add the OpenTelemetry SDK to your application. Most languages have official SDKs available (e.g., `@opentelemetry/api` for Node.js, `opentelemetry-api` for Python, etc.)."
+        },
+        {
+          instruction: "Initialize the OpenTelemetry SDK in your application and configure the OTLP exporters for the signals you want (logs and/or traces)."
+        }
+      ]
+    },
+    {
+      id: "environment",
+      section: "config",
+      title: "Set OTLP environment",
+      actions: [
+        {
+          instruction: "Set these variables in the environment that runs your application — `OTEL_EXPORTER_OTLP_ENDPOINT` is your intake URL (above).",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "`OTEL_EXPORTER_OTLP_PROTOCOL`",
+              value: "http/protobuf",
+              copyLabel: "OTLP protocol"
+            }
+          ],
+          notes: [
+            {
+              text: "These variables work with any OpenTelemetry SDK (Node.js, Python, Go, Java, .NET, etc.)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "redeploy",
+      section: "verify",
+      title: "Redeploy and verify",
+      actions: [
+        {
+          instruction: "Restart or redeploy the application, then generate a test log or trace to confirm Sazabi receives telemetry."
+        }
+      ]
+    }
+  ]
+};
+
+// ../log-source-provider/src/sources/otel/spec.ts
+var otelTraceIntakeDeclaration = {
+  id: "otel-trace",
+  label: "OpenTelemetry Traces",
+  aliases: ["mastra", "otlp-trace", "otlp-traces", "otel-traces"],
+  transform: "otlp-traces-only"
+};
+var otelSpec = {
+  id: "otel",
+  name: "OpenTelemetry",
+  searchAliases: ["otel", "open telemetry"],
+  capabilities: ["connectionless"],
+  auth: [],
+  delivery: ["push"],
+  intake: [
+    {
+      id: "otel",
+      label: "OpenTelemetry",
+      aliases: ["gcl", "otlp"],
+      transform: "otlp-passthrough"
+    },
+    otelTraceIntakeDeclaration
+  ],
+  lifecycleSkipReason: "Manual OTLP setup is not exercised by automated lifecycle tests yet.",
+  subtitle: "Send OpenTelemetry logs and traces directly to Sazabi's OTLP-compatible intake for AI-powered observability.",
+  features: ["OTLP log export", "OTLP trace export", "Any OTEL SDK"],
+  evidenceHints: [
+    "@opentelemetry packages, opentelemetry-* SDKs, or OTEL_* environment variables",
+    "OTLP exporter configuration in application code or deployment manifests",
+    "Existing OpenTelemetry instrumentation without a more specific Sazabi source"
+  ],
+  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
+  dashboard: {
+    slug: "opentelemetry",
+    iconKey: "opentelemetry",
+    intakeSourceId: "otel"
+  }
+};
+
 // ../log-source-provider/src/sources/plain/setup.ts
 var plainManaged = {
   kind: "multi-step",
@@ -38034,7 +38077,7 @@ var plainManaged = {
     displayName: "$workspace.workspaceName",
     button: CONNECT_BUTTON
   },
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/plain"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/plain"
 };
 var plainConnectionless = {
   groups: [
@@ -38077,7 +38120,7 @@ var plainConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/plain"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/plain"
 };
 var plainStreams = {
   content: {
@@ -38341,208 +38384,6 @@ var porterSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/posthog/setup.ts
-var posthogManaged = {
-  kind: "multi-step",
-  steps: [
-    {
-      id: "prepare",
-      title: "Create key",
-      actions: [
-        {
-          kind: "instruction",
-          instruction: "Create a personal API key in your PostHog account under **Settings > Personal API keys** ([US](https://us.posthog.com/settings/user-api-keys) · [EU](https://eu.posthog.com/settings/user-api-keys))."
-        },
-        {
-          kind: "instruction",
-          instruction: "Grant it these scopes:\n\n- `project:read` - list your projects\n- `organization:read` - show your organization\n- `hog_function:write` - install the webhook destination"
-        }
-      ]
-    },
-    {
-      id: "credentials",
-      title: "Enter API key",
-      actions: [
-        {
-          id: "token",
-          kind: "secret",
-          label: "Personal API key",
-          instruction: "Enter your personal API key below.",
-          placeholder: "phx_..."
-        }
-      ]
-    }
-  ],
-  submit: {
-    actions: [
-      {
-        kind: "validate",
-        action: "validate",
-        input: { token: "$token" },
-        resultAs: "validate"
-      },
-      {
-        kind: "preflight",
-        action: "preflight",
-        input: {
-          token: "$token",
-          region: "$validate.posthogApiRegion",
-          organizationId: "$validate.posthogOrganizationId"
-        }
-      }
-    ],
-    metadata: {
-      posthogPersonalApiKey: "$token",
-      posthogApiRegion: "$validate.posthogApiRegion",
-      posthogOrganizationId: "$validate.posthogOrganizationId",
-      posthogOrganizationName: "$validate.posthogOrganizationName"
-    },
-    button: CONNECT_BUTTON
-  },
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/posthog"
-};
-var POSTHOG_STREAM_COLUMNS = [
-  { field: "name", header: "Project" },
-  {
-    field: "organizationName",
-    header: "Organization",
-    width: "w-48",
-    transform: "fallback: - "
-  }
-];
-var posthogStreams = {
-  content: {
-    kind: "list",
-    listAction: "list",
-    listInput: { connectionId: "${context.connectionId}" },
-    columns: POSTHOG_STREAM_COLUMNS,
-    searchPlaceholder: "Search projects...",
-    searchFields: ["name", "organizationName"],
-    dedupeByConfigField: "posthogProjectId",
-    emptyState: {
-      noMatches: "No projects found.",
-      allConfigured: "All projects already have PostHog destinations configured."
-    },
-    toStreamItem: {
-      displayName: "$item.name",
-      config: {
-        posthogProjectId: "$item.id",
-        posthogProjectName: "$item.name"
-      }
-    }
-  }
-};
-var posthogConnectionless = {
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/posthog",
-  groups: [
-    {
-      id: "prepare",
-      section: "config",
-      title: "Open destination form",
-      actions: [
-        {
-          instruction: "Configure an [HTTP Webhook destination](https://${context.posthogRegion}.posthog.com/pipeline/new/hog-template-webhook) in PostHog under **Data Pipeline > Destinations**."
-        }
-      ]
-    },
-    {
-      id: "values",
-      section: "config",
-      title: "Set destination values",
-      actions: [
-        {
-          instruction: "Paste your Sazabi intake URL (above) into the **Destination URL** field, then set these values in the PostHog HTTP Webhook destination form.",
-          payloads: [
-            {
-              kind: "copyable",
-              label: "Method",
-              value: "POST"
-            },
-            {
-              kind: "code",
-              label: "Body template",
-              language: "json",
-              copyLabel: "Body template",
-              value: `{
-  "event": "{event}",
-  "person": "{person}"
-}`
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: "verify",
-      section: "verify",
-      title: "Save and verify",
-      actions: [
-        {
-          instruction: "Save the PostHog destination, send a test event, and check Sazabi for the incoming product event."
-        }
-      ]
-    }
-  ]
-};
-
-// ../log-source-provider/src/sources/posthog/spec.ts
-var posthogSensitiveFields = ["posthogPersonalApiKey"];
-var posthogIntakeDeclaration = {
-  id: "posthog",
-  label: "PostHog",
-  transform: "posthog-cdp"
-};
-var posthogSpec = {
-  id: "posthog",
-  name: "PostHog",
-  capabilities: ["connectionless", "managed"],
-  auth: ["apiToken"],
-  delivery: ["push"],
-  lifecycleEligible: true,
-  sensitiveFields: posthogSensitiveFields,
-  serverOwnedStreamConfigFields: ["posthogHogFunctionId"],
-  intake: [posthogIntakeDeclaration],
-  subtitle: "Forward your PostHog events directly to Sazabi for real-time product and error observability.",
-  features: [
-    "CDP webhook forwarding",
-    "Event property mapping",
-    "Real-time streaming"
-  ],
-  evidenceHints: [
-    "posthog-js, posthog-node, or posthog-python packages",
-    "POSTHOG_* or NEXT_PUBLIC_POSTHOG_* environment variables",
-    "README/docs naming PostHog for product analytics, feature flags, or session replay"
-  ],
-  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
-  dashboard: {
-    iconKey: "posthog",
-    intakeSourceId: "posthog",
-    streamSelectorLayout: "sidepanel",
-    actions: {
-      submit: {
-        validate: {
-          kind: "source-action",
-          actionId: "validate-personal-api-key",
-          sensitiveInputFields: ["token"]
-        },
-        preflight: {
-          kind: "source-action",
-          actionId: "run-preflight-checks",
-          normalize: "preflight",
-          sensitiveInputFields: ["token"]
-        }
-      },
-      list: {
-        list: {
-          kind: "source-action",
-          actionId: "list-projects",
-          itemsField: "projects"
-        }
-      }
-    }
-  }
-};
-
 // ../log-source-provider/src/sources/posthog-sdk/setup.ts
 var posthogSdkConnectionless = {
   perStreamInstructions: true,
@@ -38704,6 +38545,208 @@ var posthogSdkSpec = {
   dashboard: {
     iconKey: "posthog",
     intakeSourceId: "posthog-sdk"
+  }
+};
+
+// ../log-source-provider/src/sources/posthog/setup.ts
+var posthogManaged = {
+  kind: "multi-step",
+  steps: [
+    {
+      id: "prepare",
+      title: "Create key",
+      actions: [
+        {
+          kind: "instruction",
+          instruction: "Create a personal API key in your PostHog account under **Settings > Personal API keys** ([US](https://us.posthog.com/settings/user-api-keys) · [EU](https://eu.posthog.com/settings/user-api-keys))."
+        },
+        {
+          kind: "instruction",
+          instruction: "Grant it these scopes:\n\n- `project:read` - list your projects\n- `organization:read` - show your organization\n- `hog_function:write` - install the webhook destination"
+        }
+      ]
+    },
+    {
+      id: "credentials",
+      title: "Enter API key",
+      actions: [
+        {
+          id: "token",
+          kind: "secret",
+          label: "Personal API key",
+          instruction: "Enter your personal API key below.",
+          placeholder: "phx_..."
+        }
+      ]
+    }
+  ],
+  submit: {
+    actions: [
+      {
+        kind: "validate",
+        action: "validate",
+        input: { token: "$token" },
+        resultAs: "validate"
+      },
+      {
+        kind: "preflight",
+        action: "preflight",
+        input: {
+          token: "$token",
+          region: "$validate.posthogApiRegion",
+          organizationId: "$validate.posthogOrganizationId"
+        }
+      }
+    ],
+    metadata: {
+      posthogPersonalApiKey: "$token",
+      posthogApiRegion: "$validate.posthogApiRegion",
+      posthogOrganizationId: "$validate.posthogOrganizationId",
+      posthogOrganizationName: "$validate.posthogOrganizationName"
+    },
+    button: CONNECT_BUTTON
+  },
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/posthog"
+};
+var POSTHOG_STREAM_COLUMNS = [
+  { field: "name", header: "Project" },
+  {
+    field: "organizationName",
+    header: "Organization",
+    width: "w-48",
+    transform: "fallback: - "
+  }
+];
+var posthogStreams = {
+  content: {
+    kind: "list",
+    listAction: "list",
+    listInput: { connectionId: "${context.connectionId}" },
+    columns: POSTHOG_STREAM_COLUMNS,
+    searchPlaceholder: "Search projects...",
+    searchFields: ["name", "organizationName"],
+    dedupeByConfigField: "posthogProjectId",
+    emptyState: {
+      noMatches: "No projects found.",
+      allConfigured: "All projects already have PostHog destinations configured."
+    },
+    toStreamItem: {
+      displayName: "$item.name",
+      config: {
+        posthogProjectId: "$item.id",
+        posthogProjectName: "$item.name"
+      }
+    }
+  }
+};
+var posthogConnectionless = {
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/posthog",
+  groups: [
+    {
+      id: "prepare",
+      section: "config",
+      title: "Open destination form",
+      actions: [
+        {
+          instruction: "Configure an [HTTP Webhook destination](https://${context.posthogRegion}.posthog.com/pipeline/new/hog-template-webhook) in PostHog under **Data Pipeline > Destinations**."
+        }
+      ]
+    },
+    {
+      id: "values",
+      section: "config",
+      title: "Set destination values",
+      actions: [
+        {
+          instruction: "Paste your Sazabi intake URL (above) into the **Destination URL** field, then set these values in the PostHog HTTP Webhook destination form.",
+          payloads: [
+            {
+              kind: "copyable",
+              label: "Method",
+              value: "POST"
+            },
+            {
+              kind: "code",
+              label: "Body template",
+              language: "json",
+              copyLabel: "Body template",
+              value: `{
+  "event": "{event}",
+  "person": "{person}"
+}`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "verify",
+      section: "verify",
+      title: "Save and verify",
+      actions: [
+        {
+          instruction: "Save the PostHog destination, send a test event, and check Sazabi for the incoming product event."
+        }
+      ]
+    }
+  ]
+};
+
+// ../log-source-provider/src/sources/posthog/spec.ts
+var posthogSensitiveFields = ["posthogPersonalApiKey"];
+var posthogIntakeDeclaration = {
+  id: "posthog",
+  label: "PostHog",
+  transform: "posthog-cdp"
+};
+var posthogSpec = {
+  id: "posthog",
+  name: "PostHog",
+  capabilities: ["connectionless", "managed"],
+  auth: ["apiToken"],
+  delivery: ["push"],
+  lifecycleEligible: true,
+  sensitiveFields: posthogSensitiveFields,
+  serverOwnedStreamConfigFields: ["posthogHogFunctionId"],
+  intake: [posthogIntakeDeclaration],
+  subtitle: "Forward your PostHog events directly to Sazabi for real-time product and error observability.",
+  features: [
+    "CDP webhook forwarding",
+    "Event property mapping",
+    "Real-time streaming"
+  ],
+  evidenceHints: [
+    "posthog-js, posthog-node, or posthog-python packages",
+    "POSTHOG_* or NEXT_PUBLIC_POSTHOG_* environment variables",
+    "README/docs naming PostHog for product analytics, feature flags, or session replay"
+  ],
+  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
+  dashboard: {
+    iconKey: "posthog",
+    intakeSourceId: "posthog",
+    streamSelectorLayout: "sidepanel",
+    actions: {
+      submit: {
+        validate: {
+          kind: "source-action",
+          actionId: "validate-personal-api-key",
+          sensitiveInputFields: ["token"]
+        },
+        preflight: {
+          kind: "source-action",
+          actionId: "run-preflight-checks",
+          normalize: "preflight",
+          sensitiveInputFields: ["token"]
+        }
+      },
+      list: {
+        list: {
+          kind: "source-action",
+          actionId: "list-projects",
+          itemsField: "projects"
+        }
+      }
+    }
   }
 };
 
@@ -39055,7 +39098,7 @@ var renderConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/render"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/render"
 };
 var renderStreams = {
   content: {
@@ -39275,6 +39318,389 @@ var respanSpec = {
   dashboard: {
     iconKey: "respan",
     intakeSourceId: "respan"
+  }
+};
+
+// ../log-source-provider/src/sources/sazabi-browser-sdk/setup.ts
+var INIT_SNIPPET = `// Must be the first import: it installs dormant instrumentation before
+// any other module can capture the native fetch/XHR/history references.
+import "@sazabi/browser/register";
+
+import { init } from "@sazabi/browser";
+
+init({
+  intakeUrl: "https://\${context.ingestHost}",
+  serviceName: "my-web-app",
+});`;
+var ALLOWLIST_SNIPPET = `init({
+  intakeUrl: "https://\${context.ingestHost}",
+  serviceName: "my-web-app",
+  network: {
+    // Same-origin requests are allowlisted by default; add each cross-origin
+    // API you want traceparent injected into.
+    allowlist: ["https://api.example.com"],
+  },
+});`;
+var IDENTIFY_SNIPPET = `import { addEvent, identify, reset } from "@sazabi/browser";
+
+identify("user_123", { plan: "pro" }); // on sign-in
+addEvent("checkout_started", { cartValue: 42 }); // custom mark
+reset(); // on sign-out`;
+var sazabiBrowserSdkConnectionless = {
+  perStreamInstructions: true,
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/sazabi-browser-sdk",
+  groups: [
+    {
+      id: "install",
+      section: "config",
+      title: "Install the SDK",
+      actions: [
+        {
+          instruction: "Add **@sazabi/browser** to the app you want to observe.",
+          payloads: [
+            {
+              kind: "code-tabs",
+              label: "Install @sazabi/browser",
+              tabs: [
+                {
+                  id: "bun",
+                  label: "bun",
+                  language: "bash",
+                  copyLabel: "bun install command",
+                  value: "bun add @sazabi/browser"
+                },
+                {
+                  id: "npm",
+                  label: "npm",
+                  language: "bash",
+                  copyLabel: "npm install command",
+                  value: "npm install @sazabi/browser"
+                },
+                {
+                  id: "pnpm",
+                  label: "pnpm",
+                  language: "bash",
+                  copyLabel: "pnpm install command",
+                  value: "pnpm add @sazabi/browser"
+                },
+                {
+                  id: "yarn",
+                  label: "yarn",
+                  language: "bash",
+                  copyLabel: "yarn install command",
+                  value: "yarn add @sazabi/browser"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "initialize",
+      section: "config",
+      title: "Initialize in your app",
+      actions: [
+        {
+          instruction: "Import `@sazabi/browser/register` on the **first line** of your entry module, then call `init()` with your intake URL (above).",
+          payloads: [
+            {
+              kind: "code",
+              label: "Entry module",
+              language: "typescript",
+              copyLabel: "SDK initialization",
+              value: INIT_SNIPPET
+            }
+          ],
+          notes: [
+            {
+              text: "The public key is meant to ship in your browser bundle — it can only write telemetry, never read it."
+            },
+            {
+              text: "Ordering matters: libraries that capture `window.fetch` at module scope win if they load first, and the SDK would then miss their requests."
+            }
+          ]
+        },
+        {
+          instruction: "Add each cross-origin API you call to `network.allowlist` so the SDK injects W3C `traceparent` into those requests.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Cross-origin trace propagation",
+              language: "typescript",
+              copyLabel: "Network allowlist",
+              value: ALLOWLIST_SNIPPET
+            }
+          ],
+          notes: [
+            {
+              text: "Your API's CORS configuration must list `traceparent` in `Access-Control-Allow-Headers`, or the browser preflight fails and the requests break. Skip this action if your API is same-origin — those requests are allowlisted already.",
+              variant: "requirement"
+            }
+          ]
+        },
+        {
+          instruction: "Call `identify()` on sign-in and `reset()` on sign-out to attribute sessions to a user, and `addEvent()` to mark your own milestones.",
+          payloads: [
+            {
+              kind: "code",
+              label: "Identity and custom marks",
+              language: "typescript",
+              copyLabel: "Identity snippet",
+              value: IDENTIFY_SNIPPET
+            }
+          ],
+          notes: [
+            {
+              text: "`session.distinct_id` is asserted by the browser, not authenticated — treat it as a claim, not proof of identity."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: "verify",
+      section: "verify",
+      title: "Verify events are arriving",
+      actions: [
+        {
+          instruction: "Load your app and click through a few pages, then watch for events here.",
+          notes: [
+            {
+              text: "The SDK batches and flushes every 5 seconds, and again when the tab is hidden or closed, so the first events land within about 10 seconds of activity."
+            },
+            {
+              text: "In your browser's network tab, filter for `intake` — POSTs to `/v1/logs` should return 200."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// ../log-source-provider/src/sources/sazabi-browser-sdk/spec.ts
+var sazabiBrowserSdkSpec = {
+  id: "sazabi_browser_sdk",
+  name: "Sazabi Browser SDK",
+  searchAliases: [
+    "browser",
+    "browser sdk",
+    "frontend",
+    "javascript",
+    "rum",
+    "session",
+    "web"
+  ],
+  capabilities: ["connectionless"],
+  auth: [],
+  delivery: ["push"],
+  intake: [
+    {
+      id: "sazabi-browser-sdk",
+      label: "Sazabi Browser SDK",
+      aliases: ["web"],
+      transform: "otlp-passthrough"
+    }
+  ],
+  lifecycleSkipReason: "Browser SDK setup is not exercised by automated lifecycle tests yet.",
+  subtitle: "Capture browser sessions — navigation, clicks, errors, and network calls with trace context — with the Sazabi browser SDK.",
+  features: [
+    "Session-scoped event stream",
+    "Frontend error capture",
+    "Network calls with W3C trace context",
+    "Frontend-to-backend log correlation"
+  ],
+  evidenceHints: [
+    "Frontend framework dependencies in package.json (react, vue, svelte, next, vite)",
+    "A browser entry point such as index.html or src/main.tsx",
+    "@sazabi/browser already present in package.json"
+  ],
+  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
+  dashboard: {
+    iconKey: "sazabi-browser-sdk",
+    intakeSourceId: "sazabi-browser-sdk"
+  }
+};
+
+// ../log-source-provider/src/sources/sentry-platform/setup.ts
+var sentryPlatformManaged = {
+  kind: "multi-step",
+  steps: [
+    {
+      id: "prepare",
+      title: "Create token",
+      notes: [
+        {
+          variant: "requirement",
+          text: "You must be an **Owner** or **Manager** in the Sentry organization — creating an Internal Integration needs the `org:write` scope, which Admin, Member, and Billing roles do not have (Sentry returns 403)."
+        }
+      ],
+      actions: [
+        {
+          kind: "instruction",
+          instruction: "Create a Sentry **User Auth Token** (not an Organization Auth Token) with **Organization: Read & Write** (`org:write`), **Project: Read**, and **Issue & Event: Read** scopes. User Auth Tokens are created under your personal Sentry settings; Organization Auth Tokens (under org settings) require different management and scopes — use a User Auth Token.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Sentry auth token settings",
+              href: "https://sentry.io/settings/account/api/auth-tokens/new-token/"
+            }
+          ],
+          notes: [
+            {
+              text: "The `org:write` scope only lets Sazabi create the Internal Integration; the integration itself only receives read-level webhook events."
+            }
+          ]
+        },
+        {
+          kind: "instruction",
+          instruction: "Confirm the Permissions Preview at the bottom of the Sentry form shows `event:read, org:write, project:read` before submitting."
+        }
+      ]
+    },
+    {
+      id: "credentials",
+      title: "Enter credentials",
+      actions: [
+        {
+          id: "token",
+          kind: "secret",
+          label: "Sentry auth token",
+          instruction: "Enter your Sentry auth token below.",
+          description: "A Sentry User Auth Token (not Organization Auth Token) with the org:write, project:read, and event:read scopes.",
+          placeholder: "Enter your Sentry auth token"
+        },
+        {
+          id: "organizationSlug",
+          kind: "text",
+          label: "Sentry organization slug",
+          instruction: "Enter your Sentry organization slug below.",
+          description: "The slug from your Sentry URL: sentry.io/organizations/<slug>/",
+          placeholder: "e.g. my-org",
+          pattern: "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
+          patternMessage: "Enter a valid Sentry organization slug (lowercase, hyphens allowed)."
+        }
+      ]
+    }
+  ],
+  submit: {
+    actions: [
+      {
+        kind: "validate",
+        action: "validate",
+        input: { token: "$token", organizationSlug: "$organizationSlug" },
+        resultAs: "validate"
+      }
+    ],
+    metadata: {
+      sentryAuthToken: "$token",
+      organizationSlug: "$organizationSlug"
+    },
+    button: CONNECT_BUTTON
+  },
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/connect-your-account/sentry"
+};
+var sentryPlatformConnectionless = {
+  groups: [
+    {
+      id: "create-integration",
+      section: "config",
+      title: "Create the Internal Integration",
+      notes: [
+        {
+          variant: "requirement",
+          text: "Creating an Internal Integration needs the **`org:write`** scope, which Sentry grants only to organization **Owners** and **Managers**. On this path the scope never leaves Sentry — you give Sazabi no auth token."
+        }
+      ],
+      actions: [
+        {
+          instruction: "In Sentry, go to **Settings → Developer Settings → Custom Integrations** and choose **New Internal Integration**.",
+          payloads: [
+            {
+              kind: "external-link",
+              label: "Open Sentry Custom Integrations",
+              href: "https://sentry.io/settings/developer-settings/"
+            }
+          ]
+        },
+        {
+          instruction: "Under **Webhooks**, enable webhooks and subscribe to the **Issue** and **Comment** resources. To route alerts as well, enable **Alert Rule Action** so the integration can be added as a notification destination on Issue Alert and Metric Alert rules."
+        }
+      ]
+    },
+    {
+      id: "endpoint",
+      section: "config",
+      title: "Set the webhook URL",
+      actions: [
+        {
+          instruction: "Paste your Sazabi intake URL (above) into the Internal Integration's Webhook URL field."
+        },
+        {
+          instruction: "Save the integration."
+        }
+      ]
+    },
+    {
+      id: "verify",
+      section: "verify",
+      title: "Verify",
+      actions: [
+        {
+          instruction: "Do something in Sentry to trigger an event — comment on an issue, change an issue's status, or create a fresh issue by throwing an exception in an instrumented project. `issue` and `comment` webhooks arrive within a few minutes."
+        },
+        {
+          instruction: "To stream `event_alert` / `metric_alert` webhooks, edit each Issue Alert or Metric Alert rule in Sentry and add this integration as a notification destination — alerts are opt-in."
+        }
+      ]
+    }
+  ],
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/sentry"
+};
+
+// ../log-source-provider/src/sources/sentry-platform/spec.ts
+var sentryPlatformSensitiveFields = ["sentryAuthToken"];
+var sentryPlatformIntakeDeclaration = {
+  id: "sentry-platform",
+  label: "Sentry Platform",
+  transform: "sentry-platform-webhook"
+};
+var sentryPlatformSpec = {
+  id: "sentry_platform",
+  name: "Sentry",
+  capabilities: ["connectionless", "managed"],
+  auth: ["apiToken"],
+  delivery: ["push"],
+  streamCardinality: "single",
+  sensitiveFields: sentryPlatformSensitiveFields,
+  serverOwnedStreamConfigFields: ["sentryAppSlug"],
+  intake: [sentryPlatformIntakeDeclaration],
+  subtitle: "Connect your Sentry organization to stream errors, issues, and alerts to Sazabi in real-time.",
+  features: [
+    "Error streaming",
+    "Issue tracking",
+    "Alert forwarding",
+    "Metric alerts"
+  ],
+  evidenceHints: [
+    "Sentry organization or project config where org-level event forwarding is preferred",
+    "sentry-cli release/deploy automation that would benefit from platform context",
+    "Multiple Sentry SDK projects that should be connected through one Sentry platform integration"
+  ],
+  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
+  dashboard: {
+    iconKey: "sentry",
+    intakeSourceId: "sentry-platform",
+    actions: {
+      submit: {
+        validate: {
+          kind: "source-action",
+          actionId: "validate",
+          sensitiveInputFields: ["token"]
+        }
+      }
+    }
   }
 };
 
@@ -39519,187 +39945,6 @@ var sentrySpec = {
   }
 };
 
-// ../log-source-provider/src/sources/sentry-platform/setup.ts
-var sentryPlatformManaged = {
-  kind: "multi-step",
-  steps: [
-    {
-      id: "prepare",
-      title: "Create token",
-      notes: [
-        {
-          variant: "requirement",
-          text: "You must be an **Owner** or **Manager** in the Sentry organization — creating an Internal Integration needs the `org:write` scope, which Admin, Member, and Billing roles do not have (Sentry returns 403)."
-        }
-      ],
-      actions: [
-        {
-          kind: "instruction",
-          instruction: "Create a Sentry **User Auth Token** (not an Organization Auth Token) with **Organization: Read & Write** (`org:write`), **Project: Read**, and **Issue & Event: Read** scopes. User Auth Tokens are created under your personal Sentry settings; Organization Auth Tokens (under org settings) require different management and scopes — use a User Auth Token.",
-          payloads: [
-            {
-              kind: "external-link",
-              label: "Open Sentry auth token settings",
-              href: "https://sentry.io/settings/account/api/auth-tokens/new-token/"
-            }
-          ],
-          notes: [
-            {
-              text: "The `org:write` scope only lets Sazabi create the Internal Integration; the integration itself only receives read-level webhook events."
-            }
-          ]
-        },
-        {
-          kind: "instruction",
-          instruction: "Confirm the Permissions Preview at the bottom of the Sentry form shows `event:read, org:write, project:read` before submitting."
-        }
-      ]
-    },
-    {
-      id: "credentials",
-      title: "Enter credentials",
-      actions: [
-        {
-          id: "token",
-          kind: "secret",
-          label: "Sentry auth token",
-          instruction: "Enter your Sentry auth token below.",
-          description: "A Sentry User Auth Token (not Organization Auth Token) with the org:write, project:read, and event:read scopes.",
-          placeholder: "Enter your Sentry auth token"
-        },
-        {
-          id: "organizationSlug",
-          kind: "text",
-          label: "Sentry organization slug",
-          instruction: "Enter your Sentry organization slug below.",
-          description: "The slug from your Sentry URL: sentry.io/organizations/<slug>/",
-          placeholder: "e.g. my-org",
-          pattern: "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
-          patternMessage: "Enter a valid Sentry organization slug (lowercase, hyphens allowed)."
-        }
-      ]
-    }
-  ],
-  submit: {
-    actions: [
-      {
-        kind: "validate",
-        action: "validate",
-        input: { token: "$token", organizationSlug: "$organizationSlug" },
-        resultAs: "validate"
-      }
-    ],
-    metadata: {
-      sentryAuthToken: "$token",
-      organizationSlug: "$organizationSlug"
-    },
-    button: CONNECT_BUTTON
-  },
-  docsUrl: "https://docs.sazabi.com/data/sources/connect-your-account/sentry"
-};
-var sentryPlatformConnectionless = {
-  groups: [
-    {
-      id: "create-integration",
-      section: "config",
-      title: "Create the Internal Integration",
-      notes: [
-        {
-          variant: "requirement",
-          text: "Creating an Internal Integration needs the **`org:write`** scope, which Sentry grants only to organization **Owners** and **Managers**. On this path the scope never leaves Sentry — you give Sazabi no auth token."
-        }
-      ],
-      actions: [
-        {
-          instruction: "In Sentry, go to **Settings → Developer Settings → Custom Integrations** and choose **New Internal Integration**.",
-          payloads: [
-            {
-              kind: "external-link",
-              label: "Open Sentry Custom Integrations",
-              href: "https://sentry.io/settings/developer-settings/"
-            }
-          ]
-        },
-        {
-          instruction: "Under **Webhooks**, enable webhooks and subscribe to the **Issue** and **Comment** resources. To route alerts as well, enable **Alert Rule Action** so the integration can be added as a notification destination on Issue Alert and Metric Alert rules."
-        }
-      ]
-    },
-    {
-      id: "endpoint",
-      section: "config",
-      title: "Set the webhook URL",
-      actions: [
-        {
-          instruction: "Paste your Sazabi intake URL (above) into the Internal Integration's Webhook URL field."
-        },
-        {
-          instruction: "Save the integration."
-        }
-      ]
-    },
-    {
-      id: "verify",
-      section: "verify",
-      title: "Verify",
-      actions: [
-        {
-          instruction: "Do something in Sentry to trigger an event — comment on an issue, change an issue's status, or create a fresh issue by throwing an exception in an instrumented project. `issue` and `comment` webhooks arrive within a few minutes."
-        },
-        {
-          instruction: "To stream `event_alert` / `metric_alert` webhooks, edit each Issue Alert or Metric Alert rule in Sentry and add this integration as a notification destination — alerts are opt-in."
-        }
-      ]
-    }
-  ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/sentry-platform"
-};
-
-// ../log-source-provider/src/sources/sentry-platform/spec.ts
-var sentryPlatformSensitiveFields = ["sentryAuthToken"];
-var sentryPlatformIntakeDeclaration = {
-  id: "sentry-platform",
-  label: "Sentry Platform",
-  transform: "sentry-platform-webhook"
-};
-var sentryPlatformSpec = {
-  id: "sentry_platform",
-  name: "Sentry",
-  capabilities: ["connectionless", "managed"],
-  auth: ["apiToken"],
-  delivery: ["push"],
-  streamCardinality: "single",
-  sensitiveFields: sentryPlatformSensitiveFields,
-  serverOwnedStreamConfigFields: ["sentryAppSlug"],
-  intake: [sentryPlatformIntakeDeclaration],
-  subtitle: "Connect your Sentry organization to stream errors, issues, and alerts to Sazabi in real-time.",
-  features: [
-    "Error streaming",
-    "Issue tracking",
-    "Alert forwarding",
-    "Metric alerts"
-  ],
-  evidenceHints: [
-    "Sentry organization or project config where org-level event forwarding is preferred",
-    "sentry-cli release/deploy automation that would benefit from platform context",
-    "Multiple Sentry SDK projects that should be connected through one Sentry platform integration"
-  ],
-  setupSkill: LOG_SOURCE_SETUP_SKILL_SPEC_VALUE,
-  dashboard: {
-    iconKey: "sentry",
-    intakeSourceId: "sentry-platform",
-    actions: {
-      submit: {
-        validate: {
-          kind: "source-action",
-          actionId: "validate",
-          sensitiveInputFields: ["token"]
-        }
-      }
-    }
-  }
-};
-
 // ../log-source-provider/src/sources/supabase/setup.ts
 var supabaseConnectionless = {
   groups: [
@@ -39785,7 +40030,7 @@ var supabaseConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/supabase"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/supabase"
 };
 
 // ../log-source-provider/src/sources/supabase/spec.ts
@@ -40284,7 +40529,7 @@ var vercelConnectionless = {
       ]
     }
   ],
-  docsUrl: "https://docs.sazabi.com/data/sources/endpoint/vercel"
+  docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/vercel"
 };
 var VERCEL_STREAM_COLUMNS = [
   { field: "name", header: "Project" },
@@ -40590,6 +40835,7 @@ var LOG_SOURCE_PROVIDER_SPECS = [
   railwaySpec,
   renderSpec,
   respanSpec,
+  sazabiBrowserSdkSpec,
   sentryPlatformSpec,
   sentrySpec,
   supabaseSpec,
@@ -40677,7 +40923,8 @@ var LOG_SOURCE_TYPES = [
   "prometheus",
   "webhook_events",
   "claude_code",
-  "codex"
+  "codex",
+  "sazabi_browser_sdk"
 ];
 var LOG_SOURCE_PROVIDER_CATALOG = LOG_SOURCE_PROVIDER_SPECS.map((spec) => ({
   id: spec.id,
@@ -40753,7 +41000,8 @@ var LOG_SOURCE_CONNECTIONLESS_FLOWS = {
   vercel: vercelConnectionless,
   webhook_events: webhookEventsConnectionless,
   claude_code: claudeCodeConnectionless,
-  codex: codexConnectionless
+  codex: codexConnectionless,
+  sazabi_browser_sdk: sazabiBrowserSdkConnectionless
 };
 var LOG_SOURCE_COVERAGE_MATRIX = LOG_SOURCE_PROVIDER_SPECS.map((spec) => ({
   sourceId: spec.id,
@@ -40769,71 +41017,72 @@ var LOG_SOURCE_COVERAGE_MATRIX = LOG_SOURCE_PROVIDER_SPECS.map((spec) => ({
   lifecycleSkipReason: spec.lifecycleSkipReason
 }));
 // ../public-api-contracts/src/log-sources.ts
-import { z as z10 } from "zod";
+import { z as z9 } from "zod";
 var LOG_SOURCE_PROVIDER_VALUES = LOG_SOURCE_TYPES;
-var LogSourceProviderEnum = z10.enum(LOG_SOURCE_PROVIDER_VALUES);
-var LogStreamStatusEnum = z10.enum([
+var LogSourceProviderEnum = z9.enum(LOG_SOURCE_PROVIDER_VALUES);
+var LogStreamStatusEnum = z9.enum([
   "pending",
   "provisioning",
   "active",
   "error"
 ]);
-var LogSourceModeEnum = z10.enum(["managed", "connectionless"]);
-var LogSourceMetadataFieldSchema = z10.object({
-  name: z10.string().describe("Field name used as the JSON key in metadata."),
-  type: z10.string().describe('Zod type name, e.g. "string", "boolean", "enum".'),
-  required: z10.boolean().describe("Whether the field is required."),
-  sensitive: z10.boolean().describe("Whether the field contains a secret and will be encrypted."),
-  description: z10.string().nullable().describe("Human-readable description of the field.")
+var LogSourceModeEnum = z9.enum(["managed", "connectionless"]);
+var LogSourceMetadataFieldSchema = z9.object({
+  name: z9.string().describe("Field name used as the JSON key in metadata."),
+  type: z9.string().describe('Zod type name, e.g. "string", "boolean", "enum".'),
+  required: z9.boolean().describe("Whether the field is required."),
+  sensitive: z9.boolean().describe("Whether the field contains a secret and will be encrypted."),
+  description: z9.string().nullable().describe("Human-readable description of the field.")
 });
-var LogSourceProviderInfoSchema = z10.object({
-  id: z10.string().describe("Log source provider identifier."),
-  name: z10.string().describe("Human-readable display name."),
-  modes: z10.array(LogSourceModeEnum).describe("Setup modes this provider supports. `managed` log sources take vendor credentials; `connectionless` log sources mint a keyed intake endpoint."),
-  metadataFields: z10.array(LogSourceMetadataFieldSchema).describe("Fields required in the metadata object when creating a managed log source. Empty for connectionless-only providers."),
-  setupSkill: z10.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
+var LogSourceProviderInfoSchema = z9.object({
+  id: z9.string().describe("Log source provider identifier."),
+  name: z9.string().describe("Human-readable display name."),
+  modes: z9.array(LogSourceModeEnum).describe("Setup modes this provider supports. `managed` log sources take vendor credentials; `connectionless` log sources mint a keyed intake endpoint."),
+  metadataFields: z9.array(LogSourceMetadataFieldSchema).describe("Fields required in the metadata object when creating a managed log source. Empty for connectionless-only providers."),
+  setupSkill: z9.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
 });
-var LogSourceEndpointCardSchema = z10.object({
-  kind: z10.enum(["url", "hostPort"]).describe("Card shape. `url` = a complete keyed URL whose hostname authenticates; `hostPort` = a non-keyed listener host + port whose credential travels separately."),
-  label: z10.string().optional().describe("Card label. Present when a log source exposes several endpoints (e.g. separate logs and traces destinations)."),
-  url: z10.string().optional().describe("The complete keyed intake URL. Present when kind is `url`."),
-  host: z10.string().optional().describe("The regional listener hostname (no scheme). Present when kind is `hostPort`."),
-  port: z10.number().int().optional().describe("The listener port. Present when kind is `hostPort`."),
-  description: z10.string().optional().describe("Vendor-specific guidance rendered under the value."),
-  extraCredential: z10.object({
-    label: z10.string(),
-    value: z10.string(),
-    description: z10.string().optional()
+var LogSourceEndpointCardSchema = z9.object({
+  kind: z9.enum(["url", "hostPort"]).describe("Card shape. `url` = a complete keyed URL whose hostname authenticates; `hostPort` = a non-keyed listener host + port whose credential travels separately."),
+  label: z9.string().optional().describe("Card label. Present when a log source exposes several endpoints (e.g. separate logs and traces destinations)."),
+  url: z9.string().optional().describe("The complete keyed intake URL. Present when kind is `url`."),
+  host: z9.string().optional().describe("The regional listener hostname (no scheme). Present when kind is `hostPort`."),
+  port: z9.number().int().optional().describe("The listener port. Present when kind is `hostPort`."),
+  description: z9.string().optional().describe("Vendor-specific guidance rendered under the value."),
+  extraCredential: z9.object({
+    label: z9.string(),
+    value: z9.string(),
+    description: z9.string().optional()
   }).optional().describe("The credential the sender must attach when the hostname alone does not authenticate. Present when kind is `hostPort`.")
 });
-var LogStreamSchema = z10.object({
-  id: z10.string().uuid(),
-  logSourceId: z10.string().uuid().describe("Root log source ID. Every log stream roots on exactly one log source."),
-  displayName: z10.string().nullable().describe("Display name pulled automatically from information available through the log source connection (e.g. the vendor object's name). Null when no connection-derived name exists; connectionless log streams are always nameless."),
-  config: z10.record(z10.string(), z10.unknown()),
+var LogStreamSchema = z9.object({
+  id: z9.string().uuid(),
+  logSourceId: z9.string().uuid().describe("Root log source ID. Every log stream roots on exactly one log source."),
+  displayName: z9.string().nullable().describe("Display name pulled automatically from information available through the log source connection (e.g. the vendor object's name). Null when no connection-derived name exists; connectionless log streams are always nameless."),
+  config: z9.record(z9.string(), z9.unknown()),
   status: LogStreamStatusEnum,
-  errorMessage: z10.string().nullable(),
-  enabled: z10.boolean().describe("Whether the log stream is currently ingesting. Independent of provisioning status: a paused log stream stays configured but stops accepting new data."),
-  createdAt: z10.string().datetime(),
-  endpointCards: z10.array(LogSourceEndpointCardSchema).optional().describe("Server-computed endpoint card(s) for this log stream's delivery key — where to point the sender. Present only for log streams that carry their own intake key.")
+  errorMessage: z9.string().nullable(),
+  enabled: z9.boolean().describe("Whether the log stream is currently ingesting. Independent of provisioning status: a paused log stream stays configured but stops accepting new data."),
+  createdAt: z9.string().datetime(),
+  endpointCards: z9.array(LogSourceEndpointCardSchema).optional().describe("Server-computed endpoint card(s) for this log stream's delivery key — where to point the sender. Present only for log streams that carry their own intake key.")
 });
-var LogSourceSchema = z10.object({
-  id: z10.string().uuid(),
+var LogSourceSchema = z9.object({
+  id: z9.string().uuid(),
   provider: LogSourceProviderEnum,
   mode: LogSourceModeEnum,
-  name: z10.string().describe('Display name — a generated mnemonic (e.g. "amber-falcon"). Assigned at creation and immutable.'),
-  streamCount: z10.number().int(),
-  createdAt: z10.string().datetime()
+  name: z9.string().describe('Display name — a generated mnemonic (e.g. "amber-falcon"). Assigned at creation and immutable.'),
+  streamCount: z9.number().int(),
+  createdAt: z9.string().datetime()
 });
 var LogSourceDetailSchema = LogSourceSchema.extend({
-  streams: z10.array(LogStreamSchema).describe("The log source's live log streams, newest first.")
+  streams: z9.array(LogStreamSchema).describe("The log source's live log streams, newest first.")
 });
-var ListLogSourceProvidersInputSchema = z10.object({});
-var ListLogSourceProvidersOutputSchema = z10.object({
-  providers: z10.array(LogSourceProviderInfoSchema)
+var ListLogSourceProvidersInputSchema = z9.object({});
+var ListLogSourceProvidersOutputSchema = z9.object({
+  providers: z9.array(LogSourceProviderInfoSchema)
 });
 var listLogSourceProviders = defineOperation({
   operationId: "logSources.listProviders",
+  summary: "List log source providers",
   description: "List all supported log source providers with their setup modes and metadata requirements.",
   backend: "api",
   route: {
@@ -40846,15 +41095,16 @@ var listLogSourceProviders = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var ListLogSourcesInputSchema = z10.object({
-  projectId: z10.string().uuid().optional().describe("Project to list log sources for. Auto-filled from SDK context when omitted."),
+var ListLogSourcesInputSchema = z9.object({
+  projectId: z9.string().uuid().optional().describe("Project to list log sources for. Auto-filled from SDK context when omitted."),
   provider: LogSourceProviderEnum.optional().describe("Filter log sources by provider.")
 });
-var ListLogSourcesOutputSchema = z10.object({
-  logSources: z10.array(LogSourceSchema)
+var ListLogSourcesOutputSchema = z9.object({
+  logSources: z9.array(LogSourceSchema)
 });
 var listLogSources = defineOperation({
   operationId: "logSources.list",
+  summary: "List log sources",
   description: "List log sources within one project.",
   backend: "api",
   route: {
@@ -40867,20 +41117,21 @@ var listLogSources = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var CreateLogSourceInputSchema = z10.object({
-  projectId: z10.string().uuid().optional().describe("Project to create the log source in. Auto-filled from SDK context when omitted."),
+var CreateLogSourceInputSchema = z9.object({
+  projectId: z9.string().uuid().optional().describe("Project to create the log source in. Auto-filled from SDK context when omitted."),
   provider: LogSourceProviderEnum.describe("Log source provider identifier."),
   mode: LogSourceModeEnum.optional().describe("Setup mode. Defaults to `managed` when metadata is provided, otherwise `connectionless`. Must be a mode the provider supports (see `modes` on the provider catalog)."),
-  metadata: z10.record(z10.string(), z10.unknown()).optional().describe("Vendor credentials and configuration for managed setup. Fields vary by provider (see `metadataFields` on the provider catalog). Required for managed mode; must be omitted for connectionless mode.")
+  metadata: z9.record(z9.string(), z9.unknown()).optional().describe("Vendor credentials and configuration for managed setup. Fields vary by provider (see `metadataFields` on the provider catalog). Required for managed mode; must be omitted for connectionless mode.")
 }).strict();
-var CreateLogSourceOutputSchema = z10.object({
+var CreateLogSourceOutputSchema = z9.object({
   logSource: LogSourceSchema.describe("The created log source."),
-  streamId: z10.string().uuid().optional().describe("ID of the log stream created alongside the log source. Present for connectionless log sources (which always mint their keyed log stream) and for managed providers that auto-provision a default log stream."),
-  publicKey: z10.string().optional().describe("Intake key minted for the log source. Store this securely — it is only shown once. Present for connectionless log sources and for managed providers that ingest through a Sazabi endpoint."),
-  endpointCards: z10.array(LogSourceEndpointCardSchema).optional().describe("Server-computed endpoint card(s) for the minted key — where to point the sender. Present for connectionless log sources.")
+  streamId: z9.string().uuid().optional().describe("ID of the log stream created alongside the log source. Present for connectionless log sources (which always mint their keyed log stream) and for managed providers that auto-provision a default log stream."),
+  publicKey: z9.string().optional().describe("Intake key minted for the log source. Store this securely — it is only shown once. Present for connectionless log sources and for managed providers that ingest through a Sazabi endpoint."),
+  endpointCards: z9.array(LogSourceEndpointCardSchema).optional().describe("Server-computed endpoint card(s) for the minted key — where to point the sender. Present for connectionless log sources.")
 });
 var createLogSource = defineOperation({
   operationId: "logSources.create",
+  summary: "Create a log source",
   description: "Create a log source. Managed mode takes vendor credentials in `metadata`, validates them, and provisions delivery behind the log source. Connectionless mode mints the log source plus a keyed log stream and returns the intake key and endpoint card(s) to point the sender at.",
   backend: "api",
   route: {
@@ -40894,14 +41145,15 @@ var createLogSource = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetLogSourceInputSchema = z10.object({
-  logSourceId: z10.string().uuid().describe("Log source ID to fetch.")
+var GetLogSourceInputSchema = z9.object({
+  logSourceId: z9.string().uuid().describe("Log source ID to fetch.")
 });
-var GetLogSourceOutputSchema = z10.object({
+var GetLogSourceOutputSchema = z9.object({
   logSource: LogSourceDetailSchema
 });
 var getLogSource = defineOperation({
   operationId: "logSources.get",
+  summary: "Get a log source",
   description: "Get one log source by ID, including its log streams and their endpoint card(s).",
   backend: "api",
   route: {
@@ -40914,15 +41166,16 @@ var getLogSource = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpdateLogSourceInputSchema = z10.object({
-  logSourceId: z10.string().uuid().describe("Log source ID to update."),
-  enabled: z10.boolean().optional().describe("Pause (`false`) or resume (`true`) ingestion for all of the log source's log streams. Reversible; never deletes anything.")
+var UpdateLogSourceInputSchema = z9.object({
+  logSourceId: z9.string().uuid().describe("Log source ID to update."),
+  enabled: z9.boolean().optional().describe("Pause (`false`) or resume (`true`) ingestion for all of the log source's log streams. Reversible; never deletes anything.")
 }).strict();
-var UpdateLogSourceOutputSchema = z10.object({
+var UpdateLogSourceOutputSchema = z9.object({
   logSource: LogSourceSchema
 });
 var updateLogSource = defineOperation({
   operationId: "logSources.update",
+  summary: "Update a log source",
   description: "Update a log source: pause or resume ingestion across its log streams. Log sources cannot be renamed — their generated names are immutable.",
   backend: "api",
   route: {
@@ -40935,15 +41188,16 @@ var updateLogSource = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteLogSourceInputSchema = z10.object({
-  logSourceId: z10.string().uuid().describe("Log source ID to delete.")
+var DeleteLogSourceInputSchema = z9.object({
+  logSourceId: z9.string().uuid().describe("Log source ID to delete.")
 });
-var DeleteLogSourceOutputSchema = z10.object({
-  success: z10.boolean(),
-  teardownError: z10.string().nullable().describe("Null when vendor-side cleanup succeeded or was not needed; error message when remote cleanup failed and must be finished manually.")
+var DeleteLogSourceOutputSchema = z9.object({
+  success: z9.boolean(),
+  teardownError: z9.string().nullable().describe("Null when vendor-side cleanup succeeded or was not needed; error message when remote cleanup failed and must be finished manually.")
 });
 var deleteLogSource = defineOperation({
   operationId: "logSources.delete",
+  summary: "Delete a log source",
   description: "Delete a log source. Tombstones the log source and its log streams, deactivates their intake keys (already-ingested data is preserved with its attribution), and runs vendor-side cleanup for managed log sources when the provider supports it.",
   backend: "api",
   route: {
@@ -40967,16 +41221,17 @@ var logSourcesContract = {
 };
 
 // ../public-api-contracts/src/log-streams.ts
-import { z as z11 } from "zod";
-var ListLogStreamsInputSchema = z11.object({
-  logSourceId: z11.string().uuid().describe("Log source ID to list log streams for."),
-  enabled: z11.boolean().optional().describe("Optional filter on log stream ingestion state. Omit to list all log streams; pass true for only enabled log streams or false for only paused log streams.")
+import { z as z10 } from "zod";
+var ListLogStreamsInputSchema = z10.object({
+  logSourceId: z10.string().uuid().describe("Log source ID to list log streams for."),
+  enabled: z10.boolean().optional().describe("Optional filter on log stream ingestion state. Omit to list all log streams; pass true for only enabled log streams or false for only paused log streams.")
 });
-var ListLogStreamsOutputSchema = z11.object({
-  streams: z11.array(LogStreamSchema)
+var ListLogStreamsOutputSchema = z10.object({
+  streams: z10.array(LogStreamSchema)
 });
 var listLogStreams = defineOperation({
   operationId: "logStreams.list",
+  summary: "List log streams",
   description: "List the log streams that belong to a log source.",
   backend: "api",
   route: {
@@ -40989,15 +41244,16 @@ var listLogStreams = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var CreateLogStreamInputSchema = z11.object({
-  logSourceId: z11.string().uuid().describe("Log source ID to create the log stream under."),
-  config: z11.record(z11.string(), z11.unknown()).optional().describe("Platform-specific log stream configuration.")
+var CreateLogStreamInputSchema = z10.object({
+  logSourceId: z10.string().uuid().describe("Log source ID to create the log stream under."),
+  config: z10.record(z10.string(), z10.unknown()).optional().describe("Platform-specific log stream configuration.")
 }).strict();
-var CreateLogStreamOutputSchema = z11.object({
-  streamId: z11.string().uuid().describe("ID of the created log stream.")
+var CreateLogStreamOutputSchema = z10.object({
+  streamId: z10.string().uuid().describe("ID of the created log stream.")
 });
 var createLogStream = defineOperation({
   operationId: "logStreams.create",
+  summary: "Create a log stream",
   description: "Create a new log stream under a managed log source. Triggers async provisioning; poll the log stream to track it. Connectionless log sources are single-stream — create another log source instead.",
   backend: "api",
   route: {
@@ -41011,14 +41267,47 @@ var createLogStream = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetLogStreamInputSchema = z11.object({
-  streamId: z11.string().uuid().describe("Log stream ID to fetch.")
+var GetLogStreamVolumeStatsInputSchema = z10.object({
+  logSourceId: z10.string().uuid().describe("Log source ID whose log streams should be measured."),
+  startDate: z10.string().datetime({ offset: true }),
+  endDate: z10.string().datetime({ offset: true })
+}).refine((data) => new Date(data.startDate) < new Date(data.endDate), {
+  message: "startDate must be before endDate",
+  path: ["endDate"]
 });
-var GetLogStreamOutputSchema = z11.object({
+var LogStreamVolumeStatsSchema = z10.object({
+  streamId: z10.string().uuid(),
+  totalBytes: z10.number().nonnegative(),
+  logCount: z10.number().nonnegative(),
+  bytesPerHour: z10.number().nonnegative(),
+  lastIngestedAt: z10.string().datetime({ offset: true }).nullable()
+});
+var GetLogStreamVolumeStatsOutputSchema = z10.object({
+  stats: z10.array(LogStreamVolumeStatsSchema)
+});
+var getLogStreamVolumeStats = defineOperation({
+  operationId: "logStreams.volumeStats",
+  description: "Get bytes, log count, intake rate, and last-received time for each log stream in a log source over a bounded window.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/log-streams/volume-stats",
+    tags: ["Log Streams"]
+  },
+  input: GetLogStreamVolumeStatsInputSchema,
+  output: GetLogStreamVolumeStatsOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var GetLogStreamInputSchema = z10.object({
+  streamId: z10.string().uuid().describe("Log stream ID to fetch.")
+});
+var GetLogStreamOutputSchema = z10.object({
   stream: LogStreamSchema
 });
 var getLogStream = defineOperation({
   operationId: "logStreams.get",
+  summary: "Get a log stream",
   description: "Get one log stream by ID. Use to poll provisioning status.",
   backend: "api",
   route: {
@@ -41031,15 +41320,16 @@ var getLogStream = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpdateLogStreamInputSchema = z11.object({
-  streamId: z11.string().uuid().describe("Log stream ID to update."),
-  enabled: z11.boolean().optional().describe("Pause (`false`) or resume (`true`) ingestion for this log stream. Reversible; never deletes anything.")
+var UpdateLogStreamInputSchema = z10.object({
+  streamId: z10.string().uuid().describe("Log stream ID to update."),
+  enabled: z10.boolean().optional().describe("Pause (`false`) or resume (`true`) ingestion for this log stream. Reversible; never deletes anything.")
 }).strict();
-var UpdateLogStreamOutputSchema = z11.object({
+var UpdateLogStreamOutputSchema = z10.object({
   stream: LogStreamSchema
 });
 var updateLogStream = defineOperation({
   operationId: "logStreams.update",
+  summary: "Update a log stream",
   description: "Update a log stream: pause or resume its ingestion. Log streams cannot be renamed.",
   backend: "api",
   route: {
@@ -41052,14 +41342,15 @@ var updateLogStream = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteLogStreamInputSchema = z11.object({
-  streamId: z11.string().uuid().describe("Log stream ID to delete.")
+var DeleteLogStreamInputSchema = z10.object({
+  streamId: z10.string().uuid().describe("Log stream ID to delete.")
 });
-var DeleteLogStreamOutputSchema = z11.object({
-  success: z11.boolean()
+var DeleteLogStreamOutputSchema = z10.object({
+  success: z10.boolean()
 });
 var deleteLogStream = defineOperation({
   operationId: "logStreams.delete",
+  summary: "Delete a log stream",
   description: "Delete a log stream. Tombstones the log stream and deactivates its intake key. Deleting a connectionless log source's only log stream tombstones the log source too.",
   backend: "api",
   route: {
@@ -41073,15 +41364,16 @@ var deleteLogStream = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var ReassignLogStreamInputSchema = z11.object({
-  streamId: z11.string().uuid().describe("Log stream ID to reassign."),
-  targetLogSourceId: z11.string().uuid().describe("Log source to move the log stream under. Must be a connectionless log source in the same project; the stream's key is rebound to this log source's intake adapter.")
+var ReassignLogStreamInputSchema = z10.object({
+  streamId: z10.string().uuid().describe("Log stream ID to reassign."),
+  targetLogSourceId: z10.string().uuid().describe("Log source to move the log stream under. Must be a connectionless log source in the same project; the stream's key is rebound to this log source's intake adapter.")
 }).strict();
-var ReassignLogStreamOutputSchema = z11.object({
+var ReassignLogStreamOutputSchema = z10.object({
   stream: LogStreamSchema
 });
 var reassignLogStream = defineOperation({
   operationId: "logStreams.reassign",
+  summary: "Reassign a log stream",
   description: "Move a log stream to a different connectionless log source in the same project. Preserves the stream's ID, intake key credential, and ingested data; rebinds the key's intake adapter to the target log source's provider so future data is processed as that provider's format.",
   backend: "api",
   route: {
@@ -41098,15 +41390,141 @@ var reassignLogStream = defineOperation({
 var logStreamsContract = {
   list: listLogStreams.contract,
   create: createLogStream.contract,
+  volumeStats: getLogStreamVolumeStats.contract,
   get: getLogStream.contract,
   update: updateLogStream.contract,
   delete: deleteLogStream.contract,
   reassign: reassignLogStream.contract
 };
 
-// ../public-api-contracts/src/logs.ts
+// ../log-query/src/spec.ts
+import { z as z11 } from "zod";
+var isoTimestamp = z11.iso.datetime({ offset: true });
+var nonEmptyString = z11.string().trim().min(1).max(1024);
+var logAttributeSourceSchema = z11.enum(["resource", "scope", "log"]);
+var serviceFieldSchema = z11.strictObject({ kind: z11.literal("service") });
+var severityFieldSchema = z11.strictObject({
+  kind: z11.literal("severity_number")
+});
+var attributeFieldSchema = z11.strictObject({
+  kind: z11.literal("attribute"),
+  source: logAttributeSourceSchema,
+  key: nonEmptyString
+});
+var logFieldSchema = z11.discriminatedUnion("kind", [
+  serviceFieldSchema,
+  severityFieldSchema,
+  attributeFieldSchema
+]);
+var stringPredicateSchema = z11.strictObject({
+  field: z11.union([serviceFieldSchema, attributeFieldSchema]),
+  operator: z11.enum(["eq", "neq", "contains"]),
+  value: z11.string().max(8192)
+});
+var valuesPredicateSchema = z11.strictObject({
+  field: z11.union([serviceFieldSchema, attributeFieldSchema]),
+  operator: z11.literal("in"),
+  values: z11.array(z11.string().max(8192)).min(1).max(100)
+});
+var existsPredicateSchema = z11.strictObject({
+  field: attributeFieldSchema,
+  operator: z11.literal("exists")
+});
+var numericPredicateSchema = z11.strictObject({
+  field: z11.union([severityFieldSchema, attributeFieldSchema]),
+  operator: z11.enum(["gt", "gte", "lt", "lte"]),
+  value: z11.number().finite()
+});
+var logPredicateSchema = z11.discriminatedUnion("operator", [
+  stringPredicateSchema,
+  valuesPredicateSchema,
+  existsPredicateSchema,
+  numericPredicateSchema
+]);
+var logTimeRangeSchema = z11.discriminatedUnion("kind", [
+  z11.strictObject({
+    kind: z11.literal("absolute"),
+    from: isoTimestamp,
+    to: isoTimestamp
+  }).refine(({ from, to }) => Date.parse(from) < Date.parse(to), {
+    message: "absolute time range must have from before to"
+  }),
+  z11.strictObject({
+    kind: z11.literal("relative"),
+    lookbackSeconds: z11.number().int().positive().max(31 * 24 * 60 * 60)
+  })
+]);
+var countMeasureSchema = z11.strictObject({ operation: z11.literal("count") });
+var numericMeasureSchema = z11.strictObject({
+  operation: z11.enum(["avg", "min", "max", "sum", "p50", "p95", "p99"]),
+  field: z11.union([severityFieldSchema, attributeFieldSchema])
+});
+var logMeasureSchema = z11.discriminatedUnion("operation", [
+  countMeasureSchema,
+  numericMeasureSchema
+]);
+var detailsResultSchema = z11.strictObject({
+  kind: z11.literal("details"),
+  limit: z11.number().int().positive().max(100).default(50)
+});
+var aggregateResultSchema = z11.strictObject({
+  kind: z11.literal("aggregate"),
+  measure: logMeasureSchema,
+  groupBy: z11.array(logFieldSchema).max(2).default([]),
+  limit: z11.number().int().positive().max(1000).default(100)
+});
+var timeseriesResultSchema = z11.strictObject({
+  kind: z11.literal("timeseries"),
+  bucket: z11.enum(["minute", "hour", "day"]),
+  measure: logMeasureSchema,
+  groupBy: z11.array(logFieldSchema).max(2).default([]),
+  limit: z11.number().int().positive().max(1e4).default(1000)
+});
+var logQuerySpecV1Schema = z11.strictObject({
+  version: z11.literal(1),
+  pattern: z11.strictObject({
+    query: nonEmptyString
+  }),
+  timeRange: logTimeRangeSchema,
+  filters: z11.array(logPredicateSchema).max(50).default([]),
+  result: z11.discriminatedUnion("kind", [
+    detailsResultSchema,
+    aggregateResultSchema,
+    timeseriesResultSchema
+  ])
+});
+var logQueryResolutionV1Schema = z11.strictObject({
+  version: z11.literal(1),
+  definitionHash: z11.string().regex(/^[a-f0-9]{64}$/),
+  catalogRevision: z11.string().regex(/^\d+$/),
+  familyIds: z11.array(z11.uuid()).min(1).max(1e4),
+  resolvedAt: isoTimestamp
+});
+// ../log-query/src/natural-planner.ts
 import { z as z12 } from "zod";
-var FilterOperatorSchema = z12.enum([
+var EXACT_QUERY_DIMENSIONS = new Set([
+  "sazabi.logical_service.name",
+  "event.name",
+  "http.route",
+  "sazabi.request.route_kind",
+  "http.request.method"
+]);
+var COMPLETE_LOOKUP_DIMENSIONS = new Set([
+  "sazabi.logical_service.name",
+  "event.name",
+  "http.route",
+  "sazabi.request.route_kind",
+  "http.request.method"
+]);
+var modelPlanSchema = logQuerySpecV1Schema.omit({ pattern: true }).extend({
+  status: z12.enum(["query", "no_match"]),
+  explanation: z12.string().max(500),
+  selectionMode: z12.enum(["semantic_patterns", "exact_dimensions"]),
+  patternRefs: z12.array(z12.string().regex(/^p[1-9]\d*$/u)).max(100)
+}).strict();
+// ../public-api-contracts/src/logs.ts
+import { z as z13 } from "zod";
+var FilterOperatorSchema = z13.enum([
   "eq",
   "neq",
   "in",
@@ -41119,29 +41537,29 @@ var FilterOperatorSchema = z12.enum([
   "between",
   "exists"
 ]).describe("Filter operator: 'eq' (equals), 'neq' (not equals), 'in' (in array), 'contains' (substring), 'starts_with' (prefix), 'gt' (greater than), 'gte' (greater than or equal), 'lt' (less than), 'lte' (less than or equal), 'between' (range), 'exists' (field exists)");
-var SearchModeSchema = z12.enum(["any", "all", "phrase"]).describe("Search mode: 'any' (match any token), 'all' (match all tokens), 'phrase' (exact phrase match)");
-var LogSearchSchema = z12.object({
-  query: z12.string().min(1, "Search query must be at least 1 character").max(500, "Search query must be at most 500 characters").describe("Search query text (1-500 characters)"),
-  fields: z12.array(z12.string()).optional().describe("Fields to search in (defaults to backend allowlist)"),
+var SearchModeSchema = z13.enum(["any", "all", "phrase"]).describe("Search mode: 'any' (match any token), 'all' (match all tokens), 'phrase' (exact phrase match)");
+var LogSearchSchema = z13.object({
+  query: z13.string().min(1, "Search query must be at least 1 character").max(500, "Search query must be at most 500 characters").describe("Search query text (1-500 characters)"),
+  fields: z13.array(z13.string()).optional().describe("Fields to search in (defaults to backend allowlist)"),
   mode: SearchModeSchema.optional().default("all").describe("Token matching mode")
 });
-var LogFilterSchema = z12.object({
-  field: z12.string().describe("Field name to filter on"),
+var LogFilterSchema = z13.object({
+  field: z13.string().describe("Field name to filter on"),
   op: FilterOperatorSchema.describe("Filter operator"),
-  value: z12.union([
-    z12.string(),
-    z12.number(),
-    z12.boolean(),
-    z12.array(z12.union([z12.string(), z12.number()])),
-    z12.object({
-      from: z12.string(),
-      to: z12.string()
+  value: z13.union([
+    z13.string(),
+    z13.number(),
+    z13.boolean(),
+    z13.array(z13.union([z13.string(), z13.number()])),
+    z13.object({
+      from: z13.string(),
+      to: z13.string()
     })
   ]).describe("Filter value (type depends on operator)")
 }).superRefine((filter, ctx) => {
   if (filter.op === "in" && !Array.isArray(filter.value)) {
     ctx.addIssue({
-      code: z12.ZodIssueCode.custom,
+      code: z13.ZodIssueCode.custom,
       message: "Value must be an array when op is 'in'",
       path: ["value"]
     });
@@ -41151,7 +41569,7 @@ var LogFilterSchema = z12.object({
     const isRange = typeof v === "object" && v !== null && "from" in v && "to" in v;
     if (!isRange) {
       ctx.addIssue({
-        code: z12.ZodIssueCode.custom,
+        code: z13.ZodIssueCode.custom,
         message: "Value must be an object with from/to when op is 'between'",
         path: ["value"]
       });
@@ -41159,30 +41577,30 @@ var LogFilterSchema = z12.object({
   }
   if (filter.op === "exists" && typeof filter.value !== "boolean") {
     ctx.addIssue({
-      code: z12.ZodIssueCode.custom,
+      code: z13.ZodIssueCode.custom,
       message: "Value must be boolean when op is 'exists'",
       path: ["value"]
     });
   }
 });
-var LogSortSchema = z12.object({
-  field: z12.string().describe("Field name to sort by"),
-  direction: z12.enum(["asc", "desc"]).default("desc").describe("Sort direction: 'asc' for ascending, 'desc' for descending")
+var LogSortSchema = z13.object({
+  field: z13.string().describe("Field name to sort by"),
+  direction: z13.enum(["asc", "desc"]).default("desc").describe("Sort direction: 'asc' for ascending, 'desc' for descending")
 });
-var LogPaginationSchema = z12.object({
-  limit: z12.number().int().min(1, "Limit must be at least 1").max(1000, "Limit must be at most 1000").default(50).describe("Maximum number of rows to return"),
-  cursor: z12.string().optional().describe("Opaque cursor from previous response for pagination")
+var LogPaginationSchema = z13.object({
+  limit: z13.number().int().min(1, "Limit must be at least 1").max(1000, "Limit must be at most 1000").default(50).describe("Maximum number of rows to return"),
+  cursor: z13.string().optional().describe("Opaque cursor from previous response for pagination")
 });
-var QueryLogsInputSchema = z12.object({
-  projectId: z12.string().uuid().optional().describe("Project to query logs for. Auto-filled from CLI and SDK context when omitted."),
+var QueryLogsInputSchema = z13.object({
+  projectId: z13.string().uuid().optional().describe("Project to query logs for. Auto-filled from CLI and SDK context when omitted."),
   search: LogSearchSchema.optional().describe("Full-text search configuration"),
-  filters: z12.array(LogFilterSchema).optional().describe("Structured filter clauses (ANDed together). When no `timestamp` filter is provided, queries default to a 24h look-back window; pass an explicit `timestamp` filter to query a different range."),
-  select: z12.array(z12.string()).optional().describe("Fields to return (defaults to backend default set)"),
+  filters: z13.array(LogFilterSchema).optional().describe("Structured filter clauses (ANDed together). When no `timestamp` filter is provided, queries default to a 24h look-back window; pass an explicit `timestamp` filter to query a different range."),
+  select: z13.array(z13.string()).optional().describe("Fields to return (defaults to backend default set)"),
   sort: LogSortSchema.optional().describe("Sort configuration (defaults to timestamp desc)"),
   pagination: LogPaginationSchema.optional().describe("Pagination configuration")
 });
 var DEFAULT_QUERY_WINDOW_MS = 24 * 60 * 60 * 1000;
-var LogBackendIdSchema = z12.enum([
+var LogBackendIdSchema = z13.enum([
   "clickhouse",
   "better-stack",
   "datadog",
@@ -41193,129 +41611,170 @@ var LogBackendIdSchema = z12.enum([
   "posthog",
   "mezmo"
 ]);
-var LogBackendKindSchema = z12.enum(["native", "external"]);
-var LogsSchemaInputSchema = z12.object({
-  projectId: z12.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted."),
-  question: z12.string().trim().min(1).max(2000).optional().describe("Optional natural-language question used to retrieve coherent schema bundles."),
-  topK: z12.number().int().min(1).max(32).optional().describe("Max schema bundles to return when question is set (default 8)")
+var LogBackendKindSchema = z13.enum(["native", "external"]);
+var LogsSchemaInputSchema = z13.object({
+  projectId: z13.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted."),
+  question: z13.string().trim().min(1).max(2000).optional().describe("Optional natural-language question used to retrieve coherent schema bundles."),
+  topK: z13.number().int().min(1).max(32).optional().describe("Max schema bundles to return when question is set (default 8)")
 });
-var LogsSchemaBundleSchema = z12.object({
-  id: z12.string().describe("Stable schema-bundle document id"),
-  service: z12.string().describe("Emitting service for this co-occurrence shape"),
-  keys: z12.array(z12.string()).describe("Co-occurring otel_log_attributes keys in this bundle"),
-  rowCount: z12.number().nonnegative().describe("Observed row count when the bundle was compiled"),
-  score: z12.number().optional().describe("Retrieval rank score when returned from vector search")
+var LogsSchemaBundleSchema = z13.object({
+  id: z13.string().describe("Stable schema-bundle document id"),
+  service: z13.string().describe("Emitting service for this co-occurrence shape"),
+  keys: z13.array(z13.string()).describe("Co-occurring otel_log_attributes keys in this bundle"),
+  rowCount: z13.number().nonnegative().describe("Observed row count when the bundle was compiled"),
+  score: z13.number().optional().describe("Retrieval rank score when returned from vector search")
 });
-var LogsSchemaOutputSchema = z12.object({
-  backend: z12.object({
+var LogsSchemaOutputSchema = z13.object({
+  backend: z13.object({
     id: LogBackendIdSchema,
-    name: z12.string(),
+    name: z13.string(),
     kind: LogBackendKindSchema
   }).describe("Active log backend for the project"),
-  features: z12.array(z12.string()).describe("Backend features registered on the server"),
-  commands: z12.array(z12.enum(["schema", "query", "volume", "patterns", "nativeQuery"])).describe("CLI/API commands available for this backend"),
-  queryableFields: z12.array(z12.string()).describe("Fields accepted by the normalized logs.query contract"),
-  searchableFields: z12.array(z12.string()).describe("Fields accepted by logs.query full-text search"),
-  question: z12.string().optional().describe("Echo of the question used for retrieval when provided"),
-  selectedBundles: z12.array(LogsSchemaBundleSchema).describe("Question-conditioned coherent schema bundles (empty when question omitted)"),
-  selectedAttributeKeys: z12.array(z12.string()).describe("Flattened attribute keys from selectedBundles, or recent keys when question omitted"),
-  observedServiceNames: z12.array(z12.string()).describe("Recently observed service names for this project"),
-  observedAttributeKeys: z12.array(z12.string()).describe("Observed / selected attribute keys for agent and CLI schema discovery"),
-  indexStatus: z12.enum(["ready", "empty", "unavailable", "skipped"]).describe("ready: bundles retrieved; empty: index missing/empty; unavailable: retrieval failed; skipped: no question (legacy path)"),
-  schemaContext: z12.record(z12.string(), z12.any()).optional().describe("Backend-specific schema guidance and examples")
+  features: z13.array(z13.string()).describe("Backend features registered on the server"),
+  commands: z13.array(z13.enum(["schema", "query", "volume", "patterns", "nativeQuery"])).describe("CLI/API commands available for this backend"),
+  queryableFields: z13.array(z13.string()).describe("Fields accepted by the normalized logs.query contract"),
+  searchableFields: z13.array(z13.string()).describe("Fields accepted by logs.query full-text search"),
+  question: z13.string().optional().describe("Echo of the question used for retrieval when provided"),
+  selectedBundles: z13.array(LogsSchemaBundleSchema).describe("Question-conditioned coherent schema bundles (empty when question omitted)"),
+  selectedAttributeKeys: z13.array(z13.string()).describe("Flattened attribute keys from selectedBundles, or recent keys when question omitted"),
+  observedServiceNames: z13.array(z13.string()).describe("Recently observed service names for this project"),
+  observedAttributeKeys: z13.array(z13.string()).describe("Observed / selected attribute keys for agent and CLI schema discovery"),
+  indexStatus: z13.enum(["ready", "empty", "unavailable", "skipped"]).describe("ready: bundles retrieved; empty: index missing/empty; unavailable: retrieval failed; skipped: no question (legacy path)"),
+  schemaContext: z13.record(z13.string(), z13.any()).optional().describe("Backend-specific schema guidance and examples")
 });
-var LogsVolumeIntervalSchema = z12.enum(["1m", "5m", "15m", "1h"]);
-var LogsVolumeDimensionSchema = z12.enum([
+var LogsVolumeIntervalSchema = z13.enum(["1m", "5m", "15m", "1h"]);
+var LogsVolumeDimensionSchema = z13.enum([
   "service_name",
   "severity_text",
   "environment"
 ]);
-var LogsVolumeInputSchema = z12.object({
-  projectId: z12.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
-  startDate: z12.string().datetime({ offset: true }),
-  endDate: z12.string().datetime({ offset: true }),
+var LogsVolumeInputSchema = z13.object({
+  projectId: z13.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
+  startDate: z13.string().datetime({ offset: true }),
+  endDate: z13.string().datetime({ offset: true }),
   interval: LogsVolumeIntervalSchema.optional().describe("Aggregation bucket size for the volume series"),
   groupBy: LogsVolumeDimensionSchema.optional().describe("Optional field to split volume series by"),
-  filters: z12.object({
-    service_name: z12.string().optional(),
-    severity_text: z12.string().optional(),
-    environment: z12.string().optional()
+  filters: z13.object({
+    service_name: z13.string().optional(),
+    severity_text: z13.string().optional(),
+    environment: z13.string().optional()
   }).optional()
 }).refine((data) => new Date(data.startDate) < new Date(data.endDate), {
   message: "startDate must be before endDate",
   path: ["endDate"]
 });
-var LogsVolumeOutputSchema = z12.object({
-  total: z12.number().nonnegative(),
-  startDate: z12.string().datetime({ offset: true }),
-  endDate: z12.string().datetime({ offset: true }),
+var LogsVolumeOutputSchema = z13.object({
+  total: z13.number().nonnegative(),
+  startDate: z13.string().datetime({ offset: true }),
+  endDate: z13.string().datetime({ offset: true }),
   interval: LogsVolumeIntervalSchema,
-  series: z12.array(z12.object({
-    group: z12.string(),
-    total: z12.number().nonnegative(),
-    points: z12.array(z12.object({
-      bucket: z12.string(),
-      count: z12.number().nonnegative()
+  series: z13.array(z13.object({
+    group: z13.string(),
+    total: z13.number().nonnegative(),
+    points: z13.array(z13.object({
+      bucket: z13.string(),
+      count: z13.number().nonnegative()
     }))
   }))
 });
-var LogsPatternsInputSchema = z12.object({
-  projectId: z12.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
-  query: z12.string().min(1).max(500).optional().describe("Optional text to match against normalized log patterns"),
-  severity: z12.string().optional().describe("Optional severity_text value, for example ERROR"),
-  startDate: z12.string().datetime({ offset: true }).optional().describe("Optional earliest last-seen timestamp"),
-  endDate: z12.string().datetime({ offset: true }).optional().describe("Optional latest last-seen timestamp"),
-  limit: z12.number().int().min(1).max(100).default(25).describe("Maximum number of log patterns to return")
+var LogsPatternsInputSchema = z13.object({
+  projectId: z13.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
+  query: z13.string().min(1).max(500).optional().describe("Optional text to match against normalized log patterns"),
+  severity: z13.string().optional().describe("Optional severity_text value, for example ERROR"),
+  startDate: z13.string().datetime({ offset: true }).optional().describe("Optional earliest last-seen timestamp"),
+  endDate: z13.string().datetime({ offset: true }).optional().describe("Optional latest last-seen timestamp"),
+  limit: z13.number().int().min(1).max(100).default(25).describe("Maximum number of log patterns to return")
 }).refine((data) => !data.startDate || !data.endDate || new Date(data.startDate) < new Date(data.endDate), {
   message: "startDate must be before endDate",
   path: ["endDate"]
 });
-var LogPatternSchema = z12.object({
-  serviceName: z12.string().nullable(),
-  fingerprint: z12.string(),
-  pattern: z12.string(),
-  severity: z12.string().nullable(),
-  occurrences: z12.number().nonnegative(),
-  firstSeen: z12.string().nullable(),
-  lastSeen: z12.string().nullable(),
-  representativeId: z12.string().nullable()
+var LogPatternSchema = z13.object({
+  serviceName: z13.string().nullable(),
+  fingerprint: z13.string(),
+  pattern: z13.string(),
+  severity: z13.string().nullable(),
+  occurrences: z13.number().nonnegative(),
+  firstSeen: z13.string().nullable(),
+  lastSeen: z13.string().nullable(),
+  representativeId: z13.string().nullable()
 });
-var LogsPatternsOutputSchema = z12.object({
-  patterns: z12.array(LogPatternSchema),
-  meta: z12.object({
+var LogsPatternsOutputSchema = z13.object({
+  patterns: z13.array(LogPatternSchema),
+  meta: z13.object({
     backendId: LogBackendIdSchema,
-    count: z12.number().int().nonnegative(),
-    took: z12.number().nonnegative()
+    count: z13.number().int().nonnegative(),
+    took: z13.number().nonnegative()
   })
 });
-var LogsNativeQueryInputSchema = z12.object({
-  projectId: z12.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
-  query: z12.string().min(1, "Query cannot be empty").max(1e4, "Query must be 10000 characters or less")
+var LogsNativeQueryInputSchema = z13.object({
+  projectId: z13.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
+  query: z13.string().min(1, "Query cannot be empty").max(1e4, "Query must be 10000 characters or less")
 });
-var LogsNativeQueryOutputSchema = z12.object({
-  result: z12.string().describe("Backend-formatted query result"),
-  format: z12.literal("text"),
-  meta: z12.object({
+var LogsNativeQueryOutputSchema = z13.object({
+  result: z13.string().describe("Backend-formatted query result"),
+  format: z13.literal("text"),
+  meta: z13.object({
     backendId: LogBackendIdSchema,
-    took: z12.number().nonnegative(),
-    truncated: z12.boolean()
+    took: z13.number().nonnegative(),
+    truncated: z13.boolean()
   })
 });
-var LogPaginationResponseSchema = z12.object({
-  cursor: z12.string().nullable().describe("Cursor for next page (null if no more results)"),
-  hasMore: z12.boolean().describe("Whether more results are available")
+var LogPaginationResponseSchema = z13.object({
+  cursor: z13.string().nullable().describe("Cursor for next page (null if no more results)"),
+  hasMore: z13.boolean().describe("Whether more results are available")
 });
-var LogQueryMetaSchema = z12.object({
-  count: z12.number().int().nonnegative().describe("Number of log rows returned in this response"),
-  took: z12.number().nonnegative().describe("Query execution time in milliseconds")
+var LogQueryMetaSchema = z13.object({
+  count: z13.number().int().nonnegative().describe("Number of log rows returned in this response"),
+  took: z13.number().nonnegative().describe("Query execution time in milliseconds")
 });
-var QueryLogsOutputSchema = z12.object({
-  data: z12.array(z12.record(z12.string(), z12.any())).describe("Array of log rows with selected fields"),
-  nextCursor: z12.string().nullable().describe("Pass as 'cursor' in the next query to fetch the next page. Null when there are no more results."),
+var QueryLogsOutputSchema = z13.object({
+  data: z13.array(z13.record(z13.string(), z13.any())).describe("Array of log rows with selected fields"),
+  nextCursor: z13.string().nullable().describe("Pass as 'cursor' in the next query to fetch the next page. Null when there are no more results."),
   meta: LogQueryMetaSchema.describe("Query execution metadata")
 });
+var SearchLogsInputSchema = z13.object({
+  projectId: z13.string().uuid().optional().describe("Project to search. Auto-filled from CLI and SDK context when omitted."),
+  question: z13.string().trim().min(1).max(2000).describe("Natural-language question about the project's logs")
+});
+var SearchLogsMetaSchema = z13.object({
+  took: z13.number().nonnegative(),
+  retrievalMs: z13.number().nonnegative(),
+  planningMs: z13.number().nonnegative(),
+  executionMs: z13.number().nonnegative(),
+  candidateCount: z13.number().int().nonnegative(),
+  familyCount: z13.number().int().nonnegative(),
+  plannerModel: z13.string()
+});
+var SearchLogsOutputSchema = z13.discriminatedUnion("status", [
+  z13.object({
+    status: z13.literal("no_match"),
+    explanation: z13.string(),
+    data: z13.array(z13.record(z13.string(), z13.any())).length(0),
+    meta: SearchLogsMetaSchema
+  }),
+  z13.object({
+    status: z13.literal("query"),
+    explanation: z13.string(),
+    spec: logQuerySpecV1Schema,
+    resolution: logQueryResolutionV1Schema,
+    resolvedTimeRange: z13.object({
+      from: z13.string().datetime({ offset: true }),
+      to: z13.string().datetime({ offset: true })
+    }),
+    coverage: z13.object({
+      status: z13.literal("complete"),
+      available: z13.object({
+        from: z13.string().datetime({ offset: true }),
+        to: z13.string().datetime({ offset: true })
+      })
+    }),
+    data: z13.array(z13.record(z13.string(), z13.any())),
+    meta: SearchLogsMetaSchema
+  })
+]);
 var queryLogs = defineOperation({
   operationId: "logs.query",
+  summary: "Query logs",
   description: "Query logs within one project.",
   backend: "api",
   route: {
@@ -41328,8 +41787,24 @@ var queryLogs = defineOperation({
   pagination: "cursor",
   async: "sync"
 });
+var searchLogs = defineOperation({
+  operationId: "logs.search",
+  summary: "Search logs with natural language",
+  description: "Plan and execute a bounded template-first log query for one project.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/logs/search",
+    tags: ["Logs"]
+  },
+  input: SearchLogsInputSchema,
+  output: SearchLogsOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
 var logsSchema = defineOperation({
   operationId: "logs.schema",
+  summary: "Get log schema",
   description: "Describe the active log backend, supported commands, query fields, and schema context.",
   backend: "api",
   route: {
@@ -41344,6 +41819,7 @@ var logsSchema = defineOperation({
 });
 var logsVolume = defineOperation({
   operationId: "logs.volume",
+  summary: "Get log volume",
   description: "Query pre-aggregated log volume for one project.",
   backend: "api",
   route: {
@@ -41358,6 +41834,7 @@ var logsVolume = defineOperation({
 });
 var logsPatterns = defineOperation({
   operationId: "logs.patterns",
+  summary: "Get log patterns",
   description: "Query normalized log patterns for discovery workflows.",
   backend: "api",
   route: {
@@ -41372,6 +41849,7 @@ var logsPatterns = defineOperation({
 });
 var logsNativeQuery = defineOperation({
   operationId: "logs.nativeQuery",
+  summary: "Run a native log query",
   description: "Run a read-only query in the log store's native query language, with server-side guardrails.",
   backend: "api",
   route: {
@@ -41386,6 +41864,7 @@ var logsNativeQuery = defineOperation({
 });
 var logsContract = {
   query: queryLogs.contract,
+  search: searchLogs.contract,
   schema: logsSchema.contract,
   volume: logsVolume.contract,
   patterns: logsPatterns.contract,
@@ -41393,9 +41872,9 @@ var logsContract = {
 };
 
 // ../mcp-connector-provider/src/ai-sdk-tool-definitions.ts
-import { z as z13 } from "zod";
-// ../mcp-connector-provider/src/connection-schemas.ts
 import { z as z14 } from "zod";
+// ../mcp-connector-provider/src/connection-schemas.ts
+import { z as z15 } from "zod";
 var MCP_TRANSPORTS = ["streamable-http", "sse"];
 var MCP_AUTH_MODES = [
   "none",
@@ -41425,152 +41904,152 @@ var MCP_TOOL_AVAILABILITY_REASON_VALUES = [
   "write_blocked",
   "disabled"
 ];
-var mcpConnectionTransportSchema = z14.enum(MCP_TRANSPORTS);
-var mcpConnectionAuthModeSchema = z14.enum(MCP_AUTH_MODES);
-var mcpOauthTokenEndpointAuthMethodSchema = z14.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS);
-var mcpConnectionSourceSchema = z14.enum(MCP_CONNECTION_SOURCES);
-var mcpConnectionInstallStatusSchema = z14.enum(MCP_INSTALL_STATUSES);
-var mcpProviderAvailabilitySchema = z14.enum(MCP_PROVIDER_AVAILABILITY_VALUES);
-var mcpToolAvailabilitySchema = z14.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES);
-var mcpCustomHeaderSchema = z14.object({
-  id: z14.string().min(1),
-  name: z14.string().min(1),
-  value: z14.string().min(1)
+var mcpConnectionTransportSchema = z15.enum(MCP_TRANSPORTS);
+var mcpConnectionAuthModeSchema = z15.enum(MCP_AUTH_MODES);
+var mcpOauthTokenEndpointAuthMethodSchema = z15.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS);
+var mcpConnectionSourceSchema = z15.enum(MCP_CONNECTION_SOURCES);
+var mcpConnectionInstallStatusSchema = z15.enum(MCP_INSTALL_STATUSES);
+var mcpProviderAvailabilitySchema = z15.enum(MCP_PROVIDER_AVAILABILITY_VALUES);
+var mcpToolAvailabilitySchema = z15.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES);
+var mcpCustomHeaderSchema = z15.object({
+  id: z15.string().min(1),
+  name: z15.string().min(1),
+  value: z15.string().min(1)
 });
-var mcpMaskedHeaderSchema = z14.object({
-  id: z14.string().min(1),
-  name: z14.string().min(1),
-  maskedValue: z14.string().min(1)
+var mcpMaskedHeaderSchema = z15.object({
+  id: z15.string().min(1),
+  name: z15.string().min(1),
+  maskedValue: z15.string().min(1)
 });
-var mcpNoAuthConfigSchema = z14.object({
-  authMode: z14.literal("none")
+var mcpNoAuthConfigSchema = z15.object({
+  authMode: z15.literal("none")
 });
-var mcpHeaderRefreshCredentialsSchema = z14.object({
-  tokenUrl: z14.string().url(),
-  clientId: z14.string().min(1),
-  clientSecret: z14.string().min(1).optional(),
+var mcpHeaderRefreshCredentialsSchema = z15.object({
+  tokenUrl: z15.string().url(),
+  clientId: z15.string().min(1),
+  clientSecret: z15.string().min(1).optional(),
   tokenEndpointAuthMethod: mcpOauthTokenEndpointAuthMethodSchema.optional(),
-  refreshToken: z14.string().min(1),
-  headerName: z14.string().min(1).default("Authorization"),
-  headerValuePrefix: z14.string().default("Bearer "),
-  expiresAt: z14.string().datetime().optional()
+  refreshToken: z15.string().min(1),
+  headerName: z15.string().min(1).default("Authorization"),
+  headerValuePrefix: z15.string().default("Bearer "),
+  expiresAt: z15.string().datetime().optional()
 });
-var mcpHeadersAuthConfigSchema = z14.object({
-  authMode: z14.literal("headers"),
-  headers: z14.array(mcpCustomHeaderSchema),
+var mcpHeadersAuthConfigSchema = z15.object({
+  authMode: z15.literal("headers"),
+  headers: z15.array(mcpCustomHeaderSchema),
   refreshCredentials: mcpHeaderRefreshCredentialsSchema.optional()
 });
-var mcpAwsSigV4AuthConfigSchema = z14.object({
-  authMode: z14.literal("aws-sigv4"),
-  accessKeyId: z14.string().min(1),
-  secretAccessKey: z14.string().min(1),
-  sessionToken: z14.string().min(1).optional(),
-  region: z14.string().min(1),
-  service: z14.string().min(1).default("aws-mcp")
+var mcpAwsSigV4AuthConfigSchema = z15.object({
+  authMode: z15.literal("aws-sigv4"),
+  accessKeyId: z15.string().min(1),
+  secretAccessKey: z15.string().min(1),
+  sessionToken: z15.string().min(1).optional(),
+  region: z15.string().min(1),
+  service: z15.string().min(1).default("aws-mcp")
 });
-var optionalOauthScopeSchema = z14.preprocess((value) => {
+var optionalOauthScopeSchema = z15.preprocess((value) => {
   if (typeof value !== "string") {
     return;
   }
   const normalizedValue = value.trim();
   return normalizedValue.length > 0 ? normalizedValue : undefined;
-}, z14.string().min(1).optional()).optional();
-var mcpOauthTokenSchema = z14.object({
-  accessToken: z14.string().min(1),
-  refreshToken: z14.string().min(1).optional(),
-  tokenType: z14.string().min(1).optional(),
+}, z15.string().min(1).optional()).optional();
+var mcpOauthTokenSchema = z15.object({
+  accessToken: z15.string().min(1),
+  refreshToken: z15.string().min(1).optional(),
+  tokenType: z15.string().min(1).optional(),
   scope: optionalOauthScopeSchema,
-  expiresAt: z14.string().datetime().optional()
+  expiresAt: z15.string().datetime().optional()
 }).transform(({ scope, ...tokens }) => {
   return scope === undefined ? tokens : { ...tokens, scope };
 });
-var mcpOauthAuthConfigSchema = z14.object({
-  authMode: z14.literal("oauth"),
-  providerId: z14.string().min(1),
+var mcpOauthAuthConfigSchema = z15.object({
+  authMode: z15.literal("oauth"),
+  providerId: z15.string().min(1),
   tokens: mcpOauthTokenSchema,
-  headers: z14.array(mcpCustomHeaderSchema).optional()
+  headers: z15.array(mcpCustomHeaderSchema).optional()
 });
-var mcpAuthConfigSchema = z14.discriminatedUnion("authMode", [
+var mcpAuthConfigSchema = z15.discriminatedUnion("authMode", [
   mcpNoAuthConfigSchema,
   mcpHeadersAuthConfigSchema,
   mcpOauthAuthConfigSchema,
   mcpAwsSigV4AuthConfigSchema
 ]);
-var mcpEncryptedAuthConfigSchema = z14.string().min(1).regex(/^enc:v1:/, "Encrypted auth config must use enc:v1 format.");
-var mcpPendingOauthRequestConfigSchema = z14.object({
-  codeVerifier: z14.string().min(1),
-  clientId: z14.string().min(1),
-  clientSecret: z14.string().min(1).optional(),
+var mcpEncryptedAuthConfigSchema = z15.string().min(1).regex(/^enc:v1:/, "Encrypted auth config must use enc:v1 format.");
+var mcpPendingOauthRequestConfigSchema = z15.object({
+  codeVerifier: z15.string().min(1),
+  clientId: z15.string().min(1),
+  clientSecret: z15.string().min(1).optional(),
   tokenEndpointAuthMethod: mcpOauthTokenEndpointAuthMethodSchema.optional(),
-  tokenUrl: z14.string().url().optional(),
-  resourceUrl: z14.string().url().optional(),
-  projectId: z14.string().uuid().optional(),
-  returnTo: z14.string().min(1).max(2000).optional(),
-  messageId: z14.string().min(1).max(240).optional(),
-  scopes: z14.array(z14.string().min(1)).optional()
+  tokenUrl: z15.string().url().optional(),
+  resourceUrl: z15.string().url().optional(),
+  projectId: z15.string().uuid().optional(),
+  returnTo: z15.string().min(1).max(2000).optional(),
+  messageId: z15.string().min(1).max(240).optional(),
+  scopes: z15.array(z15.string().min(1)).optional()
 });
-var mcpToolInputSchemaSchema = z14.object({
-  type: z14.string().optional(),
-  properties: z14.record(z14.string(), z14.unknown()).optional(),
-  required: z14.array(z14.string()).optional(),
-  additionalProperties: z14.boolean().optional()
-}).catchall(z14.unknown());
-var mcpProviderCapabilitiesSchema = z14.object({
-  supportsOAuth: z14.boolean().default(false),
-  supportsCustomHeaders: z14.boolean().default(true),
-  supportsToolDiscovery: z14.boolean().default(true),
-  readOnlyToolNames: z14.array(z14.string()).default([])
+var mcpToolInputSchemaSchema = z15.object({
+  type: z15.string().optional(),
+  properties: z15.record(z15.string(), z15.unknown()).optional(),
+  required: z15.array(z15.string()).optional(),
+  additionalProperties: z15.boolean().optional()
+}).catchall(z15.unknown());
+var mcpProviderCapabilitiesSchema = z15.object({
+  supportsOAuth: z15.boolean().default(false),
+  supportsCustomHeaders: z15.boolean().default(true),
+  supportsToolDiscovery: z15.boolean().default(true),
+  readOnlyToolNames: z15.array(z15.string()).default([])
 });
-var mcpToolSnapshotEntrySchema = z14.object({
-  name: z14.string().min(1),
-  title: z14.string().min(1),
-  description: z14.string().min(1),
+var mcpToolSnapshotEntrySchema = z15.object({
+  name: z15.string().min(1),
+  title: z15.string().min(1),
+  description: z15.string().min(1),
   inputSchema: mcpToolInputSchemaSchema,
-  annotations: z14.record(z14.string(), z14.unknown()).default({}),
+  annotations: z15.record(z15.string(), z15.unknown()).default({}),
   availability: mcpToolAvailabilitySchema,
-  isReadOnly: z14.boolean()
+  isReadOnly: z15.boolean()
 });
-var mcpToolSnapshotSchema = z14.object({
-  discoveredAt: z14.string().datetime(),
-  tools: z14.array(mcpToolSnapshotEntrySchema)
+var mcpToolSnapshotSchema = z15.object({
+  discoveredAt: z15.string().datetime(),
+  tools: z15.array(mcpToolSnapshotEntrySchema)
 });
-var mcpConnectorManagementSchema = z14.object({
-  mode: z14.enum(["user", "system"]),
-  managedBy: z14.object({
-    type: z14.literal("integration"),
-    id: z14.string().min(1),
-    displayName: z14.string().min(1),
-    iconKey: z14.string().min(1)
+var mcpConnectorManagementSchema = z15.object({
+  mode: z15.enum(["user", "system"]),
+  managedBy: z15.object({
+    type: z15.literal("integration"),
+    id: z15.string().min(1),
+    displayName: z15.string().min(1),
+    iconKey: z15.string().min(1)
   }).nullable(),
-  capabilities: z14.object({
-    canRename: z14.boolean(),
-    canEditCredentials: z14.boolean(),
-    canSetReadOnly: z14.boolean(),
-    canConfigureTools: z14.boolean(),
-    canDisconnect: z14.boolean()
+  capabilities: z15.object({
+    canRename: z15.boolean(),
+    canEditCredentials: z15.boolean(),
+    canSetReadOnly: z15.boolean(),
+    canConfigureTools: z15.boolean(),
+    canDisconnect: z15.boolean()
   })
 });
-var mcpConnectionRecordSchema = z14.object({
-  id: z14.string().uuid(),
-  organizationId: z14.string().min(1),
-  projectId: z14.string().uuid(),
-  providerId: z14.string().min(1),
+var mcpConnectionRecordSchema = z15.object({
+  id: z15.string().uuid(),
+  organizationId: z15.string().min(1),
+  projectId: z15.string().uuid(),
+  providerId: z15.string().min(1),
   source: mcpConnectionSourceSchema,
-  displayName: z14.string().min(1),
-  connectionKey: z14.string().min(1),
-  serverUrl: z14.string().url(),
+  displayName: z15.string().min(1),
+  connectionKey: z15.string().min(1),
+  serverUrl: z15.string().url(),
   transport: mcpConnectionTransportSchema,
   authMode: mcpConnectionAuthModeSchema,
   installStatus: mcpConnectionInstallStatusSchema,
-  installedByUserId: z14.string().nullable(),
-  connectedAt: z14.string().datetime().nullable(),
+  installedByUserId: z15.string().nullable(),
+  connectedAt: z15.string().datetime().nullable(),
   toolSnapshot: mcpToolSnapshotSchema.nullable(),
-  enabledToolNames: z14.array(z14.string()),
-  readOnly: z14.boolean().default(false),
-  version: z14.number().int().nonnegative(),
-  createdAt: z14.string().datetime(),
-  updatedAt: z14.string().datetime(),
-  deletedAt: z14.string().datetime().nullable()
+  enabledToolNames: z15.array(z15.string()),
+  readOnly: z15.boolean().default(false),
+  version: z15.number().int().nonnegative(),
+  createdAt: z15.string().datetime(),
+  updatedAt: z15.string().datetime(),
+  deletedAt: z15.string().datetime().nullable()
 });
 var McpConnectorManagementSchema = mcpConnectorManagementSchema;
 // ../mcp-connector-provider/src/mcp-client.ts
@@ -41581,58 +42060,58 @@ import * as z3rt from "zod/v3";
 import * as z4mini from "zod/v4-mini";
 
 // ../../node_modules/@modelcontextprotocol/sdk/dist/esm/types.js
-import * as z15 from "zod/v4";
+import * as z16 from "zod/v4";
 var RELATED_TASK_META_KEY = "io.modelcontextprotocol/related-task";
 var JSONRPC_VERSION = "2.0";
-var AssertObjectSchema = z15.custom((v) => v !== null && (typeof v === "object" || typeof v === "function"));
-var ProgressTokenSchema = z15.union([z15.string(), z15.number().int()]);
-var CursorSchema = z15.string();
-var TaskCreationParamsSchema = z15.looseObject({
-  ttl: z15.number().optional(),
-  pollInterval: z15.number().optional()
+var AssertObjectSchema = z16.custom((v) => v !== null && (typeof v === "object" || typeof v === "function"));
+var ProgressTokenSchema = z16.union([z16.string(), z16.number().int()]);
+var CursorSchema = z16.string();
+var TaskCreationParamsSchema = z16.looseObject({
+  ttl: z16.number().optional(),
+  pollInterval: z16.number().optional()
 });
-var TaskMetadataSchema = z15.object({
-  ttl: z15.number().optional()
+var TaskMetadataSchema = z16.object({
+  ttl: z16.number().optional()
 });
-var RelatedTaskMetadataSchema = z15.object({
-  taskId: z15.string()
+var RelatedTaskMetadataSchema = z16.object({
+  taskId: z16.string()
 });
-var RequestMetaSchema = z15.looseObject({
+var RequestMetaSchema = z16.looseObject({
   progressToken: ProgressTokenSchema.optional(),
   [RELATED_TASK_META_KEY]: RelatedTaskMetadataSchema.optional()
 });
-var BaseRequestParamsSchema = z15.object({
+var BaseRequestParamsSchema = z16.object({
   _meta: RequestMetaSchema.optional()
 });
 var TaskAugmentedRequestParamsSchema = BaseRequestParamsSchema.extend({
   task: TaskMetadataSchema.optional()
 });
-var RequestSchema = z15.object({
-  method: z15.string(),
+var RequestSchema = z16.object({
+  method: z16.string(),
   params: BaseRequestParamsSchema.loose().optional()
 });
-var NotificationsParamsSchema = z15.object({
+var NotificationsParamsSchema = z16.object({
   _meta: RequestMetaSchema.optional()
 });
-var NotificationSchema = z15.object({
-  method: z15.string(),
+var NotificationSchema = z16.object({
+  method: z16.string(),
   params: NotificationsParamsSchema.loose().optional()
 });
-var ResultSchema = z15.looseObject({
+var ResultSchema = z16.looseObject({
   _meta: RequestMetaSchema.optional()
 });
-var RequestIdSchema = z15.union([z15.string(), z15.number().int()]);
-var JSONRPCRequestSchema = z15.object({
-  jsonrpc: z15.literal(JSONRPC_VERSION),
+var RequestIdSchema = z16.union([z16.string(), z16.number().int()]);
+var JSONRPCRequestSchema = z16.object({
+  jsonrpc: z16.literal(JSONRPC_VERSION),
   id: RequestIdSchema,
   ...RequestSchema.shape
 }).strict();
-var JSONRPCNotificationSchema = z15.object({
-  jsonrpc: z15.literal(JSONRPC_VERSION),
+var JSONRPCNotificationSchema = z16.object({
+  jsonrpc: z16.literal(JSONRPC_VERSION),
   ...NotificationSchema.shape
 }).strict();
-var JSONRPCResultResponseSchema = z15.object({
-  jsonrpc: z15.literal(JSONRPC_VERSION),
+var JSONRPCResultResponseSchema = z16.object({
+  jsonrpc: z16.literal(JSONRPC_VERSION),
   id: RequestIdSchema,
   result: ResultSchema
 }).strict();
@@ -41647,151 +42126,151 @@ var ErrorCode;
   ErrorCode2[ErrorCode2["InternalError"] = -32603] = "InternalError";
   ErrorCode2[ErrorCode2["UrlElicitationRequired"] = -32042] = "UrlElicitationRequired";
 })(ErrorCode || (ErrorCode = {}));
-var JSONRPCErrorResponseSchema = z15.object({
-  jsonrpc: z15.literal(JSONRPC_VERSION),
+var JSONRPCErrorResponseSchema = z16.object({
+  jsonrpc: z16.literal(JSONRPC_VERSION),
   id: RequestIdSchema.optional(),
-  error: z15.object({
-    code: z15.number().int(),
-    message: z15.string(),
-    data: z15.unknown().optional()
+  error: z16.object({
+    code: z16.number().int(),
+    message: z16.string(),
+    data: z16.unknown().optional()
   })
 }).strict();
-var JSONRPCMessageSchema = z15.union([
+var JSONRPCMessageSchema = z16.union([
   JSONRPCRequestSchema,
   JSONRPCNotificationSchema,
   JSONRPCResultResponseSchema,
   JSONRPCErrorResponseSchema
 ]);
-var JSONRPCResponseSchema = z15.union([JSONRPCResultResponseSchema, JSONRPCErrorResponseSchema]);
+var JSONRPCResponseSchema = z16.union([JSONRPCResultResponseSchema, JSONRPCErrorResponseSchema]);
 var EmptyResultSchema = ResultSchema.strict();
 var CancelledNotificationParamsSchema = NotificationsParamsSchema.extend({
   requestId: RequestIdSchema.optional(),
-  reason: z15.string().optional()
+  reason: z16.string().optional()
 });
 var CancelledNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/cancelled"),
+  method: z16.literal("notifications/cancelled"),
   params: CancelledNotificationParamsSchema
 });
-var IconSchema = z15.object({
-  src: z15.string(),
-  mimeType: z15.string().optional(),
-  sizes: z15.array(z15.string()).optional(),
-  theme: z15.enum(["light", "dark"]).optional()
+var IconSchema = z16.object({
+  src: z16.string(),
+  mimeType: z16.string().optional(),
+  sizes: z16.array(z16.string()).optional(),
+  theme: z16.enum(["light", "dark"]).optional()
 });
-var IconsSchema = z15.object({
-  icons: z15.array(IconSchema).optional()
+var IconsSchema = z16.object({
+  icons: z16.array(IconSchema).optional()
 });
-var BaseMetadataSchema = z15.object({
-  name: z15.string(),
-  title: z15.string().optional()
+var BaseMetadataSchema = z16.object({
+  name: z16.string(),
+  title: z16.string().optional()
 });
 var ImplementationSchema = BaseMetadataSchema.extend({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  version: z15.string(),
-  websiteUrl: z15.string().optional(),
-  description: z15.string().optional()
+  version: z16.string(),
+  websiteUrl: z16.string().optional(),
+  description: z16.string().optional()
 });
-var FormElicitationCapabilitySchema = z15.intersection(z15.object({
-  applyDefaults: z15.boolean().optional()
-}), z15.record(z15.string(), z15.unknown()));
-var ElicitationCapabilitySchema = z15.preprocess((value) => {
+var FormElicitationCapabilitySchema = z16.intersection(z16.object({
+  applyDefaults: z16.boolean().optional()
+}), z16.record(z16.string(), z16.unknown()));
+var ElicitationCapabilitySchema = z16.preprocess((value) => {
   if (value && typeof value === "object" && !Array.isArray(value)) {
     if (Object.keys(value).length === 0) {
       return { form: {} };
     }
   }
   return value;
-}, z15.intersection(z15.object({
+}, z16.intersection(z16.object({
   form: FormElicitationCapabilitySchema.optional(),
   url: AssertObjectSchema.optional()
-}), z15.record(z15.string(), z15.unknown()).optional()));
-var ClientTasksCapabilitySchema = z15.looseObject({
+}), z16.record(z16.string(), z16.unknown()).optional()));
+var ClientTasksCapabilitySchema = z16.looseObject({
   list: AssertObjectSchema.optional(),
   cancel: AssertObjectSchema.optional(),
-  requests: z15.looseObject({
-    sampling: z15.looseObject({
+  requests: z16.looseObject({
+    sampling: z16.looseObject({
       createMessage: AssertObjectSchema.optional()
     }).optional(),
-    elicitation: z15.looseObject({
+    elicitation: z16.looseObject({
       create: AssertObjectSchema.optional()
     }).optional()
   }).optional()
 });
-var ServerTasksCapabilitySchema = z15.looseObject({
+var ServerTasksCapabilitySchema = z16.looseObject({
   list: AssertObjectSchema.optional(),
   cancel: AssertObjectSchema.optional(),
-  requests: z15.looseObject({
-    tools: z15.looseObject({
+  requests: z16.looseObject({
+    tools: z16.looseObject({
       call: AssertObjectSchema.optional()
     }).optional()
   }).optional()
 });
-var ClientCapabilitiesSchema = z15.object({
-  experimental: z15.record(z15.string(), AssertObjectSchema).optional(),
-  sampling: z15.object({
+var ClientCapabilitiesSchema = z16.object({
+  experimental: z16.record(z16.string(), AssertObjectSchema).optional(),
+  sampling: z16.object({
     context: AssertObjectSchema.optional(),
     tools: AssertObjectSchema.optional()
   }).optional(),
   elicitation: ElicitationCapabilitySchema.optional(),
-  roots: z15.object({
-    listChanged: z15.boolean().optional()
+  roots: z16.object({
+    listChanged: z16.boolean().optional()
   }).optional(),
   tasks: ClientTasksCapabilitySchema.optional(),
-  extensions: z15.record(z15.string(), AssertObjectSchema).optional()
+  extensions: z16.record(z16.string(), AssertObjectSchema).optional()
 });
 var InitializeRequestParamsSchema = BaseRequestParamsSchema.extend({
-  protocolVersion: z15.string(),
+  protocolVersion: z16.string(),
   capabilities: ClientCapabilitiesSchema,
   clientInfo: ImplementationSchema
 });
 var InitializeRequestSchema = RequestSchema.extend({
-  method: z15.literal("initialize"),
+  method: z16.literal("initialize"),
   params: InitializeRequestParamsSchema
 });
-var ServerCapabilitiesSchema = z15.object({
-  experimental: z15.record(z15.string(), AssertObjectSchema).optional(),
+var ServerCapabilitiesSchema = z16.object({
+  experimental: z16.record(z16.string(), AssertObjectSchema).optional(),
   logging: AssertObjectSchema.optional(),
   completions: AssertObjectSchema.optional(),
-  prompts: z15.object({
-    listChanged: z15.boolean().optional()
+  prompts: z16.object({
+    listChanged: z16.boolean().optional()
   }).optional(),
-  resources: z15.object({
-    subscribe: z15.boolean().optional(),
-    listChanged: z15.boolean().optional()
+  resources: z16.object({
+    subscribe: z16.boolean().optional(),
+    listChanged: z16.boolean().optional()
   }).optional(),
-  tools: z15.object({
-    listChanged: z15.boolean().optional()
+  tools: z16.object({
+    listChanged: z16.boolean().optional()
   }).optional(),
   tasks: ServerTasksCapabilitySchema.optional(),
-  extensions: z15.record(z15.string(), AssertObjectSchema).optional()
+  extensions: z16.record(z16.string(), AssertObjectSchema).optional()
 });
 var InitializeResultSchema = ResultSchema.extend({
-  protocolVersion: z15.string(),
+  protocolVersion: z16.string(),
   capabilities: ServerCapabilitiesSchema,
   serverInfo: ImplementationSchema,
-  instructions: z15.string().optional()
+  instructions: z16.string().optional()
 });
 var InitializedNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/initialized"),
+  method: z16.literal("notifications/initialized"),
   params: NotificationsParamsSchema.optional()
 });
 var PingRequestSchema = RequestSchema.extend({
-  method: z15.literal("ping"),
+  method: z16.literal("ping"),
   params: BaseRequestParamsSchema.optional()
 });
-var ProgressSchema = z15.object({
-  progress: z15.number(),
-  total: z15.optional(z15.number()),
-  message: z15.optional(z15.string())
+var ProgressSchema = z16.object({
+  progress: z16.number(),
+  total: z16.optional(z16.number()),
+  message: z16.optional(z16.string())
 });
-var ProgressNotificationParamsSchema = z15.object({
+var ProgressNotificationParamsSchema = z16.object({
   ...NotificationsParamsSchema.shape,
   ...ProgressSchema.shape,
   progressToken: ProgressTokenSchema
 });
 var ProgressNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/progress"),
+  method: z16.literal("notifications/progress"),
   params: ProgressNotificationParamsSchema
 });
 var PaginatedRequestParamsSchema = BaseRequestParamsSchema.extend({
@@ -41803,60 +42282,60 @@ var PaginatedRequestSchema = RequestSchema.extend({
 var PaginatedResultSchema = ResultSchema.extend({
   nextCursor: CursorSchema.optional()
 });
-var TaskStatusSchema = z15.enum(["working", "input_required", "completed", "failed", "cancelled"]);
-var TaskSchema = z15.object({
-  taskId: z15.string(),
+var TaskStatusSchema = z16.enum(["working", "input_required", "completed", "failed", "cancelled"]);
+var TaskSchema = z16.object({
+  taskId: z16.string(),
   status: TaskStatusSchema,
-  ttl: z15.union([z15.number(), z15.null()]),
-  createdAt: z15.string(),
-  lastUpdatedAt: z15.string(),
-  pollInterval: z15.optional(z15.number()),
-  statusMessage: z15.optional(z15.string())
+  ttl: z16.union([z16.number(), z16.null()]),
+  createdAt: z16.string(),
+  lastUpdatedAt: z16.string(),
+  pollInterval: z16.optional(z16.number()),
+  statusMessage: z16.optional(z16.string())
 });
 var CreateTaskResultSchema = ResultSchema.extend({
   task: TaskSchema
 });
 var TaskStatusNotificationParamsSchema = NotificationsParamsSchema.merge(TaskSchema);
 var TaskStatusNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/tasks/status"),
+  method: z16.literal("notifications/tasks/status"),
   params: TaskStatusNotificationParamsSchema
 });
 var GetTaskRequestSchema = RequestSchema.extend({
-  method: z15.literal("tasks/get"),
+  method: z16.literal("tasks/get"),
   params: BaseRequestParamsSchema.extend({
-    taskId: z15.string()
+    taskId: z16.string()
   })
 });
 var GetTaskResultSchema = ResultSchema.merge(TaskSchema);
 var GetTaskPayloadRequestSchema = RequestSchema.extend({
-  method: z15.literal("tasks/result"),
+  method: z16.literal("tasks/result"),
   params: BaseRequestParamsSchema.extend({
-    taskId: z15.string()
+    taskId: z16.string()
   })
 });
 var GetTaskPayloadResultSchema = ResultSchema.loose();
 var ListTasksRequestSchema = PaginatedRequestSchema.extend({
-  method: z15.literal("tasks/list")
+  method: z16.literal("tasks/list")
 });
 var ListTasksResultSchema = PaginatedResultSchema.extend({
-  tasks: z15.array(TaskSchema)
+  tasks: z16.array(TaskSchema)
 });
 var CancelTaskRequestSchema = RequestSchema.extend({
-  method: z15.literal("tasks/cancel"),
+  method: z16.literal("tasks/cancel"),
   params: BaseRequestParamsSchema.extend({
-    taskId: z15.string()
+    taskId: z16.string()
   })
 });
 var CancelTaskResultSchema = ResultSchema.merge(TaskSchema);
-var ResourceContentsSchema = z15.object({
-  uri: z15.string(),
-  mimeType: z15.optional(z15.string()),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+var ResourceContentsSchema = z16.object({
+  uri: z16.string(),
+  mimeType: z16.optional(z16.string()),
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
 var TextResourceContentsSchema = ResourceContentsSchema.extend({
-  text: z15.string()
+  text: z16.string()
 });
-var Base64Schema = z15.string().refine((val) => {
+var Base64Schema = z16.string().refine((val) => {
   try {
     atob(val);
     return true;
@@ -41867,447 +42346,447 @@ var Base64Schema = z15.string().refine((val) => {
 var BlobResourceContentsSchema = ResourceContentsSchema.extend({
   blob: Base64Schema
 });
-var RoleSchema = z15.enum(["user", "assistant"]);
-var AnnotationsSchema = z15.object({
-  audience: z15.array(RoleSchema).optional(),
-  priority: z15.number().min(0).max(1).optional(),
-  lastModified: z15.iso.datetime({ offset: true }).optional()
+var RoleSchema = z16.enum(["user", "assistant"]);
+var AnnotationsSchema = z16.object({
+  audience: z16.array(RoleSchema).optional(),
+  priority: z16.number().min(0).max(1).optional(),
+  lastModified: z16.iso.datetime({ offset: true }).optional()
 });
-var ResourceSchema = z15.object({
+var ResourceSchema = z16.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  uri: z15.string(),
-  description: z15.optional(z15.string()),
-  mimeType: z15.optional(z15.string()),
-  size: z15.optional(z15.number()),
+  uri: z16.string(),
+  description: z16.optional(z16.string()),
+  mimeType: z16.optional(z16.string()),
+  size: z16.optional(z16.number()),
   annotations: AnnotationsSchema.optional(),
-  _meta: z15.optional(z15.looseObject({}))
+  _meta: z16.optional(z16.looseObject({}))
 });
-var ResourceTemplateSchema = z15.object({
+var ResourceTemplateSchema = z16.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  uriTemplate: z15.string(),
-  description: z15.optional(z15.string()),
-  mimeType: z15.optional(z15.string()),
+  uriTemplate: z16.string(),
+  description: z16.optional(z16.string()),
+  mimeType: z16.optional(z16.string()),
   annotations: AnnotationsSchema.optional(),
-  _meta: z15.optional(z15.looseObject({}))
+  _meta: z16.optional(z16.looseObject({}))
 });
 var ListResourcesRequestSchema = PaginatedRequestSchema.extend({
-  method: z15.literal("resources/list")
+  method: z16.literal("resources/list")
 });
 var ListResourcesResultSchema = PaginatedResultSchema.extend({
-  resources: z15.array(ResourceSchema)
+  resources: z16.array(ResourceSchema)
 });
 var ListResourceTemplatesRequestSchema = PaginatedRequestSchema.extend({
-  method: z15.literal("resources/templates/list")
+  method: z16.literal("resources/templates/list")
 });
 var ListResourceTemplatesResultSchema = PaginatedResultSchema.extend({
-  resourceTemplates: z15.array(ResourceTemplateSchema)
+  resourceTemplates: z16.array(ResourceTemplateSchema)
 });
 var ResourceRequestParamsSchema = BaseRequestParamsSchema.extend({
-  uri: z15.string()
+  uri: z16.string()
 });
 var ReadResourceRequestParamsSchema = ResourceRequestParamsSchema;
 var ReadResourceRequestSchema = RequestSchema.extend({
-  method: z15.literal("resources/read"),
+  method: z16.literal("resources/read"),
   params: ReadResourceRequestParamsSchema
 });
 var ReadResourceResultSchema = ResultSchema.extend({
-  contents: z15.array(z15.union([TextResourceContentsSchema, BlobResourceContentsSchema]))
+  contents: z16.array(z16.union([TextResourceContentsSchema, BlobResourceContentsSchema]))
 });
 var ResourceListChangedNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/resources/list_changed"),
+  method: z16.literal("notifications/resources/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
 var SubscribeRequestParamsSchema = ResourceRequestParamsSchema;
 var SubscribeRequestSchema = RequestSchema.extend({
-  method: z15.literal("resources/subscribe"),
+  method: z16.literal("resources/subscribe"),
   params: SubscribeRequestParamsSchema
 });
 var UnsubscribeRequestParamsSchema = ResourceRequestParamsSchema;
 var UnsubscribeRequestSchema = RequestSchema.extend({
-  method: z15.literal("resources/unsubscribe"),
+  method: z16.literal("resources/unsubscribe"),
   params: UnsubscribeRequestParamsSchema
 });
 var ResourceUpdatedNotificationParamsSchema = NotificationsParamsSchema.extend({
-  uri: z15.string()
+  uri: z16.string()
 });
 var ResourceUpdatedNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/resources/updated"),
+  method: z16.literal("notifications/resources/updated"),
   params: ResourceUpdatedNotificationParamsSchema
 });
-var PromptArgumentSchema = z15.object({
-  name: z15.string(),
-  description: z15.optional(z15.string()),
-  required: z15.optional(z15.boolean())
+var PromptArgumentSchema = z16.object({
+  name: z16.string(),
+  description: z16.optional(z16.string()),
+  required: z16.optional(z16.boolean())
 });
-var PromptSchema = z15.object({
+var PromptSchema = z16.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  description: z15.optional(z15.string()),
-  arguments: z15.optional(z15.array(PromptArgumentSchema)),
-  _meta: z15.optional(z15.looseObject({}))
+  description: z16.optional(z16.string()),
+  arguments: z16.optional(z16.array(PromptArgumentSchema)),
+  _meta: z16.optional(z16.looseObject({}))
 });
 var ListPromptsRequestSchema = PaginatedRequestSchema.extend({
-  method: z15.literal("prompts/list")
+  method: z16.literal("prompts/list")
 });
 var ListPromptsResultSchema = PaginatedResultSchema.extend({
-  prompts: z15.array(PromptSchema)
+  prompts: z16.array(PromptSchema)
 });
 var GetPromptRequestParamsSchema = BaseRequestParamsSchema.extend({
-  name: z15.string(),
-  arguments: z15.record(z15.string(), z15.string()).optional()
+  name: z16.string(),
+  arguments: z16.record(z16.string(), z16.string()).optional()
 });
 var GetPromptRequestSchema = RequestSchema.extend({
-  method: z15.literal("prompts/get"),
+  method: z16.literal("prompts/get"),
   params: GetPromptRequestParamsSchema
 });
-var TextContentSchema = z15.object({
-  type: z15.literal("text"),
-  text: z15.string(),
+var TextContentSchema = z16.object({
+  type: z16.literal("text"),
+  text: z16.string(),
   annotations: AnnotationsSchema.optional(),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
-var ImageContentSchema = z15.object({
-  type: z15.literal("image"),
+var ImageContentSchema = z16.object({
+  type: z16.literal("image"),
   data: Base64Schema,
-  mimeType: z15.string(),
+  mimeType: z16.string(),
   annotations: AnnotationsSchema.optional(),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
-var AudioContentSchema = z15.object({
-  type: z15.literal("audio"),
+var AudioContentSchema = z16.object({
+  type: z16.literal("audio"),
   data: Base64Schema,
-  mimeType: z15.string(),
+  mimeType: z16.string(),
   annotations: AnnotationsSchema.optional(),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
-var ToolUseContentSchema = z15.object({
-  type: z15.literal("tool_use"),
-  name: z15.string(),
-  id: z15.string(),
-  input: z15.record(z15.string(), z15.unknown()),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+var ToolUseContentSchema = z16.object({
+  type: z16.literal("tool_use"),
+  name: z16.string(),
+  id: z16.string(),
+  input: z16.record(z16.string(), z16.unknown()),
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
-var EmbeddedResourceSchema = z15.object({
-  type: z15.literal("resource"),
-  resource: z15.union([TextResourceContentsSchema, BlobResourceContentsSchema]),
+var EmbeddedResourceSchema = z16.object({
+  type: z16.literal("resource"),
+  resource: z16.union([TextResourceContentsSchema, BlobResourceContentsSchema]),
   annotations: AnnotationsSchema.optional(),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
 var ResourceLinkSchema = ResourceSchema.extend({
-  type: z15.literal("resource_link")
+  type: z16.literal("resource_link")
 });
-var ContentBlockSchema = z15.union([
+var ContentBlockSchema = z16.union([
   TextContentSchema,
   ImageContentSchema,
   AudioContentSchema,
   ResourceLinkSchema,
   EmbeddedResourceSchema
 ]);
-var PromptMessageSchema = z15.object({
+var PromptMessageSchema = z16.object({
   role: RoleSchema,
   content: ContentBlockSchema
 });
 var GetPromptResultSchema = ResultSchema.extend({
-  description: z15.string().optional(),
-  messages: z15.array(PromptMessageSchema)
+  description: z16.string().optional(),
+  messages: z16.array(PromptMessageSchema)
 });
 var PromptListChangedNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/prompts/list_changed"),
+  method: z16.literal("notifications/prompts/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
-var ToolAnnotationsSchema = z15.object({
-  title: z15.string().optional(),
-  readOnlyHint: z15.boolean().optional(),
-  destructiveHint: z15.boolean().optional(),
-  idempotentHint: z15.boolean().optional(),
-  openWorldHint: z15.boolean().optional()
+var ToolAnnotationsSchema = z16.object({
+  title: z16.string().optional(),
+  readOnlyHint: z16.boolean().optional(),
+  destructiveHint: z16.boolean().optional(),
+  idempotentHint: z16.boolean().optional(),
+  openWorldHint: z16.boolean().optional()
 });
-var ToolExecutionSchema = z15.object({
-  taskSupport: z15.enum(["required", "optional", "forbidden"]).optional()
+var ToolExecutionSchema = z16.object({
+  taskSupport: z16.enum(["required", "optional", "forbidden"]).optional()
 });
-var ToolSchema = z15.object({
+var ToolSchema = z16.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  description: z15.string().optional(),
-  inputSchema: z15.object({
-    type: z15.literal("object"),
-    properties: z15.record(z15.string(), AssertObjectSchema).optional(),
-    required: z15.array(z15.string()).optional()
-  }).catchall(z15.unknown()),
-  outputSchema: z15.object({
-    type: z15.literal("object"),
-    properties: z15.record(z15.string(), AssertObjectSchema).optional(),
-    required: z15.array(z15.string()).optional()
-  }).catchall(z15.unknown()).optional(),
+  description: z16.string().optional(),
+  inputSchema: z16.object({
+    type: z16.literal("object"),
+    properties: z16.record(z16.string(), AssertObjectSchema).optional(),
+    required: z16.array(z16.string()).optional()
+  }).catchall(z16.unknown()),
+  outputSchema: z16.object({
+    type: z16.literal("object"),
+    properties: z16.record(z16.string(), AssertObjectSchema).optional(),
+    required: z16.array(z16.string()).optional()
+  }).catchall(z16.unknown()).optional(),
   annotations: ToolAnnotationsSchema.optional(),
   execution: ToolExecutionSchema.optional(),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
 var ListToolsRequestSchema = PaginatedRequestSchema.extend({
-  method: z15.literal("tools/list")
+  method: z16.literal("tools/list")
 });
 var ListToolsResultSchema = PaginatedResultSchema.extend({
-  tools: z15.array(ToolSchema)
+  tools: z16.array(ToolSchema)
 });
 var CallToolResultSchema = ResultSchema.extend({
-  content: z15.array(ContentBlockSchema).default([]),
-  structuredContent: z15.record(z15.string(), z15.unknown()).optional(),
-  isError: z15.boolean().optional()
+  content: z16.array(ContentBlockSchema).default([]),
+  structuredContent: z16.record(z16.string(), z16.unknown()).optional(),
+  isError: z16.boolean().optional()
 });
 var CompatibilityCallToolResultSchema = CallToolResultSchema.or(ResultSchema.extend({
-  toolResult: z15.unknown()
+  toolResult: z16.unknown()
 }));
 var CallToolRequestParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  name: z15.string(),
-  arguments: z15.record(z15.string(), z15.unknown()).optional()
+  name: z16.string(),
+  arguments: z16.record(z16.string(), z16.unknown()).optional()
 });
 var CallToolRequestSchema = RequestSchema.extend({
-  method: z15.literal("tools/call"),
+  method: z16.literal("tools/call"),
   params: CallToolRequestParamsSchema
 });
 var ToolListChangedNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/tools/list_changed"),
+  method: z16.literal("notifications/tools/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
-var ListChangedOptionsBaseSchema = z15.object({
-  autoRefresh: z15.boolean().default(true),
-  debounceMs: z15.number().int().nonnegative().default(300)
+var ListChangedOptionsBaseSchema = z16.object({
+  autoRefresh: z16.boolean().default(true),
+  debounceMs: z16.number().int().nonnegative().default(300)
 });
-var LoggingLevelSchema = z15.enum(["debug", "info", "notice", "warning", "error", "critical", "alert", "emergency"]);
+var LoggingLevelSchema = z16.enum(["debug", "info", "notice", "warning", "error", "critical", "alert", "emergency"]);
 var SetLevelRequestParamsSchema = BaseRequestParamsSchema.extend({
   level: LoggingLevelSchema
 });
 var SetLevelRequestSchema = RequestSchema.extend({
-  method: z15.literal("logging/setLevel"),
+  method: z16.literal("logging/setLevel"),
   params: SetLevelRequestParamsSchema
 });
 var LoggingMessageNotificationParamsSchema = NotificationsParamsSchema.extend({
   level: LoggingLevelSchema,
-  logger: z15.string().optional(),
-  data: z15.unknown()
+  logger: z16.string().optional(),
+  data: z16.unknown()
 });
 var LoggingMessageNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/message"),
+  method: z16.literal("notifications/message"),
   params: LoggingMessageNotificationParamsSchema
 });
-var ModelHintSchema = z15.object({
-  name: z15.string().optional()
+var ModelHintSchema = z16.object({
+  name: z16.string().optional()
 });
-var ModelPreferencesSchema = z15.object({
-  hints: z15.array(ModelHintSchema).optional(),
-  costPriority: z15.number().min(0).max(1).optional(),
-  speedPriority: z15.number().min(0).max(1).optional(),
-  intelligencePriority: z15.number().min(0).max(1).optional()
+var ModelPreferencesSchema = z16.object({
+  hints: z16.array(ModelHintSchema).optional(),
+  costPriority: z16.number().min(0).max(1).optional(),
+  speedPriority: z16.number().min(0).max(1).optional(),
+  intelligencePriority: z16.number().min(0).max(1).optional()
 });
-var ToolChoiceSchema = z15.object({
-  mode: z15.enum(["auto", "required", "none"]).optional()
+var ToolChoiceSchema = z16.object({
+  mode: z16.enum(["auto", "required", "none"]).optional()
 });
-var ToolResultContentSchema = z15.object({
-  type: z15.literal("tool_result"),
-  toolUseId: z15.string().describe("The unique identifier for the corresponding tool call."),
-  content: z15.array(ContentBlockSchema).default([]),
-  structuredContent: z15.object({}).loose().optional(),
-  isError: z15.boolean().optional(),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+var ToolResultContentSchema = z16.object({
+  type: z16.literal("tool_result"),
+  toolUseId: z16.string().describe("The unique identifier for the corresponding tool call."),
+  content: z16.array(ContentBlockSchema).default([]),
+  structuredContent: z16.object({}).loose().optional(),
+  isError: z16.boolean().optional(),
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
-var SamplingContentSchema = z15.discriminatedUnion("type", [TextContentSchema, ImageContentSchema, AudioContentSchema]);
-var SamplingMessageContentBlockSchema = z15.discriminatedUnion("type", [
+var SamplingContentSchema = z16.discriminatedUnion("type", [TextContentSchema, ImageContentSchema, AudioContentSchema]);
+var SamplingMessageContentBlockSchema = z16.discriminatedUnion("type", [
   TextContentSchema,
   ImageContentSchema,
   AudioContentSchema,
   ToolUseContentSchema,
   ToolResultContentSchema
 ]);
-var SamplingMessageSchema = z15.object({
+var SamplingMessageSchema = z16.object({
   role: RoleSchema,
-  content: z15.union([SamplingMessageContentBlockSchema, z15.array(SamplingMessageContentBlockSchema)]),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+  content: z16.union([SamplingMessageContentBlockSchema, z16.array(SamplingMessageContentBlockSchema)]),
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
 var CreateMessageRequestParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  messages: z15.array(SamplingMessageSchema),
+  messages: z16.array(SamplingMessageSchema),
   modelPreferences: ModelPreferencesSchema.optional(),
-  systemPrompt: z15.string().optional(),
-  includeContext: z15.enum(["none", "thisServer", "allServers"]).optional(),
-  temperature: z15.number().optional(),
-  maxTokens: z15.number().int(),
-  stopSequences: z15.array(z15.string()).optional(),
+  systemPrompt: z16.string().optional(),
+  includeContext: z16.enum(["none", "thisServer", "allServers"]).optional(),
+  temperature: z16.number().optional(),
+  maxTokens: z16.number().int(),
+  stopSequences: z16.array(z16.string()).optional(),
   metadata: AssertObjectSchema.optional(),
-  tools: z15.array(ToolSchema).optional(),
+  tools: z16.array(ToolSchema).optional(),
   toolChoice: ToolChoiceSchema.optional()
 });
 var CreateMessageRequestSchema = RequestSchema.extend({
-  method: z15.literal("sampling/createMessage"),
+  method: z16.literal("sampling/createMessage"),
   params: CreateMessageRequestParamsSchema
 });
 var CreateMessageResultSchema = ResultSchema.extend({
-  model: z15.string(),
-  stopReason: z15.optional(z15.enum(["endTurn", "stopSequence", "maxTokens"]).or(z15.string())),
+  model: z16.string(),
+  stopReason: z16.optional(z16.enum(["endTurn", "stopSequence", "maxTokens"]).or(z16.string())),
   role: RoleSchema,
   content: SamplingContentSchema
 });
 var CreateMessageResultWithToolsSchema = ResultSchema.extend({
-  model: z15.string(),
-  stopReason: z15.optional(z15.enum(["endTurn", "stopSequence", "maxTokens", "toolUse"]).or(z15.string())),
+  model: z16.string(),
+  stopReason: z16.optional(z16.enum(["endTurn", "stopSequence", "maxTokens", "toolUse"]).or(z16.string())),
   role: RoleSchema,
-  content: z15.union([SamplingMessageContentBlockSchema, z15.array(SamplingMessageContentBlockSchema)])
+  content: z16.union([SamplingMessageContentBlockSchema, z16.array(SamplingMessageContentBlockSchema)])
 });
-var BooleanSchemaSchema = z15.object({
-  type: z15.literal("boolean"),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  default: z15.boolean().optional()
+var BooleanSchemaSchema = z16.object({
+  type: z16.literal("boolean"),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  default: z16.boolean().optional()
 });
-var StringSchemaSchema = z15.object({
-  type: z15.literal("string"),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  minLength: z15.number().optional(),
-  maxLength: z15.number().optional(),
-  format: z15.enum(["email", "uri", "date", "date-time"]).optional(),
-  default: z15.string().optional()
+var StringSchemaSchema = z16.object({
+  type: z16.literal("string"),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  minLength: z16.number().optional(),
+  maxLength: z16.number().optional(),
+  format: z16.enum(["email", "uri", "date", "date-time"]).optional(),
+  default: z16.string().optional()
 });
-var NumberSchemaSchema = z15.object({
-  type: z15.enum(["number", "integer"]),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  minimum: z15.number().optional(),
-  maximum: z15.number().optional(),
-  default: z15.number().optional()
+var NumberSchemaSchema = z16.object({
+  type: z16.enum(["number", "integer"]),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  minimum: z16.number().optional(),
+  maximum: z16.number().optional(),
+  default: z16.number().optional()
 });
-var UntitledSingleSelectEnumSchemaSchema = z15.object({
-  type: z15.literal("string"),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  enum: z15.array(z15.string()),
-  default: z15.string().optional()
+var UntitledSingleSelectEnumSchemaSchema = z16.object({
+  type: z16.literal("string"),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  enum: z16.array(z16.string()),
+  default: z16.string().optional()
 });
-var TitledSingleSelectEnumSchemaSchema = z15.object({
-  type: z15.literal("string"),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  oneOf: z15.array(z15.object({
-    const: z15.string(),
-    title: z15.string()
+var TitledSingleSelectEnumSchemaSchema = z16.object({
+  type: z16.literal("string"),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  oneOf: z16.array(z16.object({
+    const: z16.string(),
+    title: z16.string()
   })),
-  default: z15.string().optional()
+  default: z16.string().optional()
 });
-var LegacyTitledEnumSchemaSchema = z15.object({
-  type: z15.literal("string"),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  enum: z15.array(z15.string()),
-  enumNames: z15.array(z15.string()).optional(),
-  default: z15.string().optional()
+var LegacyTitledEnumSchemaSchema = z16.object({
+  type: z16.literal("string"),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  enum: z16.array(z16.string()),
+  enumNames: z16.array(z16.string()).optional(),
+  default: z16.string().optional()
 });
-var SingleSelectEnumSchemaSchema = z15.union([UntitledSingleSelectEnumSchemaSchema, TitledSingleSelectEnumSchemaSchema]);
-var UntitledMultiSelectEnumSchemaSchema = z15.object({
-  type: z15.literal("array"),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  minItems: z15.number().optional(),
-  maxItems: z15.number().optional(),
-  items: z15.object({
-    type: z15.literal("string"),
-    enum: z15.array(z15.string())
+var SingleSelectEnumSchemaSchema = z16.union([UntitledSingleSelectEnumSchemaSchema, TitledSingleSelectEnumSchemaSchema]);
+var UntitledMultiSelectEnumSchemaSchema = z16.object({
+  type: z16.literal("array"),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  minItems: z16.number().optional(),
+  maxItems: z16.number().optional(),
+  items: z16.object({
+    type: z16.literal("string"),
+    enum: z16.array(z16.string())
   }),
-  default: z15.array(z15.string()).optional()
+  default: z16.array(z16.string()).optional()
 });
-var TitledMultiSelectEnumSchemaSchema = z15.object({
-  type: z15.literal("array"),
-  title: z15.string().optional(),
-  description: z15.string().optional(),
-  minItems: z15.number().optional(),
-  maxItems: z15.number().optional(),
-  items: z15.object({
-    anyOf: z15.array(z15.object({
-      const: z15.string(),
-      title: z15.string()
+var TitledMultiSelectEnumSchemaSchema = z16.object({
+  type: z16.literal("array"),
+  title: z16.string().optional(),
+  description: z16.string().optional(),
+  minItems: z16.number().optional(),
+  maxItems: z16.number().optional(),
+  items: z16.object({
+    anyOf: z16.array(z16.object({
+      const: z16.string(),
+      title: z16.string()
     }))
   }),
-  default: z15.array(z15.string()).optional()
+  default: z16.array(z16.string()).optional()
 });
-var MultiSelectEnumSchemaSchema = z15.union([UntitledMultiSelectEnumSchemaSchema, TitledMultiSelectEnumSchemaSchema]);
-var EnumSchemaSchema = z15.union([LegacyTitledEnumSchemaSchema, SingleSelectEnumSchemaSchema, MultiSelectEnumSchemaSchema]);
-var PrimitiveSchemaDefinitionSchema = z15.union([EnumSchemaSchema, BooleanSchemaSchema, StringSchemaSchema, NumberSchemaSchema]);
+var MultiSelectEnumSchemaSchema = z16.union([UntitledMultiSelectEnumSchemaSchema, TitledMultiSelectEnumSchemaSchema]);
+var EnumSchemaSchema = z16.union([LegacyTitledEnumSchemaSchema, SingleSelectEnumSchemaSchema, MultiSelectEnumSchemaSchema]);
+var PrimitiveSchemaDefinitionSchema = z16.union([EnumSchemaSchema, BooleanSchemaSchema, StringSchemaSchema, NumberSchemaSchema]);
 var ElicitRequestFormParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  mode: z15.literal("form").optional(),
-  message: z15.string(),
-  requestedSchema: z15.object({
-    type: z15.literal("object"),
-    properties: z15.record(z15.string(), PrimitiveSchemaDefinitionSchema),
-    required: z15.array(z15.string()).optional()
+  mode: z16.literal("form").optional(),
+  message: z16.string(),
+  requestedSchema: z16.object({
+    type: z16.literal("object"),
+    properties: z16.record(z16.string(), PrimitiveSchemaDefinitionSchema),
+    required: z16.array(z16.string()).optional()
   })
 });
 var ElicitRequestURLParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  mode: z15.literal("url"),
-  message: z15.string(),
-  elicitationId: z15.string(),
-  url: z15.string().url()
+  mode: z16.literal("url"),
+  message: z16.string(),
+  elicitationId: z16.string(),
+  url: z16.string().url()
 });
-var ElicitRequestParamsSchema = z15.union([ElicitRequestFormParamsSchema, ElicitRequestURLParamsSchema]);
+var ElicitRequestParamsSchema = z16.union([ElicitRequestFormParamsSchema, ElicitRequestURLParamsSchema]);
 var ElicitRequestSchema = RequestSchema.extend({
-  method: z15.literal("elicitation/create"),
+  method: z16.literal("elicitation/create"),
   params: ElicitRequestParamsSchema
 });
 var ElicitationCompleteNotificationParamsSchema = NotificationsParamsSchema.extend({
-  elicitationId: z15.string()
+  elicitationId: z16.string()
 });
 var ElicitationCompleteNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/elicitation/complete"),
+  method: z16.literal("notifications/elicitation/complete"),
   params: ElicitationCompleteNotificationParamsSchema
 });
 var ElicitResultSchema = ResultSchema.extend({
-  action: z15.enum(["accept", "decline", "cancel"]),
-  content: z15.preprocess((val) => val === null ? undefined : val, z15.record(z15.string(), z15.union([z15.string(), z15.number(), z15.boolean(), z15.array(z15.string())])).optional())
+  action: z16.enum(["accept", "decline", "cancel"]),
+  content: z16.preprocess((val) => val === null ? undefined : val, z16.record(z16.string(), z16.union([z16.string(), z16.number(), z16.boolean(), z16.array(z16.string())])).optional())
 });
-var ResourceTemplateReferenceSchema = z15.object({
-  type: z15.literal("ref/resource"),
-  uri: z15.string()
+var ResourceTemplateReferenceSchema = z16.object({
+  type: z16.literal("ref/resource"),
+  uri: z16.string()
 });
-var PromptReferenceSchema = z15.object({
-  type: z15.literal("ref/prompt"),
-  name: z15.string()
+var PromptReferenceSchema = z16.object({
+  type: z16.literal("ref/prompt"),
+  name: z16.string()
 });
 var CompleteRequestParamsSchema = BaseRequestParamsSchema.extend({
-  ref: z15.union([PromptReferenceSchema, ResourceTemplateReferenceSchema]),
-  argument: z15.object({
-    name: z15.string(),
-    value: z15.string()
+  ref: z16.union([PromptReferenceSchema, ResourceTemplateReferenceSchema]),
+  argument: z16.object({
+    name: z16.string(),
+    value: z16.string()
   }),
-  context: z15.object({
-    arguments: z15.record(z15.string(), z15.string()).optional()
+  context: z16.object({
+    arguments: z16.record(z16.string(), z16.string()).optional()
   }).optional()
 });
 var CompleteRequestSchema = RequestSchema.extend({
-  method: z15.literal("completion/complete"),
+  method: z16.literal("completion/complete"),
   params: CompleteRequestParamsSchema
 });
 var CompleteResultSchema = ResultSchema.extend({
-  completion: z15.looseObject({
-    values: z15.array(z15.string()).max(100),
-    total: z15.optional(z15.number().int()),
-    hasMore: z15.optional(z15.boolean())
+  completion: z16.looseObject({
+    values: z16.array(z16.string()).max(100),
+    total: z16.optional(z16.number().int()),
+    hasMore: z16.optional(z16.boolean())
   })
 });
-var RootSchema = z15.object({
-  uri: z15.string().startsWith("file://"),
-  name: z15.string().optional(),
-  _meta: z15.record(z15.string(), z15.unknown()).optional()
+var RootSchema = z16.object({
+  uri: z16.string().startsWith("file://"),
+  name: z16.string().optional(),
+  _meta: z16.record(z16.string(), z16.unknown()).optional()
 });
 var ListRootsRequestSchema = RequestSchema.extend({
-  method: z15.literal("roots/list"),
+  method: z16.literal("roots/list"),
   params: BaseRequestParamsSchema.optional()
 });
 var ListRootsResultSchema = ResultSchema.extend({
-  roots: z15.array(RootSchema)
+  roots: z16.array(RootSchema)
 });
 var RootsListChangedNotificationSchema = NotificationSchema.extend({
-  method: z15.literal("notifications/roots/list_changed"),
+  method: z16.literal("notifications/roots/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
-var ClientRequestSchema = z15.union([
+var ClientRequestSchema = z16.union([
   PingRequestSchema,
   InitializeRequestSchema,
   CompleteRequestSchema,
@@ -42326,14 +42805,14 @@ var ClientRequestSchema = z15.union([
   ListTasksRequestSchema,
   CancelTaskRequestSchema
 ]);
-var ClientNotificationSchema = z15.union([
+var ClientNotificationSchema = z16.union([
   CancelledNotificationSchema,
   ProgressNotificationSchema,
   InitializedNotificationSchema,
   RootsListChangedNotificationSchema,
   TaskStatusNotificationSchema
 ]);
-var ClientResultSchema = z15.union([
+var ClientResultSchema = z16.union([
   EmptyResultSchema,
   CreateMessageResultSchema,
   CreateMessageResultWithToolsSchema,
@@ -42343,7 +42822,7 @@ var ClientResultSchema = z15.union([
   ListTasksResultSchema,
   CreateTaskResultSchema
 ]);
-var ServerRequestSchema = z15.union([
+var ServerRequestSchema = z16.union([
   PingRequestSchema,
   CreateMessageRequestSchema,
   ElicitRequestSchema,
@@ -42353,7 +42832,7 @@ var ServerRequestSchema = z15.union([
   ListTasksRequestSchema,
   CancelTaskRequestSchema
 ]);
-var ServerNotificationSchema = z15.union([
+var ServerNotificationSchema = z16.union([
   CancelledNotificationSchema,
   ProgressNotificationSchema,
   LoggingMessageNotificationSchema,
@@ -42364,7 +42843,7 @@ var ServerNotificationSchema = z15.union([
   TaskStatusNotificationSchema,
   ElicitationCompleteNotificationSchema
 ]);
-var ServerResultSchema = z15.union([
+var ServerResultSchema = z16.union([
   EmptyResultSchema,
   InitializeResultSchema,
   CompleteResultSchema,
@@ -42404,149 +42883,149 @@ var crypto;
 crypto = globalThis.crypto?.webcrypto ?? globalThis.crypto ?? import("node:crypto").then((m) => m.webcrypto);
 
 // ../../node_modules/@modelcontextprotocol/sdk/dist/esm/shared/auth.js
-import * as z16 from "zod/v4";
-var SafeUrlSchema = z16.url().superRefine((val, ctx) => {
+import * as z17 from "zod/v4";
+var SafeUrlSchema = z17.url().superRefine((val, ctx) => {
   if (!URL.canParse(val)) {
     ctx.addIssue({
-      code: z16.ZodIssueCode.custom,
+      code: z17.ZodIssueCode.custom,
       message: "URL must be parseable",
       fatal: true
     });
-    return z16.NEVER;
+    return z17.NEVER;
   }
 }).refine((url2) => {
   const u = new URL(url2);
   return u.protocol !== "javascript:" && u.protocol !== "data:" && u.protocol !== "vbscript:";
 }, { message: "URL cannot use javascript:, data:, or vbscript: scheme" });
-var OAuthProtectedResourceMetadataSchema = z16.looseObject({
-  resource: z16.string().url(),
-  authorization_servers: z16.array(SafeUrlSchema).optional(),
-  jwks_uri: z16.string().url().optional(),
-  scopes_supported: z16.array(z16.string()).optional(),
-  bearer_methods_supported: z16.array(z16.string()).optional(),
-  resource_signing_alg_values_supported: z16.array(z16.string()).optional(),
-  resource_name: z16.string().optional(),
-  resource_documentation: z16.string().optional(),
-  resource_policy_uri: z16.string().url().optional(),
-  resource_tos_uri: z16.string().url().optional(),
-  tls_client_certificate_bound_access_tokens: z16.boolean().optional(),
-  authorization_details_types_supported: z16.array(z16.string()).optional(),
-  dpop_signing_alg_values_supported: z16.array(z16.string()).optional(),
-  dpop_bound_access_tokens_required: z16.boolean().optional()
+var OAuthProtectedResourceMetadataSchema = z17.looseObject({
+  resource: z17.string().url(),
+  authorization_servers: z17.array(SafeUrlSchema).optional(),
+  jwks_uri: z17.string().url().optional(),
+  scopes_supported: z17.array(z17.string()).optional(),
+  bearer_methods_supported: z17.array(z17.string()).optional(),
+  resource_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  resource_name: z17.string().optional(),
+  resource_documentation: z17.string().optional(),
+  resource_policy_uri: z17.string().url().optional(),
+  resource_tos_uri: z17.string().url().optional(),
+  tls_client_certificate_bound_access_tokens: z17.boolean().optional(),
+  authorization_details_types_supported: z17.array(z17.string()).optional(),
+  dpop_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  dpop_bound_access_tokens_required: z17.boolean().optional()
 });
-var OAuthMetadataSchema = z16.looseObject({
-  issuer: z16.string(),
+var OAuthMetadataSchema = z17.looseObject({
+  issuer: z17.string(),
   authorization_endpoint: SafeUrlSchema,
   token_endpoint: SafeUrlSchema,
   registration_endpoint: SafeUrlSchema.optional(),
-  scopes_supported: z16.array(z16.string()).optional(),
-  response_types_supported: z16.array(z16.string()),
-  response_modes_supported: z16.array(z16.string()).optional(),
-  grant_types_supported: z16.array(z16.string()).optional(),
-  token_endpoint_auth_methods_supported: z16.array(z16.string()).optional(),
-  token_endpoint_auth_signing_alg_values_supported: z16.array(z16.string()).optional(),
+  scopes_supported: z17.array(z17.string()).optional(),
+  response_types_supported: z17.array(z17.string()),
+  response_modes_supported: z17.array(z17.string()).optional(),
+  grant_types_supported: z17.array(z17.string()).optional(),
+  token_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
+  token_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
   service_documentation: SafeUrlSchema.optional(),
   revocation_endpoint: SafeUrlSchema.optional(),
-  revocation_endpoint_auth_methods_supported: z16.array(z16.string()).optional(),
-  revocation_endpoint_auth_signing_alg_values_supported: z16.array(z16.string()).optional(),
-  introspection_endpoint: z16.string().optional(),
-  introspection_endpoint_auth_methods_supported: z16.array(z16.string()).optional(),
-  introspection_endpoint_auth_signing_alg_values_supported: z16.array(z16.string()).optional(),
-  code_challenge_methods_supported: z16.array(z16.string()).optional(),
-  client_id_metadata_document_supported: z16.boolean().optional()
+  revocation_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
+  revocation_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  introspection_endpoint: z17.string().optional(),
+  introspection_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
+  introspection_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  code_challenge_methods_supported: z17.array(z17.string()).optional(),
+  client_id_metadata_document_supported: z17.boolean().optional()
 });
-var OpenIdProviderMetadataSchema = z16.looseObject({
-  issuer: z16.string(),
+var OpenIdProviderMetadataSchema = z17.looseObject({
+  issuer: z17.string(),
   authorization_endpoint: SafeUrlSchema,
   token_endpoint: SafeUrlSchema,
   userinfo_endpoint: SafeUrlSchema.optional(),
   jwks_uri: SafeUrlSchema,
   registration_endpoint: SafeUrlSchema.optional(),
-  scopes_supported: z16.array(z16.string()).optional(),
-  response_types_supported: z16.array(z16.string()),
-  response_modes_supported: z16.array(z16.string()).optional(),
-  grant_types_supported: z16.array(z16.string()).optional(),
-  acr_values_supported: z16.array(z16.string()).optional(),
-  subject_types_supported: z16.array(z16.string()),
-  id_token_signing_alg_values_supported: z16.array(z16.string()),
-  id_token_encryption_alg_values_supported: z16.array(z16.string()).optional(),
-  id_token_encryption_enc_values_supported: z16.array(z16.string()).optional(),
-  userinfo_signing_alg_values_supported: z16.array(z16.string()).optional(),
-  userinfo_encryption_alg_values_supported: z16.array(z16.string()).optional(),
-  userinfo_encryption_enc_values_supported: z16.array(z16.string()).optional(),
-  request_object_signing_alg_values_supported: z16.array(z16.string()).optional(),
-  request_object_encryption_alg_values_supported: z16.array(z16.string()).optional(),
-  request_object_encryption_enc_values_supported: z16.array(z16.string()).optional(),
-  token_endpoint_auth_methods_supported: z16.array(z16.string()).optional(),
-  token_endpoint_auth_signing_alg_values_supported: z16.array(z16.string()).optional(),
-  display_values_supported: z16.array(z16.string()).optional(),
-  claim_types_supported: z16.array(z16.string()).optional(),
-  claims_supported: z16.array(z16.string()).optional(),
-  service_documentation: z16.string().optional(),
-  claims_locales_supported: z16.array(z16.string()).optional(),
-  ui_locales_supported: z16.array(z16.string()).optional(),
-  claims_parameter_supported: z16.boolean().optional(),
-  request_parameter_supported: z16.boolean().optional(),
-  request_uri_parameter_supported: z16.boolean().optional(),
-  require_request_uri_registration: z16.boolean().optional(),
+  scopes_supported: z17.array(z17.string()).optional(),
+  response_types_supported: z17.array(z17.string()),
+  response_modes_supported: z17.array(z17.string()).optional(),
+  grant_types_supported: z17.array(z17.string()).optional(),
+  acr_values_supported: z17.array(z17.string()).optional(),
+  subject_types_supported: z17.array(z17.string()),
+  id_token_signing_alg_values_supported: z17.array(z17.string()),
+  id_token_encryption_alg_values_supported: z17.array(z17.string()).optional(),
+  id_token_encryption_enc_values_supported: z17.array(z17.string()).optional(),
+  userinfo_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  userinfo_encryption_alg_values_supported: z17.array(z17.string()).optional(),
+  userinfo_encryption_enc_values_supported: z17.array(z17.string()).optional(),
+  request_object_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  request_object_encryption_alg_values_supported: z17.array(z17.string()).optional(),
+  request_object_encryption_enc_values_supported: z17.array(z17.string()).optional(),
+  token_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
+  token_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  display_values_supported: z17.array(z17.string()).optional(),
+  claim_types_supported: z17.array(z17.string()).optional(),
+  claims_supported: z17.array(z17.string()).optional(),
+  service_documentation: z17.string().optional(),
+  claims_locales_supported: z17.array(z17.string()).optional(),
+  ui_locales_supported: z17.array(z17.string()).optional(),
+  claims_parameter_supported: z17.boolean().optional(),
+  request_parameter_supported: z17.boolean().optional(),
+  request_uri_parameter_supported: z17.boolean().optional(),
+  require_request_uri_registration: z17.boolean().optional(),
   op_policy_uri: SafeUrlSchema.optional(),
   op_tos_uri: SafeUrlSchema.optional(),
-  client_id_metadata_document_supported: z16.boolean().optional()
+  client_id_metadata_document_supported: z17.boolean().optional()
 });
-var OpenIdProviderDiscoveryMetadataSchema = z16.object({
+var OpenIdProviderDiscoveryMetadataSchema = z17.object({
   ...OpenIdProviderMetadataSchema.shape,
   ...OAuthMetadataSchema.pick({
     code_challenge_methods_supported: true
   }).shape
 });
-var OAuthTokensSchema = z16.object({
-  access_token: z16.string(),
-  id_token: z16.string().optional(),
-  token_type: z16.string(),
-  expires_in: z16.coerce.number().optional(),
-  scope: z16.string().optional(),
-  refresh_token: z16.string().optional()
+var OAuthTokensSchema = z17.object({
+  access_token: z17.string(),
+  id_token: z17.string().optional(),
+  token_type: z17.string(),
+  expires_in: z17.coerce.number().optional(),
+  scope: z17.string().optional(),
+  refresh_token: z17.string().optional()
 }).strip();
-var OAuthErrorResponseSchema = z16.object({
-  error: z16.string(),
-  error_description: z16.string().optional(),
-  error_uri: z16.string().optional()
+var OAuthErrorResponseSchema = z17.object({
+  error: z17.string(),
+  error_description: z17.string().optional(),
+  error_uri: z17.string().optional()
 });
-var OptionalSafeUrlSchema = SafeUrlSchema.optional().or(z16.literal("").transform(() => {
+var OptionalSafeUrlSchema = SafeUrlSchema.optional().or(z17.literal("").transform(() => {
   return;
 }));
-var OAuthClientMetadataSchema = z16.object({
-  redirect_uris: z16.array(SafeUrlSchema),
-  token_endpoint_auth_method: z16.string().optional(),
-  grant_types: z16.array(z16.string()).optional(),
-  response_types: z16.array(z16.string()).optional(),
-  client_name: z16.string().optional(),
+var OAuthClientMetadataSchema = z17.object({
+  redirect_uris: z17.array(SafeUrlSchema),
+  token_endpoint_auth_method: z17.string().optional(),
+  grant_types: z17.array(z17.string()).optional(),
+  response_types: z17.array(z17.string()).optional(),
+  client_name: z17.string().optional(),
   client_uri: SafeUrlSchema.optional(),
   logo_uri: OptionalSafeUrlSchema,
-  scope: z16.string().optional(),
-  contacts: z16.array(z16.string()).optional(),
+  scope: z17.string().optional(),
+  contacts: z17.array(z17.string()).optional(),
   tos_uri: OptionalSafeUrlSchema,
-  policy_uri: z16.string().optional(),
+  policy_uri: z17.string().optional(),
   jwks_uri: SafeUrlSchema.optional(),
-  jwks: z16.any().optional(),
-  software_id: z16.string().optional(),
-  software_version: z16.string().optional(),
-  software_statement: z16.string().optional()
+  jwks: z17.any().optional(),
+  software_id: z17.string().optional(),
+  software_version: z17.string().optional(),
+  software_statement: z17.string().optional()
 }).strip();
-var OAuthClientInformationSchema = z16.object({
-  client_id: z16.string(),
-  client_secret: z16.string().optional(),
-  client_id_issued_at: z16.number().optional(),
-  client_secret_expires_at: z16.number().optional()
+var OAuthClientInformationSchema = z17.object({
+  client_id: z17.string(),
+  client_secret: z17.string().optional(),
+  client_id_issued_at: z17.number().optional(),
+  client_secret_expires_at: z17.number().optional()
 }).strip();
 var OAuthClientInformationFullSchema = OAuthClientMetadataSchema.merge(OAuthClientInformationSchema);
-var OAuthClientRegistrationErrorSchema = z16.object({
-  error: z16.string(),
-  error_description: z16.string().optional()
+var OAuthClientRegistrationErrorSchema = z17.object({
+  error: z17.string(),
+  error_description: z17.string().optional()
 }).strip();
-var OAuthTokenRevocationRequestSchema = z16.object({
-  token: z16.string(),
-  token_type_hint: z16.string().optional()
+var OAuthTokenRevocationRequestSchema = z17.object({
+  token: z17.string(),
+  token_type_hint: z17.string().optional()
 }).strip();
 
 // ../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/errors.js
@@ -43020,42 +43499,42 @@ var guardedFetch = async (url2, init, options) => {
   }
 };
 // ../mcp-connector-provider/src/mcp-client.ts
-import { z as z17 } from "zod";
-var mcpSdkToolSchema = z17.object({
-  name: z17.string().min(1),
-  description: z17.string().optional(),
-  inputSchema: z17.record(z17.string(), z17.unknown()).optional(),
-  annotations: z17.record(z17.string(), z17.unknown()).optional()
+import { z as z18 } from "zod";
+var mcpSdkToolSchema = z18.object({
+  name: z18.string().min(1),
+  description: z18.string().optional(),
+  inputSchema: z18.record(z18.string(), z18.unknown()).optional(),
+  annotations: z18.record(z18.string(), z18.unknown()).optional()
 });
-var elasticCloudToolsMetadataResponseSchema = z17.object({
-  results: z17.array(z17.object({
-    id: z17.string().min(1),
-    readonly: z17.boolean().optional()
+var elasticCloudToolsMetadataResponseSchema = z18.object({
+  results: z18.array(z18.object({
+    id: z18.string().min(1),
+    readonly: z18.boolean().optional()
   }))
 });
-var mcpCallToolContentSchema = z17.object({
-  type: z17.string()
-}).catchall(z17.unknown());
-var mcpCallToolResultSchema = z17.object({
-  content: z17.array(mcpCallToolContentSchema),
-  structuredContent: z17.unknown().optional(),
-  isError: z17.boolean().optional()
+var mcpCallToolContentSchema = z18.object({
+  type: z18.string()
+}).catchall(z18.unknown());
+var mcpCallToolResultSchema = z18.object({
+  content: z18.array(mcpCallToolContentSchema),
+  structuredContent: z18.unknown().optional(),
+  isError: z18.boolean().optional()
 });
-var mcpServerVersionSchema = z17.object({
-  name: z17.string().min(1),
-  version: z17.string().min(1)
+var mcpServerVersionSchema = z18.object({
+  name: z18.string().min(1),
+  version: z18.string().min(1)
 });
-var structuredErrorSchema = z17.object({
-  status: z17.number().int().optional(),
-  data: z17.object({
-    status: z17.number().int().optional()
+var structuredErrorSchema = z18.object({
+  status: z18.number().int().optional(),
+  data: z18.object({
+    status: z18.number().int().optional()
   }).passthrough().optional(),
-  cause: z17.object({
-    status: z17.number().int().optional()
+  cause: z18.object({
+    status: z18.number().int().optional()
   }).passthrough().optional()
 }).passthrough();
-var jwtPayloadSchema = z17.object({
-  exp: z17.number().int().positive().optional()
+var jwtPayloadSchema = z18.object({
+  exp: z18.number().int().positive().optional()
 }).passthrough();
 var oauthRefreshSkewMs = 2 * 60 * 1000;
 // ../mcp-connector-provider/src/mcp-keybased-validation.ts
@@ -44062,6 +44541,48 @@ Pylon's MCP server authenticates via OAuth with dynamic client registration. Onc
 - An active Pylon account
 - Permission to authorize third-party OAuth applications in your Pylon workspace
 `.trim();
+var agentcat = `
+## Overview
+
+Connect AgentCat to Sazabi agents to inspect agent usage analytics and debug issues from your workflow.
+
+## How it works
+
+AgentCat hosts an MCP server at \`https://mcp.agentcat.com/mcp\` over streamable HTTP. Sazabi authenticates with AgentCat's OAuth flow using dynamic client registration and PKCE. Agents can then browse projects, search sessions and issues, inspect metrics, and load AgentCat skills. Write tools are governed by the per-connection read-only toggle.
+
+## Features
+
+- Review project usage and agent performance
+- Search and inspect agent sessions
+- Investigate tracked issues and metric trends
+- Load AgentCat skills into agent workflows
+
+## Requirements
+
+- An AgentCat account with access to the projects you want to inspect
+- Permission to authorize an OAuth client in AgentCat
+`.trim();
+var herd = `
+## Overview
+
+Connect Herd to Sazabi agents for institutional-grade crypto research and on-chain workflows.
+
+## How it works
+
+Herd hosts an MCP server at \`https://mcp.herd.eco/v1\` over streamable HTTP. Sazabi authenticates with Herd's OAuth flow using dynamic client registration and PKCE. Agents can query contracts, decode transactions, analyze wallets, and build or simulate HAL actions. Write and execution tools remain subject to the per-connection read-only toggle.
+
+## Features
+
+- Inspect contract metadata, source, deployments, and roles
+- Decode transactions and review wallet activity
+- Analyze wallet balances, tokens, and deployments
+- Build, search, and simulate Herd HAL actions
+
+## Requirements
+
+- A Herd account
+- Permission to authorize an OAuth client in Herd
+`.trim();
 var secureframe = `
 ## Overview
 
@@ -44850,10 +45371,11 @@ Connect 1Password so Sazabi agents can work with your vaults and secrets through
 // ../mcp-connector-provider/src/providers/lib/mcp-provider.ts
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { z as z18 } from "zod";
+import { z as z19 } from "zod";
 var MCP_CONNECTOR_SKILLS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "../../../skills");
 var MCP_PROVIDER_ICON_KEYS = [
   "airbyte",
+  "agentcat",
   "atlassian",
   "attio",
   "autumn",
@@ -44880,6 +45402,7 @@ var MCP_PROVIDER_ICON_KEYS = [
   "grafana",
   "granola",
   "happenstance",
+  "herd",
   "honeycomb",
   "incident-io",
   "intercom",
@@ -44905,6 +45428,7 @@ var MCP_PROVIDER_ICON_KEYS = [
   "salesforce",
   "secureframe",
   "sentry",
+  "secureframe",
   "signoz",
   "slack",
   "stripe",
@@ -44914,65 +45438,65 @@ var MCP_PROVIDER_ICON_KEYS = [
   "vercel",
   "x"
 ];
-var mcpProviderIconKeySchema = z18.enum(MCP_PROVIDER_ICON_KEYS);
-var mcpProviderCapabilityOverridesSchema = z18.object({
-  readOnlyToolNames: z18.array(z18.string()).optional(),
-  blockedToolNames: z18.array(z18.string()).optional(),
-  defaultUnavailableReason: z18.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES).optional(),
-  allowWriteTools: z18.boolean().optional()
+var mcpProviderIconKeySchema = z19.enum(MCP_PROVIDER_ICON_KEYS);
+var mcpProviderCapabilityOverridesSchema = z19.object({
+  readOnlyToolNames: z19.array(z19.string()).optional(),
+  blockedToolNames: z19.array(z19.string()).optional(),
+  defaultUnavailableReason: z19.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES).optional(),
+  allowWriteTools: z19.boolean().optional()
 });
-var mcpDynamicClientRegistrationSchema = z18.object({
-  registrationEndpoint: z18.string().url(),
-  tokenEndpointAuthMethod: z18.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS).optional(),
-  includeScopesInRegistration: z18.boolean().optional()
+var mcpDynamicClientRegistrationSchema = z19.object({
+  registrationEndpoint: z19.string().url(),
+  tokenEndpointAuthMethod: z19.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS).optional(),
+  includeScopesInRegistration: z19.boolean().optional()
 });
-var mcpProviderOauthMetadataSchema = z18.object({
-  providerConfigKey: z18.string().min(1),
-  callbackPathSegment: z18.string().min(1),
-  authorizationUrl: z18.string().url().optional(),
-  tokenUrl: z18.string().url().optional(),
-  resourceUrl: z18.string().url().optional(),
-  useServerUrlAsResource: z18.boolean().optional(),
-  omitScopeFromAuthorizationUrl: z18.boolean().optional(),
-  authorizationUrlParams: z18.record(z18.string(), z18.string()).optional(),
-  defaultAccessTokenTtlSeconds: z18.number().int().positive().optional(),
+var mcpProviderOauthMetadataSchema = z19.object({
+  providerConfigKey: z19.string().min(1),
+  callbackPathSegment: z19.string().min(1),
+  authorizationUrl: z19.string().url().optional(),
+  tokenUrl: z19.string().url().optional(),
+  resourceUrl: z19.string().url().optional(),
+  useServerUrlAsResource: z19.boolean().optional(),
+  omitScopeFromAuthorizationUrl: z19.boolean().optional(),
+  authorizationUrlParams: z19.record(z19.string(), z19.string()).optional(),
+  defaultAccessTokenTtlSeconds: z19.number().int().positive().optional(),
   dynamicClientRegistration: mcpDynamicClientRegistrationSchema.optional()
 });
-var mcpProviderRegionSchema = z18.object({
-  label: z18.string().min(1),
-  serverUrl: z18.string().url(),
-  authorizationUrl: z18.string().url().optional(),
-  tokenUrl: z18.string().url().optional(),
-  resourceUrl: z18.string().url().optional(),
+var mcpProviderRegionSchema = z19.object({
+  label: z19.string().min(1),
+  serverUrl: z19.string().url(),
+  authorizationUrl: z19.string().url().optional(),
+  tokenUrl: z19.string().url().optional(),
+  resourceUrl: z19.string().url().optional(),
   dynamicClientRegistration: mcpDynamicClientRegistrationSchema.optional()
 });
-var mcpProviderSetupGroupSchema = z18.object({
-  id: z18.string().min(1),
-  title: z18.string().min(1),
-  description: z18.string().optional(),
-  body: z18.string().min(1),
-  fieldKeys: z18.array(z18.string().min(1)).optional(),
-  imageKeys: z18.array(z18.string().min(1)).optional()
+var mcpProviderSetupGroupSchema = z19.object({
+  id: z19.string().min(1),
+  title: z19.string().min(1),
+  description: z19.string().optional(),
+  body: z19.string().min(1),
+  fieldKeys: z19.array(z19.string().min(1)).optional(),
+  imageKeys: z19.array(z19.string().min(1)).optional()
 });
-var mcpProvider = z18.object({
-  id: z18.string().min(1),
-  label: z18.string().min(1),
+var mcpProvider = z19.object({
+  id: z19.string().min(1),
+  label: z19.string().min(1),
   iconKey: mcpProviderIconKeySchema,
-  defaultServerUrl: z18.string().url().nullable(),
-  serverUrlPathSuffixMaxSegments: z18.number().int().positive().optional(),
-  serverUrlHostnameSuffixes: z18.array(z18.string().min(2)).optional(),
-  transport: z18.enum(MCP_TRANSPORTS),
-  authMode: z18.enum(MCP_AUTH_MODES),
-  availability: z18.enum(MCP_PROVIDER_AVAILABILITY_VALUES),
+  defaultServerUrl: z19.string().url().nullable(),
+  serverUrlPathSuffixMaxSegments: z19.number().int().positive().optional(),
+  serverUrlHostnameSuffixes: z19.array(z19.string().min(2)).optional(),
+  transport: z19.enum(MCP_TRANSPORTS),
+  authMode: z19.enum(MCP_AUTH_MODES),
+  availability: z19.enum(MCP_PROVIDER_AVAILABILITY_VALUES),
   oauth: mcpProviderOauthMetadataSchema.optional(),
-  regions: z18.array(mcpProviderRegionSchema).optional(),
+  regions: z19.array(mcpProviderRegionSchema).optional(),
   capabilityOverrides: mcpProviderCapabilityOverridesSchema.optional(),
-  helpText: z18.string().optional(),
-  setupGroups: z18.array(mcpProviderSetupGroupSchema).optional(),
-  evidenceHints: z18.array(z18.string().min(1)).optional(),
-  skill: z18.string().min(1).optional(),
-  setupSkill: z18.string().min(1).optional(),
-  scopesUserSelectable: z18.boolean().optional()
+  helpText: z19.string().optional(),
+  setupGroups: z19.array(mcpProviderSetupGroupSchema).optional(),
+  evidenceHints: z19.array(z19.string().min(1)).optional(),
+  skill: z19.string().min(1).optional(),
+  setupSkill: z19.string().min(1).optional(),
+  scopesUserSelectable: z19.boolean().optional()
 });
 
 // ../mcp-connector-provider/src/providers/lib/define-mcp-preset.ts
@@ -44986,6 +45510,43 @@ var defineMcpPreset = (preset) => {
     ...preset.normalizeHeaders ? { normalizeHeaders: preset.normalizeHeaders } : {}
   };
 };
+
+// ../mcp-connector-provider/src/providers/agentcat.ts
+var agentcat2 = defineMcpPreset({
+  id: "agentcat",
+  label: "AgentCat",
+  iconKey: "agentcat",
+  defaultServerUrl: "https://mcp.agentcat.com/mcp",
+  transport: "streamable-http",
+  authMode: "oauth",
+  availability: "enabled",
+  oauth: {
+    providerConfigKey: "agentcat",
+    callbackPathSegment: "agentcat",
+    authorizationUrl: "https://api.agentcat.com/oauth/authorize/",
+    tokenUrl: "https://api.agentcat.com/oauth/token/",
+    dynamicClientRegistration: {
+      registrationEndpoint: "https://api.agentcat.com/oauth/register/",
+      tokenEndpointAuthMethod: "none"
+    }
+  },
+  getAvailableScopes: async () => [
+    {
+      value: "mcpcat:read",
+      label: "Read",
+      description: "Read AgentCat project, session, issue, and metric data."
+    },
+    {
+      value: "mcpcat:write",
+      label: "Write",
+      description: "Create and update AgentCat issues and project data."
+    }
+  ],
+  capabilityOverrides: {
+    allowWriteTools: true
+  },
+  helpText: "Inspect agent usage analytics and debug AgentCat issues."
+});
 
 // ../mcp-connector-provider/src/providers/airbyte.ts
 var airbyte2 = defineMcpPreset({
@@ -45830,7 +46391,8 @@ var gcp2 = defineMcpPreset({
       id: "server-url",
       title: "Choose the Google Cloud MCP endpoint",
       description: "Google exposes a separate remote MCP server per product at https://SERVICE.googleapis.com/mcp.",
-      body: "Sazabi defaults to Cloud Logging (`https://logging.googleapis.com/mcp`). To use a different product, replace the server URL with its endpoint, such as `https://monitoring.googleapis.com/mcp` (Cloud Monitoring) or `https://bigquery.googleapis.com/mcp` (BigQuery). See the [supported products list](https://docs.cloud.google.com/mcp/supported-products)."
+      body: "Sazabi defaults to Cloud Logging (`https://logging.googleapis.com/mcp`). To use a different product, replace the server URL with its endpoint, such as `https://monitoring.googleapis.com/mcp` (Cloud Monitoring) or `https://bigquery.googleapis.com/mcp` (BigQuery). See the [supported products list](https://docs.cloud.google.com/mcp/supported-products).",
+      fieldKeys: ["serverUrl"]
     },
     {
       id: "access-token",
@@ -46018,6 +46580,38 @@ var happenstance2 = defineMcpPreset({
     "Docs naming Happenstance as the people/relationship search tool"
   ],
   helpText: "Search your Happenstance network to find and get introduced to people."
+});
+
+// ../mcp-connector-provider/src/providers/herd.ts
+var herd2 = defineMcpPreset({
+  id: "herd",
+  label: "Herd",
+  iconKey: "herd",
+  defaultServerUrl: "https://mcp.herd.eco/v1",
+  transport: "streamable-http",
+  authMode: "oauth",
+  availability: "enabled",
+  oauth: {
+    providerConfigKey: "herd",
+    callbackPathSegment: "herd",
+    authorizationUrl: "https://mcp.herd.eco/api/auth/oauth2/authorize",
+    tokenUrl: "https://mcp.herd.eco/api/auth/oauth2/token",
+    dynamicClientRegistration: {
+      registrationEndpoint: "https://mcp.herd.eco/api/auth/oauth2/register",
+      tokenEndpointAuthMethod: "none"
+    }
+  },
+  getAvailableScopes: async () => [
+    { value: "openid", required: true },
+    { value: "offline_access", required: true },
+    { value: "profile" },
+    { value: "email" }
+  ],
+  scopesUserSelectable: false,
+  capabilityOverrides: {
+    allowWriteTools: true
+  },
+  helpText: "Analyze contracts, transactions, wallets, and on-chain activity."
 });
 
 // ../mcp-connector-provider/src/providers/honeycomb.ts
@@ -47414,6 +48008,7 @@ var MCP_PROVIDERS = [
   datadog2,
   deepwiki2,
   airbyte2,
+  agentcat2,
   atlassian2,
   attio2,
   autumn2,
@@ -47438,6 +48033,7 @@ var MCP_PROVIDERS = [
   grafana2,
   granola2,
   happenstance2,
+  herd2,
   honeycomb2,
   incidentIo2,
   intercom2,
@@ -47472,61 +48068,62 @@ var MCP_PROVIDERS = [
 ];
 var mcpProviderById = new Map(MCP_PROVIDERS.map((provider) => [provider.id, provider]));
 // ../public-api-contracts/src/mcp-connectors.ts
-import { z as z19 } from "zod";
+import { z as z20 } from "zod";
 var MCP_CONNECTOR_INSTALL_STATUS_VALUES = [
   "configured",
   "authorizing",
   "connected",
   "error"
 ];
-var McpConnectorInstallStatusEnum = z19.enum(MCP_CONNECTOR_INSTALL_STATUS_VALUES);
+var McpConnectorInstallStatusEnum = z20.enum(MCP_CONNECTOR_INSTALL_STATUS_VALUES);
 var MCP_CONNECTOR_SOURCE_VALUES = ["preset", "custom"];
-var McpConnectorSourceEnum = z19.enum(MCP_CONNECTOR_SOURCE_VALUES);
+var McpConnectorSourceEnum = z20.enum(MCP_CONNECTOR_SOURCE_VALUES);
 var MCP_CONNECTOR_TRANSPORT_VALUES = [
   "streamable-http",
   "sse"
 ];
-var McpConnectorTransportEnum = z19.enum(MCP_CONNECTOR_TRANSPORT_VALUES);
+var McpConnectorTransportEnum = z20.enum(MCP_CONNECTOR_TRANSPORT_VALUES);
 var MCP_CONNECTOR_AUTH_MODE_VALUES = [
   "none",
   "headers",
   "oauth",
   "aws-sigv4"
 ];
-var McpConnectorAuthModeEnum = z19.enum(MCP_CONNECTOR_AUTH_MODE_VALUES);
-var McpConnectorSchema = z19.object({
-  connectionId: z19.string().uuid().describe("Connection ID."),
-  connectionKey: z19.string().describe("Stable key used to reference this connector in tool calls."),
-  providerId: z19.string().describe('Provider identifier, e.g. "linear".'),
-  displayName: z19.string().describe("Human-readable connector name."),
+var McpConnectorAuthModeEnum = z20.enum(MCP_CONNECTOR_AUTH_MODE_VALUES);
+var McpConnectorSchema = z20.object({
+  connectionId: z20.string().uuid().describe("Connection ID."),
+  connectionKey: z20.string().describe("Stable key used to reference this connector in tool calls."),
+  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
+  displayName: z20.string().describe("Human-readable connector name."),
   source: McpConnectorSourceEnum.describe("Whether the connector is a built-in preset or a custom server."),
   installStatus: McpConnectorInstallStatusEnum.describe("Current connection lifecycle status."),
   authMode: McpConnectorAuthModeEnum.describe("Authentication mode."),
   transport: McpConnectorTransportEnum.describe("Transport protocol."),
-  serverUrl: z19.string().describe("MCP server URL."),
-  readOnly: z19.boolean().describe("Whether the connector is restricted to read-only tools."),
+  serverUrl: z20.string().describe("MCP server URL."),
+  readOnly: z20.boolean().describe("Whether the connector is restricted to read-only tools."),
   management: McpConnectorManagementSchema.describe("Lifecycle owner and supported connector mutations."),
-  enabledToolCount: z19.number().int().nonnegative().describe("Number of tools enabled and available for this connector."),
-  connectedAt: z19.string().datetime().nullable().describe("When the connector last became connected, if ever."),
-  createdAt: z19.string().datetime(),
-  updatedAt: z19.string().datetime()
+  enabledToolCount: z20.number().int().nonnegative().describe("Number of tools enabled and available for this connector."),
+  connectedAt: z20.string().datetime().nullable().describe("When the connector last became connected, if ever."),
+  createdAt: z20.string().datetime(),
+  updatedAt: z20.string().datetime()
 });
-var McpConnectorToolSchema = z19.object({
-  name: z19.string().describe("Tool name as invoked."),
-  title: z19.string().describe("Human-readable tool title."),
-  description: z19.string().describe("Tool description."),
-  isReadOnly: z19.boolean().describe("Whether the tool is considered read-only."),
-  enabled: z19.boolean().describe("Whether the tool is enabled and available given the connector config.")
+var McpConnectorToolSchema = z20.object({
+  name: z20.string().describe("Tool name as invoked."),
+  title: z20.string().describe("Human-readable tool title."),
+  description: z20.string().describe("Tool description."),
+  isReadOnly: z20.boolean().describe("Whether the tool is considered read-only."),
+  enabled: z20.boolean().describe("Whether the tool is enabled and available given the connector config.")
 });
-var ListMcpConnectorsInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project to list connectors for. Auto-filled from SDK context when omitted."),
-  connectedOnly: z19.union([z19.boolean(), z19.stringbool()]).optional().describe("When true, only return connectors that are connected.")
+var ListMcpConnectorsInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project to list connectors for. Auto-filled from SDK context when omitted."),
+  connectedOnly: z20.union([z20.boolean(), z20.stringbool()]).optional().describe("When true, only return connectors that are connected.")
 });
-var ListMcpConnectorsOutputSchema = z19.object({
-  connectors: z19.array(McpConnectorSchema)
+var ListMcpConnectorsOutputSchema = z20.object({
+  connectors: z20.array(McpConnectorSchema)
 });
 var listMcpConnectors = defineOperation({
   operationId: "mcpConnectors.list",
+  summary: "List MCP connectors",
   description: "List configured MCP connectors within one project with provider, status, and enabled-tool count.",
   backend: "api",
   route: {
@@ -47539,15 +48136,16 @@ var listMcpConnectors = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetMcpConnectorInputSchema = z19.object({
-  connectionId: z19.string().uuid().describe("Connection ID to fetch."),
-  projectId: z19.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
+var GetMcpConnectorInputSchema = z20.object({
+  connectionId: z20.string().uuid().describe("Connection ID to fetch."),
+  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
 });
-var GetMcpConnectorOutputSchema = z19.object({
+var GetMcpConnectorOutputSchema = z20.object({
   connector: McpConnectorSchema
 });
 var getMcpConnector = defineOperation({
   operationId: "mcpConnectors.get",
+  summary: "Get an MCP connector",
   description: "Get one configured MCP connector by connection ID.",
   backend: "api",
   route: {
@@ -47560,16 +48158,17 @@ var getMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetMcpConnectorDetailsInputSchema = z19.object({
-  connectionId: z19.string().uuid().describe("Connection ID to inspect."),
-  projectId: z19.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
+var GetMcpConnectorDetailsInputSchema = z20.object({
+  connectionId: z20.string().uuid().describe("Connection ID to inspect."),
+  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
 });
-var GetMcpConnectorDetailsOutputSchema = z19.object({
+var GetMcpConnectorDetailsOutputSchema = z20.object({
   connector: McpConnectorSchema,
-  tools: z19.array(McpConnectorToolSchema)
+  tools: z20.array(McpConnectorToolSchema)
 });
 var getMcpConnectorDetails = defineOperation({
   operationId: "mcpConnectors.details",
+  summary: "Inspect an MCP connector's tools",
   description: "Inspect one MCP connector's tool surface, including each tool's name, description, and read-only status.",
   backend: "api",
   route: {
@@ -47582,19 +48181,20 @@ var getMcpConnectorDetails = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var McpProviderInfoSchema = z19.object({
-  providerId: z19.string().describe('Provider identifier, e.g. "linear".'),
-  label: z19.string().describe("Human-readable provider name."),
+var McpProviderInfoSchema = z20.object({
+  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
+  label: z20.string().describe("Human-readable provider name."),
   authMode: McpConnectorAuthModeEnum.describe("Authentication mode."),
-  availability: z19.enum(MCP_PROVIDER_AVAILABILITY_VALUES).describe("Whether the provider is enabled or coming soon."),
-  setupSkill: z19.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
+  availability: z20.enum(MCP_PROVIDER_AVAILABILITY_VALUES).describe("Whether the provider is enabled or coming soon."),
+  setupSkill: z20.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
 });
-var ListMcpProvidersInputSchema = z19.object({});
-var ListMcpProvidersOutputSchema = z19.object({
-  providers: z19.array(McpProviderInfoSchema)
+var ListMcpProvidersInputSchema = z20.object({});
+var ListMcpProvidersOutputSchema = z20.object({
+  providers: z20.array(McpProviderInfoSchema)
 });
 var listMcpProviders2 = defineOperation({
   operationId: "mcpConnectors.listProviders",
+  summary: "List MCP connector providers",
   description: "List all supported MCP connector providers with their auth mode and setup skill.",
   backend: "api",
   route: {
@@ -47607,39 +48207,48 @@ var listMcpProviders2 = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var McpConnectorIndexEntrySchema = z19.object({
-  connectionKey: z19.string().describe("Stable key used to call this connector."),
-  displayName: z19.string().describe("Human-readable connector name."),
-  providerId: z19.string().describe('Provider identifier, e.g. "linear".'),
-  toolCount: z19.number().int().nonnegative().describe("Number of executable tools on this connector.")
+var McpConnectorIndexEntrySchema = z20.object({
+  connectionKey: z20.string().describe("Stable key used to call this connector."),
+  displayName: z20.string().describe("Human-readable connector name."),
+  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
+  toolCount: z20.number().int().nonnegative().describe("Number of executable tools on this connector.")
 });
-var McpConnectorToolSearchHitSchema = z19.object({
-  connectionKey: z19.string().describe("Connector that exposes this tool."),
-  toolName: z19.string().describe("Tool name as invoked."),
-  providerId: z19.string().describe('Provider identifier, e.g. "linear".'),
-  displayName: z19.string().describe("Human-readable connector name."),
-  isReadOnly: z19.boolean().describe("Whether the tool is considered read-only."),
-  description: z19.string().describe("Tool description from the stored snapshot."),
-  score: z19.number().describe("BM25 rank score. Zero when enumerating a namespace."),
-  inputSchema: z19.record(z19.string(), z19.unknown()).optional().describe("JSON Schema for the tool's arguments, when requested.")
+var McpConnectorToolSearchHitSchema = z20.object({
+  connectionKey: z20.string().describe("Connector that exposes this tool."),
+  toolName: z20.string().describe("Tool name as invoked."),
+  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
+  displayName: z20.string().describe("Human-readable connector name."),
+  isReadOnly: z20.boolean().describe("Whether the tool is considered read-only."),
+  description: z20.string().describe("Tool description from the stored snapshot."),
+  score: z20.number().describe("BM25 rank score. Zero when enumerating a namespace."),
+  inputSchema: z20.record(z20.string(), z20.unknown()).optional().describe("JSON Schema for the tool's arguments, when requested.")
 });
-var SearchMcpConnectorToolsInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project to search connectors in. Auto-filled from SDK context when omitted."),
-  query: z19.string().optional().describe("Free-text query over tool names, titles, connector keys, and descriptions. Omit or empty to list connectors, or to enumerate one connector when namespace is set."),
-  namespace: z19.string().min(1).optional().describe("Restrict results to one connectionKey or providerId."),
-  limit: z19.coerce.number().int().min(1).max(100).default(10).describe("Maximum number of connectors or tool hits to return."),
-  offset: z19.coerce.number().int().min(0).default(0).describe("Number of connectors or tool hits to skip."),
-  includeInputSchema: z19.union([z19.boolean(), z19.stringbool()]).optional().describe("When true, tool hits include inputSchema so a caller can execute without a describe round-trip.")
+var SearchMcpConnectorToolsInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project to search connectors in. Auto-filled from SDK context when omitted."),
+  query: z20.string().optional().describe("Free-text query over tool names, titles, connector keys, and descriptions. Omit or empty to list connectors, or to enumerate one connector when namespace is set."),
+  namespace: z20.string().min(1).optional().describe("Restrict results to one connectionKey or providerId."),
+  limit: z20.coerce.number().int().min(1).max(100).default(10).describe("Maximum number of connectors or tool hits to return."),
+  offset: z20.coerce.number().int().min(0).default(0).describe("Number of connectors or tool hits to skip."),
+  includeInputSchema: z20.union([z20.boolean(), z20.stringbool()]).optional().describe("Load one exact tool's inputSchema. Requires a connectionKey namespace and non-empty query; accepts either toolName or the hit's copy-paste name.")
+}).superRefine((input, ctx) => {
+  if (input.includeInputSchema === true && (!input.namespace?.trim() || !input.query?.trim())) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["includeInputSchema"],
+      message: "Schema detail requires namespace and a non-empty exact tool name."
+    });
+  }
 });
-var SearchMcpConnectorToolsOutputSchema = z19.object({
-  kind: z19.enum(["connectors", "tools"]).describe("connectors when the query is empty and no namespace is set; tools otherwise."),
-  total: z19.number().int().nonnegative().describe("Total matches before limit and offset."),
-  connectors: z19.array(McpConnectorIndexEntrySchema).describe("Connector index. Empty when kind is tools."),
-  tools: z19.array(McpConnectorToolSearchHitSchema).describe("Ranked or enumerated tool hits. Empty when kind is connectors.")
+var SearchMcpConnectorToolsOutputSchema = z20.object({
+  kind: z20.enum(["connectors", "tools"]).describe("connectors when the query is empty and no namespace is set; tools otherwise."),
+  total: z20.number().int().nonnegative().describe("Total matches before limit and offset."),
+  connectors: z20.array(McpConnectorIndexEntrySchema).describe("Connector index. Empty when kind is tools."),
+  tools: z20.array(McpConnectorToolSearchHitSchema).describe("Ranked or enumerated tool hits. Empty when kind is connectors.")
 });
 var searchMcpConnectorTools = defineOperation({
   operationId: "mcpConnectors.search",
-  description: "Search executable third-party MCP connector tools by free-text query. Empty query lists connectors; empty query plus namespace enumerates that connector. Hits omit input schemas unless includeInputSchema is true.",
+  summary: "Search MCP connector tools",
+  description: "Search executable third-party MCP connector tools by free-text query. Empty query lists connectors; empty query plus namespace enumerates that connector. Hits omit input schemas unless includeInputSchema is true, which requires one exact namespaced tool and always returns at most one hit.",
   backend: "api",
   route: {
     method: "GET",
@@ -47651,23 +48260,24 @@ var searchMcpConnectorTools = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DescribeMcpConnectorToolInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  connectionKey: z19.string().min(1).describe("Connector key from search or mcpConnectors.list."),
-  toolName: z19.string().min(1).describe("Tool name as invoked.")
+var DescribeMcpConnectorToolInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  connectionKey: z20.string().min(1).describe("Connector key from search or mcpConnectors.list."),
+  toolName: z20.string().min(1).describe("Tool name as invoked.")
 });
-var DescribeMcpConnectorToolOutputSchema = z19.object({
-  connectionKey: z19.string().describe("Connector that exposes this tool."),
-  toolName: z19.string().describe("Tool name as invoked."),
-  providerId: z19.string().describe('Provider identifier, e.g. "linear".'),
-  displayName: z19.string().describe("Human-readable connector name."),
-  title: z19.string().describe("Human-readable tool title."),
-  description: z19.string().describe("Tool description from the stored snapshot."),
-  isReadOnly: z19.boolean().describe("Whether the tool is considered read-only."),
-  inputSchema: z19.record(z19.string(), z19.unknown()).describe("JSON Schema for the tool's arguments.")
+var DescribeMcpConnectorToolOutputSchema = z20.object({
+  connectionKey: z20.string().describe("Connector that exposes this tool."),
+  toolName: z20.string().describe("Tool name as invoked."),
+  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
+  displayName: z20.string().describe("Human-readable connector name."),
+  title: z20.string().describe("Human-readable tool title."),
+  description: z20.string().describe("Tool description from the stored snapshot."),
+  isReadOnly: z20.boolean().describe("Whether the tool is considered read-only."),
+  inputSchema: z20.record(z20.string(), z20.unknown()).describe("JSON Schema for the tool's arguments.")
 });
 var describeMcpConnectorTool = defineOperation({
   operationId: "mcpConnectors.describe",
+  summary: "Describe an MCP connector tool",
   description: "Load one executable third-party MCP connector tool, including its input schema.",
   backend: "api",
   route: {
@@ -47680,30 +48290,31 @@ var describeMcpConnectorTool = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var CallMcpConnectorToolInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  connectionKey: z19.string().min(1).describe("Connector key from search or mcpConnectors.list."),
-  toolName: z19.string().min(1).describe("Tool name as invoked."),
-  arguments: z19.record(z19.string(), z19.unknown()).optional().describe("Arguments matching the tool's input schema.")
+var CallMcpConnectorToolInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  connectionKey: z20.string().min(1).describe("Connector key from search or mcpConnectors.list."),
+  toolName: z20.string().min(1).describe("Tool name as invoked."),
+  arguments: z20.record(z20.string(), z20.unknown()).optional().describe("Arguments matching the tool's input schema.")
 });
-var CallMcpConnectorToolOutputSchema = z19.discriminatedUnion("ok", [
-  z19.object({
-    ok: z19.literal(true),
-    connectionKey: z19.string().describe("Connector that ran the tool."),
-    toolName: z19.string().describe("Tool name as invoked."),
-    result: z19.unknown().describe("Vendor tool result payload."),
-    structuredContent: z19.unknown().optional().describe("Structured content from the vendor when present."),
-    content: z19.array(z19.record(z19.string(), z19.unknown())).describe("Raw MCP content parts from the vendor."),
-    text: z19.string().nullable().describe("Concatenated text content, if any.")
+var CallMcpConnectorToolOutputSchema = z20.discriminatedUnion("ok", [
+  z20.object({
+    ok: z20.literal(true),
+    connectionKey: z20.string().describe("Connector that ran the tool."),
+    toolName: z20.string().describe("Tool name as invoked."),
+    result: z20.unknown().describe("Vendor tool result payload."),
+    structuredContent: z20.unknown().optional().describe("Structured content from the vendor when present."),
+    content: z20.array(z20.record(z20.string(), z20.unknown())).describe("Raw MCP content parts from the vendor."),
+    text: z20.string().nullable().describe("Concatenated text content, if any.")
   }),
-  z19.object({
-    ok: z19.literal(false),
-    code: z19.enum(["TOOL_NOT_ENABLED", "READ_ONLY", "MCP_ERROR"]).describe("Why the tool did not run."),
-    message: z19.string().describe("Caller-facing error message.")
+  z20.object({
+    ok: z20.literal(false),
+    code: z20.enum(["TOOL_NOT_ENABLED", "READ_ONLY", "MCP_ERROR"]).describe("Why the tool did not run."),
+    message: z20.string().describe("Caller-facing error message.")
   })
 ]);
 var callMcpConnectorTool = defineOperation({
   operationId: "mcpConnectors.call",
+  summary: "Call an MCP connector tool",
   description: "Invoke one executable third-party MCP connector tool using that connection's stored credential.",
   backend: "api",
   route: {
@@ -47716,31 +48327,32 @@ var callMcpConnectorTool = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var McpConnectorHeaderSchema = z19.object({
-  id: z19.string().min(1).describe("Stable ID for this header (must be unique within the connector)."),
-  name: z19.string().trim().min(1).describe("HTTP header name."),
-  value: z19.string().min(1).describe("HTTP header value (passed verbatim).")
+var McpConnectorHeaderSchema = z20.object({
+  id: z20.string().min(1).describe("Stable ID for this header (must be unique within the connector)."),
+  name: z20.string().trim().min(1).describe("HTTP header name."),
+  value: z20.string().min(1).describe("HTTP header value (passed verbatim).")
 });
-var McpConnectorAwsSigV4Schema = z19.object({
-  accessKeyId: z19.string().trim().min(1).describe("AWS access key ID."),
-  secretAccessKey: z19.string().min(1).describe("AWS secret access key."),
-  sessionToken: z19.string().min(1).optional().describe("Optional session token for temporary credentials."),
-  region: z19.string().trim().min(1).describe("AWS region.")
+var McpConnectorAwsSigV4Schema = z20.object({
+  accessKeyId: z20.string().trim().min(1).describe("AWS access key ID."),
+  secretAccessKey: z20.string().min(1).describe("AWS secret access key."),
+  sessionToken: z20.string().min(1).optional().describe("Optional session token for temporary credentials."),
+  region: z20.string().trim().min(1).describe("AWS region.")
 });
-var CreateMcpConnectorInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project to create the connector in. Auto-filled from SDK context when omitted."),
-  serverUrl: z19.string().url().describe("MCP server URL (must be https)."),
+var CreateMcpConnectorInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project to create the connector in. Auto-filled from SDK context when omitted."),
+  serverUrl: z20.string().url().describe("MCP server URL (must be https)."),
   transport: McpConnectorTransportEnum.describe("Transport protocol."),
-  headers: z19.array(McpConnectorHeaderSchema).optional().describe("HTTP headers to send with each request."),
+  headers: z20.array(McpConnectorHeaderSchema).optional().describe("HTTP headers to send with each request."),
   awsSigV4: McpConnectorAwsSigV4Schema.optional().describe("AWS SigV4 credentials for AWS MCP servers."),
-  providerId: z19.string().min(1).describe("Built-in preset provider ID (for example, linear or datadog)."),
-  readOnly: z19.boolean().optional().describe("Restrict the connector to read-only tools. Defaults to false.")
+  providerId: z20.string().min(1).describe("Built-in preset provider ID (for example, linear or datadog)."),
+  readOnly: z20.boolean().optional().describe("Restrict the connector to read-only tools. Defaults to false.")
 });
-var CreateMcpConnectorOutputSchema = z19.object({
+var CreateMcpConnectorOutputSchema = z20.object({
   connector: McpConnectorSchema
 });
 var createMcpConnector = defineOperation({
   operationId: "mcpConnectors.create",
+  summary: "Create an MCP connector",
   description: "Create a preset MCP connector with header-based or AWS SigV4 authentication. The server URL must match the selected provider's supported endpoints. Connects immediately and returns the connector with its discovered tool snapshot.",
   backend: "api",
   route: {
@@ -47754,19 +48366,20 @@ var createMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpdateMcpConnectorInputSchema = z19.object({
-  connectionId: z19.string().uuid().describe("Connection ID to update."),
-  projectId: z19.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  serverUrl: z19.string().url().optional().describe("New MCP server URL."),
+var UpdateMcpConnectorInputSchema = z20.object({
+  connectionId: z20.string().uuid().describe("Connection ID to update."),
+  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  serverUrl: z20.string().url().optional().describe("New MCP server URL."),
   transport: McpConnectorTransportEnum.optional().describe("New transport protocol."),
-  headers: z19.array(McpConnectorHeaderSchema).optional().describe("Complete replacement header set. Replaces all existing headers."),
+  headers: z20.array(McpConnectorHeaderSchema).optional().describe("Complete replacement header set. Replaces all existing headers."),
   awsSigV4: McpConnectorAwsSigV4Schema.optional().describe("Replacement AWS SigV4 credentials. Mutually exclusive with headers.")
 });
-var UpdateMcpConnectorOutputSchema = z19.object({
+var UpdateMcpConnectorOutputSchema = z20.object({
   connector: McpConnectorSchema
 });
 var updateMcpConnector = defineOperation({
   operationId: "mcpConnectors.update",
+  summary: "Update an MCP connector",
   description: "Deprecated. Preset MCP connector updates are no longer supported via the public API; disconnect and reconnect instead.",
   backend: "api",
   route: {
@@ -47779,13 +48392,14 @@ var updateMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DisconnectMcpConnectorInputSchema = z19.object({
-  connectionId: z19.string().uuid().describe("Connection ID to disconnect."),
-  projectId: z19.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
+var DisconnectMcpConnectorInputSchema = z20.object({
+  connectionId: z20.string().uuid().describe("Connection ID to disconnect."),
+  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
 });
-var DisconnectMcpConnectorOutputSchema = z19.void();
+var DisconnectMcpConnectorOutputSchema = z20.void();
 var disconnectMcpConnector = defineOperation({
   operationId: "mcpConnectors.disconnect",
+  summary: "Disconnect an MCP connector",
   description: "Disconnect and permanently remove an MCP connector.",
   backend: "api",
   route: {
@@ -47799,16 +48413,17 @@ var disconnectMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SetMcpConnectorReadOnlyInputSchema = z19.object({
-  connectionId: z19.string().uuid().describe("Connection ID to update."),
-  projectId: z19.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  readOnly: z19.boolean().describe("True to restrict to read-only tools; false to allow all enabled tools.")
+var SetMcpConnectorReadOnlyInputSchema = z20.object({
+  connectionId: z20.string().uuid().describe("Connection ID to update."),
+  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  readOnly: z20.boolean().describe("True to restrict to read-only tools; false to allow all enabled tools.")
 });
-var SetMcpConnectorReadOnlyOutputSchema = z19.object({
+var SetMcpConnectorReadOnlyOutputSchema = z20.object({
   connector: McpConnectorSchema
 });
 var setMcpConnectorReadOnly = defineOperation({
   operationId: "mcpConnectors.setReadOnly",
+  summary: "Toggle an MCP connector's read-only mode",
   description: "Toggle the read-only restriction on an MCP connector.",
   backend: "api",
   route: {
@@ -47821,21 +48436,22 @@ var setMcpConnectorReadOnly = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var BeginMcpOAuthInstallInputSchema = z19.object({
-  projectId: z19.string().uuid().optional().describe("Project to install into. Auto-filled from SDK context when omitted."),
-  providerId: z19.string().min(1).describe('Provider ID to install, e.g. "linear".'),
-  requestedScopes: z19.array(z19.string()).optional().describe("Scopes to request. Defaults to the provider's recommended scope set."),
-  serverUrl: z19.string().url().optional().describe("Server URL for multi-region providers; defaults to the provider's primary server."),
-  readOnly: z19.boolean().optional().describe("Restrict the connector to read-only tools after install. Defaults to false."),
-  returnTo: z19.string().optional().describe("Path to redirect the user to after OAuth completes.")
+var BeginMcpOAuthInstallInputSchema = z20.object({
+  projectId: z20.string().uuid().optional().describe("Project to install into. Auto-filled from SDK context when omitted."),
+  providerId: z20.string().min(1).describe('Provider ID to install, e.g. "linear".'),
+  requestedScopes: z20.array(z20.string()).optional().describe("Scopes to request. Defaults to the provider's recommended scope set."),
+  serverUrl: z20.string().url().optional().describe("Server URL for multi-region providers; defaults to the provider's primary server."),
+  readOnly: z20.boolean().optional().describe("Restrict the connector to read-only tools after install. Defaults to false."),
+  returnTo: z20.string().optional().describe("Path to redirect the user to after OAuth completes.")
 });
-var BeginMcpOAuthInstallOutputSchema = z19.object({
-  authorizationUrl: z19.string().describe("Authorization URL to open in the user's browser."),
-  connectionId: z19.string().uuid().describe("Connection ID to poll for completion via getMcpOAuthInstallAttempt."),
-  expiresAt: z19.string().datetime().describe("When the OAuth authorization attempt expires.")
+var BeginMcpOAuthInstallOutputSchema = z20.object({
+  authorizationUrl: z20.string().describe("Authorization URL to open in the user's browser."),
+  connectionId: z20.string().uuid().describe("Connection ID to poll for completion via getMcpOAuthInstallAttempt."),
+  expiresAt: z20.string().datetime().describe("When the OAuth authorization attempt expires.")
 });
 var beginMcpOAuthInstall = defineOperation({
   operationId: "mcpConnectors.beginOAuthInstall",
+  summary: "Begin an MCP connector OAuth install",
   description: "Begin an OAuth browser flow to install a preset MCP connector. Opens an authorization URL in the user's browser; poll getMcpOAuthInstallAttempt with the returned connectionId to check completion.",
   backend: "api",
   route: {
@@ -47849,16 +48465,17 @@ var beginMcpOAuthInstall = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetMcpOAuthInstallAttemptInputSchema = z19.object({
-  connectionId: z19.string().uuid().describe("Connection ID returned by beginMcpOAuthInstall."),
-  projectId: z19.string().uuid().optional().describe("Project the connection belongs to. Auto-filled from SDK context when omitted.")
+var GetMcpOAuthInstallAttemptInputSchema = z20.object({
+  connectionId: z20.string().uuid().describe("Connection ID returned by beginMcpOAuthInstall."),
+  projectId: z20.string().uuid().optional().describe("Project the connection belongs to. Auto-filled from SDK context when omitted.")
 });
-var GetMcpOAuthInstallAttemptOutputSchema = z19.object({
-  status: z19.enum(["authorizing", "connected", "error"]).describe("Current install status."),
+var GetMcpOAuthInstallAttemptOutputSchema = z20.object({
+  status: z20.enum(["authorizing", "connected", "error"]).describe("Current install status."),
   connector: McpConnectorSchema.optional().describe("Connector details once connected or in error state.")
 });
 var getMcpOAuthInstallAttempt = defineOperation({
   operationId: "mcpConnectors.getOAuthInstallAttempt",
+  summary: "Get an MCP connector OAuth install attempt",
   description: "Poll the status of an in-progress OAuth MCP connector install. Returns authorizing while the user completes the browser flow, connected on success, or error on failure.",
   backend: "api",
   route: {
@@ -47888,53 +48505,53 @@ var mcpConnectorsContract = {
 };
 
 // ../public-api-contracts/src/me.ts
-import { z as z20 } from "zod";
-var OrganizationMembershipRoleSchema = z20.enum(["admin", "member"]);
-var AuthOrganizationSchema = z20.object({
-  id: z20.string().min(1),
-  name: z20.string(),
-  slug: z20.string(),
-  logo: z20.string().nullable().optional(),
+import { z as z21 } from "zod";
+var OrganizationMembershipRoleSchema = z21.enum(["admin", "member"]);
+var AuthOrganizationSchema = z21.object({
+  id: z21.string().min(1),
+  name: z21.string(),
+  slug: z21.string(),
+  logo: z21.string().nullable().optional(),
   role: OrganizationMembershipRoleSchema
 });
-var AuthUserSchema = z20.object({
-  id: z20.string().min(1),
-  name: z20.string().nullable(),
-  email: z20.string().email()
+var AuthUserSchema = z21.object({
+  id: z21.string().min(1),
+  name: z21.string().nullable(),
+  email: z21.string().email()
 });
-var UserMeSchema = z20.object({
-  credentialType: z20.literal("user"),
+var UserMeSchema = z21.object({
+  credentialType: z21.literal("user"),
   user: AuthUserSchema,
-  activeOrganizationId: z20.string().min(1).nullable().describe("Deprecated: reflects the browser session's last-active organization, not API routing; this field will be removed."),
-  authorizedOrganizationId: z20.string().min(1).nullable(),
-  authorizedProjectId: z20.string().min(1).nullable(),
-  organizations: z20.array(AuthOrganizationSchema).describe("Organizations the user belongs to, including membership role.")
+  authorizedOrganizationId: z21.string().min(1).nullable(),
+  authorizedProjectId: z21.string().min(1).nullable(),
+  organizations: z21.array(AuthOrganizationSchema).describe("Organizations the user belongs to, including membership role.")
 });
-var SecretMeSchema = z20.object({
-  credentialType: z20.literal("secret"),
-  organization: z20.object({
-    id: z20.string().min(1),
-    name: z20.string(),
-    slug: z20.string(),
-    logo: z20.string().nullable().optional()
+var SecretMeSchema = z21.object({
+  credentialType: z21.literal("secret"),
+  organization: z21.object({
+    id: z21.string().min(1),
+    name: z21.string(),
+    slug: z21.string(),
+    logo: z21.string().nullable().optional()
   }),
-  keyName: z20.string()
+  keyName: z21.string()
 });
-var PartnerMeSchema = z20.object({
-  credentialType: z20.literal("partner"),
-  superorganization: z20.object({
-    id: z20.string().uuid(),
-    name: z20.string()
+var PartnerMeSchema = z21.object({
+  credentialType: z21.literal("partner"),
+  superorganization: z21.object({
+    id: z21.string().uuid(),
+    name: z21.string()
   })
 });
-var MeInputSchema = z20.object({});
-var MeOutputSchema = z20.discriminatedUnion("credentialType", [
+var MeInputSchema = z21.object({});
+var MeOutputSchema = z21.discriminatedUnion("credentialType", [
   UserMeSchema,
   SecretMeSchema,
   PartnerMeSchema
 ]);
 var me = defineOperation({
   operationId: "me.get",
+  summary: "Get the current credential",
   description: "Return the identity and available context for the current credential.",
   backend: "api",
   route: {
@@ -47950,55 +48567,56 @@ var me = defineOperation({
 var meContract = me.contract;
 
 // ../public-api-contracts/src/members.ts
-import { z as z21 } from "zod";
-var OrganizationMemberSchema = z21.object({
-  membershipId: z21.string().min(1).describe("Organization membership record ID."),
-  userId: z21.string().min(1).describe("User ID for the organization member."),
-  name: z21.string().nullable().describe("Display name for the member, when available."),
-  email: z21.string().email().describe("Email address for the member."),
-  imageUrl: z21.string().nullable().describe("Profile image URL for the member, when available."),
+import { z as z22 } from "zod";
+var OrganizationMemberSchema = z22.object({
+  membershipId: z22.string().min(1).describe("Organization membership record ID."),
+  userId: z22.string().min(1).describe("User ID for the organization member."),
+  name: z22.string().nullable().describe("Display name for the member, when available."),
+  email: z22.string().email().describe("Email address for the member."),
+  imageUrl: z22.string().nullable().describe("Profile image URL for the member, when available."),
   role: OrganizationMembershipRoleSchema.describe("Organization role."),
-  createdAt: z21.string().datetime().describe("When the membership was created.")
+  createdAt: z22.string().datetime().describe("When the membership was created.")
 });
-var OrganizationInvitationSchema = z21.object({
-  id: z21.string().min(1).describe("Invitation ID."),
-  email: z21.string().email().describe("Invited email address."),
+var OrganizationInvitationSchema = z22.object({
+  id: z22.string().min(1).describe("Invitation ID."),
+  email: z22.string().email().describe("Invited email address."),
   role: OrganizationMembershipRoleSchema.describe("Role the invitee will receive when they accept."),
-  status: z21.string().min(1).describe('Invitation status (e.g. "pending").'),
-  createdAt: z21.string().datetime().describe("When the invitation was created."),
-  expiresAt: z21.string().datetime().describe("When the invitation expires.")
+  status: z22.string().min(1).describe('Invitation status (e.g. "pending").'),
+  createdAt: z22.string().datetime().describe("When the invitation was created."),
+  expiresAt: z22.string().datetime().describe("When the invitation expires.")
 });
-var MemberSelectorSchema = z21.string().min(1).describe("A user ID, or a URL-encoded email address, of the member.");
-var ListMembersInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization to list members for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+var MemberSelectorSchema = z22.string().min(1).describe("A user ID, or a URL-encoded email address, of the member.");
+var ListMembersInputSchema = z22.object({
+  organizationId: z22.string().min(1).optional().describe("Organization to list members for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
-var ListMembersOutputSchema = z21.object({
-  members: z21.array(OrganizationMemberSchema).describe("Members visible within the selected organization.")
+var ListMembersOutputSchema = z22.object({
+  members: z22.array(OrganizationMemberSchema).describe("Members visible within the selected organization.")
 });
-var UpdateMemberRoleInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+var UpdateMemberRoleInputSchema = z22.object({
+  organizationId: z22.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to update."),
   role: OrganizationMembershipRoleSchema.describe("Role to assign.")
 });
-var UpdateMemberRoleOutputSchema = z21.object({
+var UpdateMemberRoleOutputSchema = z22.object({
   member: OrganizationMemberSchema.describe("Updated organization member.")
 });
-var RemoveMemberInputSchema = z21.object({
-  params: z21.object({
+var RemoveMemberInputSchema = z22.object({
+  params: z22.object({
     member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to remove.")
   }),
-  query: z21.object({
-    organizationId: z21.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  query: z22.object({
+    organizationId: z22.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RemoveMemberOutputSchema = z21.object({
-  removedUserId: z21.string().min(1).describe("User ID removed from the organization.")
+var RemoveMemberOutputSchema = z22.object({
+  removedUserId: z22.string().min(1).describe("User ID removed from the organization.")
 });
 var listMembers = defineOperation({
   operationId: "members.list",
+  summary: "List members",
   description: "List members in an organization.",
   backend: "api",
   route: {
@@ -48034,6 +48652,7 @@ var listMembers = defineOperation({
 });
 var updateMemberRole = defineOperation({
   operationId: "members.updateRole",
+  summary: "Update a member's role",
   description: "Update a member's organization role.",
   backend: "api",
   route: {
@@ -48069,6 +48688,7 @@ var updateMemberRole = defineOperation({
 });
 var removeMember = defineOperation({
   operationId: "members.remove",
+  summary: "Remove a member",
   description: "Remove a member from an organization.",
   backend: "api",
   route: {
@@ -48082,36 +48702,37 @@ var removeMember = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var InviteMemberInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization to invite into. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
-  email: z21.string().email().describe("Email address to invite."),
+var InviteMemberInputSchema = z22.object({
+  organizationId: z22.string().min(1).optional().describe("Organization to invite into. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  email: z22.string().email().describe("Email address to invite."),
   role: OrganizationMembershipRoleSchema.optional().default("member").describe('Role to grant on acceptance. Defaults to "member".')
 });
-var InviteMemberOutputSchema = z21.object({
+var InviteMemberOutputSchema = z22.object({
   invitation: OrganizationInvitationSchema.describe("The created pending invitation.")
 });
-var ListInvitationsInputSchema = z21.object({
-  organizationId: z21.string().min(1).optional().describe("Organization to list invitations for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+var ListInvitationsInputSchema = z22.object({
+  organizationId: z22.string().min(1).optional().describe("Organization to list invitations for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
-var ListInvitationsOutputSchema = z21.object({
-  invitations: z21.array(OrganizationInvitationSchema).describe("Pending invitations visible within the selected organization.")
+var ListInvitationsOutputSchema = z22.object({
+  invitations: z22.array(OrganizationInvitationSchema).describe("Pending invitations visible within the selected organization.")
 });
-var RevokeInvitationInputSchema = z21.object({
-  params: z21.object({
-    invitationId: z21.string().min(1).describe("ID of the invitation to revoke.")
+var RevokeInvitationInputSchema = z22.object({
+  params: z22.object({
+    invitationId: z22.string().min(1).describe("ID of the invitation to revoke.")
   }),
-  query: z21.object({
-    organizationId: z21.string().min(1).optional().describe("Organization containing the invitation. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+  query: z22.object({
+    organizationId: z22.string().min(1).optional().describe("Organization containing the invitation. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RevokeInvitationOutputSchema = z21.object({
-  revokedInvitationId: z21.string().min(1).describe("ID of the revoked invitation.")
+var RevokeInvitationOutputSchema = z22.object({
+  revokedInvitationId: z22.string().min(1).describe("ID of the revoked invitation.")
 });
 var inviteMember = defineOperation({
   operationId: "members.invite",
+  summary: "Invite a member",
   description: "Invite a person to the organization by email.",
   backend: "api",
   route: {
@@ -48147,6 +48768,7 @@ var inviteMember = defineOperation({
 });
 var listInvitations = defineOperation({
   operationId: "members.listInvitations",
+  summary: "List invitations",
   description: "List pending invitations for an organization.",
   backend: "api",
   route: {
@@ -48181,6 +48803,7 @@ var listInvitations = defineOperation({
 });
 var revokeInvitation = defineOperation({
   operationId: "members.revokeInvitation",
+  summary: "Revoke an invitation",
   description: "Revoke a pending invitation.",
   backend: "api",
   route: {
@@ -48204,56 +48827,56 @@ var membersContract = {
 };
 
 // ../public-api-contracts/src/memory.ts
-import { z as z22 } from "zod";
+import { z as z23 } from "zod";
 var MEMORY_CURATED_KINDS = ["note", "runbook"];
 var MEMORY_KINDS = ["note", "runbook", "change"];
-var MemoryKindSchema = z22.enum(MEMORY_KINDS);
-var MemoryCuratedKindSchema = z22.enum(MEMORY_CURATED_KINDS);
-var MemoryPathSchema = z22.string().min(1).max(512).refine((value) => !value.startsWith("/"), {
+var MemoryKindSchema = z23.enum(MEMORY_KINDS);
+var MemoryCuratedKindSchema = z23.enum(MEMORY_CURATED_KINDS);
+var MemoryPathSchema = z23.string().min(1).max(512).refine((value) => !value.startsWith("/"), {
   message: "Path must be relative without a leading slash."
 }).describe("Relative memory path, for example AGENTS.md or notes/architecture.md.");
 var MEMORY_BODY_MAX_BYTES = 4194304;
-var MemoryBodySchema = z22.string().min(1).refine((value) => new TextEncoder().encode(value).length <= MEMORY_BODY_MAX_BYTES, {
+var MemoryBodySchema = z23.string().min(1).refine((value) => new TextEncoder().encode(value).length <= MEMORY_BODY_MAX_BYTES, {
   message: `Memory body must be at most ${MEMORY_BODY_MAX_BYTES} bytes (4 MiB).`
 }).describe("Document body stored in project memory.");
-var MemoryDurationSchema = z22.string().regex(/^(\d+)(s|m|h|d)$/u, "Duration must use s, m, h, or d units, for example 7d or 30m.").describe("Relative time window, for example 7d or 30m.");
+var MemoryDurationSchema = z23.string().regex(/^(\d+)(s|m|h|d)$/u, "Duration must use s, m, h, or d units, for example 7d or 30m.").describe("Relative time window, for example 7d or 30m.");
 var parseKindFilter = (value) => {
   const kinds = value.split(",").map((part) => part.trim()).filter(Boolean);
-  const parsed = z22.array(MemoryKindSchema).safeParse(kinds);
+  const parsed = z23.array(MemoryKindSchema).safeParse(kinds);
   if (!parsed.success) {
     throw new Error("Kind filter must be a comma-separated list of note, runbook, or change.");
   }
   return parsed.data;
 };
-var MemoryKindFilterSchema = z22.string().min(1).transform(parseKindFilter).describe("Comma-separated kinds, for example note,runbook.");
-var MemoryDocumentSchema = z22.object({
-  id: z22.string().uuid(),
-  projectId: z22.string().uuid(),
+var MemoryKindFilterSchema = z23.string().min(1).transform(parseKindFilter).describe("Comma-separated kinds, for example note,runbook.");
+var MemoryDocumentSchema = z23.object({
+  id: z23.string().uuid(),
+  projectId: z23.string().uuid(),
   kind: MemoryKindSchema,
-  managed: z22.boolean(),
-  path: z22.string().nullable(),
-  title: z22.string().nullable(),
-  contentHash: z22.string(),
-  attrs: z22.record(z22.string(), z22.unknown()),
-  createdAt: z22.string().datetime(),
-  updatedAt: z22.string().datetime()
+  managed: z23.boolean(),
+  path: z23.string().nullable(),
+  title: z23.string().nullable(),
+  contentHash: z23.string(),
+  attrs: z23.record(z23.string(), z23.unknown()),
+  createdAt: z23.string().datetime(),
+  updatedAt: z23.string().datetime()
 });
 var MemoryDocumentDetailSchema = MemoryDocumentSchema.extend({
   body: MemoryBodySchema
 });
-var PutProjectMemoryInputSchema = z22.object({
-  projectId: z22.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+var PutProjectMemoryInputSchema = z23.object({
+  projectId: z23.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
   path: MemoryPathSchema.describe("Relative path for the curated document."),
   body: MemoryBodySchema,
   kind: MemoryCuratedKindSchema.default("note").describe("Curated document kind. Only note and runbook may be written through the API."),
-  title: z22.string().max(500).optional().describe("Optional display title. Defaults to the path basename.")
+  title: z23.string().max(500).optional().describe("Optional display title. Defaults to the path basename.")
 });
-var PutProjectMemoryOutputSchema = z22.object({
+var PutProjectMemoryOutputSchema = z23.object({
   document: MemoryDocumentDetailSchema
 });
-var GetProjectMemoryInputSchema = z22.object({
-  projectId: z22.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
-  id: z22.string().uuid().optional().describe("Document id."),
+var GetProjectMemoryInputSchema = z23.object({
+  projectId: z23.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+  id: z23.string().uuid().optional().describe("Document id."),
   path: MemoryPathSchema.optional().describe("Relative curated path.")
 }).superRefine((value, ctx) => {
   const hasId = value.id !== undefined;
@@ -48265,55 +48888,55 @@ var GetProjectMemoryInputSchema = z22.object({
     });
   }
 });
-var GetProjectMemoryOutputSchema = z22.object({
+var GetProjectMemoryOutputSchema = z23.object({
   document: MemoryDocumentDetailSchema
 });
-var ListProjectMemoryInputSchema = z22.object({
-  projectId: z22.string().uuid().optional().describe("Project to list memory for. Auto-filled from CLI and SDK context when omitted."),
+var ListProjectMemoryInputSchema = z23.object({
+  projectId: z23.string().uuid().optional().describe("Project to list memory for. Auto-filled from CLI and SDK context when omitted."),
   kind: MemoryKindFilterSchema.optional(),
   since: MemoryDurationSchema.optional().describe("Only return documents updated within this window, for example 7d."),
-  service: z22.string().min(1).optional().describe("Filter to documents whose attrs.services contains this value."),
-  pathPrefix: z22.string().min(1).optional().describe("Filter to paths starting with this prefix."),
-  managed: z22.coerce.boolean().optional(),
-  cursor: z22.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  limit: z22.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of documents to return per page.")
+  service: z23.string().min(1).optional().describe("Filter to documents whose attrs.services contains this value."),
+  pathPrefix: z23.string().min(1).optional().describe("Filter to paths starting with this prefix."),
+  managed: z23.coerce.boolean().optional(),
+  cursor: z23.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  limit: z23.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of documents to return per page.")
 });
-var ListProjectMemoryOutputSchema = z22.object({
-  documents: z22.array(MemoryDocumentSchema),
-  nextCursor: z22.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListProjectMemoryOutputSchema = z23.object({
+  documents: z23.array(MemoryDocumentSchema),
+  nextCursor: z23.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var MemorySearchHitSchema = z22.object({
-  documentId: z22.string().uuid(),
+var MemorySearchHitSchema = z23.object({
+  documentId: z23.string().uuid(),
   kind: MemoryKindSchema,
-  managed: z22.boolean(),
-  path: z22.string().nullable(),
-  title: z22.string().nullable(),
-  snippet: z22.string(),
-  score: z22.number()
+  managed: z23.boolean(),
+  path: z23.string().nullable(),
+  title: z23.string().nullable(),
+  snippet: z23.string(),
+  score: z23.number()
 });
-var MemorySearchEmptyVerdictSchema = z22.object({
-  calibrated: z22.literal(true),
-  minScoreThreshold: z22.number(),
-  queryTerms: z22.array(z22.string()),
-  message: z22.string()
+var MemorySearchEmptyVerdictSchema = z23.object({
+  calibrated: z23.literal(true),
+  minScoreThreshold: z23.number(),
+  queryTerms: z23.array(z23.string()),
+  message: z23.string()
 });
-var SearchProjectMemoryInputSchema = z22.object({
-  projectId: z22.string().uuid().optional().describe("Project to search memory for. Auto-filled from CLI and SDK context when omitted."),
-  query: z22.string().trim().min(1).max(500).describe("Natural-language search query."),
+var SearchProjectMemoryInputSchema = z23.object({
+  projectId: z23.string().uuid().optional().describe("Project to search memory for. Auto-filled from CLI and SDK context when omitted."),
+  query: z23.string().trim().min(1).max(500).describe("Natural-language search query."),
   kind: MemoryKindFilterSchema.optional(),
   since: MemoryDurationSchema.optional(),
-  service: z22.string().min(1).optional(),
-  pathPrefix: z22.string().min(1).optional(),
-  managed: z22.coerce.boolean().optional(),
-  limit: z22.coerce.number().int().min(1).max(50).default(10).describe("Maximum ranked search hits to return.")
+  service: z23.string().min(1).optional(),
+  pathPrefix: z23.string().min(1).optional(),
+  managed: z23.coerce.boolean().optional(),
+  limit: z23.coerce.number().int().min(1).max(50).default(10).describe("Maximum ranked search hits to return.")
 });
-var SearchProjectMemoryOutputSchema = z22.object({
-  hits: z22.array(MemorySearchHitSchema),
+var SearchProjectMemoryOutputSchema = z23.object({
+  hits: z23.array(MemorySearchHitSchema),
   emptyVerdict: MemorySearchEmptyVerdictSchema.nullable()
 });
-var DeleteProjectMemoryInputSchema = z22.object({
-  projectId: z22.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
-  id: z22.string().uuid().optional().describe("Document id."),
+var DeleteProjectMemoryInputSchema = z23.object({
+  projectId: z23.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+  id: z23.string().uuid().optional().describe("Document id."),
   path: MemoryPathSchema.optional()
 }).superRefine((value, ctx) => {
   const hasId = value.id !== undefined;
@@ -48325,9 +48948,10 @@ var DeleteProjectMemoryInputSchema = z22.object({
     });
   }
 });
-var DeleteProjectMemoryOutputSchema = z22.void();
+var DeleteProjectMemoryOutputSchema = z23.void();
 var putProjectMemory = defineOperation({
   operationId: "memory.put",
+  summary: "Create or replace a memory document",
   description: "Create or replace a curated project memory document. Embeds on success.",
   backend: "api",
   route: {
@@ -48342,6 +48966,7 @@ var putProjectMemory = defineOperation({
 });
 var getProjectMemory = defineOperation({
   operationId: "memory.get",
+  summary: "Get a memory document",
   description: "Get one project memory document by id or path.",
   backend: "api",
   route: {
@@ -48356,6 +48981,7 @@ var getProjectMemory = defineOperation({
 });
 var listProjectMemory = defineOperation({
   operationId: "memory.list",
+  summary: "List memory documents",
   description: "List project memory catalog rows without embedding search.",
   backend: "api",
   route: {
@@ -48370,6 +48996,7 @@ var listProjectMemory = defineOperation({
 });
 var searchProjectMemory = defineOperation({
   operationId: "memory.search",
+  summary: "Search project memory",
   description: "Hybrid semantic and keyword search over project memory documents.",
   backend: "api",
   route: {
@@ -48384,6 +49011,7 @@ var searchProjectMemory = defineOperation({
 });
 var deleteProjectMemory = defineOperation({
   operationId: "memory.delete",
+  summary: "Delete a memory document",
   description: "Soft-delete a curated project memory document by id or path.",
   backend: "api",
   route: {
@@ -48406,20 +49034,19 @@ var memoryContract = {
 };
 
 // ../public-api-contracts/src/messages.ts
-import { z as z25 } from "zod";
+import { z as z26 } from "zod";
 
 // ../public-api-contracts/src/runs.ts
-import { z as z23 } from "zod";
-var RunStatusSchema = z23.enum(["processing", "completed", "aborted", "error"]);
-var RunSchema = z23.object({
-  id: z23.string().uuid(),
-  threadId: z23.string().uuid(),
-  userMessageId: z23.string().uuid().nullable(),
-  assistantMessageId: z23.string().uuid().nullable(),
-  parentRunId: z23.string().uuid().nullable(),
-  workflowRunId: z23.string().nullable(),
+import { z as z24 } from "zod";
+var RunStatusSchema = z24.enum(["processing", "completed", "aborted", "error"]);
+var RunSchema = z24.object({
+  id: z24.string().uuid(),
+  threadId: z24.string().uuid(),
+  userMessageId: z24.string().uuid().nullable(),
+  assistantMessageId: z24.string().uuid().nullable(),
+  workflowRunId: z24.string().nullable(),
   status: RunStatusSchema,
-  source: z23.enum([
+  source: z24.enum([
     "app",
     "api",
     "mcp",
@@ -48434,48 +49061,49 @@ var RunSchema = z23.object({
     "bitbucket",
     "system"
   ]),
-  createdAt: z23.string().datetime(),
-  updatedAt: z23.string().datetime(),
-  completedAt: z23.string().datetime().nullable()
+  createdAt: z24.string().datetime(),
+  updatedAt: z24.string().datetime(),
+  completedAt: z24.string().datetime().nullable()
 });
-var ListRunsInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project ID to list runs for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z23.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
-  cursor: z23.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListRunsInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project ID to list runs for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z24.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
+  cursor: z24.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListRunsOutputSchema = z23.object({
-  runs: z23.array(RunSchema),
-  nextCursor: z23.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListRunsOutputSchema = z24.object({
+  runs: z24.array(RunSchema),
+  nextCursor: z24.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var ListThreadRunsInputSchema = z23.object({
-  threadId: z23.string().uuid().describe("Thread ID to list runs for."),
-  limit: z23.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
-  cursor: z23.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListThreadRunsInputSchema = z24.object({
+  threadId: z24.string().uuid().describe("Thread ID to list runs for."),
+  limit: z24.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
+  cursor: z24.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListThreadRunsOutputSchema = z23.object({
-  runs: z23.array(RunSchema),
-  nextCursor: z23.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListThreadRunsOutputSchema = z24.object({
+  runs: z24.array(RunSchema),
+  nextCursor: z24.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetRunInputSchema = z23.object({
-  runId: z23.string().uuid().describe("Run ID returned by a deferred operation.")
+var GetRunInputSchema = z24.object({
+  runId: z24.string().uuid().describe("Run ID returned by a deferred operation.")
 });
-var RunResultSchema = z23.object({
-  completed: z23.boolean().describe("Whether the run has reached a terminal status."),
-  threadId: z23.string().uuid().describe("Thread ID associated with the run."),
-  runId: z23.string().uuid().describe("Run ID for subsequent polling."),
-  messageId: z23.string().uuid().optional().describe("ID of the user message that triggered this run."),
+var RunResultSchema = z24.object({
+  completed: z24.boolean().describe("Whether the run has reached a terminal status."),
+  threadId: z24.string().uuid().describe("Thread ID associated with the run."),
+  runId: z24.string().uuid().describe("Run ID for subsequent polling."),
+  messageId: z24.string().uuid().optional().describe("ID of the user message that triggered this run."),
   status: RunStatusSchema.describe("Current run lifecycle status."),
-  response: z23.string().nullable().describe("Assistant response text when the run has completed.")
+  response: z24.string().nullable().describe("Assistant response text when the run has completed.")
 });
 var GetRunOutputSchema = RunResultSchema.describe("Current run state and, when complete, the assistant response.");
-var CancelRunInputSchema = z23.object({
-  runId: z23.string().uuid().describe("Run ID of the in-flight run to request cancellation for.")
+var CancelRunInputSchema = z24.object({
+  runId: z24.string().uuid().describe("Run ID of the in-flight run to request cancellation for.")
 });
-var CancelRunOutputSchema = z23.object({
-  success: z23.literal(true).describe("Always true when the cancellation request was accepted.")
+var CancelRunOutputSchema = z24.object({
+  success: z24.literal(true).describe("Always true when the cancellation request was accepted.")
 });
 var listRuns = defineOperation({
   operationId: "runs.list",
+  summary: "List runs",
   description: "List deferred runs within one project.",
   backend: "api",
   route: {
@@ -48490,7 +49118,7 @@ var listRuns = defineOperation({
 });
 var listThreadRuns = defineOperation({
   operationId: "runs.listForThread",
-  summary: "List Runs for a Thread",
+  summary: "List runs for a thread",
   description: "List deferred runs for one thread.",
   backend: "api",
   route: {
@@ -48505,6 +49133,7 @@ var listThreadRuns = defineOperation({
 });
 var getRun = defineOperation({
   operationId: "runs.get",
+  summary: "Get a run",
   description: "Get the current result for a deferred run by run ID.",
   backend: "api",
   route: {
@@ -48534,6 +49163,7 @@ var getRun = defineOperation({
 });
 var cancelRun = defineOperation({
   operationId: "runs.cancel",
+  summary: "Cancel a run",
   description: "Request cancellation of an in-flight run. Idempotent and best-effort: returns success even when the run has already reached a terminal status.",
   backend: "api",
   route: {
@@ -48592,8 +49222,8 @@ var validatePublicThreadAmbientMarker = (ambientServiceRun, automationId, ctx) =
 };
 
 // ../public-api-contracts/src/threads.ts
-import { z as z24 } from "zod";
-var MessageSourceSchema = z24.enum([
+import { z as z25 } from "zod";
+var MessageSourceSchema = z25.enum([
   "slack",
   "teams",
   "linear",
@@ -48608,36 +49238,36 @@ var MessageSourceSchema = z24.enum([
   "bitbucket",
   "system"
 ]);
-var ThreadSchema = z24.object({
-  id: z24.string().uuid(),
-  projectId: z24.string().uuid(),
-  title: z24.string().nullable(),
-  status: z24.enum(["regular", "archived"]),
+var ThreadSchema = z25.object({
+  id: z25.string().uuid(),
+  projectId: z25.string().uuid(),
+  title: z25.string().nullable(),
+  status: z25.enum(["regular", "archived"]),
   source: MessageSourceSchema.nullable(),
-  createdAt: z24.string().datetime(),
-  updatedAt: z24.string().datetime()
+  createdAt: z25.string().datetime(),
+  updatedAt: z25.string().datetime()
 });
-var MessagePartSchema = z24.object({
-  type: z24.literal("message"),
-  message: z24.string()
+var MessagePartSchema = z25.object({
+  type: z25.literal("message"),
+  message: z25.string()
 });
-var ReasoningPartSchema = z24.object({
-  type: z24.literal("reasoning"),
-  reasoning: z24.string(),
-  status: z24.enum(["in_progress", "complete"]).optional()
+var ReasoningPartSchema = z25.object({
+  type: z25.literal("reasoning"),
+  reasoning: z25.string(),
+  status: z25.enum(["in_progress", "complete"]).optional()
 });
-var ToolCallPartSchema = z24.object({
-  type: z24.literal("tool_call"),
-  name: z24.string(),
-  params: z24.any().optional(),
-  result: z24.any().optional(),
-  status: z24.enum(["in_progress", "success", "error", "unknown"]).optional(),
-  toolCallId: z24.string().optional(),
-  durationMs: z24.number().nonnegative().optional()
+var ToolCallPartSchema = z25.object({
+  type: z25.literal("tool_call"),
+  name: z25.string(),
+  params: z25.any().optional(),
+  result: z25.any().optional(),
+  status: z25.enum(["in_progress", "success", "error", "unknown"]).optional(),
+  toolCallId: z25.string().optional(),
+  durationMs: z25.number().nonnegative().optional()
 });
-var ArtifactPartSchema = z24.object({
-  type: z24.literal("artifact"),
-  name: z24.enum([
+var ArtifactPartSchema = z25.object({
+  type: z25.literal("artifact"),
+  name: z25.enum([
     "timeseries",
     "table",
     "log_detail",
@@ -48646,35 +49276,35 @@ var ArtifactPartSchema = z24.object({
     "issue_card",
     "mdx"
   ]),
-  data: z24.any(),
-  toolCallId: z24.string().optional()
+  data: z25.any(),
+  toolCallId: z25.string().optional()
 });
-var ForkPartSchema = z24.object({
-  type: z24.literal("fork"),
-  sourceThreadId: z24.string(),
-  sourceMessageId: z24.string(),
-  sourceThreadTitle: z24.string().nullable()
+var ForkPartSchema = z25.object({
+  type: z25.literal("fork"),
+  sourceThreadId: z25.string(),
+  sourceMessageId: z25.string(),
+  sourceThreadTitle: z25.string().nullable()
 });
-var SummaryPartSchema = z24.object({
-  type: z24.literal("summary"),
-  summary: z24.string()
+var SummaryPartSchema = z25.object({
+  type: z25.literal("summary"),
+  summary: z25.string()
 });
-var SlackContextPartSchema = z24.object({
-  type: z24.literal("slack_context"),
-  channelId: z24.string(),
-  isTruncated: z24.boolean().optional(),
-  messages: z24.array(z24.object({
-    timestamp: z24.string(),
-    slackUserId: z24.string().optional(),
-    displayName: z24.string(),
-    text: z24.string(),
-    isBot: z24.boolean(),
-    files: z24.array(z24.object({
-      name: z24.string(),
-      mimetype: z24.string(),
-      size: z24.number().optional(),
-      attachmentId: z24.string().uuid().optional(),
-      ingestionStatus: z24.enum([
+var SlackContextPartSchema = z25.object({
+  type: z25.literal("slack_context"),
+  channelId: z25.string(),
+  isTruncated: z25.boolean().optional(),
+  messages: z25.array(z25.object({
+    timestamp: z25.string(),
+    slackUserId: z25.string().optional(),
+    displayName: z25.string(),
+    text: z25.string(),
+    isBot: z25.boolean(),
+    files: z25.array(z25.object({
+      name: z25.string(),
+      mimetype: z25.string(),
+      size: z25.number().optional(),
+      attachmentId: z25.string().uuid().optional(),
+      ingestionStatus: z25.enum([
         "attached",
         "unsupported",
         "oversized",
@@ -48684,19 +49314,19 @@ var SlackContextPartSchema = z24.object({
     })).optional()
   }))
 });
-var MicrosoftTeamsContextPartSchema = z24.object({
-  type: z24.literal("teams_context"),
-  conversationId: z24.string(),
-  isTruncated: z24.boolean().optional(),
-  messages: z24.array(z24.object({
-    activityId: z24.string().optional(),
-    displayName: z24.string(),
-    text: z24.string(),
-    isBot: z24.boolean(),
-    createdDateTime: z24.string().optional()
+var MicrosoftTeamsContextPartSchema = z25.object({
+  type: z25.literal("teams_context"),
+  conversationId: z25.string(),
+  isTruncated: z25.boolean().optional(),
+  messages: z25.array(z25.object({
+    activityId: z25.string().optional(),
+    displayName: z25.string(),
+    text: z25.string(),
+    isBot: z25.boolean(),
+    createdDateTime: z25.string().optional()
   }))
 });
-var ContentPartSchema = z24.union([
+var ContentPartSchema = z25.union([
   MessagePartSchema,
   ReasoningPartSchema,
   ToolCallPartSchema,
@@ -48706,64 +49336,65 @@ var ContentPartSchema = z24.union([
   SlackContextPartSchema,
   MicrosoftTeamsContextPartSchema
 ]);
-var MessageSchema = z24.object({
-  id: z24.string().uuid(),
-  role: z24.enum(["user", "assistant"]),
-  content: z24.array(ContentPartSchema),
+var MessageSchema = z25.object({
+  id: z25.string().uuid(),
+  role: z25.enum(["user", "assistant"]),
+  content: z25.array(ContentPartSchema),
   source: MessageSourceSchema,
-  createdAt: z24.string().datetime()
+  createdAt: z25.string().datetime()
 });
-var ListThreadsInputSchema = z24.object({
-  projectId: z24.string().uuid().optional().describe("Project to list threads for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z24.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of threads to return per page."),
-  cursor: z24.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  status: z24.enum(["regular", "archived"]).optional().describe("Filter by thread status. 'regular' returns active threads, 'archived' returns archived threads.")
+var ListThreadsInputSchema = z25.object({
+  projectId: z25.string().uuid().optional().describe("Project to list threads for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z25.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of threads to return per page."),
+  cursor: z25.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  status: z25.enum(["regular", "archived"]).optional().describe("Filter by thread status. 'regular' returns active threads, 'archived' returns archived threads.")
 });
-var ListThreadsOutputSchema = z24.object({
-  threads: z24.array(ThreadSchema).describe("The page of threads matching the query."),
-  nextCursor: z24.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListThreadsOutputSchema = z25.object({
+  threads: z25.array(ThreadSchema).describe("The page of threads matching the query."),
+  nextCursor: z25.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetThreadInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID returned by threads.list or threads.create.")
+var GetThreadInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID returned by threads.list or threads.create.")
 });
-var GetThreadOutputSchema = z24.object({
+var GetThreadOutputSchema = z25.object({
   thread: ThreadSchema.describe("The requested thread."),
-  messages: z24.array(MessageSchema).describe("Messages currently stored on the thread in chronological order.")
+  messages: z25.array(MessageSchema).describe("Messages currently stored on the thread in chronological order.")
 });
-var CreateThreadInputSchema = z24.object({
-  projectId: z24.string().uuid().optional().describe("Project to create the thread in. Auto-filled from CLI and SDK context when omitted."),
-  message: z24.string().min(1, "Message cannot be empty").describe("Initial user message that starts the thread."),
-  wait: z24.boolean().default(true).describe("Whether the server should wait for the agent run before responding."),
-  timeoutSeconds: z24.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
-  automationId: z24.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
-  ambientServiceRun: z24.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
+var CreateThreadInputSchema = z25.object({
+  projectId: z25.string().uuid().optional().describe("Project to create the thread in. Auto-filled from CLI and SDK context when omitted."),
+  message: z25.string().min(1, "Message cannot be empty").describe("Initial user message that starts the thread."),
+  wait: z25.boolean().default(true).describe("Whether the server should wait for the agent run before responding."),
+  timeoutSeconds: z25.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
+  automationId: z25.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
+  ambientServiceRun: z25.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
 }).superRefine((input, ctx) => {
   validatePublicThreadMessageLength(input.message, input.automationId, ctx);
   validatePublicThreadAmbientMarker(input.ambientServiceRun, input.automationId, ctx);
 });
 var CreateThreadOutputSchema = RunResultSchema.describe("Deferred run result for creating a thread.");
-var GetThreadStatusInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID whose current processing status should be returned.")
+var GetThreadStatusInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID whose current processing status should be returned.")
 });
-var GetThreadStatusOutputSchema = z24.object({
-  status: z24.enum(["idle", "processing"]),
-  lastRunStatus: z24.enum(["error"]).nullable()
+var GetThreadStatusOutputSchema = z25.object({
+  status: z25.enum(["idle", "processing"]),
+  lastRunStatus: z25.enum(["error"]).nullable()
 });
-var StopThreadInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID whose active run should be stopped.")
+var StopThreadInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID whose active run should be stopped.")
 });
-var StopThreadOutputSchema = z24.object({
-  success: z24.literal(true).describe("Always true when the stop request was accepted.")
+var StopThreadOutputSchema = z25.object({
+  success: z25.literal(true).describe("Always true when the stop request was accepted.")
 });
-var UpdateThreadInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID of the thread to update."),
-  status: z24.enum(["regular", "archived"]).describe("New status for the thread. 'archived' hides the thread from the sidebar.")
+var UpdateThreadInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID of the thread to update."),
+  status: z25.enum(["regular", "archived"]).describe("New status for the thread. 'archived' hides the thread from the sidebar.")
 });
-var UpdateThreadOutputSchema = z24.object({
+var UpdateThreadOutputSchema = z25.object({
   thread: ThreadSchema.describe("The updated thread.")
 });
 var listThreads = defineOperation({
   operationId: "threads.list",
+  summary: "List threads",
   description: "List threads in a project, optionally filtered by status.",
   backend: "api",
   route: {
@@ -48802,6 +49433,7 @@ var listThreads = defineOperation({
 });
 var getThread = defineOperation({
   operationId: "threads.get",
+  summary: "Get a thread",
   description: "Get a thread and its messages.",
   backend: "api",
   route: {
@@ -48816,6 +49448,7 @@ var getThread = defineOperation({
 });
 var getThreadStatus = defineOperation({
   operationId: "threads.getStatus",
+  summary: "Get a thread's status",
   description: "Get the current processing status for a thread.",
   backend: "api",
   route: {
@@ -48842,6 +49475,7 @@ var getThreadStatus = defineOperation({
 });
 var stopThread = defineOperation({
   operationId: "threads.stop",
+  summary: "Stop a thread's run",
   description: "Stop a thread's in-flight run. Idempotent and best-effort: returns success even when the thread has no active run.",
   backend: "api",
   route: {
@@ -48867,6 +49501,7 @@ var stopThread = defineOperation({
 });
 var createThread = defineOperation({
   operationId: "threads.create",
+  summary: "Create a thread",
   description: "Create a thread with an initial message and optionally wait for the agent response.",
   backend: "api",
   route: {
@@ -48900,6 +49535,7 @@ var createThread = defineOperation({
 });
 var updateThread = defineOperation({
   operationId: "threads.update",
+  summary: "Update a thread",
   description: "Update a thread's status.",
   backend: "api",
   route: {
@@ -48932,44 +49568,44 @@ var updateThread = defineOperation({
     }
   ]
 });
-var ThreadVisibilitySchema = z24.enum(["private", "organization"]);
-var ForkThreadInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID of the source thread to fork."),
-  messageId: z24.string().uuid().describe("Message ID in the source thread to fork from. The new thread copies messages up to and including this message.")
+var ThreadVisibilitySchema = z25.enum(["private", "organization"]);
+var ForkThreadInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID of the source thread to fork."),
+  messageId: z25.string().uuid().describe("Message ID in the source thread to fork from. The new thread copies messages up to and including this message.")
 });
-var ForkThreadOutputSchema = z24.object({
+var ForkThreadOutputSchema = z25.object({
   thread: ThreadSchema.describe("The newly created forked thread.")
 });
-var SetThreadVisibilityInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID of the thread to update."),
+var SetThreadVisibilityInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID of the thread to update."),
   visibility: ThreadVisibilitySchema.describe("New visibility. 'private' restricts the thread to its owner; 'organization' shares it with the organization.")
 });
-var SetThreadVisibilityOutputSchema = z24.object({
+var SetThreadVisibilityOutputSchema = z25.object({
   thread: ThreadSchema.describe("The updated thread."),
   visibility: ThreadVisibilitySchema.describe("The thread's resulting visibility.")
 });
-var ThreadShareLinkSchema = z24.object({
-  shareId: z24.string().uuid().describe("Unique identifier for the snapshot."),
-  threadId: z24.string().uuid().describe("Thread the snapshot was taken from."),
-  url: z24.string().describe("Public read-only URL for the snapshot."),
-  createdAt: z24.string().datetime()
+var ThreadShareLinkSchema = z25.object({
+  shareId: z25.string().uuid().describe("Unique identifier for the snapshot."),
+  threadId: z25.string().uuid().describe("Thread the snapshot was taken from."),
+  url: z25.string().describe("Public read-only URL for the snapshot."),
+  createdAt: z25.string().datetime()
 });
-var CreateThreadShareLinkInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID to create a public read-only snapshot for.")
+var CreateThreadShareLinkInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID to create a public read-only snapshot for.")
 });
-var CreateThreadShareLinkOutputSchema = z24.object({
+var CreateThreadShareLinkOutputSchema = z25.object({
   share: ThreadShareLinkSchema.describe("The created share link.")
 });
-var RevokeThreadShareLinkInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID the snapshot belongs to."),
-  shareId: z24.string().uuid().describe("Snapshot ID to revoke.")
+var RevokeThreadShareLinkInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID the snapshot belongs to."),
+  shareId: z25.string().uuid().describe("Snapshot ID to revoke.")
 });
-var RevokeThreadShareLinkOutputSchema = z24.void();
-var ListThreadShareLinksInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID to list public snapshots for.")
+var RevokeThreadShareLinkOutputSchema = z25.void();
+var ListThreadShareLinksInputSchema = z25.object({
+  threadId: z25.string().uuid().describe("Thread ID to list public snapshots for.")
 });
-var ListThreadShareLinksOutputSchema = z24.object({
-  shares: z24.array(ThreadShareLinkSchema).describe("Active share links for the thread.")
+var ListThreadShareLinksOutputSchema = z25.object({
+  shares: z25.array(ThreadShareLinkSchema).describe("Active share links for the thread.")
 });
 var SAMPLE_THREAD_ID = "22222222-2222-4222-8222-222222222222";
 var SAMPLE_PROJECT_ID = "11111111-1111-4111-8111-111111111111";
@@ -48977,6 +49613,7 @@ var SAMPLE_MESSAGE_ID = "44444444-4444-4444-8444-444444444444";
 var SAMPLE_SHARE_ID = "55555555-5555-4555-8555-555555555555";
 var forkThread = defineOperation({
   operationId: "threads.fork",
+  summary: "Fork a thread",
   description: "Fork a thread from a specific message, creating a new thread that copies messages up to that point.",
   backend: "api",
   route: {
@@ -49012,6 +49649,7 @@ var forkThread = defineOperation({
 });
 var setThreadVisibility = defineOperation({
   operationId: "threads.setVisibility",
+  summary: "Set a thread's visibility",
   description: "Set a thread's visibility to private or organization.",
   backend: "api",
   route: {
@@ -49047,6 +49685,7 @@ var setThreadVisibility = defineOperation({
 });
 var createThreadShareLink = defineOperation({
   operationId: "threads.createShareLink",
+  summary: "Create a thread share link",
   description: "Create a public read-only share link for a thread's current messages.",
   backend: "api",
   route: {
@@ -49078,6 +49717,7 @@ var createThreadShareLink = defineOperation({
 });
 var listThreadShareLinks = defineOperation({
   operationId: "threads.listShareLinks",
+  summary: "List thread share links",
   description: "List active public share links for a thread.",
   backend: "api",
   route: {
@@ -49110,6 +49750,7 @@ var listThreadShareLinks = defineOperation({
 });
 var revokeThreadShareLink = defineOperation({
   operationId: "threads.revokeShareLink",
+  summary: "Revoke a thread share link",
   description: "Revoke a public share link for a thread.",
   backend: "api",
   route: {
@@ -49138,22 +49779,22 @@ var threadsContract = {
 };
 
 // ../public-api-contracts/src/messages.ts
-var ListMessagesInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID to list messages for."),
-  limit: z25.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of messages to return per page."),
-  cursor: z25.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListMessagesInputSchema = z26.object({
+  threadId: z26.string().uuid().describe("Thread ID to list messages for."),
+  limit: z26.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of messages to return per page."),
+  cursor: z26.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListMessagesOutputSchema = z25.object({
-  messages: z25.array(MessageSchema),
-  nextCursor: z25.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListMessagesOutputSchema = z26.object({
+  messages: z26.array(MessageSchema),
+  nextCursor: z26.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var AppendMessageInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID to append the message to."),
-  message: z25.string().min(1, "Message cannot be empty").describe("Message body to append to the thread."),
-  wait: z25.boolean().default(true).describe("Whether the server should wait for the appended message run before responding."),
-  timeoutSeconds: z25.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
-  automationId: z25.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
-  ambientServiceRun: z25.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
+var AppendMessageInputSchema = z26.object({
+  threadId: z26.string().uuid().describe("Thread ID to append the message to."),
+  message: z26.string().min(1, "Message cannot be empty").describe("Message body to append to the thread."),
+  wait: z26.boolean().default(true).describe("Whether the server should wait for the appended message run before responding."),
+  timeoutSeconds: z26.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
+  automationId: z26.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
+  ambientServiceRun: z26.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
 }).superRefine((input, ctx) => {
   validatePublicThreadMessageLength(input.message, input.automationId, ctx);
   validatePublicThreadAmbientMarker(input.ambientServiceRun, input.automationId, ctx);
@@ -49161,6 +49802,7 @@ var AppendMessageInputSchema = z25.object({
 var AppendMessageOutputSchema = RunResultSchema.describe("Deferred run result for appending a message to an existing thread.");
 var listMessages = defineOperation({
   operationId: "messages.list",
+  summary: "List messages in a thread",
   description: "List messages in a thread with cursor pagination.",
   backend: "api",
   route: {
@@ -49201,6 +49843,7 @@ var listMessages = defineOperation({
 });
 var appendMessage = defineOperation({
   operationId: "messages.append",
+  summary: "Append a message to a thread",
   description: "Append a user message to an existing thread and trigger a deferred run.",
   backend: "api",
   route: {
@@ -49240,24 +49883,24 @@ init_src();
 var registeredDefinitionsByValue = new Map;
 var definitionsEqual = (left, right) => left.value === right.value && left.label === right.label && left.scope === right.scope && left.role === right.role && left.defaultOff === right.defaultOff && (left.defaultOffChannels ?? []).join(",") === (right.defaultOffChannels ?? []).join(",") && left.email?.template === right.email?.template && left.email?.ctaLabel === right.email?.ctaLabel && (left.deliveryConditions ?? []).join(",") === (right.deliveryConditions ?? []).join(",");
 var registerNotificationTypes = (definitions) => {
-  for (const definition of Object.values(definitions)) {
-    const existing = registeredDefinitionsByValue.get(definition.value);
-    if (existing && !definitionsEqual(existing, definition)) {
-      throw new Error(`Notification type registered twice with conflicting definitions: ${definition.value}`);
+  for (const definition2 of Object.values(definitions)) {
+    const existing = registeredDefinitionsByValue.get(definition2.value);
+    if (existing && !definitionsEqual(existing, definition2)) {
+      throw new Error(`Notification type registered twice with conflicting definitions: ${definition2.value}`);
     }
-    if (definition.role !== undefined && definition.scope !== "org") {
-      throw new Error(`Notification type role restrictions require org scope: ${definition.value}`);
+    if (definition2.role !== undefined && definition2.scope !== "org") {
+      throw new Error(`Notification type role restrictions require org scope: ${definition2.value}`);
     }
-    if (definition.label.trim().length === 0) {
-      throw new Error(`Notification type needs a display label: ${definition.value}`);
+    if (definition2.label.trim().length === 0) {
+      throw new Error(`Notification type needs a display label: ${definition2.value}`);
     }
-    if (definition.email && definition.email.ctaLabel.trim().length === 0) {
-      throw new Error(`Notification email presentation needs a CTA label: ${definition.value}`);
+    if (definition2.email && definition2.email.ctaLabel.trim().length === 0) {
+      throw new Error(`Notification email presentation needs a CTA label: ${definition2.value}`);
     }
-    if (definition.defaultOff && definition.defaultOffChannels) {
-      throw new Error(`Notification type declares both defaultOff and defaultOffChannels: ${definition.value}`);
+    if (definition2.defaultOff && definition2.defaultOffChannels) {
+      throw new Error(`Notification type declares both defaultOff and defaultOffChannels: ${definition2.value}`);
     }
-    registeredDefinitionsByValue.set(definition.value, definition);
+    registeredDefinitionsByValue.set(definition2.value, definition2);
   }
   return definitions;
 };
@@ -49550,13 +50193,13 @@ var NOTIFICATION_TYPE_DEFINITIONS = {
   ...PROJECT_RESOURCE_NOTIFICATION_TYPE_DEFINITIONS,
   ...BILLING_NOTIFICATION_TYPE_DEFINITIONS
 };
-var NOTIFICATION_TYPES = Object.fromEntries(Object.entries(NOTIFICATION_TYPE_DEFINITIONS).map(([key, definition]) => [
+var NOTIFICATION_TYPES = Object.fromEntries(Object.entries(NOTIFICATION_TYPE_DEFINITIONS).map(([key, definition2]) => [
   key,
-  definition.value
+  definition2.value
 ]));
-var definitionsByValue = new Map(Object.values(NOTIFICATION_TYPE_DEFINITIONS).map((definition) => [
-  definition.value,
-  definition
+var definitionsByValue = new Map(Object.values(NOTIFICATION_TYPE_DEFINITIONS).map((definition2) => [
+  definition2.value,
+  definition2
 ]));
 var getNotificationTypeLabel = (notificationType) => {
   const label = definitionsByValue.get(notificationType)?.label;
@@ -49597,14 +50240,14 @@ var PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES = [
 var PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPE_SET = new Set(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES);
 // ../notifications/src/events.ts
 init_src();
-import { z as z27 } from "zod";
-var NotificationTypeSchema = z27.enum(ALL_NOTIFICATION_TYPES);
+import { z as z28 } from "zod";
+var NotificationTypeSchema = z28.enum(ALL_NOTIFICATION_TYPES);
 var DEPRECATED_NOTIFICATION_TYPE_ALIASES = {
   data_source_connected: "log_source_connected",
   data_source_disconnected: "log_source_disconnected"
 };
 var normalizeNotificationTypeInput = (value) => typeof value === "string" && (value in DEPRECATED_NOTIFICATION_TYPE_ALIASES) ? DEPRECATED_NOTIFICATION_TYPE_ALIASES[value] : value;
-var NotificationTypeInputSchema = z27.preprocess(normalizeNotificationTypeInput, NotificationTypeSchema);
+var NotificationTypeInputSchema = z28.preprocess(normalizeNotificationTypeInput, NotificationTypeSchema);
 // ../notifications/src/project-shared-notification-types.ts
 var PROJECT_SHARED_NOTIFICATION_TYPE_DEFINITIONS = PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES.map((notificationType) => ({
   notificationType,
@@ -49619,69 +50262,69 @@ var PERSONAL_RECORD_CHANNELS = new Set([
 ]);
 var STATEFUL_INCIDENT_RECORD_CHANNELS = new Set(["incident_io", "pagerduty", "rootly"]);
 // ../public-api-contracts/src/notification-channels.ts
-import { z as z28 } from "zod";
-var NotificationChannelPrerequisiteStatusSchema = z28.enum([
+import { z as z29 } from "zod";
+var NotificationChannelPrerequisiteStatusSchema = z29.enum([
   "ready",
   "missing",
   "degraded",
   "unavailable"
 ]);
-var NotificationChannelDestinationSchema = z28.object({
-  id: z28.string(),
-  label: z28.string(),
-  status: z28.enum(["active", "inactive", "degraded"]),
-  statusLabel: z28.string()
+var NotificationChannelDestinationSchema = z29.object({
+  id: z29.string(),
+  label: z29.string(),
+  status: z29.enum(["active", "inactive", "degraded"]),
+  statusLabel: z29.string()
 });
-var NotificationChannelCardSchema = z28.object({
+var NotificationChannelCardSchema = z29.object({
   channel: NotificationChannelSchema,
-  name: z28.string(),
-  description: z28.string(),
-  scope: z28.enum(["personal", "project"]),
-  enabled: z28.boolean().nullable(),
-  preferenceId: z28.string().nullable(),
-  prerequisite: z28.object({
+  name: z29.string(),
+  description: z29.string(),
+  scope: z29.enum(["personal", "project"]),
+  enabled: z29.boolean().nullable(),
+  preferenceId: z29.string().nullable(),
+  prerequisite: z29.object({
     status: NotificationChannelPrerequisiteStatusSchema,
-    statusLabel: z28.string(),
-    message: z28.string()
+    statusLabel: z29.string(),
+    message: z29.string()
   }),
-  action: z28.object({
-    label: z28.string(),
-    href: z28.string()
+  action: z29.object({
+    label: z29.string(),
+    href: z29.string()
   }).nullable(),
-  destinations: z28.array(NotificationChannelDestinationSchema),
-  destinationManagement: z28.enum([
+  destinations: z29.array(NotificationChannelDestinationSchema),
+  destinationManagement: z29.enum([
     "none",
     "slack_channels",
     "teams_channels",
     "integration_connections",
     "webhook_endpoints"
   ]),
-  canCreateDestinations: z28.boolean(),
-  supportedNotificationTypes: z28.array(NotificationTypeSchema)
+  canCreateDestinations: z29.boolean(),
+  supportedNotificationTypes: z29.array(NotificationTypeSchema)
 });
-var ProjectNotificationChannelPreferenceSchema = z28.object({
+var ProjectNotificationChannelPreferenceSchema = z29.object({
   channel: ProjectNotificationChannelSchema,
-  enabled: z28.boolean(),
-  preferenceId: z28.string().nullable()
+  enabled: z29.boolean(),
+  preferenceId: z29.string().nullable()
 });
-var ProjectNotificationTypePreferenceSchema = z28.object({
+var ProjectNotificationTypePreferenceSchema = z29.object({
   channel: ProjectNotificationChannelSchema,
   notificationType: NotificationTypeSchema,
-  enabled: z28.boolean(),
-  preferenceId: z28.string()
+  enabled: z29.boolean(),
+  preferenceId: z29.string()
 });
-var GetProjectNotificationChannelsInputSchema = z28.object({
-  projectId: z28.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
+var GetProjectNotificationChannelsInputSchema = z29.object({
+  projectId: z29.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
 });
-var GetProjectNotificationChannelsOutputSchema = z28.object({
-  channelCards: z28.array(NotificationChannelCardSchema).length(10),
-  channels: z28.array(ProjectNotificationChannelPreferenceSchema),
-  notificationTypePreferences: z28.array(ProjectNotificationTypePreferenceSchema),
-  issueNotificationMinSeverity: z28.enum(["low", "medium", "high", "critical"])
+var GetProjectNotificationChannelsOutputSchema = z29.object({
+  channelCards: z29.array(NotificationChannelCardSchema).length(10),
+  channels: z29.array(ProjectNotificationChannelPreferenceSchema),
+  notificationTypePreferences: z29.array(ProjectNotificationTypePreferenceSchema),
+  issueNotificationMinSeverity: z29.enum(["low", "medium", "high", "critical"])
 });
 var getProjectNotificationChannels = defineOperation({
   operationId: "notificationChannels.getProject",
-  summary: "List Project Notification Channels",
+  summary: "List project notification channels",
   description: "List a project's notification channels with preferences, prerequisites, connection state, configured destinations, and supported notification types.",
   backend: "api",
   route: {
@@ -49699,43 +50342,43 @@ var notificationChannelsContract = {
 };
 
 // ../public-api-contracts/src/notification-delivery-rules.ts
-import { z as z29 } from "zod";
-var DeliveryRuleSeveritySchema = z29.enum([
+import { z as z30 } from "zod";
+var DeliveryRuleSeveritySchema = z30.enum([
   "low",
   "medium",
   "high",
   "critical"
 ]);
-var DeliveryRuleConditionSchema = z29.object({
-  severities: z29.array(DeliveryRuleSeveritySchema).min(1).optional()
+var DeliveryRuleConditionSchema = z30.object({
+  severities: z30.array(DeliveryRuleSeveritySchema).min(1).optional()
 }).strict();
-var LegacyDeliveryRuleConditionSchema = z29.object({
-  componentIds: z29.array(z29.string().uuid()).min(1).optional(),
-  severities: z29.array(DeliveryRuleSeveritySchema).min(1).optional()
+var LegacyDeliveryRuleConditionSchema = z30.object({
+  componentIds: z30.array(z30.string().uuid()).min(1).optional(),
+  severities: z30.array(DeliveryRuleSeveritySchema).min(1).optional()
 }).strict();
-var DeliveryRuleDestinationInputSchema = z29.object({
+var DeliveryRuleDestinationInputSchema = z30.object({
   channel: ProjectNotificationChannelSchema,
-  destinationKey: z29.string().min(1)
+  destinationKey: z30.string().min(1)
 });
-var DeliveryRuleDefinitionSchema = z29.object({
-  destinations: z29.array(DeliveryRuleDestinationInputSchema).min(1),
-  notificationTypes: z29.array(z29.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
-  componentIds: z29.array(z29.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
-  includeDescendants: z29.boolean().default(false).describe("Whether the rule also matches descendant components."),
+var DeliveryRuleDefinitionSchema = z30.object({
+  destinations: z30.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+  componentIds: z30.array(z30.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
+  includeDescendants: z30.boolean().default(false).describe("Whether the rule also matches descendant components."),
   condition: DeliveryRuleConditionSchema
 });
-var LegacyDeliveryRuleDefinitionSchema = z29.object({
-  destinations: z29.array(DeliveryRuleDestinationInputSchema).min(1),
-  notificationTypes: z29.array(z29.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+var LegacyDeliveryRuleDefinitionSchema = z30.object({
+  destinations: z30.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
   condition: LegacyDeliveryRuleConditionSchema
 });
-var DeliveryRuleDefinitionInputObjectSchema = z29.object({
-  destinations: z29.array(DeliveryRuleDestinationInputSchema).min(1),
-  notificationTypes: z29.array(z29.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
-  componentIds: z29.array(z29.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
-  componentId: z29.string().uuid().optional().describe("Deprecated single-component compatibility input."),
-  includeDescendants: z29.boolean().default(false).describe("Whether the rule also matches descendant components."),
-  condition: z29.union([
+var DeliveryRuleDefinitionInputObjectSchema = z30.object({
+  destinations: z30.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+  componentIds: z30.array(z30.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
+  componentId: z30.string().uuid().optional().describe("Deprecated single-component compatibility input."),
+  includeDescendants: z30.boolean().default(false).describe("Whether the rule also matches descendant components."),
+  condition: z30.union([
     DeliveryRuleConditionSchema,
     LegacyDeliveryRuleConditionSchema
   ])
@@ -49757,48 +50400,57 @@ var rejectConflictingComponentInputs = (input, context) => {
   }
 };
 var DeliveryRuleDefinitionInputSchema = DeliveryRuleDefinitionInputObjectSchema.superRefine(rejectConflictingComponentInputs);
-var DeliveryRuleDestinationSchema = z29.object({
-  id: z29.string(),
+var DeliveryRuleDestinationSchema = z30.object({
+  id: z30.string(),
   channel: ProjectNotificationChannelSchema,
-  destinationKey: z29.string(),
-  displayName: z29.string()
+  destinationKey: z30.string(),
+  displayName: z30.string()
 });
-var DeliveryRuleComponentSchema = z29.object({
-  id: z29.string().uuid(),
-  label: z29.string(),
-  lifecycle: z29.enum(["active", "retired", "merged"])
+var DeliveryRuleComponentSchema = z30.object({
+  id: z30.string().uuid(),
+  label: z30.string(),
+  lifecycle: z30.enum(["active", "inactive", "merged"])
 });
-var ProjectDeliveryRuleSchema = z29.object({
-  id: z29.string().uuid(),
-  projectId: z29.string().uuid(),
-  notificationTypes: z29.array(z29.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)),
-  destinations: z29.array(DeliveryRuleDestinationSchema),
+var ProjectDeliveryRuleSchema = z30.object({
+  id: z30.string().uuid(),
+  projectId: z30.string().uuid(),
+  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)),
+  destinations: z30.array(DeliveryRuleDestinationSchema),
   condition: DeliveryRuleConditionSchema,
   component: DeliveryRuleComponentSchema.nullable(),
-  componentId: z29.string().uuid().nullable(),
-  includeDescendants: z29.boolean(),
-  suspendedAt: z29.string().datetime().nullable(),
-  suspensionReason: z29.string().nullable(),
-  components: z29.array(DeliveryRuleComponentSchema),
-  createdAt: z29.string().datetime(),
-  updatedAt: z29.string().datetime()
+  componentId: z30.string().uuid().nullable(),
+  includeDescendants: z30.boolean(),
+  suspendedAt: z30.string().datetime().nullable(),
+  suspensionReason: z30.string().nullable(),
+  components: z30.array(DeliveryRuleComponentSchema),
+  createdAt: z30.string().datetime(),
+  updatedAt: z30.string().datetime()
 });
-var ProjectScopeSchema = z29.object({
-  projectId: z29.string().uuid().optional().describe("Project whose notification delivery rules are being managed.")
+var ProjectScopeSchema = z30.object({
+  projectId: z30.string().uuid().optional().describe("Project whose notification delivery rules are being managed.")
 });
-var DeliveryRuleIdSchema = z29.string().uuid().describe("Logical notification delivery rule ID.");
+var DeliveryRuleIdSchema = z30.string().uuid().describe("Logical notification delivery rule ID.");
 var ListDeliveryRulesInputSchema = ProjectScopeSchema;
-var ListDeliveryRulesOutputSchema = z29.object({
-  rules: z29.array(ProjectDeliveryRuleSchema)
+var ListDeliveryRulesOutputSchema = z30.object({
+  rules: z30.array(ProjectDeliveryRuleSchema)
 });
-var DeliveryRuleOptionsOutputSchema = z29.object({
-  destinations: z29.array(DeliveryRuleDestinationSchema),
-  notificationTypes: z29.array(z29.object({
-    notificationType: z29.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES),
-    label: z29.string(),
-    conditions: z29.array(z29.enum(["component", "severity"]))
+var DeliveryRuleChannelCatalogStateSchema = z30.object({
+  status: z30.enum(["pending", "refreshing", "ready", "error"]),
+  lastSucceededAt: z30.string().nullable(),
+  isInitialSyncPending: z30.boolean().describe("True while the provider's channel catalog has never completed its first sync. Destinations for that provider appear once the initial background sync finishes; treat an empty destination list as loading, not empty.")
+}).describe("Sync state of a provider's channel catalog backing the destination list.");
+var DeliveryRuleOptionsOutputSchema = z30.object({
+  destinations: z30.array(DeliveryRuleDestinationSchema),
+  notificationTypes: z30.array(z30.object({
+    notificationType: z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES),
+    label: z30.string(),
+    conditions: z30.array(z30.enum(["component", "severity"]))
   })),
-  components: z29.array(DeliveryRuleComponentSchema)
+  components: z30.array(DeliveryRuleComponentSchema),
+  channelCatalogs: z30.object({
+    slack: DeliveryRuleChannelCatalogStateSchema.nullable(),
+    microsoftTeams: DeliveryRuleChannelCatalogStateSchema.nullable()
+  }).optional()
 });
 var CreateDeliveryRuleInputSchema = ProjectScopeSchema.extend(DeliveryRuleDefinitionInputObjectSchema.shape).superRefine(rejectConflictingComponentInputs);
 var CreateDeliveryRuleOutputSchema = ProjectDeliveryRuleSchema;
@@ -49810,11 +50462,12 @@ var UpdateDeliveryRuleOutputSchema = ProjectDeliveryRuleSchema;
 var DeleteDeliveryRuleInputSchema = ProjectScopeSchema.extend({
   ruleId: DeliveryRuleIdSchema
 });
-var DeleteDeliveryRuleOutputSchema = z29.object({
-  removed: z29.boolean()
+var DeleteDeliveryRuleOutputSchema = z30.object({
+  removed: z30.boolean()
 });
 var listDeliveryRules = defineOperation({
   operationId: "notificationDeliveryRules.list",
+  summary: "List delivery rules",
   description: "List the positive delivery rules for a project.",
   backend: "api",
   route: {
@@ -49829,6 +50482,7 @@ var listDeliveryRules = defineOperation({
 });
 var getDeliveryRuleOptions = defineOperation({
   operationId: "notificationDeliveryRules.options",
+  summary: "Get delivery rule options",
   description: "List available destinations, events, and conditions for project delivery rules.",
   backend: "api",
   route: {
@@ -49843,6 +50497,7 @@ var getDeliveryRuleOptions = defineOperation({
 });
 var createDeliveryRule = defineOperation({
   operationId: "notificationDeliveryRules.create",
+  summary: "Create a delivery rule",
   description: "Create a positive project notification delivery rule.",
   backend: "api",
   route: {
@@ -49857,6 +50512,7 @@ var createDeliveryRule = defineOperation({
 });
 var updateDeliveryRule = defineOperation({
   operationId: "notificationDeliveryRules.update",
+  summary: "Update a delivery rule",
   description: "Replace a positive delivery rule atomically.",
   backend: "api",
   route: {
@@ -49871,6 +50527,7 @@ var updateDeliveryRule = defineOperation({
 });
 var deleteDeliveryRule = defineOperation({
   operationId: "notificationDeliveryRules.delete",
+  summary: "Delete a delivery rule",
   description: "Delete a positive delivery rule without deleting its reusable destinations.",
   backend: "api",
   route: {
@@ -49892,8 +50549,8 @@ var notificationDeliveryRulesContract = {
 };
 
 // ../public-api-contracts/src/onboarding.ts
-import { z as z30 } from "zod";
-var OnboardingStepIdSchema = z30.enum([
+import { z as z31 } from "zod";
+var OnboardingStepIdSchema = z31.enum([
   "verify-email",
   "accept-invite",
   "create-organization",
@@ -49908,52 +50565,54 @@ var OnboardingStepIdSchema = z30.enum([
   "confirm-issue",
   "finish"
 ]);
-var OnboardingGateSchema = z30.enum([
+var OnboardingGateSchema = z31.enum([
   "needs-onboarding",
   "blocked",
+  "access-denied",
   "ready"
 ]);
-var OnboardingCompletionStatusSchema = z30.enum([
+var OnboardingCompletionStatusSchema = z31.enum([
   "incomplete",
   "complete",
   "skipped"
 ]);
-var OnboardingInvitationSchema = z30.object({
-  invitationId: z30.string(),
-  organizationId: z30.string(),
-  organizationName: z30.string(),
-  organizationSlug: z30.string(),
-  organizationImageUrl: z30.string().nullable(),
-  inviterName: z30.string().nullable()
+var OnboardingInvitationSchema = z31.object({
+  invitationId: z31.string(),
+  organizationId: z31.string(),
+  organizationName: z31.string(),
+  organizationSlug: z31.string(),
+  organizationImageUrl: z31.string().nullable(),
+  inviterName: z31.string().nullable()
 });
-var OnboardingSnapshotSchema = z30.object({
+var OnboardingSnapshotSchema = z31.object({
   gate: OnboardingGateSchema,
   canonicalStep: OnboardingStepIdSchema.nullable(),
-  organizationId: z30.string().nullable(),
-  projectId: z30.string().nullable(),
-  completionByStep: z30.record(OnboardingStepIdSchema, OnboardingCompletionStatusSchema),
-  githubSkipped: z30.boolean(),
-  githubAppSkipped: z30.boolean(),
-  slackSkipped: z30.boolean(),
-  sampleIssueId: z30.string().nullable(),
-  actorRole: z30.enum(["admin", "member"]).nullable(),
-  requiredStep: z30.union([OnboardingStepIdSchema, z30.literal("select-organization")]).nullable(),
-  isCompleted: z30.boolean(),
-  onboardingRecommendationsThreadId: z30.string().nullable(),
-  hasOrganizations: z30.boolean(),
-  hasPaidBillingSubscription: z30.boolean(),
-  billingStepEnabled: z30.boolean(),
-  pendingInvitations: z30.array(OnboardingInvitationSchema)
+  organizationId: z31.string().nullable(),
+  projectId: z31.string().nullable(),
+  completionByStep: z31.record(OnboardingStepIdSchema, OnboardingCompletionStatusSchema),
+  githubSkipped: z31.boolean(),
+  githubAppSkipped: z31.boolean(),
+  slackSkipped: z31.boolean(),
+  sampleIssueId: z31.string().nullable(),
+  actorRole: z31.enum(["admin", "member"]).nullable(),
+  requiredStep: z31.union([OnboardingStepIdSchema, z31.literal("select-organization")]).nullable(),
+  isCompleted: z31.boolean(),
+  onboardingRecommendationsThreadId: z31.string().nullable(),
+  hasOrganizations: z31.boolean(),
+  hasPaidBillingSubscription: z31.boolean(),
+  billingStepEnabled: z31.boolean(),
+  pendingInvitations: z31.array(OnboardingInvitationSchema)
 });
-var GetOnboardingStateInputSchema = z30.object({
-  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
-  projectId: z30.string().uuid().optional().describe("Project whose onboarding state to bind (sample-issue attempt and project-scoped facts). Auto-filled from CLI and SDK context when omitted.")
+var GetOnboardingStateInputSchema = z31.object({
+  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z31.string().uuid().optional().describe("Project whose onboarding state to bind (sample-issue attempt and project-scoped facts). Auto-filled from CLI and SDK context when omitted.")
 });
-var GetOnboardingStateOutputSchema = z30.object({
+var GetOnboardingStateOutputSchema = z31.object({
   onboarding: OnboardingSnapshotSchema
 });
 var getOnboardingState = defineOperation({
   operationId: "onboarding.getState",
+  summary: "Get onboarding state",
   description: "Read onboarding progress for the authenticated user.",
   backend: "api",
   route: {
@@ -49966,16 +50625,17 @@ var getOnboardingState = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingIntegrationInputSchema = z30.object({
-  integration: z30.enum(["github", "slack"]).describe("Integration onboarding step to skip."),
-  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
-  projectId: z30.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+var SkipOnboardingIntegrationInputSchema = z31.object({
+  integration: z31.enum(["github", "slack"]).describe("Integration onboarding step to skip."),
+  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z31.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
-var SkipOnboardingIntegrationOutputSchema = z30.object({
-  skipped: z30.literal(true)
+var SkipOnboardingIntegrationOutputSchema = z31.object({
+  skipped: z31.literal(true)
 });
 var skipOnboardingIntegration = defineOperation({
   operationId: "onboarding.skipIntegration",
+  summary: "Skip an integration step",
   description: "Skip a GitHub or Slack integration step during onboarding.",
   backend: "api",
   route: {
@@ -49988,16 +50648,16 @@ var skipOnboardingIntegration = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingGithubAppInstallationInputSchema = z30.object({
-  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
-  projectId: z30.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+var SkipOnboardingGithubAppInstallationInputSchema = z31.object({
+  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z31.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
-var SkipOnboardingGithubAppInstallationOutputSchema = z30.object({
-  skipped: z30.literal(true)
+var SkipOnboardingGithubAppInstallationOutputSchema = z31.object({
+  skipped: z31.literal(true)
 });
 var skipOnboardingGithubAppInstallation = defineOperation({
   operationId: "onboarding.skipGithubAppInstallation",
-  summary: "Skip GitHub App Installation",
+  summary: "Skip GitHub App installation",
   description: "Skip GitHub App installation during onboarding.",
   backend: "api",
   route: {
@@ -50010,16 +50670,16 @@ var skipOnboardingGithubAppInstallation = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingSampleIssueInputSchema = z30.object({
-  organizationId: z30.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
-  projectId: z30.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+var SkipOnboardingSampleIssueInputSchema = z31.object({
+  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z31.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
-var SkipOnboardingSampleIssueOutputSchema = z30.object({
-  skipped: z30.literal(true)
+var SkipOnboardingSampleIssueOutputSchema = z31.object({
+  skipped: z31.literal(true)
 });
 var skipOnboardingSampleIssue = defineOperation({
   operationId: "onboarding.skipSampleIssue",
-  summary: "Skip Test Issue",
+  summary: "Skip the test issue",
   description: "Skip the optional test issue during onboarding.",
   backend: "api",
   route: {
@@ -50032,14 +50692,15 @@ var skipOnboardingSampleIssue = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var FinishOnboardingInputSchema = z30.object({
-  projectId: z30.string().uuid().describe("Project that completed onboarding.")
+var FinishOnboardingInputSchema = z31.object({
+  projectId: z31.string().uuid().describe("Project that completed onboarding.")
 });
-var FinishOnboardingOutputSchema = z30.object({
-  completed: z30.boolean()
+var FinishOnboardingOutputSchema = z31.object({
+  completed: z31.boolean()
 });
 var finishOnboarding = defineOperation({
   operationId: "onboarding.finish",
+  summary: "Finish onboarding",
   description: "Mark onboarding complete when all prerequisites are satisfied.",
   backend: "api",
   route: {
@@ -50061,42 +50722,43 @@ var onboardingContract = {
 };
 
 // ../public-api-contracts/src/organizations.ts
-import { z as z31 } from "zod";
-var OrganizationSchema = z31.object({
-  id: z31.string().min(1),
-  name: z31.string(),
-  slug: z31.string(),
-  logo: z31.string().nullable().optional()
+import { z as z32 } from "zod";
+var OrganizationSchema = z32.object({
+  id: z32.string().min(1),
+  name: z32.string(),
+  slug: z32.string(),
+  logo: z32.string().nullable().optional()
 });
 var ListedOrganizationSchema = OrganizationSchema.extend({
   role: OrganizationMembershipRoleSchema.optional()
 });
-var ListOrganizationsInputSchema = z31.object({});
-var ListOrganizationsOutputSchema = z31.object({
-  organizations: z31.array(ListedOrganizationSchema).describe("Organizations available to the current credential.")
+var ListOrganizationsInputSchema = z32.object({});
+var ListOrganizationsOutputSchema = z32.object({
+  organizations: z32.array(ListedOrganizationSchema).describe("Organizations available to the current credential.")
 });
-var GetOrganizationInputSchema = z31.object({
-  organizationId: z31.string().min(1).describe("Organization ID to fetch.")
+var GetOrganizationInputSchema = z32.object({
+  organizationId: z32.string().min(1).describe("Organization ID to fetch.")
 });
-var GetOrganizationOutputSchema = z31.object({
+var GetOrganizationOutputSchema = z32.object({
   organization: OrganizationSchema
 });
-var UpdateOrganizationInputSchema = z31.object({
-  organizationId: z31.string().min(1).describe("Organization ID to update. SDK and CLI callers can auto-fill this before dispatch."),
-  name: z31.string().trim().min(1).max(100).describe("New organization name.")
+var UpdateOrganizationInputSchema = z32.object({
+  organizationId: z32.string().min(1).describe("Organization ID to update. SDK and CLI callers can auto-fill this before dispatch."),
+  name: z32.string().trim().min(1).max(100).describe("New organization name.")
 });
-var UpdateOrganizationOutputSchema = z31.object({
+var UpdateOrganizationOutputSchema = z32.object({
   organization: OrganizationSchema.describe("Updated organization.")
 });
-var OrganizationNameSchema = z31.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
-var CreateOrganizationInputSchema = z31.object({
+var OrganizationNameSchema = z32.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
+var CreateOrganizationInputSchema = z32.object({
   name: OrganizationNameSchema.describe("Organization display name.")
 });
-var CreateOrganizationOutputSchema = z31.object({
+var CreateOrganizationOutputSchema = z32.object({
   organization: OrganizationSchema
 });
 var createOrganization = defineOperation({
   operationId: "organizations.create",
+  summary: "Create an organization",
   description: "Create an organization for the authenticated user.",
   backend: "api",
   route: {
@@ -50112,6 +50774,7 @@ var createOrganization = defineOperation({
 });
 var listOrganizations = defineOperation({
   operationId: "organizations.list",
+  summary: "List organizations",
   description: "List organizations available to the current credential.",
   backend: "api",
   route: {
@@ -50126,6 +50789,7 @@ var listOrganizations = defineOperation({
 });
 var getOrganization = defineOperation({
   operationId: "organizations.get",
+  summary: "Get an organization",
   description: "Get one organization by ID.",
   backend: "api",
   route: {
@@ -50140,6 +50804,7 @@ var getOrganization = defineOperation({
 });
 var updateOrganization = defineOperation({
   operationId: "organizations.update",
+  summary: "Update an organization",
   description: "Update one organization.",
   backend: "api",
   route: {
@@ -50177,8 +50842,8 @@ var organizationsContract = {
 };
 
 // ../public-api-contracts/src/project.ts
-import { z as z32 } from "zod";
-var ProjectRegionSchema = z32.enum([
+import { z as z33 } from "zod";
+var ProjectRegionSchema = z33.enum([
   "us-east-1",
   "us-east-2",
   "us-west-1",
@@ -50192,35 +50857,36 @@ var ProjectRegionSchema = z32.enum([
   "eu-west-2",
   "eu-west-3"
 ]);
-var ProjectSchema = z32.object({
-  id: z32.string().uuid(),
-  organizationId: z32.string().min(1),
-  name: z32.string(),
+var ProjectSchema = z33.object({
+  id: z33.string().uuid(),
+  organizationId: z33.string().min(1),
+  name: z33.string(),
   region: ProjectRegionSchema
 });
-var ListProjectsInputSchema = z32.object({
-  organizationId: z32.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.")
+var ListProjectsInputSchema = z33.object({
+  organizationId: z33.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
-var ListProjectsOutputSchema = z32.object({
-  projects: z32.array(ProjectSchema).describe("Projects visible within the selected organization.")
+var ListProjectsOutputSchema = z33.object({
+  projects: z33.array(ProjectSchema).describe("Projects visible within the selected organization.")
 });
-var GetProjectInputSchema = z32.object({
-  projectId: z32.string().uuid().describe("Project ID to fetch.")
+var GetProjectInputSchema = z33.object({
+  projectId: z33.string().uuid().describe("Project ID to fetch.")
 });
-var ProjectNameSchema = z32.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
-var CreateProjectInputSchema = z32.object({
-  organizationId: z32.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers."),
+var ProjectNameSchema = z33.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
+var CreateProjectInputSchema = z33.object({
+  organizationId: z33.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   name: ProjectNameSchema.describe("Project name."),
   region: ProjectRegionSchema.optional().default("us-west-2").describe("AWS region where the new project should be created.")
 });
-var CreateProjectOutputSchema = z32.object({
+var CreateProjectOutputSchema = z33.object({
   project: ProjectSchema
 });
-var GetProjectDetailsOutputSchema = z32.object({
+var GetProjectDetailsOutputSchema = z33.object({
   project: ProjectSchema
 });
 var listProjects = defineOperation({
   operationId: "projects.list",
+  summary: "List projects",
   description: "List projects in an organization.",
   backend: "api",
   route: {
@@ -50235,6 +50901,7 @@ var listProjects = defineOperation({
 });
 var getProject = defineOperation({
   operationId: "projects.get",
+  summary: "Get a project",
   description: "Get one project by ID.",
   backend: "api",
   route: {
@@ -50249,6 +50916,7 @@ var getProject = defineOperation({
 });
 var createProject = defineOperation({
   operationId: "projects.create",
+  summary: "Create a project",
   description: "Create one project in an organization.",
   backend: "api",
   route: {
@@ -50262,15 +50930,16 @@ var createProject = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpdateProjectInputSchema = z32.object({
-  projectId: z32.string().uuid().describe("Project ID to update."),
+var UpdateProjectInputSchema = z33.object({
+  projectId: z33.string().uuid().describe("Project ID to update."),
   name: ProjectNameSchema.optional().describe("New project name.")
 });
-var UpdateProjectOutputSchema = z32.object({
+var UpdateProjectOutputSchema = z33.object({
   project: ProjectSchema
 });
 var updateProject = defineOperation({
   operationId: "projects.update",
+  summary: "Update a project",
   description: "Update (rename) one project by ID. User credentials require the `settings:write` organization permission (admin or owner role).",
   backend: "api",
   route: {
@@ -50283,12 +50952,13 @@ var updateProject = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteProjectInputSchema = z32.object({
-  projectId: z32.string().uuid().describe("Project ID to delete.")
+var DeleteProjectInputSchema = z33.object({
+  projectId: z33.string().uuid().describe("Project ID to delete.")
 });
-var DeleteProjectOutputSchema = z32.void();
+var DeleteProjectOutputSchema = z33.void();
 var deleteProject = defineOperation({
   operationId: "projects.delete",
+  summary: "Delete a project",
   description: "Delete one project by ID. User credentials require the `settings:write` organization permission (admin or owner role).",
   backend: "api",
   route: {
@@ -50311,52 +50981,53 @@ var projectsContract = {
 };
 
 // ../public-api-contracts/src/pull-requests.ts
-import { z as z33 } from "zod";
-var PullRequestStatusSchema = z33.enum(["open", "merged", "closed"]);
-var PullRequestReviewStateSchema = z33.enum([
+import { z as z34 } from "zod";
+var PullRequestStatusSchema = z34.enum(["open", "merged", "closed"]);
+var PullRequestReviewStateSchema = z34.enum([
   "review_required",
   "approved",
   "changes_requested"
 ]);
-var PullRequestChecksStateSchema = z33.enum([
+var PullRequestChecksStateSchema = z34.enum([
   "passing",
   "failing",
   "pending"
 ]);
-var PullRequestSchema = z33.object({
-  id: z33.string().uuid(),
-  projectId: z33.string().uuid(),
-  repositoryFullName: z33.string(),
-  pullRequestId: z33.string().describe("Provider-native pull request identifier (GitHub PR number or Bitbucket PR id), serialized as a string."),
-  githubPullRequestId: z33.number().int().describe("Deprecated: use pullRequestId. Numeric form of the provider-native pull request identifier; kept for backward compatibility."),
-  title: z33.string().nullable(),
-  url: z33.string().nullable(),
+var PullRequestSchema = z34.object({
+  id: z34.string().uuid(),
+  projectId: z34.string().uuid(),
+  repositoryFullName: z34.string(),
+  pullRequestId: z34.string().describe("Provider-native pull request identifier (GitHub PR number or Bitbucket PR id), serialized as a string."),
+  githubPullRequestId: z34.number().int().describe("Deprecated: use pullRequestId. Numeric form of the provider-native pull request identifier; kept for backward compatibility."),
+  title: z34.string().nullable(),
+  url: z34.string().nullable(),
   status: PullRequestStatusSchema.nullable(),
   reviewState: PullRequestReviewStateSchema.nullable(),
   checksState: PullRequestChecksStateSchema.nullable(),
-  requestedByUserId: z33.string().nullable(),
-  authorLogin: z33.string().nullable().describe("Forge login that authored the pull request (often the Sazabi app identity)."),
-  githubAuthorLogin: z33.string().nullable().describe("Deprecated: use authorLogin. Kept for backward compatibility."),
-  threadId: z33.string().uuid().nullable(),
-  runId: z33.string().uuid().nullable(),
-  createdAt: z33.string().datetime(),
-  mergedAt: z33.string().datetime().nullable(),
-  closedAt: z33.string().datetime().nullable()
+  requestedByUserId: z34.string().nullable(),
+  authorLogin: z34.string().nullable().describe("Forge login that authored the pull request (often the Sazabi app identity)."),
+  githubAuthorLogin: z34.string().nullable().describe("Deprecated: use authorLogin. Kept for backward compatibility."),
+  threadId: z34.string().uuid().nullable(),
+  runId: z34.string().uuid().nullable(),
+  createdAt: z34.string().datetime(),
+  mergedAt: z34.string().datetime().nullable(),
+  closedAt: z34.string().datetime().nullable()
 });
-var ListPullRequestsInputSchema = z33.object({
-  projectId: z33.string().uuid().optional().describe("Project to list pull requests for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z33.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of pull requests to return per page."),
-  cursor: z33.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+var ListPullRequestsInputSchema = z34.object({
+  projectId: z34.string().uuid().optional().describe("Project to list pull requests for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z34.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of pull requests to return per page."),
+  cursor: z34.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
   status: PullRequestStatusSchema.optional().describe("Filter by pull request status (open, merged, or closed)."),
-  repositoryFullName: z33.string().trim().optional().describe("Filter by repository full name, for example owner/repo. Case-insensitive."),
-  requestedByUserId: z33.string().trim().optional().describe("Filter by the Sazabi user who requested the pull request. Pass 'me' to filter to the authenticated user.")
+  repositoryFullName: z34.string().trim().optional().describe("Filter by repository full name, for example owner/repo. Case-insensitive."),
+  requestedByUserId: z34.string().trim().optional().describe("Filter by the Sazabi user who requested the pull request. Pass 'me' to filter to the authenticated user.")
 });
-var ListPullRequestsOutputSchema = z33.object({
-  pullRequests: z33.array(PullRequestSchema),
-  nextCursor: z33.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListPullRequestsOutputSchema = z34.object({
+  pullRequests: z34.array(PullRequestSchema),
+  nextCursor: z34.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
 var listPullRequests = defineOperation({
   operationId: "pullRequests.list",
+  summary: "List pull requests",
   description: "List pull requests that Sazabi opened, optionally filtered by status, repository, and requesting user.",
   backend: "api",
   route: { method: "GET", path: "/pull-requests", tags: ["Pull Requests"] },
@@ -50370,29 +51041,30 @@ var pullRequestsContract = {
 };
 
 // ../public-api-contracts/src/recommendations.ts
-import { z as z34 } from "zod";
-var RecommendationKindSchema = z34.enum([
+import { z as z35 } from "zod";
+var RecommendationKindSchema = z35.enum([
   "log_source",
   "mcp_connector",
   "sandbox_cli",
   "integration"
 ]);
-var RecommendationStatusSchema = z34.enum(["connected", "recommended"]);
-var RecommendationSchema = z34.object({
+var RecommendationStatusSchema = z35.enum(["connected", "recommended"]);
+var RecommendationSchema = z35.object({
   kind: RecommendationKindSchema.describe("What the recommendation targets: a log source, MCP connector, sandbox CLI, or integration."),
-  targetId: z34.string().describe("Exact catalog id for the kind (log source type, MCP provider id, sandbox CLI preset type, or integration provider id)."),
+  targetId: z35.string().describe("Exact catalog id for the kind (log source type, MCP provider id, sandbox CLI preset type, or integration provider id)."),
   status: RecommendationStatusSchema.describe("Resolved live against current connections: connected (already set up) or recommended (suggested, not yet connected)."),
-  roiScore: z34.number().int().min(0).max(100).describe("Intrinsic ROI score, 0–100 — a normalized blend of how valuable, how easy to connect, and how proven the item is. A pure function of the item; computed live on read, never stored."),
-  priority: z34.number().int().min(1).describe("1-based rank within this list, sorted by roiScore (best first). Items are already returned in priority order; the field lets consumers recover the rank without trusting array position.")
+  roiScore: z35.number().int().min(0).max(100).describe("Intrinsic ROI score, 0–100 — a normalized blend of how valuable, how easy to connect, and how proven the item is. A pure function of the item; computed live on read, never stored."),
+  priority: z35.number().int().min(1).describe("1-based rank within this list, sorted by roiScore (best first). Items are already returned in priority order; the field lets consumers recover the rank without trusting array position.")
 });
-var ListRecommendationsInputSchema = z34.object({
-  projectId: z34.string().uuid().optional().describe("Project to list recommendations for. Auto-filled from CLI and SDK context when omitted.")
+var ListRecommendationsInputSchema = z35.object({
+  projectId: z35.string().uuid().optional().describe("Project to list recommendations for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListRecommendationsOutputSchema = z34.object({
-  recommendations: z34.array(RecommendationSchema).describe("The project's configuration recommendations, deduped by (kind, targetId), with status resolved live and each item's ROI score. Returned in priority order (highest roiScore first).")
+var ListRecommendationsOutputSchema = z35.object({
+  recommendations: z35.array(RecommendationSchema).describe("The project's configuration recommendations, deduped by (kind, targetId), with status resolved live and each item's ROI score. Returned in priority order (highest roiScore first).")
 });
 var listRecommendations = defineOperation({
   operationId: "recommendations.list",
+  summary: "List recommendations",
   description: "List a project's configuration recommendations (data sources, MCP connectors, sandbox CLIs, and integrations) with each item's live connection status.",
   backend: "api",
   route: {
@@ -50407,41 +51079,42 @@ var listRecommendations = defineOperation({
 });
 
 // ../public-api-contracts/src/repos.ts
-import { z as z35 } from "zod";
-var RepoProviderSchema = z35.enum(["github", "bitbucket"]);
-var RepoSchema = z35.object({
-  id: z35.string().uuid().describe("Repository row id — stable across access sources; use it as the path id for repos.remove."),
-  accessSourceId: z35.string().uuid().describe("Access source granting this view of the repository (GitHub App installation, personal connection, or integration). Pass to repos.add to link the repository through this source."),
-  source: z35.enum(["githubApp", "personal", "integration"]).describe("Kind of access source granting this view: an organization GitHub App installation, the caller's personal forge connection, or an organization integration."),
-  sourceLabel: z35.string().describe('Display label for the access source (e.g. "GitHub app", "Personal").'),
+import { z as z36 } from "zod";
+var RepoProviderSchema = z36.enum(["github", "bitbucket"]);
+var RepoSchema = z36.object({
+  id: z36.string().uuid().describe("Repository row id — stable across access sources; use it as the path id for repos.remove."),
+  accessSourceId: z36.string().uuid().describe("Access source granting this view of the repository (GitHub App installation, personal connection, or integration). Pass to repos.add to link the repository through this source."),
+  source: z36.enum(["githubApp", "personal", "integration"]).describe("Kind of access source granting this view: an organization GitHub App installation, the caller's personal forge connection, or an organization integration."),
+  sourceLabel: z36.string().describe('Display label for the access source (e.g. "GitHub app", "Personal").'),
   provider: RepoProviderSchema.describe("Forge hosting the repository."),
-  owner: z35.string().describe("Repository owner (user or organization)."),
-  name: z35.string().describe("Repository name without the owner."),
-  fullName: z35.string().describe("Full name in owner/name form."),
-  defaultBranch: z35.string().nullable().describe("Default branch, when the forge reports one."),
-  isPrivate: z35.boolean().describe("Whether the repository is private."),
-  linked: z35.boolean().describe("Whether the repository is already linked to the project.")
+  owner: z36.string().describe("Repository owner (user or organization)."),
+  name: z36.string().describe("Repository name without the owner."),
+  fullName: z36.string().describe("Full name in owner/name form."),
+  defaultBranch: z36.string().nullable().describe("Default branch, when the forge reports one."),
+  isPrivate: z36.boolean().describe("Whether the repository is private."),
+  linked: z36.boolean().describe("Whether the repository is already linked to the project.")
 });
-var ListReposInputSchema = z35.object({
-  projectId: z35.string().uuid().optional().describe("Project to list repositories for. Auto-filled from CLI and SDK context when omitted.")
+var ListReposInputSchema = z36.object({
+  projectId: z36.string().uuid().optional().describe("Project to list repositories for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListReposOutputSchema = z35.object({
-  repos: z35.array(RepoSchema).describe("Every repository available to the project's organization (from GitHub App installations, the caller's personal forge connections, and integrations), with `linked` marking the ones already linked to the project.")
+var ListReposOutputSchema = z36.object({
+  repos: z36.array(RepoSchema).describe("Every repository available to the project's organization (from GitHub App installations, the caller's personal forge connections, and integrations), with `linked` marking the ones already linked to the project.")
 });
-var AddReposInputSchema = z35.object({
-  projectId: z35.string().uuid().optional().describe("Project to link the repositories to. Auto-filled from CLI and SDK context when omitted."),
-  accessSourceIds: z35.array(z35.string().uuid()).min(1).describe("Access source ids (from repos.list) to link. Select only one access source per repository.")
+var AddReposInputSchema = z36.object({
+  projectId: z36.string().uuid().optional().describe("Project to link the repositories to. Auto-filled from CLI and SDK context when omitted."),
+  accessSourceIds: z36.array(z36.string().uuid()).min(1).describe("Access source ids (from repos.list) to link. Select only one access source per repository.")
 });
-var AddReposOutputSchema = z35.object({
-  repos: z35.array(RepoSchema).describe("The now-linked repositories.")
+var AddReposOutputSchema = z36.object({
+  repos: z36.array(RepoSchema).describe("The now-linked repositories.")
 });
-var RemoveRepoInputSchema = z35.object({
-  id: z35.string().uuid().describe("Repository row id (from repos.list) to unlink."),
-  projectId: z35.string().uuid().optional().describe("Project to unlink the repository from. Auto-filled from CLI and SDK context when omitted.")
+var RemoveRepoInputSchema = z36.object({
+  id: z36.string().uuid().describe("Repository row id (from repos.list) to unlink."),
+  projectId: z36.string().uuid().optional().describe("Project to unlink the repository from. Auto-filled from CLI and SDK context when omitted.")
 });
-var RemoveRepoOutputSchema = z35.void();
+var RemoveRepoOutputSchema = z36.void();
 var listRepos = defineOperation({
   operationId: "repos.list",
+  summary: "List repositories",
   description: "List the repositories available to a project — every repository reachable through the organization's GitHub App installations, the caller's personal forge connections, and integrations — with each one's linked status.",
   backend: "api",
   route: {
@@ -50456,6 +51129,7 @@ var listRepos = defineOperation({
 });
 var addRepos = defineOperation({
   operationId: "repos.add",
+  summary: "Link repositories to a project",
   description: "Link repositories to a project by access source id. Select only one access source per repository; re-linking an already-linked repository refreshes its selected access source.",
   backend: "api",
   route: {
@@ -50470,6 +51144,7 @@ var addRepos = defineOperation({
 });
 var removeRepo = defineOperation({
   operationId: "repos.remove",
+  summary: "Unlink a repository from a project",
   description: "Unlink a repository from a project by repository row id.",
   backend: "api",
   route: {
@@ -50485,20 +51160,21 @@ var removeRepo = defineOperation({
 });
 
 // ../public-api-contracts/src/sandbox-presets.ts
-import { z as z36 } from "zod";
-var SandboxPresetTypeInfoSchema = z36.object({
-  type: z36.string().describe("Preset type identifier."),
-  label: z36.string().describe("Human-readable display name."),
-  executableNames: z36.array(z36.string()).describe("CLI binary names installed by this preset."),
-  envVarKeys: z36.array(z36.string()).describe("Environment variables required for authentication."),
-  setupSkill: z36.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
+import { z as z37 } from "zod";
+var SandboxPresetTypeInfoSchema = z37.object({
+  type: z37.string().describe("Preset type identifier."),
+  label: z37.string().describe("Human-readable display name."),
+  executableNames: z37.array(z37.string()).describe("CLI binary names installed by this preset."),
+  envVarKeys: z37.array(z37.string()).describe("Environment variables required for authentication."),
+  setupSkill: z37.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
 });
-var ListSandboxPresetTypesInputSchema = z36.object({});
-var ListSandboxPresetTypesOutputSchema = z36.object({
-  types: z36.array(SandboxPresetTypeInfoSchema)
+var ListSandboxPresetTypesInputSchema = z37.object({});
+var ListSandboxPresetTypesOutputSchema = z37.object({
+  types: z37.array(SandboxPresetTypeInfoSchema)
 });
 var listSandboxPresetTypes = defineOperation({
   operationId: "sandboxPresets.listTypes",
+  summary: "List CLI types",
   description: "List all supported sandbox CLI types with their environment variable requirements and setup skills.",
   backend: "api",
   route: {
@@ -50511,27 +51187,29 @@ var listSandboxPresetTypes = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SandboxPresetCredentialSourceSchema = z36.enum([
+var SandboxPresetCredentialSourceSchema = z37.enum([
   "github_app",
   "bitbucket_integration",
   "personal_access_token",
-  "stored_credentials"
+  "stored_credentials",
+  "tailscale_federated_identity"
 ]);
-var SandboxPresetConnectionSchema = z36.object({
-  presetType: z36.string().describe("Preset type identifier."),
+var SandboxPresetConnectionSchema = z37.object({
+  presetType: z37.string().describe("Preset type identifier."),
   credentialSource: SandboxPresetCredentialSourceSchema.describe("Authoritative credential source for the preset."),
-  isSystemManaged: z36.boolean().describe("Whether the connection follows an integration lifecycle."),
-  fallbackConfigured: z36.boolean().describe("Whether user-provided fallback credentials are stored for this preset."),
-  envVarKeys: z36.array(z36.string()).describe("Stored environment variable names. Secret values are omitted.")
+  isSystemManaged: z37.boolean().describe("Whether the connection follows an integration lifecycle."),
+  fallbackConfigured: z37.boolean().describe("Whether user-provided fallback credentials are stored for this preset."),
+  envVarKeys: z37.array(z37.string()).describe("Stored environment variable names. Secret values are omitted.")
 });
-var ListSandboxPresetConnectionsInputSchema = z36.object({
-  projectId: z36.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
+var ListSandboxPresetConnectionsInputSchema = z37.object({
+  projectId: z37.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
 });
-var ListSandboxPresetConnectionsOutputSchema = z36.object({
-  connections: z36.array(SandboxPresetConnectionSchema)
+var ListSandboxPresetConnectionsOutputSchema = z37.object({
+  connections: z37.array(SandboxPresetConnectionSchema)
 });
 var listSandboxPresetConnections = defineOperation({
   operationId: "sandboxPresets.listConnections",
+  summary: "List CLI connections",
   description: "List a project's stored and integration-backed sandbox CLI connections without returning secret values.",
   backend: "api",
   route: {
@@ -50544,19 +51222,19 @@ var listSandboxPresetConnections = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SandboxPresetEnvVarSchema = z36.object({
-  key: z36.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must match /^[A-Za-z_][A-Za-z0-9_]*$/.").describe("Environment variable name (e.g. KUBECONFIG_CONTENTS)."),
-  value: z36.string().max(10 * 1024).describe("Secret value. Encrypted at rest; never returned by any API response.")
+var SandboxPresetEnvVarSchema = z37.object({
+  key: z37.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must match /^[A-Za-z_][A-Za-z0-9_]*$/.").describe("Environment variable name (e.g. KUBECONFIG_CONTENTS)."),
+  value: z37.string().max(10 * 1024).describe("Secret value. Encrypted at rest; never returned by any API response.")
 });
-var UpsertSandboxPresetInputSchema = z36.object({
-  projectId: z36.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  presetType: z36.string().min(1).describe("Preset type identifier (e.g. kubectl, aws, github)."),
-  environmentVariables: z36.array(SandboxPresetEnvVarSchema).max(100).describe("Full set of env vars for this preset. Replaces any previously stored values for the preset.")
+var UpsertSandboxPresetInputSchema = z37.object({
+  projectId: z37.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  presetType: z37.string().min(1).describe("Preset type identifier (e.g. kubectl, aws, github)."),
+  environmentVariables: z37.array(SandboxPresetEnvVarSchema).max(100).describe("Full set of env vars for this preset. Replaces any previously stored values for the preset.")
 });
-var UpsertSandboxPresetOutputSchema = z36.object({
-  projectId: z36.string().uuid().describe("Project the preset was written to."),
-  presetType: z36.string().describe("Preset type that was upserted."),
-  envVarKeys: z36.array(z36.string()).describe("Env var key names now stored for this preset. Values are never returned.")
+var UpsertSandboxPresetOutputSchema = z37.object({
+  projectId: z37.string().uuid().describe("Project the preset was written to."),
+  presetType: z37.string().describe("Preset type that was upserted."),
+  envVarKeys: z37.array(z37.string()).describe("Env var key names now stored for this preset. Values are never returned.")
 });
 var upsertSandboxPreset = defineOperation({
   operationId: "sandboxPresets.upsertPreset",
@@ -50574,14 +51252,14 @@ var upsertSandboxPreset = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteSandboxPresetInputSchema = z36.object({
-  projectId: z36.string().uuid().optional().describe("Project to update. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  presetType: z36.string().min(1).describe("Preset type identifier.")
+var DeleteSandboxPresetInputSchema = z37.object({
+  projectId: z37.string().uuid().optional().describe("Project to update. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  presetType: z37.string().min(1).describe("Preset type identifier.")
 });
-var DeleteSandboxPresetOutputSchema = z36.object({
-  projectId: z36.string().uuid().describe("Project the CLI connection belonged to."),
-  presetType: z36.string().describe("Preset type that was disconnected."),
-  deleted: z36.boolean().describe("Whether a stored CLI connection was deleted.")
+var DeleteSandboxPresetOutputSchema = z37.object({
+  projectId: z37.string().uuid().describe("Project the CLI connection belonged to."),
+  presetType: z37.string().describe("Preset type that was disconnected."),
+  deleted: z37.boolean().describe("Whether a stored CLI connection was deleted.")
 });
 var deleteSandboxPreset = defineOperation({
   operationId: "sandboxPresets.deletePreset",
@@ -50598,16 +51276,16 @@ var deleteSandboxPreset = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var TestSandboxPresetInputSchema = z36.object({
-  projectId: z36.string().uuid().optional().describe("Project to test from. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  presetType: z36.string().min(1).describe("Preset type identifier."),
-  environmentVariables: z36.array(SandboxPresetEnvVarSchema).max(100).describe("Unsaved credentials to validate in a readonly sandbox.")
+var TestSandboxPresetInputSchema = z37.object({
+  projectId: z37.string().uuid().optional().describe("Project to test from. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  presetType: z37.string().min(1).describe("Preset type identifier."),
+  environmentVariables: z37.array(SandboxPresetEnvVarSchema).max(100).describe("Unsaved credentials to validate in a readonly sandbox.")
 });
-var TestSandboxPresetOutputSchema = z36.object({
-  status: z36.enum(["success", "failed"]),
-  message: z36.string().nullable(),
-  stdout: z36.string().describe("Truncated command output with submitted credentials redacted."),
-  stderr: z36.string().describe("Truncated command errors with submitted credentials redacted.")
+var TestSandboxPresetOutputSchema = z37.object({
+  status: z37.enum(["success", "failed"]),
+  message: z37.string().nullable(),
+  stdout: z37.string().describe("Truncated command output with submitted credentials redacted."),
+  stderr: z37.string().describe("Truncated command errors with submitted credentials redacted.")
 });
 var testSandboxPreset = defineOperation({
   operationId: "sandboxPresets.testPreset",
@@ -50633,66 +51311,67 @@ var sandboxPresetsContract = {
 };
 
 // ../public-api-contracts/src/scripts.ts
-import { z as z37 } from "zod";
-var ProjectScriptNameSchema = z37.string().min(1).max(64).regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/, "Name must start with a letter or digit and contain only letters, digits, underscores, and hyphens (max 64 characters).").describe("Script name. Must be unique within the project among non-deleted scripts.");
+import { z as z38 } from "zod";
+var ProjectScriptNameSchema = z38.string().min(1).max(64).regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/, "Name must start with a letter or digit and contain only letters, digits, underscores, and hyphens (max 64 characters).").describe("Script name. Must be unique within the project among non-deleted scripts.");
 var PROJECT_SCRIPT_CONTENT_MAX_BYTES = 1024 * 1024;
-var ProjectScriptContentSchema = z37.string().min(1).refine((value) => new TextEncoder().encode(value).length <= PROJECT_SCRIPT_CONTENT_MAX_BYTES, {
+var ProjectScriptContentSchema = z38.string().min(1).refine((value) => new TextEncoder().encode(value).length <= PROJECT_SCRIPT_CONTENT_MAX_BYTES, {
   message: `Script content must be at most ${PROJECT_SCRIPT_CONTENT_MAX_BYTES} bytes (1 MiB).`
 }).describe("Bash script body materialized as /home/sazabi/scripts/<name>.sh in the sandbox.");
-var ProjectScriptSchema = z37.object({
-  id: z37.string().uuid(),
-  projectId: z37.string().uuid(),
-  name: z37.string(),
-  description: z37.string().nullable(),
-  contentHash: z37.string().describe("sha256 hex digest of the script content."),
-  createdAt: z37.string().datetime(),
-  updatedAt: z37.string().datetime()
+var ProjectScriptSchema = z38.object({
+  id: z38.string().uuid(),
+  projectId: z38.string().uuid(),
+  name: z38.string(),
+  description: z38.string().nullable(),
+  contentHash: z38.string().describe("sha256 hex digest of the script content."),
+  createdAt: z38.string().datetime(),
+  updatedAt: z38.string().datetime()
 });
 var ProjectScriptDetailSchema = ProjectScriptSchema.extend({
   content: ProjectScriptContentSchema
 });
-var ListProjectScriptsInputSchema = z37.object({
-  projectId: z37.string().uuid().optional().describe("Project to list scripts for. Auto-filled from CLI and SDK context when omitted."),
-  search: z37.string().optional().describe("Case-insensitive partial match on script name."),
-  cursor: z37.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  limit: z37.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of scripts to return per page.")
+var ListProjectScriptsInputSchema = z38.object({
+  projectId: z38.string().uuid().optional().describe("Project to list scripts for. Auto-filled from CLI and SDK context when omitted."),
+  search: z38.string().optional().describe("Case-insensitive partial match on script name."),
+  cursor: z38.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  limit: z38.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of scripts to return per page.")
 });
-var ListProjectScriptsOutputSchema = z37.object({
-  scripts: z37.array(ProjectScriptSchema),
-  nextCursor: z37.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListProjectScriptsOutputSchema = z38.object({
+  scripts: z38.array(ProjectScriptSchema),
+  nextCursor: z38.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetProjectScriptInputSchema = z37.object({
+var GetProjectScriptInputSchema = z38.object({
   name: ProjectScriptNameSchema.describe("Script name to fetch."),
-  projectId: z37.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z38.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
 });
-var GetProjectScriptOutputSchema = z37.object({
+var GetProjectScriptOutputSchema = z38.object({
   script: ProjectScriptDetailSchema
 });
-var CreateProjectScriptInputSchema = z37.object({
-  projectId: z37.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
+var CreateProjectScriptInputSchema = z38.object({
+  projectId: z38.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
   name: ProjectScriptNameSchema.describe("Script name. Must be unique within the project among non-deleted scripts."),
   content: ProjectScriptContentSchema,
-  description: z37.string().max(500).nullable().optional().describe("Optional human-readable description.")
+  description: z38.string().max(500).nullable().optional().describe("Optional human-readable description.")
 });
-var CreateProjectScriptOutputSchema = z37.object({
+var CreateProjectScriptOutputSchema = z38.object({
   script: ProjectScriptDetailSchema
 });
-var UpdateProjectScriptInputSchema = z37.object({
+var UpdateProjectScriptInputSchema = z38.object({
   name: ProjectScriptNameSchema.describe("Script to update."),
-  projectId: z37.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
+  projectId: z38.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
   content: ProjectScriptContentSchema.optional().describe("New script body. Omit to leave content unchanged."),
-  description: z37.string().max(500).nullable().optional().describe("New description, or null to clear it. Omit to leave unchanged.")
+  description: z38.string().max(500).nullable().optional().describe("New description, or null to clear it. Omit to leave unchanged.")
 });
-var UpdateProjectScriptOutputSchema = z37.object({
+var UpdateProjectScriptOutputSchema = z38.object({
   script: ProjectScriptDetailSchema
 });
-var DeleteProjectScriptInputSchema = z37.object({
+var DeleteProjectScriptInputSchema = z38.object({
   name: ProjectScriptNameSchema.describe("Script to delete."),
-  projectId: z37.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z38.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
 });
-var DeleteProjectScriptOutputSchema = z37.void();
+var DeleteProjectScriptOutputSchema = z38.void();
 var listProjectScripts = defineOperation({
   operationId: "scripts.list",
+  summary: "List scripts",
   description: "List durable bash scripts stored for a project.",
   backend: "api",
   route: {
@@ -50707,6 +51386,7 @@ var listProjectScripts = defineOperation({
 });
 var getProjectScript = defineOperation({
   operationId: "scripts.get",
+  summary: "Get a script",
   description: "Get a single project script by name, including its body.",
   backend: "api",
   route: {
@@ -50721,6 +51401,7 @@ var getProjectScript = defineOperation({
 });
 var createProjectScript = defineOperation({
   operationId: "scripts.create",
+  summary: "Create a script",
   description: "Create a durable bash script for a project.",
   backend: "api",
   route: {
@@ -50736,6 +51417,7 @@ var createProjectScript = defineOperation({
 });
 var updateProjectScript = defineOperation({
   operationId: "scripts.update",
+  summary: "Update a script",
   description: "Update a project script's body and/or description.",
   backend: "api",
   route: {
@@ -50750,6 +51432,7 @@ var updateProjectScript = defineOperation({
 });
 var deleteProjectScript = defineOperation({
   operationId: "scripts.delete",
+  summary: "Delete a script",
   description: "Soft-delete a project script by name.",
   backend: "api",
   route: {
@@ -50772,60 +51455,61 @@ var scriptsContract = {
 };
 
 // ../public-api-contracts/src/search.ts
-import { z as z38 } from "zod";
-var SearchInputSchema = z38.object({
-  projectId: z38.string().uuid().optional().describe("Project to search within. Auto-filled from CLI and SDK context when omitted."),
-  query: z38.string().trim().min(1, "Query must be at least 1 character").max(500, "Query must be at most 500 characters"),
-  limit: z38.coerce.number().min(1).max(100).default(20).describe("Maximum number of search results to return."),
-  page: z38.coerce.number().min(1).default(1).describe("One-based page number.")
+import { z as z39 } from "zod";
+var SearchInputSchema = z39.object({
+  projectId: z39.string().uuid().optional().describe("Project to search within. Auto-filled from CLI and SDK context when omitted."),
+  query: z39.string().trim().min(1, "Query must be at least 1 character").max(500, "Query must be at most 500 characters"),
+  limit: z39.coerce.number().min(1).max(100).default(20).describe("Maximum number of search results to return."),
+  page: z39.coerce.number().min(1).default(1).describe("One-based page number.")
 });
 var SearchThreadsInputSchema = SearchInputSchema.extend({
-  status: z38.enum(["regular", "archived"]).optional().describe("Optional thread status filter.")
+  status: z39.enum(["regular", "archived"]).optional().describe("Optional thread status filter.")
 });
 var SearchMessagesInputSchema = SearchInputSchema.extend({
-  threadId: z38.string().uuid().optional().describe("Optional thread restriction for message search."),
-  role: z38.enum(["user", "assistant"]).optional().describe("Optional message role filter.")
+  threadId: z39.string().uuid().optional().describe("Optional thread restriction for message search."),
+  role: z39.enum(["user", "assistant"]).optional().describe("Optional message role filter.")
 });
-var SearchThreadsOutputSchema = z38.object({
-  threads: z38.array(z38.object({
-    id: z38.string().uuid(),
-    projectId: z38.string().uuid().optional(),
-    title: z38.string(),
-    status: z38.enum(["regular", "archived"]),
-    labels: z38.array(z38.string()),
-    createdAt: z38.string().datetime(),
-    updatedAt: z38.string().datetime(),
-    highlights: z38.array(z38.string()),
-    score: z38.number().optional()
+var SearchThreadsOutputSchema = z39.object({
+  threads: z39.array(z39.object({
+    id: z39.string().uuid(),
+    projectId: z39.string().uuid().optional(),
+    title: z39.string(),
+    status: z39.enum(["regular", "archived"]),
+    labels: z39.array(z39.string()),
+    createdAt: z39.string().datetime(),
+    updatedAt: z39.string().datetime(),
+    highlights: z39.array(z39.string()),
+    score: z39.number().optional()
   })),
-  pagination: z38.object({
-    page: z38.number(),
-    limit: z38.number(),
-    totalResults: z38.number(),
-    totalPages: z38.number()
+  pagination: z39.object({
+    page: z39.number(),
+    limit: z39.number(),
+    totalResults: z39.number(),
+    totalPages: z39.number()
   }).describe("Page-based pagination metadata for the current search result.")
 });
-var SearchMessagesOutputSchema = z38.object({
-  messages: z38.array(z38.object({
-    id: z38.string().uuid(),
-    threadId: z38.string().uuid(),
-    threadTitle: z38.string(),
-    role: z38.enum(["user", "assistant"]),
-    content: z38.string(),
-    createdAt: z38.string().datetime(),
-    updatedAt: z38.string().datetime(),
-    highlights: z38.array(z38.string()),
-    score: z38.number().optional()
+var SearchMessagesOutputSchema = z39.object({
+  messages: z39.array(z39.object({
+    id: z39.string().uuid(),
+    threadId: z39.string().uuid(),
+    threadTitle: z39.string(),
+    role: z39.enum(["user", "assistant"]),
+    content: z39.string(),
+    createdAt: z39.string().datetime(),
+    updatedAt: z39.string().datetime(),
+    highlights: z39.array(z39.string()),
+    score: z39.number().optional()
   })),
-  pagination: z38.object({
-    page: z38.number(),
-    limit: z38.number(),
-    totalResults: z38.number(),
-    totalPages: z38.number()
+  pagination: z39.object({
+    page: z39.number(),
+    limit: z39.number(),
+    totalResults: z39.number(),
+    totalPages: z39.number()
   }).describe("Page-based pagination metadata for the current search result.")
 });
 var searchThreads = defineOperation({
   operationId: "search.threads",
+  summary: "Search threads",
   description: "Search threads within one project.",
   backend: "api",
   route: {
@@ -50873,6 +51557,7 @@ var searchThreads = defineOperation({
 });
 var searchMessages = defineOperation({
   operationId: "search.messages",
+  summary: "Search messages",
   description: "Search messages within one project.",
   backend: "api",
   route: {
@@ -50924,62 +51609,63 @@ var searchContract = {
 };
 
 // ../public-api-contracts/src/signal-definitions.ts
-import { z as z39 } from "zod";
-var SignalDefinitionIdSchema = z39.string().uuid().describe("Signal definition ID.");
-var SignalDefinitionNameSchema = z39.string().min(1).max(200).describe("Human-readable expression name.");
-var SignalDefinitionCelExpressionSchema = z39.string().min(1).max(8192).describe("CEL expression evaluated against ingested log events.");
-var SignalDefinitionSchema = z39.object({
-  id: z39.string().uuid(),
-  projectId: z39.string().uuid(),
-  name: z39.string(),
+import { z as z40 } from "zod";
+var SignalDefinitionIdSchema = z40.string().uuid().describe("Signal definition ID.");
+var SignalDefinitionNameSchema = z40.string().min(1).max(200).describe("Human-readable expression name.");
+var SignalDefinitionCelExpressionSchema = z40.string().min(1).max(8192).describe("CEL expression evaluated against ingested log events.");
+var SignalDefinitionSchema = z40.object({
+  id: z40.string().uuid(),
+  projectId: z40.string().uuid(),
+  name: z40.string(),
   expression: SignalDefinitionCelExpressionSchema,
-  enabled: z39.boolean(),
-  compiledVersion: z39.number().int(),
-  linkedAutomationIds: z39.array(z39.string().uuid()).optional().describe("Automations bound to this expression. Included on list/get when available."),
-  createdAt: z39.string().datetime(),
-  updatedAt: z39.string().datetime()
+  enabled: z40.boolean(),
+  compiledVersion: z40.number().int(),
+  linkedAutomationIds: z40.array(z40.string().uuid()).optional().describe("Automations bound to this expression. Included on list/get when available."),
+  createdAt: z40.string().datetime(),
+  updatedAt: z40.string().datetime()
 });
-var ListSignalDefinitionsInputSchema = z39.object({
-  projectId: z39.string().uuid().optional().describe("Project to list signal definitions for. Auto-filled from CLI and SDK context when omitted.")
+var ListSignalDefinitionsInputSchema = z40.object({
+  projectId: z40.string().uuid().optional().describe("Project to list signal definitions for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListSignalDefinitionsOutputSchema = z39.object({
-  signalDefinitions: z39.array(SignalDefinitionSchema)
+var ListSignalDefinitionsOutputSchema = z40.object({
+  signalDefinitions: z40.array(SignalDefinitionSchema)
 });
-var GetSignalDefinitionInputSchema = z39.object({
+var GetSignalDefinitionInputSchema = z40.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z39.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z40.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
 });
-var GetSignalDefinitionOutputSchema = z39.object({
+var GetSignalDefinitionOutputSchema = z40.object({
   signalDefinition: SignalDefinitionSchema
 });
-var CreateSignalDefinitionInputSchema = z39.object({
-  projectId: z39.string().uuid().optional().describe("Project to create the expression in. Auto-filled from CLI and SDK context when omitted."),
+var CreateSignalDefinitionInputSchema = z40.object({
+  projectId: z40.string().uuid().optional().describe("Project to create the expression in. Auto-filled from CLI and SDK context when omitted."),
   name: SignalDefinitionNameSchema,
   expression: SignalDefinitionCelExpressionSchema,
-  enabled: z39.boolean().optional().describe("Whether the expression starts enabled. Defaults to true.")
+  enabled: z40.boolean().optional().describe("Whether the expression starts enabled. Defaults to true.")
 });
-var CreateSignalDefinitionOutputSchema = z39.object({
+var CreateSignalDefinitionOutputSchema = z40.object({
   signalDefinition: SignalDefinitionSchema
 });
-var UpdateSignalDefinitionInputSchema = z39.object({
+var UpdateSignalDefinitionInputSchema = z40.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z39.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted."),
+  projectId: z40.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted."),
   name: SignalDefinitionNameSchema.optional(),
   expression: SignalDefinitionCelExpressionSchema.optional(),
-  enabled: z39.boolean().optional().describe("Whether the expression is enabled.")
+  enabled: z40.boolean().optional().describe("Whether the expression is enabled.")
 });
-var UpdateSignalDefinitionOutputSchema = z39.object({
+var UpdateSignalDefinitionOutputSchema = z40.object({
   signalDefinition: SignalDefinitionSchema
 });
-var DisableSignalDefinitionInputSchema = z39.object({
+var DisableSignalDefinitionInputSchema = z40.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z39.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z40.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
 });
-var DisableSignalDefinitionOutputSchema = z39.object({
+var DisableSignalDefinitionOutputSchema = z40.object({
   signalDefinition: SignalDefinitionSchema
 });
 var listSignalDefinitions = defineOperation({
   operationId: "signalDefinitions.list",
+  summary: "List signal definitions",
   description: "List signal definitions in a project.",
   backend: "api",
   route: {
@@ -50994,6 +51680,7 @@ var listSignalDefinitions = defineOperation({
 });
 var getSignalDefinition = defineOperation({
   operationId: "signalDefinitions.get",
+  summary: "Get a signal definition",
   description: "Get a single signal definition by ID.",
   backend: "api",
   route: {
@@ -51008,6 +51695,7 @@ var getSignalDefinition = defineOperation({
 });
 var createSignalDefinition = defineOperation({
   operationId: "signalDefinitions.create",
+  summary: "Create a signal definition",
   description: "Create a CEL signal definition for a project.",
   backend: "api",
   route: {
@@ -51023,6 +51711,7 @@ var createSignalDefinition = defineOperation({
 });
 var updateSignalDefinition = defineOperation({
   operationId: "signalDefinitions.update",
+  summary: "Update a signal definition",
   description: "Update a signal definition's name, CEL body, or enabled state.",
   backend: "api",
   route: {
@@ -51037,6 +51726,7 @@ var updateSignalDefinition = defineOperation({
 });
 var disableSignalDefinition = defineOperation({
   operationId: "signalDefinitions.disable",
+  summary: "Disable a signal definition",
   description: "Disable a signal definition so it stops matching logs.",
   backend: "api",
   route: {
@@ -51049,13 +51739,14 @@ var disableSignalDefinition = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteSignalDefinitionInputSchema = z39.object({
+var DeleteSignalDefinitionInputSchema = z40.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z39.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z40.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
 });
-var DeleteSignalDefinitionOutputSchema = z39.void();
+var DeleteSignalDefinitionOutputSchema = z40.void();
 var deleteSignalDefinition = defineOperation({
   operationId: "signalDefinitions.delete",
+  summary: "Delete a signal definition",
   description: "Permanently delete a signal definition.",
   backend: "api",
   route: {
@@ -51082,25 +51773,26 @@ var signalDefinitionsContract = {
 var TASK_CATEGORIES = ["onboarding", "setup"];
 
 // ../public-api-contracts/src/tasks.ts
-import { z as z40 } from "zod";
-var TaskCategorySchema = z40.enum(TASK_CATEGORIES);
-var TaskSchema2 = z40.object({
-  id: z40.string().describe("Unique task identifier (e.g. install_github_app)."),
-  label: z40.string().describe("Short human-readable task name."),
-  description: z40.string().describe("Explanation of what needs to be completed to satisfy this task."),
-  instructions: z40.string().describe("Step-by-step instructions for completing this task."),
-  completed: z40.boolean().describe("Whether the task has been completed."),
-  completedAt: z40.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
+import { z as z41 } from "zod";
+var TaskCategorySchema = z41.enum(TASK_CATEGORIES);
+var TaskSchema2 = z41.object({
+  id: z41.string().describe("Unique task identifier (e.g. install_github_app)."),
+  label: z41.string().describe("Short human-readable task name."),
+  description: z41.string().describe("Explanation of what needs to be completed to satisfy this task."),
+  instructions: z41.string().describe("Step-by-step instructions for completing this task."),
+  completed: z41.boolean().describe("Whether the task has been completed."),
+  completedAt: z41.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
   category: TaskCategorySchema.describe("Task category: onboarding (core setup steps) or setup (additional configuration).")
 });
-var ListTasksInputSchema = z40.object({
-  projectId: z40.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
+var ListTasksInputSchema = z41.object({
+  projectId: z41.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListTasksOutputSchema = z40.object({
-  tasks: z40.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
+var ListTasksOutputSchema = z41.object({
+  tasks: z41.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
 });
 var listTasks = defineOperation({
   operationId: "tasks.list",
+  summary: "List tasks",
   description: "List all onboarding and setup tasks for a project, including their current completion status and a description of what is required to complete each task.",
   backend: "api",
   route: {
@@ -51115,90 +51807,91 @@ var listTasks = defineOperation({
 });
 
 // ../public-api-contracts/src/teams.ts
-import { z as z41 } from "zod";
-var TeamSchema = z41.object({
-  id: z41.string().uuid().describe("Team ID."),
-  name: z41.string().describe("Team name, unique among the org's active teams."),
-  description: z41.string().nullable().describe("Optional team description."),
-  createdAt: z41.string().datetime().describe("When the team was created."),
-  memberCount: z41.number().int().nonnegative().describe("Number of active members in the team.")
+import { z as z42 } from "zod";
+var TeamSchema = z42.object({
+  id: z42.string().uuid().describe("Team ID."),
+  name: z42.string().describe("Team name, unique among the org's active teams."),
+  description: z42.string().nullable().describe("Optional team description."),
+  createdAt: z42.string().datetime().describe("When the team was created."),
+  memberCount: z42.number().int().nonnegative().describe("Number of active members in the team.")
 });
-var TeamMemberSchema = z41.object({
-  userId: z41.string().min(1).describe("User ID of the team member."),
-  name: z41.string().nullable().describe("Display name for the member, when available."),
-  email: z41.string().email().describe("Email address for the member."),
-  addedAt: z41.string().datetime().describe("When the member was added to the team.")
+var TeamMemberSchema = z42.object({
+  userId: z42.string().min(1).describe("User ID of the team member."),
+  name: z42.string().nullable().describe("Display name for the member, when available."),
+  email: z42.string().email().describe("Email address for the member."),
+  addedAt: z42.string().datetime().describe("When the member was added to the team.")
 });
-var OrganizationIdInputSchema2 = z41.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. Omitting it currently falls back to the session's active organization for user tokens (deprecated); a future release will require it for user-token callers.");
-var ListTeamsInputSchema = z41.object({
+var OrganizationIdInputSchema2 = z42.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).");
+var ListTeamsInputSchema = z42.object({
   organizationId: OrganizationIdInputSchema2
 });
-var ListTeamsOutputSchema = z41.object({
-  teams: z41.array(TeamSchema).describe("Active teams in the organization.")
+var ListTeamsOutputSchema = z42.object({
+  teams: z42.array(TeamSchema).describe("Active teams in the organization.")
 });
-var CreateTeamInputSchema = z41.object({
+var CreateTeamInputSchema = z42.object({
   organizationId: OrganizationIdInputSchema2,
-  name: z41.string().trim().min(1).describe("Team name."),
-  description: z41.string().trim().min(1).optional().describe("Optional team description.")
+  name: z42.string().trim().min(1).describe("Team name."),
+  description: z42.string().trim().min(1).optional().describe("Optional team description.")
 });
-var CreateTeamOutputSchema = z41.object({
-  id: z41.string().uuid().describe("ID of the created team.")
+var CreateTeamOutputSchema = z42.object({
+  id: z42.string().uuid().describe("ID of the created team.")
 });
-var UpdateTeamInputSchema = z41.object({
+var UpdateTeamInputSchema = z42.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z41.string().uuid().describe("Team to update."),
-  name: z41.string().trim().min(1).optional().describe("New team name."),
-  description: z41.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
+  teamId: z42.string().uuid().describe("Team to update."),
+  name: z42.string().trim().min(1).optional().describe("New team name."),
+  description: z42.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
 });
-var UpdateTeamOutputSchema = z41.object({
-  id: z41.string().uuid().describe("ID of the updated team.")
+var UpdateTeamOutputSchema = z42.object({
+  id: z42.string().uuid().describe("ID of the updated team.")
 });
-var DeleteTeamInputSchema = z41.object({
-  params: z41.object({
-    teamId: z41.string().uuid().describe("Team to delete.")
+var DeleteTeamInputSchema = z42.object({
+  params: z42.object({
+    teamId: z42.string().uuid().describe("Team to delete.")
   }),
-  query: z41.object({
+  query: z42.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var DeleteTeamOutputSchema = z41.object({
-  success: z41.literal(true).describe("The team and its memberships were removed.")
+var DeleteTeamOutputSchema = z42.object({
+  success: z42.literal(true).describe("The team and its memberships were removed.")
 });
-var AddTeamMemberInputSchema = z41.object({
+var AddTeamMemberInputSchema = z42.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z41.string().uuid().describe("Team to add the member to."),
-  userId: z41.string().min(1).describe("User ID of an active organization member to add.")
+  teamId: z42.string().uuid().describe("Team to add the member to."),
+  userId: z42.string().min(1).describe("User ID of an active organization member to add.")
 });
-var AddTeamMemberOutputSchema = z41.object({
-  id: z41.string().uuid().describe("ID of the team membership.")
+var AddTeamMemberOutputSchema = z42.object({
+  id: z42.string().uuid().describe("ID of the team membership.")
 });
-var RemoveTeamMemberInputSchema = z41.object({
-  params: z41.object({
-    teamId: z41.string().uuid().describe("Team to remove the member from."),
-    userId: z41.string().min(1).describe("User ID of the member to remove.")
+var RemoveTeamMemberInputSchema = z42.object({
+  params: z42.object({
+    teamId: z42.string().uuid().describe("Team to remove the member from."),
+    userId: z42.string().min(1).describe("User ID of the member to remove.")
   }),
-  query: z41.object({
+  query: z42.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RemoveTeamMemberOutputSchema = z41.object({
-  success: z41.literal(true).describe("The membership was removed.")
+var RemoveTeamMemberOutputSchema = z42.object({
+  success: z42.literal(true).describe("The membership was removed.")
 });
-var ListTeamMembersInputSchema = z41.object({
+var ListTeamMembersInputSchema = z42.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z41.string().uuid().describe("Team to list members for.")
+  teamId: z42.string().uuid().describe("Team to list members for.")
 });
-var ListTeamMembersOutputSchema = z41.object({
-  members: z41.array(TeamMemberSchema).describe("Active members of the team.")
+var ListTeamMembersOutputSchema = z42.object({
+  members: z42.array(TeamMemberSchema).describe("Active members of the team.")
 });
 var listTeams = defineOperation({
   operationId: "teams.list",
+  summary: "List teams",
   description: "List teams in an organization.",
   backend: "api",
   route: {
@@ -51232,6 +51925,7 @@ var listTeams = defineOperation({
 });
 var createTeam = defineOperation({
   operationId: "teams.create",
+  summary: "Create a team",
   description: "Create a team in an organization.",
   backend: "api",
   route: {
@@ -51247,6 +51941,7 @@ var createTeam = defineOperation({
 });
 var updateTeam = defineOperation({
   operationId: "teams.update",
+  summary: "Update a team",
   description: "Rename a team or update its description.",
   backend: "api",
   route: {
@@ -51261,6 +51956,7 @@ var updateTeam = defineOperation({
 });
 var deleteTeam = defineOperation({
   operationId: "teams.delete",
+  summary: "Delete a team",
   description: "Delete a team, its memberships, and its component-ownership assignments.",
   backend: "api",
   route: {
@@ -51276,6 +51972,7 @@ var deleteTeam = defineOperation({
 });
 var addTeamMember = defineOperation({
   operationId: "teams.addMember",
+  summary: "Add a team member",
   description: "Add an active organization member to a team.",
   backend: "api",
   route: {
@@ -51291,6 +51988,7 @@ var addTeamMember = defineOperation({
 });
 var removeTeamMember = defineOperation({
   operationId: "teams.removeMember",
+  summary: "Remove a team member",
   description: "Remove a member from a team.",
   backend: "api",
   route: {
@@ -51306,6 +52004,7 @@ var removeTeamMember = defineOperation({
 });
 var listTeamMembers = defineOperation({
   operationId: "teams.listMembers",
+  summary: "List team members",
   description: "List a team's active members.",
   backend: "api",
   route: {
@@ -51329,31 +52028,32 @@ var teamsContract = {
 };
 
 // ../public-api-contracts/src/work-items.ts
-import { z as z42 } from "zod";
-var WorkItemAttributionSchema = z42.object({
-  kind: z42.enum(["user", "workspace"]),
-  name: z42.string().optional(),
-  email: z42.string().optional()
+import { z as z43 } from "zod";
+var WorkItemAttributionSchema = z43.object({
+  kind: z43.enum(["user", "workspace"]),
+  name: z43.string().optional(),
+  email: z43.string().optional()
 });
-var CreateWorkItemInputSchema = z42.object({
-  container: z42.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
-  title: z42.string().min(1),
-  bodyMarkdown: z42.string().optional(),
-  state: z42.string().optional(),
-  itemType: z42.string().optional(),
-  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers."),
-  clientRequestId: z42.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
+var CreateWorkItemInputSchema = z43.object({
+  container: z43.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
+  title: z43.string().min(1),
+  bodyMarkdown: z43.string().optional(),
+  state: z43.string().optional(),
+  itemType: z43.string().optional(),
+  organizationId: z43.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers."),
+  clientRequestId: z43.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
 }).strict();
-var CreateWorkItemOutputSchema = z42.object({
-  identifier: z42.string(),
-  title: z42.string(),
-  url: z42.string(),
-  state: z42.string(),
+var CreateWorkItemOutputSchema = z43.object({
+  identifier: z43.string(),
+  title: z43.string(),
+  url: z43.string(),
+  state: z43.string(),
   attribution: WorkItemAttributionSchema.optional(),
-  reused: z42.boolean()
+  reused: z43.boolean()
 });
 var createWorkItem = defineOperation({
   operationId: "work-items.create",
+  summary: "Create a work item",
   description: "Create a work item (e.g. a Linear issue) in a connected issue tracker, attributing the write to the requesting user.",
   backend: "api",
   route: {
@@ -51367,17 +52067,18 @@ var createWorkItem = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var CommentOnWorkItemInputSchema = z42.object({
-  itemId: z42.string().min(1).describe("The work item to comment on."),
-  bodyMarkdown: z42.string().min(1),
-  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
+var CommentOnWorkItemInputSchema = z43.object({
+  itemId: z43.string().min(1).describe("The work item to comment on."),
+  bodyMarkdown: z43.string().min(1),
+  organizationId: z43.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
 }).strict();
-var CommentOnWorkItemOutputSchema = z42.object({
-  identifier: z42.string(),
-  url: z42.string()
+var CommentOnWorkItemOutputSchema = z43.object({
+  identifier: z43.string(),
+  url: z43.string()
 });
 var commentOnWorkItem = defineOperation({
   operationId: "work-items.comment",
+  summary: "Comment on a work item",
   description: "Add a comment to an existing work item.",
   backend: "api",
   route: {
@@ -51390,20 +52091,21 @@ var commentOnWorkItem = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var TransitionWorkItemInputSchema = z42.object({
-  itemId: z42.string().min(1).describe("The work item to transition."),
-  state: z42.string().min(1).describe("The target workflow state."),
-  organizationId: z42.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
+var TransitionWorkItemInputSchema = z43.object({
+  itemId: z43.string().min(1).describe("The work item to transition."),
+  state: z43.string().min(1).describe("The target workflow state."),
+  organizationId: z43.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
 }).strict();
-var TransitionWorkItemOutputSchema = z42.object({
-  identifier: z42.string(),
-  title: z42.string(),
-  url: z42.string(),
-  state: z42.string(),
-  changed: z42.boolean()
+var TransitionWorkItemOutputSchema = z43.object({
+  identifier: z43.string(),
+  title: z43.string(),
+  url: z43.string(),
+  state: z43.string(),
+  changed: z43.boolean()
 });
 var transitionWorkItem = defineOperation({
   operationId: "work-items.transition",
+  summary: "Transition a work item",
   description: "Move a work item to a target workflow state.",
   backend: "api",
   route: {
@@ -51440,6 +52142,7 @@ var publicApiContract = {
   },
   logs: {
     query: queryLogs.contract,
+    search: searchLogs.contract,
     schema: logsSchema.contract,
     volume: logsVolume.contract,
     patterns: logsPatterns.contract,
@@ -51456,6 +52159,7 @@ var publicApiContract = {
   logStreams: {
     list: listLogStreams.contract,
     create: createLogStream.contract,
+    volumeStats: getLogStreamVolumeStats.contract,
     get: getLogStream.contract,
     update: updateLogStream.contract,
     delete: deleteLogStream.contract,
@@ -51471,11 +52175,13 @@ var publicApiContract = {
     listProviders: listIntegrationProviders.contract,
     listConnections: listIntegrationConnections.contract,
     getConnection: getIntegrationConnection.contract,
+    getLinearAutomationConfiguration: getLinearAutomationConfiguration.contract,
     createConnection: createIntegrationConnection.contract,
     beginConnect: beginIntegrationConnect.contract,
     getConnectAttempt: getIntegrationConnectAttempt.contract,
     disconnectConnection: disconnectIntegrationConnection.contract,
     updateConnectionCredentials: updateIntegrationConnectionCredentials.contract,
+    updateLinearAutomationConfiguration: updateLinearAutomationConfiguration.contract,
     getOrganizationExternalIdentityJitPolicy: getOrganizationExternalIdentityJitPolicy.contract,
     updateOrganizationExternalIdentityJitPolicy: updateOrganizationExternalIdentityJitPolicy.contract,
     getConnectionExternalIdentityJitPolicy: getConnectionExternalIdentityJitPolicy.contract,
@@ -51524,13 +52230,6 @@ var publicApiContract = {
     create: createProjectScript.contract,
     update: updateProjectScript.contract,
     delete: deleteProjectScript.contract
-  },
-  logMatchExpressions: {
-    list: listLogMatchExpressions.contract,
-    get: getLogMatchExpression.contract,
-    create: createLogMatchExpression.contract,
-    update: updateLogMatchExpression.contract,
-    disable: disableLogMatchExpression.contract
   },
   signalDefinitions: {
     list: listSignalDefinitions.contract,
@@ -51649,6 +52348,8 @@ var publicApiContract = {
   billing: {
     getSummary: getBillingSummary.contract,
     getUsage: getBillingUsage.contract,
+    getAccruedUsageCharges: getAccruedUsageCharges.contract,
+    listUsageInvoices: listUsageInvoices.contract,
     listTransactions: listBillingTransactions.contract,
     getAutoTopUp: getAutoTopUp.contract,
     updateAutoTopUp: updateAutoTopUp.contract,
@@ -51682,10 +52383,8 @@ var publicApiContract = {
     deregister: deregisterComponent.contract,
     rename: renameComponent.contract,
     assignTeam: assignComponentTeam.contract,
-    retirementPreview: previewComponentRetirement.contract,
-    retire: retireComponent.contract,
-    restorationPreview: previewComponentRestoration.contract,
-    restore: restoreComponent.contract,
+    reactivationPreview: previewComponentReactivation.contract,
+    reactivate: reactivateComponent.contract,
     mergePreview: previewComponentMerge.contract,
     merge: mergeComponent.contract,
     relationships: {
@@ -52021,42 +52720,42 @@ var toStreamError = (error) => {
 import { ORPCError } from "@orpc/client";
 
 // ../tail-ws-contracts/src/index.ts
-import { z as z43 } from "zod";
-var LogFiltersSchema = z43.object({
-  severities: z43.array(z43.string()).optional().describe("Limit results to the listed severities."),
-  services: z43.array(z43.string()).optional().describe("Limit results to the listed service names."),
-  environments: z43.array(z43.string()).optional().describe("Limit results to the listed deployment environments."),
-  searchTerm: z43.string().optional().describe("Case-insensitive substring match against the log body."),
-  traceId: z43.string().optional().describe("Limit results to one trace ID."),
-  attributes: z43.record(z43.string(), z43.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
+import { z as z44 } from "zod";
+var LogFiltersSchema = z44.object({
+  severities: z44.array(z44.string()).optional().describe("Limit results to the listed severities."),
+  services: z44.array(z44.string()).optional().describe("Limit results to the listed service names."),
+  environments: z44.array(z44.string()).optional().describe("Limit results to the listed deployment environments."),
+  searchTerm: z44.string().optional().describe("Case-insensitive substring match against the log body."),
+  traceId: z44.string().optional().describe("Limit results to one trace ID."),
+  attributes: z44.record(z44.string(), z44.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
 });
-var WebSocketLogResourceSchema = z43.object({
-  service: z43.string(),
-  namespace: z43.string(),
-  environment: z43.string(),
-  host: z43.string(),
-  container: z43.string(),
-  pod: z43.string()
+var WebSocketLogResourceSchema = z44.object({
+  service: z44.string(),
+  namespace: z44.string(),
+  environment: z44.string(),
+  host: z44.string(),
+  container: z44.string(),
+  pod: z44.string()
 });
-var WebSocketLogEntrySchema = z43.object({
-  id: z43.string(),
-  timestamp: z43.string().datetime(),
-  severity: z43.string(),
-  body: z43.string(),
-  service: z43.string(),
-  traceId: z43.string(),
-  spanId: z43.string(),
-  attributes: z43.record(z43.string(), z43.string()),
+var WebSocketLogEntrySchema = z44.object({
+  id: z44.string(),
+  timestamp: z44.string().datetime(),
+  severity: z44.string(),
+  body: z44.string(),
+  service: z44.string(),
+  traceId: z44.string(),
+  spanId: z44.string(),
+  attributes: z44.record(z44.string(), z44.string()),
   resource: WebSocketLogResourceSchema
 });
-var WebSocketLogMessageSchema = z43.object({
-  type: z43.literal("logs"),
-  timestamp: z43.string().datetime(),
-  data: z43.array(WebSocketLogEntrySchema)
+var WebSocketLogMessageSchema = z44.object({
+  type: z44.literal("logs"),
+  timestamp: z44.string().datetime(),
+  data: z44.array(WebSocketLogEntrySchema)
 });
 
 // src/log-transports.ts
-import { z as z44 } from "zod";
+import { z as z45 } from "zod";
 var DEFAULT_INTAKE_BASE_URL = "https://{region}.intake.sazabi.com";
 var DEFAULT_TAIL_BASE_URL = "https://{region}.tail.sazabi.com";
 var TAIL_RECONNECT_BASE_DELAY_MS = 500;
@@ -52071,17 +52770,17 @@ var isLoopbackHostname = (hostname) => {
   const normalizedHostname = normalizeLoopbackHostname(hostname);
   return normalizedHostname === "localhost" || normalizedHostname === "127.0.0.1" || normalizedHostname === "::1";
 };
-var TailLogsInputSchema = z44.object({
-  projectId: z44.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
+var TailLogsInputSchema = z45.object({
+  projectId: z45.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
   filters: LogFiltersSchema.optional().describe("Optional filters applied by the tail SSE service.")
 });
-var ForwardLogsInputSchema = z44.object({
-  publicKey: z44.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
-  logs: z44.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
+var ForwardLogsInputSchema = z45.object({
+  publicKey: z45.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
+  logs: z45.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
 });
-var ForwardLogsOutputSchema = z44.object({
-  forwardedCount: z44.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
-  failedCount: z44.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
+var ForwardLogsOutputSchema = z45.object({
+  forwardedCount: z45.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
+  failedCount: z45.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
 });
 var forwardLogsExamples = [
   {
@@ -52798,6 +53497,7 @@ var createClient = (options) => {
     logs: {
       ...logs,
       query: async (input = {}) => raw.logs.query(await resolveRequiredProjectScopedInput(options.credentialProvider, input, queryLogs.operationId)),
+      search: async (input) => raw.logs.search(await resolveRequiredProjectScopedInput(options.credentialProvider, input, searchLogs.operationId)),
       schema: async (input = {}) => raw.logs.schema(await resolveRequiredProjectScopedInput(options.credentialProvider, input, logsSchema.operationId)),
       volume: async (input) => raw.logs.volume(await resolveRequiredProjectScopedInput(options.credentialProvider, input, logsVolume.operationId)),
       patterns: async (input = {}) => raw.logs.patterns(await resolveRequiredProjectScopedInput(options.credentialProvider, input, logsPatterns.operationId)),
@@ -53001,13 +53701,6 @@ var createClient = (options) => {
       search: async (input) => raw.memory.search(await resolveRequiredProjectScopedInput(options.credentialProvider, input, searchProjectMemory.operationId)),
       delete: async (input) => raw.memory.delete(await resolveRequiredProjectScopedInput(options.credentialProvider, input, deleteProjectMemory.operationId))
     },
-    logMatchExpressions: {
-      list: async (input = {}) => raw.logMatchExpressions.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.list")),
-      get: async (input) => raw.logMatchExpressions.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.get")),
-      create: async (input) => raw.logMatchExpressions.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.create")),
-      update: async (input) => raw.logMatchExpressions.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.update")),
-      disable: async (input) => raw.logMatchExpressions.disable(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logMatchExpressions.disable"))
-    },
     signalDefinitions: {
       list: async (input = {}) => raw.signalDefinitions.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.list")),
       get: async (input) => raw.signalDefinitions.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.get")),
@@ -53046,16 +53739,11 @@ var createClient = (options) => {
       list: async (input = {}) => raw.components.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "components.list")),
       get: async (input) => raw.components.get(input),
       register: async (input) => raw.components.register(await resolveRequiredProjectScopedInput(options.credentialProvider, input, registerComponent.operationId)),
-      deregister: async (input) => raw.components.deregister({
-        componentId: input.componentId,
-        ...input.reason !== undefined ? { reason: input.reason } : {}
-      }),
+      deregister: async (input) => raw.components.deregister(input),
       rename: async (input) => raw.components.rename(input),
       assignTeam: async (input) => raw.components.assignTeam(input),
-      retirementPreview: async (input) => raw.components.retirementPreview(input),
-      retire: async (input) => raw.components.retire(input),
-      restorationPreview: async (input) => raw.components.restorationPreview(input),
-      restore: async (input) => raw.components.restore(input),
+      reactivationPreview: async (input) => raw.components.reactivationPreview(input),
+      reactivate: async (input) => raw.components.reactivate(input),
       mergePreview: async (input) => raw.components.mergePreview(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "components.mergePreview")),
       merge: async (input) => raw.components.merge(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "components.merge")),
       relationships: {
@@ -53072,6 +53760,8 @@ var createClient = (options) => {
     billing: {
       getSummary: async (input = {}) => raw.billing.getSummary(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getSummary")),
       getUsage: async (input = {}) => raw.billing.getUsage(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getUsage")),
+      getAccruedUsageCharges: async (input = {}) => raw.billing.getAccruedUsageCharges(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getAccruedUsageCharges")),
+      listUsageInvoices: async (input = {}) => raw.billing.listUsageInvoices(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.listUsageInvoices")),
       listTransactions: async (input = {}) => raw.billing.listTransactions(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.listTransactions")),
       previewSubscriptionCancellation: async (input = {}) => raw.billing.previewSubscriptionCancellation(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.previewSubscriptionCancellation")),
       scheduleSubscriptionCancellation: async (input = {}) => raw.billing.scheduleSubscriptionCancellation(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.scheduleSubscriptionCancellation")),

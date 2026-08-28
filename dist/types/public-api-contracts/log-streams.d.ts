@@ -98,6 +98,42 @@ export declare const createLogStream: import("../orpc-contracts/index.js").Opera
 }, z.core.$strict>, z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>, "api">;
+export declare const GetLogStreamVolumeStatsInputSchema: z.ZodObject<{
+    logSourceId: z.ZodString;
+    startDate: z.ZodString;
+    endDate: z.ZodString;
+}, z.core.$strip>;
+export declare const LogStreamVolumeStatsSchema: z.ZodObject<{
+    streamId: z.ZodString;
+    totalBytes: z.ZodNumber;
+    logCount: z.ZodNumber;
+    bytesPerHour: z.ZodNumber;
+    lastIngestedAt: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export declare const GetLogStreamVolumeStatsOutputSchema: z.ZodObject<{
+    stats: z.ZodArray<z.ZodObject<{
+        streamId: z.ZodString;
+        totalBytes: z.ZodNumber;
+        logCount: z.ZodNumber;
+        bytesPerHour: z.ZodNumber;
+        lastIngestedAt: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type GetLogStreamVolumeStatsInput = z.infer<typeof GetLogStreamVolumeStatsInputSchema>;
+export type GetLogStreamVolumeStatsOutput = z.infer<typeof GetLogStreamVolumeStatsOutputSchema>;
+export declare const getLogStreamVolumeStats: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    logSourceId: z.ZodString;
+    startDate: z.ZodString;
+    endDate: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    stats: z.ZodArray<z.ZodObject<{
+        streamId: z.ZodString;
+        totalBytes: z.ZodNumber;
+        logCount: z.ZodNumber;
+        bytesPerHour: z.ZodNumber;
+        lastIngestedAt: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
 export declare const GetLogStreamInputSchema: z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>;
@@ -376,6 +412,19 @@ export declare const logStreamsContract: {
         config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     }, z.core.$strict>, z.ZodObject<{
         streamId: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly volumeStats: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        logSourceId: z.ZodString;
+        startDate: z.ZodString;
+        endDate: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        stats: z.ZodArray<z.ZodObject<{
+            streamId: z.ZodString;
+            totalBytes: z.ZodNumber;
+            logCount: z.ZodNumber;
+            bytesPerHour: z.ZodNumber;
+            lastIngestedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly get: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         streamId: z.ZodString;

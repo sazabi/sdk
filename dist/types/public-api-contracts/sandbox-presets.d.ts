@@ -42,6 +42,7 @@ export declare const SandboxPresetCredentialSourceSchema: z.ZodEnum<{
     github_app: "github_app";
     personal_access_token: "personal_access_token";
     stored_credentials: "stored_credentials";
+    tailscale_federated_identity: "tailscale_federated_identity";
 }>;
 export declare const SandboxPresetConnectionSchema: z.ZodObject<{
     presetType: z.ZodString;
@@ -50,6 +51,7 @@ export declare const SandboxPresetConnectionSchema: z.ZodObject<{
         github_app: "github_app";
         personal_access_token: "personal_access_token";
         stored_credentials: "stored_credentials";
+        tailscale_federated_identity: "tailscale_federated_identity";
     }>;
     isSystemManaged: z.ZodBoolean;
     fallbackConfigured: z.ZodBoolean;
@@ -67,6 +69,7 @@ export declare const ListSandboxPresetConnectionsOutputSchema: z.ZodObject<{
             github_app: "github_app";
             personal_access_token: "personal_access_token";
             stored_credentials: "stored_credentials";
+            tailscale_federated_identity: "tailscale_federated_identity";
         }>;
         isSystemManaged: z.ZodBoolean;
         fallbackConfigured: z.ZodBoolean;
@@ -85,6 +88,7 @@ export declare const listSandboxPresetConnections: import("../orpc-contracts/ind
             github_app: "github_app";
             personal_access_token: "personal_access_token";
             stored_credentials: "stored_credentials";
+            tailscale_federated_identity: "tailscale_federated_identity";
         }>;
         isSystemManaged: z.ZodBoolean;
         fallbackConfigured: z.ZodBoolean;
@@ -205,6 +209,7 @@ export declare const sandboxPresetsContract: {
                 github_app: "github_app";
                 personal_access_token: "personal_access_token";
                 stored_credentials: "stored_credentials";
+                tailscale_federated_identity: "tailscale_federated_identity";
             }>;
             isSystemManaged: z.ZodBoolean;
             fallbackConfigured: z.ZodBoolean;
