@@ -404,6 +404,10 @@ export declare const publicApiContract: {
                 canToggle: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            automationId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly runs: {
             readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
                 automationId: import("zod").ZodString;
@@ -589,6 +593,9 @@ export declare const publicApiContract: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodEnum<{
                         contains: "contains";
@@ -607,11 +614,14 @@ export declare const publicApiContract: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodLiteral<"in">;
                     values: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    field: import("zod").ZodObject<{
+                    field: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
                         kind: import("zod").ZodLiteral<"attribute">;
                         source: import("zod").ZodEnum<{
                             log: "log";
@@ -619,7 +629,10 @@ export declare const publicApiContract: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodLiteral<"exists">;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     field: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
@@ -632,6 +645,9 @@ export declare const publicApiContract: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodEnum<{
                         gt: "gt";
@@ -668,6 +684,9 @@ export declare const publicApiContract: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            kind: import("zod").ZodLiteral<"body_json">;
+                            path: import("zod").ZodArray<import("zod").ZodString>;
                         }, import("zod/v4/core").$strict>]>;
                     }, import("zod/v4/core").$strict>], "operation">;
                     groupBy: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -682,6 +701,9 @@ export declare const publicApiContract: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>], "kind">>>;
                     limit: import("zod").ZodDefault<import("zod").ZodNumber>;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -713,6 +735,9 @@ export declare const publicApiContract: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            kind: import("zod").ZodLiteral<"body_json">;
+                            path: import("zod").ZodArray<import("zod").ZodString>;
                         }, import("zod/v4/core").$strict>]>;
                     }, import("zod/v4/core").$strict>], "operation">;
                     groupBy: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -727,6 +752,9 @@ export declare const publicApiContract: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>], "kind">>>;
                     limit: import("zod").ZodDefault<import("zod").ZodNumber>;
                 }, import("zod/v4/core").$strict>], "kind">;
@@ -1025,6 +1053,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -1130,6 +1162,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
             streamId: import("zod").ZodOptional<import("zod").ZodString>;
             publicKey: import("zod").ZodOptional<import("zod").ZodString>;
@@ -1205,6 +1241,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
                 streams: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     logSourceId: import("zod").ZodString;
@@ -1241,6 +1281,10 @@ export declare const publicApiContract: {
         readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             logSourceId: import("zod").ZodString;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            streamAutoProvisionFilter: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                denylist: import("zod").ZodArray<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             logSource: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -1294,6 +1338,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -1345,6 +1393,20 @@ export declare const publicApiContract: {
             config: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             streamId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly createBatch: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            logSourceId: import("zod").ZodString;
+            streams: import("zod").ZodArray<import("zod").ZodObject<{
+                config: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
+            }, import("zod/v4/core").$strict>>;
+            setAutoProvisionFilter: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                denylist: import("zod").ZodArray<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>>;
+        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+            accepted: import("zod").ZodArray<import("zod").ZodObject<{
+                streamId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly volumeStats: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             logSourceId: import("zod").ZodString;
@@ -3032,20 +3094,57 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
-    readonly sandboxPresets: {
-        readonly deletePreset: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+    readonly sandboxEnvironmentVariables: {
+        readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            presetType: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
+                key: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            key: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            environmentVariable: import("zod").ZodObject<{
+                key: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly upsert: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
+                key: import("zod").ZodString;
+                value: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             projectId: import("zod").ZodString;
-            presetType: import("zod").ZodString;
+            environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
+                key: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            key: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            projectId: import("zod").ZodString;
+            key: import("zod").ZodString;
+            deleted: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
+    readonly sandboxClis: {
+        readonly deleteCli: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            cliType: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            projectId: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             deleted: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly listConnections: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             connections: import("zod").ZodArray<import("zod").ZodObject<{
-                presetType: import("zod").ZodString;
+                cliType: import("zod").ZodString;
                 credentialSource: import("zod").ZodEnum<{
                     bitbucket_integration: "bitbucket_integration";
                     github_app: "github_app";
@@ -3067,9 +3166,9 @@ export declare const publicApiContract: {
                 setupSkill: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly testPreset: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+        readonly testCli: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            presetType: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
                 key: import("zod").ZodString;
                 value: import("zod").ZodString;
@@ -3083,16 +3182,16 @@ export declare const publicApiContract: {
             stdout: import("zod").ZodString;
             stderr: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly upsertPreset: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+        readonly upsertCli: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            presetType: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
                 key: import("zod").ZodString;
                 value: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             projectId: import("zod").ZodString;
-            presetType: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             envVarKeys: import("zod").ZodArray<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
@@ -5161,6 +5260,7 @@ export declare const publicApiContract: {
             planSlug: import("zod").ZodNullable<import("zod").ZodString>;
             currency: import("zod").ZodNullable<import("zod").ZodString>;
             currentBalance: import("zod").ZodNullable<import("zod").ZodString>;
+            cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
             targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             currentCycle: import("zod").ZodNullable<import("zod").ZodObject<{
                 startsAt: import("zod").ZodString;
@@ -5181,6 +5281,7 @@ export declare const publicApiContract: {
                 planName: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             subscription: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -5196,6 +5297,7 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 subscriptionStatus: import("zod").ZodString;
                 cycleStartsAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -5208,6 +5310,7 @@ export declare const publicApiContract: {
                     planName: import("zod").ZodNullable<import("zod").ZodString>;
                     price: import("zod").ZodNullable<import("zod").ZodString>;
                     currency: import("zod").ZodNullable<import("zod").ZodString>;
+                    cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                     targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 pendingCancellation: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -5414,6 +5517,7 @@ export declare const publicApiContract: {
                 bestFor: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodString;
                 currency: import("zod").ZodString;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 logsIncludedBytes: import("zod").ZodString;
                 aiTokensIncluded: import("zod").ZodString;
@@ -5436,7 +5540,9 @@ export declare const publicApiContract: {
             targetPlanName: import("zod").ZodString;
             currentPlanPrice: import("zod").ZodString;
             targetPlanPrice: import("zod").ZodString;
+            currentCycleCredits: import("zod").ZodString;
             currentTargetCreditBalance: import("zod").ZodString;
+            cycleCredits: import("zod").ZodString;
             targetCreditBalance: import("zod").ZodString;
             creditDeficitAmount: import("zod").ZodString;
             creditDeficitChargeAmount: import("zod").ZodString;
@@ -5455,6 +5561,7 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 subscriptionStatus: import("zod").ZodString;
                 cycleStartsAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -5467,6 +5574,7 @@ export declare const publicApiContract: {
                     planName: import("zod").ZodNullable<import("zod").ZodString>;
                     price: import("zod").ZodNullable<import("zod").ZodString>;
                     currency: import("zod").ZodNullable<import("zod").ZodString>;
+                    cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                     targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 pendingCancellation: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -5486,6 +5594,7 @@ export declare const publicApiContract: {
                 planName: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             calculatedAt: import("zod").ZodString;
@@ -5498,6 +5607,7 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 subscriptionStatus: import("zod").ZodString;
                 cycleStartsAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -5510,6 +5620,7 @@ export declare const publicApiContract: {
                     planName: import("zod").ZodNullable<import("zod").ZodString>;
                     price: import("zod").ZodNullable<import("zod").ZodString>;
                     currency: import("zod").ZodNullable<import("zod").ZodString>;
+                    cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                     targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 pendingCancellation: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -5529,6 +5640,7 @@ export declare const publicApiContract: {
                 planName: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             calculatedAt: import("zod").ZodString;
@@ -5629,6 +5741,10 @@ export declare const publicApiContract: {
                 }>;
                 roiScore: import("zod").ZodNumber;
                 priority: import("zod").ZodNumber;
+                components: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
@@ -6844,6 +6960,10 @@ export declare const publicApiOperations: {
                 canToggle: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
+        readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            automationId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodVoid, "api">;
         readonly runs: {
             readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
                 automationId: import("zod").ZodString;
@@ -7029,6 +7149,9 @@ export declare const publicApiOperations: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodEnum<{
                         contains: "contains";
@@ -7047,11 +7170,14 @@ export declare const publicApiOperations: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodLiteral<"in">;
                     values: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    field: import("zod").ZodObject<{
+                    field: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
                         kind: import("zod").ZodLiteral<"attribute">;
                         source: import("zod").ZodEnum<{
                             log: "log";
@@ -7059,7 +7185,10 @@ export declare const publicApiOperations: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodLiteral<"exists">;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     field: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
@@ -7072,6 +7201,9 @@ export declare const publicApiOperations: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>]>;
                     operator: import("zod").ZodEnum<{
                         gt: "gt";
@@ -7108,6 +7240,9 @@ export declare const publicApiOperations: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            kind: import("zod").ZodLiteral<"body_json">;
+                            path: import("zod").ZodArray<import("zod").ZodString>;
                         }, import("zod/v4/core").$strict>]>;
                     }, import("zod/v4/core").$strict>], "operation">;
                     groupBy: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -7122,6 +7257,9 @@ export declare const publicApiOperations: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>], "kind">>>;
                     limit: import("zod").ZodDefault<import("zod").ZodNumber>;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -7153,6 +7291,9 @@ export declare const publicApiOperations: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            kind: import("zod").ZodLiteral<"body_json">;
+                            path: import("zod").ZodArray<import("zod").ZodString>;
                         }, import("zod/v4/core").$strict>]>;
                     }, import("zod/v4/core").$strict>], "operation">;
                     groupBy: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -7167,6 +7308,9 @@ export declare const publicApiOperations: {
                             scope: "scope";
                         }>;
                         key: import("zod").ZodString;
+                    }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                        kind: import("zod").ZodLiteral<"body_json">;
+                        path: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strict>], "kind">>>;
                     limit: import("zod").ZodDefault<import("zod").ZodNumber>;
                 }, import("zod/v4/core").$strict>], "kind">;
@@ -7465,6 +7609,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -7570,6 +7718,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
             streamId: import("zod").ZodOptional<import("zod").ZodString>;
             publicKey: import("zod").ZodOptional<import("zod").ZodString>;
@@ -7645,6 +7797,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
                 streams: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     logSourceId: import("zod").ZodString;
@@ -7681,6 +7837,10 @@ export declare const publicApiOperations: {
         readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             logSourceId: import("zod").ZodString;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            streamAutoProvisionFilter: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                denylist: import("zod").ZodArray<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             logSource: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -7734,6 +7894,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 streamCount: import("zod").ZodNumber;
                 createdAt: import("zod").ZodString;
+                streamAutoProvisionFilter: import("zod").ZodNullable<import("zod").ZodObject<{
+                    allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                    denylist: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -7785,6 +7949,20 @@ export declare const publicApiOperations: {
             config: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             streamId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly createBatch: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            logSourceId: import("zod").ZodString;
+            streams: import("zod").ZodArray<import("zod").ZodObject<{
+                config: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
+            }, import("zod/v4/core").$strict>>;
+            setAutoProvisionFilter: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                allowlist: import("zod").ZodArray<import("zod").ZodString>;
+                denylist: import("zod").ZodArray<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>>;
+        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+            accepted: import("zod").ZodArray<import("zod").ZodObject<{
+                streamId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly volumeStats: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             logSourceId: import("zod").ZodString;
@@ -9472,20 +9650,57 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
     };
-    readonly sandboxPresets: {
-        readonly deletePreset: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+    readonly sandboxEnvironmentVariables: {
+        readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            presetType: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
+                key: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            key: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            environmentVariable: import("zod").ZodObject<{
+                key: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly upsert: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
+                key: import("zod").ZodString;
+                value: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             projectId: import("zod").ZodString;
-            presetType: import("zod").ZodString;
+            environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
+                key: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            key: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            projectId: import("zod").ZodString;
+            key: import("zod").ZodString;
+            deleted: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, "api">;
+    };
+    readonly sandboxClis: {
+        readonly deleteCli: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            cliType: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            projectId: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             deleted: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, "api">;
         readonly listConnections: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             connections: import("zod").ZodArray<import("zod").ZodObject<{
-                presetType: import("zod").ZodString;
+                cliType: import("zod").ZodString;
                 credentialSource: import("zod").ZodEnum<{
                     bitbucket_integration: "bitbucket_integration";
                     github_app: "github_app";
@@ -9507,9 +9722,9 @@ export declare const publicApiOperations: {
                 setupSkill: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly testPreset: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+        readonly testCli: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            presetType: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
                 key: import("zod").ZodString;
                 value: import("zod").ZodString;
@@ -9523,16 +9738,16 @@ export declare const publicApiOperations: {
             stdout: import("zod").ZodString;
             stderr: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly upsertPreset: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+        readonly upsertCli: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            presetType: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             environmentVariables: import("zod").ZodArray<import("zod").ZodObject<{
                 key: import("zod").ZodString;
                 value: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             projectId: import("zod").ZodString;
-            presetType: import("zod").ZodString;
+            cliType: import("zod").ZodString;
             envVarKeys: import("zod").ZodArray<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
     };
@@ -11601,6 +11816,7 @@ export declare const publicApiOperations: {
             planSlug: import("zod").ZodNullable<import("zod").ZodString>;
             currency: import("zod").ZodNullable<import("zod").ZodString>;
             currentBalance: import("zod").ZodNullable<import("zod").ZodString>;
+            cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
             targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             currentCycle: import("zod").ZodNullable<import("zod").ZodObject<{
                 startsAt: import("zod").ZodString;
@@ -11621,6 +11837,7 @@ export declare const publicApiOperations: {
                 planName: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             subscription: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -11636,6 +11853,7 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 subscriptionStatus: import("zod").ZodString;
                 cycleStartsAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -11648,6 +11866,7 @@ export declare const publicApiOperations: {
                     planName: import("zod").ZodNullable<import("zod").ZodString>;
                     price: import("zod").ZodNullable<import("zod").ZodString>;
                     currency: import("zod").ZodNullable<import("zod").ZodString>;
+                    cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                     targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 pendingCancellation: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -11854,6 +12073,7 @@ export declare const publicApiOperations: {
                 bestFor: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodString;
                 currency: import("zod").ZodString;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 logsIncludedBytes: import("zod").ZodString;
                 aiTokensIncluded: import("zod").ZodString;
@@ -11876,7 +12096,9 @@ export declare const publicApiOperations: {
             targetPlanName: import("zod").ZodString;
             currentPlanPrice: import("zod").ZodString;
             targetPlanPrice: import("zod").ZodString;
+            currentCycleCredits: import("zod").ZodString;
             currentTargetCreditBalance: import("zod").ZodString;
+            cycleCredits: import("zod").ZodString;
             targetCreditBalance: import("zod").ZodString;
             creditDeficitAmount: import("zod").ZodString;
             creditDeficitChargeAmount: import("zod").ZodString;
@@ -11895,6 +12117,7 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 subscriptionStatus: import("zod").ZodString;
                 cycleStartsAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -11907,6 +12130,7 @@ export declare const publicApiOperations: {
                     planName: import("zod").ZodNullable<import("zod").ZodString>;
                     price: import("zod").ZodNullable<import("zod").ZodString>;
                     currency: import("zod").ZodNullable<import("zod").ZodString>;
+                    cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                     targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 pendingCancellation: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -11926,6 +12150,7 @@ export declare const publicApiOperations: {
                 planName: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             calculatedAt: import("zod").ZodString;
@@ -11938,6 +12163,7 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 subscriptionStatus: import("zod").ZodString;
                 cycleStartsAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -11950,6 +12176,7 @@ export declare const publicApiOperations: {
                     planName: import("zod").ZodNullable<import("zod").ZodString>;
                     price: import("zod").ZodNullable<import("zod").ZodString>;
                     currency: import("zod").ZodNullable<import("zod").ZodString>;
+                    cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                     targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 pendingCancellation: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -11969,6 +12196,7 @@ export declare const publicApiOperations: {
                 planName: import("zod").ZodNullable<import("zod").ZodString>;
                 price: import("zod").ZodNullable<import("zod").ZodString>;
                 currency: import("zod").ZodNullable<import("zod").ZodString>;
+                cycleCredits: import("zod").ZodNullable<import("zod").ZodString>;
                 targetCreditBalance: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             calculatedAt: import("zod").ZodString;
@@ -12069,6 +12297,10 @@ export declare const publicApiOperations: {
                 }>;
                 roiScore: import("zod").ZodNumber;
                 priority: import("zod").ZodNumber;
+                components: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
     };

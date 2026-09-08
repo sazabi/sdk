@@ -564,6 +564,13 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type DisableAutomationOutput = z.infer<typeof DisableAutomationOutputSchema>;
+export declare const DeleteAutomationInputSchema: z.ZodObject<{
+    automationId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type DeleteAutomationInput = z.infer<typeof DeleteAutomationInputSchema>;
+export declare const DeleteAutomationOutputSchema: z.ZodVoid;
+export type DeleteAutomationOutput = z.infer<typeof DeleteAutomationOutputSchema>;
 export declare const listAutomations: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     search: z.ZodOptional<z.ZodString>;
@@ -930,6 +937,10 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         canToggle: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const deleteAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    automationId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodVoid, "api">;
 export declare const ListAutomationRunsInputSchema: z.ZodObject<{
     automationId: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
@@ -1516,6 +1527,10 @@ export declare const automationsContract: {
             canToggle: z.ZodBoolean;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly delete: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        automationId: z.ZodString;
+        projectId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly runs: {
         readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
             automationId: z.ZodString;

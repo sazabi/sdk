@@ -13,6 +13,30 @@ export declare const LogSourceModeEnum: z.ZodEnum<{
     managed: "managed";
 }>;
 /**
+ * A log source's persisted, ongoing auto-provisioning selection scope
+ * (ENG-6870, reshaped for allow-then-deny in ENG-7024; see
+ * docs/design/app/log-source-auto-provisioning/design.md).
+ *
+ * `null` is manual — items the provider later reports are never provisioned
+ * automatically. Otherwise both lists apply together: an item is provisioned
+ * when it passes the include gate AND is not excluded. An empty `allowlist`
+ * imposes no include restriction and an empty `denylist` excludes nothing,
+ * so `{ allowlist: [], denylist: [] }` means everything.
+ *
+ * Patterns are whole-string globs: `*` matches any run of characters
+ * (including none) and `?` matches exactly one; every other character is
+ * literal. Deliberately not regular expressions — see
+ * `packages/log-source-provider/src/server/auto-provision-filter.ts`.
+ *
+ * Each list holds at most `MAX_AUTO_PROVISION_FILTER_PATTERNS_PER_LIST`
+ * patterns — a plain per-array bound, so this schema and the generated
+ * OpenAPI document express exactly the same limit.
+ */
+export declare const AutoProvisionFilterSchema: z.ZodObject<{
+    allowlist: z.ZodArray<z.ZodString>;
+    denylist: z.ZodArray<z.ZodString>;
+}, z.core.$strip>;
+/**
  * A log source provider with its supported setup modes and metadata
  * requirements.
  */
@@ -147,6 +171,10 @@ export declare const LogSourceSchema: z.ZodObject<{
     name: z.ZodString;
     streamCount: z.ZodNumber;
     createdAt: z.ZodString;
+    streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+        allowlist: z.ZodArray<z.ZodString>;
+        denylist: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>>;
 }, z.core.$strip>;
 /**
  * A log source with its log streams expanded. Log streams that carry their
@@ -204,6 +232,10 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
     name: z.ZodString;
     streamCount: z.ZodNumber;
     createdAt: z.ZodString;
+    streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+        allowlist: z.ZodArray<z.ZodString>;
+        denylist: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>>;
     streams: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         logSourceId: z.ZodString;
@@ -373,6 +405,10 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListLogSourcesInput = z.infer<typeof ListLogSourcesInputSchema>;
@@ -475,6 +511,10 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const CreateLogSourceInputSchema: z.ZodObject<{
@@ -581,6 +621,10 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>;
     streamId: z.ZodOptional<z.ZodString>;
     publicKey: z.ZodOptional<z.ZodString>;
@@ -706,6 +750,10 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>;
     streamId: z.ZodOptional<z.ZodString>;
     publicKey: z.ZodOptional<z.ZodString>;
@@ -782,6 +830,10 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
         streams: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             logSourceId: z.ZodString;
@@ -872,6 +924,10 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
         streams: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             logSourceId: z.ZodString;
@@ -908,6 +964,10 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
 export declare const UpdateLogSourceInputSchema: z.ZodObject<{
     logSourceId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
+    streamAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        allowlist: z.ZodArray<z.ZodString>;
+        denylist: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>>>;
 }, z.core.$strict>;
 export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
     logSource: z.ZodObject<{
@@ -962,6 +1022,10 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type UpdateLogSourceInput = z.infer<typeof UpdateLogSourceInputSchema>;
@@ -969,6 +1033,10 @@ export type UpdateLogSourceOutput = z.infer<typeof UpdateLogSourceOutputSchema>;
 export declare const updateLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     logSourceId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
+    streamAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        allowlist: z.ZodArray<z.ZodString>;
+        denylist: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>>>;
 }, z.core.$strict>, z.ZodObject<{
     logSource: z.ZodObject<{
         id: z.ZodString;
@@ -1022,6 +1090,10 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
         name: z.ZodString;
         streamCount: z.ZodNumber;
         createdAt: z.ZodString;
+        streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const DeleteLogSourceInputSchema: z.ZodObject<{
@@ -1156,6 +1228,10 @@ export declare const logSourcesContract: {
             name: z.ZodString;
             streamCount: z.ZodNumber;
             createdAt: z.ZodString;
+            streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+                allowlist: z.ZodArray<z.ZodString>;
+                denylist: z.ZodArray<z.ZodString>;
+            }, z.core.$strip>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -1261,6 +1337,10 @@ export declare const logSourcesContract: {
             name: z.ZodString;
             streamCount: z.ZodNumber;
             createdAt: z.ZodString;
+            streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+                allowlist: z.ZodArray<z.ZodString>;
+                denylist: z.ZodArray<z.ZodString>;
+            }, z.core.$strip>>;
         }, z.core.$strip>;
         streamId: z.ZodOptional<z.ZodString>;
         publicKey: z.ZodOptional<z.ZodString>;
@@ -1336,6 +1416,10 @@ export declare const logSourcesContract: {
             name: z.ZodString;
             streamCount: z.ZodNumber;
             createdAt: z.ZodString;
+            streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+                allowlist: z.ZodArray<z.ZodString>;
+                denylist: z.ZodArray<z.ZodString>;
+            }, z.core.$strip>>;
             streams: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
                 logSourceId: z.ZodString;
@@ -1372,6 +1456,10 @@ export declare const logSourcesContract: {
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         logSourceId: z.ZodString;
         enabled: z.ZodOptional<z.ZodBoolean>;
+        streamAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>>;
     }, z.core.$strict>, z.ZodObject<{
         logSource: z.ZodObject<{
             id: z.ZodString;
@@ -1425,6 +1513,10 @@ export declare const logSourcesContract: {
             name: z.ZodString;
             streamCount: z.ZodNumber;
             createdAt: z.ZodString;
+            streamAutoProvisionFilter: z.ZodNullable<z.ZodObject<{
+                allowlist: z.ZodArray<z.ZodString>;
+                denylist: z.ZodArray<z.ZodString>;
+            }, z.core.$strip>>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly delete: import("@orpc/contract").ContractProcedure<z.ZodObject<{

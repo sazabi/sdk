@@ -98,6 +98,43 @@ export declare const createLogStream: import("../orpc-contracts/index.js").Opera
 }, z.core.$strict>, z.ZodObject<{
     streamId: z.ZodString;
 }, z.core.$strip>, "api">;
+export declare const CreateLogStreamsRequestItemSchema: z.ZodObject<{
+    config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+}, z.core.$strict>;
+export declare const CreateLogStreamsInputSchema: z.ZodObject<{
+    logSourceId: z.ZodString;
+    streams: z.ZodArray<z.ZodObject<{
+        config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    }, z.core.$strict>>;
+    setAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        allowlist: z.ZodArray<z.ZodString>;
+        denylist: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>>>;
+}, z.core.$strict>;
+export declare const CreateLogStreamsAcceptedItemSchema: z.ZodObject<{
+    streamId: z.ZodString;
+}, z.core.$strip>;
+export declare const CreateLogStreamsOutputSchema: z.ZodObject<{
+    accepted: z.ZodArray<z.ZodObject<{
+        streamId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type CreateLogStreamsInput = z.infer<typeof CreateLogStreamsInputSchema>;
+export type CreateLogStreamsOutput = z.infer<typeof CreateLogStreamsOutputSchema>;
+export declare const createLogStreams: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    logSourceId: z.ZodString;
+    streams: z.ZodArray<z.ZodObject<{
+        config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    }, z.core.$strict>>;
+    setAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        allowlist: z.ZodArray<z.ZodString>;
+        denylist: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>>>;
+}, z.core.$strict>, z.ZodObject<{
+    accepted: z.ZodArray<z.ZodObject<{
+        streamId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
 export declare const GetLogStreamVolumeStatsInputSchema: z.ZodObject<{
     logSourceId: z.ZodString;
     startDate: z.ZodString;
@@ -412,6 +449,20 @@ export declare const logStreamsContract: {
         config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     }, z.core.$strict>, z.ZodObject<{
         streamId: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly createBatch: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        logSourceId: z.ZodString;
+        streams: z.ZodArray<z.ZodObject<{
+            config: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+        }, z.core.$strict>>;
+        setAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            allowlist: z.ZodArray<z.ZodString>;
+            denylist: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>>;
+    }, z.core.$strict>, z.ZodObject<{
+        accepted: z.ZodArray<z.ZodObject<{
+            streamId: z.ZodString;
+        }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly volumeStats: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         logSourceId: z.ZodString;

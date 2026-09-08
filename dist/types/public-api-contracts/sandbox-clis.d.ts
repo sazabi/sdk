@@ -1,24 +1,24 @@
 /**
- * Public API contracts for sandbox CLI preset inspection.
+ * Public API contracts for sandbox CLIs.
  *
- * These operations are read-only. They expose the available sandbox CLI
- * presets with their environment variable requirements and setup skills,
- * without returning any secret material.
+ * These operations expose the available sandbox CLIs with their environment
+ * variable requirements and setup skills, and manage a project's sandbox CLI
+ * connections, without returning any secret material.
  */
 import { z } from "zod";
 /**
- * One sandbox CLI preset type in the catalog.
+ * One sandbox CLI type in the catalog.
  */
-export declare const SandboxPresetTypeInfoSchema: z.ZodObject<{
+export declare const SandboxCliTypeInfoSchema: z.ZodObject<{
     type: z.ZodString;
     label: z.ZodString;
     executableNames: z.ZodArray<z.ZodString>;
     envVarKeys: z.ZodArray<z.ZodString>;
     setupSkill: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
-export type SandboxPresetTypeInfo = z.infer<typeof SandboxPresetTypeInfoSchema>;
-export declare const ListSandboxPresetTypesInputSchema: z.ZodObject<{}, z.core.$strip>;
-export declare const ListSandboxPresetTypesOutputSchema: z.ZodObject<{
+export type SandboxCliTypeInfo = z.infer<typeof SandboxCliTypeInfoSchema>;
+export declare const ListSandboxCliTypesInputSchema: z.ZodObject<{}, z.core.$strip>;
+export declare const ListSandboxCliTypesOutputSchema: z.ZodObject<{
     types: z.ZodArray<z.ZodObject<{
         type: z.ZodString;
         label: z.ZodString;
@@ -27,8 +27,8 @@ export declare const ListSandboxPresetTypesOutputSchema: z.ZodObject<{
         setupSkill: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export type ListSandboxPresetTypesOutput = z.infer<typeof ListSandboxPresetTypesOutputSchema>;
-export declare const listSandboxPresetTypes: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
+export type ListSandboxCliTypesOutput = z.infer<typeof ListSandboxCliTypesOutputSchema>;
+export declare const listSandboxCliTypes: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
     types: z.ZodArray<z.ZodObject<{
         type: z.ZodString;
         label: z.ZodString;
@@ -37,15 +37,15 @@ export declare const listSandboxPresetTypes: import("../orpc-contracts/index.js"
         setupSkill: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
-export declare const SandboxPresetCredentialSourceSchema: z.ZodEnum<{
+export declare const SandboxCliCredentialSourceSchema: z.ZodEnum<{
     bitbucket_integration: "bitbucket_integration";
     github_app: "github_app";
     personal_access_token: "personal_access_token";
     stored_credentials: "stored_credentials";
     tailscale_federated_identity: "tailscale_federated_identity";
 }>;
-export declare const SandboxPresetConnectionSchema: z.ZodObject<{
-    presetType: z.ZodString;
+export declare const SandboxCliConnectionSchema: z.ZodObject<{
+    cliType: z.ZodString;
     credentialSource: z.ZodEnum<{
         bitbucket_integration: "bitbucket_integration";
         github_app: "github_app";
@@ -57,13 +57,13 @@ export declare const SandboxPresetConnectionSchema: z.ZodObject<{
     fallbackConfigured: z.ZodBoolean;
     envVarKeys: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
-export type SandboxPresetConnection = z.infer<typeof SandboxPresetConnectionSchema>;
-export declare const ListSandboxPresetConnectionsInputSchema: z.ZodObject<{
+export type SandboxCliConnection = z.infer<typeof SandboxCliConnectionSchema>;
+export declare const ListSandboxCliConnectionsInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
-export declare const ListSandboxPresetConnectionsOutputSchema: z.ZodObject<{
+export declare const ListSandboxCliConnectionsOutputSchema: z.ZodObject<{
     connections: z.ZodArray<z.ZodObject<{
-        presetType: z.ZodString;
+        cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
             github_app: "github_app";
@@ -76,13 +76,13 @@ export declare const ListSandboxPresetConnectionsOutputSchema: z.ZodObject<{
         envVarKeys: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export type ListSandboxPresetConnectionsInput = z.infer<typeof ListSandboxPresetConnectionsInputSchema>;
-export type ListSandboxPresetConnectionsOutput = z.infer<typeof ListSandboxPresetConnectionsOutputSchema>;
-export declare const listSandboxPresetConnections: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type ListSandboxCliConnectionsInput = z.infer<typeof ListSandboxCliConnectionsInputSchema>;
+export type ListSandboxCliConnectionsOutput = z.infer<typeof ListSandboxCliConnectionsOutputSchema>;
+export declare const listSandboxCliConnections: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     connections: z.ZodArray<z.ZodObject<{
-        presetType: z.ZodString;
+        cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
             github_app: "github_app";
@@ -96,18 +96,18 @@ export declare const listSandboxPresetConnections: import("../orpc-contracts/ind
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 /**
- * One preset environment variable (name + secret value).
+ * One sandbox CLI environment variable (name + secret value).
  *
  * `value` is write-only credential material. It is accepted on input, encrypted
  * server-side, and NEVER returned in any response.
  */
-export declare const SandboxPresetEnvVarSchema: z.ZodObject<{
+export declare const SandboxCliEnvVarSchema: z.ZodObject<{
     key: z.ZodString;
     value: z.ZodString;
 }, z.core.$strip>;
-export declare const UpsertSandboxPresetInputSchema: z.ZodObject<{
+export declare const UpsertSandboxCliInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     environmentVariables: z.ZodArray<z.ZodObject<{
         key: z.ZodString;
         value: z.ZodString;
@@ -117,53 +117,53 @@ export declare const UpsertSandboxPresetInputSchema: z.ZodObject<{
  * Response intentionally excludes all env var values — only the resulting key
  * names are echoed back so callers can confirm what was stored.
  */
-export declare const UpsertSandboxPresetOutputSchema: z.ZodObject<{
+export declare const UpsertSandboxCliOutputSchema: z.ZodObject<{
     projectId: z.ZodString;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     envVarKeys: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
-export type UpsertSandboxPresetInput = z.infer<typeof UpsertSandboxPresetInputSchema>;
-export type UpsertSandboxPresetOutput = z.infer<typeof UpsertSandboxPresetOutputSchema>;
-export declare const upsertSandboxPreset: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type UpsertSandboxCliInput = z.infer<typeof UpsertSandboxCliInputSchema>;
+export type UpsertSandboxCliOutput = z.infer<typeof UpsertSandboxCliOutputSchema>;
+export declare const upsertSandboxCli: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     environmentVariables: z.ZodArray<z.ZodObject<{
         key: z.ZodString;
         value: z.ZodString;
     }, z.core.$strip>>;
 }, z.core.$strip>, z.ZodObject<{
     projectId: z.ZodString;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     envVarKeys: z.ZodArray<z.ZodString>;
 }, z.core.$strip>, "api">;
-export declare const DeleteSandboxPresetInputSchema: z.ZodObject<{
+export declare const DeleteSandboxCliInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
 }, z.core.$strip>;
-export declare const DeleteSandboxPresetOutputSchema: z.ZodObject<{
+export declare const DeleteSandboxCliOutputSchema: z.ZodObject<{
     projectId: z.ZodString;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     deleted: z.ZodBoolean;
 }, z.core.$strip>;
-export type DeleteSandboxPresetInput = z.infer<typeof DeleteSandboxPresetInputSchema>;
-export type DeleteSandboxPresetOutput = z.infer<typeof DeleteSandboxPresetOutputSchema>;
-export declare const deleteSandboxPreset: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type DeleteSandboxCliInput = z.infer<typeof DeleteSandboxCliInputSchema>;
+export type DeleteSandboxCliOutput = z.infer<typeof DeleteSandboxCliOutputSchema>;
+export declare const deleteSandboxCli: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     projectId: z.ZodString;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     deleted: z.ZodBoolean;
 }, z.core.$strip>, "api">;
-export declare const TestSandboxPresetInputSchema: z.ZodObject<{
+export declare const TestSandboxCliInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     environmentVariables: z.ZodArray<z.ZodObject<{
         key: z.ZodString;
         value: z.ZodString;
     }, z.core.$strip>>;
 }, z.core.$strip>;
-export declare const TestSandboxPresetOutputSchema: z.ZodObject<{
+export declare const TestSandboxCliOutputSchema: z.ZodObject<{
     status: z.ZodEnum<{
         failed: "failed";
         success: "success";
@@ -172,11 +172,11 @@ export declare const TestSandboxPresetOutputSchema: z.ZodObject<{
     stdout: z.ZodString;
     stderr: z.ZodString;
 }, z.core.$strip>;
-export type TestSandboxPresetInput = z.infer<typeof TestSandboxPresetInputSchema>;
-export type TestSandboxPresetOutput = z.infer<typeof TestSandboxPresetOutputSchema>;
-export declare const testSandboxPreset: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+export type TestSandboxCliInput = z.infer<typeof TestSandboxCliInputSchema>;
+export type TestSandboxCliOutput = z.infer<typeof TestSandboxCliOutputSchema>;
+export declare const testSandboxCli: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    presetType: z.ZodString;
+    cliType: z.ZodString;
     environmentVariables: z.ZodArray<z.ZodObject<{
         key: z.ZodString;
         value: z.ZodString;
@@ -190,20 +190,20 @@ export declare const testSandboxPreset: import("../orpc-contracts/index.js").Ope
     stdout: z.ZodString;
     stderr: z.ZodString;
 }, z.core.$strip>, "api">;
-export declare const sandboxPresetsContract: {
-    readonly deletePreset: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+export declare const sandboxClisContract: {
+    readonly deleteCli: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
-        presetType: z.ZodString;
+        cliType: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         projectId: z.ZodString;
-        presetType: z.ZodString;
+        cliType: z.ZodString;
         deleted: z.ZodBoolean;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly listConnections: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         connections: z.ZodArray<z.ZodObject<{
-            presetType: z.ZodString;
+            cliType: z.ZodString;
             credentialSource: z.ZodEnum<{
                 bitbucket_integration: "bitbucket_integration";
                 github_app: "github_app";
@@ -225,9 +225,9 @@ export declare const sandboxPresetsContract: {
             setupSkill: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly testPreset: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+    readonly testCli: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
-        presetType: z.ZodString;
+        cliType: z.ZodString;
         environmentVariables: z.ZodArray<z.ZodObject<{
             key: z.ZodString;
             value: z.ZodString;
@@ -241,16 +241,16 @@ export declare const sandboxPresetsContract: {
         stdout: z.ZodString;
         stderr: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly upsertPreset: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+    readonly upsertCli: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
-        presetType: z.ZodString;
+        cliType: z.ZodString;
         environmentVariables: z.ZodArray<z.ZodObject<{
             key: z.ZodString;
             value: z.ZodString;
         }, z.core.$strip>>;
     }, z.core.$strip>, z.ZodObject<{
         projectId: z.ZodString;
-        presetType: z.ZodString;
+        cliType: z.ZodString;
         envVarKeys: z.ZodArray<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };

@@ -148,12 +148,19 @@ export type QueryLogsInput = z.infer<typeof QueryLogsInputSchema>;
  */
 export declare const DEFAULT_QUERY_WINDOW_MS: number;
 /**
+ * Default look-back window for unfiltered phrase searches (1h). Because phrase
+ * searches cannot safely token-prune without dropping valid substring matches,
+ * the default look-back is kept narrow to bound scan costs on large tables.
+ * Callers can widen the window explicitly with from/to timestamp filters.
+ */
+export declare const DEFAULT_PHRASE_QUERY_WINDOW_MS: number;
+/**
  * Applies the default query window at the public API boundary: when the caller
  * provided no explicit `timestamp` filter, returns the input with a
- * `timestamp >= now - DEFAULT_QUERY_WINDOW_MS` lower bound appended so the query
- * stays pruned to recent data. Keeps log backends unaware of defaulting policy.
- * An explicit `timestamp` filter (any operator) opts out and is returned
- * unchanged.
+ * `timestamp >= now - DEFAULT_QUERY_WINDOW_MS` (or 1h for phrase mode) lower bound
+ * appended so the query stays pruned to recent data. Keeps log backends unaware of
+ * defaulting policy. An explicit `timestamp` filter (any operator) opts out and is
+ * returned unchanged.
  */
 export declare const applyDefaultLogQueryWindow: (input: QueryLogsInput) => QueryLogsInput;
 /**
@@ -453,6 +460,9 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>]>;
             operator: z.ZodEnum<{
                 contains: "contains";
@@ -471,11 +481,14 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>]>;
             operator: z.ZodLiteral<"in">;
             values: z.ZodArray<z.ZodString>;
         }, z.core.$strict>, z.ZodObject<{
-            field: z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
                 kind: z.ZodLiteral<"attribute">;
                 source: z.ZodEnum<{
                     log: "log";
@@ -483,7 +496,10 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                     scope: "scope";
                 }>;
                 key: z.ZodString;
-            }, z.core.$strict>;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
+            }, z.core.$strict>]>;
             operator: z.ZodLiteral<"exists">;
         }, z.core.$strict>, z.ZodObject<{
             field: z.ZodUnion<readonly [z.ZodObject<{
@@ -496,6 +512,9 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>]>;
             operator: z.ZodEnum<{
                 gt: "gt";
@@ -532,6 +551,9 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>]>;
             }, z.core.$strict>], "operation">;
             groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -546,6 +568,9 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>], "kind">>>;
             limit: z.ZodDefault<z.ZodNumber>;
         }, z.core.$strict>, z.ZodObject<{
@@ -577,6 +602,9 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>]>;
             }, z.core.$strict>], "operation">;
             groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -591,6 +619,9 @@ export declare const SearchLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObjec
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>], "kind">>>;
             limit: z.ZodDefault<z.ZodNumber>;
         }, z.core.$strict>], "kind">;
@@ -722,6 +753,9 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>]>;
             operator: z.ZodEnum<{
                 contains: "contains";
@@ -740,11 +774,14 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>]>;
             operator: z.ZodLiteral<"in">;
             values: z.ZodArray<z.ZodString>;
         }, z.core.$strict>, z.ZodObject<{
-            field: z.ZodObject<{
+            field: z.ZodUnion<readonly [z.ZodObject<{
                 kind: z.ZodLiteral<"attribute">;
                 source: z.ZodEnum<{
                     log: "log";
@@ -752,7 +789,10 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                     scope: "scope";
                 }>;
                 key: z.ZodString;
-            }, z.core.$strict>;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
+            }, z.core.$strict>]>;
             operator: z.ZodLiteral<"exists">;
         }, z.core.$strict>, z.ZodObject<{
             field: z.ZodUnion<readonly [z.ZodObject<{
@@ -765,6 +805,9 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>]>;
             operator: z.ZodEnum<{
                 gt: "gt";
@@ -801,6 +844,9 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>]>;
             }, z.core.$strict>], "operation">;
             groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -815,6 +861,9 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>], "kind">>>;
             limit: z.ZodDefault<z.ZodNumber>;
         }, z.core.$strict>, z.ZodObject<{
@@ -846,6 +895,9 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>]>;
             }, z.core.$strict>], "operation">;
             groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -860,6 +912,9 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
                     scope: "scope";
                 }>;
                 key: z.ZodString;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"body_json">;
+                path: z.ZodArray<z.ZodString>;
             }, z.core.$strict>], "kind">>>;
             limit: z.ZodDefault<z.ZodNumber>;
         }, z.core.$strict>], "kind">;
@@ -1150,6 +1205,9 @@ export declare const logsContract: {
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>]>;
                 operator: z.ZodEnum<{
                     contains: "contains";
@@ -1168,11 +1226,14 @@ export declare const logsContract: {
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>]>;
                 operator: z.ZodLiteral<"in">;
                 values: z.ZodArray<z.ZodString>;
             }, z.core.$strict>, z.ZodObject<{
-                field: z.ZodObject<{
+                field: z.ZodUnion<readonly [z.ZodObject<{
                     kind: z.ZodLiteral<"attribute">;
                     source: z.ZodEnum<{
                         log: "log";
@@ -1180,7 +1241,10 @@ export declare const logsContract: {
                         scope: "scope";
                     }>;
                     key: z.ZodString;
-                }, z.core.$strict>;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
+                }, z.core.$strict>]>;
                 operator: z.ZodLiteral<"exists">;
             }, z.core.$strict>, z.ZodObject<{
                 field: z.ZodUnion<readonly [z.ZodObject<{
@@ -1193,6 +1257,9 @@ export declare const logsContract: {
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>]>;
                 operator: z.ZodEnum<{
                     gt: "gt";
@@ -1229,6 +1296,9 @@ export declare const logsContract: {
                             scope: "scope";
                         }>;
                         key: z.ZodString;
+                    }, z.core.$strict>, z.ZodObject<{
+                        kind: z.ZodLiteral<"body_json">;
+                        path: z.ZodArray<z.ZodString>;
                     }, z.core.$strict>]>;
                 }, z.core.$strict>], "operation">;
                 groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -1243,6 +1313,9 @@ export declare const logsContract: {
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>], "kind">>>;
                 limit: z.ZodDefault<z.ZodNumber>;
             }, z.core.$strict>, z.ZodObject<{
@@ -1274,6 +1347,9 @@ export declare const logsContract: {
                             scope: "scope";
                         }>;
                         key: z.ZodString;
+                    }, z.core.$strict>, z.ZodObject<{
+                        kind: z.ZodLiteral<"body_json">;
+                        path: z.ZodArray<z.ZodString>;
                     }, z.core.$strict>]>;
                 }, z.core.$strict>], "operation">;
                 groupBy: z.ZodDefault<z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -1288,6 +1364,9 @@ export declare const logsContract: {
                         scope: "scope";
                     }>;
                     key: z.ZodString;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"body_json">;
+                    path: z.ZodArray<z.ZodString>;
                 }, z.core.$strict>], "kind">>>;
                 limit: z.ZodDefault<z.ZodNumber>;
             }, z.core.$strict>], "kind">;

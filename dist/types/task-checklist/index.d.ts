@@ -18,9 +18,9 @@ export type TaskMetadata = {
 };
 export declare const TASK_METADATA: readonly [{
     readonly id: "install_github_app";
-    readonly label: "Install GitHub app";
-    readonly description: "Install the Sazabi GitHub App on your GitHub organization to enable code search, pull request mention handling, and repository-triggered agent runs.";
-    readonly instructions: "Go to Settings > Integrations > GitHub and click 'Install GitHub App'. You will be redirected to GitHub to authorize the app on your organization.";
+    readonly label: "Install GitHub or Bitbucket";
+    readonly description: "Connect GitHub or Bitbucket to enable code search, pull request mention handling, and repository-triggered agent runs. The task key keeps its github spelling for compatibility, but either forge connection satisfies it.";
+    readonly instructions: "Go to Settings > Integrations and connect GitHub (install the Sazabi GitHub App on your GitHub organization) or Bitbucket (add a workspace access token).";
     readonly category: "onboarding";
 }, {
     readonly id: "configure_code_search";

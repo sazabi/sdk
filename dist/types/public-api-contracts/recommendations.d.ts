@@ -25,6 +25,10 @@ export declare const RecommendationSchema: z.ZodObject<{
     }>;
     roiScore: z.ZodNumber;
     priority: z.ZodNumber;
+    components: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>>;
 }, z.core.$strip>;
 export type Recommendation = z.infer<typeof RecommendationSchema>;
 export declare const ListRecommendationsInputSchema: z.ZodObject<{
@@ -46,6 +50,10 @@ export declare const ListRecommendationsOutputSchema: z.ZodObject<{
         }>;
         roiScore: z.ZodNumber;
         priority: z.ZodNumber;
+        components: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListRecommendationsOutput = z.infer<typeof ListRecommendationsOutputSchema>;
@@ -66,5 +74,9 @@ export declare const listRecommendations: import("../orpc-contracts/index.js").O
         }>;
         roiScore: z.ZodNumber;
         priority: z.ZodNumber;
+        components: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;

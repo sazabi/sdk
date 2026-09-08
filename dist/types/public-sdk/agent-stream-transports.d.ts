@@ -19,6 +19,12 @@ export interface AgentStreamTransportOptions {
      * client. Omit for raw SDK/API callers.
      */
     clientSource?: string;
+    /**
+     * Version of the client surface making the request. Forwarded as the
+     * `x-sazabi-client-version` header for parity with the oRPC client
+     * (ENG-6768). Omit when the caller has no meaningful version.
+     */
+    clientVersion?: string;
 }
 /**
  * Caller-facing params for streaming a single run's agent events.

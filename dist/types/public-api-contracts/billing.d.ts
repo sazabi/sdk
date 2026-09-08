@@ -39,6 +39,16 @@ export declare const BillingTransactionReasonSchema: z.ZodEnum<{
     usage: "usage";
 }>;
 export type BillingTransactionReason = z.infer<typeof BillingTransactionReasonSchema>;
+export declare const BillingPendingDowngradeSchema: z.ZodObject<{
+    billingSubscriptionChangeId: z.ZodString;
+    effectiveAt: z.ZodString;
+    planSlug: z.ZodNullable<z.ZodString>;
+    planName: z.ZodNullable<z.ZodString>;
+    price: z.ZodNullable<z.ZodString>;
+    currency: z.ZodNullable<z.ZodString>;
+    cycleCredits: z.ZodNullable<z.ZodString>;
+    targetCreditBalance: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
 export declare const GetBillingSummaryInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -54,6 +64,7 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
     planSlug: z.ZodNullable<z.ZodString>;
     currency: z.ZodNullable<z.ZodString>;
     currentBalance: z.ZodNullable<z.ZodString>;
+    cycleCredits: z.ZodNullable<z.ZodString>;
     targetCreditBalance: z.ZodNullable<z.ZodString>;
     currentCycle: z.ZodNullable<z.ZodObject<{
         startsAt: z.ZodString;
@@ -74,6 +85,7 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
         planName: z.ZodNullable<z.ZodString>;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     subscription: z.ZodNullable<z.ZodObject<{
@@ -89,6 +101,7 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
         name: z.ZodString;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         subscriptionStatus: z.ZodString;
         cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -101,6 +114,7 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -257,6 +271,7 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
     planSlug: z.ZodNullable<z.ZodString>;
     currency: z.ZodNullable<z.ZodString>;
     currentBalance: z.ZodNullable<z.ZodString>;
+    cycleCredits: z.ZodNullable<z.ZodString>;
     targetCreditBalance: z.ZodNullable<z.ZodString>;
     currentCycle: z.ZodNullable<z.ZodObject<{
         startsAt: z.ZodString;
@@ -277,6 +292,7 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
         planName: z.ZodNullable<z.ZodString>;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     subscription: z.ZodNullable<z.ZodObject<{
@@ -292,6 +308,7 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
         name: z.ZodString;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         subscriptionStatus: z.ZodString;
         cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -304,6 +321,7 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -440,6 +458,7 @@ export declare const BillingPlanSchema: z.ZodObject<{
     bestFor: z.ZodNullable<z.ZodString>;
     price: z.ZodString;
     currency: z.ZodString;
+    cycleCredits: z.ZodNullable<z.ZodString>;
     targetCreditBalance: z.ZodNullable<z.ZodString>;
     logsIncludedBytes: z.ZodString;
     aiTokensIncluded: z.ZodString;
@@ -457,6 +476,7 @@ export declare const ListPlansOutputSchema: z.ZodObject<{
         bestFor: z.ZodNullable<z.ZodString>;
         price: z.ZodString;
         currency: z.ZodString;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         logsIncludedBytes: z.ZodString;
         aiTokensIncluded: z.ZodString;
@@ -482,7 +502,9 @@ export declare const PreviewPlanChangeOutputSchema: z.ZodObject<{
     targetPlanName: z.ZodString;
     currentPlanPrice: z.ZodString;
     targetPlanPrice: z.ZodString;
+    currentCycleCredits: z.ZodString;
     currentTargetCreditBalance: z.ZodString;
+    cycleCredits: z.ZodString;
     targetCreditBalance: z.ZodString;
     creditDeficitAmount: z.ZodString;
     creditDeficitChargeAmount: z.ZodString;
@@ -565,6 +587,7 @@ export declare const BillingCurrentPlanSchema: z.ZodObject<{
     name: z.ZodString;
     price: z.ZodNullable<z.ZodString>;
     currency: z.ZodNullable<z.ZodString>;
+    cycleCredits: z.ZodNullable<z.ZodString>;
     targetCreditBalance: z.ZodNullable<z.ZodString>;
     subscriptionStatus: z.ZodString;
     cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -577,6 +600,7 @@ export declare const BillingCurrentPlanSchema: z.ZodObject<{
         planName: z.ZodNullable<z.ZodString>;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -592,6 +616,7 @@ export declare const SubscriptionCancellationPreviewSchema: z.ZodObject<{
         name: z.ZodString;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         subscriptionStatus: z.ZodString;
         cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -604,6 +629,7 @@ export declare const SubscriptionCancellationPreviewSchema: z.ZodObject<{
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -623,6 +649,7 @@ export declare const SubscriptionCancellationPreviewSchema: z.ZodObject<{
         planName: z.ZodNullable<z.ZodString>;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     calculatedAt: z.ZodString;
@@ -633,6 +660,7 @@ export declare const ScheduleSubscriptionCancellationOutputSchema: z.ZodObject<{
         name: z.ZodString;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         subscriptionStatus: z.ZodString;
         cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -645,6 +673,7 @@ export declare const ScheduleSubscriptionCancellationOutputSchema: z.ZodObject<{
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -664,6 +693,7 @@ export declare const ScheduleSubscriptionCancellationOutputSchema: z.ZodObject<{
         planName: z.ZodNullable<z.ZodString>;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     calculatedAt: z.ZodString;
@@ -734,6 +764,7 @@ export declare const listPlans: import("../orpc-contracts/index.js").OperationDe
         bestFor: z.ZodNullable<z.ZodString>;
         price: z.ZodString;
         currency: z.ZodString;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         logsIncludedBytes: z.ZodString;
         aiTokensIncluded: z.ZodString;
@@ -756,7 +787,9 @@ export declare const previewPlanChange: import("../orpc-contracts/index.js").Ope
     targetPlanName: z.ZodString;
     currentPlanPrice: z.ZodString;
     targetPlanPrice: z.ZodString;
+    currentCycleCredits: z.ZodString;
     currentTargetCreditBalance: z.ZodString;
+    cycleCredits: z.ZodString;
     targetCreditBalance: z.ZodString;
     creditDeficitAmount: z.ZodString;
     creditDeficitChargeAmount: z.ZodString;
@@ -826,6 +859,7 @@ export declare const previewSubscriptionCancellation: import("../orpc-contracts/
         name: z.ZodString;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         subscriptionStatus: z.ZodString;
         cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -838,6 +872,7 @@ export declare const previewSubscriptionCancellation: import("../orpc-contracts/
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -857,6 +892,7 @@ export declare const previewSubscriptionCancellation: import("../orpc-contracts/
         planName: z.ZodNullable<z.ZodString>;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     calculatedAt: z.ZodString;
@@ -869,6 +905,7 @@ export declare const scheduleSubscriptionCancellation: import("../orpc-contracts
         name: z.ZodString;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         subscriptionStatus: z.ZodString;
         cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -881,6 +918,7 @@ export declare const scheduleSubscriptionCancellation: import("../orpc-contracts
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -900,6 +938,7 @@ export declare const scheduleSubscriptionCancellation: import("../orpc-contracts
         planName: z.ZodNullable<z.ZodString>;
         price: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     calculatedAt: z.ZodString;
@@ -1116,6 +1155,7 @@ export declare const billingContract: {
         planSlug: z.ZodNullable<z.ZodString>;
         currency: z.ZodNullable<z.ZodString>;
         currentBalance: z.ZodNullable<z.ZodString>;
+        cycleCredits: z.ZodNullable<z.ZodString>;
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         currentCycle: z.ZodNullable<z.ZodObject<{
             startsAt: z.ZodString;
@@ -1136,6 +1176,7 @@ export declare const billingContract: {
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         subscription: z.ZodNullable<z.ZodObject<{
@@ -1151,6 +1192,7 @@ export declare const billingContract: {
             name: z.ZodString;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
             subscriptionStatus: z.ZodString;
             cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -1163,6 +1205,7 @@ export declare const billingContract: {
                 planName: z.ZodNullable<z.ZodString>;
                 price: z.ZodNullable<z.ZodString>;
                 currency: z.ZodNullable<z.ZodString>;
+                cycleCredits: z.ZodNullable<z.ZodString>;
                 targetCreditBalance: z.ZodNullable<z.ZodString>;
             }, z.core.$strip>>;
             pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -1369,6 +1412,7 @@ export declare const billingContract: {
             bestFor: z.ZodNullable<z.ZodString>;
             price: z.ZodString;
             currency: z.ZodString;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
             logsIncludedBytes: z.ZodString;
             aiTokensIncluded: z.ZodString;
@@ -1391,7 +1435,9 @@ export declare const billingContract: {
         targetPlanName: z.ZodString;
         currentPlanPrice: z.ZodString;
         targetPlanPrice: z.ZodString;
+        currentCycleCredits: z.ZodString;
         currentTargetCreditBalance: z.ZodString;
+        cycleCredits: z.ZodString;
         targetCreditBalance: z.ZodString;
         creditDeficitAmount: z.ZodString;
         creditDeficitChargeAmount: z.ZodString;
@@ -1461,6 +1507,7 @@ export declare const billingContract: {
             name: z.ZodString;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
             subscriptionStatus: z.ZodString;
             cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -1473,6 +1520,7 @@ export declare const billingContract: {
                 planName: z.ZodNullable<z.ZodString>;
                 price: z.ZodNullable<z.ZodString>;
                 currency: z.ZodNullable<z.ZodString>;
+                cycleCredits: z.ZodNullable<z.ZodString>;
                 targetCreditBalance: z.ZodNullable<z.ZodString>;
             }, z.core.$strip>>;
             pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -1492,6 +1540,7 @@ export declare const billingContract: {
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         calculatedAt: z.ZodString;
@@ -1504,6 +1553,7 @@ export declare const billingContract: {
             name: z.ZodString;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
             subscriptionStatus: z.ZodString;
             cycleStartsAt: z.ZodNullable<z.ZodString>;
@@ -1516,6 +1566,7 @@ export declare const billingContract: {
                 planName: z.ZodNullable<z.ZodString>;
                 price: z.ZodNullable<z.ZodString>;
                 currency: z.ZodNullable<z.ZodString>;
+                cycleCredits: z.ZodNullable<z.ZodString>;
                 targetCreditBalance: z.ZodNullable<z.ZodString>;
             }, z.core.$strip>>;
             pendingCancellation: z.ZodNullable<z.ZodObject<{
@@ -1535,6 +1586,7 @@ export declare const billingContract: {
             planName: z.ZodNullable<z.ZodString>;
             price: z.ZodNullable<z.ZodString>;
             currency: z.ZodNullable<z.ZodString>;
+            cycleCredits: z.ZodNullable<z.ZodString>;
             targetCreditBalance: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         calculatedAt: z.ZodString;
