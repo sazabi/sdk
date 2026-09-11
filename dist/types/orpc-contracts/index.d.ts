@@ -1,6 +1,10 @@
 export type { ContractClientOptions } from "./create-contract-client.js";
 export { createContractClient } from "./create-contract-client.js";
 export { defineOperation } from "./define-operation.js";
+export type { BuildPreviewVariantHostnameOptions } from "./preview-variant-hostname.js";
+export { buildPreviewVariantHostname } from "./preview-variant-hostname.js";
+export type { CachedPreviewVariantRegistryOptions, PreviewVariantRegistry, } from "./preview-variant-registry.js";
+export { createCachedPreviewVariantRegistry, defaultPreviewVariantRegistry, unresolvedPreviewVariantRegistry, } from "./preview-variant-registry.js";
 export type { GenerateOpenApiSpecOptions } from "./generate-openapi-spec.js";
 export { generateOpenApiSpec, stripContentFrom204Responses, } from "./generate-openapi-spec.js";
 export type { AnyOperationDefinition } from "./operation-collections.js";

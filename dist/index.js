@@ -35,8 +35,8 @@ var __commonJS = (cb, mod) => () => (mod || cb((mod = { exports: {} }).exports, 
 var __esm = (fn, res) => () => (fn && (res = fn(fn = 0)), res);
 var __require = /* @__PURE__ */ createRequire(import.meta.url);
 
-// ../../node_modules/tslib/tslib.js
-var require_tslib = __commonJS(function(exports, module2) {
+// ../../../node_modules/tslib/tslib.js
+var require_tslib = __commonJS(function(exports, module) {
   var __extends;
   var __assign;
   var __rest;
@@ -75,7 +75,7 @@ var require_tslib = __commonJS(function(exports, module2) {
       define("tslib", ["exports"], function(exports2) {
         factory(createExporter(root, createExporter(exports2)));
       });
-    } else if (typeof module2 === "object" && typeof exports === "object") {
+    } else if (typeof module === "object" && typeof exports === "object") {
       factory(createExporter(root, createExporter(exports)));
     } else {
       factory(createExporter(root));
@@ -110,8 +110,8 @@ var require_tslib = __commonJS(function(exports, module2) {
       d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __);
     };
     __assign = Object.assign || function(t) {
-      for (var s, i2 = 1, n = arguments.length;i2 < n; i2++) {
-        s = arguments[i2];
+      for (var s, i = 1, n = arguments.length;i < n; i++) {
+        s = arguments[i];
         for (var p in s)
           if (Object.prototype.hasOwnProperty.call(s, p))
             t[p] = s[p];
@@ -124,9 +124,9 @@ var require_tslib = __commonJS(function(exports, module2) {
         if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
           t[p] = s[p];
       if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i2 = 0, p = Object.getOwnPropertySymbols(s);i2 < p.length; i2++) {
-          if (e.indexOf(p[i2]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i2]))
-            t[p[i2]] = s[p[i2]];
+        for (var i = 0, p = Object.getOwnPropertySymbols(s);i < p.length; i++) {
+          if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+            t[p[i]] = s[p[i]];
         }
       return t;
     };
@@ -135,8 +135,8 @@ var require_tslib = __commonJS(function(exports, module2) {
       if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
         r = Reflect.decorate(decorators, target, key, desc);
       else
-        for (var i2 = decorators.length - 1;i2 >= 0; i2--)
-          if (d = decorators[i2])
+        for (var i = decorators.length - 1;i >= 0; i--)
+          if (d = decorators[i])
             r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
       return c > 3 && r && Object.defineProperty(target, key, r), r;
     };
@@ -155,7 +155,7 @@ var require_tslib = __commonJS(function(exports, module2) {
       var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
       var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
       var _, done = false;
-      for (var i2 = decorators.length - 1;i2 >= 0; i2--) {
+      for (var i = decorators.length - 1;i >= 0; i--) {
         var context = {};
         for (var p in contextIn)
           context[p] = p === "access" ? {} : contextIn[p];
@@ -166,7 +166,7 @@ var require_tslib = __commonJS(function(exports, module2) {
             throw new TypeError("Cannot add initializers after decoration has completed");
           extraInitializers.push(accept(f || null));
         };
-        var result = (0, decorators[i2])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
+        var result = (0, decorators[i])(kind === "accessor" ? { get: descriptor.get, set: descriptor.set } : descriptor[key], context);
         if (kind === "accessor") {
           if (result === undefined)
             continue;
@@ -191,18 +191,18 @@ var require_tslib = __commonJS(function(exports, module2) {
     };
     __runInitializers = function(thisArg, initializers, value) {
       var useValue = arguments.length > 2;
-      for (var i2 = 0;i2 < initializers.length; i2++) {
-        value = useValue ? initializers[i2].call(thisArg, value) : initializers[i2].call(thisArg);
+      for (var i = 0;i < initializers.length; i++) {
+        value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
       }
       return useValue ? value : undefined;
     };
     __propKey = function(x) {
       return typeof x === "symbol" ? x : "".concat(x);
     };
-    __setFunctionName = function(f, name2, prefix) {
-      if (typeof name2 === "symbol")
-        name2 = name2.description ? "[".concat(name2.description, "]") : "";
-      return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name2) : name2 });
+    __setFunctionName = function(f, name, prefix) {
+      if (typeof name === "symbol")
+        name = name.description ? "[".concat(name.description, "]") : "";
+      return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
     };
     __metadata = function(metadataKey, metadataValue) {
       if (typeof Reflect === "object" && typeof Reflect.metadata === "function")
@@ -210,11 +210,11 @@ var require_tslib = __commonJS(function(exports, module2) {
     };
     __awaiter = function(thisArg, _arguments, P, generator) {
       function adopt(value) {
-        return value instanceof P ? value : new P(function(resolve4) {
-          resolve4(value);
+        return value instanceof P ? value : new P(function(resolve) {
+          resolve(value);
         });
       }
-      return new (P || (P = Promise))(function(resolve4, reject) {
+      return new (P || (P = Promise))(function(resolve, reject) {
         function fulfilled(value) {
           try {
             step(generator.next(value));
@@ -230,12 +230,12 @@ var require_tslib = __commonJS(function(exports, module2) {
           }
         }
         function step(result) {
-          result.done ? resolve4(result.value) : adopt(result.value).then(fulfilled, rejected);
+          result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
         }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
       });
     };
-    __generator = function(thisArg, body2) {
+    __generator = function(thisArg, body) {
       var _ = { label: 0, sent: function() {
         if (t[0] & 1)
           throw t[1];
@@ -299,7 +299,7 @@ var require_tslib = __commonJS(function(exports, module2) {
                 _.trys.pop();
                 continue;
             }
-            op = body2.call(thisArg, _);
+            op = body.call(thisArg, _);
           } catch (e) {
             op = [6, e];
             y = 0;
@@ -332,15 +332,15 @@ var require_tslib = __commonJS(function(exports, module2) {
       o[k2] = m[k];
     };
     __values = function(o) {
-      var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i2 = 0;
+      var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
       if (m)
         return m.call(o);
       if (o && typeof o.length === "number")
         return {
           next: function() {
-            if (o && i2 >= o.length)
+            if (o && i >= o.length)
               o = undefined;
-            return { value: o && o[i2++], done: !o };
+            return { value: o && o[i++], done: !o };
           }
         };
       throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
@@ -349,16 +349,16 @@ var require_tslib = __commonJS(function(exports, module2) {
       var m = typeof Symbol === "function" && o[Symbol.iterator];
       if (!m)
         return o;
-      var i2 = m.call(o), r, ar = [], e;
+      var i = m.call(o), r, ar = [], e;
       try {
-        while ((n === undefined || n-- > 0) && !(r = i2.next()).done)
+        while ((n === undefined || n-- > 0) && !(r = i.next()).done)
           ar.push(r.value);
       } catch (error) {
         e = { error };
       } finally {
         try {
-          if (r && !r.done && (m = i2["return"]))
-            m.call(i2);
+          if (r && !r.done && (m = i["return"]))
+            m.call(i);
         } finally {
           if (e)
             throw e.error;
@@ -367,25 +367,25 @@ var require_tslib = __commonJS(function(exports, module2) {
       return ar;
     };
     __spread = function() {
-      for (var ar = [], i2 = 0;i2 < arguments.length; i2++)
-        ar = ar.concat(__read(arguments[i2]));
+      for (var ar = [], i = 0;i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
       return ar;
     };
     __spreadArrays = function() {
-      for (var s = 0, i2 = 0, il = arguments.length;i2 < il; i2++)
-        s += arguments[i2].length;
-      for (var r = Array(s), k = 0, i2 = 0;i2 < il; i2++)
-        for (var a = arguments[i2], j = 0, jl = a.length;j < jl; j++, k++)
+      for (var s = 0, i = 0, il = arguments.length;i < il; i++)
+        s += arguments[i].length;
+      for (var r = Array(s), k = 0, i = 0;i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length;j < jl; j++, k++)
           r[k] = a[j];
       return r;
     };
     __spreadArray = function(to, from, pack) {
       if (pack || arguments.length === 2)
-        for (var i2 = 0, l = from.length, ar;i2 < l; i2++) {
-          if (ar || !(i2 in from)) {
+        for (var i = 0, l = from.length, ar;i < l; i++) {
+          if (ar || !(i in from)) {
             if (!ar)
-              ar = Array.prototype.slice.call(from, 0, i2);
-            ar[i2] = from[i2];
+              ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
           }
         }
       return to.concat(ar || Array.prototype.slice.call(from));
@@ -396,10 +396,10 @@ var require_tslib = __commonJS(function(exports, module2) {
     __asyncGenerator = function(thisArg, _arguments, generator) {
       if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
-      var g = generator.apply(thisArg, _arguments || []), i2, q = [];
-      return i2 = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i2[Symbol.asyncIterator] = function() {
+      var g = generator.apply(thisArg, _arguments || []), i, q = [];
+      return i = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function() {
         return this;
-      }, i2;
+      }, i;
       function awaitReturn(f) {
         return function(v) {
           return Promise.resolve(v).then(f, reject);
@@ -407,13 +407,13 @@ var require_tslib = __commonJS(function(exports, module2) {
       }
       function verb(n, f) {
         if (g[n]) {
-          i2[n] = function(v) {
+          i[n] = function(v) {
             return new Promise(function(a, b) {
               q.push([n, v, a, b]) > 1 || resume(n, v);
             });
           };
           if (f)
-            i2[n] = f(i2[n]);
+            i[n] = f(i[n]);
         }
       }
       function resume(n, v) {
@@ -438,14 +438,14 @@ var require_tslib = __commonJS(function(exports, module2) {
       }
     };
     __asyncDelegator = function(o) {
-      var i2, p;
-      return i2 = {}, verb("next"), verb("throw", function(e) {
+      var i, p;
+      return i = {}, verb("next"), verb("throw", function(e) {
         throw e;
-      }), verb("return"), i2[Symbol.iterator] = function() {
+      }), verb("return"), i[Symbol.iterator] = function() {
         return this;
-      }, i2;
+      }, i;
       function verb(n, f) {
-        i2[n] = o[n] ? function(v) {
+        i[n] = o[n] ? function(v) {
           return (p = !p) ? { value: __await(o[n](v)), done: false } : f ? f(v) : v;
         } : f;
       }
@@ -453,20 +453,20 @@ var require_tslib = __commonJS(function(exports, module2) {
     __asyncValues = function(o) {
       if (!Symbol.asyncIterator)
         throw new TypeError("Symbol.asyncIterator is not defined.");
-      var m = o[Symbol.asyncIterator], i2;
-      return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i2 = {}, verb("next"), verb("throw"), verb("return"), i2[Symbol.asyncIterator] = function() {
+      var m = o[Symbol.asyncIterator], i;
+      return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
         return this;
-      }, i2);
+      }, i);
       function verb(n) {
-        i2[n] = o[n] && function(v) {
-          return new Promise(function(resolve4, reject) {
-            v = o[n](v), settle(resolve4, reject, v.done, v.value);
+        i[n] = o[n] && function(v) {
+          return new Promise(function(resolve, reject) {
+            v = o[n](v), settle(resolve, reject, v.done, v.value);
           });
         };
       }
-      function settle(resolve4, reject, d, v) {
+      function settle(resolve, reject, d, v) {
         Promise.resolve(v).then(function(v2) {
-          resolve4({ value: v2, done: d });
+          resolve({ value: v2, done: d });
         }, reject);
       }
     };
@@ -498,9 +498,9 @@ var require_tslib = __commonJS(function(exports, module2) {
         return mod;
       var result = {};
       if (mod != null) {
-        for (var k = ownKeys(mod), i2 = 0;i2 < k.length; i2++)
-          if (k[i2] !== "default")
-            __createBinding(result, mod, k[i2]);
+        for (var k = ownKeys(mod), i = 0;i < k.length; i++)
+          if (k[i] !== "default")
+            __createBinding(result, mod, k[i]);
       }
       __setModuleDefault(result, mod);
       return result;
@@ -640,7 +640,7 @@ var require_tslib = __commonJS(function(exports, module2) {
   });
 });
 
-// ../../node_modules/@aws-crypto/sha256-js/build/main/constants.js
+// ../../../node_modules/@aws-crypto/sha256-js/build/main/constants.js
 var require_constants = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.MAX_HASHABLE_LENGTH = exports.INIT = exports.KEY = exports.DIGEST_LENGTH = exports.BLOCK_SIZE = undefined;
@@ -725,7 +725,7 @@ var require_constants = __commonJS(function(exports) {
   exports.MAX_HASHABLE_LENGTH = Math.pow(2, 53) - 1;
 });
 
-// ../../node_modules/@aws-crypto/sha256-js/build/main/RawSha256.js
+// ../../../node_modules/@aws-crypto/sha256-js/build/main/RawSha256.js
 var require_RawSha256 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.RawSha256 = undefined;
@@ -765,43 +765,43 @@ var require_RawSha256 = __commonJS(function(exports) {
         var undecoratedLength = this.bufferLength;
         bufferView.setUint8(this.bufferLength++, 128);
         if (undecoratedLength % constants_1.BLOCK_SIZE >= constants_1.BLOCK_SIZE - 8) {
-          for (var i2 = this.bufferLength;i2 < constants_1.BLOCK_SIZE; i2++) {
-            bufferView.setUint8(i2, 0);
+          for (var i = this.bufferLength;i < constants_1.BLOCK_SIZE; i++) {
+            bufferView.setUint8(i, 0);
           }
           this.hashBuffer();
           this.bufferLength = 0;
         }
-        for (var i2 = this.bufferLength;i2 < constants_1.BLOCK_SIZE - 8; i2++) {
-          bufferView.setUint8(i2, 0);
+        for (var i = this.bufferLength;i < constants_1.BLOCK_SIZE - 8; i++) {
+          bufferView.setUint8(i, 0);
         }
         bufferView.setUint32(constants_1.BLOCK_SIZE - 8, Math.floor(bitsHashed / 4294967296), true);
         bufferView.setUint32(constants_1.BLOCK_SIZE - 4, bitsHashed);
         this.hashBuffer();
         this.finished = true;
       }
-      var out2 = new Uint8Array(constants_1.DIGEST_LENGTH);
-      for (var i2 = 0;i2 < 8; i2++) {
-        out2[i2 * 4] = this.state[i2] >>> 24 & 255;
-        out2[i2 * 4 + 1] = this.state[i2] >>> 16 & 255;
-        out2[i2 * 4 + 2] = this.state[i2] >>> 8 & 255;
-        out2[i2 * 4 + 3] = this.state[i2] >>> 0 & 255;
+      var out = new Uint8Array(constants_1.DIGEST_LENGTH);
+      for (var i = 0;i < 8; i++) {
+        out[i * 4] = this.state[i] >>> 24 & 255;
+        out[i * 4 + 1] = this.state[i] >>> 16 & 255;
+        out[i * 4 + 2] = this.state[i] >>> 8 & 255;
+        out[i * 4 + 3] = this.state[i] >>> 0 & 255;
       }
-      return out2;
+      return out;
     };
     RawSha2562.prototype.hashBuffer = function() {
       var _a = this, buffer = _a.buffer, state = _a.state;
       var state0 = state[0], state1 = state[1], state2 = state[2], state3 = state[3], state4 = state[4], state5 = state[5], state6 = state[6], state7 = state[7];
-      for (var i2 = 0;i2 < constants_1.BLOCK_SIZE; i2++) {
-        if (i2 < 16) {
-          this.temp[i2] = (buffer[i2 * 4] & 255) << 24 | (buffer[i2 * 4 + 1] & 255) << 16 | (buffer[i2 * 4 + 2] & 255) << 8 | buffer[i2 * 4 + 3] & 255;
+      for (var i = 0;i < constants_1.BLOCK_SIZE; i++) {
+        if (i < 16) {
+          this.temp[i] = (buffer[i * 4] & 255) << 24 | (buffer[i * 4 + 1] & 255) << 16 | (buffer[i * 4 + 2] & 255) << 8 | buffer[i * 4 + 3] & 255;
         } else {
-          var u = this.temp[i2 - 2];
+          var u = this.temp[i - 2];
           var t1_1 = (u >>> 17 | u << 15) ^ (u >>> 19 | u << 13) ^ u >>> 10;
-          u = this.temp[i2 - 15];
+          u = this.temp[i - 15];
           var t2_1 = (u >>> 7 | u << 25) ^ (u >>> 18 | u << 14) ^ u >>> 3;
-          this.temp[i2] = (t1_1 + this.temp[i2 - 7] | 0) + (t2_1 + this.temp[i2 - 16] | 0);
+          this.temp[i] = (t1_1 + this.temp[i - 7] | 0) + (t2_1 + this.temp[i - 16] | 0);
         }
-        var t1 = (((state4 >>> 6 | state4 << 26) ^ (state4 >>> 11 | state4 << 21) ^ (state4 >>> 25 | state4 << 7)) + (state4 & state5 ^ ~state4 & state6) | 0) + (state7 + (constants_1.KEY[i2] + this.temp[i2] | 0) | 0) | 0;
+        var t1 = (((state4 >>> 6 | state4 << 26) ^ (state4 >>> 11 | state4 << 21) ^ (state4 >>> 25 | state4 << 7)) + (state4 & state5 ^ ~state4 & state6) | 0) + (state7 + (constants_1.KEY[i] + this.temp[i] | 0) | 0) | 0;
         var t2 = ((state0 >>> 2 | state0 << 30) ^ (state0 >>> 13 | state0 << 19) ^ (state0 >>> 22 | state0 << 10)) + (state0 & state1 ^ state0 & state2 ^ state1 & state2) | 0;
         state7 = state6;
         state6 = state5;
@@ -826,69 +826,69 @@ var require_RawSha256 = __commonJS(function(exports) {
   exports.RawSha256 = RawSha256;
 });
 
-// ../../node_modules/@smithy/util-buffer-from/node_modules/@smithy/is-array-buffer/dist-cjs/index.js
-var require_dist_cjs = __commonJS(function(exports, module2) {
-  var __defProp3 = Object.defineProperty;
+// ../../../node_modules/@smithy/util-buffer-from/node_modules/@smithy/is-array-buffer/dist-cjs/index.js
+var require_dist_cjs = __commonJS(function(exports, module) {
+  var __defProp2 = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames2 = Object.getOwnPropertyNames;
   var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-  var __name2 = (target, value) => __defProp3(target, "name", { value, configurable: true });
+  var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
   var __export = (target, all) => {
-    for (var name2 in all)
-      __defProp3(target, name2, { get: all[name2], enumerable: true });
+    for (var name in all)
+      __defProp2(target, name, { get: all[name], enumerable: true });
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
       for (let key of __getOwnPropNames2(from))
         if (!__hasOwnProp2.call(to, key) && key !== except)
-          __defProp3(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+          __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
     }
     return to;
   };
-  var __toCommonJS = (mod) => __copyProps(__defProp3({}, "__esModule", { value: true }), mod);
+  var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
   var src_exports = {};
   __export(src_exports, {
     isArrayBuffer: () => isArrayBuffer
   });
-  module2.exports = __toCommonJS(src_exports);
-  var isArrayBuffer = /* @__PURE__ */ __name2((arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]", "isArrayBuffer");
+  module.exports = __toCommonJS(src_exports);
+  var isArrayBuffer = /* @__PURE__ */ __name((arg) => typeof ArrayBuffer === "function" && arg instanceof ArrayBuffer || Object.prototype.toString.call(arg) === "[object ArrayBuffer]", "isArrayBuffer");
 });
 
-// ../../node_modules/@smithy/util-buffer-from/dist-cjs/index.js
-var require_dist_cjs2 = __commonJS(function(exports, module2) {
-  var __defProp3 = Object.defineProperty;
+// ../../../node_modules/@smithy/util-buffer-from/dist-cjs/index.js
+var require_dist_cjs2 = __commonJS(function(exports, module) {
+  var __defProp2 = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames2 = Object.getOwnPropertyNames;
   var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-  var __name2 = (target, value) => __defProp3(target, "name", { value, configurable: true });
+  var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
   var __export = (target, all) => {
-    for (var name2 in all)
-      __defProp3(target, name2, { get: all[name2], enumerable: true });
+    for (var name in all)
+      __defProp2(target, name, { get: all[name], enumerable: true });
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
       for (let key of __getOwnPropNames2(from))
         if (!__hasOwnProp2.call(to, key) && key !== except)
-          __defProp3(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+          __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
     }
     return to;
   };
-  var __toCommonJS = (mod) => __copyProps(__defProp3({}, "__esModule", { value: true }), mod);
+  var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
   var src_exports = {};
   __export(src_exports, {
     fromArrayBuffer: () => fromArrayBuffer,
     fromString: () => fromString
   });
-  module2.exports = __toCommonJS(src_exports);
+  module.exports = __toCommonJS(src_exports);
   var import_is_array_buffer = require_dist_cjs();
   var import_buffer = __require("buffer");
-  var fromArrayBuffer = /* @__PURE__ */ __name2((input, offset = 0, length = input.byteLength - offset) => {
+  var fromArrayBuffer = /* @__PURE__ */ __name((input, offset = 0, length = input.byteLength - offset) => {
     if (!(0, import_is_array_buffer.isArrayBuffer)(input)) {
       throw new TypeError(`The "input" argument must be ArrayBuffer. Received type ${typeof input} (${input})`);
     }
     return import_buffer.Buffer.from(input, offset, length);
   }, "fromArrayBuffer");
-  var fromString = /* @__PURE__ */ __name2((input, encoding) => {
+  var fromString = /* @__PURE__ */ __name((input, encoding) => {
     if (typeof input !== "string") {
       throw new TypeError(`The "input" argument must be of type string. Received type ${typeof input} (${input})`);
     }
@@ -896,39 +896,39 @@ var require_dist_cjs2 = __commonJS(function(exports, module2) {
   }, "fromString");
 });
 
-// ../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-cjs/index.js
-var require_dist_cjs3 = __commonJS(function(exports, module2) {
-  var __defProp3 = Object.defineProperty;
+// ../../../node_modules/@aws-crypto/util/node_modules/@smithy/util-utf8/dist-cjs/index.js
+var require_dist_cjs3 = __commonJS(function(exports, module) {
+  var __defProp2 = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames2 = Object.getOwnPropertyNames;
   var __hasOwnProp2 = Object.prototype.hasOwnProperty;
-  var __name2 = (target, value) => __defProp3(target, "name", { value, configurable: true });
+  var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
   var __export = (target, all) => {
-    for (var name2 in all)
-      __defProp3(target, name2, { get: all[name2], enumerable: true });
+    for (var name in all)
+      __defProp2(target, name, { get: all[name], enumerable: true });
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
       for (let key of __getOwnPropNames2(from))
         if (!__hasOwnProp2.call(to, key) && key !== except)
-          __defProp3(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+          __defProp2(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
     }
     return to;
   };
-  var __toCommonJS = (mod) => __copyProps(__defProp3({}, "__esModule", { value: true }), mod);
+  var __toCommonJS = (mod) => __copyProps(__defProp2({}, "__esModule", { value: true }), mod);
   var src_exports = {};
   __export(src_exports, {
     fromUtf8: () => fromUtf8,
     toUint8Array: () => toUint8Array,
     toUtf8: () => toUtf8
   });
-  module2.exports = __toCommonJS(src_exports);
+  module.exports = __toCommonJS(src_exports);
   var import_util_buffer_from = require_dist_cjs2();
-  var fromUtf8 = /* @__PURE__ */ __name2((input) => {
+  var fromUtf8 = /* @__PURE__ */ __name((input) => {
     const buf = (0, import_util_buffer_from.fromString)(input, "utf8");
     return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength / Uint8Array.BYTES_PER_ELEMENT);
   }, "fromUtf8");
-  var toUint8Array = /* @__PURE__ */ __name2((data) => {
+  var toUint8Array = /* @__PURE__ */ __name((data) => {
     if (typeof data === "string") {
       return fromUtf8(data);
     }
@@ -937,7 +937,7 @@ var require_dist_cjs3 = __commonJS(function(exports, module2) {
     }
     return new Uint8Array(data);
   }, "toUint8Array");
-  var toUtf8 = /* @__PURE__ */ __name2((input) => {
+  var toUtf8 = /* @__PURE__ */ __name((input) => {
     if (typeof input === "string") {
       return input;
     }
@@ -948,7 +948,7 @@ var require_dist_cjs3 = __commonJS(function(exports, module2) {
   }, "toUtf8");
 });
 
-// ../../node_modules/@aws-crypto/util/build/main/convertToBuffer.js
+// ../../../node_modules/@aws-crypto/util/build/main/convertToBuffer.js
 var require_convertToBuffer = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.convertToBuffer = undefined;
@@ -970,7 +970,7 @@ var require_convertToBuffer = __commonJS(function(exports) {
   exports.convertToBuffer = convertToBuffer;
 });
 
-// ../../node_modules/@aws-crypto/util/build/main/isEmptyData.js
+// ../../../node_modules/@aws-crypto/util/build/main/isEmptyData.js
 var require_isEmptyData = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.isEmptyData = undefined;
@@ -983,7 +983,7 @@ var require_isEmptyData = __commonJS(function(exports) {
   exports.isEmptyData = isEmptyData;
 });
 
-// ../../node_modules/@aws-crypto/util/build/main/numToUint8.js
+// ../../../node_modules/@aws-crypto/util/build/main/numToUint8.js
 var require_numToUint8 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.numToUint8 = undefined;
@@ -998,7 +998,7 @@ var require_numToUint8 = __commonJS(function(exports) {
   exports.numToUint8 = numToUint8;
 });
 
-// ../../node_modules/@aws-crypto/util/build/main/uint32ArrayFrom.js
+// ../../../node_modules/@aws-crypto/util/build/main/uint32ArrayFrom.js
 var require_uint32ArrayFrom = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.uint32ArrayFrom = undefined;
@@ -1017,7 +1017,7 @@ var require_uint32ArrayFrom = __commonJS(function(exports) {
   exports.uint32ArrayFrom = uint32ArrayFrom;
 });
 
-// ../../node_modules/@aws-crypto/util/build/main/index.js
+// ../../../node_modules/@aws-crypto/util/build/main/index.js
 var require_main = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.uint32ArrayFrom = exports.numToUint8 = exports.isEmptyData = exports.convertToBuffer = undefined;
@@ -1039,7 +1039,7 @@ var require_main = __commonJS(function(exports) {
   } });
 });
 
-// ../../node_modules/@aws-crypto/sha256-js/build/main/jsSha256.js
+// ../../../node_modules/@aws-crypto/sha256-js/build/main/jsSha256.js
 var require_jsSha256 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.Sha256 = undefined;
@@ -1089,14 +1089,14 @@ var require_jsSha256 = __commonJS(function(exports) {
         var inner = bufferFromSecret(this.secret);
         var outer = new Uint8Array(constants_1.BLOCK_SIZE);
         outer.set(inner);
-        for (var i2 = 0;i2 < constants_1.BLOCK_SIZE; i2++) {
-          inner[i2] ^= 54;
-          outer[i2] ^= 92;
+        for (var i = 0;i < constants_1.BLOCK_SIZE; i++) {
+          inner[i] ^= 54;
+          outer[i] ^= 92;
         }
         this.hash.update(inner);
         this.outer.update(outer);
-        for (var i2 = 0;i2 < inner.byteLength; i2++) {
-          inner[i2] = 0;
+        for (var i = 0;i < inner.byteLength; i++) {
+          inner[i] = 0;
         }
       }
     };
@@ -1116,14 +1116,14 @@ var require_jsSha256 = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/@aws-crypto/sha256-js/build/main/index.js
+// ../../../node_modules/@aws-crypto/sha256-js/build/main/index.js
 var require_main2 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var tslib_1 = require_tslib();
   tslib_1.__exportStar(require_jsSha256(), exports);
 });
 
-// ../../node_modules/ajv/dist/compile/codegen/code.js
+// ../../../node_modules/ajv/dist/compile/codegen/code.js
 var require_code = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.regexpCode = exports.getEsmExportName = exports.getProperty = exports.safeStringify = exports.stringify = exports.strConcat = exports.addCodeArg = exports.str = exports._ = exports.nil = exports._Code = exports.Name = exports.IDENTIFIER = exports._CodeOrName = undefined;
@@ -1181,24 +1181,24 @@ var require_code = __commonJS(function(exports) {
   }
   exports._Code = _Code;
   exports.nil = new _Code("");
-  function _(strs, ...args2) {
+  function _(strs, ...args) {
     const code = [strs[0]];
-    let i2 = 0;
-    while (i2 < args2.length) {
-      addCodeArg(code, args2[i2]);
-      code.push(strs[++i2]);
+    let i = 0;
+    while (i < args.length) {
+      addCodeArg(code, args[i]);
+      code.push(strs[++i]);
     }
     return new _Code(code);
   }
   exports._ = _;
   var plus = new _Code("+");
-  function str(strs, ...args2) {
+  function str(strs, ...args) {
     const expr = [safeStringify(strs[0])];
-    let i2 = 0;
-    while (i2 < args2.length) {
+    let i = 0;
+    while (i < args.length) {
       expr.push(plus);
-      addCodeArg(expr, args2[i2]);
-      expr.push(plus, safeStringify(strs[++i2]));
+      addCodeArg(expr, args[i]);
+      expr.push(plus, safeStringify(strs[++i]));
     }
     optimize(expr);
     return new _Code(expr);
@@ -1214,17 +1214,17 @@ var require_code = __commonJS(function(exports) {
   }
   exports.addCodeArg = addCodeArg;
   function optimize(expr) {
-    let i2 = 1;
-    while (i2 < expr.length - 1) {
-      if (expr[i2] === plus) {
-        const res = mergeExprItems(expr[i2 - 1], expr[i2 + 1]);
+    let i = 1;
+    while (i < expr.length - 1) {
+      if (expr[i] === plus) {
+        const res = mergeExprItems(expr[i - 1], expr[i + 1]);
         if (res !== undefined) {
-          expr.splice(i2 - 1, 3, res);
+          expr.splice(i - 1, 3, res);
           continue;
         }
-        expr[i2++] = "+";
+        expr[i++] = "+";
       }
-      i2++;
+      i++;
     }
   }
   function mergeExprItems(a, b) {
@@ -1277,16 +1277,16 @@ var require_code = __commonJS(function(exports) {
   exports.regexpCode = regexpCode;
 });
 
-// ../../node_modules/ajv/dist/compile/codegen/scope.js
+// ../../../node_modules/ajv/dist/compile/codegen/scope.js
 var require_scope = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.ValueScope = exports.ValueScopeName = exports.Scope = exports.varKinds = exports.UsedValueState = undefined;
   var code_1 = require_code();
 
   class ValueError extends Error {
-    constructor(name2) {
-      super(`CodeGen: "code" for ${name2} not defined`);
-      this.value = name2.value;
+    constructor(name) {
+      super(`CodeGen: "code" for ${name} not defined`);
+      this.value = name.value;
     }
   }
   var UsedValueState;
@@ -1356,8 +1356,8 @@ var require_scope = __commonJS(function(exports) {
       var _a;
       if (value.ref === undefined)
         throw new Error("CodeGen: ref must be passed in value");
-      const name2 = this.toName(nameOrPrefix);
-      const { prefix } = name2;
+      const name = this.toName(nameOrPrefix);
+      const { prefix } = name;
       const valueKey = (_a = value.key) !== null && _a !== undefined ? _a : value.ref;
       let vs = this._values[prefix];
       if (vs) {
@@ -1367,12 +1367,12 @@ var require_scope = __commonJS(function(exports) {
       } else {
         vs = this._values[prefix] = new Map;
       }
-      vs.set(valueKey, name2);
+      vs.set(valueKey, name);
       const s = this._scope[prefix] || (this._scope[prefix] = []);
       const itemIndex = s.length;
       s[itemIndex] = value.ref;
-      name2.setValue(value, { property: prefix, itemIndex });
-      return name2;
+      name.setValue(value, { property: prefix, itemIndex });
+      return name;
     }
     getValue(prefix, keyOrRef) {
       const vs = this._values[prefix];
@@ -1381,17 +1381,17 @@ var require_scope = __commonJS(function(exports) {
       return vs.get(keyOrRef);
     }
     scopeRefs(scopeName, values = this._values) {
-      return this._reduceValues(values, (name2) => {
-        if (name2.scopePath === undefined)
-          throw new Error(`CodeGen: name "${name2}" has no value`);
-        return (0, code_1._)`${scopeName}${name2.scopePath}`;
+      return this._reduceValues(values, (name) => {
+        if (name.scopePath === undefined)
+          throw new Error(`CodeGen: name "${name}" has no value`);
+        return (0, code_1._)`${scopeName}${name.scopePath}`;
       });
     }
     scopeCode(values = this._values, usedValues, getCode) {
-      return this._reduceValues(values, (name2) => {
-        if (name2.value === undefined)
-          throw new Error(`CodeGen: name "${name2}" has no value`);
-        return name2.value.code;
+      return this._reduceValues(values, (name) => {
+        if (name.value === undefined)
+          throw new Error(`CodeGen: name "${name}" has no value`);
+        return name.value.code;
       }, usedValues, getCode);
     }
     _reduceValues(values, valueCode, usedValues = {}, getCode) {
@@ -1401,20 +1401,20 @@ var require_scope = __commonJS(function(exports) {
         if (!vs)
           continue;
         const nameSet = usedValues[prefix] = usedValues[prefix] || new Map;
-        vs.forEach((name2) => {
-          if (nameSet.has(name2))
+        vs.forEach((name) => {
+          if (nameSet.has(name))
             return;
-          nameSet.set(name2, UsedValueState.Started);
-          let c = valueCode(name2);
+          nameSet.set(name, UsedValueState.Started);
+          let c = valueCode(name);
           if (c) {
             const def = this.opts.es5 ? exports.varKinds.var : exports.varKinds.const;
-            code = (0, code_1._)`${code}${def} ${name2} = ${c};${this.opts._n}`;
-          } else if (c = getCode === null || getCode === undefined ? undefined : getCode(name2)) {
+            code = (0, code_1._)`${code}${def} ${name} = ${c};${this.opts._n}`;
+          } else if (c = getCode === null || getCode === undefined ? undefined : getCode(name)) {
             code = (0, code_1._)`${code}${c}${this.opts._n}`;
           } else {
-            throw new ValueError(name2);
+            throw new ValueError(name);
           }
-          nameSet.set(name2, UsedValueState.Completed);
+          nameSet.set(name, UsedValueState.Completed);
         });
       }
       return code;
@@ -1423,7 +1423,7 @@ var require_scope = __commonJS(function(exports) {
   exports.ValueScope = ValueScope;
 });
 
-// ../../node_modules/ajv/dist/compile/codegen/index.js
+// ../../../node_modules/ajv/dist/compile/codegen/index.js
 var require_codegen = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.or = exports.and = exports.not = exports.CodeGen = exports.operators = exports.varKinds = exports.ValueScopeName = exports.ValueScope = exports.Scope = exports.Name = exports.regexpCode = exports.stringify = exports.getProperty = exports.nil = exports.strConcat = exports.str = exports._ = undefined;
@@ -1480,7 +1480,7 @@ var require_codegen = __commonJS(function(exports) {
     ADD: new code_1._Code("+")
   };
 
-  class Node2 {
+  class Node {
     optimizeNodes() {
       return this;
     }
@@ -1489,11 +1489,11 @@ var require_codegen = __commonJS(function(exports) {
     }
   }
 
-  class Def extends Node2 {
-    constructor(varKind, name2, rhs) {
+  class Def extends Node {
+    constructor(varKind, name, rhs) {
       super();
       this.varKind = varKind;
-      this.name = name2;
+      this.name = name;
       this.rhs = rhs;
     }
     render({ es5, _n }) {
@@ -1513,7 +1513,7 @@ var require_codegen = __commonJS(function(exports) {
     }
   }
 
-  class Assign extends Node2 {
+  class Assign extends Node {
     constructor(lhs, rhs, sideEffects) {
       super();
       this.lhs = lhs;
@@ -1545,7 +1545,7 @@ var require_codegen = __commonJS(function(exports) {
     }
   }
 
-  class Label extends Node2 {
+  class Label extends Node {
     constructor(label) {
       super();
       this.label = label;
@@ -1556,7 +1556,7 @@ var require_codegen = __commonJS(function(exports) {
     }
   }
 
-  class Break extends Node2 {
+  class Break extends Node {
     constructor(label) {
       super();
       this.label = label;
@@ -1568,7 +1568,7 @@ var require_codegen = __commonJS(function(exports) {
     }
   }
 
-  class Throw extends Node2 {
+  class Throw extends Node {
     constructor(error) {
       super();
       this.error = error;
@@ -1581,7 +1581,7 @@ var require_codegen = __commonJS(function(exports) {
     }
   }
 
-  class AnyCode extends Node2 {
+  class AnyCode extends Node {
     constructor(code) {
       super();
       this.code = code;
@@ -1601,7 +1601,7 @@ var require_codegen = __commonJS(function(exports) {
     }
   }
 
-  class ParentNode extends Node2 {
+  class ParentNode extends Node {
     constructor(nodes = []) {
       super();
       this.nodes = nodes;
@@ -1611,27 +1611,27 @@ var require_codegen = __commonJS(function(exports) {
     }
     optimizeNodes() {
       const { nodes } = this;
-      let i2 = nodes.length;
-      while (i2--) {
-        const n = nodes[i2].optimizeNodes();
+      let i = nodes.length;
+      while (i--) {
+        const n = nodes[i].optimizeNodes();
         if (Array.isArray(n))
-          nodes.splice(i2, 1, ...n);
+          nodes.splice(i, 1, ...n);
         else if (n)
-          nodes[i2] = n;
+          nodes[i] = n;
         else
-          nodes.splice(i2, 1);
+          nodes.splice(i, 1);
       }
       return nodes.length > 0 ? this : undefined;
     }
     optimizeNames(names, constants) {
       const { nodes } = this;
-      let i2 = nodes.length;
-      while (i2--) {
-        const n = nodes[i2];
+      let i = nodes.length;
+      while (i--) {
+        const n = nodes[i];
         if (n.optimizeNames(names, constants))
           continue;
         subtractNames(names, n.names);
-        nodes.splice(i2, 1);
+        nodes.splice(i, 1);
       }
       return nodes.length > 0 ? this : undefined;
     }
@@ -1727,17 +1727,17 @@ var require_codegen = __commonJS(function(exports) {
   }
 
   class ForRange extends For {
-    constructor(varKind, name2, from, to) {
+    constructor(varKind, name, from, to) {
       super();
       this.varKind = varKind;
-      this.name = name2;
+      this.name = name;
       this.from = from;
       this.to = to;
     }
     render(opts) {
       const varKind = opts.es5 ? scope_1.varKinds.var : this.varKind;
-      const { name: name2, from, to } = this;
-      return `for(${varKind} ${name2}=${from}; ${name2}<${to}; ${name2}++)` + super.render(opts);
+      const { name, from, to } = this;
+      return `for(${varKind} ${name}=${from}; ${name}<${to}; ${name}++)` + super.render(opts);
     }
     get names() {
       const names = addExprNames(super.names, this.from);
@@ -1746,11 +1746,11 @@ var require_codegen = __commonJS(function(exports) {
   }
 
   class ForIter extends For {
-    constructor(loop, varKind, name2, iterable) {
+    constructor(loop, varKind, name, iterable) {
       super();
       this.loop = loop;
       this.varKind = varKind;
-      this.name = name2;
+      this.name = name;
       this.iterable = iterable;
     }
     render(opts) {
@@ -1768,10 +1768,10 @@ var require_codegen = __commonJS(function(exports) {
   }
 
   class Func extends BlockNode {
-    constructor(name2, args2, async) {
+    constructor(name, args, async) {
       super();
-      this.name = name2;
-      this.args = args2;
+      this.name = name;
+      this.args = args;
       this.async = async;
     }
     render(opts) {
@@ -1860,10 +1860,10 @@ var require_codegen = __commonJS(function(exports) {
       return this._extScope.name(prefix);
     }
     scopeValue(prefixOrName, value) {
-      const name2 = this._extScope.value(prefixOrName, value);
-      const vs = this._values[name2.prefix] || (this._values[name2.prefix] = new Set);
-      vs.add(name2);
-      return name2;
+      const name = this._extScope.value(prefixOrName, value);
+      const vs = this._values[name.prefix] || (this._values[name.prefix] = new Set);
+      vs.add(name);
+      return name;
     }
     getScopeValue(prefix, keyOrRef) {
       return this._extScope.getValue(prefix, keyOrRef);
@@ -1875,11 +1875,11 @@ var require_codegen = __commonJS(function(exports) {
       return this._extScope.scopeCode(this._values);
     }
     _def(varKind, nameOrPrefix, rhs, constant) {
-      const name2 = this._scope.toName(nameOrPrefix);
+      const name = this._scope.toName(nameOrPrefix);
       if (rhs !== undefined && constant)
-        this._constants[name2.str] = rhs;
-      this._leafNode(new Def(varKind, name2, rhs));
-      return name2;
+        this._constants[name.str] = rhs;
+      this._leafNode(new Def(varKind, name, rhs));
+      return name;
     }
     const(nameOrPrefix, rhs, _constant) {
       return this._def(scope_1.varKinds.const, nameOrPrefix, rhs, _constant);
@@ -1947,26 +1947,26 @@ var require_codegen = __commonJS(function(exports) {
       return this._for(new ForLoop(iteration), forBody);
     }
     forRange(nameOrPrefix, from, to, forBody, varKind = this.opts.es5 ? scope_1.varKinds.var : scope_1.varKinds.let) {
-      const name2 = this._scope.toName(nameOrPrefix);
-      return this._for(new ForRange(varKind, name2, from, to), () => forBody(name2));
+      const name = this._scope.toName(nameOrPrefix);
+      return this._for(new ForRange(varKind, name, from, to), () => forBody(name));
     }
     forOf(nameOrPrefix, iterable, forBody, varKind = scope_1.varKinds.const) {
-      const name2 = this._scope.toName(nameOrPrefix);
+      const name = this._scope.toName(nameOrPrefix);
       if (this.opts.es5) {
         const arr = iterable instanceof code_1.Name ? iterable : this.var("_arr", iterable);
-        return this.forRange("_i", 0, (0, code_1._)`${arr}.length`, (i2) => {
-          this.var(name2, (0, code_1._)`${arr}[${i2}]`);
-          forBody(name2);
+        return this.forRange("_i", 0, (0, code_1._)`${arr}.length`, (i) => {
+          this.var(name, (0, code_1._)`${arr}[${i}]`);
+          forBody(name);
         });
       }
-      return this._for(new ForIter("of", varKind, name2, iterable), () => forBody(name2));
+      return this._for(new ForIter("of", varKind, name, iterable), () => forBody(name));
     }
     forIn(nameOrPrefix, obj, forBody, varKind = this.opts.es5 ? scope_1.varKinds.var : scope_1.varKinds.const) {
       if (this.opts.ownProperties) {
         return this.forOf(nameOrPrefix, (0, code_1._)`Object.keys(${obj})`, forBody);
       }
-      const name2 = this._scope.toName(nameOrPrefix);
-      return this._for(new ForIter("in", varKind, name2, obj), () => forBody(name2));
+      const name = this._scope.toName(nameOrPrefix);
+      return this._for(new ForIter("in", varKind, name, obj), () => forBody(name));
     }
     endFor() {
       return this._endBlockNode(For);
@@ -2005,10 +2005,10 @@ var require_codegen = __commonJS(function(exports) {
     throw(error) {
       return this._leafNode(new Throw(error));
     }
-    block(body2, nodeCount) {
+    block(body, nodeCount) {
       this._blockStarts.push(this._nodes.length);
-      if (body2)
-        this.code(body2).endBlock(nodeCount);
+      if (body)
+        this.code(body).endBlock(nodeCount);
       return this;
     }
     endBlock(nodeCount) {
@@ -2022,8 +2022,8 @@ var require_codegen = __commonJS(function(exports) {
       this._nodes.length = len;
       return this;
     }
-    func(name2, args2 = code_1.nil, async, funcBody) {
-      this._blockNode(new Func(name2, args2, async));
+    func(name, args = code_1.nil, async, funcBody) {
+      this._blockNode(new Func(name, args, async));
       if (funcBody)
         this.code(funcBody).endFunc();
       return this;
@@ -2116,13 +2116,13 @@ var require_codegen = __commonJS(function(exports) {
   }
   exports.not = not;
   var andCode = mappend(exports.operators.AND);
-  function and(...args2) {
-    return args2.reduce(andCode);
+  function and(...args) {
+    return args.reduce(andCode);
   }
   exports.and = and;
   var orCode = mappend(exports.operators.OR);
-  function or(...args2) {
-    return args2.reduce(orCode);
+  function or(...args) {
+    return args.reduce(orCode);
   }
   exports.or = or;
   function mappend(op) {
@@ -2133,7 +2133,7 @@ var require_codegen = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv/dist/compile/util.js
+// ../../../node_modules/ajv/dist/compile/util.js
 var require_util = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.checkStrictMode = exports.getErrorPath = exports.Type = exports.useFunc = exports.setEvaluated = exports.evaluatedPropsToName = exports.mergeEvaluated = exports.eachItem = exports.unescapeJsonPointer = exports.escapeJsonPointer = exports.escapeFragment = exports.unescapeFragment = exports.schemaRefOrVal = exports.schemaHasRulesButRef = exports.schemaHasRules = exports.checkUnknownRules = exports.alwaysValidSchema = exports.toHash = undefined;
@@ -2177,11 +2177,11 @@ var require_util = __commonJS(function(exports) {
     return false;
   }
   exports.schemaHasRules = schemaHasRules;
-  function schemaHasRulesButRef(schema, RULES2) {
+  function schemaHasRulesButRef(schema, RULES) {
     if (typeof schema == "boolean")
       return !schema;
     for (const key in schema)
-      if (key !== "$ref" && RULES2.all[key])
+      if (key !== "$ref" && RULES.all[key])
         return true;
     return false;
   }
@@ -2297,7 +2297,7 @@ var require_util = __commonJS(function(exports) {
   exports.checkStrictMode = checkStrictMode;
 });
 
-// ../../node_modules/ajv/dist/compile/names.js
+// ../../../node_modules/ajv/dist/compile/names.js
 var require_names = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -2322,7 +2322,7 @@ var require_names = __commonJS(function(exports) {
   exports.default = names;
 });
 
-// ../../node_modules/ajv/dist/compile/errors.js
+// ../../../node_modules/ajv/dist/compile/errors.js
 var require_errors = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.extendErrors = exports.resetErrorsCount = exports.reportExtraError = exports.reportError = exports.keyword$DataError = exports.keywordError = undefined;
@@ -2364,21 +2364,21 @@ var require_errors = __commonJS(function(exports) {
   function extendErrors({ gen, keyword, schemaValue, data, errsCount, it }) {
     if (errsCount === undefined)
       throw new Error("ajv implementation error");
-    const err2 = gen.name("err");
-    gen.forRange("i", errsCount, names_1.default.errors, (i2) => {
-      gen.const(err2, (0, codegen_1._)`${names_1.default.vErrors}[${i2}]`);
-      gen.if((0, codegen_1._)`${err2}.instancePath === undefined`, () => gen.assign((0, codegen_1._)`${err2}.instancePath`, (0, codegen_1.strConcat)(names_1.default.instancePath, it.errorPath)));
-      gen.assign((0, codegen_1._)`${err2}.schemaPath`, (0, codegen_1.str)`${it.errSchemaPath}/${keyword}`);
+    const err = gen.name("err");
+    gen.forRange("i", errsCount, names_1.default.errors, (i) => {
+      gen.const(err, (0, codegen_1._)`${names_1.default.vErrors}[${i}]`);
+      gen.if((0, codegen_1._)`${err}.instancePath === undefined`, () => gen.assign((0, codegen_1._)`${err}.instancePath`, (0, codegen_1.strConcat)(names_1.default.instancePath, it.errorPath)));
+      gen.assign((0, codegen_1._)`${err}.schemaPath`, (0, codegen_1.str)`${it.errSchemaPath}/${keyword}`);
       if (it.opts.verbose) {
-        gen.assign((0, codegen_1._)`${err2}.schema`, schemaValue);
-        gen.assign((0, codegen_1._)`${err2}.data`, data);
+        gen.assign((0, codegen_1._)`${err}.schema`, schemaValue);
+        gen.assign((0, codegen_1._)`${err}.data`, data);
       }
     });
   }
   exports.extendErrors = extendErrors;
   function addError(gen, errObj) {
-    const err2 = gen.const("err", errObj);
-    gen.if((0, codegen_1._)`${names_1.default.vErrors} === null`, () => gen.assign(names_1.default.vErrors, (0, codegen_1._)`[${err2}]`), (0, codegen_1._)`${names_1.default.vErrors}.push(${err2})`);
+    const err = gen.const("err", errObj);
+    gen.if((0, codegen_1._)`${names_1.default.vErrors} === null`, () => gen.assign(names_1.default.vErrors, (0, codegen_1._)`[${err}]`), (0, codegen_1._)`${names_1.default.vErrors}.push(${err})`);
     gen.code((0, codegen_1._)`${names_1.default.errors}++`);
   }
   function returnErrors(it, errs) {
@@ -2440,7 +2440,7 @@ var require_errors = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv/dist/compile/validate/boolSchema.js
+// ../../../node_modules/ajv/dist/compile/validate/boolSchema.js
 var require_boolSchema = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.boolOrEmptySchema = exports.topBoolOrEmptySchema = undefined;
@@ -2488,7 +2488,7 @@ var require_boolSchema = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv/dist/compile/rules.js
+// ../../../node_modules/ajv/dist/compile/rules.js
 var require_rules = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.getRules = exports.isJSONType = undefined;
@@ -2516,7 +2516,7 @@ var require_rules = __commonJS(function(exports) {
   exports.getRules = getRules;
 });
 
-// ../../node_modules/ajv/dist/compile/validate/applicability.js
+// ../../../node_modules/ajv/dist/compile/validate/applicability.js
 var require_applicability = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.shouldUseRule = exports.shouldUseGroup = exports.schemaHasRulesForType = undefined;
@@ -2536,7 +2536,7 @@ var require_applicability = __commonJS(function(exports) {
   exports.shouldUseRule = shouldUseRule;
 });
 
-// ../../node_modules/ajv/dist/compile/validate/dataType.js
+// ../../../node_modules/ajv/dist/compile/validate/dataType.js
 var require_dataType = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.reportTypeError = exports.checkDataTypes = exports.checkDataType = exports.coerceAndCheckDataType = exports.getJSONTypes = exports.getSchemaTypes = exports.DataType = undefined;
@@ -2717,7 +2717,7 @@ var require_dataType = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv/dist/compile/validate/defaults.js
+// ../../../node_modules/ajv/dist/compile/validate/defaults.js
 var require_defaults = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.assignDefaults = undefined;
@@ -2730,7 +2730,7 @@ var require_defaults = __commonJS(function(exports) {
         assignDefault(it, key, properties[key].default);
       }
     } else if (ty === "array" && Array.isArray(items)) {
-      items.forEach((sch, i2) => assignDefault(it, i2, sch.default));
+      items.forEach((sch, i) => assignDefault(it, i, sch.default));
     }
   }
   exports.assignDefaults = assignDefaults;
@@ -2751,7 +2751,7 @@ var require_defaults = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv/dist/vocabularies/code.js
+// ../../../node_modules/ajv/dist/vocabularies/code.js
 var require_code2 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.validateUnion = exports.validateArray = exports.usePattern = exports.callValidateCode = exports.schemaProperties = exports.allSchemaProperties = exports.noPropertyInData = exports.propertyInData = exports.isOwnProperty = exports.hasPropFunc = exports.reportMissingProp = exports.checkMissingProp = exports.checkReportMissingProp = undefined;
@@ -2805,7 +2805,7 @@ var require_code2 = __commonJS(function(exports) {
     return allSchemaProperties(schemaMap).filter((p) => !(0, util_1.alwaysValidSchema)(it, schemaMap[p]));
   }
   exports.schemaProperties = schemaProperties;
-  function callValidateCode({ schemaCode, data, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func2, context, passSchema) {
+  function callValidateCode({ schemaCode, data, it: { gen, topSchemaRef, schemaPath, errorPath }, it }, func, context, passSchema) {
     const dataAndSchema = passSchema ? (0, codegen_1._)`${schemaCode}, ${data}, ${topSchemaRef}${schemaPath}` : data;
     const valCxt = [
       [names_1.default.instancePath, (0, codegen_1.strConcat)(names_1.default.instancePath, errorPath)],
@@ -2815,8 +2815,8 @@ var require_code2 = __commonJS(function(exports) {
     ];
     if (it.opts.dynamicRef)
       valCxt.push([names_1.default.dynamicAnchors, names_1.default.dynamicAnchors]);
-    const args2 = (0, codegen_1._)`${dataAndSchema}, ${gen.object(...valCxt)}`;
-    return context !== codegen_1.nil ? (0, codegen_1._)`${func2}.call(${context}, ${args2})` : (0, codegen_1._)`${func2}(${args2})`;
+    const args = (0, codegen_1._)`${dataAndSchema}, ${gen.object(...valCxt)}`;
+    return context !== codegen_1.nil ? (0, codegen_1._)`${func}.call(${context}, ${args})` : (0, codegen_1._)`${func}(${args})`;
   }
   exports.callValidateCode = callValidateCode;
   var newRegExp = (0, codegen_1._)`new RegExp`;
@@ -2844,10 +2844,10 @@ var require_code2 = __commonJS(function(exports) {
     return valid;
     function validateItems(notValid) {
       const len = gen.const("len", (0, codegen_1._)`${data}.length`);
-      gen.forRange("i", 0, len, (i2) => {
+      gen.forRange("i", 0, len, (i) => {
         cxt.subschema({
           keyword,
-          dataProp: i2,
+          dataProp: i,
           dataPropType: util_1.Type.Num
         }, valid);
         gen.if((0, codegen_1.not)(valid), notValid);
@@ -2864,10 +2864,10 @@ var require_code2 = __commonJS(function(exports) {
       return;
     const valid = gen.let("valid", false);
     const schValid = gen.name("_valid");
-    gen.block(() => schema.forEach((_sch, i2) => {
+    gen.block(() => schema.forEach((_sch, i) => {
       const schCxt = cxt.subschema({
         keyword,
-        schemaProp: i2,
+        schemaProp: i,
         compositeRule: true
       }, schValid);
       gen.assign(valid, (0, codegen_1._)`${valid} || ${schValid}`);
@@ -2880,7 +2880,7 @@ var require_code2 = __commonJS(function(exports) {
   exports.validateUnion = validateUnion;
 });
 
-// ../../node_modules/ajv/dist/compile/validate/keyword.js
+// ../../../node_modules/ajv/dist/compile/validate/keyword.js
 var require_keyword = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.validateKeywordUsage = exports.validSchemaType = exports.funcKeywordCode = exports.macroKeywordCode = undefined;
@@ -2995,7 +2995,7 @@ var require_keyword = __commonJS(function(exports) {
   exports.validateKeywordUsage = validateKeywordUsage;
 });
 
-// ../../node_modules/ajv/dist/compile/validate/subschema.js
+// ../../../node_modules/ajv/dist/compile/validate/subschema.js
 var require_subschema = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.extendSubschemaMode = exports.extendSubschemaData = exports.getSubschema = undefined;
@@ -3075,21 +3075,21 @@ var require_subschema = __commonJS(function(exports) {
   exports.extendSubschemaMode = extendSubschemaMode;
 });
 
-// ../../node_modules/fast-deep-equal/index.js
-var require_fast_deep_equal = __commonJS(function(exports, module2) {
-  module2.exports = function equal(a, b) {
+// ../../../node_modules/fast-deep-equal/index.js
+var require_fast_deep_equal = __commonJS(function(exports, module) {
+  module.exports = function equal(a, b) {
     if (a === b)
       return true;
     if (a && b && typeof a == "object" && typeof b == "object") {
       if (a.constructor !== b.constructor)
         return false;
-      var length, i2, keys;
+      var length, i, keys;
       if (Array.isArray(a)) {
         length = a.length;
         if (length != b.length)
           return false;
-        for (i2 = length;i2-- !== 0; )
-          if (!equal(a[i2], b[i2]))
+        for (i = length;i-- !== 0; )
+          if (!equal(a[i], b[i]))
             return false;
         return true;
       }
@@ -3103,11 +3103,11 @@ var require_fast_deep_equal = __commonJS(function(exports, module2) {
       length = keys.length;
       if (length !== Object.keys(b).length)
         return false;
-      for (i2 = length;i2-- !== 0; )
-        if (!Object.prototype.hasOwnProperty.call(b, keys[i2]))
+      for (i = length;i-- !== 0; )
+        if (!Object.prototype.hasOwnProperty.call(b, keys[i]))
           return false;
-      for (i2 = length;i2-- !== 0; ) {
-        var key = keys[i2];
+      for (i = length;i-- !== 0; ) {
+        var key = keys[i];
         if (!equal(a[key], b[key]))
           return false;
       }
@@ -3117,9 +3117,9 @@ var require_fast_deep_equal = __commonJS(function(exports, module2) {
   };
 });
 
-// ../../node_modules/json-schema-traverse/index.js
-var require_json_schema_traverse = __commonJS(function(exports, module2) {
-  var traverse = module2.exports = function(schema, opts, cb) {
+// ../../../node_modules/json-schema-traverse/index.js
+var require_json_schema_traverse = __commonJS(function(exports, module) {
+  var traverse = module.exports = function(schema, opts, cb) {
     if (typeof opts == "function") {
       cb = opts;
       opts = {};
@@ -3180,8 +3180,8 @@ var require_json_schema_traverse = __commonJS(function(exports, module2) {
         var sch = schema[key];
         if (Array.isArray(sch)) {
           if (key in traverse.arrayKeywords) {
-            for (var i2 = 0;i2 < sch.length; i2++)
-              _traverse(opts, pre, post, sch[i2], jsonPtr + "/" + key + "/" + i2, rootSchema, jsonPtr, key, schema, i2);
+            for (var i = 0;i < sch.length; i++)
+              _traverse(opts, pre, post, sch[i], jsonPtr + "/" + key + "/" + i, rootSchema, jsonPtr, key, schema, i);
           }
         } else if (key in traverse.propsKeywords) {
           if (sch && typeof sch == "object") {
@@ -3200,7 +3200,7 @@ var require_json_schema_traverse = __commonJS(function(exports, module2) {
   }
 });
 
-// ../../node_modules/ajv/dist/compile/resolve.js
+// ../../../node_modules/ajv/dist/compile/resolve.js
 var require_resolve = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.getSchemaRefs = exports.resolveUrl = exports.normalizeId = exports._getFullPath = exports.getFullPath = exports.inlineRef = undefined;
@@ -3353,7 +3353,7 @@ var require_resolve = __commonJS(function(exports) {
   exports.getSchemaRefs = getSchemaRefs;
 });
 
-// ../../node_modules/ajv/dist/compile/validate/index.js
+// ../../../node_modules/ajv/dist/compile/validate/index.js
 var require_validate = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.getData = exports.KeywordCxt = exports.validateFunctionCode = undefined;
@@ -3380,15 +3380,15 @@ var require_validate = __commonJS(function(exports) {
     validateFunction(it, () => (0, boolSchema_1.topBoolOrEmptySchema)(it));
   }
   exports.validateFunctionCode = validateFunctionCode;
-  function validateFunction({ gen, validateName, schema, schemaEnv, opts }, body2) {
+  function validateFunction({ gen, validateName, schema, schemaEnv, opts }, body) {
     if (opts.code.es5) {
       gen.func(validateName, (0, codegen_1._)`${names_1.default.data}, ${names_1.default.valCxt}`, schemaEnv.$async, () => {
         gen.code((0, codegen_1._)`"use strict"; ${funcSourceUrl(schema, opts)}`);
         destructureValCxtES5(gen, opts);
-        gen.code(body2);
+        gen.code(body);
       });
     } else {
-      gen.func(validateName, (0, codegen_1._)`${names_1.default.data}, ${destructureValCxt(opts)}`, schemaEnv.$async, () => gen.code(funcSourceUrl(schema, opts)).code(body2));
+      gen.func(validateName, (0, codegen_1._)`${names_1.default.data}, ${destructureValCxt(opts)}`, schemaEnv.$async, () => gen.code(funcSourceUrl(schema, opts)).code(body));
     }
   }
   function destructureValCxt(opts) {
@@ -3528,17 +3528,17 @@ var require_validate = __commonJS(function(exports) {
   }
   function schemaKeywords(it, types, typeErrors, errsCount) {
     const { gen, schema, data, allErrors, opts, self: self2 } = it;
-    const { RULES: RULES2 } = self2;
-    if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES2))) {
-      gen.block(() => keywordCode(it, "$ref", RULES2.all.$ref.definition));
+    const { RULES } = self2;
+    if (schema.$ref && (opts.ignoreKeywordsWithRef || !(0, util_1.schemaHasRulesButRef)(schema, RULES))) {
+      gen.block(() => keywordCode(it, "$ref", RULES.all.$ref.definition));
       return;
     }
     if (!opts.jtd)
       checkStrictTypes(it, types);
     gen.block(() => {
-      for (const group of RULES2.rules)
+      for (const group of RULES.rules)
         groupKeywords(group);
-      groupKeywords(RULES2.post);
+      groupKeywords(RULES.post);
     });
     function groupKeywords(group) {
       if (!(0, applicability_1.shouldUseGroup)(schema, group))
@@ -3858,7 +3858,7 @@ var require_validate = __commonJS(function(exports) {
   exports.getData = getData;
 });
 
-// ../../node_modules/ajv/dist/runtime/validation_error.js
+// ../../../node_modules/ajv/dist/runtime/validation_error.js
 var require_validation_error = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
 
@@ -3872,7 +3872,7 @@ var require_validation_error = __commonJS(function(exports) {
   exports.default = ValidationError;
 });
 
-// ../../node_modules/ajv/dist/compile/ref_error.js
+// ../../../node_modules/ajv/dist/compile/ref_error.js
 var require_ref_error = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var resolve_1 = require_resolve();
@@ -3887,7 +3887,7 @@ var require_ref_error = __commonJS(function(exports) {
   exports.default = MissingRefError;
 });
 
-// ../../node_modules/ajv/dist/compile/index.js
+// ../../../node_modules/ajv/dist/compile/index.js
 var require_compile = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.resolveSchema = exports.getCompilingSchema = exports.resolveRef = exports.compileSchema = exports.SchemaEnv = undefined;
@@ -4009,7 +4009,7 @@ var require_compile = __commonJS(function(exports) {
     const schOrFunc = root.refs[ref];
     if (schOrFunc)
       return schOrFunc;
-    let _sch = resolve4.call(this, root, ref);
+    let _sch = resolve.call(this, root, ref);
     if (_sch === undefined) {
       const schema = (_a = root.localRefs) === null || _a === undefined ? undefined : _a[ref];
       const { schemaId } = this.opts;
@@ -4036,7 +4036,7 @@ var require_compile = __commonJS(function(exports) {
   function sameSchemaEnv(s1, s2) {
     return s1.schema === s2.schema && s1.root === s2.root && s1.baseId === s2.baseId;
   }
-  function resolve4(root, ref) {
+  function resolve(root, ref) {
     let sch;
     while (typeof (sch = this.refs[ref]) == "string")
       ref = sch;
@@ -4108,9 +4108,9 @@ var require_compile = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv/dist/refs/data.json
-var require_data = __commonJS(function(exports, module2) {
-  module2.exports = {
+// ../../../node_modules/ajv/dist/refs/data.json
+var require_data = __commonJS(function(exports, module) {
+  module.exports = {
     $id: "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#",
     description: "Meta-schema for $data reference (JSON AnySchema extension proposal)",
     type: "object",
@@ -4125,8 +4125,8 @@ var require_data = __commonJS(function(exports, module2) {
   };
 });
 
-// ../../node_modules/fast-uri/lib/utils.js
-var require_utils = __commonJS(function(exports, module2) {
+// ../../../node_modules/fast-uri/lib/utils.js
+var require_utils = __commonJS(function(exports, module) {
   var isUUID = RegExp.prototype.test.bind(/^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/iu);
   var isIPv4 = RegExp.prototype.test.bind(/^(?:(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d{2}|[1-9]\d|\d)$/u);
   var isHexPair = RegExp.prototype.test.bind(/^[\da-f]{2}$/iu);
@@ -4135,24 +4135,24 @@ var require_utils = __commonJS(function(exports, module2) {
   function stringArrayToHexStripped(input) {
     let acc = "";
     let code = 0;
-    let i2 = 0;
-    for (i2 = 0;i2 < input.length; i2++) {
-      code = input[i2].charCodeAt(0);
+    let i = 0;
+    for (i = 0;i < input.length; i++) {
+      code = input[i].charCodeAt(0);
       if (code === 48) {
         continue;
       }
       if (!(code >= 48 && code <= 57 || code >= 65 && code <= 70 || code >= 97 && code <= 102)) {
         return "";
       }
-      acc += input[i2];
+      acc += input[i];
       break;
     }
-    for (i2 += 1;i2 < input.length; i2++) {
-      code = input[i2].charCodeAt(0);
+    for (i += 1;i < input.length; i++) {
+      code = input[i].charCodeAt(0);
       if (!(code >= 48 && code <= 57 || code >= 65 && code <= 70 || code >= 97 && code <= 102)) {
         return "";
       }
-      acc += input[i2];
+      acc += input[i];
     }
     return acc;
   }
@@ -4182,8 +4182,8 @@ var require_utils = __commonJS(function(exports, module2) {
     let endipv6Encountered = false;
     let endIpv6 = false;
     let consume = consumeHextets;
-    for (let i2 = 0;i2 < input.length; i2++) {
-      const cursor = input[i2];
+    for (let i = 0;i < input.length; i++) {
+      const cursor = input[i];
       if (cursor === "[" || cursor === "]") {
         continue;
       }
@@ -4198,7 +4198,7 @@ var require_utils = __commonJS(function(exports, module2) {
           output.error = true;
           break;
         }
-        if (i2 > 0 && input[i2 - 1] === ":") {
+        if (i > 0 && input[i - 1] === ":") {
           endipv6Encountered = true;
         }
         address.push(":");
@@ -4244,8 +4244,8 @@ var require_utils = __commonJS(function(exports, module2) {
   }
   function findToken(str, token) {
     let ind = 0;
-    for (let i2 = 0;i2 < str.length; i2++) {
-      if (str[i2] === token)
+    for (let i = 0;i < str.length; i++) {
+      if (str[i] === token)
         ind++;
     }
     return ind;
@@ -4338,9 +4338,9 @@ var require_utils = __commonJS(function(exports, module2) {
       return input;
     }
     let output = "";
-    for (let i2 = 0;i2 < input.length; i2++) {
-      if (input[i2] === "%" && i2 + 2 < input.length) {
-        const hex = input.slice(i2 + 1, i2 + 3);
+    for (let i = 0;i < input.length; i++) {
+      if (input[i] === "%" && i + 2 < input.length) {
+        const hex = input.slice(i + 1, i + 3);
         if (isHexPair(hex)) {
           const normalizedHex = hex.toUpperCase();
           const decoded = String.fromCharCode(parseInt(normalizedHex, 16));
@@ -4349,19 +4349,19 @@ var require_utils = __commonJS(function(exports, module2) {
           } else {
             output += "%" + normalizedHex;
           }
-          i2 += 2;
+          i += 2;
           continue;
         }
       }
-      output += input[i2];
+      output += input[i];
     }
     return output;
   }
   function normalizePathEncoding(input) {
     let output = "";
-    for (let i2 = 0;i2 < input.length; i2++) {
-      if (input[i2] === "%" && i2 + 2 < input.length) {
-        const hex = input.slice(i2 + 1, i2 + 3);
+    for (let i = 0;i < input.length; i++) {
+      if (input[i] === "%" && i + 2 < input.length) {
+        const hex = input.slice(i + 1, i + 3);
         if (isHexPair(hex)) {
           const normalizedHex = hex.toUpperCase();
           const decoded = String.fromCharCode(parseInt(normalizedHex, 16));
@@ -4370,30 +4370,30 @@ var require_utils = __commonJS(function(exports, module2) {
           } else {
             output += "%" + normalizedHex;
           }
-          i2 += 2;
+          i += 2;
           continue;
         }
       }
-      if (isPathCharacter(input[i2])) {
-        output += input[i2];
+      if (isPathCharacter(input[i])) {
+        output += input[i];
       } else {
-        output += escape(input[i2]);
+        output += escape(input[i]);
       }
     }
     return output;
   }
   function escapePreservingEscapes(input) {
     let output = "";
-    for (let i2 = 0;i2 < input.length; i2++) {
-      if (input[i2] === "%" && i2 + 2 < input.length) {
-        const hex = input.slice(i2 + 1, i2 + 3);
+    for (let i = 0;i < input.length; i++) {
+      if (input[i] === "%" && i + 2 < input.length) {
+        const hex = input.slice(i + 1, i + 3);
         if (isHexPair(hex)) {
           output += "%" + hex.toUpperCase();
-          i2 += 2;
+          i += 2;
           continue;
         }
       }
-      output += escape(input[i2]);
+      output += escape(input[i]);
     }
     return output;
   }
@@ -4421,7 +4421,7 @@ var require_utils = __commonJS(function(exports, module2) {
     }
     return uriTokens.length ? uriTokens.join("") : undefined;
   }
-  module2.exports = {
+  module.exports = {
     nonSimpleDomain,
     recomposeAuthority,
     reescapeHostDelimiters,
@@ -4436,8 +4436,8 @@ var require_utils = __commonJS(function(exports, module2) {
   };
 });
 
-// ../../node_modules/fast-uri/lib/schemes.js
-var require_schemes = __commonJS(function(exports, module2) {
+// ../../../node_modules/fast-uri/lib/schemes.js
+var require_schemes = __commonJS(function(exports, module) {
   var { isUUID } = require_utils();
   var URN_REG = /([\da-z][\d\-a-z]{0,31}):((?:[\w!$'()*+,\-.:;=@]|%[\da-f]{2})+)/iu;
   var supportedSchemeNames = [
@@ -4448,8 +4448,8 @@ var require_schemes = __commonJS(function(exports, module2) {
     "urn",
     "urn:uuid"
   ];
-  function isValidSchemeName(name2) {
-    return supportedSchemeNames.indexOf(name2) !== -1;
+  function isValidSchemeName(name) {
+    return supportedSchemeNames.indexOf(name) !== -1;
   }
   function wsIsSecure(wsComponent) {
     if (wsComponent.secure === true) {
@@ -4602,7 +4602,7 @@ var require_schemes = __commonJS(function(exports, module2) {
   function getSchemeHandler(scheme) {
     return scheme && (SCHEMES[scheme] || SCHEMES[scheme.toLowerCase()]) || undefined;
   }
-  module2.exports = {
+  module.exports = {
     wsIsSecure,
     SCHEMES,
     isValidSchemeName,
@@ -4610,8 +4610,8 @@ var require_schemes = __commonJS(function(exports, module2) {
   };
 });
 
-// ../../node_modules/fast-uri/index.js
-var require_fast_uri = __commonJS(function(exports, module2) {
+// ../../../node_modules/fast-uri/index.js
+var require_fast_uri = __commonJS(function(exports, module) {
   var { normalizeIPv6, removeDotSegments, recomposeAuthority, normalizePercentEncoding, normalizePathEncoding, escapePreservingEscapes, reescapeHostDelimiters, isIPv4, nonSimpleDomain } = require_utils();
   var { SCHEMES, getSchemeHandler } = require_schemes();
   function normalize(uri, options) {
@@ -4622,7 +4622,7 @@ var require_fast_uri = __commonJS(function(exports, module2) {
     }
     return uri;
   }
-  function resolve4(baseURI, relativeURI, options) {
+  function resolve(baseURI, relativeURI, options) {
     const schemelessOptions = options ? Object.assign({ scheme: "null" }, options) : { scheme: "null" };
     const resolved = resolveComponent(parse(baseURI, schemelessOptions), parse(relativeURI, schemelessOptions), schemelessOptions, true);
     schemelessOptions.skipEscape = true;
@@ -4881,18 +4881,18 @@ var require_fast_uri = __commonJS(function(exports, module2) {
   var fastUri = {
     SCHEMES,
     normalize,
-    resolve: resolve4,
+    resolve,
     resolveComponent,
     equal,
     serialize,
     parse
   };
-  module2.exports = fastUri;
-  module2.exports.default = fastUri;
-  module2.exports.fastUri = fastUri;
+  module.exports = fastUri;
+  module.exports.default = fastUri;
+  module.exports.fastUri = fastUri;
 });
 
-// ../../node_modules/ajv/dist/runtime/uri.js
+// ../../../node_modules/ajv/dist/runtime/uri.js
 var require_uri = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var uri = require_fast_uri();
@@ -4900,7 +4900,7 @@ var require_uri = __commonJS(function(exports) {
   exports.default = uri;
 });
 
-// ../../node_modules/ajv/dist/core.js
+// ../../../node_modules/ajv/dist/core.js
 var require_core = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.CodeGen = exports.Name = exports.nil = exports.stringify = exports.str = exports._ = exports.KeywordCxt = undefined;
@@ -4937,7 +4937,7 @@ var require_core = __commonJS(function(exports) {
   var util_1 = require_util();
   var $dataRefSchema = require_data();
   var uri_1 = require_uri();
-  var defaultRegExp = (str, flags2) => new RegExp(str, flags2);
+  var defaultRegExp = (str, flags) => new RegExp(str, flags);
   defaultRegExp.code = "new RegExp";
   var META_IGNORE_OPTIONS = ["removeAdditional", "useDefaults", "coerceTypes"];
   var EXT_SCOPE_NAMES = new Set([
@@ -5246,12 +5246,12 @@ var require_core = __commonJS(function(exports) {
         return this;
       }
       keywordMetaschema.call(this, def);
-      const definition2 = {
+      const definition = {
         ...def,
         type: (0, dataType_1.getJSONTypes)(def.type),
         schemaType: (0, dataType_1.getJSONTypes)(def.schemaType)
       };
-      (0, util_1.eachItem)(keyword, definition2.type.length === 0 ? (k) => addRule.call(this, k, definition2) : (k) => definition2.type.forEach((t) => addRule.call(this, k, definition2, t)));
+      (0, util_1.eachItem)(keyword, definition.type.length === 0 ? (k) => addRule.call(this, k, definition) : (k) => definition.type.forEach((t) => addRule.call(this, k, definition, t)));
       return this;
     }
     getKeyword(keyword) {
@@ -5259,20 +5259,20 @@ var require_core = __commonJS(function(exports) {
       return typeof rule == "object" ? rule.definition : !!rule;
     }
     removeKeyword(keyword) {
-      const { RULES: RULES2 } = this;
-      delete RULES2.keywords[keyword];
-      delete RULES2.all[keyword];
-      for (const group of RULES2.rules) {
-        const i2 = group.rules.findIndex((rule) => rule.keyword === keyword);
-        if (i2 >= 0)
-          group.rules.splice(i2, 1);
+      const { RULES } = this;
+      delete RULES.keywords[keyword];
+      delete RULES.all[keyword];
+      for (const group of RULES.rules) {
+        const i = group.rules.findIndex((rule) => rule.keyword === keyword);
+        if (i >= 0)
+          group.rules.splice(i, 1);
       }
       return this;
     }
-    addFormat(name2, format) {
+    addFormat(name, format) {
       if (typeof format == "string")
         format = new RegExp(format);
-      this.formats[name2] = format;
+      this.formats[name] = format;
       return this;
     }
     errorsText(errors = this.errors, { separator = ", ", dataVar = "data" } = {}) {
@@ -5389,10 +5389,10 @@ var require_core = __commonJS(function(exports) {
         this.addSchema(optsSchemas[key], key);
   }
   function addInitialFormats() {
-    for (const name2 in this.opts.formats) {
-      const format = this.opts.formats[name2];
+    for (const name in this.opts.formats) {
+      const format = this.opts.formats[name];
       if (format)
-        this.addFormat(name2, format);
+        this.addFormat(name, format);
     }
   }
   function addInitialKeywords(defs) {
@@ -5426,9 +5426,9 @@ var require_core = __commonJS(function(exports) {
   }
   var KEYWORD_NAME = /^[a-z_$][a-z0-9_$:-]*$/i;
   function checkKeyword(keyword, def) {
-    const { RULES: RULES2 } = this;
+    const { RULES } = this;
     (0, util_1.eachItem)(keyword, (kwd) => {
-      if (RULES2.keywords[kwd])
+      if (RULES.keywords[kwd])
         throw new Error(`Keyword ${kwd} is already defined`);
       if (!KEYWORD_NAME.test(kwd))
         throw new Error(`Keyword ${kwd} has invalid name`);
@@ -5439,39 +5439,39 @@ var require_core = __commonJS(function(exports) {
       throw new Error('$data keyword must have "code" or "validate" function');
     }
   }
-  function addRule(keyword, definition2, dataType) {
+  function addRule(keyword, definition, dataType) {
     var _a;
-    const post = definition2 === null || definition2 === undefined ? undefined : definition2.post;
+    const post = definition === null || definition === undefined ? undefined : definition.post;
     if (dataType && post)
       throw new Error('keyword with "post" flag cannot have "type"');
-    const { RULES: RULES2 } = this;
-    let ruleGroup = post ? RULES2.post : RULES2.rules.find(({ type: t }) => t === dataType);
+    const { RULES } = this;
+    let ruleGroup = post ? RULES.post : RULES.rules.find(({ type: t }) => t === dataType);
     if (!ruleGroup) {
       ruleGroup = { type: dataType, rules: [] };
-      RULES2.rules.push(ruleGroup);
+      RULES.rules.push(ruleGroup);
     }
-    RULES2.keywords[keyword] = true;
-    if (!definition2)
+    RULES.keywords[keyword] = true;
+    if (!definition)
       return;
     const rule = {
       keyword,
       definition: {
-        ...definition2,
-        type: (0, dataType_1.getJSONTypes)(definition2.type),
-        schemaType: (0, dataType_1.getJSONTypes)(definition2.schemaType)
+        ...definition,
+        type: (0, dataType_1.getJSONTypes)(definition.type),
+        schemaType: (0, dataType_1.getJSONTypes)(definition.schemaType)
       }
     };
-    if (definition2.before)
-      addBeforeRule.call(this, ruleGroup, rule, definition2.before);
+    if (definition.before)
+      addBeforeRule.call(this, ruleGroup, rule, definition.before);
     else
       ruleGroup.rules.push(rule);
-    RULES2.all[keyword] = rule;
-    (_a = definition2.implements) === null || _a === undefined || _a.forEach((kwd) => this.addKeyword(kwd));
+    RULES.all[keyword] = rule;
+    (_a = definition.implements) === null || _a === undefined || _a.forEach((kwd) => this.addKeyword(kwd));
   }
   function addBeforeRule(ruleGroup, rule, before) {
-    const i2 = ruleGroup.rules.findIndex((_rule) => _rule.keyword === before);
-    if (i2 >= 0) {
-      ruleGroup.rules.splice(i2, 0, rule);
+    const i = ruleGroup.rules.findIndex((_rule) => _rule.keyword === before);
+    if (i >= 0) {
+      ruleGroup.rules.splice(i, 0, rule);
     } else {
       ruleGroup.rules.push(rule);
       this.logger.warn(`rule ${before} is not defined`);
@@ -5493,7 +5493,7 @@ var require_core = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv/dist/vocabularies/core/id.js
+// ../../../node_modules/ajv/dist/vocabularies/core/id.js
 var require_id = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var def = {
@@ -5505,7 +5505,7 @@ var require_id = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/core/ref.js
+// ../../../node_modules/ajv/dist/vocabularies/core/ref.js
 var require_ref = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.callRef = exports.getValidate = undefined;
@@ -5624,7 +5624,7 @@ var require_ref = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/core/index.js
+// ../../../node_modules/ajv/dist/vocabularies/core/index.js
 var require_core2 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var id_1 = require_id();
@@ -5642,7 +5642,7 @@ var require_core2 = __commonJS(function(exports) {
   exports.default = core;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/limitNumber.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/limitNumber.js
 var require_limitNumber = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -5671,7 +5671,7 @@ var require_limitNumber = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/multipleOf.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/multipleOf.js
 var require_multipleOf = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -5696,7 +5696,7 @@ var require_multipleOf = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/runtime/ucs2length.js
+// ../../../node_modules/ajv/dist/runtime/ucs2length.js
 var require_ucs2length = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   function ucs2length(str) {
@@ -5719,7 +5719,7 @@ var require_ucs2length = __commonJS(function(exports) {
   ucs2length.code = 'require("ajv/dist/runtime/ucs2length").default';
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/limitLength.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/limitLength.js
 var require_limitLength = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -5748,7 +5748,7 @@ var require_limitLength = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/pattern.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/pattern.js
 var require_pattern = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var code_1 = require_code2();
@@ -5782,7 +5782,7 @@ var require_pattern = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/limitProperties.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/limitProperties.js
 var require_limitProperties = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -5808,7 +5808,7 @@ var require_limitProperties = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/required.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/required.js
 var require_required = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var code_1 = require_code2();
@@ -5887,7 +5887,7 @@ var require_required = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/limitItems.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/limitItems.js
 var require_limitItems = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -5913,7 +5913,7 @@ var require_limitItems = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/runtime/equal.js
+// ../../../node_modules/ajv/dist/runtime/equal.js
 var require_equal = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var equal = require_fast_deep_equal();
@@ -5921,7 +5921,7 @@ var require_equal = __commonJS(function(exports) {
   exports.default = equal;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/uniqueItems.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/uniqueItems.js
 var require_uniqueItems = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var dataType_1 = require_dataType();
@@ -5929,8 +5929,8 @@ var require_uniqueItems = __commonJS(function(exports) {
   var util_1 = require_util();
   var equal_1 = require_equal();
   var error = {
-    message: ({ params: { i: i2, j } }) => (0, codegen_1.str)`must NOT have duplicate items (items ## ${j} and ${i2} are identical)`,
-    params: ({ params: { i: i2, j } }) => (0, codegen_1._)`{i: ${i2}, j: ${j}}`
+    message: ({ params: { i, j } }) => (0, codegen_1.str)`must NOT have duplicate items (items ## ${j} and ${i} are identical)`,
+    params: ({ params: { i, j } }) => (0, codegen_1._)`{i: ${i}, j: ${j}}`
   };
   var def = {
     keyword: "uniqueItems",
@@ -5947,21 +5947,21 @@ var require_uniqueItems = __commonJS(function(exports) {
       cxt.block$data(valid, validateUniqueItems, (0, codegen_1._)`${schemaCode} === false`);
       cxt.ok(valid);
       function validateUniqueItems() {
-        const i2 = gen.let("i", (0, codegen_1._)`${data}.length`);
+        const i = gen.let("i", (0, codegen_1._)`${data}.length`);
         const j = gen.let("j");
-        cxt.setParams({ i: i2, j });
+        cxt.setParams({ i, j });
         gen.assign(valid, true);
-        gen.if((0, codegen_1._)`${i2} > 1`, () => (canOptimize() ? loopN : loopN2)(i2, j));
+        gen.if((0, codegen_1._)`${i} > 1`, () => (canOptimize() ? loopN : loopN2)(i, j));
       }
       function canOptimize() {
         return itemTypes.length > 0 && !itemTypes.some((t) => t === "object" || t === "array");
       }
-      function loopN(i2, j) {
+      function loopN(i, j) {
         const item = gen.name("item");
         const wrongType = (0, dataType_1.checkDataTypes)(itemTypes, item, it.opts.strictNumbers, dataType_1.DataType.Wrong);
         const indices = gen.const("indices", (0, codegen_1._)`{}`);
-        gen.for((0, codegen_1._)`;${i2}--;`, () => {
-          gen.let(item, (0, codegen_1._)`${data}[${i2}]`);
+        gen.for((0, codegen_1._)`;${i}--;`, () => {
+          gen.let(item, (0, codegen_1._)`${data}[${i}]`);
           gen.if(wrongType, (0, codegen_1._)`continue`);
           if (itemTypes.length > 1)
             gen.if((0, codegen_1._)`typeof ${item} == "string"`, (0, codegen_1._)`${item} += "_"`);
@@ -5969,13 +5969,13 @@ var require_uniqueItems = __commonJS(function(exports) {
             gen.assign(j, (0, codegen_1._)`${indices}[${item}]`);
             cxt.error();
             gen.assign(valid, false).break();
-          }).code((0, codegen_1._)`${indices}[${item}] = ${i2}`);
+          }).code((0, codegen_1._)`${indices}[${item}] = ${i}`);
         });
       }
-      function loopN2(i2, j) {
+      function loopN2(i, j) {
         const eql = (0, util_1.useFunc)(gen, equal_1.default);
         const outer = gen.name("outer");
-        gen.label(outer).for((0, codegen_1._)`;${i2}--;`, () => gen.for((0, codegen_1._)`${j} = ${i2}; ${j}--;`, () => gen.if((0, codegen_1._)`${eql}(${data}[${i2}], ${data}[${j}])`, () => {
+        gen.label(outer).for((0, codegen_1._)`;${i}--;`, () => gen.for((0, codegen_1._)`${j} = ${i}; ${j}--;`, () => gen.if((0, codegen_1._)`${eql}(${data}[${i}], ${data}[${j}])`, () => {
           cxt.error();
           gen.assign(valid, false).break(outer);
         })));
@@ -5985,7 +5985,7 @@ var require_uniqueItems = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/const.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/const.js
 var require_const = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -6011,7 +6011,7 @@ var require_const = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/enum.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/enum.js
 var require_enum = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -6041,23 +6041,23 @@ var require_enum = __commonJS(function(exports) {
         if (!Array.isArray(schema))
           throw new Error("ajv implementation error");
         const vSchema = gen.const("vSchema", schemaCode);
-        valid = (0, codegen_1.or)(...schema.map((_x, i2) => equalCode(vSchema, i2)));
+        valid = (0, codegen_1.or)(...schema.map((_x, i) => equalCode(vSchema, i)));
       }
       cxt.pass(valid);
       function loopEnum() {
         gen.assign(valid, false);
         gen.forOf("v", schemaCode, (v) => gen.if((0, codegen_1._)`${getEql()}(${data}, ${v})`, () => gen.assign(valid, true).break()));
       }
-      function equalCode(vSchema, i2) {
-        const sch = schema[i2];
-        return typeof sch === "object" && sch !== null ? (0, codegen_1._)`${getEql()}(${data}, ${vSchema}[${i2}])` : (0, codegen_1._)`${data} === ${sch}`;
+      function equalCode(vSchema, i) {
+        const sch = schema[i];
+        return typeof sch === "object" && sch !== null ? (0, codegen_1._)`${getEql()}(${data}, ${vSchema}[${i}])` : (0, codegen_1._)`${data} === ${sch}`;
       }
     }
   };
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/validation/index.js
+// ../../../node_modules/ajv/dist/vocabularies/validation/index.js
 var require_validation = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var limitNumber_1 = require_limitNumber();
@@ -6087,7 +6087,7 @@ var require_validation = __commonJS(function(exports) {
   exports.default = validation;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/additionalItems.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/additionalItems.js
 var require_additionalItems = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.validateAdditionalItems = undefined;
@@ -6126,8 +6126,8 @@ var require_additionalItems = __commonJS(function(exports) {
       cxt.ok(valid);
     }
     function validateItems(valid) {
-      gen.forRange("i", items.length, len, (i2) => {
-        cxt.subschema({ keyword, dataProp: i2, dataPropType: util_1.Type.Num }, valid);
+      gen.forRange("i", items.length, len, (i) => {
+        cxt.subschema({ keyword, dataProp: i, dataPropType: util_1.Type.Num }, valid);
         if (!it.allErrors)
           gen.if((0, codegen_1.not)(valid), () => gen.break());
       });
@@ -6137,7 +6137,7 @@ var require_additionalItems = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/items.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/items.js
 var require_items = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.validateTuple = undefined;
@@ -6167,13 +6167,13 @@ var require_items = __commonJS(function(exports) {
     }
     const valid = gen.name("valid");
     const len = gen.const("len", (0, codegen_1._)`${data}.length`);
-    schArr.forEach((sch, i2) => {
+    schArr.forEach((sch, i) => {
       if ((0, util_1.alwaysValidSchema)(it, sch))
         return;
-      gen.if((0, codegen_1._)`${len} > ${i2}`, () => cxt.subschema({
+      gen.if((0, codegen_1._)`${len} > ${i}`, () => cxt.subschema({
         keyword,
-        schemaProp: i2,
-        dataProp: i2
+        schemaProp: i,
+        dataProp: i
       }, valid));
       cxt.ok(valid);
     });
@@ -6191,7 +6191,7 @@ var require_items = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/prefixItems.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/prefixItems.js
 var require_prefixItems = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var items_1 = require_items();
@@ -6205,7 +6205,7 @@ var require_prefixItems = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/items2020.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/items2020.js
 var require_items2020 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -6237,7 +6237,7 @@ var require_items2020 = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/contains.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/contains.js
 var require_contains = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -6301,10 +6301,10 @@ var require_contains = __commonJS(function(exports) {
         validateItems(schValid, () => gen.if(schValid, () => checkLimits(count)));
       }
       function validateItems(_valid, block) {
-        gen.forRange("i", 0, len, (i2) => {
+        gen.forRange("i", 0, len, (i) => {
           cxt.subschema({
             keyword: "contains",
-            dataProp: i2,
+            dataProp: i,
             dataPropType: util_1.Type.Num,
             compositeRule: true
           }, _valid);
@@ -6328,7 +6328,7 @@ var require_contains = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/dependencies.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/dependencies.js
 var require_dependencies = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.validateSchemaDeps = exports.validatePropertyDeps = exports.error = undefined;
@@ -6413,7 +6413,7 @@ var require_dependencies = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/propertyNames.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/propertyNames.js
 var require_propertyNames = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -6453,7 +6453,7 @@ var require_propertyNames = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/additionalProperties.js
 var require_additionalProperties = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var code_1 = require_code2();
@@ -6556,7 +6556,7 @@ var require_additionalProperties = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/properties.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/properties.js
 var require_properties = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var validate_1 = require_validate();
@@ -6611,7 +6611,7 @@ var require_properties = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/patternProperties.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/patternProperties.js
 var require_patternProperties = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var code_1 = require_code2();
@@ -6682,7 +6682,7 @@ var require_patternProperties = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/not.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/not.js
 var require_not = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var util_1 = require_util();
@@ -6710,7 +6710,7 @@ var require_not = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/anyOf.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/anyOf.js
 var require_anyOf = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var code_1 = require_code2();
@@ -6724,7 +6724,7 @@ var require_anyOf = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/oneOf.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/oneOf.js
 var require_oneOf = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -6752,23 +6752,23 @@ var require_oneOf = __commonJS(function(exports) {
       gen.block(validateOneOf);
       cxt.result(valid, () => cxt.reset(), () => cxt.error(true));
       function validateOneOf() {
-        schArr.forEach((sch, i2) => {
+        schArr.forEach((sch, i) => {
           let schCxt;
           if ((0, util_1.alwaysValidSchema)(it, sch)) {
             gen.var(schValid, true);
           } else {
             schCxt = cxt.subschema({
               keyword: "oneOf",
-              schemaProp: i2,
+              schemaProp: i,
               compositeRule: true
             }, schValid);
           }
-          if (i2 > 0) {
-            gen.if((0, codegen_1._)`${schValid} && ${valid}`).assign(valid, false).assign(passing, (0, codegen_1._)`[${passing}, ${i2}]`).else();
+          if (i > 0) {
+            gen.if((0, codegen_1._)`${schValid} && ${valid}`).assign(valid, false).assign(passing, (0, codegen_1._)`[${passing}, ${i}]`).else();
           }
           gen.if(schValid, () => {
             gen.assign(valid, true);
-            gen.assign(passing, i2);
+            gen.assign(passing, i);
             if (schCxt)
               cxt.mergeEvaluated(schCxt, codegen_1.Name);
           });
@@ -6779,7 +6779,7 @@ var require_oneOf = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/allOf.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/allOf.js
 var require_allOf = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var util_1 = require_util();
@@ -6791,10 +6791,10 @@ var require_allOf = __commonJS(function(exports) {
       if (!Array.isArray(schema))
         throw new Error("ajv implementation error");
       const valid = gen.name("valid");
-      schema.forEach((sch, i2) => {
+      schema.forEach((sch, i) => {
         if ((0, util_1.alwaysValidSchema)(it, sch))
           return;
-        const schCxt = cxt.subschema({ keyword: "allOf", schemaProp: i2 }, valid);
+        const schCxt = cxt.subschema({ keyword: "allOf", schemaProp: i }, valid);
         cxt.ok(valid);
         cxt.mergeEvaluated(schCxt);
       });
@@ -6803,7 +6803,7 @@ var require_allOf = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/if.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/if.js
 var require_if = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -6869,7 +6869,7 @@ var require_if = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/thenElse.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/thenElse.js
 var require_thenElse = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var util_1 = require_util();
@@ -6884,7 +6884,7 @@ var require_thenElse = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/applicator/index.js
+// ../../../node_modules/ajv/dist/vocabularies/applicator/index.js
 var require_applicator = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var additionalItems_1 = require_additionalItems();
@@ -6927,7 +6927,7 @@ var require_applicator = __commonJS(function(exports) {
   exports.default = getApplicator;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/format/format.js
+// ../../../node_modules/ajv/dist/vocabularies/format/format.js
 var require_format = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -7014,7 +7014,7 @@ var require_format = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/format/index.js
+// ../../../node_modules/ajv/dist/vocabularies/format/index.js
 var require_format2 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var format_1 = require_format();
@@ -7022,7 +7022,7 @@ var require_format2 = __commonJS(function(exports) {
   exports.default = format;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/metadata.js
+// ../../../node_modules/ajv/dist/vocabularies/metadata.js
 var require_metadata = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.contentVocabulary = exports.metadataVocabulary = undefined;
@@ -7042,7 +7042,7 @@ var require_metadata = __commonJS(function(exports) {
   ];
 });
 
-// ../../node_modules/ajv/dist/vocabularies/draft7.js
+// ../../../node_modules/ajv/dist/vocabularies/draft7.js
 var require_draft7 = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var core_1 = require_core2();
@@ -7061,7 +7061,7 @@ var require_draft7 = __commonJS(function(exports) {
   exports.default = draft7Vocabularies;
 });
 
-// ../../node_modules/ajv/dist/vocabularies/discriminator/types.js
+// ../../../node_modules/ajv/dist/vocabularies/discriminator/types.js
 var require_types = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.DiscrError = undefined;
@@ -7072,7 +7072,7 @@ var require_types = __commonJS(function(exports) {
   })(DiscrError || (exports.DiscrError = DiscrError = {}));
 });
 
-// ../../node_modules/ajv/dist/vocabularies/discriminator/index.js
+// ../../../node_modules/ajv/dist/vocabularies/discriminator/index.js
 var require_discriminator = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var codegen_1 = require_codegen();
@@ -7128,8 +7128,8 @@ var require_discriminator = __commonJS(function(exports) {
         const oneOfMapping = {};
         const topRequired = hasRequired(parentSchema);
         let tagRequired = true;
-        for (let i2 = 0;i2 < oneOf.length; i2++) {
-          let sch = oneOf[i2];
+        for (let i = 0;i < oneOf.length; i++) {
+          let sch = oneOf[i];
           if ((sch === null || sch === undefined ? undefined : sch.$ref) && !(0, util_1.schemaHasRulesButRef)(sch, it.self.RULES)) {
             const ref = sch.$ref;
             sch = compile_1.resolveRef.call(it.self, it.schemaEnv.root, it.baseId, ref);
@@ -7143,7 +7143,7 @@ var require_discriminator = __commonJS(function(exports) {
             throw new Error(`discriminator: oneOf subschemas (or referenced schemas) must have "properties/${tagName}"`);
           }
           tagRequired = tagRequired && (topRequired || hasRequired(sch));
-          addMappings(propSch, i2);
+          addMappings(propSch, i);
         }
         if (!tagRequired)
           throw new Error(`discriminator: "${tagName}" must be required`);
@@ -7151,22 +7151,22 @@ var require_discriminator = __commonJS(function(exports) {
         function hasRequired({ required }) {
           return Array.isArray(required) && required.includes(tagName);
         }
-        function addMappings(sch, i2) {
+        function addMappings(sch, i) {
           if (sch.const) {
-            addMapping(sch.const, i2);
+            addMapping(sch.const, i);
           } else if (sch.enum) {
             for (const tagValue of sch.enum) {
-              addMapping(tagValue, i2);
+              addMapping(tagValue, i);
             }
           } else {
             throw new Error(`discriminator: "properties/${tagName}" must have "const" or "enum"`);
           }
         }
-        function addMapping(tagValue, i2) {
+        function addMapping(tagValue, i) {
           if (typeof tagValue != "string" || tagValue in oneOfMapping) {
             throw new Error(`discriminator: "${tagName}" values must be unique strings`);
           }
-          oneOfMapping[tagValue] = i2;
+          oneOfMapping[tagValue] = i;
         }
       }
     }
@@ -7174,9 +7174,9 @@ var require_discriminator = __commonJS(function(exports) {
   exports.default = def;
 });
 
-// ../../node_modules/ajv/dist/refs/json-schema-draft-07.json
-var require_json_schema_draft_07 = __commonJS(function(exports, module2) {
-  module2.exports = {
+// ../../../node_modules/ajv/dist/refs/json-schema-draft-07.json
+var require_json_schema_draft_07 = __commonJS(function(exports, module) {
+  module.exports = {
     $schema: "http://json-schema.org/draft-07/schema#",
     $id: "http://json-schema.org/draft-07/schema#",
     title: "Core schema meta-schema",
@@ -7329,8 +7329,8 @@ var require_json_schema_draft_07 = __commonJS(function(exports, module2) {
   };
 });
 
-// ../../node_modules/ajv/dist/ajv.js
-var require_ajv = __commonJS(function(exports, module2) {
+// ../../../node_modules/ajv/dist/ajv.js
+var require_ajv = __commonJS(function(exports, module) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.MissingRefError = exports.ValidationError = exports.CodeGen = exports.Name = exports.nil = exports.stringify = exports.str = exports._ = exports.KeywordCxt = exports.Ajv = undefined;
   var core_1 = require_core();
@@ -7360,8 +7360,8 @@ var require_ajv = __commonJS(function(exports, module2) {
     }
   }
   exports.Ajv = Ajv;
-  module2.exports = exports = Ajv;
-  module2.exports.Ajv = Ajv;
+  module.exports = exports = Ajv;
+  module.exports.Ajv = Ajv;
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.default = Ajv;
   var validate_1 = require_validate();
@@ -7397,7 +7397,7 @@ var require_ajv = __commonJS(function(exports, module2) {
   } });
 });
 
-// ../../node_modules/ajv-formats/dist/formats.js
+// ../../../node_modules/ajv-formats/dist/formats.js
 var require_formats = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.formatNames = exports.fastFormats = exports.fullFormats = undefined;
@@ -7574,7 +7574,7 @@ var require_formats = __commonJS(function(exports) {
   }
 });
 
-// ../../node_modules/ajv-formats/dist/limit.js
+// ../../../node_modules/ajv-formats/dist/limit.js
 var require_limit = __commonJS(function(exports) {
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.formatLimitDefinition = undefined;
@@ -7643,8 +7643,8 @@ var require_limit = __commonJS(function(exports) {
   exports.default = formatLimitPlugin;
 });
 
-// ../../node_modules/ajv-formats/dist/index.js
-var require_dist = __commonJS(function(exports, module2) {
+// ../../../node_modules/ajv-formats/dist/index.js
+var require_dist = __commonJS(function(exports, module) {
   Object.defineProperty(exports, "__esModule", { value: true });
   var formats_1 = require_formats();
   var limit_1 = require_limit();
@@ -7663,27 +7663,27 @@ var require_dist = __commonJS(function(exports, module2) {
       (0, limit_1.default)(ajv);
     return ajv;
   };
-  formatsPlugin.get = (name2, mode = "full") => {
+  formatsPlugin.get = (name, mode = "full") => {
     const formats = mode === "fast" ? formats_1.fastFormats : formats_1.fullFormats;
-    const f = formats[name2];
+    const f = formats[name];
     if (!f)
-      throw new Error(`Unknown format "${name2}"`);
+      throw new Error(`Unknown format "${name}"`);
     return f;
   };
-  function addFormats(ajv, list, fs2, exportName) {
+  function addFormats(ajv, list, fs, exportName) {
     var _a;
     var _b;
     (_a = (_b = ajv.opts.code).formats) !== null && _a !== undefined || (_b.formats = (0, codegen_1._)`require("ajv-formats/dist/formats").${exportName}`);
     for (const f of list)
-      ajv.addFormat(f, fs2[f]);
+      ajv.addFormat(f, fs[f]);
   }
-  module2.exports = exports = formatsPlugin;
+  module.exports = exports = formatsPlugin;
   Object.defineProperty(exports, "__esModule", { value: true });
   exports.default = formatsPlugin;
 });
 
-// ../notification-channels/src/index.ts
-import { z as z27 } from "zod";
+// ../../notification-channels/src/index.ts
+import { z as z31 } from "zod";
 var NOTIFICATION_CHANNELS, PERSONAL_NOTIFICATION_CHANNELS, PROJECT_NOTIFICATION_CHANNELS, ALL_NOTIFICATION_CHANNELS, NOTIFICATION_CHANNEL_VALUES, NotificationChannelSchema, ProjectNotificationChannelSchema, NOTIFICATION_CHANNEL_DEFINITIONS, registeredChannels;
 var init_src = __esm(() => {
   NOTIFICATION_CHANNELS = {
@@ -7717,8 +7717,8 @@ var init_src = __esm(() => {
     ...ALL_NOTIFICATION_CHANNELS,
     "victorops"
   ];
-  NotificationChannelSchema = z27.enum(ALL_NOTIFICATION_CHANNELS);
-  ProjectNotificationChannelSchema = z27.enum(PROJECT_NOTIFICATION_CHANNELS);
+  NotificationChannelSchema = z31.enum(ALL_NOTIFICATION_CHANNELS);
+  ProjectNotificationChannelSchema = z31.enum(PROJECT_NOTIFICATION_CHANNELS);
   NOTIFICATION_CHANNEL_DEFINITIONS = [
     {
       channel: "in_app",
@@ -7811,7 +7811,7 @@ var init_src = __esm(() => {
 import { createORPCClient, ORPCError as ORPCError2 } from "@orpc/client";
 import { OpenAPILink } from "@orpc/openapi-client/fetch";
 
-// ../public-api-contracts/src/agent-stream.ts
+// ../../contracts/public-api/src/agent-stream.ts
 import { z } from "zod";
 var RunStartedStreamEventSchema = z.object({
   type: z.literal("run_started"),
@@ -7918,12 +7918,12 @@ var AGENT_STREAM_CURSOR_QUERY_PARAM = "cursor";
 var AGENT_STREAM_METHOD = "GET";
 var AGENT_STREAM_CONTROL_EVENT = "control";
 var AGENT_STREAM_DONE_SENTINEL = "[DONE]";
-// ../public-api-contracts/src/components.ts
+// ../../contracts/public-api/src/components.ts
 import { z as z2 } from "zod";
-// ../orpc-contracts/src/define-operation.ts
+// ../../infrastructure/orpc-contracts/src/define-operation.ts
 import { oc } from "@orpc/contract";
 var defineOperation = (definition) => {
-  const metadata2 = {
+  const metadata = {
     operationId: definition.operationId,
     backend: definition.backend,
     pagination: definition.pagination,
@@ -7932,7 +7932,7 @@ var defineOperation = (definition) => {
   };
   return {
     ...definition,
-    contract: oc.$meta(metadata2).route({
+    contract: oc.$meta(metadata).route({
       method: definition.route.method,
       path: definition.route.path,
       tags: definition.route.tags,
@@ -7946,7 +7946,7 @@ var defineOperation = (definition) => {
     }).input(definition.input).output(definition.output)
   };
 };
-// ../public-api-contracts/src/components.ts
+// ../../contracts/public-api/src/components.ts
 var ComponentSchema = z2.object({
   id: z2.string().uuid(),
   projectId: z2.string().uuid(),
@@ -8645,7 +8645,7 @@ var componentsContract = {
   },
   timeline: getStatusTimeline.contract
 };
-// ../public-api-contracts/src/automations.ts
+// ../../contracts/public-api/src/automations.ts
 import { z as z3 } from "zod";
 var AutomationIdSchema = z3.string().uuid().describe("Automation ID.");
 var AutomationRunStatusSchema = z3.enum([
@@ -8674,10 +8674,16 @@ var AutomationRunDetailSchema = AutomationRunSchema.extend({
 });
 var AutomationKindSchema = z3.enum(["script", "log_match"]);
 var AutomationSignalTypeSchema = z3.enum(["expression_matched"]);
+var AUTOMATION_DESCRIPTION_MAX_CHARACTERS = 2000;
+var AUTOMATION_DESCRIPTION_LIMIT_MESSAGE = `description must be at most ${AUTOMATION_DESCRIPTION_MAX_CHARACTERS.toLocaleString()} characters.`;
+var AutomationDescriptionInputSchema = z3.string().max(AUTOMATION_DESCRIPTION_MAX_CHARACTERS, {
+  message: AUTOMATION_DESCRIPTION_LIMIT_MESSAGE
+});
 var AutomationSchema = z3.object({
   id: z3.string().uuid(),
   projectId: z3.string().uuid(),
   name: z3.string(),
+  description: z3.string().nullable().describe("Human-readable description. For log-match automations this is the investigation prompt the agent runs with. Null when unset."),
   kind: AutomationKindSchema.describe("Automation kind: a scheduled script or a log-match investigation."),
   scriptId: z3.string().uuid().nullable().describe("ID of the project_scripts row this automation runs, for DB-backed script automations. Null for legacy script_path automations and for log-match automations."),
   scriptName: z3.string().nullable().describe("Name of the project_scripts row this automation runs (see scriptId). Null when scriptId is null."),
@@ -8725,7 +8731,7 @@ var GetAutomationOutputSchema = z3.object({
 var CreateAutomationInputSchema = z3.object({
   projectId: z3.string().uuid().optional().describe("Project to create the automation in. Auto-filled from CLI and SDK context when omitted."),
   name: z3.string().min(1).max(200).describe("Automation name."),
-  description: z3.string().max(2000).nullable().optional().describe("Human-readable description. Required for log-match automations (investigation instructions)."),
+  description: AutomationDescriptionInputSchema.nullable().optional().describe(`Human-readable description. Required for log-match automations (investigation instructions). At most ${AUTOMATION_DESCRIPTION_MAX_CHARACTERS.toLocaleString()} characters.`),
   scriptId: z3.string().uuid().optional().describe("Project script to run, by ID. Provide exactly one of scriptId, script, or expressionId."),
   script: z3.string().optional().describe("Project script to run, by name (resolved to scriptId server-side). Provide exactly one of scriptId, script, or expressionId."),
   expressionId: z3.string().uuid().optional().describe("Log-match expression to bind. Creates a signal automation that investigates matching logs. Mutually exclusive with scriptId and script."),
@@ -8784,7 +8790,7 @@ var UpdateAutomationInputSchema = z3.object({
   automationId: AutomationIdSchema,
   projectId: z3.string().uuid().optional().describe("Project that owns the automation. Auto-filled from CLI and SDK context when omitted."),
   name: z3.string().min(1).max(200).optional().describe("New automation name."),
-  description: z3.string().max(2000).nullable().optional().describe("New description, or null to clear it. Omit to leave unchanged."),
+  description: AutomationDescriptionInputSchema.nullable().optional().describe(`New description, or null to clear it. Omit to leave unchanged. At most ${AUTOMATION_DESCRIPTION_MAX_CHARACTERS.toLocaleString()} characters.`),
   cronExpression: z3.string().optional().describe("New cron schedule."),
   timezone: z3.string().optional().describe("New IANA timezone."),
   timeoutSeconds: z3.coerce.number().int().min(1).max(3600).optional().describe("New execution timeout in seconds.")
@@ -9022,7 +9028,7 @@ var automationsContract = {
   }
 };
 
-// ../public-api-contracts/src/billing.ts
+// ../../contracts/public-api/src/billing.ts
 import { z as z4 } from "zod";
 var BillingUsageDimensionSchema = z4.enum([
   "logs_ingested_bytes",
@@ -9126,7 +9132,8 @@ var GetBillingUsageInputSchema = z4.object({
 });
 var BillingUsageRowSchema = z4.object({
   dimension: BillingUsageDimensionSchema,
-  totalQuantity: z4.string(),
+  totalQuantity: z4.string().describe("Measured product units; cached input and cache-write tokens are already included in input."),
+  weightedQuantity: z4.string().optional().describe("Weighted product units before included usage and unit conversion."),
   ratedQuantity: z4.string(),
   creditsConsumed: z4.string(),
   sourceBreakdown: z4.record(z4.string(), z4.string())
@@ -9648,7 +9655,7 @@ var billingContract = {
   resumeSubscriptionCancellation: resumeSubscriptionCancellation.contract
 };
 
-// ../public-api-contracts/src/connected-accounts.ts
+// ../../contracts/public-api/src/connected-accounts.ts
 import { z as z5 } from "zod";
 var CONNECTED_ACCOUNT_PROVIDER_VALUES = [
   "github",
@@ -9766,7 +9773,7 @@ var disconnectConnectedAccount = defineOperation({
   async: "sync"
 });
 
-// ../public-api-contracts/src/integrations.ts
+// ../../contracts/public-api/src/integrations.ts
 import { z as z6 } from "zod";
 var INTEGRATION_PROVIDER_VALUES = [
   "slack",
@@ -10110,6 +10117,26 @@ var updateConnectionExternalIdentityJitPolicy = defineOperation({
   pagination: "none",
   async: "sync"
 });
+var MicrosoftTeamsAdminConsentSchema = z6.object({
+  status: z6.enum(["granted", "declined", "pending"]).describe("Recorded consent outcome. Absent metadata reads as pending; a grant completed outside a Sazabi session can leave a working tenant grant recorded as pending."),
+  grantedAt: z6.string().nullable().describe("ISO timestamp of the recorded grant, when granted."),
+  consentUrl: z6.string().nullable().describe("Microsoft admin-consent URL to open in a browser (short-lived signed state). Null for secret-key callers or when Teams OAuth is not provisioned in this environment.")
+});
+var getMicrosoftTeamsAdminConsent = defineOperation({
+  operationId: "integrations.getMicrosoftTeamsAdminConsent",
+  summary: "Get the Microsoft Teams tenant admin-consent status",
+  description: "Read the recorded Microsoft tenant admin-consent status for a Teams connection, with a consent URL for retrying the grant.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/integrations/connections/{connectionId}/microsoft-teams-admin-consent",
+    tags: ["Integrations"]
+  },
+  input: ExternalIdentityJitConnectionInputSchema,
+  output: MicrosoftTeamsAdminConsentSchema,
+  pagination: "none",
+  async: "sync"
+});
 var SlackConnectionInputSchema = z6.object({
   organizationId: z6.string().min(1).optional().describe("Organization the connection belongs to. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   connectionId: z6.string().uuid().describe("Slack integration connection ID (the `integration_connections.id`, not the Slack team id).")
@@ -10278,7 +10305,7 @@ var deleteSlackChannelProjectMapping = defineOperation({
   async: "sync"
 });
 
-// ../public-api-contracts/src/issues.ts
+// ../../contracts/public-api/src/issues.ts
 import { z as z7 } from "zod";
 var IssueSchema = z7.object({
   id: z7.string().uuid(),
@@ -10294,8 +10321,8 @@ var IssueSchema = z7.object({
   muteHitCount: z7.number().int().nonnegative(),
   lastActivityAt: z7.string().datetime().nullable(),
   lastDeliveredAt: z7.string().datetime().nullable(),
-  locked: z7.boolean(),
-  redacted: z7.boolean()
+  locked: z7.boolean().describe("Deprecated. Always false; issue details are never credit-locked."),
+  redacted: z7.boolean().describe("Deprecated. Always false; issue details are never credit-redacted.")
 });
 var IssueSlackChannelSchema = z7.object({
   channelId: z7.string().nullable(),
@@ -10312,8 +10339,8 @@ var IssueSearchItemSchema = IssueSchema.extend({
 });
 var CreateIssueInputObjectSchema = z7.object({
   projectId: z7.string().uuid().optional().describe("Project to create the issue in. Auto-filled from CLI and SDK context when omitted."),
-  name: z7.string().trim().min(1).optional().describe("Stable issue name for indexing and mute matching. When omitted, the name is derived from contentMdx."),
-  contentMdx: z7.string().trim().min(1, "contentMdx cannot be empty").optional().describe("Safe Sazabi MDX document for the issue body (impact, root cause, remediation, evidence). Required unless sample is true."),
+  name: z7.string().trim().min(1).optional().describe('Stable issue name for indexing and mute matching: at most 80 characters, plain English, in the form "<service or surface>: <customer-visible symptom>", without counts, timestamps, or internal identifiers. When omitted, the name is derived from contentMdx.'),
+  contentMdx: z7.string().trim().min(1, "contentMdx cannot be empty").optional().describe("Safe Sazabi MDX document for the issue body, sections in this order: ## Summary, ## What changed, ## Impact, ## What to do, ## How we know, ## Details. Code, file paths, and function names only under Details; no Sazabi identifiers (pattern, template, log, trace, component ids). Required unless sample is true."),
   severity: z7.enum(["low", "medium", "high", "critical"]).default("medium").describe("Issue severity used for prioritization and triage."),
   componentId: z7.string().uuid().optional().describe("UUID of a registered component this issue belongs to. Required unless sample is true: every issue must be attributed to a component. List components first and pick the best match; register one if none fits. Missing or unknown IDs are rejected."),
   statusStartedAt: z7.string().datetime({ offset: true }).optional().describe("Optional ISO timestamp for when the linked status-page incident began."),
@@ -10610,7 +10637,7 @@ var issuesContract = {
   unmute: unmuteIssue.contract
 };
 
-// ../public-api-contracts/src/keys.ts
+// ../../contracts/public-api/src/keys.ts
 import { z as z8 } from "zod";
 var KEY_NAME_REGEX = /^[a-zA-Z0-9\s\-_]+$/;
 var BaseKeySchema = z8.object({
@@ -11048,10 +11075,10 @@ var secretKeysContract = {
   update: updateSecretKey.contract,
   delete: deleteSecretKey.contract
 };
-// ../log-source-provider/src/sources/shared/types.ts
+// ../../log-source-provider/src/sources/shared/types.ts
 var LOG_SOURCE_SETUP_SKILL_SPEC_VALUE = "available";
 
-// ../log-source-provider/src/sources/claude-code/setup.ts
+// ../../log-source-provider/src/sources/claude-code/setup.ts
 var claudeCodeConnectionless = {
   perStreamInstructions: true,
   groups: [
@@ -11108,7 +11135,7 @@ var claudeCodeConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/claude-code/spec.ts
+// ../../log-source-provider/src/sources/claude-code/spec.ts
 var claudeCodeSpec = {
   id: "claude_code",
   name: "Claude Code",
@@ -11145,7 +11172,7 @@ var claudeCodeSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/cloudflare-workers/setup.ts
+// ../../log-source-provider/src/sources/cloudflare-workers/setup.ts
 var cloudflareWorkersConnectionless = {
   perStreamInstructions: true,
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/cloudflare-workers",
@@ -11228,7 +11255,7 @@ var cloudflareWorkersConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/cloudflare-workers/spec.ts
+// ../../log-source-provider/src/sources/cloudflare-workers/spec.ts
 var cloudflareWorkersSpec = {
   id: "cloudflare_workers",
   name: "Cloudflare Workers",
@@ -11268,7 +11295,7 @@ var cloudflareWorkersSpec = {
   streamCardinality: "multi"
 };
 
-// ../log-source-provider/src/sources/shared/setup-actions.ts
+// ../../log-source-provider/src/sources/shared/setup-actions.ts
 var CONNECT_BUTTON = {
   label: "Connect",
   pendingLabel: "Connecting..."
@@ -11302,7 +11329,7 @@ var otelSdkAutoDetectNote = {
   text: "Most OpenTelemetry SDKs automatically detect these environment variables. If your SDK is already configured in code, use the same endpoint and protocol values there instead."
 };
 
-// ../log-source-provider/src/sources/cloudflare/setup.ts
+// ../../log-source-provider/src/sources/cloudflare/setup.ts
 var cloudflareManaged = {
   kind: "multi-step",
   steps: [
@@ -11451,7 +11478,7 @@ var cloudflareConnectionless = {
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/cloudflare"
 };
 
-// ../log-source-provider/src/sources/cloudflare/spec.ts
+// ../../log-source-provider/src/sources/cloudflare/spec.ts
 var cloudflareSensitiveFields = ["cloudflareApiToken"];
 var cloudflareIntakeDeclaration = {
   id: "cloudflare-logpush",
@@ -11496,7 +11523,7 @@ var cloudflareSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/cloudwatch/setup.ts
+// ../../log-source-provider/src/sources/cloudwatch/setup.ts
 var cloudwatchPrefetch = {
   action: "prefetch",
   input: {
@@ -11842,7 +11869,7 @@ service:
   ]
 };
 
-// ../log-source-provider/src/sources/cloudwatch/spec.ts
+// ../../log-source-provider/src/sources/cloudwatch/spec.ts
 var cloudwatchSensitiveFields = ["externalId"];
 var cloudwatchSpec = {
   id: "cloudwatch",
@@ -11903,7 +11930,7 @@ var cloudwatchSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/codex/setup.ts
+// ../../log-source-provider/src/sources/codex/setup.ts
 var codexConnectionless = {
   perStreamInstructions: true,
   groups: [
@@ -11956,7 +11983,7 @@ protocol = "binary"`
   ]
 };
 
-// ../log-source-provider/src/sources/codex/spec.ts
+// ../../log-source-provider/src/sources/codex/spec.ts
 var codexSpec = {
   id: "codex",
   name: "Codex",
@@ -11993,7 +12020,7 @@ var codexSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/convex/setup.ts
+// ../../log-source-provider/src/sources/convex/setup.ts
 var convexManaged = {
   kind: "multi-step",
   steps: [
@@ -12115,7 +12142,7 @@ var convexStreams = {
   }
 };
 
-// ../log-source-provider/src/sources/convex/spec.ts
+// ../../log-source-provider/src/sources/convex/spec.ts
 var convexSensitiveFields = ["accessToken"];
 var convexIntakeDeclaration = {
   id: "convex",
@@ -12163,7 +12190,7 @@ var convexSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/datadog/setup.ts
+// ../../log-source-provider/src/sources/datadog/setup.ts
 var datadogConnectionless = {
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/datadog",
   perStreamInstructions: true,
@@ -12318,7 +12345,7 @@ DD_LOGS_CONFIG_FORCE_USE_HTTP=true`
   ]
 };
 
-// ../log-source-provider/src/sources/datadog/spec.ts
+// ../../log-source-provider/src/sources/datadog/spec.ts
 var datadogSpec = {
   id: "datadog",
   name: "Datadog Agent",
@@ -12352,7 +12379,7 @@ var datadogSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/daytona/setup.ts
+// ../../log-source-provider/src/sources/daytona/setup.ts
 var daytonaConnectionless = {
   groups: [
     {
@@ -12410,7 +12437,7 @@ var daytonaConnectionless = {
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/daytona"
 };
 
-// ../log-source-provider/src/sources/daytona/spec.ts
+// ../../log-source-provider/src/sources/daytona/spec.ts
 var daytonaSpec = {
   id: "daytona",
   name: "Daytona",
@@ -12448,7 +12475,7 @@ var daytonaSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/digital-ocean/setup.ts
+// ../../log-source-provider/src/sources/digital-ocean/setup.ts
 var digitalOceanManaged = {
   kind: "multi-step",
   steps: [
@@ -12578,7 +12605,7 @@ var digitalOceanStreams = {
   }
 };
 
-// ../log-source-provider/src/sources/digital-ocean/spec.ts
+// ../../log-source-provider/src/sources/digital-ocean/spec.ts
 var digitalOceanSensitiveFields = ["apiToken"];
 var digitalOceanIntakeDeclaration = {
   id: "digital-ocean",
@@ -12637,7 +12664,7 @@ var digitalOceanSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/e2b/setup.ts
+// ../../log-source-provider/src/sources/e2b/setup.ts
 var TYPESCRIPT_SDK = `import { Sandbox } from '@e2b/code-interpreter'
 import { logs, SeverityNumber } from '@opentelemetry/api-logs'
 import { LoggerProvider, BatchLogRecordProcessor } from '@opentelemetry/sdk-logs'
@@ -12821,7 +12848,7 @@ var e2bConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/e2b/spec.ts
+// ../../log-source-provider/src/sources/e2b/spec.ts
 var e2bSpec = {
   id: "e2b",
   name: "E2B",
@@ -12851,7 +12878,7 @@ var e2bSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/elastic-cloud/setup.ts
+// ../../log-source-provider/src/sources/elastic-cloud/setup.ts
 var ELASTIC_AGENT_CONFIG = `receivers:
   filelog:
     include: ["/var/log/**/*.log"]
@@ -13060,7 +13087,7 @@ var elasticCloudConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/elastic-cloud/spec.ts
+// ../../log-source-provider/src/sources/elastic-cloud/spec.ts
 var elasticCloudSpec = {
   id: "elastic_cloud",
   name: "Elastic Cloud",
@@ -13094,7 +13121,7 @@ var elasticCloudSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/fluent-bit/setup.ts
+// ../../log-source-provider/src/sources/fluent-bit/setup.ts
 var CLASSIC_CONFIG = `[OUTPUT]
     name              opentelemetry
     match             *
@@ -13173,7 +13200,7 @@ var fluentBitConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/fluent-bit/spec.ts
+// ../../log-source-provider/src/sources/fluent-bit/spec.ts
 var fluentBitSpec = {
   id: "fluent_bit",
   name: "Fluent Bit",
@@ -13208,7 +13235,7 @@ var fluentBitSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/fly-io/setup.ts
+// ../../log-source-provider/src/sources/fly-io/setup.ts
 var flyIoManaged = {
   kind: "multi-step",
   steps: [
@@ -13381,7 +13408,7 @@ var flyIoStreams = {
   }
 };
 
-// ../log-source-provider/src/sources/fly-io/spec.ts
+// ../../log-source-provider/src/sources/fly-io/spec.ts
 var flyIoSensitiveFields = ["apiToken"];
 var flyIoIntakeDeclaration = {
   id: "fly-io",
@@ -13427,7 +13454,7 @@ var flyIoSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/gcp/setup.ts
+// ../../log-source-provider/src/sources/gcp/setup.ts
 var gcpManaged = {
   kind: "choice",
   title: "Choose setup method",
@@ -13648,7 +13675,7 @@ service:
   ]
 };
 
-// ../log-source-provider/src/sources/gcp/spec.ts
+// ../../log-source-provider/src/sources/gcp/spec.ts
 var gcpSensitiveFields = ["serviceAccountKey"];
 var gcpIntakeDeclaration = {
   id: "gcp",
@@ -13707,7 +13734,7 @@ var gcpSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/grafana-alloy/setup.ts
+// ../../log-source-provider/src/sources/grafana-alloy/setup.ts
 var ALLOY_RIVER = `otelcol.receiver.otlp "default" {
   grpc {}
   http {}
@@ -13807,7 +13834,7 @@ var grafanaAlloyConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/grafana-alloy/spec.ts
+// ../../log-source-provider/src/sources/grafana-alloy/spec.ts
 var grafanaAlloySpec = {
   id: "grafana_alloy",
   name: "Grafana Alloy",
@@ -13842,7 +13869,7 @@ var grafanaAlloySpec = {
   }
 };
 
-// ../log-source-provider/src/sources/inngest/setup.ts
+// ../../log-source-provider/src/sources/inngest/setup.ts
 var inngestConnectionless = {
   groups: [
     {
@@ -13865,7 +13892,7 @@ var inngestConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/inngest/spec.ts
+// ../../log-source-provider/src/sources/inngest/spec.ts
 var inngestSpec = {
   id: "inngest",
   name: "Inngest",
@@ -13895,7 +13922,7 @@ var inngestSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/langchain/setup.ts
+// ../../log-source-provider/src/sources/langchain/setup.ts
 var langchainOtlpEnvironmentAction = {
   instruction: "Set the following environment variables in your application environment so they are present when the process starts — `OTEL_EXPORTER_OTLP_ENDPOINT` is your intake URL (above).",
   payloads: [
@@ -14019,7 +14046,7 @@ new LangChainInstrumentation().manuallyInstrument(CallbackManagerModule);`
   ]
 };
 
-// ../log-source-provider/src/sources/langchain/spec.ts
+// ../../log-source-provider/src/sources/langchain/spec.ts
 var langchainSpec = {
   id: "langchain",
   name: "LangChain",
@@ -14049,7 +14076,7 @@ var langchainSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/mastra/setup.ts
+// ../../log-source-provider/src/sources/mastra/setup.ts
 var mastraConnectionless = {
   groups: [
     {
@@ -14122,7 +14149,7 @@ const response = await agent.generate("Hello, world!");`
   ]
 };
 
-// ../log-source-provider/src/sources/mastra/spec.ts
+// ../../log-source-provider/src/sources/mastra/spec.ts
 var mastraSpec = {
   id: "mastra",
   name: "Mastra",
@@ -14152,7 +14179,7 @@ var mastraSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/neon/setup.ts
+// ../../log-source-provider/src/sources/neon/setup.ts
 var neonConnectionless = {
   perStreamInstructions: true,
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/neon",
@@ -14261,7 +14288,7 @@ var neonConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/neon/spec.ts
+// ../../log-source-provider/src/sources/neon/spec.ts
 var neonSensitiveFields = [];
 var neonSpec = {
   id: "neon",
@@ -14293,7 +14320,7 @@ var neonSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/netlify/setup.ts
+// ../../log-source-provider/src/sources/netlify/setup.ts
 var netlifyConnectionless = {
   groups: [
     {
@@ -14346,7 +14373,7 @@ var netlifyConnectionless = {
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/netlify"
 };
 
-// ../log-source-provider/src/sources/netlify/spec.ts
+// ../../log-source-provider/src/sources/netlify/spec.ts
 var netlifySpec = {
   id: "netlify",
   name: "Netlify",
@@ -14376,7 +14403,7 @@ var netlifySpec = {
   }
 };
 
-// ../log-source-provider/src/sources/openrouter/setup.ts
+// ../../log-source-provider/src/sources/openrouter/setup.ts
 var openrouterConnectionless = {
   groups: [
     {
@@ -14426,7 +14453,7 @@ var openrouterConnectionless = {
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/openrouter"
 };
 
-// ../log-source-provider/src/sources/openrouter/spec.ts
+// ../../log-source-provider/src/sources/openrouter/spec.ts
 var openrouterSpec = {
   id: "openrouter",
   name: "OpenRouter",
@@ -14460,7 +14487,7 @@ var openrouterSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/otel-collector/setup.ts
+// ../../log-source-provider/src/sources/otel-collector/setup.ts
 var COLLECTOR_YAML = `exporters:
   otlphttp/sazabi:
     endpoint: "https://\${context.ingestHost}"
@@ -14543,7 +14570,7 @@ var otelCollectorConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/otel-collector/spec.ts
+// ../../log-source-provider/src/sources/otel-collector/spec.ts
 var otelCollectorSpec = {
   id: "otel_collector",
   name: "OpenTelemetry Collector",
@@ -14579,7 +14606,7 @@ var otelCollectorSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/otel-metrics/setup.ts
+// ../../log-source-provider/src/sources/otel-metrics/setup.ts
 var otelMetricsConnectionless = {
   perStreamInstructions: true,
   groups: [
@@ -14634,7 +14661,7 @@ var otelMetricsConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/otel-metrics/spec.ts
+// ../../log-source-provider/src/sources/otel-metrics/spec.ts
 var otelMetricsSpec = {
   id: "otel_metrics",
   name: "OpenTelemetry Metrics",
@@ -14676,7 +14703,7 @@ var otelMetricsSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/otel/setup.ts
+// ../../log-source-provider/src/sources/otel/setup.ts
 var otelConnectionless = {
   perStreamInstructions: true,
   groups: [
@@ -14734,7 +14761,7 @@ var otelConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/otel/spec.ts
+// ../../log-source-provider/src/sources/otel/spec.ts
 var otelTraceIntakeDeclaration = {
   id: "otel-trace",
   label: "OpenTelemetry Traces",
@@ -14774,7 +14801,7 @@ var otelSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/plain/setup.ts
+// ../../log-source-provider/src/sources/plain/setup.ts
 var plainManaged = {
   kind: "multi-step",
   steps: [
@@ -14881,7 +14908,6 @@ var plainStreams = {
     dedupeByConfigField: "eventType",
     dedupeExpandArrayField: "eventTypes",
     aggregateSelection: {
-      displayName: "Plain events",
       itemField: "eventType",
       configField: "eventTypes"
     },
@@ -14899,7 +14925,7 @@ var plainStreams = {
   }
 };
 
-// ../log-source-provider/src/sources/plain/spec.ts
+// ../../log-source-provider/src/sources/plain/spec.ts
 var plainSensitiveFields = ["plainApiKey"];
 var plainIntakeDeclaration = {
   id: "plain",
@@ -14963,7 +14989,7 @@ var plainSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/porter/setup.ts
+// ../../log-source-provider/src/sources/porter/setup.ts
 var porterConnectionless = {
   groups: [
     {
@@ -15100,7 +15126,7 @@ try {
   ]
 };
 
-// ../log-source-provider/src/sources/porter/spec.ts
+// ../../log-source-provider/src/sources/porter/spec.ts
 var porterSpec = {
   id: "porter",
   name: "Porter",
@@ -15131,7 +15157,7 @@ var porterSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/posthog-sdk/setup.ts
+// ../../log-source-provider/src/sources/posthog-sdk/setup.ts
 var posthogSdkConnectionless = {
   perStreamInstructions: true,
   groups: [
@@ -15263,7 +15289,7 @@ export default config;`
   ]
 };
 
-// ../log-source-provider/src/sources/posthog-sdk/spec.ts
+// ../../log-source-provider/src/sources/posthog-sdk/spec.ts
 var posthogSdkSensitiveFields = [];
 var posthogSdkSpec = {
   id: "posthog_sdk",
@@ -15296,7 +15322,7 @@ var posthogSdkSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/posthog/setup.ts
+// ../../log-source-provider/src/sources/posthog/setup.ts
 var posthogManaged = {
   kind: "multi-step",
   steps: [
@@ -15440,7 +15466,7 @@ var posthogConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/posthog/spec.ts
+// ../../log-source-provider/src/sources/posthog/spec.ts
 var posthogSensitiveFields = ["posthogPersonalApiKey"];
 var posthogIntakeDeclaration = {
   id: "posthog",
@@ -15499,7 +15525,7 @@ var posthogSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/prometheus/setup.ts
+// ../../log-source-provider/src/sources/prometheus/setup.ts
 var COLLECTOR_CONFIG = `receivers:
   prometheus:
     config:
@@ -15568,7 +15594,7 @@ var prometheusConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/prometheus/spec.ts
+// ../../log-source-provider/src/sources/prometheus/spec.ts
 var prometheusSpec = {
   id: "prometheus",
   name: "Prometheus",
@@ -15610,7 +15636,7 @@ var prometheusSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/railway/setup.ts
+// ../../log-source-provider/src/sources/railway/setup.ts
 var RAILWAY_RAW_EDITOR_VARIABLES = "OTEL_EXPORTER_OTLP_ENDPOINT=https://${context.ingestHost}\nOTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf\nOTEL_SERVICE_NAME=${{RAILWAY_SERVICE_NAME}}\nOTEL_RESOURCE_ATTRIBUTES=deployment.environment=${{RAILWAY_ENVIRONMENT_NAME}},service.version=${{RAILWAY_GIT_COMMIT_SHA}},railway.project.name=${{RAILWAY_PROJECT_NAME}},railway.deployment.id=${{RAILWAY_DEPLOYMENT_ID}}";
 var NODE_BOOTSTRAP = `bun add @opentelemetry/api @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node @opentelemetry/exporter-trace-otlp-proto @opentelemetry/exporter-logs-otlp-proto
 
@@ -15731,7 +15757,7 @@ var railwayConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/railway/spec.ts
+// ../../log-source-provider/src/sources/railway/spec.ts
 var railwaySpec = {
   id: "railway",
   name: "Railway",
@@ -15761,7 +15787,7 @@ var railwaySpec = {
   }
 };
 
-// ../log-source-provider/src/sources/render/setup.ts
+// ../../log-source-provider/src/sources/render/setup.ts
 var renderManaged = {
   kind: "multi-step",
   steps: [
@@ -15878,7 +15904,7 @@ var renderStreams = {
   }
 };
 
-// ../log-source-provider/src/sources/render/spec.ts
+// ../../log-source-provider/src/sources/render/spec.ts
 var renderSensitiveFields = ["apiToken"];
 var renderIntakeDeclaration = {
   id: "render-syslog",
@@ -15931,7 +15957,7 @@ var renderSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/respan/setup.ts
+// ../../log-source-provider/src/sources/respan/setup.ts
 var respanConnectionless = {
   groups: [
     {
@@ -16037,7 +16063,7 @@ await respan.initialize();
   ]
 };
 
-// ../log-source-provider/src/sources/respan/spec.ts
+// ../../log-source-provider/src/sources/respan/spec.ts
 var respanSpec = {
   id: "respan",
   name: "Respan",
@@ -16074,7 +16100,7 @@ var respanSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/sazabi-browser-sdk/setup.ts
+// ../../log-source-provider/src/sources/sazabi-browser-sdk/setup.ts
 var INIT_SNIPPET = `// Must be the first import: it installs dormant instrumentation before
 // any other module can capture the native fetch/XHR/history references.
 import "@sazabi/browser/register";
@@ -16232,7 +16258,7 @@ var sazabiBrowserSdkConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/sazabi-browser-sdk/spec.ts
+// ../../log-source-provider/src/sources/sazabi-browser-sdk/spec.ts
 var sazabiBrowserSdkSpec = {
   id: "sazabi_browser_sdk",
   name: "Sazabi Browser SDK",
@@ -16277,7 +16303,7 @@ var sazabiBrowserSdkSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/sentry-platform/setup.ts
+// ../../log-source-provider/src/sources/sentry-platform/setup.ts
 var sentryPlatformManaged = {
   kind: "multi-step",
   steps: [
@@ -16413,7 +16439,7 @@ var sentryPlatformConnectionless = {
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/sentry"
 };
 
-// ../log-source-provider/src/sources/sentry-platform/spec.ts
+// ../../log-source-provider/src/sources/sentry-platform/spec.ts
 var sentryPlatformSensitiveFields = ["sentryAuthToken"];
 var sentryPlatformIntakeDeclaration = {
   id: "sentry-platform",
@@ -16459,7 +16485,7 @@ var sentryPlatformSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/sentry/setup.ts
+// ../../log-source-provider/src/sources/sentry/setup.ts
 var sentryConnectionless = {
   kind: "choice",
   title: "Choose Sentry SDK",
@@ -16665,7 +16691,7 @@ sentry_sdk.init(
   ]
 };
 
-// ../log-source-provider/src/sources/sentry/spec.ts
+// ../../log-source-provider/src/sources/sentry/spec.ts
 var sentrySpec = {
   id: "sentry",
   name: "Sentry SDK",
@@ -16701,7 +16727,7 @@ var sentrySpec = {
   }
 };
 
-// ../log-source-provider/src/sources/supabase/setup.ts
+// ../../log-source-provider/src/sources/supabase/setup.ts
 var supabaseConnectionless = {
   groups: [
     {
@@ -16789,7 +16815,7 @@ var supabaseConnectionless = {
   docsUrl: "https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/supabase"
 };
 
-// ../log-source-provider/src/sources/supabase/spec.ts
+// ../../log-source-provider/src/sources/supabase/spec.ts
 var supabaseSpec = {
   id: "supabase",
   name: "Supabase",
@@ -16819,7 +16845,7 @@ var supabaseSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/temporal/setup.ts
+// ../../log-source-provider/src/sources/temporal/setup.ts
 var temporalConnectionless = {
   groups: [
     {
@@ -16842,7 +16868,7 @@ var temporalConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/temporal/spec.ts
+// ../../log-source-provider/src/sources/temporal/spec.ts
 var temporalSpec = {
   id: "temporal",
   name: "Temporal",
@@ -16872,7 +16898,7 @@ var temporalSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/trigger-dev/setup.ts
+// ../../log-source-provider/src/sources/trigger-dev/setup.ts
 var triggerDevConnectionless = {
   perStreamInstructions: true,
   groups: [
@@ -16944,7 +16970,7 @@ export default defineConfig({
   ]
 };
 
-// ../log-source-provider/src/sources/trigger-dev/spec.ts
+// ../../log-source-provider/src/sources/trigger-dev/spec.ts
 var triggerDevSpec = {
   id: "trigger_dev",
   name: "Trigger.dev",
@@ -16974,7 +17000,7 @@ var triggerDevSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/vector/setup.ts
+// ../../log-source-provider/src/sources/vector/setup.ts
 var LOGS_YAML = `transforms:
   sazabi_logs_otlp:
     type: remap
@@ -17134,7 +17160,7 @@ var vectorConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/vector/spec.ts
+// ../../log-source-provider/src/sources/vector/spec.ts
 var vectorSpec = {
   id: "vector",
   name: "Vector",
@@ -17169,7 +17195,7 @@ var vectorSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/vercel/setup.ts
+// ../../log-source-provider/src/sources/vercel/setup.ts
 var vercelManaged = {
   kind: "multi-step",
   steps: [
@@ -17387,7 +17413,7 @@ var vercelStreams = {
   }
 };
 
-// ../log-source-provider/src/sources/vercel/spec.ts
+// ../../log-source-provider/src/sources/vercel/spec.ts
 var vercelSensitiveFields = ["vercelApiToken"];
 var vercelIntakeDeclaration = {
   id: "vercel",
@@ -17457,7 +17483,7 @@ var vercelSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/webhook-events/setup.ts
+// ../../log-source-provider/src/sources/webhook-events/setup.ts
 var webhookEventsConnectionless = {
   perStreamInstructions: true,
   groups: [
@@ -17519,7 +17545,7 @@ var webhookEventsConnectionless = {
   ]
 };
 
-// ../log-source-provider/src/sources/webhook-events/spec.ts
+// ../../log-source-provider/src/sources/webhook-events/spec.ts
 var webhookEventsSpec = {
   id: "webhook_events",
   name: "Webhook Events",
@@ -17563,7 +17589,7 @@ var webhookEventsSpec = {
   }
 };
 
-// ../log-source-provider/src/sources/catalog.ts
+// ../../log-source-provider/src/sources/catalog.ts
 var LOG_SOURCE_PROVIDER_SPECS = [
   claudeCodeSpec,
   cloudflareSpec,
@@ -17778,11 +17804,11 @@ var LOG_SOURCE_COVERAGE_MATRIX = LOG_SOURCE_PROVIDER_SPECS.map((spec) => ({
   lifecycleEligible: spec.lifecycleEligible ?? false,
   lifecycleSkipReason: spec.lifecycleSkipReason
 }));
-// ../log-source-provider/src/types.ts
+// ../../log-source-provider/src/types.ts
 var MAX_STREAMS_PER_BATCH = 2000;
 var MAX_AUTO_PROVISION_FILTER_PATTERNS_PER_LIST = 32;
 var MAX_AUTO_PROVISION_FILTER_PATTERN_LENGTH = 256;
-// ../public-api-contracts/src/log-sources.ts
+// ../../contracts/public-api/src/log-sources.ts
 import { z as z9 } from "zod";
 var LOG_SOURCE_PROVIDER_VALUES = LOG_SOURCE_TYPES;
 var LogSourceProviderEnum = z9.enum(LOG_SOURCE_PROVIDER_VALUES);
@@ -17827,11 +17853,12 @@ var LogSourceEndpointCardSchema = z9.object({
 var LogStreamSchema = z9.object({
   id: z9.string().uuid(),
   logSourceId: z9.string().uuid().describe("Root log source ID. Every log stream roots on exactly one log source."),
-  displayName: z9.string().nullable().describe("Display name pulled automatically from information available through the log source connection (e.g. the vendor object's name). Null when no connection-derived name exists; connectionless log streams are always nameless."),
+  displayName: z9.string().nullable().describe("Log stream name, assigned by the server at creation and immutable: the vendor object's name when the log source connection supplies one, a generated mnemonic otherwise, and the log source's own name for connectionless log streams. Null only on legacy log streams created before names became required."),
   config: z9.record(z9.string(), z9.unknown()),
   status: LogStreamStatusEnum,
   errorMessage: z9.string().nullable(),
   enabled: z9.boolean().describe("Whether the log stream is currently ingesting. Independent of provisioning status: a paused log stream stays configured but stops accepting new data."),
+  provisionedVia: z9.enum(["manual", "auto"]).describe(`How this log stream was created. "manual" for every user-initiated create (single add, select-all, API); "auto" only when the auto-provisioning scan created it because a new vendor object matched the log source's saved scope.`),
   createdAt: z9.string().datetime(),
   endpointCards: z9.array(LogSourceEndpointCardSchema).optional().describe("Server-computed endpoint card(s) for this log stream's delivery key — where to point the sender. Present only for log streams that carry their own intake key.")
 });
@@ -17992,7 +18019,7 @@ var logSourcesContract = {
   delete: deleteLogSource.contract
 };
 
-// ../public-api-contracts/src/log-streams.ts
+// ../../contracts/public-api/src/log-streams.ts
 import { z as z10 } from "zod";
 var ListLogStreamsInputSchema = z10.object({
   logSourceId: z10.string().uuid().describe("Log source ID to list log streams for."),
@@ -18200,5042 +18227,372 @@ var logStreamsContract = {
   reassign: reassignLogStream.contract
 };
 
-// ../log-query/src/spec.ts
+// ../../protocols/log-query/src/spec.ts
+import { z as z12 } from "zod";
+
+// ../../protocols/log-query/src/plan/predicate.ts
 import { z as z11 } from "zod";
-var isoTimestamp = z11.iso.datetime({ offset: true });
-var nonEmptyString = z11.string().trim().min(1).max(1024);
-var logAttributeSourceSchema = z11.enum(["resource", "scope", "log"]);
-var serviceFieldSchema = z11.strictObject({ kind: z11.literal("service") });
-var severityFieldSchema = z11.strictObject({
-  kind: z11.literal("severity_number")
+var PREDICATE_COMPARATORS = [
+  "eq",
+  "neq",
+  "gt",
+  "gte",
+  "lt",
+  "lte",
+  "in",
+  "contains",
+  "starts_with",
+  "exists"
+];
+var MAX_IN_VALUES = 100;
+var MAX_OPERAND_BYTES = 8192;
+var operandScalarSchema = z11.union([
+  z11.string().max(MAX_OPERAND_BYTES),
+  z11.number(),
+  z11.boolean(),
+  z11.null()
+]);
+var operandSchema = z11.union([
+  operandScalarSchema,
+  z11.array(operandScalarSchema).max(MAX_IN_VALUES, {
+    error: `in accepts at most ${MAX_IN_VALUES} values`
+  })
+]);
+var operandIssue = (comparator, value) => {
+  if (comparator === "exists") {
+    return value === undefined ? undefined : "exists takes no value";
+  }
+  if (value === undefined)
+    return `${comparator} requires a value`;
+  if (comparator === "in") {
+    if (!Array.isArray(value))
+      return "in requires an array value";
+    if (value.length > MAX_IN_VALUES) {
+      return `in accepts at most ${MAX_IN_VALUES} values`;
+    }
+  }
+  return;
+};
+var MAX_PREDICATE_CHILDREN = 50;
+var MAX_PREDICATE_DEPTH = 8;
+var MAX_PREDICATE_NODES = 200;
+var MAX_PREDICATE_OPERAND_CHARS = 65536;
+var operandChars = (value) => {
+  if (typeof value === "string")
+    return value.length;
+  if (!Array.isArray(value))
+    return 0;
+  let total = 0;
+  for (const item of value) {
+    if (typeof item === "string")
+      total += item.length;
+  }
+  return total;
+};
+var treeShapeIssue = (input) => {
+  let nodes = 0;
+  let chars = 0;
+  const pending = [
+    { node: input, depth: 1 }
+  ];
+  for (let next = pending.pop();next !== undefined; next = pending.pop()) {
+    nodes += 1;
+    if (nodes > MAX_PREDICATE_NODES) {
+      return `predicate has more than ${MAX_PREDICATE_NODES} nodes`;
+    }
+    if (next.depth > MAX_PREDICATE_DEPTH) {
+      return `predicate nests deeper than ${MAX_PREDICATE_DEPTH} levels`;
+    }
+    if (typeof next.node !== "object" || next.node === null)
+      continue;
+    const { children, child, value } = next.node;
+    chars += operandChars(value);
+    if (chars > MAX_PREDICATE_OPERAND_CHARS) {
+      return `predicate operands exceed ${MAX_PREDICATE_OPERAND_CHARS} characters in total`;
+    }
+    if (Array.isArray(children)) {
+      if (children.length > MAX_PREDICATE_CHILDREN) {
+        return `predicate has a node with more than ${MAX_PREDICATE_CHILDREN} children`;
+      }
+      for (const each of children)
+        pending.push({ node: each, depth: next.depth + 1 });
+    }
+    if (child !== undefined)
+      pending.push({ node: child, depth: next.depth + 1 });
+  }
+  return;
+};
+var createPredicateTreeSchema = (fieldRef) => {
+  const tree = z11.lazy(() => z11.discriminatedUnion("op", [
+    z11.strictObject({
+      op: z11.enum(["and", "or"]),
+      children: z11.array(tree).max(MAX_PREDICATE_CHILDREN)
+    }),
+    z11.strictObject({ op: z11.literal("not"), child: tree }),
+    z11.strictObject({
+      op: z11.literal("compare"),
+      field: fieldRef,
+      comparator: z11.enum(PREDICATE_COMPARATORS),
+      value: operandSchema.optional()
+    }).superRefine((predicate, ctx) => {
+      const issue = operandIssue(predicate.comparator, predicate.value);
+      if (issue)
+        ctx.addIssue({ code: "custom", path: ["value"], message: issue });
+    })
+  ]));
+  return z11.unknown().superRefine((input, ctx) => {
+    const issue = treeShapeIssue(input);
+    if (issue)
+      ctx.addIssue({ code: "custom", message: issue });
+  }).pipe(tree);
+};
+
+// ../../protocols/log-query/src/spec.ts
+var isoTimestamp = z12.iso.datetime({ offset: true });
+var nonEmptyString = z12.string().trim().min(1).max(1024);
+var logAttributeSourceSchema = z12.enum(["resource", "scope", "log"]);
+var serviceFieldSchema = z12.strictObject({ kind: z12.literal("service") });
+var severityFieldSchema = z12.strictObject({
+  kind: z12.literal("severity_number")
 });
-var attributeFieldSchema = z11.strictObject({
-  kind: z11.literal("attribute"),
+var attributeFieldSchema = z12.strictObject({
+  kind: z12.literal("attribute"),
   source: logAttributeSourceSchema,
   key: nonEmptyString
 });
-var bodyJsonFieldSchema = z11.strictObject({
-  kind: z11.literal("body_json"),
-  path: z11.array(nonEmptyString).min(1).max(8)
+var bodyJsonFieldSchema = z12.strictObject({
+  kind: z12.literal("body_json"),
+  path: z12.array(nonEmptyString).min(1).max(8)
 });
-var logFieldSchema = z11.discriminatedUnion("kind", [
+var logFieldSchema = z12.discriminatedUnion("kind", [
   serviceFieldSchema,
   severityFieldSchema,
   attributeFieldSchema,
   bodyJsonFieldSchema
 ]);
-var stringPredicateSchema = z11.strictObject({
-  field: z11.union([
+var stringPredicateSchema = z12.strictObject({
+  field: z12.union([
     serviceFieldSchema,
     attributeFieldSchema,
     bodyJsonFieldSchema
   ]),
-  operator: z11.enum(["eq", "neq", "contains"]),
-  value: z11.string().max(8192)
+  operator: z12.enum(["eq", "neq", "contains"]),
+  value: z12.string().max(8192)
 });
-var valuesPredicateSchema = z11.strictObject({
-  field: z11.union([
+var valuesPredicateSchema = z12.strictObject({
+  field: z12.union([
     serviceFieldSchema,
     attributeFieldSchema,
     bodyJsonFieldSchema
   ]),
-  operator: z11.literal("in"),
-  values: z11.array(z11.string().max(8192)).min(1).max(100)
+  operator: z12.literal("in"),
+  values: z12.array(z12.string().max(8192)).min(1).max(100)
 });
-var existsPredicateSchema = z11.strictObject({
-  field: z11.union([attributeFieldSchema, bodyJsonFieldSchema]),
-  operator: z11.literal("exists")
+var existsPredicateSchema = z12.strictObject({
+  field: z12.union([attributeFieldSchema, bodyJsonFieldSchema]),
+  operator: z12.literal("exists")
 });
-var numericPredicateSchema = z11.strictObject({
-  field: z11.union([
+var numericPredicateSchema = z12.strictObject({
+  field: z12.union([
     severityFieldSchema,
     attributeFieldSchema,
     bodyJsonFieldSchema
   ]),
-  operator: z11.enum(["gt", "gte", "lt", "lte"]),
-  value: z11.number().finite()
+  operator: z12.enum(["gt", "gte", "lt", "lte"]),
+  value: z12.number().finite()
 });
-var logPredicateSchema = z11.discriminatedUnion("operator", [
+var logPredicateSchema = z12.discriminatedUnion("operator", [
   stringPredicateSchema,
   valuesPredicateSchema,
   existsPredicateSchema,
   numericPredicateSchema
 ]);
-var logTimeRangeSchema = z11.discriminatedUnion("kind", [
-  z11.strictObject({
-    kind: z11.literal("absolute"),
+var predicateOperandChars = (predicate) => {
+  if (predicate.operator === "in") {
+    return predicate.values.reduce((total, value) => total + value.length, 0);
+  }
+  return "value" in predicate && typeof predicate.value === "string" ? predicate.value.length : 0;
+};
+var boundedFiltersSchema = z12.array(logPredicateSchema).max(50).superRefine((filters, ctx) => {
+  const total = filters.reduce((sum, predicate) => sum + predicateOperandChars(predicate), 0);
+  if (total > MAX_PREDICATE_OPERAND_CHARS) {
+    ctx.addIssue({
+      code: "custom",
+      message: `filters carry more than ${MAX_PREDICATE_OPERAND_CHARS} operand characters in total`
+    });
+  }
+});
+var logTimeRangeSchema = z12.discriminatedUnion("kind", [
+  z12.strictObject({
+    kind: z12.literal("absolute"),
     from: isoTimestamp,
     to: isoTimestamp
   }).refine(({ from, to }) => Date.parse(from) < Date.parse(to), {
     message: "absolute time range must have from before to"
   }),
-  z11.strictObject({
-    kind: z11.literal("relative"),
-    lookbackSeconds: z11.number().int().positive().max(31 * 24 * 60 * 60)
+  z12.strictObject({
+    kind: z12.literal("relative"),
+    lookbackSeconds: z12.number().int().positive().max(31 * 24 * 60 * 60)
   })
 ]);
-var countMeasureSchema = z11.strictObject({ operation: z11.literal("count") });
-var numericMeasureSchema = z11.strictObject({
-  operation: z11.enum(["avg", "min", "max", "sum", "p50", "p95", "p99"]),
-  field: z11.union([
+var countMeasureSchema = z12.strictObject({ operation: z12.literal("count") });
+var numericMeasureSchema = z12.strictObject({
+  operation: z12.enum(["avg", "min", "max", "sum", "p50", "p95", "p99"]),
+  field: z12.union([
     severityFieldSchema,
     attributeFieldSchema,
     bodyJsonFieldSchema
   ])
 });
-var logMeasureSchema = z11.discriminatedUnion("operation", [
+var logMeasureSchema = z12.discriminatedUnion("operation", [
   countMeasureSchema,
   numericMeasureSchema
 ]);
-var detailsResultSchema = z11.strictObject({
-  kind: z11.literal("details"),
-  limit: z11.number().int().positive().max(100).default(50)
+var detailsResultSchema = z12.strictObject({
+  kind: z12.literal("details"),
+  limit: z12.number().int().positive().max(100).default(50)
 });
-var aggregateResultSchema = z11.strictObject({
-  kind: z11.literal("aggregate"),
+var aggregateResultSchema = z12.strictObject({
+  kind: z12.literal("aggregate"),
   measure: logMeasureSchema,
-  groupBy: z11.array(logFieldSchema).max(2).default([]),
-  limit: z11.number().int().positive().max(1000).default(100)
+  groupBy: z12.array(logFieldSchema).max(2).default([]),
+  limit: z12.number().int().positive().max(1000).default(100)
 });
-var timeseriesResultSchema = z11.strictObject({
-  kind: z11.literal("timeseries"),
-  bucket: z11.enum(["minute", "hour", "day"]),
+var timeseriesResultSchema = z12.strictObject({
+  kind: z12.literal("timeseries"),
+  bucket: z12.enum(["minute", "hour", "day"]),
   measure: logMeasureSchema,
-  groupBy: z11.array(logFieldSchema).max(2).default([]),
-  limit: z11.number().int().positive().max(1e4).default(1000)
+  groupBy: z12.array(logFieldSchema).max(2).default([]),
+  limit: z12.number().int().positive().max(1e4).default(1000)
 });
-var logQuerySpecV1Schema = z11.strictObject({
-  version: z11.literal(1),
-  pattern: z11.strictObject({
+var logQuerySpecV1Schema = z12.strictObject({
+  version: z12.literal(1),
+  pattern: z12.strictObject({
     query: nonEmptyString
   }),
   timeRange: logTimeRangeSchema,
-  filters: z11.array(logPredicateSchema).max(50).default([]),
-  result: z11.discriminatedUnion("kind", [
+  filters: boundedFiltersSchema.default([]),
+  result: z12.discriminatedUnion("kind", [
     detailsResultSchema,
     aggregateResultSchema,
     timeseriesResultSchema
   ])
 });
-var logQueryResolutionV1Schema = z11.strictObject({
-  version: z11.literal(1),
-  definitionHash: z11.string().regex(/^[a-f0-9]{64}$/),
-  catalogRevision: z11.string().regex(/^\d+$/),
-  familyIds: z11.array(z11.uuid()).min(1).max(1e4),
+var logQueryResolutionV1Schema = z12.strictObject({
+  version: z12.literal(1),
+  definitionHash: z12.string().regex(/^[a-f0-9]{64}$/),
+  catalogRevision: z12.string().regex(/^\d+$/),
+  familyIds: z12.array(z12.uuid()).min(1).max(1e4),
   resolvedAt: isoTimestamp
 });
-// ../log-template-extractor/src/code-sites-document.ts
-import { z as z12 } from "zod";
-var CODE_SITES_DOCUMENT_SCHEMA_VERSION = 1;
-var codeSiteContextSchema = z12.object({
-  functionName: z12.string().nullable(),
-  startLine: z12.number().int().positive(),
-  endLine: z12.number().int().positive(),
-  code: z12.string()
-});
-var codeSiteSchema = z12.object({
-  file: z12.string(),
-  line: z12.number().int().positive(),
-  lang: z12.string(),
-  level: z12.string(),
-  callee: z12.string(),
-  kind: z12.string(),
-  template: z12.string().nullable(),
-  sink: z12.enum(["logger", "console", "error", "property"]),
-  argc: z12.number().int().nonnegative(),
-  context: codeSiteContextSchema.optional()
-});
-var codeSitesDocumentSchema = z12.object({
-  schemaVersion: z12.literal(CODE_SITES_DOCUMENT_SCHEMA_VERSION),
-  extractorVersion: z12.string(),
-  repository: z12.string().optional(),
-  commit: z12.string().optional(),
-  generatedAt: z12.string(),
-  files: z12.number().int().nonnegative(),
-  parsed: z12.number().int().nonnegative(),
-  stats: z12.record(z12.string(), z12.number()),
-  sites: z12.array(codeSiteSchema)
-});
-// ../../node_modules/web-tree-sitter/tree-sitter.js
-var __defProp2 = Object.defineProperty;
-var __name = (target, value) => __defProp2(target, "name", { value, configurable: true });
-var SIZE_OF_SHORT = 2;
-var SIZE_OF_INT = 4;
-var SIZE_OF_CURSOR = 4 * SIZE_OF_INT;
-var SIZE_OF_NODE = 5 * SIZE_OF_INT;
-var SIZE_OF_POINT = 2 * SIZE_OF_INT;
-var SIZE_OF_RANGE = 2 * SIZE_OF_INT + 2 * SIZE_OF_POINT;
-var ZERO_POINT = { row: 0, column: 0 };
-var INTERNAL = Symbol("INTERNAL");
-function assertInternal(x) {
-  if (x !== INTERNAL)
-    throw new Error("Illegal constructor");
-}
-__name(assertInternal, "assertInternal");
-function isPoint(point) {
-  return !!point && typeof point.row === "number" && typeof point.column === "number";
-}
-__name(isPoint, "isPoint");
-function setModule(module2) {
-  C = module2;
-}
-__name(setModule, "setModule");
-var C;
-var LookaheadIterator = class {
-  static {
-    __name(this, "LookaheadIterator");
-  }
-  [0] = 0;
-  language;
-  constructor(internal, address, language) {
-    assertInternal(internal);
-    this[0] = address;
-    this.language = language;
-  }
-  get currentTypeId() {
-    return C._ts_lookahead_iterator_current_symbol(this[0]);
-  }
-  get currentType() {
-    return this.language.types[this.currentTypeId] || "ERROR";
-  }
-  delete() {
-    C._ts_lookahead_iterator_delete(this[0]);
-    this[0] = 0;
-  }
-  reset(language, stateId) {
-    if (C._ts_lookahead_iterator_reset(this[0], language[0], stateId)) {
-      this.language = language;
-      return true;
-    }
-    return false;
-  }
-  resetState(stateId) {
-    return Boolean(C._ts_lookahead_iterator_reset_state(this[0], stateId));
-  }
-  [Symbol.iterator]() {
-    return {
-      next: /* @__PURE__ */ __name(() => {
-        if (C._ts_lookahead_iterator_next(this[0])) {
-          return { done: false, value: this.currentType };
-        }
-        return { done: true, value: "" };
-      }, "next")
-    };
-  }
-};
-function getText(tree, startIndex, endIndex, startPosition) {
-  const length = endIndex - startIndex;
-  let result = tree.textCallback(startIndex, startPosition);
-  if (result) {
-    startIndex += result.length;
-    while (startIndex < endIndex) {
-      const string = tree.textCallback(startIndex, startPosition);
-      if (string && string.length > 0) {
-        startIndex += string.length;
-        result += string;
-      } else {
-        break;
-      }
-    }
-    if (startIndex > endIndex) {
-      result = result.slice(0, length);
-    }
-  }
-  return result ?? "";
-}
-__name(getText, "getText");
-var Tree = class _Tree {
-  static {
-    __name(this, "Tree");
-  }
-  [0] = 0;
-  textCallback;
-  language;
-  constructor(internal, address, language, textCallback) {
-    assertInternal(internal);
-    this[0] = address;
-    this.language = language;
-    this.textCallback = textCallback;
-  }
-  copy() {
-    const address = C._ts_tree_copy(this[0]);
-    return new _Tree(INTERNAL, address, this.language, this.textCallback);
-  }
-  delete() {
-    C._ts_tree_delete(this[0]);
-    this[0] = 0;
-  }
-  get rootNode() {
-    C._ts_tree_root_node_wasm(this[0]);
-    return unmarshalNode(this);
-  }
-  rootNodeWithOffset(offsetBytes, offsetExtent) {
-    const address = TRANSFER_BUFFER + SIZE_OF_NODE;
-    C.setValue(address, offsetBytes, "i32");
-    marshalPoint(address + SIZE_OF_INT, offsetExtent);
-    C._ts_tree_root_node_with_offset_wasm(this[0]);
-    return unmarshalNode(this);
-  }
-  edit(edit) {
-    marshalEdit(edit);
-    C._ts_tree_edit_wasm(this[0]);
-  }
-  walk() {
-    return this.rootNode.walk();
-  }
-  getChangedRanges(other) {
-    if (!(other instanceof _Tree)) {
-      throw new TypeError("Argument must be a Tree");
-    }
-    C._ts_tree_get_changed_ranges_wasm(this[0], other[0]);
-    const count = C.getValue(TRANSFER_BUFFER, "i32");
-    const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const result = new Array(count);
-    if (count > 0) {
-      let address = buffer;
-      for (let i2 = 0;i2 < count; i2++) {
-        result[i2] = unmarshalRange(address);
-        address += SIZE_OF_RANGE;
-      }
-      C._free(buffer);
-    }
-    return result;
-  }
-  getIncludedRanges() {
-    C._ts_tree_included_ranges_wasm(this[0]);
-    const count = C.getValue(TRANSFER_BUFFER, "i32");
-    const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const result = new Array(count);
-    if (count > 0) {
-      let address = buffer;
-      for (let i2 = 0;i2 < count; i2++) {
-        result[i2] = unmarshalRange(address);
-        address += SIZE_OF_RANGE;
-      }
-      C._free(buffer);
-    }
-    return result;
-  }
-};
-var TreeCursor = class _TreeCursor {
-  static {
-    __name(this, "TreeCursor");
-  }
-  [0] = 0;
-  [1] = 0;
-  [2] = 0;
-  [3] = 0;
-  tree;
-  constructor(internal, tree) {
-    assertInternal(internal);
-    this.tree = tree;
-    unmarshalTreeCursor(this);
-  }
-  copy() {
-    const copy = new _TreeCursor(INTERNAL, this.tree);
-    C._ts_tree_cursor_copy_wasm(this.tree[0]);
-    unmarshalTreeCursor(copy);
-    return copy;
-  }
-  delete() {
-    marshalTreeCursor(this);
-    C._ts_tree_cursor_delete_wasm(this.tree[0]);
-    this[0] = this[1] = this[2] = 0;
-  }
-  get currentNode() {
-    marshalTreeCursor(this);
-    C._ts_tree_cursor_current_node_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  get currentFieldId() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_field_id_wasm(this.tree[0]);
-  }
-  get currentFieldName() {
-    return this.tree.language.fields[this.currentFieldId];
-  }
-  get currentDepth() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_depth_wasm(this.tree[0]);
-  }
-  get currentDescendantIndex() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_descendant_index_wasm(this.tree[0]);
-  }
-  get nodeType() {
-    return this.tree.language.types[this.nodeTypeId] || "ERROR";
-  }
-  get nodeTypeId() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_node_type_id_wasm(this.tree[0]);
-  }
-  get nodeStateId() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_node_state_id_wasm(this.tree[0]);
-  }
-  get nodeId() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_node_id_wasm(this.tree[0]);
-  }
-  get nodeIsNamed() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_node_is_named_wasm(this.tree[0]) === 1;
-  }
-  get nodeIsMissing() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_current_node_is_missing_wasm(this.tree[0]) === 1;
-  }
-  get nodeText() {
-    marshalTreeCursor(this);
-    const startIndex = C._ts_tree_cursor_start_index_wasm(this.tree[0]);
-    const endIndex = C._ts_tree_cursor_end_index_wasm(this.tree[0]);
-    C._ts_tree_cursor_start_position_wasm(this.tree[0]);
-    const startPosition = unmarshalPoint(TRANSFER_BUFFER);
-    return getText(this.tree, startIndex, endIndex, startPosition);
-  }
-  get startPosition() {
-    marshalTreeCursor(this);
-    C._ts_tree_cursor_start_position_wasm(this.tree[0]);
-    return unmarshalPoint(TRANSFER_BUFFER);
-  }
-  get endPosition() {
-    marshalTreeCursor(this);
-    C._ts_tree_cursor_end_position_wasm(this.tree[0]);
-    return unmarshalPoint(TRANSFER_BUFFER);
-  }
-  get startIndex() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_start_index_wasm(this.tree[0]);
-  }
-  get endIndex() {
-    marshalTreeCursor(this);
-    return C._ts_tree_cursor_end_index_wasm(this.tree[0]);
-  }
-  gotoFirstChild() {
-    marshalTreeCursor(this);
-    const result = C._ts_tree_cursor_goto_first_child_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-    return result === 1;
-  }
-  gotoLastChild() {
-    marshalTreeCursor(this);
-    const result = C._ts_tree_cursor_goto_last_child_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-    return result === 1;
-  }
-  gotoParent() {
-    marshalTreeCursor(this);
-    const result = C._ts_tree_cursor_goto_parent_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-    return result === 1;
-  }
-  gotoNextSibling() {
-    marshalTreeCursor(this);
-    const result = C._ts_tree_cursor_goto_next_sibling_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-    return result === 1;
-  }
-  gotoPreviousSibling() {
-    marshalTreeCursor(this);
-    const result = C._ts_tree_cursor_goto_previous_sibling_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-    return result === 1;
-  }
-  gotoDescendant(goalDescendantIndex) {
-    marshalTreeCursor(this);
-    C._ts_tree_cursor_goto_descendant_wasm(this.tree[0], goalDescendantIndex);
-    unmarshalTreeCursor(this);
-  }
-  gotoFirstChildForIndex(goalIndex) {
-    marshalTreeCursor(this);
-    C.setValue(TRANSFER_BUFFER + SIZE_OF_CURSOR, goalIndex, "i32");
-    const result = C._ts_tree_cursor_goto_first_child_for_index_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-    return result === 1;
-  }
-  gotoFirstChildForPosition(goalPosition) {
-    marshalTreeCursor(this);
-    marshalPoint(TRANSFER_BUFFER + SIZE_OF_CURSOR, goalPosition);
-    const result = C._ts_tree_cursor_goto_first_child_for_position_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-    return result === 1;
-  }
-  reset(node) {
-    marshalNode(node);
-    marshalTreeCursor(this, TRANSFER_BUFFER + SIZE_OF_NODE);
-    C._ts_tree_cursor_reset_wasm(this.tree[0]);
-    unmarshalTreeCursor(this);
-  }
-  resetTo(cursor) {
-    marshalTreeCursor(this, TRANSFER_BUFFER);
-    marshalTreeCursor(cursor, TRANSFER_BUFFER + SIZE_OF_CURSOR);
-    C._ts_tree_cursor_reset_to_wasm(this.tree[0], cursor.tree[0]);
-    unmarshalTreeCursor(this);
-  }
-};
-var Node = class {
-  static {
-    __name(this, "Node");
-  }
-  [0] = 0;
-  _children;
-  _namedChildren;
-  constructor(internal, {
-    id,
-    tree,
-    startIndex,
-    startPosition,
-    other
-  }) {
-    assertInternal(internal);
-    this[0] = other;
-    this.id = id;
-    this.tree = tree;
-    this.startIndex = startIndex;
-    this.startPosition = startPosition;
-  }
-  id;
-  startIndex;
-  startPosition;
-  tree;
-  get typeId() {
-    marshalNode(this);
-    return C._ts_node_symbol_wasm(this.tree[0]);
-  }
-  get grammarId() {
-    marshalNode(this);
-    return C._ts_node_grammar_symbol_wasm(this.tree[0]);
-  }
-  get type() {
-    return this.tree.language.types[this.typeId] || "ERROR";
-  }
-  get grammarType() {
-    return this.tree.language.types[this.grammarId] || "ERROR";
-  }
-  get isNamed() {
-    marshalNode(this);
-    return C._ts_node_is_named_wasm(this.tree[0]) === 1;
-  }
-  get isExtra() {
-    marshalNode(this);
-    return C._ts_node_is_extra_wasm(this.tree[0]) === 1;
-  }
-  get isError() {
-    marshalNode(this);
-    return C._ts_node_is_error_wasm(this.tree[0]) === 1;
-  }
-  get isMissing() {
-    marshalNode(this);
-    return C._ts_node_is_missing_wasm(this.tree[0]) === 1;
-  }
-  get hasChanges() {
-    marshalNode(this);
-    return C._ts_node_has_changes_wasm(this.tree[0]) === 1;
-  }
-  get hasError() {
-    marshalNode(this);
-    return C._ts_node_has_error_wasm(this.tree[0]) === 1;
-  }
-  get endIndex() {
-    marshalNode(this);
-    return C._ts_node_end_index_wasm(this.tree[0]);
-  }
-  get endPosition() {
-    marshalNode(this);
-    C._ts_node_end_point_wasm(this.tree[0]);
-    return unmarshalPoint(TRANSFER_BUFFER);
-  }
-  get text() {
-    return getText(this.tree, this.startIndex, this.endIndex, this.startPosition);
-  }
-  get parseState() {
-    marshalNode(this);
-    return C._ts_node_parse_state_wasm(this.tree[0]);
-  }
-  get nextParseState() {
-    marshalNode(this);
-    return C._ts_node_next_parse_state_wasm(this.tree[0]);
-  }
-  equals(other) {
-    return this.tree === other.tree && this.id === other.id;
-  }
-  child(index) {
-    marshalNode(this);
-    C._ts_node_child_wasm(this.tree[0], index);
-    return unmarshalNode(this.tree);
-  }
-  namedChild(index) {
-    marshalNode(this);
-    C._ts_node_named_child_wasm(this.tree[0], index);
-    return unmarshalNode(this.tree);
-  }
-  childForFieldId(fieldId) {
-    marshalNode(this);
-    C._ts_node_child_by_field_id_wasm(this.tree[0], fieldId);
-    return unmarshalNode(this.tree);
-  }
-  childForFieldName(fieldName) {
-    const fieldId = this.tree.language.fields.indexOf(fieldName);
-    if (fieldId !== -1)
-      return this.childForFieldId(fieldId);
-    return null;
-  }
-  fieldNameForChild(index) {
-    marshalNode(this);
-    const address = C._ts_node_field_name_for_child_wasm(this.tree[0], index);
-    if (!address)
-      return null;
-    return C.AsciiToString(address);
-  }
-  fieldNameForNamedChild(index) {
-    marshalNode(this);
-    const address = C._ts_node_field_name_for_named_child_wasm(this.tree[0], index);
-    if (!address)
-      return null;
-    return C.AsciiToString(address);
-  }
-  childrenForFieldName(fieldName) {
-    const fieldId = this.tree.language.fields.indexOf(fieldName);
-    if (fieldId !== -1 && fieldId !== 0)
-      return this.childrenForFieldId(fieldId);
-    return [];
-  }
-  childrenForFieldId(fieldId) {
-    marshalNode(this);
-    C._ts_node_children_by_field_id_wasm(this.tree[0], fieldId);
-    const count = C.getValue(TRANSFER_BUFFER, "i32");
-    const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const result = new Array(count);
-    if (count > 0) {
-      let address = buffer;
-      for (let i2 = 0;i2 < count; i2++) {
-        result[i2] = unmarshalNode(this.tree, address);
-        address += SIZE_OF_NODE;
-      }
-      C._free(buffer);
-    }
-    return result;
-  }
-  firstChildForIndex(index) {
-    marshalNode(this);
-    const address = TRANSFER_BUFFER + SIZE_OF_NODE;
-    C.setValue(address, index, "i32");
-    C._ts_node_first_child_for_byte_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  firstNamedChildForIndex(index) {
-    marshalNode(this);
-    const address = TRANSFER_BUFFER + SIZE_OF_NODE;
-    C.setValue(address, index, "i32");
-    C._ts_node_first_named_child_for_byte_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  get childCount() {
-    marshalNode(this);
-    return C._ts_node_child_count_wasm(this.tree[0]);
-  }
-  get namedChildCount() {
-    marshalNode(this);
-    return C._ts_node_named_child_count_wasm(this.tree[0]);
-  }
-  get firstChild() {
-    return this.child(0);
-  }
-  get firstNamedChild() {
-    return this.namedChild(0);
-  }
-  get lastChild() {
-    return this.child(this.childCount - 1);
-  }
-  get lastNamedChild() {
-    return this.namedChild(this.namedChildCount - 1);
-  }
-  get children() {
-    if (!this._children) {
-      marshalNode(this);
-      C._ts_node_children_wasm(this.tree[0]);
-      const count = C.getValue(TRANSFER_BUFFER, "i32");
-      const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-      this._children = new Array(count);
-      if (count > 0) {
-        let address = buffer;
-        for (let i2 = 0;i2 < count; i2++) {
-          this._children[i2] = unmarshalNode(this.tree, address);
-          address += SIZE_OF_NODE;
-        }
-        C._free(buffer);
-      }
-    }
-    return this._children;
-  }
-  get namedChildren() {
-    if (!this._namedChildren) {
-      marshalNode(this);
-      C._ts_node_named_children_wasm(this.tree[0]);
-      const count = C.getValue(TRANSFER_BUFFER, "i32");
-      const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-      this._namedChildren = new Array(count);
-      if (count > 0) {
-        let address = buffer;
-        for (let i2 = 0;i2 < count; i2++) {
-          this._namedChildren[i2] = unmarshalNode(this.tree, address);
-          address += SIZE_OF_NODE;
-        }
-        C._free(buffer);
-      }
-    }
-    return this._namedChildren;
-  }
-  descendantsOfType(types, startPosition = ZERO_POINT, endPosition = ZERO_POINT) {
-    if (!Array.isArray(types))
-      types = [types];
-    const symbols = [];
-    const typesBySymbol = this.tree.language.types;
-    for (const node_type of types) {
-      if (node_type == "ERROR") {
-        symbols.push(65535);
-      }
-    }
-    for (let i2 = 0, n = typesBySymbol.length;i2 < n; i2++) {
-      if (types.includes(typesBySymbol[i2])) {
-        symbols.push(i2);
-      }
-    }
-    const symbolsAddress = C._malloc(SIZE_OF_INT * symbols.length);
-    for (let i2 = 0, n = symbols.length;i2 < n; i2++) {
-      C.setValue(symbolsAddress + i2 * SIZE_OF_INT, symbols[i2], "i32");
-    }
-    marshalNode(this);
-    C._ts_node_descendants_of_type_wasm(this.tree[0], symbolsAddress, symbols.length, startPosition.row, startPosition.column, endPosition.row, endPosition.column);
-    const descendantCount = C.getValue(TRANSFER_BUFFER, "i32");
-    const descendantAddress = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const result = new Array(descendantCount);
-    if (descendantCount > 0) {
-      let address = descendantAddress;
-      for (let i2 = 0;i2 < descendantCount; i2++) {
-        result[i2] = unmarshalNode(this.tree, address);
-        address += SIZE_OF_NODE;
-      }
-    }
-    C._free(descendantAddress);
-    C._free(symbolsAddress);
-    return result;
-  }
-  get nextSibling() {
-    marshalNode(this);
-    C._ts_node_next_sibling_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  get previousSibling() {
-    marshalNode(this);
-    C._ts_node_prev_sibling_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  get nextNamedSibling() {
-    marshalNode(this);
-    C._ts_node_next_named_sibling_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  get previousNamedSibling() {
-    marshalNode(this);
-    C._ts_node_prev_named_sibling_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  get descendantCount() {
-    marshalNode(this);
-    return C._ts_node_descendant_count_wasm(this.tree[0]);
-  }
-  get parent() {
-    marshalNode(this);
-    C._ts_node_parent_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  childWithDescendant(descendant) {
-    marshalNode(this);
-    marshalNode(descendant, 1);
-    C._ts_node_child_with_descendant_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  descendantForIndex(start2, end = start2) {
-    if (typeof start2 !== "number" || typeof end !== "number") {
-      throw new Error("Arguments must be numbers");
-    }
-    marshalNode(this);
-    const address = TRANSFER_BUFFER + SIZE_OF_NODE;
-    C.setValue(address, start2, "i32");
-    C.setValue(address + SIZE_OF_INT, end, "i32");
-    C._ts_node_descendant_for_index_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  namedDescendantForIndex(start2, end = start2) {
-    if (typeof start2 !== "number" || typeof end !== "number") {
-      throw new Error("Arguments must be numbers");
-    }
-    marshalNode(this);
-    const address = TRANSFER_BUFFER + SIZE_OF_NODE;
-    C.setValue(address, start2, "i32");
-    C.setValue(address + SIZE_OF_INT, end, "i32");
-    C._ts_node_named_descendant_for_index_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  descendantForPosition(start2, end = start2) {
-    if (!isPoint(start2) || !isPoint(end)) {
-      throw new Error("Arguments must be {row, column} objects");
-    }
-    marshalNode(this);
-    const address = TRANSFER_BUFFER + SIZE_OF_NODE;
-    marshalPoint(address, start2);
-    marshalPoint(address + SIZE_OF_POINT, end);
-    C._ts_node_descendant_for_position_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  namedDescendantForPosition(start2, end = start2) {
-    if (!isPoint(start2) || !isPoint(end)) {
-      throw new Error("Arguments must be {row, column} objects");
-    }
-    marshalNode(this);
-    const address = TRANSFER_BUFFER + SIZE_OF_NODE;
-    marshalPoint(address, start2);
-    marshalPoint(address + SIZE_OF_POINT, end);
-    C._ts_node_named_descendant_for_position_wasm(this.tree[0]);
-    return unmarshalNode(this.tree);
-  }
-  walk() {
-    marshalNode(this);
-    C._ts_tree_cursor_new_wasm(this.tree[0]);
-    return new TreeCursor(INTERNAL, this.tree);
-  }
-  edit(edit) {
-    if (this.startIndex >= edit.oldEndIndex) {
-      this.startIndex = edit.newEndIndex + (this.startIndex - edit.oldEndIndex);
-      let subbedPointRow;
-      let subbedPointColumn;
-      if (this.startPosition.row > edit.oldEndPosition.row) {
-        subbedPointRow = this.startPosition.row - edit.oldEndPosition.row;
-        subbedPointColumn = this.startPosition.column;
-      } else {
-        subbedPointRow = 0;
-        subbedPointColumn = this.startPosition.column;
-        if (this.startPosition.column >= edit.oldEndPosition.column) {
-          subbedPointColumn = this.startPosition.column - edit.oldEndPosition.column;
-        }
-      }
-      if (subbedPointRow > 0) {
-        this.startPosition.row += subbedPointRow;
-        this.startPosition.column = subbedPointColumn;
-      } else {
-        this.startPosition.column += subbedPointColumn;
-      }
-    } else if (this.startIndex > edit.startIndex) {
-      this.startIndex = edit.newEndIndex;
-      this.startPosition.row = edit.newEndPosition.row;
-      this.startPosition.column = edit.newEndPosition.column;
-    }
-  }
-  toString() {
-    marshalNode(this);
-    const address = C._ts_node_to_string_wasm(this.tree[0]);
-    const result = C.AsciiToString(address);
-    C._free(address);
-    return result;
-  }
-};
-function unmarshalCaptures(query, tree, address, patternIndex, result) {
-  for (let i2 = 0, n = result.length;i2 < n; i2++) {
-    const captureIndex = C.getValue(address, "i32");
-    address += SIZE_OF_INT;
-    const node = unmarshalNode(tree, address);
-    address += SIZE_OF_NODE;
-    result[i2] = { patternIndex, name: query.captureNames[captureIndex], node };
-  }
-  return address;
-}
-__name(unmarshalCaptures, "unmarshalCaptures");
-function marshalNode(node, index = 0) {
-  let address = TRANSFER_BUFFER + index * SIZE_OF_NODE;
-  C.setValue(address, node.id, "i32");
-  address += SIZE_OF_INT;
-  C.setValue(address, node.startIndex, "i32");
-  address += SIZE_OF_INT;
-  C.setValue(address, node.startPosition.row, "i32");
-  address += SIZE_OF_INT;
-  C.setValue(address, node.startPosition.column, "i32");
-  address += SIZE_OF_INT;
-  C.setValue(address, node[0], "i32");
-}
-__name(marshalNode, "marshalNode");
-function unmarshalNode(tree, address = TRANSFER_BUFFER) {
-  const id = C.getValue(address, "i32");
-  address += SIZE_OF_INT;
-  if (id === 0)
-    return null;
-  const index = C.getValue(address, "i32");
-  address += SIZE_OF_INT;
-  const row = C.getValue(address, "i32");
-  address += SIZE_OF_INT;
-  const column = C.getValue(address, "i32");
-  address += SIZE_OF_INT;
-  const other = C.getValue(address, "i32");
-  const result = new Node(INTERNAL, {
-    id,
-    tree,
-    startIndex: index,
-    startPosition: { row, column },
-    other
-  });
-  return result;
-}
-__name(unmarshalNode, "unmarshalNode");
-function marshalTreeCursor(cursor, address = TRANSFER_BUFFER) {
-  C.setValue(address + 0 * SIZE_OF_INT, cursor[0], "i32");
-  C.setValue(address + 1 * SIZE_OF_INT, cursor[1], "i32");
-  C.setValue(address + 2 * SIZE_OF_INT, cursor[2], "i32");
-  C.setValue(address + 3 * SIZE_OF_INT, cursor[3], "i32");
-}
-__name(marshalTreeCursor, "marshalTreeCursor");
-function unmarshalTreeCursor(cursor) {
-  cursor[0] = C.getValue(TRANSFER_BUFFER + 0 * SIZE_OF_INT, "i32");
-  cursor[1] = C.getValue(TRANSFER_BUFFER + 1 * SIZE_OF_INT, "i32");
-  cursor[2] = C.getValue(TRANSFER_BUFFER + 2 * SIZE_OF_INT, "i32");
-  cursor[3] = C.getValue(TRANSFER_BUFFER + 3 * SIZE_OF_INT, "i32");
-}
-__name(unmarshalTreeCursor, "unmarshalTreeCursor");
-function marshalPoint(address, point) {
-  C.setValue(address, point.row, "i32");
-  C.setValue(address + SIZE_OF_INT, point.column, "i32");
-}
-__name(marshalPoint, "marshalPoint");
-function unmarshalPoint(address) {
-  const result = {
-    row: C.getValue(address, "i32") >>> 0,
-    column: C.getValue(address + SIZE_OF_INT, "i32") >>> 0
-  };
-  return result;
-}
-__name(unmarshalPoint, "unmarshalPoint");
-function marshalRange(address, range) {
-  marshalPoint(address, range.startPosition);
-  address += SIZE_OF_POINT;
-  marshalPoint(address, range.endPosition);
-  address += SIZE_OF_POINT;
-  C.setValue(address, range.startIndex, "i32");
-  address += SIZE_OF_INT;
-  C.setValue(address, range.endIndex, "i32");
-  address += SIZE_OF_INT;
-}
-__name(marshalRange, "marshalRange");
-function unmarshalRange(address) {
-  const result = {};
-  result.startPosition = unmarshalPoint(address);
-  address += SIZE_OF_POINT;
-  result.endPosition = unmarshalPoint(address);
-  address += SIZE_OF_POINT;
-  result.startIndex = C.getValue(address, "i32") >>> 0;
-  address += SIZE_OF_INT;
-  result.endIndex = C.getValue(address, "i32") >>> 0;
-  return result;
-}
-__name(unmarshalRange, "unmarshalRange");
-function marshalEdit(edit, address = TRANSFER_BUFFER) {
-  marshalPoint(address, edit.startPosition);
-  address += SIZE_OF_POINT;
-  marshalPoint(address, edit.oldEndPosition);
-  address += SIZE_OF_POINT;
-  marshalPoint(address, edit.newEndPosition);
-  address += SIZE_OF_POINT;
-  C.setValue(address, edit.startIndex, "i32");
-  address += SIZE_OF_INT;
-  C.setValue(address, edit.oldEndIndex, "i32");
-  address += SIZE_OF_INT;
-  C.setValue(address, edit.newEndIndex, "i32");
-  address += SIZE_OF_INT;
-}
-__name(marshalEdit, "marshalEdit");
-function unmarshalLanguageMetadata(address) {
-  const major_version = C.getValue(address, "i32");
-  const minor_version = C.getValue(address += SIZE_OF_INT, "i32");
-  const patch_version = C.getValue(address += SIZE_OF_INT, "i32");
-  return { major_version, minor_version, patch_version };
-}
-__name(unmarshalLanguageMetadata, "unmarshalLanguageMetadata");
-var PREDICATE_STEP_TYPE_CAPTURE = 1;
-var PREDICATE_STEP_TYPE_STRING = 2;
-var QUERY_WORD_REGEX = /[\w-]+/g;
-var CaptureQuantifier = {
-  Zero: 0,
-  ZeroOrOne: 1,
-  ZeroOrMore: 2,
-  One: 3,
-  OneOrMore: 4
-};
-var isCaptureStep = /* @__PURE__ */ __name((step) => step.type === "capture", "isCaptureStep");
-var isStringStep = /* @__PURE__ */ __name((step) => step.type === "string", "isStringStep");
-var QueryErrorKind = {
-  Syntax: 1,
-  NodeName: 2,
-  FieldName: 3,
-  CaptureName: 4,
-  PatternStructure: 5
-};
-var QueryError = class _QueryError extends Error {
-  constructor(kind, info2, index, length) {
-    super(_QueryError.formatMessage(kind, info2));
-    this.kind = kind;
-    this.info = info2;
-    this.index = index;
-    this.length = length;
-    this.name = "QueryError";
-  }
-  static {
-    __name(this, "QueryError");
-  }
-  static formatMessage(kind, info2) {
-    switch (kind) {
-      case QueryErrorKind.NodeName:
-        return `Bad node name '${info2.word}'`;
-      case QueryErrorKind.FieldName:
-        return `Bad field name '${info2.word}'`;
-      case QueryErrorKind.CaptureName:
-        return `Bad capture name @${info2.word}`;
-      case QueryErrorKind.PatternStructure:
-        return `Bad pattern structure at offset ${info2.suffix}`;
-      case QueryErrorKind.Syntax:
-        return `Bad syntax at offset ${info2.suffix}`;
-    }
-  }
-};
-function parseAnyPredicate(steps, index, operator, textPredicates) {
-  if (steps.length !== 3) {
-    throw new Error(`Wrong number of arguments to \`#${operator}\` predicate. Expected 2, got ${steps.length - 1}`);
-  }
-  if (!isCaptureStep(steps[1])) {
-    throw new Error(`First argument of \`#${operator}\` predicate must be a capture. Got "${steps[1].value}"`);
-  }
-  const isPositive = operator === "eq?" || operator === "any-eq?";
-  const matchAll = !operator.startsWith("any-");
-  if (isCaptureStep(steps[2])) {
-    const captureName1 = steps[1].name;
-    const captureName2 = steps[2].name;
-    textPredicates[index].push((captures) => {
-      const nodes1 = [];
-      const nodes2 = [];
-      for (const c of captures) {
-        if (c.name === captureName1)
-          nodes1.push(c.node);
-        if (c.name === captureName2)
-          nodes2.push(c.node);
-      }
-      const compare = /* @__PURE__ */ __name((n1, n2, positive) => {
-        return positive ? n1.text === n2.text : n1.text !== n2.text;
-      }, "compare");
-      return matchAll ? nodes1.every((n1) => nodes2.some((n2) => compare(n1, n2, isPositive))) : nodes1.some((n1) => nodes2.some((n2) => compare(n1, n2, isPositive)));
-    });
-  } else {
-    const captureName = steps[1].name;
-    const stringValue = steps[2].value;
-    const matches = /* @__PURE__ */ __name((n) => n.text === stringValue, "matches");
-    const doesNotMatch = /* @__PURE__ */ __name((n) => n.text !== stringValue, "doesNotMatch");
-    textPredicates[index].push((captures) => {
-      const nodes = [];
-      for (const c of captures) {
-        if (c.name === captureName)
-          nodes.push(c.node);
-      }
-      const test = isPositive ? matches : doesNotMatch;
-      return matchAll ? nodes.every(test) : nodes.some(test);
-    });
-  }
-}
-__name(parseAnyPredicate, "parseAnyPredicate");
-function parseMatchPredicate(steps, index, operator, textPredicates) {
-  if (steps.length !== 3) {
-    throw new Error(`Wrong number of arguments to \`#${operator}\` predicate. Expected 2, got ${steps.length - 1}.`);
-  }
-  if (steps[1].type !== "capture") {
-    throw new Error(`First argument of \`#${operator}\` predicate must be a capture. Got "${steps[1].value}".`);
-  }
-  if (steps[2].type !== "string") {
-    throw new Error(`Second argument of \`#${operator}\` predicate must be a string. Got @${steps[2].name}.`);
-  }
-  const isPositive = operator === "match?" || operator === "any-match?";
-  const matchAll = !operator.startsWith("any-");
-  const captureName = steps[1].name;
-  const regex = new RegExp(steps[2].value);
-  textPredicates[index].push((captures) => {
-    const nodes = [];
-    for (const c of captures) {
-      if (c.name === captureName)
-        nodes.push(c.node.text);
-    }
-    const test = /* @__PURE__ */ __name((text, positive) => {
-      return positive ? regex.test(text) : !regex.test(text);
-    }, "test");
-    if (nodes.length === 0)
-      return !isPositive;
-    return matchAll ? nodes.every((text) => test(text, isPositive)) : nodes.some((text) => test(text, isPositive));
-  });
-}
-__name(parseMatchPredicate, "parseMatchPredicate");
-function parseAnyOfPredicate(steps, index, operator, textPredicates) {
-  if (steps.length < 2) {
-    throw new Error(`Wrong number of arguments to \`#${operator}\` predicate. Expected at least 1. Got ${steps.length - 1}.`);
-  }
-  if (steps[1].type !== "capture") {
-    throw new Error(`First argument of \`#${operator}\` predicate must be a capture. Got "${steps[1].value}".`);
-  }
-  const isPositive = operator === "any-of?";
-  const captureName = steps[1].name;
-  const stringSteps = steps.slice(2);
-  if (!stringSteps.every(isStringStep)) {
-    throw new Error(`Arguments to \`#${operator}\` predicate must be strings.".`);
-  }
-  const values = stringSteps.map((s) => s.value);
-  textPredicates[index].push((captures) => {
-    const nodes = [];
-    for (const c of captures) {
-      if (c.name === captureName)
-        nodes.push(c.node.text);
-    }
-    if (nodes.length === 0)
-      return !isPositive;
-    return nodes.every((text) => values.includes(text)) === isPositive;
-  });
-}
-__name(parseAnyOfPredicate, "parseAnyOfPredicate");
-function parseIsPredicate(steps, index, operator, assertedProperties, refutedProperties) {
-  if (steps.length < 2 || steps.length > 3) {
-    throw new Error(`Wrong number of arguments to \`#${operator}\` predicate. Expected 1 or 2. Got ${steps.length - 1}.`);
-  }
-  if (!steps.every(isStringStep)) {
-    throw new Error(`Arguments to \`#${operator}\` predicate must be strings.".`);
-  }
-  const properties = operator === "is?" ? assertedProperties : refutedProperties;
-  if (!properties[index])
-    properties[index] = {};
-  properties[index][steps[1].value] = steps[2]?.value ?? null;
-}
-__name(parseIsPredicate, "parseIsPredicate");
-function parseSetDirective(steps, index, setProperties) {
-  if (steps.length < 2 || steps.length > 3) {
-    throw new Error(`Wrong number of arguments to \`#set!\` predicate. Expected 1 or 2. Got ${steps.length - 1}.`);
-  }
-  if (!steps.every(isStringStep)) {
-    throw new Error(`Arguments to \`#set!\` predicate must be strings.".`);
-  }
-  if (!setProperties[index])
-    setProperties[index] = {};
-  setProperties[index][steps[1].value] = steps[2]?.value ?? null;
-}
-__name(parseSetDirective, "parseSetDirective");
-function parsePattern(index, stepType, stepValueId, captureNames, stringValues, steps, textPredicates, predicates, setProperties, assertedProperties, refutedProperties) {
-  if (stepType === PREDICATE_STEP_TYPE_CAPTURE) {
-    const name2 = captureNames[stepValueId];
-    steps.push({ type: "capture", name: name2 });
-  } else if (stepType === PREDICATE_STEP_TYPE_STRING) {
-    steps.push({ type: "string", value: stringValues[stepValueId] });
-  } else if (steps.length > 0) {
-    if (steps[0].type !== "string") {
-      throw new Error("Predicates must begin with a literal value");
-    }
-    const operator = steps[0].value;
-    switch (operator) {
-      case "any-not-eq?":
-      case "not-eq?":
-      case "any-eq?":
-      case "eq?":
-        parseAnyPredicate(steps, index, operator, textPredicates);
-        break;
-      case "any-not-match?":
-      case "not-match?":
-      case "any-match?":
-      case "match?":
-        parseMatchPredicate(steps, index, operator, textPredicates);
-        break;
-      case "not-any-of?":
-      case "any-of?":
-        parseAnyOfPredicate(steps, index, operator, textPredicates);
-        break;
-      case "is?":
-      case "is-not?":
-        parseIsPredicate(steps, index, operator, assertedProperties, refutedProperties);
-        break;
-      case "set!":
-        parseSetDirective(steps, index, setProperties);
-        break;
-      default:
-        predicates[index].push({ operator, operands: steps.slice(1) });
-    }
-    steps.length = 0;
-  }
-}
-__name(parsePattern, "parsePattern");
-var Query = class {
-  static {
-    __name(this, "Query");
-  }
-  [0] = 0;
-  exceededMatchLimit;
-  textPredicates;
-  captureNames;
-  captureQuantifiers;
-  predicates;
-  setProperties;
-  assertedProperties;
-  refutedProperties;
-  matchLimit;
-  constructor(language, source) {
-    const sourceLength = C.lengthBytesUTF8(source);
-    const sourceAddress = C._malloc(sourceLength + 1);
-    C.stringToUTF8(source, sourceAddress, sourceLength + 1);
-    const address = C._ts_query_new(language[0], sourceAddress, sourceLength, TRANSFER_BUFFER, TRANSFER_BUFFER + SIZE_OF_INT);
-    if (!address) {
-      const errorId = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-      const errorByte = C.getValue(TRANSFER_BUFFER, "i32");
-      const errorIndex = C.UTF8ToString(sourceAddress, errorByte).length;
-      const suffix = source.slice(errorIndex, errorIndex + 100).split(`
-`)[0];
-      const word = suffix.match(QUERY_WORD_REGEX)?.[0] ?? "";
-      C._free(sourceAddress);
-      switch (errorId) {
-        case QueryErrorKind.Syntax:
-          throw new QueryError(QueryErrorKind.Syntax, { suffix: `${errorIndex}: '${suffix}'...` }, errorIndex, 0);
-        case QueryErrorKind.NodeName:
-          throw new QueryError(errorId, { word }, errorIndex, word.length);
-        case QueryErrorKind.FieldName:
-          throw new QueryError(errorId, { word }, errorIndex, word.length);
-        case QueryErrorKind.CaptureName:
-          throw new QueryError(errorId, { word }, errorIndex, word.length);
-        case QueryErrorKind.PatternStructure:
-          throw new QueryError(errorId, { suffix: `${errorIndex}: '${suffix}'...` }, errorIndex, 0);
-      }
-    }
-    const stringCount = C._ts_query_string_count(address);
-    const captureCount = C._ts_query_capture_count(address);
-    const patternCount = C._ts_query_pattern_count(address);
-    const captureNames = new Array(captureCount);
-    const captureQuantifiers = new Array(patternCount);
-    const stringValues = new Array(stringCount);
-    for (let i2 = 0;i2 < captureCount; i2++) {
-      const nameAddress = C._ts_query_capture_name_for_id(address, i2, TRANSFER_BUFFER);
-      const nameLength = C.getValue(TRANSFER_BUFFER, "i32");
-      captureNames[i2] = C.UTF8ToString(nameAddress, nameLength);
-    }
-    for (let i2 = 0;i2 < patternCount; i2++) {
-      const captureQuantifiersArray = new Array(captureCount);
-      for (let j = 0;j < captureCount; j++) {
-        const quantifier = C._ts_query_capture_quantifier_for_id(address, i2, j);
-        captureQuantifiersArray[j] = quantifier;
-      }
-      captureQuantifiers[i2] = captureQuantifiersArray;
-    }
-    for (let i2 = 0;i2 < stringCount; i2++) {
-      const valueAddress = C._ts_query_string_value_for_id(address, i2, TRANSFER_BUFFER);
-      const nameLength = C.getValue(TRANSFER_BUFFER, "i32");
-      stringValues[i2] = C.UTF8ToString(valueAddress, nameLength);
-    }
-    const setProperties = new Array(patternCount);
-    const assertedProperties = new Array(patternCount);
-    const refutedProperties = new Array(patternCount);
-    const predicates = new Array(patternCount);
-    const textPredicates = new Array(patternCount);
-    for (let i2 = 0;i2 < patternCount; i2++) {
-      const predicatesAddress = C._ts_query_predicates_for_pattern(address, i2, TRANSFER_BUFFER);
-      const stepCount = C.getValue(TRANSFER_BUFFER, "i32");
-      predicates[i2] = [];
-      textPredicates[i2] = [];
-      const steps = new Array;
-      let stepAddress = predicatesAddress;
-      for (let j = 0;j < stepCount; j++) {
-        const stepType = C.getValue(stepAddress, "i32");
-        stepAddress += SIZE_OF_INT;
-        const stepValueId = C.getValue(stepAddress, "i32");
-        stepAddress += SIZE_OF_INT;
-        parsePattern(i2, stepType, stepValueId, captureNames, stringValues, steps, textPredicates, predicates, setProperties, assertedProperties, refutedProperties);
-      }
-      Object.freeze(textPredicates[i2]);
-      Object.freeze(predicates[i2]);
-      Object.freeze(setProperties[i2]);
-      Object.freeze(assertedProperties[i2]);
-      Object.freeze(refutedProperties[i2]);
-    }
-    C._free(sourceAddress);
-    this[0] = address;
-    this.captureNames = captureNames;
-    this.captureQuantifiers = captureQuantifiers;
-    this.textPredicates = textPredicates;
-    this.predicates = predicates;
-    this.setProperties = setProperties;
-    this.assertedProperties = assertedProperties;
-    this.refutedProperties = refutedProperties;
-    this.exceededMatchLimit = false;
-  }
-  delete() {
-    C._ts_query_delete(this[0]);
-    this[0] = 0;
-  }
-  matches(node, options = {}) {
-    const startPosition = options.startPosition ?? ZERO_POINT;
-    const endPosition = options.endPosition ?? ZERO_POINT;
-    const startIndex = options.startIndex ?? 0;
-    const endIndex = options.endIndex ?? 0;
-    const matchLimit = options.matchLimit ?? 4294967295;
-    const maxStartDepth = options.maxStartDepth ?? 4294967295;
-    const timeoutMicros = options.timeoutMicros ?? 0;
-    const progressCallback = options.progressCallback;
-    if (typeof matchLimit !== "number") {
-      throw new Error("Arguments must be numbers");
-    }
-    this.matchLimit = matchLimit;
-    if (endIndex !== 0 && startIndex > endIndex) {
-      throw new Error("`startIndex` cannot be greater than `endIndex`");
-    }
-    if (endPosition !== ZERO_POINT && (startPosition.row > endPosition.row || startPosition.row === endPosition.row && startPosition.column > endPosition.column)) {
-      throw new Error("`startPosition` cannot be greater than `endPosition`");
-    }
-    if (progressCallback) {
-      C.currentQueryProgressCallback = progressCallback;
-    }
-    marshalNode(node);
-    C._ts_query_matches_wasm(this[0], node.tree[0], startPosition.row, startPosition.column, endPosition.row, endPosition.column, startIndex, endIndex, matchLimit, maxStartDepth, timeoutMicros);
-    const rawCount = C.getValue(TRANSFER_BUFFER, "i32");
-    const startAddress = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const didExceedMatchLimit = C.getValue(TRANSFER_BUFFER + 2 * SIZE_OF_INT, "i32");
-    const result = new Array(rawCount);
-    this.exceededMatchLimit = Boolean(didExceedMatchLimit);
-    let filteredCount = 0;
-    let address = startAddress;
-    for (let i2 = 0;i2 < rawCount; i2++) {
-      const patternIndex = C.getValue(address, "i32");
-      address += SIZE_OF_INT;
-      const captureCount = C.getValue(address, "i32");
-      address += SIZE_OF_INT;
-      const captures = new Array(captureCount);
-      address = unmarshalCaptures(this, node.tree, address, patternIndex, captures);
-      if (this.textPredicates[patternIndex].every((p) => p(captures))) {
-        result[filteredCount] = { pattern: patternIndex, patternIndex, captures };
-        const setProperties = this.setProperties[patternIndex];
-        result[filteredCount].setProperties = setProperties;
-        const assertedProperties = this.assertedProperties[patternIndex];
-        result[filteredCount].assertedProperties = assertedProperties;
-        const refutedProperties = this.refutedProperties[patternIndex];
-        result[filteredCount].refutedProperties = refutedProperties;
-        filteredCount++;
-      }
-    }
-    result.length = filteredCount;
-    C._free(startAddress);
-    C.currentQueryProgressCallback = null;
-    return result;
-  }
-  captures(node, options = {}) {
-    const startPosition = options.startPosition ?? ZERO_POINT;
-    const endPosition = options.endPosition ?? ZERO_POINT;
-    const startIndex = options.startIndex ?? 0;
-    const endIndex = options.endIndex ?? 0;
-    const matchLimit = options.matchLimit ?? 4294967295;
-    const maxStartDepth = options.maxStartDepth ?? 4294967295;
-    const timeoutMicros = options.timeoutMicros ?? 0;
-    const progressCallback = options.progressCallback;
-    if (typeof matchLimit !== "number") {
-      throw new Error("Arguments must be numbers");
-    }
-    this.matchLimit = matchLimit;
-    if (endIndex !== 0 && startIndex > endIndex) {
-      throw new Error("`startIndex` cannot be greater than `endIndex`");
-    }
-    if (endPosition !== ZERO_POINT && (startPosition.row > endPosition.row || startPosition.row === endPosition.row && startPosition.column > endPosition.column)) {
-      throw new Error("`startPosition` cannot be greater than `endPosition`");
-    }
-    if (progressCallback) {
-      C.currentQueryProgressCallback = progressCallback;
-    }
-    marshalNode(node);
-    C._ts_query_captures_wasm(this[0], node.tree[0], startPosition.row, startPosition.column, endPosition.row, endPosition.column, startIndex, endIndex, matchLimit, maxStartDepth, timeoutMicros);
-    const count = C.getValue(TRANSFER_BUFFER, "i32");
-    const startAddress = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const didExceedMatchLimit = C.getValue(TRANSFER_BUFFER + 2 * SIZE_OF_INT, "i32");
-    const result = new Array;
-    this.exceededMatchLimit = Boolean(didExceedMatchLimit);
-    const captures = new Array;
-    let address = startAddress;
-    for (let i2 = 0;i2 < count; i2++) {
-      const patternIndex = C.getValue(address, "i32");
-      address += SIZE_OF_INT;
-      const captureCount = C.getValue(address, "i32");
-      address += SIZE_OF_INT;
-      const captureIndex = C.getValue(address, "i32");
-      address += SIZE_OF_INT;
-      captures.length = captureCount;
-      address = unmarshalCaptures(this, node.tree, address, patternIndex, captures);
-      if (this.textPredicates[patternIndex].every((p) => p(captures))) {
-        const capture = captures[captureIndex];
-        const setProperties = this.setProperties[patternIndex];
-        capture.setProperties = setProperties;
-        const assertedProperties = this.assertedProperties[patternIndex];
-        capture.assertedProperties = assertedProperties;
-        const refutedProperties = this.refutedProperties[patternIndex];
-        capture.refutedProperties = refutedProperties;
-        result.push(capture);
-      }
-    }
-    C._free(startAddress);
-    C.currentQueryProgressCallback = null;
-    return result;
-  }
-  predicatesForPattern(patternIndex) {
-    return this.predicates[patternIndex];
-  }
-  disableCapture(captureName) {
-    const captureNameLength = C.lengthBytesUTF8(captureName);
-    const captureNameAddress = C._malloc(captureNameLength + 1);
-    C.stringToUTF8(captureName, captureNameAddress, captureNameLength + 1);
-    C._ts_query_disable_capture(this[0], captureNameAddress, captureNameLength);
-    C._free(captureNameAddress);
-  }
-  disablePattern(patternIndex) {
-    if (patternIndex >= this.predicates.length) {
-      throw new Error(`Pattern index is ${patternIndex} but the pattern count is ${this.predicates.length}`);
-    }
-    C._ts_query_disable_pattern(this[0], patternIndex);
-  }
-  didExceedMatchLimit() {
-    return this.exceededMatchLimit;
-  }
-  startIndexForPattern(patternIndex) {
-    if (patternIndex >= this.predicates.length) {
-      throw new Error(`Pattern index is ${patternIndex} but the pattern count is ${this.predicates.length}`);
-    }
-    return C._ts_query_start_byte_for_pattern(this[0], patternIndex);
-  }
-  endIndexForPattern(patternIndex) {
-    if (patternIndex >= this.predicates.length) {
-      throw new Error(`Pattern index is ${patternIndex} but the pattern count is ${this.predicates.length}`);
-    }
-    return C._ts_query_end_byte_for_pattern(this[0], patternIndex);
-  }
-  patternCount() {
-    return C._ts_query_pattern_count(this[0]);
-  }
-  captureIndexForName(captureName) {
-    return this.captureNames.indexOf(captureName);
-  }
-  isPatternRooted(patternIndex) {
-    return C._ts_query_is_pattern_rooted(this[0], patternIndex) === 1;
-  }
-  isPatternNonLocal(patternIndex) {
-    return C._ts_query_is_pattern_non_local(this[0], patternIndex) === 1;
-  }
-  isPatternGuaranteedAtStep(byteIndex) {
-    return C._ts_query_is_pattern_guaranteed_at_step(this[0], byteIndex) === 1;
-  }
-};
-var LANGUAGE_FUNCTION_REGEX = /^tree_sitter_\w+$/;
-var Language = class _Language {
-  static {
-    __name(this, "Language");
-  }
-  [0] = 0;
-  types;
-  fields;
-  constructor(internal, address) {
-    assertInternal(internal);
-    this[0] = address;
-    this.types = new Array(C._ts_language_symbol_count(this[0]));
-    for (let i2 = 0, n = this.types.length;i2 < n; i2++) {
-      if (C._ts_language_symbol_type(this[0], i2) < 2) {
-        this.types[i2] = C.UTF8ToString(C._ts_language_symbol_name(this[0], i2));
-      }
-    }
-    this.fields = new Array(C._ts_language_field_count(this[0]) + 1);
-    for (let i2 = 0, n = this.fields.length;i2 < n; i2++) {
-      const fieldName = C._ts_language_field_name_for_id(this[0], i2);
-      if (fieldName !== 0) {
-        this.fields[i2] = C.UTF8ToString(fieldName);
-      } else {
-        this.fields[i2] = null;
-      }
-    }
-  }
-  get name() {
-    const ptr = C._ts_language_name(this[0]);
-    if (ptr === 0)
-      return null;
-    return C.UTF8ToString(ptr);
-  }
-  get version() {
-    return C._ts_language_version(this[0]);
-  }
-  get abiVersion() {
-    return C._ts_language_abi_version(this[0]);
-  }
-  get metadata() {
-    C._ts_language_metadata(this[0]);
-    const length = C.getValue(TRANSFER_BUFFER, "i32");
-    const address = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    if (length === 0)
-      return null;
-    return unmarshalLanguageMetadata(address);
-  }
-  get fieldCount() {
-    return this.fields.length - 1;
-  }
-  get stateCount() {
-    return C._ts_language_state_count(this[0]);
-  }
-  fieldIdForName(fieldName) {
-    const result = this.fields.indexOf(fieldName);
-    return result !== -1 ? result : null;
-  }
-  fieldNameForId(fieldId) {
-    return this.fields[fieldId] ?? null;
-  }
-  idForNodeType(type, named) {
-    const typeLength = C.lengthBytesUTF8(type);
-    const typeAddress = C._malloc(typeLength + 1);
-    C.stringToUTF8(type, typeAddress, typeLength + 1);
-    const result = C._ts_language_symbol_for_name(this[0], typeAddress, typeLength, named ? 1 : 0);
-    C._free(typeAddress);
-    return result || null;
-  }
-  get nodeTypeCount() {
-    return C._ts_language_symbol_count(this[0]);
-  }
-  nodeTypeForId(typeId) {
-    const name2 = C._ts_language_symbol_name(this[0], typeId);
-    return name2 ? C.UTF8ToString(name2) : null;
-  }
-  nodeTypeIsNamed(typeId) {
-    return C._ts_language_type_is_named_wasm(this[0], typeId) ? true : false;
-  }
-  nodeTypeIsVisible(typeId) {
-    return C._ts_language_type_is_visible_wasm(this[0], typeId) ? true : false;
-  }
-  get supertypes() {
-    C._ts_language_supertypes_wasm(this[0]);
-    const count = C.getValue(TRANSFER_BUFFER, "i32");
-    const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const result = new Array(count);
-    if (count > 0) {
-      let address = buffer;
-      for (let i2 = 0;i2 < count; i2++) {
-        result[i2] = C.getValue(address, "i16");
-        address += SIZE_OF_SHORT;
-      }
-    }
-    return result;
-  }
-  subtypes(supertype) {
-    C._ts_language_subtypes_wasm(this[0], supertype);
-    const count = C.getValue(TRANSFER_BUFFER, "i32");
-    const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const result = new Array(count);
-    if (count > 0) {
-      let address = buffer;
-      for (let i2 = 0;i2 < count; i2++) {
-        result[i2] = C.getValue(address, "i16");
-        address += SIZE_OF_SHORT;
-      }
-    }
-    return result;
-  }
-  nextState(stateId, typeId) {
-    return C._ts_language_next_state(this[0], stateId, typeId);
-  }
-  lookaheadIterator(stateId) {
-    const address = C._ts_lookahead_iterator_new(this[0], stateId);
-    if (address)
-      return new LookaheadIterator(INTERNAL, address, this);
-    return null;
-  }
-  query(source) {
-    console.warn("Language.query is deprecated. Use new Query(language, source) instead.");
-    return new Query(this, source);
-  }
-  static async load(input) {
-    let bytes;
-    if (input instanceof Uint8Array) {
-      bytes = Promise.resolve(input);
-    } else {
-      if (globalThis.process?.versions.node) {
-        const fs2 = await import("fs/promises");
-        bytes = fs2.readFile(input);
-      } else {
-        bytes = fetch(input).then((response) => response.arrayBuffer().then((buffer) => {
-          if (response.ok) {
-            return new Uint8Array(buffer);
-          } else {
-            const body2 = new TextDecoder("utf-8").decode(buffer);
-            throw new Error(`Language.load failed with status ${response.status}.
+// ../../protocols/log-query/src/spec-v2.ts
+import { z as z16 } from "zod";
 
-${body2}`);
-          }
-        }));
-      }
-    }
-    const mod = await C.loadWebAssemblyModule(await bytes, { loadAsync: true });
-    const symbolNames = Object.keys(mod);
-    const functionName = symbolNames.find((key) => LANGUAGE_FUNCTION_REGEX.test(key) && !key.includes("external_scanner_"));
-    if (!functionName) {
-      console.log(`Couldn't find language function in WASM file. Symbols:
-${JSON.stringify(symbolNames, null, 2)}`);
-      throw new Error("Language.load failed: no language function found in WASM file");
-    }
-    const languageAddress = mod[functionName]();
-    return new _Language(INTERNAL, languageAddress);
-  }
-};
-var Module2 = (() => {
-  var _scriptName = import.meta.url;
-  return async function(moduleArg = {}) {
-    var moduleRtn;
-    var Module = moduleArg;
-    var readyPromiseResolve, readyPromiseReject;
-    var readyPromise = new Promise((resolve, reject) => {
-      readyPromiseResolve = resolve;
-      readyPromiseReject = reject;
-    });
-    var ENVIRONMENT_IS_WEB = typeof window == "object";
-    var ENVIRONMENT_IS_WORKER = typeof WorkerGlobalScope != "undefined";
-    var ENVIRONMENT_IS_NODE = typeof process == "object" && typeof process.versions == "object" && typeof process.versions.node == "string" && process.type != "renderer";
-    var ENVIRONMENT_IS_SHELL = !ENVIRONMENT_IS_WEB && !ENVIRONMENT_IS_NODE && !ENVIRONMENT_IS_WORKER;
-    if (ENVIRONMENT_IS_NODE) {
-      const { createRequire: createRequire2 } = await import("module");
-      var require = createRequire2(import.meta.url);
-    }
-    Module.currentQueryProgressCallback = null;
-    Module.currentProgressCallback = null;
-    Module.currentLogCallback = null;
-    Module.currentParseCallback = null;
-    var moduleOverrides = Object.assign({}, Module);
-    var arguments_ = [];
-    var thisProgram = "./this.program";
-    var quit_ = /* @__PURE__ */ __name((status, toThrow) => {
-      throw toThrow;
-    }, "quit_");
-    var scriptDirectory = "";
-    function locateFile(path) {
-      if (Module["locateFile"]) {
-        return Module["locateFile"](path, scriptDirectory);
-      }
-      return scriptDirectory + path;
-    }
-    __name(locateFile, "locateFile");
-    var readAsync, readBinary;
-    if (ENVIRONMENT_IS_NODE) {
-      var fs = require("fs");
-      var nodePath = require("path");
-      if (!import.meta.url.startsWith("data:")) {
-        scriptDirectory = nodePath.dirname(require("url").fileURLToPath(import.meta.url)) + "/";
-      }
-      readBinary = /* @__PURE__ */ __name((filename) => {
-        filename = isFileURI(filename) ? new URL(filename) : filename;
-        var ret = fs.readFileSync(filename);
-        return ret;
-      }, "readBinary");
-      readAsync = /* @__PURE__ */ __name(async (filename, binary2 = true) => {
-        filename = isFileURI(filename) ? new URL(filename) : filename;
-        var ret = fs.readFileSync(filename, binary2 ? undefined : "utf8");
-        return ret;
-      }, "readAsync");
-      if (!Module["thisProgram"] && process.argv.length > 1) {
-        thisProgram = process.argv[1].replace(/\\/g, "/");
-      }
-      arguments_ = process.argv.slice(2);
-      quit_ = /* @__PURE__ */ __name((status, toThrow) => {
-        process.exitCode = status;
-        throw toThrow;
-      }, "quit_");
-    } else if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
-      if (ENVIRONMENT_IS_WORKER) {
-        scriptDirectory = self.location.href;
-      } else if (typeof document != "undefined" && document.currentScript) {
-        scriptDirectory = document.currentScript.src;
-      }
-      if (_scriptName) {
-        scriptDirectory = _scriptName;
-      }
-      if (scriptDirectory.startsWith("blob:")) {
-        scriptDirectory = "";
-      } else {
-        scriptDirectory = scriptDirectory.slice(0, scriptDirectory.replace(/[?#].*/, "").lastIndexOf("/") + 1);
-      }
-      {
-        if (ENVIRONMENT_IS_WORKER) {
-          readBinary = /* @__PURE__ */ __name((url) => {
-            var xhr = new XMLHttpRequest;
-            xhr.open("GET", url, false);
-            xhr.responseType = "arraybuffer";
-            xhr.send(null);
-            return new Uint8Array(xhr.response);
-          }, "readBinary");
-        }
-        readAsync = /* @__PURE__ */ __name(async (url) => {
-          if (isFileURI(url)) {
-            return new Promise((resolve, reject) => {
-              var xhr = new XMLHttpRequest;
-              xhr.open("GET", url, true);
-              xhr.responseType = "arraybuffer";
-              xhr.onload = () => {
-                if (xhr.status == 200 || xhr.status == 0 && xhr.response) {
-                  resolve(xhr.response);
-                  return;
-                }
-                reject(xhr.status);
-              };
-              xhr.onerror = reject;
-              xhr.send(null);
-            });
-          }
-          var response = await fetch(url, {
-            credentials: "same-origin"
-          });
-          if (response.ok) {
-            return response.arrayBuffer();
-          }
-          throw new Error(response.status + " : " + response.url);
-        }, "readAsync");
-      }
-    }
-    var out = Module["print"] || console.log.bind(console);
-    var err = Module["printErr"] || console.error.bind(console);
-    Object.assign(Module, moduleOverrides);
-    moduleOverrides = null;
-    if (Module["arguments"])
-      arguments_ = Module["arguments"];
-    if (Module["thisProgram"])
-      thisProgram = Module["thisProgram"];
-    var dynamicLibraries = Module["dynamicLibraries"] || [];
-    var wasmBinary = Module["wasmBinary"];
-    var wasmMemory;
-    var ABORT = false;
-    var EXITSTATUS;
-    function assert(condition, text) {
-      if (!condition) {
-        abort(text);
-      }
-    }
-    __name(assert, "assert");
-    var HEAP, HEAP8, HEAPU8, HEAP16, HEAPU16, HEAP32, HEAPU32, HEAPF32, HEAP64, HEAPU64, HEAPF64;
-    var HEAP_DATA_VIEW;
-    var runtimeInitialized = false;
-    var isFileURI = /* @__PURE__ */ __name((filename) => filename.startsWith("file://"), "isFileURI");
-    function updateMemoryViews() {
-      var b = wasmMemory.buffer;
-      Module["HEAP_DATA_VIEW"] = HEAP_DATA_VIEW = new DataView(b);
-      Module["HEAP8"] = HEAP8 = new Int8Array(b);
-      Module["HEAP16"] = HEAP16 = new Int16Array(b);
-      Module["HEAPU8"] = HEAPU8 = new Uint8Array(b);
-      Module["HEAPU16"] = HEAPU16 = new Uint16Array(b);
-      Module["HEAP32"] = HEAP32 = new Int32Array(b);
-      Module["HEAPU32"] = HEAPU32 = new Uint32Array(b);
-      Module["HEAPF32"] = HEAPF32 = new Float32Array(b);
-      Module["HEAPF64"] = HEAPF64 = new Float64Array(b);
-      Module["HEAP64"] = HEAP64 = new BigInt64Array(b);
-      Module["HEAPU64"] = HEAPU64 = new BigUint64Array(b);
-    }
-    __name(updateMemoryViews, "updateMemoryViews");
-    if (Module["wasmMemory"]) {
-      wasmMemory = Module["wasmMemory"];
-    } else {
-      var INITIAL_MEMORY = Module["INITIAL_MEMORY"] || 33554432;
-      wasmMemory = new WebAssembly.Memory({
-        initial: INITIAL_MEMORY / 65536,
-        maximum: 32768
-      });
-    }
-    updateMemoryViews();
-    var __RELOC_FUNCS__ = [];
-    function preRun() {
-      if (Module["preRun"]) {
-        if (typeof Module["preRun"] == "function")
-          Module["preRun"] = [Module["preRun"]];
-        while (Module["preRun"].length) {
-          addOnPreRun(Module["preRun"].shift());
-        }
-      }
-      callRuntimeCallbacks(onPreRuns);
-    }
-    __name(preRun, "preRun");
-    function initRuntime() {
-      runtimeInitialized = true;
-      callRuntimeCallbacks(__RELOC_FUNCS__);
-      wasmExports["__wasm_call_ctors"]();
-      callRuntimeCallbacks(onPostCtors);
-    }
-    __name(initRuntime, "initRuntime");
-    function preMain() {}
-    __name(preMain, "preMain");
-    function postRun() {
-      if (Module["postRun"]) {
-        if (typeof Module["postRun"] == "function")
-          Module["postRun"] = [Module["postRun"]];
-        while (Module["postRun"].length) {
-          addOnPostRun(Module["postRun"].shift());
-        }
-      }
-      callRuntimeCallbacks(onPostRuns);
-    }
-    __name(postRun, "postRun");
-    var runDependencies = 0;
-    var dependenciesFulfilled = null;
-    function getUniqueRunDependency(id) {
-      return id;
-    }
-    __name(getUniqueRunDependency, "getUniqueRunDependency");
-    function addRunDependency(id) {
-      runDependencies++;
-      Module["monitorRunDependencies"]?.(runDependencies);
-    }
-    __name(addRunDependency, "addRunDependency");
-    function removeRunDependency(id) {
-      runDependencies--;
-      Module["monitorRunDependencies"]?.(runDependencies);
-      if (runDependencies == 0) {
-        if (dependenciesFulfilled) {
-          var callback = dependenciesFulfilled;
-          dependenciesFulfilled = null;
-          callback();
-        }
-      }
-    }
-    __name(removeRunDependency, "removeRunDependency");
-    function abort(what) {
-      Module["onAbort"]?.(what);
-      what = "Aborted(" + what + ")";
-      err(what);
-      ABORT = true;
-      what += ". Build with -sASSERTIONS for more info.";
-      var e = new WebAssembly.RuntimeError(what);
-      readyPromiseReject(e);
-      throw e;
-    }
-    __name(abort, "abort");
-    var wasmBinaryFile;
-    function findWasmBinary() {
-      if (Module["locateFile"]) {
-        return locateFile("tree-sitter.wasm");
-      }
-      return new URL("tree-sitter.wasm", import.meta.url).href;
-    }
-    __name(findWasmBinary, "findWasmBinary");
-    function getBinarySync(file) {
-      if (file == wasmBinaryFile && wasmBinary) {
-        return new Uint8Array(wasmBinary);
-      }
-      if (readBinary) {
-        return readBinary(file);
-      }
-      throw "both async and sync fetching of the wasm failed";
-    }
-    __name(getBinarySync, "getBinarySync");
-    async function getWasmBinary(binaryFile) {
-      if (!wasmBinary) {
-        try {
-          var response = await readAsync(binaryFile);
-          return new Uint8Array(response);
-        } catch {}
-      }
-      return getBinarySync(binaryFile);
-    }
-    __name(getWasmBinary, "getWasmBinary");
-    async function instantiateArrayBuffer(binaryFile, imports) {
-      try {
-        var binary2 = await getWasmBinary(binaryFile);
-        var instance2 = await WebAssembly.instantiate(binary2, imports);
-        return instance2;
-      } catch (reason) {
-        err(`failed to asynchronously prepare wasm: ${reason}`);
-        abort(reason);
-      }
-    }
-    __name(instantiateArrayBuffer, "instantiateArrayBuffer");
-    async function instantiateAsync(binary2, binaryFile, imports) {
-      if (!binary2 && typeof WebAssembly.instantiateStreaming == "function" && !isFileURI(binaryFile) && !ENVIRONMENT_IS_NODE) {
-        try {
-          var response = fetch(binaryFile, {
-            credentials: "same-origin"
-          });
-          var instantiationResult = await WebAssembly.instantiateStreaming(response, imports);
-          return instantiationResult;
-        } catch (reason) {
-          err(`wasm streaming compile failed: ${reason}`);
-          err("falling back to ArrayBuffer instantiation");
-        }
-      }
-      return instantiateArrayBuffer(binaryFile, imports);
-    }
-    __name(instantiateAsync, "instantiateAsync");
-    function getWasmImports() {
-      return {
-        env: wasmImports,
-        wasi_snapshot_preview1: wasmImports,
-        "GOT.mem": new Proxy(wasmImports, GOTHandler),
-        "GOT.func": new Proxy(wasmImports, GOTHandler)
-      };
-    }
-    __name(getWasmImports, "getWasmImports");
-    async function createWasm() {
-      function receiveInstance(instance2, module2) {
-        wasmExports = instance2.exports;
-        wasmExports = relocateExports(wasmExports, 1024);
-        var metadata2 = getDylinkMetadata(module2);
-        if (metadata2.neededDynlibs) {
-          dynamicLibraries = metadata2.neededDynlibs.concat(dynamicLibraries);
-        }
-        mergeLibSymbols(wasmExports, "main");
-        LDSO.init();
-        loadDylibs();
-        __RELOC_FUNCS__.push(wasmExports["__wasm_apply_data_relocs"]);
-        removeRunDependency("wasm-instantiate");
-        return wasmExports;
-      }
-      __name(receiveInstance, "receiveInstance");
-      addRunDependency("wasm-instantiate");
-      function receiveInstantiationResult(result2) {
-        return receiveInstance(result2["instance"], result2["module"]);
-      }
-      __name(receiveInstantiationResult, "receiveInstantiationResult");
-      var info2 = getWasmImports();
-      if (Module["instantiateWasm"]) {
-        return new Promise((resolve, reject) => {
-          Module["instantiateWasm"](info2, (mod, inst) => {
-            receiveInstance(mod, inst);
-            resolve(mod.exports);
-          });
-        });
-      }
-      wasmBinaryFile ??= findWasmBinary();
-      try {
-        var result = await instantiateAsync(wasmBinary, wasmBinaryFile, info2);
-        var exports = receiveInstantiationResult(result);
-        return exports;
-      } catch (e) {
-        readyPromiseReject(e);
-        return Promise.reject(e);
-      }
-    }
-    __name(createWasm, "createWasm");
-    var ASM_CONSTS = {};
+// ../../protocols/log-query/src/plan/event-query-plan.ts
+import { z as z14 } from "zod";
 
-    class ExitStatus {
-      static {
-        __name(this, "ExitStatus");
-      }
-      name = "ExitStatus";
-      constructor(status) {
-        this.message = `Program terminated with exit(${status})`;
-        this.status = status;
-      }
-    }
-    var GOT = {};
-    var currentModuleWeakSymbols = /* @__PURE__ */ new Set([]);
-    var GOTHandler = {
-      get(obj, symName) {
-        var rtn = GOT[symName];
-        if (!rtn) {
-          rtn = GOT[symName] = new WebAssembly.Global({
-            value: "i32",
-            mutable: true
-          });
-        }
-        if (!currentModuleWeakSymbols.has(symName)) {
-          rtn.required = true;
-        }
-        return rtn;
-      }
-    };
-    var LE_HEAP_LOAD_F32 = /* @__PURE__ */ __name((byteOffset) => HEAP_DATA_VIEW.getFloat32(byteOffset, true), "LE_HEAP_LOAD_F32");
-    var LE_HEAP_LOAD_F64 = /* @__PURE__ */ __name((byteOffset) => HEAP_DATA_VIEW.getFloat64(byteOffset, true), "LE_HEAP_LOAD_F64");
-    var LE_HEAP_LOAD_I16 = /* @__PURE__ */ __name((byteOffset) => HEAP_DATA_VIEW.getInt16(byteOffset, true), "LE_HEAP_LOAD_I16");
-    var LE_HEAP_LOAD_I32 = /* @__PURE__ */ __name((byteOffset) => HEAP_DATA_VIEW.getInt32(byteOffset, true), "LE_HEAP_LOAD_I32");
-    var LE_HEAP_LOAD_U16 = /* @__PURE__ */ __name((byteOffset) => HEAP_DATA_VIEW.getUint16(byteOffset, true), "LE_HEAP_LOAD_U16");
-    var LE_HEAP_LOAD_U32 = /* @__PURE__ */ __name((byteOffset) => HEAP_DATA_VIEW.getUint32(byteOffset, true), "LE_HEAP_LOAD_U32");
-    var LE_HEAP_STORE_F32 = /* @__PURE__ */ __name((byteOffset, value) => HEAP_DATA_VIEW.setFloat32(byteOffset, value, true), "LE_HEAP_STORE_F32");
-    var LE_HEAP_STORE_F64 = /* @__PURE__ */ __name((byteOffset, value) => HEAP_DATA_VIEW.setFloat64(byteOffset, value, true), "LE_HEAP_STORE_F64");
-    var LE_HEAP_STORE_I16 = /* @__PURE__ */ __name((byteOffset, value) => HEAP_DATA_VIEW.setInt16(byteOffset, value, true), "LE_HEAP_STORE_I16");
-    var LE_HEAP_STORE_I32 = /* @__PURE__ */ __name((byteOffset, value) => HEAP_DATA_VIEW.setInt32(byteOffset, value, true), "LE_HEAP_STORE_I32");
-    var LE_HEAP_STORE_U16 = /* @__PURE__ */ __name((byteOffset, value) => HEAP_DATA_VIEW.setUint16(byteOffset, value, true), "LE_HEAP_STORE_U16");
-    var LE_HEAP_STORE_U32 = /* @__PURE__ */ __name((byteOffset, value) => HEAP_DATA_VIEW.setUint32(byteOffset, value, true), "LE_HEAP_STORE_U32");
-    var callRuntimeCallbacks = /* @__PURE__ */ __name((callbacks) => {
-      while (callbacks.length > 0) {
-        callbacks.shift()(Module);
-      }
-    }, "callRuntimeCallbacks");
-    var onPostRuns = [];
-    var addOnPostRun = /* @__PURE__ */ __name((cb) => onPostRuns.unshift(cb), "addOnPostRun");
-    var onPreRuns = [];
-    var addOnPreRun = /* @__PURE__ */ __name((cb) => onPreRuns.unshift(cb), "addOnPreRun");
-    var UTF8Decoder = typeof TextDecoder != "undefined" ? new TextDecoder : undefined;
-    var UTF8ArrayToString = /* @__PURE__ */ __name((heapOrArray, idx = 0, maxBytesToRead = NaN) => {
-      var endIdx = idx + maxBytesToRead;
-      var endPtr = idx;
-      while (heapOrArray[endPtr] && !(endPtr >= endIdx))
-        ++endPtr;
-      if (endPtr - idx > 16 && heapOrArray.buffer && UTF8Decoder) {
-        return UTF8Decoder.decode(heapOrArray.subarray(idx, endPtr));
-      }
-      var str = "";
-      while (idx < endPtr) {
-        var u0 = heapOrArray[idx++];
-        if (!(u0 & 128)) {
-          str += String.fromCharCode(u0);
-          continue;
-        }
-        var u1 = heapOrArray[idx++] & 63;
-        if ((u0 & 224) == 192) {
-          str += String.fromCharCode((u0 & 31) << 6 | u1);
-          continue;
-        }
-        var u2 = heapOrArray[idx++] & 63;
-        if ((u0 & 240) == 224) {
-          u0 = (u0 & 15) << 12 | u1 << 6 | u2;
-        } else {
-          u0 = (u0 & 7) << 18 | u1 << 12 | u2 << 6 | heapOrArray[idx++] & 63;
-        }
-        if (u0 < 65536) {
-          str += String.fromCharCode(u0);
-        } else {
-          var ch = u0 - 65536;
-          str += String.fromCharCode(55296 | ch >> 10, 56320 | ch & 1023);
-        }
-      }
-      return str;
-    }, "UTF8ArrayToString");
-    var getDylinkMetadata = /* @__PURE__ */ __name((binary2) => {
-      var offset = 0;
-      var end = 0;
-      function getU8() {
-        return binary2[offset++];
-      }
-      __name(getU8, "getU8");
-      function getLEB() {
-        var ret = 0;
-        var mul = 1;
-        while (true) {
-          var byte = binary2[offset++];
-          ret += (byte & 127) * mul;
-          mul *= 128;
-          if (!(byte & 128))
-            break;
-        }
-        return ret;
-      }
-      __name(getLEB, "getLEB");
-      function getString() {
-        var len = getLEB();
-        offset += len;
-        return UTF8ArrayToString(binary2, offset - len, len);
-      }
-      __name(getString, "getString");
-      function failIf(condition, message) {
-        if (condition)
-          throw new Error(message);
-      }
-      __name(failIf, "failIf");
-      var name2 = "dylink.0";
-      if (binary2 instanceof WebAssembly.Module) {
-        var dylinkSection = WebAssembly.Module.customSections(binary2, name2);
-        if (dylinkSection.length === 0) {
-          name2 = "dylink";
-          dylinkSection = WebAssembly.Module.customSections(binary2, name2);
-        }
-        failIf(dylinkSection.length === 0, "need dylink section");
-        binary2 = new Uint8Array(dylinkSection[0]);
-        end = binary2.length;
-      } else {
-        var int32View = new Uint32Array(new Uint8Array(binary2.subarray(0, 24)).buffer);
-        var magicNumberFound = int32View[0] == 1836278016 || int32View[0] == 6386541;
-        failIf(!magicNumberFound, "need to see wasm magic number");
-        failIf(binary2[8] !== 0, "need the dylink section to be first");
-        offset = 9;
-        var section_size = getLEB();
-        end = offset + section_size;
-        name2 = getString();
-      }
-      var customSection = {
-        neededDynlibs: [],
-        tlsExports: /* @__PURE__ */ new Set,
-        weakImports: /* @__PURE__ */ new Set
-      };
-      if (name2 == "dylink") {
-        customSection.memorySize = getLEB();
-        customSection.memoryAlign = getLEB();
-        customSection.tableSize = getLEB();
-        customSection.tableAlign = getLEB();
-        var neededDynlibsCount = getLEB();
-        for (var i2 = 0;i2 < neededDynlibsCount; ++i2) {
-          var libname = getString();
-          customSection.neededDynlibs.push(libname);
-        }
-      } else {
-        failIf(name2 !== "dylink.0");
-        var WASM_DYLINK_MEM_INFO = 1;
-        var WASM_DYLINK_NEEDED = 2;
-        var WASM_DYLINK_EXPORT_INFO = 3;
-        var WASM_DYLINK_IMPORT_INFO = 4;
-        var WASM_SYMBOL_TLS = 256;
-        var WASM_SYMBOL_BINDING_MASK = 3;
-        var WASM_SYMBOL_BINDING_WEAK = 1;
-        while (offset < end) {
-          var subsectionType = getU8();
-          var subsectionSize = getLEB();
-          if (subsectionType === WASM_DYLINK_MEM_INFO) {
-            customSection.memorySize = getLEB();
-            customSection.memoryAlign = getLEB();
-            customSection.tableSize = getLEB();
-            customSection.tableAlign = getLEB();
-          } else if (subsectionType === WASM_DYLINK_NEEDED) {
-            var neededDynlibsCount = getLEB();
-            for (var i2 = 0;i2 < neededDynlibsCount; ++i2) {
-              libname = getString();
-              customSection.neededDynlibs.push(libname);
-            }
-          } else if (subsectionType === WASM_DYLINK_EXPORT_INFO) {
-            var count = getLEB();
-            while (count--) {
-              var symname = getString();
-              var flags2 = getLEB();
-              if (flags2 & WASM_SYMBOL_TLS) {
-                customSection.tlsExports.add(symname);
-              }
-            }
-          } else if (subsectionType === WASM_DYLINK_IMPORT_INFO) {
-            var count = getLEB();
-            while (count--) {
-              var modname = getString();
-              var symname = getString();
-              var flags2 = getLEB();
-              if ((flags2 & WASM_SYMBOL_BINDING_MASK) == WASM_SYMBOL_BINDING_WEAK) {
-                customSection.weakImports.add(symname);
-              }
-            }
-          } else {
-            offset += subsectionSize;
-          }
-        }
-      }
-      return customSection;
-    }, "getDylinkMetadata");
-    function getValue(ptr, type = "i8") {
-      if (type.endsWith("*"))
-        type = "*";
-      switch (type) {
-        case "i1":
-          return HEAP8[ptr];
-        case "i8":
-          return HEAP8[ptr];
-        case "i16":
-          return LE_HEAP_LOAD_I16((ptr >> 1) * 2);
-        case "i32":
-          return LE_HEAP_LOAD_I32((ptr >> 2) * 4);
-        case "i64":
-          return HEAP64[ptr >> 3];
-        case "float":
-          return LE_HEAP_LOAD_F32((ptr >> 2) * 4);
-        case "double":
-          return LE_HEAP_LOAD_F64((ptr >> 3) * 8);
-        case "*":
-          return LE_HEAP_LOAD_U32((ptr >> 2) * 4);
-        default:
-          abort(`invalid type for getValue: ${type}`);
-      }
-    }
-    __name(getValue, "getValue");
-    var newDSO = /* @__PURE__ */ __name((name2, handle2, syms) => {
-      var dso = {
-        refcount: Infinity,
-        name: name2,
-        exports: syms,
-        global: true
-      };
-      LDSO.loadedLibsByName[name2] = dso;
-      if (handle2 != null) {
-        LDSO.loadedLibsByHandle[handle2] = dso;
-      }
-      return dso;
-    }, "newDSO");
-    var LDSO = {
-      loadedLibsByName: {},
-      loadedLibsByHandle: {},
-      init() {
-        newDSO("__main__", 0, wasmImports);
-      }
-    };
-    var ___heap_base = 78224;
-    var alignMemory = /* @__PURE__ */ __name((size, alignment) => Math.ceil(size / alignment) * alignment, "alignMemory");
-    var getMemory = /* @__PURE__ */ __name((size) => {
-      if (runtimeInitialized) {
-        return _calloc(size, 1);
-      }
-      var ret = ___heap_base;
-      var end = ret + alignMemory(size, 16);
-      ___heap_base = end;
-      GOT["__heap_base"].value = end;
-      return ret;
-    }, "getMemory");
-    var isInternalSym = /* @__PURE__ */ __name((symName) => ["__cpp_exception", "__c_longjmp", "__wasm_apply_data_relocs", "__dso_handle", "__tls_size", "__tls_align", "__set_stack_limits", "_emscripten_tls_init", "__wasm_init_tls", "__wasm_call_ctors", "__start_em_asm", "__stop_em_asm", "__start_em_js", "__stop_em_js"].includes(symName) || symName.startsWith("__em_js__"), "isInternalSym");
-    var uleb128Encode = /* @__PURE__ */ __name((n, target) => {
-      if (n < 128) {
-        target.push(n);
-      } else {
-        target.push(n % 128 | 128, n >> 7);
-      }
-    }, "uleb128Encode");
-    var sigToWasmTypes = /* @__PURE__ */ __name((sig) => {
-      var typeNames = {
-        i: "i32",
-        j: "i64",
-        f: "f32",
-        d: "f64",
-        e: "externref",
-        p: "i32"
-      };
-      var type = {
-        parameters: [],
-        results: sig[0] == "v" ? [] : [typeNames[sig[0]]]
-      };
-      for (var i2 = 1;i2 < sig.length; ++i2) {
-        type.parameters.push(typeNames[sig[i2]]);
-      }
-      return type;
-    }, "sigToWasmTypes");
-    var generateFuncType = /* @__PURE__ */ __name((sig, target) => {
-      var sigRet = sig.slice(0, 1);
-      var sigParam = sig.slice(1);
-      var typeCodes = {
-        i: 127,
-        p: 127,
-        j: 126,
-        f: 125,
-        d: 124,
-        e: 111
-      };
-      target.push(96);
-      uleb128Encode(sigParam.length, target);
-      for (var i2 = 0;i2 < sigParam.length; ++i2) {
-        target.push(typeCodes[sigParam[i2]]);
-      }
-      if (sigRet == "v") {
-        target.push(0);
-      } else {
-        target.push(1, typeCodes[sigRet]);
-      }
-    }, "generateFuncType");
-    var convertJsFunctionToWasm = /* @__PURE__ */ __name((func2, sig) => {
-      if (typeof WebAssembly.Function == "function") {
-        return new WebAssembly.Function(sigToWasmTypes(sig), func2);
-      }
-      var typeSectionBody = [1];
-      generateFuncType(sig, typeSectionBody);
-      var bytes = [
-        0,
-        97,
-        115,
-        109,
-        1,
-        0,
-        0,
-        0,
-        1
-      ];
-      uleb128Encode(typeSectionBody.length, bytes);
-      bytes.push(...typeSectionBody);
-      bytes.push(2, 7, 1, 1, 101, 1, 102, 0, 0, 7, 5, 1, 1, 102, 0, 0);
-      var module2 = new WebAssembly.Module(new Uint8Array(bytes));
-      var instance2 = new WebAssembly.Instance(module2, {
-        e: {
-          f: func2
-        }
-      });
-      var wrappedFunc = instance2.exports["f"];
-      return wrappedFunc;
-    }, "convertJsFunctionToWasm");
-    var wasmTableMirror = [];
-    var wasmTable = new WebAssembly.Table({
-      initial: 31,
-      element: "anyfunc"
-    });
-    var getWasmTableEntry = /* @__PURE__ */ __name((funcPtr) => {
-      var func2 = wasmTableMirror[funcPtr];
-      if (!func2) {
-        if (funcPtr >= wasmTableMirror.length)
-          wasmTableMirror.length = funcPtr + 1;
-        wasmTableMirror[funcPtr] = func2 = wasmTable.get(funcPtr);
-      }
-      return func2;
-    }, "getWasmTableEntry");
-    var updateTableMap = /* @__PURE__ */ __name((offset, count) => {
-      if (functionsInTableMap) {
-        for (var i2 = offset;i2 < offset + count; i2++) {
-          var item = getWasmTableEntry(i2);
-          if (item) {
-            functionsInTableMap.set(item, i2);
-          }
-        }
-      }
-    }, "updateTableMap");
-    var functionsInTableMap;
-    var getFunctionAddress = /* @__PURE__ */ __name((func2) => {
-      if (!functionsInTableMap) {
-        functionsInTableMap = /* @__PURE__ */ new WeakMap;
-        updateTableMap(0, wasmTable.length);
-      }
-      return functionsInTableMap.get(func2) || 0;
-    }, "getFunctionAddress");
-    var freeTableIndexes = [];
-    var getEmptyTableSlot = /* @__PURE__ */ __name(() => {
-      if (freeTableIndexes.length) {
-        return freeTableIndexes.pop();
-      }
-      try {
-        wasmTable.grow(1);
-      } catch (err2) {
-        if (!(err2 instanceof RangeError)) {
-          throw err2;
-        }
-        throw "Unable to grow wasm table. Set ALLOW_TABLE_GROWTH.";
-      }
-      return wasmTable.length - 1;
-    }, "getEmptyTableSlot");
-    var setWasmTableEntry = /* @__PURE__ */ __name((idx, func2) => {
-      wasmTable.set(idx, func2);
-      wasmTableMirror[idx] = wasmTable.get(idx);
-    }, "setWasmTableEntry");
-    var addFunction = /* @__PURE__ */ __name((func2, sig) => {
-      var rtn = getFunctionAddress(func2);
-      if (rtn) {
-        return rtn;
-      }
-      var ret = getEmptyTableSlot();
-      try {
-        setWasmTableEntry(ret, func2);
-      } catch (err2) {
-        if (!(err2 instanceof TypeError)) {
-          throw err2;
-        }
-        var wrapped = convertJsFunctionToWasm(func2, sig);
-        setWasmTableEntry(ret, wrapped);
-      }
-      functionsInTableMap.set(func2, ret);
-      return ret;
-    }, "addFunction");
-    var updateGOT = /* @__PURE__ */ __name((exports, replace) => {
-      for (var symName in exports) {
-        if (isInternalSym(symName)) {
-          continue;
-        }
-        var value = exports[symName];
-        GOT[symName] ||= new WebAssembly.Global({
-          value: "i32",
-          mutable: true
-        });
-        if (replace || GOT[symName].value == 0) {
-          if (typeof value == "function") {
-            GOT[symName].value = addFunction(value);
-          } else if (typeof value == "number") {
-            GOT[symName].value = value;
-          } else {
-            err(`unhandled export type for '${symName}': ${typeof value}`);
-          }
-        }
-      }
-    }, "updateGOT");
-    var relocateExports = /* @__PURE__ */ __name((exports, memoryBase2, replace) => {
-      var relocated = {};
-      for (var e in exports) {
-        var value = exports[e];
-        if (typeof value == "object") {
-          value = value.value;
-        }
-        if (typeof value == "number") {
-          value += memoryBase2;
-        }
-        relocated[e] = value;
-      }
-      updateGOT(relocated, replace);
-      return relocated;
-    }, "relocateExports");
-    var isSymbolDefined = /* @__PURE__ */ __name((symName) => {
-      var existing = wasmImports[symName];
-      if (!existing || existing.stub) {
-        return false;
-      }
-      return true;
-    }, "isSymbolDefined");
-    var dynCall = /* @__PURE__ */ __name((sig, ptr, args2 = []) => {
-      var rtn = getWasmTableEntry(ptr)(...args2);
-      return rtn;
-    }, "dynCall");
-    var stackSave = /* @__PURE__ */ __name(() => _emscripten_stack_get_current(), "stackSave");
-    var stackRestore = /* @__PURE__ */ __name((val) => __emscripten_stack_restore(val), "stackRestore");
-    var createInvokeFunction = /* @__PURE__ */ __name((sig) => (ptr, ...args2) => {
-      var sp = stackSave();
-      try {
-        return dynCall(sig, ptr, args2);
-      } catch (e) {
-        stackRestore(sp);
-        if (e !== e + 0)
-          throw e;
-        _setThrew(1, 0);
-        if (sig[0] == "j")
-          return 0n;
-      }
-    }, "createInvokeFunction");
-    var resolveGlobalSymbol = /* @__PURE__ */ __name((symName, direct = false) => {
-      var sym;
-      if (isSymbolDefined(symName)) {
-        sym = wasmImports[symName];
-      } else if (symName.startsWith("invoke_")) {
-        sym = wasmImports[symName] = createInvokeFunction(symName.split("_")[1]);
-      }
-      return {
-        sym,
-        name: symName
-      };
-    }, "resolveGlobalSymbol");
-    var onPostCtors = [];
-    var addOnPostCtor = /* @__PURE__ */ __name((cb) => onPostCtors.unshift(cb), "addOnPostCtor");
-    var UTF8ToString = /* @__PURE__ */ __name((ptr, maxBytesToRead) => ptr ? UTF8ArrayToString(HEAPU8, ptr, maxBytesToRead) : "", "UTF8ToString");
-    var loadWebAssemblyModule = /* @__PURE__ */ __name((binary, flags, libName, localScope, handle) => {
-      var metadata = getDylinkMetadata(binary);
-      currentModuleWeakSymbols = metadata.weakImports;
-      function loadModule() {
-        var memAlign = Math.pow(2, metadata.memoryAlign);
-        var memoryBase = metadata.memorySize ? alignMemory(getMemory(metadata.memorySize + memAlign), memAlign) : 0;
-        var tableBase = metadata.tableSize ? wasmTable.length : 0;
-        if (handle) {
-          HEAP8[handle + 8] = 1;
-          LE_HEAP_STORE_U32((handle + 12 >> 2) * 4, memoryBase);
-          LE_HEAP_STORE_I32((handle + 16 >> 2) * 4, metadata.memorySize);
-          LE_HEAP_STORE_U32((handle + 20 >> 2) * 4, tableBase);
-          LE_HEAP_STORE_I32((handle + 24 >> 2) * 4, metadata.tableSize);
-        }
-        if (metadata.tableSize) {
-          wasmTable.grow(metadata.tableSize);
-        }
-        var moduleExports;
-        function resolveSymbol(sym) {
-          var resolved = resolveGlobalSymbol(sym).sym;
-          if (!resolved && localScope) {
-            resolved = localScope[sym];
-          }
-          if (!resolved) {
-            resolved = moduleExports[sym];
-          }
-          return resolved;
-        }
-        __name(resolveSymbol, "resolveSymbol");
-        var proxyHandler = {
-          get(stubs, prop) {
-            switch (prop) {
-              case "__memory_base":
-                return memoryBase;
-              case "__table_base":
-                return tableBase;
-            }
-            if (prop in wasmImports && !wasmImports[prop].stub) {
-              var res = wasmImports[prop];
-              return res;
-            }
-            if (!(prop in stubs)) {
-              var resolved;
-              stubs[prop] = (...args2) => {
-                resolved ||= resolveSymbol(prop);
-                return resolved(...args2);
-              };
-            }
-            return stubs[prop];
-          }
-        };
-        var proxy = new Proxy({}, proxyHandler);
-        var info = {
-          "GOT.mem": new Proxy({}, GOTHandler),
-          "GOT.func": new Proxy({}, GOTHandler),
-          env: proxy,
-          wasi_snapshot_preview1: proxy
-        };
-        function postInstantiation(module, instance) {
-          updateTableMap(tableBase, metadata.tableSize);
-          moduleExports = relocateExports(instance.exports, memoryBase);
-          if (!flags.allowUndefined) {
-            reportUndefinedSymbols();
-          }
-          function addEmAsm(addr, body) {
-            var args = [];
-            var arity = 0;
-            for (;arity < 16; arity++) {
-              if (body.indexOf("$" + arity) != -1) {
-                args.push("$" + arity);
-              } else {
-                break;
-              }
-            }
-            args = args.join(",");
-            var func = `(${args}) => { ${body} };`;
-            ASM_CONSTS[start] = eval(func);
-          }
-          __name(addEmAsm, "addEmAsm");
-          if ("__start_em_asm" in moduleExports) {
-            var start = moduleExports["__start_em_asm"];
-            var stop = moduleExports["__stop_em_asm"];
-            while (start < stop) {
-              var jsString = UTF8ToString(start);
-              addEmAsm(start, jsString);
-              start = HEAPU8.indexOf(0, start) + 1;
-            }
-          }
-          function addEmJs(name, cSig, body) {
-            var jsArgs = [];
-            cSig = cSig.slice(1, -1);
-            if (cSig != "void") {
-              cSig = cSig.split(",");
-              for (var i in cSig) {
-                var jsArg = cSig[i].split(" ").pop();
-                jsArgs.push(jsArg.replace("*", ""));
-              }
-            }
-            var func = `(${jsArgs}) => ${body};`;
-            moduleExports[name] = eval(func);
-          }
-          __name(addEmJs, "addEmJs");
-          for (var name in moduleExports) {
-            if (name.startsWith("__em_js__")) {
-              var start = moduleExports[name];
-              var jsString = UTF8ToString(start);
-              var parts = jsString.split("<::>");
-              addEmJs(name.replace("__em_js__", ""), parts[0], parts[1]);
-              delete moduleExports[name];
-            }
-          }
-          var applyRelocs = moduleExports["__wasm_apply_data_relocs"];
-          if (applyRelocs) {
-            if (runtimeInitialized) {
-              applyRelocs();
-            } else {
-              __RELOC_FUNCS__.push(applyRelocs);
-            }
-          }
-          var init = moduleExports["__wasm_call_ctors"];
-          if (init) {
-            if (runtimeInitialized) {
-              init();
-            } else {
-              addOnPostCtor(init);
-            }
-          }
-          return moduleExports;
-        }
-        __name(postInstantiation, "postInstantiation");
-        if (flags.loadAsync) {
-          if (binary instanceof WebAssembly.Module) {
-            var instance = new WebAssembly.Instance(binary, info);
-            return Promise.resolve(postInstantiation(binary, instance));
-          }
-          return WebAssembly.instantiate(binary, info).then((result) => postInstantiation(result.module, result.instance));
-        }
-        var module = binary instanceof WebAssembly.Module ? binary : new WebAssembly.Module(binary);
-        var instance = new WebAssembly.Instance(module, info);
-        return postInstantiation(module, instance);
-      }
-      __name(loadModule, "loadModule");
-      if (flags.loadAsync) {
-        return metadata.neededDynlibs.reduce((chain, dynNeeded) => chain.then(() => loadDynamicLibrary(dynNeeded, flags, localScope)), Promise.resolve()).then(loadModule);
-      }
-      metadata.neededDynlibs.forEach((needed) => loadDynamicLibrary(needed, flags, localScope));
-      return loadModule();
-    }, "loadWebAssemblyModule");
-    var mergeLibSymbols = /* @__PURE__ */ __name((exports, libName2) => {
-      for (var [sym, exp] of Object.entries(exports)) {
-        const setImport = /* @__PURE__ */ __name((target) => {
-          if (!isSymbolDefined(target)) {
-            wasmImports[target] = exp;
-          }
-        }, "setImport");
-        setImport(sym);
-        const main_alias = "__main_argc_argv";
-        if (sym == "main") {
-          setImport(main_alias);
-        }
-        if (sym == main_alias) {
-          setImport("main");
-        }
-      }
-    }, "mergeLibSymbols");
-    var asyncLoad = /* @__PURE__ */ __name(async (url) => {
-      var arrayBuffer = await readAsync(url);
-      return new Uint8Array(arrayBuffer);
-    }, "asyncLoad");
-    function loadDynamicLibrary(libName2, flags2 = {
-      global: true,
-      nodelete: true
-    }, localScope2, handle2) {
-      var dso = LDSO.loadedLibsByName[libName2];
-      if (dso) {
-        if (!flags2.global) {
-          if (localScope2) {
-            Object.assign(localScope2, dso.exports);
-          }
-        } else if (!dso.global) {
-          dso.global = true;
-          mergeLibSymbols(dso.exports, libName2);
-        }
-        if (flags2.nodelete && dso.refcount !== Infinity) {
-          dso.refcount = Infinity;
-        }
-        dso.refcount++;
-        if (handle2) {
-          LDSO.loadedLibsByHandle[handle2] = dso;
-        }
-        return flags2.loadAsync ? Promise.resolve(true) : true;
-      }
-      dso = newDSO(libName2, handle2, "loading");
-      dso.refcount = flags2.nodelete ? Infinity : 1;
-      dso.global = flags2.global;
-      function loadLibData() {
-        if (handle2) {
-          var data = LE_HEAP_LOAD_U32((handle2 + 28 >> 2) * 4);
-          var dataSize = LE_HEAP_LOAD_U32((handle2 + 32 >> 2) * 4);
-          if (data && dataSize) {
-            var libData = HEAP8.slice(data, data + dataSize);
-            return flags2.loadAsync ? Promise.resolve(libData) : libData;
-          }
-        }
-        var libFile = locateFile(libName2);
-        if (flags2.loadAsync) {
-          return asyncLoad(libFile);
-        }
-        if (!readBinary) {
-          throw new Error(`${libFile}: file not found, and synchronous loading of external files is not available`);
-        }
-        return readBinary(libFile);
-      }
-      __name(loadLibData, "loadLibData");
-      function getExports() {
-        if (flags2.loadAsync) {
-          return loadLibData().then((libData) => loadWebAssemblyModule(libData, flags2, libName2, localScope2, handle2));
-        }
-        return loadWebAssemblyModule(loadLibData(), flags2, libName2, localScope2, handle2);
-      }
-      __name(getExports, "getExports");
-      function moduleLoaded(exports) {
-        if (dso.global) {
-          mergeLibSymbols(exports, libName2);
-        } else if (localScope2) {
-          Object.assign(localScope2, exports);
-        }
-        dso.exports = exports;
-      }
-      __name(moduleLoaded, "moduleLoaded");
-      if (flags2.loadAsync) {
-        return getExports().then((exports) => {
-          moduleLoaded(exports);
-          return true;
-        });
-      }
-      moduleLoaded(getExports());
-      return true;
-    }
-    __name(loadDynamicLibrary, "loadDynamicLibrary");
-    var reportUndefinedSymbols = /* @__PURE__ */ __name(() => {
-      for (var [symName, entry] of Object.entries(GOT)) {
-        if (entry.value == 0) {
-          var value = resolveGlobalSymbol(symName, true).sym;
-          if (!value && !entry.required) {
-            continue;
-          }
-          if (typeof value == "function") {
-            entry.value = addFunction(value, value.sig);
-          } else if (typeof value == "number") {
-            entry.value = value;
-          } else {
-            throw new Error(`bad export type for '${symName}': ${typeof value}`);
-          }
-        }
-      }
-    }, "reportUndefinedSymbols");
-    var loadDylibs = /* @__PURE__ */ __name(() => {
-      if (!dynamicLibraries.length) {
-        reportUndefinedSymbols();
-        return;
-      }
-      addRunDependency("loadDylibs");
-      dynamicLibraries.reduce((chain, lib) => chain.then(() => loadDynamicLibrary(lib, {
-        loadAsync: true,
-        global: true,
-        nodelete: true,
-        allowUndefined: true
-      })), Promise.resolve()).then(() => {
-        reportUndefinedSymbols();
-        removeRunDependency("loadDylibs");
-      });
-    }, "loadDylibs");
-    var noExitRuntime = Module["noExitRuntime"] || true;
-    function setValue(ptr, value, type = "i8") {
-      if (type.endsWith("*"))
-        type = "*";
-      switch (type) {
-        case "i1":
-          HEAP8[ptr] = value;
-          break;
-        case "i8":
-          HEAP8[ptr] = value;
-          break;
-        case "i16":
-          LE_HEAP_STORE_I16((ptr >> 1) * 2, value);
-          break;
-        case "i32":
-          LE_HEAP_STORE_I32((ptr >> 2) * 4, value);
-          break;
-        case "i64":
-          HEAP64[ptr >> 3] = BigInt(value);
-          break;
-        case "float":
-          LE_HEAP_STORE_F32((ptr >> 2) * 4, value);
-          break;
-        case "double":
-          LE_HEAP_STORE_F64((ptr >> 3) * 8, value);
-          break;
-        case "*":
-          LE_HEAP_STORE_U32((ptr >> 2) * 4, value);
-          break;
-        default:
-          abort(`invalid type for setValue: ${type}`);
-      }
-    }
-    __name(setValue, "setValue");
-    var ___memory_base = new WebAssembly.Global({
-      value: "i32",
-      mutable: false
-    }, 1024);
-    var ___stack_pointer = new WebAssembly.Global({
-      value: "i32",
-      mutable: true
-    }, 78224);
-    var ___table_base = new WebAssembly.Global({
-      value: "i32",
-      mutable: false
-    }, 1);
-    var __abort_js = /* @__PURE__ */ __name(() => abort(""), "__abort_js");
-    __abort_js.sig = "v";
-    var _emscripten_get_now = /* @__PURE__ */ __name(() => performance.now(), "_emscripten_get_now");
-    _emscripten_get_now.sig = "d";
-    var _emscripten_date_now = /* @__PURE__ */ __name(() => Date.now(), "_emscripten_date_now");
-    _emscripten_date_now.sig = "d";
-    var nowIsMonotonic = 1;
-    var checkWasiClock = /* @__PURE__ */ __name((clock_id) => clock_id >= 0 && clock_id <= 3, "checkWasiClock");
-    var INT53_MAX = 9007199254740992;
-    var INT53_MIN = -9007199254740992;
-    var bigintToI53Checked = /* @__PURE__ */ __name((num) => num < INT53_MIN || num > INT53_MAX ? NaN : Number(num), "bigintToI53Checked");
-    function _clock_time_get(clk_id, ignored_precision, ptime) {
-      ignored_precision = bigintToI53Checked(ignored_precision);
-      if (!checkWasiClock(clk_id)) {
-        return 28;
-      }
-      var now;
-      if (clk_id === 0) {
-        now = _emscripten_date_now();
-      } else if (nowIsMonotonic) {
-        now = _emscripten_get_now();
-      } else {
-        return 52;
-      }
-      var nsec = Math.round(now * 1000 * 1000);
-      HEAP64[ptime >> 3] = BigInt(nsec);
-      return 0;
-    }
-    __name(_clock_time_get, "_clock_time_get");
-    _clock_time_get.sig = "iijp";
-    var getHeapMax = /* @__PURE__ */ __name(() => 2147483648, "getHeapMax");
-    var growMemory = /* @__PURE__ */ __name((size) => {
-      var b = wasmMemory.buffer;
-      var pages = (size - b.byteLength + 65535) / 65536 | 0;
-      try {
-        wasmMemory.grow(pages);
-        updateMemoryViews();
-        return 1;
-      } catch (e) {}
-    }, "growMemory");
-    var _emscripten_resize_heap = /* @__PURE__ */ __name((requestedSize) => {
-      var oldSize = HEAPU8.length;
-      requestedSize >>>= 0;
-      var maxHeapSize = getHeapMax();
-      if (requestedSize > maxHeapSize) {
-        return false;
-      }
-      for (var cutDown = 1;cutDown <= 4; cutDown *= 2) {
-        var overGrownHeapSize = oldSize * (1 + 0.2 / cutDown);
-        overGrownHeapSize = Math.min(overGrownHeapSize, requestedSize + 100663296);
-        var newSize = Math.min(maxHeapSize, alignMemory(Math.max(requestedSize, overGrownHeapSize), 65536));
-        var replacement = growMemory(newSize);
-        if (replacement) {
-          return true;
-        }
-      }
-      return false;
-    }, "_emscripten_resize_heap");
-    _emscripten_resize_heap.sig = "ip";
-    var _fd_close = /* @__PURE__ */ __name((fd) => 52, "_fd_close");
-    _fd_close.sig = "ii";
-    function _fd_seek(fd, offset, whence, newOffset) {
-      offset = bigintToI53Checked(offset);
-      return 70;
-    }
-    __name(_fd_seek, "_fd_seek");
-    _fd_seek.sig = "iijip";
-    var printCharBuffers = [null, [], []];
-    var printChar = /* @__PURE__ */ __name((stream, curr) => {
-      var buffer = printCharBuffers[stream];
-      if (curr === 0 || curr === 10) {
-        (stream === 1 ? out : err)(UTF8ArrayToString(buffer));
-        buffer.length = 0;
-      } else {
-        buffer.push(curr);
-      }
-    }, "printChar");
-    var flush_NO_FILESYSTEM = /* @__PURE__ */ __name(() => {
-      if (printCharBuffers[1].length)
-        printChar(1, 10);
-      if (printCharBuffers[2].length)
-        printChar(2, 10);
-    }, "flush_NO_FILESYSTEM");
-    var SYSCALLS = {
-      varargs: undefined,
-      getStr(ptr) {
-        var ret = UTF8ToString(ptr);
-        return ret;
-      }
-    };
-    var _fd_write = /* @__PURE__ */ __name((fd, iov, iovcnt, pnum) => {
-      var num = 0;
-      for (var i2 = 0;i2 < iovcnt; i2++) {
-        var ptr = LE_HEAP_LOAD_U32((iov >> 2) * 4);
-        var len = LE_HEAP_LOAD_U32((iov + 4 >> 2) * 4);
-        iov += 8;
-        for (var j = 0;j < len; j++) {
-          printChar(fd, HEAPU8[ptr + j]);
-        }
-        num += len;
-      }
-      LE_HEAP_STORE_U32((pnum >> 2) * 4, num);
-      return 0;
-    }, "_fd_write");
-    _fd_write.sig = "iippp";
-    function _tree_sitter_log_callback(isLexMessage, messageAddress) {
-      if (Module.currentLogCallback) {
-        const message = UTF8ToString(messageAddress);
-        Module.currentLogCallback(message, isLexMessage !== 0);
-      }
-    }
-    __name(_tree_sitter_log_callback, "_tree_sitter_log_callback");
-    function _tree_sitter_parse_callback(inputBufferAddress, index, row, column, lengthAddress) {
-      const INPUT_BUFFER_SIZE = 10240;
-      const string = Module.currentParseCallback(index, {
-        row,
-        column
-      });
-      if (typeof string === "string") {
-        setValue(lengthAddress, string.length, "i32");
-        stringToUTF16(string, inputBufferAddress, INPUT_BUFFER_SIZE);
-      } else {
-        setValue(lengthAddress, 0, "i32");
-      }
-    }
-    __name(_tree_sitter_parse_callback, "_tree_sitter_parse_callback");
-    function _tree_sitter_progress_callback(currentOffset, hasError) {
-      if (Module.currentProgressCallback) {
-        return Module.currentProgressCallback({
-          currentOffset,
-          hasError
-        });
-      }
-      return false;
-    }
-    __name(_tree_sitter_progress_callback, "_tree_sitter_progress_callback");
-    function _tree_sitter_query_progress_callback(currentOffset) {
-      if (Module.currentQueryProgressCallback) {
-        return Module.currentQueryProgressCallback({
-          currentOffset
-        });
-      }
-      return false;
-    }
-    __name(_tree_sitter_query_progress_callback, "_tree_sitter_query_progress_callback");
-    var runtimeKeepaliveCounter = 0;
-    var keepRuntimeAlive = /* @__PURE__ */ __name(() => noExitRuntime || runtimeKeepaliveCounter > 0, "keepRuntimeAlive");
-    var _proc_exit = /* @__PURE__ */ __name((code) => {
-      EXITSTATUS = code;
-      if (!keepRuntimeAlive()) {
-        Module["onExit"]?.(code);
-        ABORT = true;
-      }
-      quit_(code, new ExitStatus(code));
-    }, "_proc_exit");
-    _proc_exit.sig = "vi";
-    var exitJS = /* @__PURE__ */ __name((status, implicit) => {
-      EXITSTATUS = status;
-      _proc_exit(status);
-    }, "exitJS");
-    var handleException = /* @__PURE__ */ __name((e) => {
-      if (e instanceof ExitStatus || e == "unwind") {
-        return EXITSTATUS;
-      }
-      quit_(1, e);
-    }, "handleException");
-    var lengthBytesUTF8 = /* @__PURE__ */ __name((str) => {
-      var len = 0;
-      for (var i2 = 0;i2 < str.length; ++i2) {
-        var c = str.charCodeAt(i2);
-        if (c <= 127) {
-          len++;
-        } else if (c <= 2047) {
-          len += 2;
-        } else if (c >= 55296 && c <= 57343) {
-          len += 4;
-          ++i2;
-        } else {
-          len += 3;
-        }
-      }
-      return len;
-    }, "lengthBytesUTF8");
-    var stringToUTF8Array = /* @__PURE__ */ __name((str, heap, outIdx, maxBytesToWrite) => {
-      if (!(maxBytesToWrite > 0))
-        return 0;
-      var startIdx = outIdx;
-      var endIdx = outIdx + maxBytesToWrite - 1;
-      for (var i2 = 0;i2 < str.length; ++i2) {
-        var u = str.charCodeAt(i2);
-        if (u >= 55296 && u <= 57343) {
-          var u1 = str.charCodeAt(++i2);
-          u = 65536 + ((u & 1023) << 10) | u1 & 1023;
-        }
-        if (u <= 127) {
-          if (outIdx >= endIdx)
-            break;
-          heap[outIdx++] = u;
-        } else if (u <= 2047) {
-          if (outIdx + 1 >= endIdx)
-            break;
-          heap[outIdx++] = 192 | u >> 6;
-          heap[outIdx++] = 128 | u & 63;
-        } else if (u <= 65535) {
-          if (outIdx + 2 >= endIdx)
-            break;
-          heap[outIdx++] = 224 | u >> 12;
-          heap[outIdx++] = 128 | u >> 6 & 63;
-          heap[outIdx++] = 128 | u & 63;
-        } else {
-          if (outIdx + 3 >= endIdx)
-            break;
-          heap[outIdx++] = 240 | u >> 18;
-          heap[outIdx++] = 128 | u >> 12 & 63;
-          heap[outIdx++] = 128 | u >> 6 & 63;
-          heap[outIdx++] = 128 | u & 63;
-        }
-      }
-      heap[outIdx] = 0;
-      return outIdx - startIdx;
-    }, "stringToUTF8Array");
-    var stringToUTF8 = /* @__PURE__ */ __name((str, outPtr, maxBytesToWrite) => stringToUTF8Array(str, HEAPU8, outPtr, maxBytesToWrite), "stringToUTF8");
-    var stackAlloc = /* @__PURE__ */ __name((sz) => __emscripten_stack_alloc(sz), "stackAlloc");
-    var stringToUTF8OnStack = /* @__PURE__ */ __name((str) => {
-      var size = lengthBytesUTF8(str) + 1;
-      var ret = stackAlloc(size);
-      stringToUTF8(str, ret, size);
-      return ret;
-    }, "stringToUTF8OnStack");
-    var AsciiToString = /* @__PURE__ */ __name((ptr) => {
-      var str = "";
-      while (true) {
-        var ch = HEAPU8[ptr++];
-        if (!ch)
-          return str;
-        str += String.fromCharCode(ch);
-      }
-    }, "AsciiToString");
-    var stringToUTF16 = /* @__PURE__ */ __name((str, outPtr, maxBytesToWrite) => {
-      maxBytesToWrite ??= 2147483647;
-      if (maxBytesToWrite < 2)
-        return 0;
-      maxBytesToWrite -= 2;
-      var startPtr = outPtr;
-      var numCharsToWrite = maxBytesToWrite < str.length * 2 ? maxBytesToWrite / 2 : str.length;
-      for (var i2 = 0;i2 < numCharsToWrite; ++i2) {
-        var codeUnit = str.charCodeAt(i2);
-        LE_HEAP_STORE_I16((outPtr >> 1) * 2, codeUnit);
-        outPtr += 2;
-      }
-      LE_HEAP_STORE_I16((outPtr >> 1) * 2, 0);
-      return outPtr - startPtr;
-    }, "stringToUTF16");
-    var wasmImports = {
-      __heap_base: ___heap_base,
-      __indirect_function_table: wasmTable,
-      __memory_base: ___memory_base,
-      __stack_pointer: ___stack_pointer,
-      __table_base: ___table_base,
-      _abort_js: __abort_js,
-      clock_time_get: _clock_time_get,
-      emscripten_resize_heap: _emscripten_resize_heap,
-      fd_close: _fd_close,
-      fd_seek: _fd_seek,
-      fd_write: _fd_write,
-      memory: wasmMemory,
-      tree_sitter_log_callback: _tree_sitter_log_callback,
-      tree_sitter_parse_callback: _tree_sitter_parse_callback,
-      tree_sitter_progress_callback: _tree_sitter_progress_callback,
-      tree_sitter_query_progress_callback: _tree_sitter_query_progress_callback
-    };
-    var wasmExports = await createWasm();
-    var ___wasm_call_ctors = wasmExports["__wasm_call_ctors"];
-    var _malloc = Module["_malloc"] = wasmExports["malloc"];
-    var _calloc = Module["_calloc"] = wasmExports["calloc"];
-    var _realloc = Module["_realloc"] = wasmExports["realloc"];
-    var _free = Module["_free"] = wasmExports["free"];
-    var _memcmp = Module["_memcmp"] = wasmExports["memcmp"];
-    var _ts_language_symbol_count = Module["_ts_language_symbol_count"] = wasmExports["ts_language_symbol_count"];
-    var _ts_language_state_count = Module["_ts_language_state_count"] = wasmExports["ts_language_state_count"];
-    var _ts_language_version = Module["_ts_language_version"] = wasmExports["ts_language_version"];
-    var _ts_language_abi_version = Module["_ts_language_abi_version"] = wasmExports["ts_language_abi_version"];
-    var _ts_language_metadata = Module["_ts_language_metadata"] = wasmExports["ts_language_metadata"];
-    var _ts_language_name = Module["_ts_language_name"] = wasmExports["ts_language_name"];
-    var _ts_language_field_count = Module["_ts_language_field_count"] = wasmExports["ts_language_field_count"];
-    var _ts_language_next_state = Module["_ts_language_next_state"] = wasmExports["ts_language_next_state"];
-    var _ts_language_symbol_name = Module["_ts_language_symbol_name"] = wasmExports["ts_language_symbol_name"];
-    var _ts_language_symbol_for_name = Module["_ts_language_symbol_for_name"] = wasmExports["ts_language_symbol_for_name"];
-    var _strncmp = Module["_strncmp"] = wasmExports["strncmp"];
-    var _ts_language_symbol_type = Module["_ts_language_symbol_type"] = wasmExports["ts_language_symbol_type"];
-    var _ts_language_field_name_for_id = Module["_ts_language_field_name_for_id"] = wasmExports["ts_language_field_name_for_id"];
-    var _ts_lookahead_iterator_new = Module["_ts_lookahead_iterator_new"] = wasmExports["ts_lookahead_iterator_new"];
-    var _ts_lookahead_iterator_delete = Module["_ts_lookahead_iterator_delete"] = wasmExports["ts_lookahead_iterator_delete"];
-    var _ts_lookahead_iterator_reset_state = Module["_ts_lookahead_iterator_reset_state"] = wasmExports["ts_lookahead_iterator_reset_state"];
-    var _ts_lookahead_iterator_reset = Module["_ts_lookahead_iterator_reset"] = wasmExports["ts_lookahead_iterator_reset"];
-    var _ts_lookahead_iterator_next = Module["_ts_lookahead_iterator_next"] = wasmExports["ts_lookahead_iterator_next"];
-    var _ts_lookahead_iterator_current_symbol = Module["_ts_lookahead_iterator_current_symbol"] = wasmExports["ts_lookahead_iterator_current_symbol"];
-    var _ts_parser_delete = Module["_ts_parser_delete"] = wasmExports["ts_parser_delete"];
-    var _ts_parser_reset = Module["_ts_parser_reset"] = wasmExports["ts_parser_reset"];
-    var _ts_parser_set_language = Module["_ts_parser_set_language"] = wasmExports["ts_parser_set_language"];
-    var _ts_parser_timeout_micros = Module["_ts_parser_timeout_micros"] = wasmExports["ts_parser_timeout_micros"];
-    var _ts_parser_set_timeout_micros = Module["_ts_parser_set_timeout_micros"] = wasmExports["ts_parser_set_timeout_micros"];
-    var _ts_parser_set_included_ranges = Module["_ts_parser_set_included_ranges"] = wasmExports["ts_parser_set_included_ranges"];
-    var _ts_query_new = Module["_ts_query_new"] = wasmExports["ts_query_new"];
-    var _ts_query_delete = Module["_ts_query_delete"] = wasmExports["ts_query_delete"];
-    var _iswspace = Module["_iswspace"] = wasmExports["iswspace"];
-    var _iswalnum = Module["_iswalnum"] = wasmExports["iswalnum"];
-    var _ts_query_pattern_count = Module["_ts_query_pattern_count"] = wasmExports["ts_query_pattern_count"];
-    var _ts_query_capture_count = Module["_ts_query_capture_count"] = wasmExports["ts_query_capture_count"];
-    var _ts_query_string_count = Module["_ts_query_string_count"] = wasmExports["ts_query_string_count"];
-    var _ts_query_capture_name_for_id = Module["_ts_query_capture_name_for_id"] = wasmExports["ts_query_capture_name_for_id"];
-    var _ts_query_capture_quantifier_for_id = Module["_ts_query_capture_quantifier_for_id"] = wasmExports["ts_query_capture_quantifier_for_id"];
-    var _ts_query_string_value_for_id = Module["_ts_query_string_value_for_id"] = wasmExports["ts_query_string_value_for_id"];
-    var _ts_query_predicates_for_pattern = Module["_ts_query_predicates_for_pattern"] = wasmExports["ts_query_predicates_for_pattern"];
-    var _ts_query_start_byte_for_pattern = Module["_ts_query_start_byte_for_pattern"] = wasmExports["ts_query_start_byte_for_pattern"];
-    var _ts_query_end_byte_for_pattern = Module["_ts_query_end_byte_for_pattern"] = wasmExports["ts_query_end_byte_for_pattern"];
-    var _ts_query_is_pattern_rooted = Module["_ts_query_is_pattern_rooted"] = wasmExports["ts_query_is_pattern_rooted"];
-    var _ts_query_is_pattern_non_local = Module["_ts_query_is_pattern_non_local"] = wasmExports["ts_query_is_pattern_non_local"];
-    var _ts_query_is_pattern_guaranteed_at_step = Module["_ts_query_is_pattern_guaranteed_at_step"] = wasmExports["ts_query_is_pattern_guaranteed_at_step"];
-    var _ts_query_disable_capture = Module["_ts_query_disable_capture"] = wasmExports["ts_query_disable_capture"];
-    var _ts_query_disable_pattern = Module["_ts_query_disable_pattern"] = wasmExports["ts_query_disable_pattern"];
-    var _ts_tree_copy = Module["_ts_tree_copy"] = wasmExports["ts_tree_copy"];
-    var _ts_tree_delete = Module["_ts_tree_delete"] = wasmExports["ts_tree_delete"];
-    var _ts_init = Module["_ts_init"] = wasmExports["ts_init"];
-    var _ts_parser_new_wasm = Module["_ts_parser_new_wasm"] = wasmExports["ts_parser_new_wasm"];
-    var _ts_parser_enable_logger_wasm = Module["_ts_parser_enable_logger_wasm"] = wasmExports["ts_parser_enable_logger_wasm"];
-    var _ts_parser_parse_wasm = Module["_ts_parser_parse_wasm"] = wasmExports["ts_parser_parse_wasm"];
-    var _ts_parser_included_ranges_wasm = Module["_ts_parser_included_ranges_wasm"] = wasmExports["ts_parser_included_ranges_wasm"];
-    var _ts_language_type_is_named_wasm = Module["_ts_language_type_is_named_wasm"] = wasmExports["ts_language_type_is_named_wasm"];
-    var _ts_language_type_is_visible_wasm = Module["_ts_language_type_is_visible_wasm"] = wasmExports["ts_language_type_is_visible_wasm"];
-    var _ts_language_supertypes_wasm = Module["_ts_language_supertypes_wasm"] = wasmExports["ts_language_supertypes_wasm"];
-    var _ts_language_subtypes_wasm = Module["_ts_language_subtypes_wasm"] = wasmExports["ts_language_subtypes_wasm"];
-    var _ts_tree_root_node_wasm = Module["_ts_tree_root_node_wasm"] = wasmExports["ts_tree_root_node_wasm"];
-    var _ts_tree_root_node_with_offset_wasm = Module["_ts_tree_root_node_with_offset_wasm"] = wasmExports["ts_tree_root_node_with_offset_wasm"];
-    var _ts_tree_edit_wasm = Module["_ts_tree_edit_wasm"] = wasmExports["ts_tree_edit_wasm"];
-    var _ts_tree_included_ranges_wasm = Module["_ts_tree_included_ranges_wasm"] = wasmExports["ts_tree_included_ranges_wasm"];
-    var _ts_tree_get_changed_ranges_wasm = Module["_ts_tree_get_changed_ranges_wasm"] = wasmExports["ts_tree_get_changed_ranges_wasm"];
-    var _ts_tree_cursor_new_wasm = Module["_ts_tree_cursor_new_wasm"] = wasmExports["ts_tree_cursor_new_wasm"];
-    var _ts_tree_cursor_copy_wasm = Module["_ts_tree_cursor_copy_wasm"] = wasmExports["ts_tree_cursor_copy_wasm"];
-    var _ts_tree_cursor_delete_wasm = Module["_ts_tree_cursor_delete_wasm"] = wasmExports["ts_tree_cursor_delete_wasm"];
-    var _ts_tree_cursor_reset_wasm = Module["_ts_tree_cursor_reset_wasm"] = wasmExports["ts_tree_cursor_reset_wasm"];
-    var _ts_tree_cursor_reset_to_wasm = Module["_ts_tree_cursor_reset_to_wasm"] = wasmExports["ts_tree_cursor_reset_to_wasm"];
-    var _ts_tree_cursor_goto_first_child_wasm = Module["_ts_tree_cursor_goto_first_child_wasm"] = wasmExports["ts_tree_cursor_goto_first_child_wasm"];
-    var _ts_tree_cursor_goto_last_child_wasm = Module["_ts_tree_cursor_goto_last_child_wasm"] = wasmExports["ts_tree_cursor_goto_last_child_wasm"];
-    var _ts_tree_cursor_goto_first_child_for_index_wasm = Module["_ts_tree_cursor_goto_first_child_for_index_wasm"] = wasmExports["ts_tree_cursor_goto_first_child_for_index_wasm"];
-    var _ts_tree_cursor_goto_first_child_for_position_wasm = Module["_ts_tree_cursor_goto_first_child_for_position_wasm"] = wasmExports["ts_tree_cursor_goto_first_child_for_position_wasm"];
-    var _ts_tree_cursor_goto_next_sibling_wasm = Module["_ts_tree_cursor_goto_next_sibling_wasm"] = wasmExports["ts_tree_cursor_goto_next_sibling_wasm"];
-    var _ts_tree_cursor_goto_previous_sibling_wasm = Module["_ts_tree_cursor_goto_previous_sibling_wasm"] = wasmExports["ts_tree_cursor_goto_previous_sibling_wasm"];
-    var _ts_tree_cursor_goto_descendant_wasm = Module["_ts_tree_cursor_goto_descendant_wasm"] = wasmExports["ts_tree_cursor_goto_descendant_wasm"];
-    var _ts_tree_cursor_goto_parent_wasm = Module["_ts_tree_cursor_goto_parent_wasm"] = wasmExports["ts_tree_cursor_goto_parent_wasm"];
-    var _ts_tree_cursor_current_node_type_id_wasm = Module["_ts_tree_cursor_current_node_type_id_wasm"] = wasmExports["ts_tree_cursor_current_node_type_id_wasm"];
-    var _ts_tree_cursor_current_node_state_id_wasm = Module["_ts_tree_cursor_current_node_state_id_wasm"] = wasmExports["ts_tree_cursor_current_node_state_id_wasm"];
-    var _ts_tree_cursor_current_node_is_named_wasm = Module["_ts_tree_cursor_current_node_is_named_wasm"] = wasmExports["ts_tree_cursor_current_node_is_named_wasm"];
-    var _ts_tree_cursor_current_node_is_missing_wasm = Module["_ts_tree_cursor_current_node_is_missing_wasm"] = wasmExports["ts_tree_cursor_current_node_is_missing_wasm"];
-    var _ts_tree_cursor_current_node_id_wasm = Module["_ts_tree_cursor_current_node_id_wasm"] = wasmExports["ts_tree_cursor_current_node_id_wasm"];
-    var _ts_tree_cursor_start_position_wasm = Module["_ts_tree_cursor_start_position_wasm"] = wasmExports["ts_tree_cursor_start_position_wasm"];
-    var _ts_tree_cursor_end_position_wasm = Module["_ts_tree_cursor_end_position_wasm"] = wasmExports["ts_tree_cursor_end_position_wasm"];
-    var _ts_tree_cursor_start_index_wasm = Module["_ts_tree_cursor_start_index_wasm"] = wasmExports["ts_tree_cursor_start_index_wasm"];
-    var _ts_tree_cursor_end_index_wasm = Module["_ts_tree_cursor_end_index_wasm"] = wasmExports["ts_tree_cursor_end_index_wasm"];
-    var _ts_tree_cursor_current_field_id_wasm = Module["_ts_tree_cursor_current_field_id_wasm"] = wasmExports["ts_tree_cursor_current_field_id_wasm"];
-    var _ts_tree_cursor_current_depth_wasm = Module["_ts_tree_cursor_current_depth_wasm"] = wasmExports["ts_tree_cursor_current_depth_wasm"];
-    var _ts_tree_cursor_current_descendant_index_wasm = Module["_ts_tree_cursor_current_descendant_index_wasm"] = wasmExports["ts_tree_cursor_current_descendant_index_wasm"];
-    var _ts_tree_cursor_current_node_wasm = Module["_ts_tree_cursor_current_node_wasm"] = wasmExports["ts_tree_cursor_current_node_wasm"];
-    var _ts_node_symbol_wasm = Module["_ts_node_symbol_wasm"] = wasmExports["ts_node_symbol_wasm"];
-    var _ts_node_field_name_for_child_wasm = Module["_ts_node_field_name_for_child_wasm"] = wasmExports["ts_node_field_name_for_child_wasm"];
-    var _ts_node_field_name_for_named_child_wasm = Module["_ts_node_field_name_for_named_child_wasm"] = wasmExports["ts_node_field_name_for_named_child_wasm"];
-    var _ts_node_children_by_field_id_wasm = Module["_ts_node_children_by_field_id_wasm"] = wasmExports["ts_node_children_by_field_id_wasm"];
-    var _ts_node_first_child_for_byte_wasm = Module["_ts_node_first_child_for_byte_wasm"] = wasmExports["ts_node_first_child_for_byte_wasm"];
-    var _ts_node_first_named_child_for_byte_wasm = Module["_ts_node_first_named_child_for_byte_wasm"] = wasmExports["ts_node_first_named_child_for_byte_wasm"];
-    var _ts_node_grammar_symbol_wasm = Module["_ts_node_grammar_symbol_wasm"] = wasmExports["ts_node_grammar_symbol_wasm"];
-    var _ts_node_child_count_wasm = Module["_ts_node_child_count_wasm"] = wasmExports["ts_node_child_count_wasm"];
-    var _ts_node_named_child_count_wasm = Module["_ts_node_named_child_count_wasm"] = wasmExports["ts_node_named_child_count_wasm"];
-    var _ts_node_child_wasm = Module["_ts_node_child_wasm"] = wasmExports["ts_node_child_wasm"];
-    var _ts_node_named_child_wasm = Module["_ts_node_named_child_wasm"] = wasmExports["ts_node_named_child_wasm"];
-    var _ts_node_child_by_field_id_wasm = Module["_ts_node_child_by_field_id_wasm"] = wasmExports["ts_node_child_by_field_id_wasm"];
-    var _ts_node_next_sibling_wasm = Module["_ts_node_next_sibling_wasm"] = wasmExports["ts_node_next_sibling_wasm"];
-    var _ts_node_prev_sibling_wasm = Module["_ts_node_prev_sibling_wasm"] = wasmExports["ts_node_prev_sibling_wasm"];
-    var _ts_node_next_named_sibling_wasm = Module["_ts_node_next_named_sibling_wasm"] = wasmExports["ts_node_next_named_sibling_wasm"];
-    var _ts_node_prev_named_sibling_wasm = Module["_ts_node_prev_named_sibling_wasm"] = wasmExports["ts_node_prev_named_sibling_wasm"];
-    var _ts_node_descendant_count_wasm = Module["_ts_node_descendant_count_wasm"] = wasmExports["ts_node_descendant_count_wasm"];
-    var _ts_node_parent_wasm = Module["_ts_node_parent_wasm"] = wasmExports["ts_node_parent_wasm"];
-    var _ts_node_child_with_descendant_wasm = Module["_ts_node_child_with_descendant_wasm"] = wasmExports["ts_node_child_with_descendant_wasm"];
-    var _ts_node_descendant_for_index_wasm = Module["_ts_node_descendant_for_index_wasm"] = wasmExports["ts_node_descendant_for_index_wasm"];
-    var _ts_node_named_descendant_for_index_wasm = Module["_ts_node_named_descendant_for_index_wasm"] = wasmExports["ts_node_named_descendant_for_index_wasm"];
-    var _ts_node_descendant_for_position_wasm = Module["_ts_node_descendant_for_position_wasm"] = wasmExports["ts_node_descendant_for_position_wasm"];
-    var _ts_node_named_descendant_for_position_wasm = Module["_ts_node_named_descendant_for_position_wasm"] = wasmExports["ts_node_named_descendant_for_position_wasm"];
-    var _ts_node_start_point_wasm = Module["_ts_node_start_point_wasm"] = wasmExports["ts_node_start_point_wasm"];
-    var _ts_node_end_point_wasm = Module["_ts_node_end_point_wasm"] = wasmExports["ts_node_end_point_wasm"];
-    var _ts_node_start_index_wasm = Module["_ts_node_start_index_wasm"] = wasmExports["ts_node_start_index_wasm"];
-    var _ts_node_end_index_wasm = Module["_ts_node_end_index_wasm"] = wasmExports["ts_node_end_index_wasm"];
-    var _ts_node_to_string_wasm = Module["_ts_node_to_string_wasm"] = wasmExports["ts_node_to_string_wasm"];
-    var _ts_node_children_wasm = Module["_ts_node_children_wasm"] = wasmExports["ts_node_children_wasm"];
-    var _ts_node_named_children_wasm = Module["_ts_node_named_children_wasm"] = wasmExports["ts_node_named_children_wasm"];
-    var _ts_node_descendants_of_type_wasm = Module["_ts_node_descendants_of_type_wasm"] = wasmExports["ts_node_descendants_of_type_wasm"];
-    var _ts_node_is_named_wasm = Module["_ts_node_is_named_wasm"] = wasmExports["ts_node_is_named_wasm"];
-    var _ts_node_has_changes_wasm = Module["_ts_node_has_changes_wasm"] = wasmExports["ts_node_has_changes_wasm"];
-    var _ts_node_has_error_wasm = Module["_ts_node_has_error_wasm"] = wasmExports["ts_node_has_error_wasm"];
-    var _ts_node_is_error_wasm = Module["_ts_node_is_error_wasm"] = wasmExports["ts_node_is_error_wasm"];
-    var _ts_node_is_missing_wasm = Module["_ts_node_is_missing_wasm"] = wasmExports["ts_node_is_missing_wasm"];
-    var _ts_node_is_extra_wasm = Module["_ts_node_is_extra_wasm"] = wasmExports["ts_node_is_extra_wasm"];
-    var _ts_node_parse_state_wasm = Module["_ts_node_parse_state_wasm"] = wasmExports["ts_node_parse_state_wasm"];
-    var _ts_node_next_parse_state_wasm = Module["_ts_node_next_parse_state_wasm"] = wasmExports["ts_node_next_parse_state_wasm"];
-    var _ts_query_matches_wasm = Module["_ts_query_matches_wasm"] = wasmExports["ts_query_matches_wasm"];
-    var _ts_query_captures_wasm = Module["_ts_query_captures_wasm"] = wasmExports["ts_query_captures_wasm"];
-    var _memset = Module["_memset"] = wasmExports["memset"];
-    var _memcpy = Module["_memcpy"] = wasmExports["memcpy"];
-    var _memmove = Module["_memmove"] = wasmExports["memmove"];
-    var _iswalpha = Module["_iswalpha"] = wasmExports["iswalpha"];
-    var _iswblank = Module["_iswblank"] = wasmExports["iswblank"];
-    var _iswdigit = Module["_iswdigit"] = wasmExports["iswdigit"];
-    var _iswlower = Module["_iswlower"] = wasmExports["iswlower"];
-    var _iswupper = Module["_iswupper"] = wasmExports["iswupper"];
-    var _iswxdigit = Module["_iswxdigit"] = wasmExports["iswxdigit"];
-    var _memchr = Module["_memchr"] = wasmExports["memchr"];
-    var _strlen = Module["_strlen"] = wasmExports["strlen"];
-    var _strcmp = Module["_strcmp"] = wasmExports["strcmp"];
-    var _strncat = Module["_strncat"] = wasmExports["strncat"];
-    var _strncpy = Module["_strncpy"] = wasmExports["strncpy"];
-    var _towlower = Module["_towlower"] = wasmExports["towlower"];
-    var _towupper = Module["_towupper"] = wasmExports["towupper"];
-    var _setThrew = wasmExports["setThrew"];
-    var __emscripten_stack_restore = wasmExports["_emscripten_stack_restore"];
-    var __emscripten_stack_alloc = wasmExports["_emscripten_stack_alloc"];
-    var _emscripten_stack_get_current = wasmExports["emscripten_stack_get_current"];
-    var ___wasm_apply_data_relocs = wasmExports["__wasm_apply_data_relocs"];
-    Module["setValue"] = setValue;
-    Module["getValue"] = getValue;
-    Module["UTF8ToString"] = UTF8ToString;
-    Module["stringToUTF8"] = stringToUTF8;
-    Module["lengthBytesUTF8"] = lengthBytesUTF8;
-    Module["AsciiToString"] = AsciiToString;
-    Module["stringToUTF16"] = stringToUTF16;
-    Module["loadWebAssemblyModule"] = loadWebAssemblyModule;
-    function callMain(args2 = []) {
-      var entryFunction = resolveGlobalSymbol("main").sym;
-      if (!entryFunction)
-        return;
-      args2.unshift(thisProgram);
-      var argc = args2.length;
-      var argv = stackAlloc((argc + 1) * 4);
-      var argv_ptr = argv;
-      args2.forEach((arg) => {
-        LE_HEAP_STORE_U32((argv_ptr >> 2) * 4, stringToUTF8OnStack(arg));
-        argv_ptr += 4;
-      });
-      LE_HEAP_STORE_U32((argv_ptr >> 2) * 4, 0);
-      try {
-        var ret = entryFunction(argc, argv);
-        exitJS(ret, true);
-        return ret;
-      } catch (e) {
-        return handleException(e);
-      }
-    }
-    __name(callMain, "callMain");
-    function run(args2 = arguments_) {
-      if (runDependencies > 0) {
-        dependenciesFulfilled = run;
-        return;
-      }
-      preRun();
-      if (runDependencies > 0) {
-        dependenciesFulfilled = run;
-        return;
-      }
-      function doRun() {
-        Module["calledRun"] = true;
-        if (ABORT)
-          return;
-        initRuntime();
-        preMain();
-        readyPromiseResolve(Module);
-        Module["onRuntimeInitialized"]?.();
-        var noInitialRun = Module["noInitialRun"];
-        if (!noInitialRun)
-          callMain(args2);
-        postRun();
-      }
-      __name(doRun, "doRun");
-      if (Module["setStatus"]) {
-        Module["setStatus"]("Running...");
-        setTimeout(() => {
-          setTimeout(() => Module["setStatus"](""), 1);
-          doRun();
-        }, 1);
-      } else {
-        doRun();
-      }
-    }
-    __name(run, "run");
-    if (Module["preInit"]) {
-      if (typeof Module["preInit"] == "function")
-        Module["preInit"] = [Module["preInit"]];
-      while (Module["preInit"].length > 0) {
-        Module["preInit"].pop()();
-      }
-    }
-    run();
-    moduleRtn = readyPromise;
-    return moduleRtn;
-  };
-})();
-var tree_sitter_default = Module2;
-var Module3 = null;
-async function initializeBinding(moduleOptions) {
-  if (!Module3) {
-    Module3 = await tree_sitter_default(moduleOptions);
-  }
-  return Module3;
-}
-__name(initializeBinding, "initializeBinding");
-function checkModule() {
-  return !!Module3;
-}
-__name(checkModule, "checkModule");
-var TRANSFER_BUFFER;
-var LANGUAGE_VERSION;
-var MIN_COMPATIBLE_VERSION;
-var Parser = class {
-  static {
-    __name(this, "Parser");
-  }
-  [0] = 0;
-  [1] = 0;
-  logCallback = null;
-  language = null;
-  static async init(moduleOptions) {
-    setModule(await initializeBinding(moduleOptions));
-    TRANSFER_BUFFER = C._ts_init();
-    LANGUAGE_VERSION = C.getValue(TRANSFER_BUFFER, "i32");
-    MIN_COMPATIBLE_VERSION = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-  }
-  constructor() {
-    this.initialize();
-  }
-  initialize() {
-    if (!checkModule()) {
-      throw new Error("cannot construct a Parser before calling `init()`");
-    }
-    C._ts_parser_new_wasm();
-    this[0] = C.getValue(TRANSFER_BUFFER, "i32");
-    this[1] = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-  }
-  delete() {
-    C._ts_parser_delete(this[0]);
-    C._free(this[1]);
-    this[0] = 0;
-    this[1] = 0;
-  }
-  setLanguage(language) {
-    let address;
-    if (!language) {
-      address = 0;
-      this.language = null;
-    } else if (language.constructor === Language) {
-      address = language[0];
-      const version = C._ts_language_version(address);
-      if (version < MIN_COMPATIBLE_VERSION || LANGUAGE_VERSION < version) {
-        throw new Error(`Incompatible language version ${version}. Compatibility range ${MIN_COMPATIBLE_VERSION} through ${LANGUAGE_VERSION}.`);
-      }
-      this.language = language;
-    } else {
-      throw new Error("Argument must be a Language");
-    }
-    C._ts_parser_set_language(this[0], address);
-    return this;
-  }
-  parse(callback, oldTree, options) {
-    if (typeof callback === "string") {
-      C.currentParseCallback = (index) => callback.slice(index);
-    } else if (typeof callback === "function") {
-      C.currentParseCallback = callback;
-    } else {
-      throw new Error("Argument must be a string or a function");
-    }
-    if (options?.progressCallback) {
-      C.currentProgressCallback = options.progressCallback;
-    } else {
-      C.currentProgressCallback = null;
-    }
-    if (this.logCallback) {
-      C.currentLogCallback = this.logCallback;
-      C._ts_parser_enable_logger_wasm(this[0], 1);
-    } else {
-      C.currentLogCallback = null;
-      C._ts_parser_enable_logger_wasm(this[0], 0);
-    }
-    let rangeCount = 0;
-    let rangeAddress = 0;
-    if (options?.includedRanges) {
-      rangeCount = options.includedRanges.length;
-      rangeAddress = C._calloc(rangeCount, SIZE_OF_RANGE);
-      let address = rangeAddress;
-      for (let i2 = 0;i2 < rangeCount; i2++) {
-        marshalRange(address, options.includedRanges[i2]);
-        address += SIZE_OF_RANGE;
-      }
-    }
-    const treeAddress = C._ts_parser_parse_wasm(this[0], this[1], oldTree ? oldTree[0] : 0, rangeAddress, rangeCount);
-    if (!treeAddress) {
-      C.currentParseCallback = null;
-      C.currentLogCallback = null;
-      C.currentProgressCallback = null;
-      return null;
-    }
-    if (!this.language) {
-      throw new Error("Parser must have a language to parse");
-    }
-    const result = new Tree(INTERNAL, treeAddress, this.language, C.currentParseCallback);
-    C.currentParseCallback = null;
-    C.currentLogCallback = null;
-    C.currentProgressCallback = null;
-    return result;
-  }
-  reset() {
-    C._ts_parser_reset(this[0]);
-  }
-  getIncludedRanges() {
-    C._ts_parser_included_ranges_wasm(this[0]);
-    const count = C.getValue(TRANSFER_BUFFER, "i32");
-    const buffer = C.getValue(TRANSFER_BUFFER + SIZE_OF_INT, "i32");
-    const result = new Array(count);
-    if (count > 0) {
-      let address = buffer;
-      for (let i2 = 0;i2 < count; i2++) {
-        result[i2] = unmarshalRange(address);
-        address += SIZE_OF_RANGE;
-      }
-      C._free(buffer);
-    }
-    return result;
-  }
-  getTimeoutMicros() {
-    return C._ts_parser_timeout_micros(this[0]);
-  }
-  setTimeoutMicros(timeout) {
-    C._ts_parser_set_timeout_micros(this[0], 0, timeout);
-  }
-  setLogger(callback) {
-    if (!callback) {
-      this.logCallback = null;
-    } else if (typeof callback !== "function") {
-      throw new Error("Logger callback must be a function");
-    } else {
-      this.logCallback = callback;
-    }
-    return this;
-  }
-  getLogger() {
-    return this.logCallback;
-  }
-};
-
-// ../log-template-extractor/src/site-model.ts
-var LEVEL_WORDS = {
-  trace: "trace",
-  verbose: "trace",
-  silly: "trace",
-  debug: "debug",
-  dbg: "debug",
-  info: "info",
-  log: "info",
-  notice: "info",
-  success: "info",
-  print: "info",
-  println: "info",
-  printf: "info",
-  puts: "info",
-  warn: "warn",
-  warning: "warn",
-  warningf: "warn",
-  error: "error",
-  err: "error",
-  exception: "error",
-  critical: "fatal",
-  fatal: "fatal",
-  panic: "fatal",
-  alert: "fatal",
-  emergency: "fatal"
-};
-var PLACEHOLDER = "<*>";
-function normalizeTemplate(t) {
-  return t.replace(/\s+/g, " ").replace(/(<\*>\s*){2,}/g, "<*> ").trim();
-}
-function maskFormatSpecs(t, options = {}) {
-  const printf = t.replace(/%\((\w+)\)[sdrf]/g, PLACEHOLDER).replace(/%[-+ #0]*\d*(?:\.\d+)?[sdifoxXeEgGcqvVtTpbuOjrw%]/g, (m) => m === "%%" ? "%" : PLACEHOLDER);
-  if (!options.braces)
-    return printf;
-  const OPEN = "\x00LBRACE\x00";
-  const CLOSE = "\x00RBRACE\x00";
-  return printf.replace(/\{\{/g, OPEN).replace(/\}\}/g, CLOSE).replace(/\{[^{}\n]*\}/g, PLACEHOLDER).split(OPEN).join("{").split(CLOSE).join("}");
-}
-function children(n) {
-  const out2 = [];
-  for (let i2 = 0;i2 < n.namedChildCount; i2++) {
-    const c = n.namedChild(i2);
-    if (c)
-      out2.push(c);
-  }
-  return out2;
-}
-function walk(n, f) {
-  const stack = [n];
-  while (stack.length) {
-    const cur = stack.pop();
-    f(cur);
-    for (let i2 = cur.childCount - 1;i2 >= 0; i2--) {
-      const c = cur.child(i2);
-      if (c)
-        stack.push(c);
-    }
-  }
-}
-function unquote(text) {
-  let s = text;
-  s = s.replace(/^(?:[rRbBuUfF]{1,2})?(?=["'`])/, "");
-  const m = s.match(/^("""|'''|"|'|`)([\s\S]*)\1$/);
-  if (m)
-    s = m[2] ?? "";
-  else if (/^r#*"/.test(s)) {
-    s = s.replace(/^r#*"/, "").replace(/"#*$/, "");
-  }
-  return s.replace(/\\n/g, " ").replace(/\\t/g, " ").replace(/\\(["'`\\])/g, "$1");
-}
-
-// ../log-template-extractor/src/languages/elixir-java.ts
-function elixirString(n) {
-  let t = "";
-  let interpolated = false;
-  for (let i2 = 0;i2 < n.childCount; i2++) {
-    const c = n.child(i2);
-    if (c.type === "quoted_content")
-      t += c.text;
-    else if (c.type === "interpolation") {
-      t += PLACEHOLDER;
-      interpolated = true;
-    } else if (c.type === "escape_sequence")
-      t += unquote('"' + c.text + '"');
-  }
-  return { text: t, interpolated };
-}
-function visitElixir(root, ctx) {
-  walk(root, (n) => {
-    if (n.type !== "call")
-      return;
-    const target = n.childForFieldName("target");
-    if (target?.type !== "dot")
-      return;
-    const parts2 = target.text.split(".");
-    const method = parts2.pop();
-    const obj = parts2.join(".");
-    let level;
-    let sink = "logger";
-    if (obj === "Logger" && LEVEL_WORDS[method])
-      level = LEVEL_WORDS[method];
-    else if (obj === "IO" && /^(puts|inspect|warn)$/.test(method)) {
-      level = "print";
-      sink = "console";
-    } else
-      return;
-    const args2 = n.childForFieldName("arguments") ?? n.namedChildren.find((c) => c?.type === "arguments");
-    const a0 = args2 ? children(args2)[0] : undefined;
-    if (!a0)
-      return;
-    let template = null;
-    let kind = "dynamic:" + a0.type;
-    if (a0.type === "string") {
-      const s = elixirString(a0);
-      template = s.text;
-      kind = s.interpolated ? "template" : "literal";
-    } else if (a0.type === "binary_operator" && a0.child(1)?.text === "<>") {
-      const parts3 = [];
-      let any = false;
-      walk(a0, (c) => {
-        if (c.type === "string" && c.parent?.type === "binary_operator") {
-          parts3.push(elixirString(c).text);
-          any = true;
-        }
-      });
-      if (any) {
-        template = a0.text.includes("<>") ? children(a0).map((c) => c.type === "string" ? elixirString(c).text : PLACEHOLDER).join("") : parts3.join("");
-        kind = "concat";
-      }
-    } else if (a0.type === "anonymous_function") {
-      let s = null;
-      walk(a0, (c) => {
-        if (s === null && c.type === "string")
-          s = elixirString(c).text;
-      });
-      if (s !== null) {
-        template = s;
-        kind = "template";
-      }
-    }
-    ctx.emit({
-      line: n.startPosition.row + 1,
-      level,
-      callee: obj + "." + method,
-      kind,
-      template: template === null ? null : normalizeTemplate(template),
-      sink,
-      argc: args2 ? children(args2).length : 0
-    });
-  });
-}
-function javaResolve(n, depth = 0) {
-  if (depth > 5)
-    return { template: null, kind: "dynamic:deep" };
-  switch (n.type) {
-    case "string_literal":
-      return { template: unquote(n.text), kind: "literal" };
-    case "parenthesized_expression": {
-      const c = n.namedChild(0);
-      return c ? javaResolve(c, depth + 1) : { template: null, kind: "dynamic" };
-    }
-    case "binary_expression": {
-      if (n.child(1)?.text !== "+")
-        return { template: null, kind: "dynamic:binary" };
-      const l = javaResolve(n.childForFieldName("left"), depth + 1);
-      const r = javaResolve(n.childForFieldName("right"), depth + 1);
-      if (l.template === null && r.template === null)
-        return { template: null, kind: "dynamic:concat" };
-      return {
-        template: (l.template ?? PLACEHOLDER) + (r.template ?? PLACEHOLDER),
-        kind: "concat"
-      };
-    }
-    case "method_invocation": {
-      const name2 = n.childForFieldName("name")?.text ?? "";
-      const obj = n.childForFieldName("object")?.text ?? "";
-      const args2 = n.childForFieldName("arguments");
-      const a = args2 ? children(args2) : [];
-      if (name2 === "format" && (obj === "String" || obj === "MessageFormat") && a[0]) {
-        const r = javaResolve(a[0], depth + 1);
-        return r.template !== null ? {
-          template: maskFormatSpecs(r.template, { braces: true }),
-          kind: "format"
-        } : { template: null, kind: "dynamic:format" };
-      }
-      if (name2 === "getMessage" || name2 === "toString")
-        return { template: null, kind: "dynamic:error-message" };
-      return { template: null, kind: "dynamic:call" };
-    }
-    default:
-      return { template: null, kind: "dynamic:" + n.type };
-  }
-}
-function visitJava(root, ctx) {
-  walk(root, (n) => {
-    if (n.type !== "method_invocation")
-      return;
-    const name2 = n.childForFieldName("name")?.text ?? "";
-    const obj = n.childForFieldName("object")?.text ?? "";
-    const lm = name2.toLowerCase();
-    let level;
-    let sink = "logger";
-    if (/^System\.(out|err)$/.test(obj) && /^print(ln)?$/.test(name2)) {
-      level = "print";
-      sink = "console";
-    } else if (LEVEL_WORDS[lm] && /log|logger|LOG|LOGGER/i.test(obj))
-      level = LEVEL_WORDS[lm];
-    else
-      return;
-    const args2 = n.childForFieldName("arguments");
-    const a = args2 ? children(args2) : [];
-    const first = a[0];
-    if (!first)
-      return;
-    const msg = a.length > 1 && first.type !== "string_literal" && /Marker|marker/.test(first.text) ? a[1] : first;
-    if (!msg)
-      return;
-    const r = javaResolve(msg);
-    ctx.emit({
-      line: n.startPosition.row + 1,
-      level,
-      callee: obj.slice(-40) + "." + name2,
-      kind: r.kind,
-      template: r.template === null ? null : normalizeTemplate(maskFormatSpecs(r.template, { braces: true })),
-      sink,
-      argc: a.length
-    });
-  });
-}
-var elixirJavaRules = [
-  {
-    id: "elixir",
-    wasm: "tree-sitter-elixir.wasm",
-    exts: /\.(ex|exs)$/,
-    visit: visitElixir
-  },
-  {
-    id: "java",
-    wasm: "tree-sitter-java.wasm",
-    exts: /\.java$/,
-    visit: visitJava
-  }
-];
-
-// ../log-template-extractor/src/languages/go.ts
-var GO_METHODS = {
-  print: "print",
-  printf: "print",
-  println: "print",
-  fatal: "fatal",
-  fatalf: "fatal",
-  fatalln: "fatal",
-  panic: "fatal",
-  panicf: "fatal",
-  panicln: "fatal",
-  trace: "trace",
-  tracef: "trace",
-  debug: "debug",
-  debugf: "debug",
-  debugw: "debug",
-  debugln: "debug",
-  debugcontext: "debug",
-  info: "info",
-  infof: "info",
-  infow: "info",
-  infoln: "info",
-  infocontext: "info",
-  warn: "warn",
-  warnf: "warn",
-  warnw: "warn",
-  warnln: "warn",
-  warncontext: "warn",
-  warning: "warn",
-  warningf: "warn",
-  error: "error",
-  errorf: "error",
-  errorw: "error",
-  errorln: "error",
-  errorcontext: "error",
-  msg: "unknown",
-  msgf: "unknown",
-  log: "info",
-  logf: "info"
-};
-var LEVEL_CHAIN = /\.(Trace|Debug|Info|Warn|Error|Fatal|Panic)\(\)/;
-function collectConsts(root) {
-  const consts = new Map;
-  walk(root, (n) => {
-    if (n.type === "const_spec" || n.type === "var_spec") {
-      const name2 = n.childForFieldName("name")?.text;
-      const value = n.childForFieldName("value");
-      const v = value?.namedChild(0);
-      if (name2 && v && (v.type === "interpreted_string_literal" || v.type === "raw_string_literal"))
-        consts.set(name2, unquote(v.text));
-    }
-  });
-  return consts;
-}
-function resolve(n, consts, depth) {
-  if (depth > 5)
-    return { template: null, kind: "dynamic:deep" };
-  switch (n.type) {
-    case "interpreted_string_literal":
-    case "raw_string_literal":
-      return { template: unquote(n.text), kind: "literal" };
-    case "parenthesized_expression": {
-      const c = n.namedChild(0);
-      return c ? resolve(c, consts, depth + 1) : { template: null, kind: "dynamic" };
-    }
-    case "binary_expression": {
-      if (n.child(1)?.text !== "+")
-        return { template: null, kind: "dynamic:binary" };
-      const l = resolve(n.childForFieldName("left"), consts, depth + 1);
-      const r = resolve(n.childForFieldName("right"), consts, depth + 1);
-      if (l.template === null && r.template === null)
-        return { template: null, kind: "dynamic:concat" };
-      return {
-        template: (l.template ?? PLACEHOLDER) + (r.template ?? PLACEHOLDER),
-        kind: "concat"
-      };
-    }
-    case "identifier": {
-      const c = consts.get(n.text);
-      return c !== undefined ? { template: c, kind: "const" } : { template: null, kind: "dynamic:identifier" };
-    }
-    case "selector_expression":
-      return {
-        template: null,
-        kind: /\.Error\(\)$|\.Message$|\.Msg$/.test(n.text) ? "dynamic:error-message" : "dynamic:property"
-      };
-    case "call_expression": {
-      const fn = n.childForFieldName("function");
-      if (!fn)
-        return { template: null, kind: "dynamic:call" };
-      const args2 = n.childForFieldName("arguments");
-      const a = args2 ? children(args2) : [];
-      const first = a[0];
-      if (/^fmt\.Sprint(f|ln)?$|^errors\.New$|^fmt\.Errorf$/.test(fn.text) && first) {
-        const r = resolve(first, consts, depth + 1);
-        if (r.template === null)
-          return { template: null, kind: "dynamic:format" };
-        let t = maskFormatSpecs(r.template);
-        if (/Sprint(ln)?$/.test(fn.text) && a.length > 1)
-          t += (" " + PLACEHOLDER).repeat(a.length - 1);
-        return { template: t, kind: "format" };
-      }
-      if (/\.Error\(\)$/.test(n.text))
-        return { template: null, kind: "dynamic:error-message" };
-      if (/^strings\.Join$/.test(fn.text))
-        return { template: null, kind: "dynamic:join" };
-      return { template: null, kind: "dynamic:call" };
-    }
-    default:
-      return { template: null, kind: "dynamic:" + n.type };
-  }
-}
-function visitGo(root, ctx) {
-  const consts = collectConsts(root);
-  walk(root, (n) => {
-    if (n.type !== "call_expression")
-      return;
-    const fn = n.childForFieldName("function");
-    if (fn.type !== "selector_expression")
-      return;
-    const method = fn.childForFieldName("field")?.text ?? "";
-    const objText = fn.childForFieldName("operand")?.text ?? "";
-    const lm = method.toLowerCase();
-    const args2 = n.childForFieldName("arguments");
-    const argNodes = args2 ? children(args2) : [];
-    if (/^(errors\.New|fmt\.Errorf|errors\.Errorf|errors\.Wrapf?|status\.Errorf?|status\.Error)$/.test(fn.text) && argNodes.length) {
-      const idx = /Wrap|status\.Error/.test(fn.text) ? 1 : 0;
-      const a = argNodes[idx];
-      if (!a)
-        return;
-      const r2 = resolve(a, consts, 0);
-      if (r2.template !== null)
-        ctx.emit({
-          line: n.startPosition.row + 1,
-          level: "error",
-          callee: fn.text,
-          kind: r2.kind,
-          template: normalizeTemplate(maskFormatSpecs(r2.template)),
-          sink: "error",
-          argc: argNodes.length
-        });
-      return;
-    }
-    if (!(lm in GO_METHODS))
-      return;
-    if (!argNodes.length)
-      return;
-    let level = GO_METHODS[lm] ?? "unknown";
-    if (lm === "msg" || lm === "msgf") {
-      const m = objText.match(LEVEL_CHAIN);
-      if (!m) {
-        ctx.stat("skip:msg-without-level-chain");
-        return;
-      }
-      level = LEVEL_WORDS[(m[1] ?? "").toLowerCase()] ?? "unknown";
-    }
-    const isFmtPkg = /^fmt$/.test(objText);
-    const levelMethod = /^(trace|debug|info|warn|warning|error|fatal|panic)(f|w|ln|context)?$/.test(lm);
-    const looksLogger = isFmtPkg || levelMethod || /log|logger|logging|zap|zerolog|logrus|slog|klog|glog|sugar|^l$|^lg$|^lgr$|^s$|^z$/i.test(objText) || /\.(Sugar|With|WithFields|WithField|WithContext|Named|Str|Int|Err|Dur|Any|Fields)\(/.test(objText) || /\.(Info|Error|Warn|Debug|Trace)\(\)$/.test(objText);
-    if (/^(t|b|tb|testing|assert|require|suite)$/.test(objText))
-      return;
-    const firstArg = argNodes[0];
-    if (!firstArg)
-      return;
-    if (levelMethod && !/^(interpreted_string_literal|raw_string_literal|binary_expression|identifier|call_expression|parenthesized_expression)$/.test(firstArg.type) && !(argNodes[1] && /string_literal/.test(argNodes[1].type))) {
-      ctx.stat("skip:level-method-non-string-arg");
-      return;
-    }
-    if (!looksLogger) {
-      ctx.stat("skip:non-logger-receiver");
-      return;
-    }
-    if (isFmtPkg && !/^Print/.test(method))
-      return;
-    let msgIdx = 0;
-    if (/context$/.test(lm) || firstArg.type === "identifier" && /^(ctx|context)$/.test(firstArg.text) && argNodes.length > 1)
-      msgIdx = 1;
-    if (lm === "log" && argNodes.length > 2 && /^(ctx|context)$/.test(firstArg.text))
-      msgIdx = 2;
-    const msg = argNodes[msgIdx];
-    if (!msg)
-      return;
-    const r = resolve(msg, consts, 0);
-    const sink = isFmtPkg ? "console" : "logger";
-    const callee = objText.replace(/\s+/g, "").slice(-40) + "." + method;
-    let t = r.template;
-    if (t !== null) {
-      t = maskFormatSpecs(t);
-      if ((isFmtPkg || objText === "log") && /^(print|println|fatal|fatalln|panic|panicln)$/.test(lm) && argNodes.length > msgIdx + 1)
-        t += (" " + PLACEHOLDER).repeat(argNodes.length - msgIdx - 1);
-      t = normalizeTemplate(t);
-    }
-    ctx.emit({
-      line: n.startPosition.row + 1,
-      level,
-      callee,
-      kind: r.kind,
-      template: t,
-      sink,
-      argc: argNodes.length
-    });
-  });
-}
-var goRules = [
-  { id: "go", wasm: "tree-sitter-go.wasm", exts: /\.go$/, visit: visitGo }
-];
-
-// ../log-template-extractor/src/languages/javascript.ts
-var METHODS = new Set(Object.keys(LEVEL_WORDS));
-var STRINGY = new Set([
-  "string",
-  "template_string",
-  "binary_expression",
-  "parenthesized_expression",
-  "ternary_expression",
-  "identifier",
-  "member_expression",
-  "call_expression"
-]);
-var FN_TYPES = new Set([
-  "function_declaration",
-  "function_expression",
-  "arrow_function",
-  "method_definition",
-  "generator_function_declaration"
-]);
-function lookupConst(from, name2, fc) {
-  let fn = enclosingFn(from);
-  while (fn) {
-    const scope = fn;
-    let found;
-    const body2 = scope.childForFieldName("body");
-    if (body2)
-      walk(body2, (n) => {
-        if (!found && n.type === "variable_declarator" && n.childForFieldName("name")?.text === name2 && n.startIndex < from.startIndex && enclosingFn(n)?.id === scope.id) {
-          const value = n.childForFieldName("value");
-          if (value && (value.type === "string" || value.type === "template_string"))
-            found = value;
-        }
-      });
-    if (found) {
-      const r = resolve2(found, fc, 1);
-      return r.template !== null && !r.template.includes(PLACEHOLDER) ? r.template : undefined;
-    }
-    fn = enclosingFn(fn);
-  }
-  return fc.consts.get(name2);
-}
-function lookupArray(from, name2, fc) {
-  let fn = enclosingFn(from);
-  while (fn) {
-    const scope = fn;
-    let found;
-    const body2 = scope.childForFieldName("body");
-    if (body2)
-      walk(body2, (n) => {
-        if (!found && n.type === "variable_declarator" && n.childForFieldName("name")?.text === name2 && n.childForFieldName("value")?.type === "array")
-          found = n.childForFieldName("value");
-      });
-    if (found)
-      return found;
-    fn = enclosingFn(fn);
-  }
-  return fc.arrays.get(name2);
-}
-function paramNames(fn) {
-  const params = fn.childForFieldName("parameters") ?? fn.childForFieldName("parameter");
-  if (!params)
-    return [];
-  if (params.type === "identifier")
-    return [params.text];
-  return children(params).map((p) => {
-    if (p.type === "identifier")
-      return p.text;
-    const pat = p.childForFieldName("pattern") ?? p.namedChild(0);
-    if (pat?.type === "identifier")
-      return pat.text;
-    if (p.type === "assignment_pattern" || p.type === "optional_parameter" || p.type === "required_parameter") {
-      const l = p.childForFieldName("left") ?? p.childForFieldName("pattern");
-      if (l?.type === "identifier")
-        return l.text;
-    }
-    return "";
-  });
-}
-function fnName(fn) {
-  if (fn.type === "function_declaration" || fn.type === "generator_function_declaration")
-    return fn.childForFieldName("name")?.text ?? "";
-  if (fn.type === "method_definition")
-    return fn.childForFieldName("name")?.text ?? "";
-  const p = fn.parent;
-  if (p?.type === "variable_declarator")
-    return p.childForFieldName("name")?.text ?? "";
-  if (p?.type === "pair")
-    return p.childForFieldName("key")?.text ?? "";
-  if (p?.type === "assignment_expression")
-    return p.childForFieldName("left")?.text.split(".").pop() ?? "";
-  return "";
-}
-function collectReturns(fn) {
-  const body2 = fn.childForFieldName("body");
-  if (!body2)
-    return [];
-  if (body2.type !== "statement_block")
-    return [body2];
-  const out2 = [];
-  walk(body2, (n) => {
-    if (n.type === "return_statement") {
-      const e = n.namedChild(0);
-      if (e)
-        out2.push(e);
-    }
-  });
-  return out2;
-}
-function enclosingFn(n) {
-  let p = n.parent;
-  while (p) {
-    if (FN_TYPES.has(p.type))
-      return p;
-    p = p.parent;
-  }
-  return null;
-}
-function collectFile(root) {
-  const consts = new Map;
-  const funcs = new Map;
-  const arrays = new Map;
-  const fc = {
-    consts,
-    funcs,
-    arrays,
-    visiting: new Set,
-    bindings: []
-  };
-  walk(root, (n) => {
-    if (n.type === "variable_declarator") {
-      const name2 = n.childForFieldName("name");
-      const value = n.childForFieldName("value");
-      if (name2?.type === "identifier" && value && (value.type === "string" || value.type === "template_string") && enclosingFn(n) === null) {
-        const r = resolve2(value, fc, 0);
-        if (r.template !== null && !r.template.includes(PLACEHOLDER))
-          consts.set(name2.text, r.template);
-      }
-      if (name2?.type === "identifier" && value?.type === "array")
-        arrays.set(name2.text, value);
-    }
-    if (FN_TYPES.has(n.type)) {
-      const name2 = fnName(n);
-      if (name2 && !funcs.has(name2))
-        funcs.set(name2, {
-          name: name2,
-          params: paramNames(n),
-          returns: collectReturns(n),
-          node: n
-        });
-    }
-  });
-  return fc;
-}
-function resolve2(n, fc, depth) {
-  if (depth > 6)
-    return { template: null, kind: "dynamic:deep" };
-  switch (n.type) {
-    case "string":
-      return { template: unquote(n.text), kind: "literal" };
-    case "template_string": {
-      let t = "";
-      let kind = "literal";
-      const params = [];
-      for (let i2 = 0;i2 < n.childCount; i2++) {
-        const c = n.child(i2);
-        if (c.type === "string_fragment")
-          t += c.text;
-        else if (c.type === "escape_sequence")
-          t += unquote('"' + c.text + '"');
-        else if (c.type === "template_substitution") {
-          const inner = c.namedChild(0);
-          const r = inner ? resolve2(inner, fc, depth + 1) : { template: null, kind: "dynamic" };
-          if ((r.kind === "literal" || r.kind === "const") && r.template !== null)
-            t += r.template;
-          else {
-            t += PLACEHOLDER;
-            kind = "template";
-            if (r.kind === "dynamic:param" && r.param)
-              params.push(r.param);
-          }
-        }
-      }
-      return { template: t, kind, params: params.length ? params : undefined };
-    }
-    case "parenthesized_expression":
-    case "as_expression":
-    case "satisfies_expression":
-    case "non_null_expression": {
-      const c = n.namedChild(0);
-      return c ? resolve2(c, fc, depth + 1) : { template: null, kind: "dynamic" };
-    }
-    case "binary_expression": {
-      const op = n.child(1)?.text;
-      if (op === "??" || op === "||") {
-        const l2 = resolve2(n.childForFieldName("left"), fc, depth + 1);
-        const r2 = resolve2(n.childForFieldName("right"), fc, depth + 1);
-        const br = [l2.template, r2.template].filter((x) => x !== null);
-        return br.length ? { template: br[0] ?? null, kind: "conditional", branches: br } : { template: null, kind: "dynamic:nullish" };
-      }
-      if (op !== "+")
-        return { template: null, kind: "dynamic:binary" };
-      const l = resolve2(n.childForFieldName("left"), fc, depth + 1);
-      const r = resolve2(n.childForFieldName("right"), fc, depth + 1);
-      if (l.template === null && r.template === null)
-        return { template: null, kind: "dynamic:concat" };
-      const params = [
-        ...l.params ?? (l.param ? [l.param] : []),
-        ...r.params ?? (r.param ? [r.param] : [])
-      ];
-      return {
-        template: (l.template ?? PLACEHOLDER) + (r.template ?? PLACEHOLDER),
-        kind: "concat",
-        params: params.length ? params : undefined
-      };
-    }
-    case "ternary_expression": {
-      const a = resolve2(n.childForFieldName("consequence"), fc, depth + 1);
-      const b = resolve2(n.childForFieldName("alternative"), fc, depth + 1);
-      const branches = [
-        ...a.branches ?? (a.template !== null ? [a.template] : []),
-        ...b.branches ?? (b.template !== null ? [b.template] : [])
-      ];
-      if (!branches.length)
-        return { template: null, kind: "dynamic:conditional" };
-      return { template: branches[0] ?? null, kind: "conditional", branches };
-    }
-    case "identifier": {
-      for (let i2 = fc.bindings.length - 1;i2 >= 0; i2--) {
-        const b = fc.bindings[i2]?.get(n.text);
-        if (b !== undefined)
-          return { template: b, kind: "literal" };
-      }
-      const local = lookupConst(n, n.text, fc);
-      if (local !== undefined)
-        return { template: local, kind: "const" };
-      const fn = enclosingFn(n);
-      if (fn) {
-        const idx = paramNames(fn).indexOf(n.text);
-        if (idx >= 0)
-          return {
-            template: null,
-            kind: "dynamic:param",
-            param: { fn: fnName(fn), idx }
-          };
-      }
-      return { template: null, kind: "dynamic:identifier" };
-    }
-    case "member_expression": {
-      const prop = n.childForFieldName("property")?.text ?? "";
-      if (/^(message|msg|stack|reason|cause)$/.test(prop))
-        return { template: null, kind: "dynamic:error-message" };
-      return { template: null, kind: "dynamic:property" };
-    }
-    case "call_expression": {
-      const fn = n.childForFieldName("function");
-      const fnText = fn.text;
-      const args2 = n.childForFieldName("arguments");
-      const argNodes = args2 ? children(args2) : [];
-      if (/JSON\.stringify$/.test(fnText))
-        return { template: null, kind: "dynamic:json" };
-      const firstArg = argNodes[0];
-      if (/(^|\.)(format|inspect|sprintf)$/.test(fnText) && firstArg) {
-        const r = resolve2(firstArg, fc, depth + 1);
-        return r.template !== null ? { template: maskFormatSpecs(r.template), kind: "format" } : { template: null, kind: "dynamic:format" };
-      }
-      if (/\.join$/.test(fnText) && fn.type === "member_expression") {
-        const sepNode = argNodes[0];
-        const sep = sepNode ? sepNode.type === "string" ? unquote(sepNode.text) : null : ",";
-        if (sep === null)
-          return { template: null, kind: "dynamic:join" };
-        let recv = fn.childForFieldName("object");
-        for (let i2 = 0;i2 < 4 && recv; i2++) {
-          if (recv.type === "call_expression") {
-            const rf = recv.childForFieldName("function");
-            if (rf?.type === "member_expression" && /^(filter|map|flat|concat|slice)$/.test(rf.childForFieldName("property")?.text ?? "")) {
-              recv = rf.childForFieldName("object");
-              continue;
-            }
-          }
-          if (recv.type === "parenthesized_expression" || recv.type === "as_expression" || recv.type === "non_null_expression") {
-            recv = recv.namedChild(0);
-            continue;
-          }
-          if (recv.type === "identifier") {
-            const arr = lookupArray(recv, recv.text, fc);
-            if (arr) {
-              recv = arr;
-              continue;
-            }
-          }
-          break;
-        }
-        if (recv?.type === "array") {
-          const parts2 = [];
-          for (const el of children(recv)) {
-            if (el.type === "spread_element") {
-              parts2.push(PLACEHOLDER);
-              continue;
-            }
-            const r = resolve2(el, fc, depth + 1);
-            const optional = el.type === "ternary_expression" || el.type === "call_expression" || r.branches && r.branches.length > 1 || /^dynamic/.test(r.kind);
-            parts2.push(r.template === null || optional ? PLACEHOLDER : r.template);
-          }
-          if (parts2.some((p) => p !== PLACEHOLDER))
-            return { template: parts2.join(sep), kind: "join" };
-        }
-        return { template: null, kind: "dynamic:join" };
-      }
-      if (argNodes.length === 1 && firstArg && /^(chalk|pc|picocolors|colors|kleur|c|styles?)\b/.test(fnText))
-        return resolve2(firstArg, fc, depth + 1);
-      if (/\.(trim|trimEnd|trimStart|toString|toUpperCase|toLowerCase|padEnd|padStart|replace|replaceAll|slice)$/.test(fnText) && fn.type === "member_expression")
-        return resolve2(fn.childForFieldName("object"), fc, depth + 1);
-      const helperName = fn.type === "identifier" ? fn.text : fn.type === "member_expression" && /^this\./.test(fnText) ? fn.childForFieldName("property").text : "";
-      const helper = helperName ? fc.funcs.get(helperName) : undefined;
-      if (helper && helper.returns.length && !fc.visiting.has(helperName)) {
-        fc.visiting.add(helperName);
-        const bind = new Map;
-        helper.params.forEach((pn, i2) => {
-          const a = argNodes[i2];
-          if (pn && a && (a.type === "string" || a.type === "template_string")) {
-            const r = resolve2(a, fc, depth + 1);
-            if (r.template !== null && !r.template.includes(PLACEHOLDER))
-              bind.set(pn, r.template);
-          }
-        });
-        fc.bindings.push(bind);
-        const branches = [];
-        for (const ret of helper.returns) {
-          const r = resolve2(ret, fc, depth + 1);
-          for (const b of r.branches ?? (r.template !== null ? [r.template] : []))
-            if (!branches.includes(b))
-              branches.push(b);
-        }
-        fc.bindings.pop();
-        fc.visiting.delete(helperName);
-        if (branches.length)
-          return { template: branches[0] ?? null, kind: "helper", branches };
-        return { template: null, kind: "dynamic:helper" };
-      }
-      return { template: null, kind: "dynamic:call" };
-    }
-    case "await_expression":
-      return { template: null, kind: "dynamic:await" };
-    default:
-      return { template: null, kind: "dynamic:" + n.type };
-  }
-}
-function isErrorish(n) {
-  if (n.type === "object" || n.type === "new_expression" || n.type === "spread_element")
-    return true;
-  if (n.type === "identifier")
-    return /^(err|error|e|ex|exception|obj|meta|ctx|context|fields|data|payload|attrs|attributes|extra)$/i.test(n.text);
-  if (n.type === "member_expression" || n.type === "call_expression")
-    return true;
-  return false;
-}
-function emitResolved(ctx, n, r, base) {
-  const emitOne = (template, kind) => {
-    let t = template;
-    if (t !== null) {
-      t = maskFormatSpecs(t);
-      if (base.sink === "console" && base.extraArgs > 0)
-        t += (" " + PLACEHOLDER).repeat(base.extraArgs);
-      t = normalizeTemplate(t);
-    }
-    ctx.emit({
-      line: n.startPosition.row + 1,
-      level: base.level,
-      callee: base.callee,
-      kind,
-      template: t,
-      sink: base.sink,
-      argc: base.argc
-    });
-  };
-  if (r.branches && r.branches.length > 1)
-    for (const b of r.branches)
-      emitOne(b, r.kind === "helper" ? "helper" : "conditional");
-  else
-    emitOne(r.template, r.kind);
-  if (r.kind === "dynamic:param" && r.param && ctx.wrapper)
-    ctx.wrapper({
-      name: r.param.fn,
-      paramIndex: r.param.idx,
-      level: base.level,
-      sink: base.sink === "property" ? "logger" : base.sink,
-      callee: base.callee
-    });
-  if (r.params && r.template !== null && ctx.wrapper) {
-    const literal = r.template.replace(/<\*>/g, "").replace(/[^A-Za-z0-9]/g, "");
-    const last = r.params[r.params.length - 1];
-    if (last && literal.length <= 12 && r.template.trimEnd().endsWith(PLACEHOLDER)) {
-      ctx.wrapper({
-        name: last.fn,
-        paramIndex: last.idx,
-        level: base.level,
-        sink: base.sink === "property" ? "logger" : base.sink,
-        callee: base.callee
-      });
-    }
-  }
-}
-function visitJs(root, ctx) {
-  const fc = collectFile(root);
-  walk(root, (n) => {
-    if (n.type === "new_expression") {
-      const ctor = n.childForFieldName("constructor")?.text ?? "";
-      if (/Error$|Exception$/.test(ctor)) {
-        const args3 = n.childForFieldName("arguments");
-        const a0 = args3 ? children(args3)[0] : undefined;
-        if (a0) {
-          const r2 = resolve2(a0, fc, 0);
-          if (r2.template !== null)
-            emitResolved(ctx, n, r2, {
-              level: "error",
-              callee: "new " + ctor,
-              sink: "error",
-              argc: children(args3).length,
-              extraArgs: 0
-            });
-        }
-      }
-      return;
-    }
-    if (n.type === "pair") {
-      const key = n.childForFieldName("key");
-      const value = n.childForFieldName("value");
-      const k = key ? unquote(key.text) : "";
-      if (value && /^(message|msg)$/.test(k) && (value.type === "string" || value.type === "template_string" || value.type === "binary_expression" || value.type === "ternary_expression")) {
-        const r2 = resolve2(value, fc, 0);
-        if (r2.template !== null)
-          emitResolved(ctx, n, r2, {
-            level: "unknown",
-            callee: "{" + k + ":}",
-            sink: "property",
-            argc: 1,
-            extraArgs: 0
-          });
-      }
-      return;
-    }
-    if (n.type !== "call_expression")
-      return;
-    const fn = n.childForFieldName("function");
-    if (!fn)
-      return;
-    let method = "";
-    let objText = "";
-    if (fn.type === "member_expression") {
-      method = fn.childForFieldName("property")?.text ?? "";
-      objText = fn.childForFieldName("object")?.text ?? "";
-    } else if (fn.type === "subscript_expression") {
-      objText = fn.childForFieldName("object")?.text ?? "";
-      if (!/log|logger|console/i.test(objText))
-        return;
-      const idx = fn.childForFieldName("index");
-      method = idx?.type === "string" ? unquote(idx.text) : "log";
-      if (!METHODS.has(method))
-        method = "log";
-    } else if (fn.type === "identifier") {
-      if (ctx.wrappers?.has(fn.text)) {
-        visitWrapperCall(n, fn.text, fc, ctx);
-        return;
-      }
-      if (!/^(log|debug|logInfo|logError|logWarn|logDebug|logWarning|logMessage)$/.test(fn.text))
-        return;
-      method = fn.text.replace(/^log/i, "").toLowerCase() || "log";
-      if (method === "message")
-        method = "log";
-    } else
-      return;
-    if (/^log(Trace|Debug|Info|Warning|Error|Fatal)$/.test(method))
-      method = method.slice(3).toLowerCase();
-    if (!METHODS.has(method)) {
-      if (fn.type === "member_expression" && ctx.wrappers?.has(method) && !/^(console|Math|JSON|process|window|document)$/.test(objText))
-        visitWrapperCall(n, method, fc, ctx);
-      return;
-    }
-    const objTail = objText.split(/[.?!)\]]/).pop() ?? objText;
-    const looksLogger = objText === "" || objText === "console" || /log|logger|pino|winston|bunyan|debug|trace|Effect|Logger|LOG|reporter|output|stderr|stdout|spinner|ora|signale|consola/i.test(objText) || /^(this|self|ctx|context|req|request|app|fastify|server|instance|client|worker|job|sentry|Sentry)$/i.test(objTail);
-    if (!looksLogger && !/^(info|warn|debug|trace|fatal)$/.test(method)) {
-      ctx.stat("skip:non-logger-receiver");
-      return;
-    }
-    if (!looksLogger && /^(response|res|reply|toast|notification|notifications|message|alert|snackbar|Toast|toaster|ui|form|setError|dialog)$/i.test(objTail)) {
-      ctx.stat("skip:ui-receiver");
-      return;
-    }
-    const args2 = n.childForFieldName("arguments");
-    const argNodes = args2 ? children(args2) : [];
-    const first = argNodes[0];
-    if (!first)
-      return;
-    const second = argNodes[1];
-    let level = LEVEL_WORDS[method] ?? "unknown";
-    let msgIdx = 0;
-    if (method === "log" && objText !== "console" && first.type === "string" && second) {
-      const lv = unquote(first.text).toLowerCase();
-      const mapped = LEVEL_WORDS[lv];
-      if (mapped) {
-        level = mapped;
-        msgIdx = 1;
-      }
-    }
-    if (msgIdx === 0 && second && isErrorish(first) && STRINGY.has(second.type) && !["member_expression", "call_expression", "identifier"].includes(second.type))
-      msgIdx = 1;
-    else if (msgIdx === 0 && second && first.type === "object" && second.type === "identifier")
-      msgIdx = 1;
-    const msg = argNodes[msgIdx];
-    if (!msg)
-      return;
-    const r = resolve2(msg, fc, 0);
-    const sink = objText === "console" || /stdout|stderr/.test(objText) ? "console" : "logger";
-    const callee = (objText ? objText.replace(/\s+/g, "").slice(-40) + "." : "") + method;
-    emitResolved(ctx, n, r, {
-      level,
-      callee,
-      sink,
-      argc: argNodes.length,
-      extraArgs: sink === "console" ? argNodes.length - msgIdx - 1 : 0
-    });
-  });
-}
-function visitWrapperCall(n, name2, fc, ctx) {
-  const defs = ctx.wrappers.get(name2);
-  const args2 = n.childForFieldName("arguments");
-  const argNodes = args2 ? children(args2) : [];
-  const seen = new Set;
-  for (const d of defs) {
-    if (seen.has(d.paramIndex))
-      continue;
-    seen.add(d.paramIndex);
-    const a = argNodes[d.paramIndex];
-    if (!a)
-      continue;
-    const r = resolve2(a, fc, 0);
-    emitResolved(ctx, n, r, {
-      level: d.level,
-      callee: name2 + "→" + d.callee,
-      sink: d.sink,
-      argc: argNodes.length,
-      extraArgs: 0
-    });
-    ctx.stat("wrapper-call");
-  }
-}
-var jsRules = [
-  {
-    id: "javascript",
-    wasm: "tree-sitter-javascript.wasm",
-    exts: /\.(js|mjs|cjs|jsx)$/,
-    visit: visitJs
-  },
-  {
-    id: "typescript",
-    wasm: "tree-sitter-typescript.wasm",
-    exts: /\.(ts|mts|cts)$/,
-    visit: visitJs
-  },
-  { id: "tsx", wasm: "tree-sitter-tsx.wasm", exts: /\.tsx$/, visit: visitJs }
-];
-
-// ../log-template-extractor/src/languages/python.ts
-var METHODS2 = new Set([
-  "debug",
-  "info",
-  "warning",
-  "warn",
-  "error",
-  "exception",
-  "critical",
-  "fatal",
-  "log",
-  "trace",
-  "success",
-  "msg",
-  "print"
-]);
-var FN_TYPES2 = new Set(["function_definition", "lambda"]);
-function enclosingFn2(n) {
-  let p = n.parent;
-  while (p) {
-    if (FN_TYPES2.has(p.type))
-      return p;
-    p = p.parent;
-  }
-  return null;
-}
-function paramNames2(fn) {
-  const ps = fn.childForFieldName("parameters");
-  if (!ps)
-    return [];
-  return children(ps).map((p) => {
-    if (p.type === "identifier")
-      return p.text;
-    const n = p.childForFieldName("name") ?? p.namedChild(0);
-    return n?.type === "identifier" ? n.text : "";
-  }).filter((x) => x !== "self" && x !== "cls");
-}
-function collectFile2(root) {
-  const consts = collectConsts2(root);
-  const funcs = new Map;
-  walk(root, (n) => {
-    if (n.type === "function_definition") {
-      const name2 = n.childForFieldName("name")?.text ?? "";
-      const returns = [];
-      const body2 = n.childForFieldName("body");
-      if (body2)
-        walk(body2, (m) => {
-          if (m.type === "return_statement") {
-            const e = m.namedChild(0);
-            if (e)
-              returns.push(e);
-          }
-        });
-      if (name2 && !funcs.has(name2))
-        funcs.set(name2, { name: name2, params: paramNames2(n), returns });
-    }
-  });
-  return { consts, funcs, visiting: new Set, bindings: [] };
-}
-function lookupList(from, name2) {
-  let fn = enclosingFn2(from);
-  while (fn) {
-    let found;
-    walk(fn, (n) => {
-      if (!found && n.type === "assignment" && n.childForFieldName("left")?.text === name2 && n.childForFieldName("right")?.type === "list")
-        found = n.childForFieldName("right");
-    });
-    if (found)
-      return found;
-    fn = enclosingFn2(fn);
-  }
-  return;
-}
-function collectConsts2(root) {
-  const consts = new Map;
-  for (const stmt of children(root)) {
-    if (stmt.type !== "expression_statement")
-      continue;
-    const a = stmt.namedChild(0);
-    if (a?.type !== "assignment")
-      continue;
-    const left = a.childForFieldName("left");
-    const right = a.childForFieldName("right");
-    if (left?.type === "identifier" && right && (right.type === "string" || right.type === "concatenated_string")) {
-      const r = resolve3(right, { consts, funcs: new Map, visiting: new Set, bindings: [] }, 0);
-      if (r.template !== null && !r.template.includes(PLACEHOLDER))
-        consts.set(left.text, r.template);
-    }
-  }
-  return consts;
-}
-function stringText(n) {
-  let t = "";
-  let interpolated = false;
-  const prefix = n.child(0)?.text ?? "";
-  for (let i2 = 0;i2 < n.childCount; i2++) {
-    const c = n.child(i2);
-    if (c.type === "string_content")
-      t += c.text;
-    else if (c.type === "escape_sequence")
-      t += unquote('"' + c.text + '"');
-    else if (c.type === "interpolation") {
-      t += PLACEHOLDER;
-      interpolated = true;
-    }
-  }
-  if (!/f/i.test(prefix) && !interpolated)
-    t = t.replace(/\{\{/g, "{").replace(/\}\}/g, "}");
-  return { text: t, interpolated };
-}
-function resolve3(n, fc, depth) {
-  const consts = fc.consts;
-  if (depth > 6)
-    return { template: null, kind: "dynamic:deep" };
-  switch (n.type) {
-    case "string": {
-      const s = stringText(n);
-      return {
-        template: s.text,
-        kind: s.interpolated ? "template" : "literal"
-      };
-    }
-    case "concatenated_string": {
-      let t = "";
-      let kind = "literal";
-      for (const c of children(n)) {
-        const r = resolve3(c, fc, depth + 1);
-        t += r.template ?? PLACEHOLDER;
-        if (r.kind !== "literal")
-          kind = "template";
-      }
-      return { template: t, kind };
-    }
-    case "parenthesized_expression": {
-      const c = n.namedChild(0);
-      return c ? resolve3(c, fc, depth + 1) : { template: null, kind: "dynamic" };
-    }
-    case "binary_operator": {
-      const op = n.child(1)?.text;
-      const l = n.childForFieldName("left");
-      const r = n.childForFieldName("right");
-      if (op === "%") {
-        const lr2 = resolve3(l, fc, depth + 1);
-        return lr2.template !== null ? { template: maskFormatSpecs(lr2.template), kind: "format" } : { template: null, kind: "dynamic:percent" };
-      }
-      if (op !== "+")
-        return { template: null, kind: "dynamic:binary" };
-      const lr = resolve3(l, fc, depth + 1);
-      const rr = resolve3(r, fc, depth + 1);
-      if (lr.template === null && rr.template === null)
-        return { template: null, kind: "dynamic:concat" };
-      return {
-        template: (lr.template ?? PLACEHOLDER) + (rr.template ?? PLACEHOLDER),
-        kind: "concat"
-      };
-    }
-    case "conditional_expression": {
-      const a = resolve3(n.namedChild(0), fc, depth + 1);
-      const b = resolve3(n.namedChild(2), fc, depth + 1);
-      const branches = [a.template, b.template].filter((x) => x !== null);
-      if (!branches.length)
-        return { template: null, kind: "dynamic:conditional" };
-      return { template: branches[0] ?? null, kind: "conditional", branches };
-    }
-    case "identifier": {
-      for (let i2 = fc.bindings.length - 1;i2 >= 0; i2--) {
-        const b = fc.bindings[i2]?.get(n.text);
-        if (b !== undefined)
-          return { template: b, kind: "literal" };
-      }
-      const c = consts.get(n.text);
-      if (c !== undefined)
-        return { template: c, kind: "const" };
-      const fn = enclosingFn2(n);
-      if (fn && fn.type === "function_definition") {
-        const idx = paramNames2(fn).indexOf(n.text);
-        if (idx >= 0)
-          return {
-            template: null,
-            kind: "dynamic:param",
-            param: { fn: fn.childForFieldName("name")?.text ?? "", idx }
-          };
-      }
-      return { template: null, kind: "dynamic:identifier" };
-    }
-    case "attribute": {
-      const attr = n.childForFieldName("attribute")?.text ?? "";
-      return {
-        template: null,
-        kind: /^(message|msg|args)$/.test(attr) ? "dynamic:error-message" : "dynamic:property"
-      };
-    }
-    case "call": {
-      const fn = n.childForFieldName("function");
-      if (fn.type === "attribute" && fn.childForFieldName("attribute")?.text === "format") {
-        const r = resolve3(fn.childForFieldName("object"), fc, depth + 1);
-        return r.template !== null ? {
-          template: maskFormatSpecs(r.template, { braces: true }),
-          kind: "format"
-        } : { template: null, kind: "dynamic:format" };
-      }
-      if (fn.type === "attribute" && fn.childForFieldName("attribute")?.text === "join") {
-        const sepNode = fn.childForFieldName("object");
-        const sep = sepNode.type === "string" ? stringText(sepNode).text : null;
-        const a = n.childForFieldName("arguments");
-        let arr = a ? a.type === "generator_expression" ? a : children(a)[0] : undefined;
-        if (arr?.type === "generator_expression" || arr?.type === "list_comprehension") {
-          const forIn = children(arr).find((c) => c.type === "for_in_clause");
-          const it = forIn?.childForFieldName("right");
-          arr = it?.type === "identifier" ? lookupList(it, it.text) : it?.type === "list" ? it : undefined;
-        }
-        if (arr?.type === "identifier")
-          arr = lookupList(arr, arr.text);
-        if (sep !== null && arr && (arr.type === "list" || arr.type === "tuple")) {
-          const parts2 = children(arr).map((el) => {
-            const r = resolve3(el, fc, depth + 1);
-            const optional = el.type === "conditional_expression" || el.type === "call" || /^dynamic/.test(r.kind) || r.branches && r.branches.length > 1;
-            return r.template === null || optional ? PLACEHOLDER : r.template;
-          });
-          if (parts2.some((p) => p !== PLACEHOLDER))
-            return { template: parts2.join(sep), kind: "join" };
-        }
-        return { template: null, kind: "dynamic:join" };
-      }
-      if (fn.type === "identifier" && fc.funcs.has(fn.text) && !fc.visiting.has(fn.text)) {
-        const helper = fc.funcs.get(fn.text);
-        if (helper.returns.length) {
-          fc.visiting.add(fn.text);
-          const a = n.childForFieldName("arguments");
-          const argNodes = a ? children(a).filter((x) => x.type !== "keyword_argument") : [];
-          const bind = new Map;
-          helper.params.forEach((pn, i2) => {
-            const an = argNodes[i2];
-            if (pn && an && an.type === "string") {
-              const r = resolve3(an, fc, depth + 1);
-              if (r.template !== null && !r.template.includes(PLACEHOLDER))
-                bind.set(pn, r.template);
-            }
-          });
-          fc.bindings.push(bind);
-          const branches = [];
-          for (const ret of helper.returns) {
-            const r = resolve3(ret, fc, depth + 1);
-            for (const b of r.branches ?? (r.template !== null ? [r.template] : []))
-              if (!branches.includes(b))
-                branches.push(b);
-          }
-          fc.bindings.pop();
-          fc.visiting.delete(fn.text);
-          if (branches.length)
-            return { template: branches[0] ?? null, kind: "helper", branches };
-          return { template: null, kind: "dynamic:helper" };
-        }
-      }
-      if (/^(str|repr|json\.dumps|pformat|pprint\.pformat)$/.test(fn.text))
-        return { template: null, kind: "dynamic:stringify" };
-      if (/\.join$/.test(fn.text))
-        return { template: null, kind: "dynamic:join" };
-      if (fn.type === "attribute" && /^(strip|rstrip|lstrip|upper|lower|capitalize)$/.test(fn.childForFieldName("attribute")?.text ?? ""))
-        return resolve3(fn.childForFieldName("object"), fc, depth + 1);
-      if (/^_$|gettext|^t$/.test(fn.text)) {
-        const a = n.childForFieldName("arguments");
-        const a0 = a ? children(a)[0] : undefined;
-        return a0 ? resolve3(a0, fc, depth + 1) : { template: null, kind: "dynamic:call" };
-      }
-      return { template: null, kind: "dynamic:call" };
-    }
-    default:
-      return { template: null, kind: "dynamic:" + n.type };
-  }
-}
-function visitPython(root, ctx) {
-  const fc = collectFile2(root);
-  walk(root, (n) => {
-    if (n.type === "raise_statement") {
-      const c = n.namedChild(0);
-      if (c?.type === "call") {
-        const args3 = c.childForFieldName("arguments");
-        const a0 = args3 ? children(args3)[0] : undefined;
-        if (a0 && a0.type !== "keyword_argument") {
-          const r2 = resolve3(a0, fc, 0);
-          if (r2.template !== null)
-            ctx.emit({
-              line: n.startPosition.row + 1,
-              level: "error",
-              callee: "raise " + (c.childForFieldName("function")?.text ?? ""),
-              kind: r2.kind,
-              template: normalizeTemplate(maskFormatSpecs(r2.template)),
-              sink: "error",
-              argc: children(args3).length
-            });
-        }
-      }
-      return;
-    }
-    if (n.type !== "call")
-      return;
-    const fn = n.childForFieldName("function");
-    let method = "";
-    let objText = "";
-    if (fn.type === "attribute") {
-      method = fn.childForFieldName("attribute")?.text ?? "";
-      objText = fn.childForFieldName("object")?.text ?? "";
-    } else if (fn.type === "identifier") {
-      method = fn.text;
-      if (ctx.wrappers?.has(method)) {
-        const a = n.childForFieldName("arguments");
-        const argNodes2 = a ? children(a).filter((x) => x.type !== "keyword_argument") : [];
-        for (const d of ctx.wrappers.get(method)) {
-          const an = argNodes2[d.paramIndex];
-          if (!an)
-            continue;
-          const r2 = resolve3(an, fc, 0);
-          const emitB = (t, k) => ctx.emit({
-            line: n.startPosition.row + 1,
-            level: d.level,
-            callee: method + "→" + d.callee,
-            kind: k,
-            template: t === null ? null : normalizeTemplate(maskFormatSpecs(t)),
-            sink: d.sink,
-            argc: argNodes2.length
-          });
-          if (r2.branches && r2.branches.length > 1)
-            for (const b of r2.branches)
-              emitB(b, "helper");
-          else
-            emitB(r2.template, r2.kind);
-          ctx.stat("wrapper-call");
-        }
-        return;
-      }
-      if (method !== "print")
-        return;
-    } else
-      return;
-    if (!METHODS2.has(method))
-      return;
-    const looksLogger = method === "print" || /log|logger|logging|LOG|_log|console|structlog|loguru|self|cls|ctx|app|rich|typer|click|echo/i.test(objText) || objText === "";
-    if (!looksLogger) {
-      ctx.stat("skip:non-logger-receiver");
-      return;
-    }
-    if (method === "print" && fn.type === "attribute" && !/console|rich/.test(objText))
-      return;
-    const args2 = n.childForFieldName("arguments");
-    let argNodes = args2 ? children(args2).filter((a) => a.type !== "keyword_argument" && a.type !== "comment") : [];
-    if (!argNodes.length)
-      return;
-    let level = method === "print" ? "print" : LEVEL_WORDS[method] ?? (method === "exception" ? "error" : "unknown");
-    let msgIdx = 0;
-    const firstArg = argNodes[0];
-    if (method === "log" && firstArg && argNodes.length > 1) {
-      const lv = firstArg.text.toLowerCase().replace(/^logging\./, "");
-      level = LEVEL_WORDS[lv] ?? "unknown";
-      msgIdx = 1;
-    }
-    const msg = argNodes[msgIdx];
-    if (!msg)
-      return;
-    const r = resolve3(msg, fc, 0);
-    const sink = method === "print" ? "console" : "logger";
-    const callee = (objText ? objText.replace(/\s+/g, "").slice(-40) + "." : "") + method;
-    const emitOne = (template, kind) => {
-      let t = template;
-      if (t !== null) {
-        t = maskFormatSpecs(t);
-        if (sink === "console" && argNodes.length > msgIdx + 1)
-          t += (" " + PLACEHOLDER).repeat(argNodes.length - msgIdx - 1);
-        t = normalizeTemplate(t);
-      }
-      ctx.emit({
-        line: n.startPosition.row + 1,
-        level,
-        callee,
-        kind,
-        template: t,
-        sink,
-        argc: argNodes.length
-      });
-    };
-    if (r.branches && r.branches.length > 1)
-      for (const b of r.branches)
-        emitOne(b, r.kind === "helper" ? "helper" : "conditional");
-    else
-      emitOne(r.template, r.kind);
-    if (r.kind === "dynamic:param" && r.param && ctx.wrapper)
-      ctx.wrapper({
-        name: r.param.fn,
-        paramIndex: r.param.idx,
-        level,
-        sink,
-        callee
-      });
-  });
-}
-var pythonRules = [
-  {
-    id: "python",
-    wasm: "tree-sitter-python.wasm",
-    exts: /\.py$/,
-    visit: visitPython
-  }
-];
-
-// ../log-template-extractor/src/languages/rust.ts
-var MACROS = {
-  trace: { level: "trace", sink: "logger" },
-  debug: { level: "debug", sink: "logger" },
-  info: { level: "info", sink: "logger" },
-  warn: { level: "warn", sink: "logger" },
-  error: { level: "error", sink: "logger" },
-  event: { level: "unknown", sink: "logger" },
-  println: { level: "print", sink: "console" },
-  eprintln: { level: "print", sink: "console" },
-  print: { level: "print", sink: "console" },
-  eprint: { level: "print", sink: "console" },
-  anyhow: { level: "error", sink: "error" },
-  bail: { level: "error", sink: "error" },
-  ensure: { level: "error", sink: "error" },
-  panic: { level: "fatal", sink: "error" },
-  unreachable: { level: "fatal", sink: "error" },
-  todo: { level: "fatal", sink: "error" },
-  unimplemented: { level: "fatal", sink: "error" }
-};
-function topLevelGroups(tt) {
-  const groups = [];
-  let current = [];
-  for (let i2 = 1;i2 < tt.childCount - 1; i2++) {
-    const c = tt.child(i2);
-    if (!c)
-      continue;
-    if (c.type === ",") {
-      groups.push(current);
-      current = [];
-      continue;
-    }
-    current.push(c);
-  }
-  groups.push(current);
-  return groups.filter((g) => g.length);
-}
-function visitRust(root, ctx) {
-  walk(root, (n) => {
-    if (n.type !== "macro_invocation")
-      return;
-    const macroNode = n.childForFieldName("macro");
-    if (!macroNode)
-      return;
-    const name2 = macroNode.text.split("::").pop() ?? "";
-    const spec = MACROS[name2];
-    if (!spec)
-      return;
-    const tt = n.namedChildren.find((c) => c?.type === "token_tree");
-    if (!tt)
-      return;
-    const groups = topLevelGroups(tt);
-    if (!groups.length)
-      return;
-    let fmtNode;
-    let level = spec.level;
-    const firstOf = (g) => g[0];
-    for (const g of groups) {
-      const first = firstOf(g);
-      if (!first)
-        continue;
-      if (g.length === 1 && first.type === "string_literal") {
-        fmtNode = first;
-        break;
-      }
-      const second = g[1];
-      const third = g[2];
-      if (g.length === 3 && second?.text === ":" && /^(target|name|parent)$/.test(first.text))
-        continue;
-      if (name2 === "event" && g.length === 3 && first.text === "Level" && third) {
-        level = LEVEL_WORDS[third.text.toLowerCase()] ?? level;
-        continue;
-      }
-      if (g.some((t2) => t2.text === "="))
-        continue;
-      if (g.length >= 2 && first.type === "string_literal") {
-        fmtNode = first;
-        break;
-      }
-    }
-    if (name2 === "ensure") {
-      const second = groups[1];
-      const candidate = second && second.length === 1 ? second[0] : undefined;
-      fmtNode = candidate?.type === "string_literal" ? candidate : undefined;
-    }
-    if (!fmtNode) {
-      const only = groups[0];
-      ctx.emit({
-        line: n.startPosition.row + 1,
-        level,
-        callee: macroNode.text + "!",
-        kind: groups.length === 1 && only && only.some((t2) => t2.text === "=") ? "dynamic:fields-only" : "dynamic:non-literal",
-        template: null,
-        sink: spec.sink,
-        argc: groups.length
-      });
-      return;
-    }
-    const raw = unquote(fmtNode.text);
-    const t = normalizeTemplate(maskFormatSpecs(raw, { braces: true }));
-    ctx.emit({
-      line: n.startPosition.row + 1,
-      level,
-      callee: macroNode.text + "!",
-      kind: /\{/.test(raw) ? "template" : "literal",
-      template: t,
-      sink: spec.sink,
-      argc: groups.length
-    });
-  });
-}
-var rustRules = [
-  {
-    id: "rust",
-    wasm: "tree-sitter-rust.wasm",
-    exts: /\.rs$/,
-    visit: visitRust
-  }
-];
-
-// ../log-template-extractor/src/site-context.ts
-var FUNCTION_NODE_TYPES = new Set([
-  "function_declaration",
-  "function_expression",
-  "function",
-  "arrow_function",
-  "method_definition",
-  "generator_function_declaration",
-  "generator_function",
-  "function_definition",
-  "decorated_definition",
-  "method_declaration",
-  "func_literal",
-  "function_item",
-  "closure_expression",
-  "constructor_declaration"
-]);
-
-// ../log-template-extractor/src/extract.ts
-var RULES = [
-  ...jsRules,
-  ...pythonRules,
-  ...goRules,
-  ...rustRules,
-  ...elixirJavaRules
-];
-var SKIP_DIR = new Set([
-  "node_modules",
-  "dist",
-  "build",
-  "out",
-  "coverage",
-  "storybook-static",
-  "vendor",
-  "target",
-  "venv",
-  "__pycache__",
-  "site-packages",
-  "generated",
-  "__generated__",
-  "public",
-  "static",
-  "assets",
-  "fixtures",
-  "__fixtures__",
-  "__snapshots__",
-  "migrations",
-  "third_party",
-  "thirdparty",
-  "external",
-  "bin",
-  "obj",
-  "Pods",
-  "DerivedData",
-  "cdk.out",
-  "playwright-report",
-  "test-results"
-]);
-var DOT_SKIP = new Set([
-  ".git",
-  ".next",
-  ".nuxt",
-  ".turbo",
-  ".cache",
-  ".yarn",
-  ".pnpm",
-  ".venv",
-  ".expo",
-  ".wrangler",
-  ".output",
-  ".svelte-kit",
-  ".gradle",
-  ".dart_tool",
-  ".serverless",
-  ".vercel",
-  ".github",
-  ".idea",
-  ".vscode",
-  ".husky",
-  ".changeset",
-  ".storybook",
-  ".mastra",
-  ".astro",
-  ".vite",
-  ".parcel-cache",
-  ".angular",
-  ".tox",
-  ".mypy_cache",
-  ".pytest_cache",
-  ".ruff_cache",
-  ".terraform",
-  ".cargo",
-  ".rustup",
-  ".bun",
-  ".npm",
-  ".docusaurus",
-  ".contentlayer",
-  ".source",
-  ".claude",
-  ".cursor",
-  ".agents",
-  ".codex"
-]);
-var languageCache = new Map;
-// ../log-query/src/pattern-retrieval.ts
-var SEVERITY_CLASS_LEVELS = {
-  error: ["error", "fatal"],
-  warn: ["warn", "warning"],
-  debug: ["debug"],
-  trace: ["trace"]
-};
-var SEVERITY_QUESTION_HINTS = [
-  [/\b(?:fatal|crit(?:ical)?)\b/iu, SEVERITY_CLASS_LEVELS.error],
-  [
-    /\b(?:error|errors|failur(?:e|es)|failed|fail(?:s|ing)?|exception|exceptions)\b/iu,
-    SEVERITY_CLASS_LEVELS.error
-  ],
-  [/\bwarn(?:ing)?s?\b/iu, SEVERITY_CLASS_LEVELS.warn],
-  [
-    /\bdebug(?:-|\s+)(?:level|logs?|messages?|entries|events?)\b|\b(?:severity|level)\s+debug\b/iu,
-    SEVERITY_CLASS_LEVELS.debug
-  ],
-  [
-    /\btrace(?:-|\s+)(?:level|logs?|messages?|entries|events?)\b|\b(?:severity|level)\s+trace\b/iu,
-    SEVERITY_CLASS_LEVELS.trace
-  ]
-];
-// ../public-api-contracts/src/logs.ts
+// ../../protocols/log-query/src/plan/measure.ts
 import { z as z13 } from "zod";
-var FilterOperatorSchema = z13.enum([
+var MEASURE_NUMERIC_AGGREGATES = [
+  "sum",
+  "avg",
+  "min",
+  "max",
+  "p50",
+  "p95",
+  "p99"
+];
+var MAX_RECENT_ROWS_LIMIT = 1000;
+var MAX_RECENT_ROW_FIELDS = 32;
+var createMeasureSchema = (fieldRef) => z13.discriminatedUnion("op", [
+  z13.strictObject({ op: z13.literal("count") }),
+  z13.strictObject({ op: z13.literal("event_rate") }),
+  z13.strictObject({ op: z13.literal("distinct"), field: fieldRef }),
+  z13.strictObject({
+    op: z13.literal("numeric"),
+    field: fieldRef,
+    parseAs: z13.literal("float64"),
+    aggregate: z13.enum(MEASURE_NUMERIC_AGGREGATES),
+    invalidValues: z13.enum(["drop", "error"])
+  }),
+  z13.strictObject({
+    op: z13.literal("recent_rows"),
+    limit: z13.number().int().positive().max(MAX_RECENT_ROWS_LIMIT),
+    fields: z13.array(fieldRef).max(MAX_RECENT_ROW_FIELDS).optional()
+  })
+]);
+
+// ../../protocols/log-query/src/plan/event-query-plan.ts
+var PLAN_OUTPUTS = ["series", "table", "evidence"];
+var SERIES_OVERFLOWS = ["other", "drop"];
+var MAX_SERIES_LIMIT = 1e4;
+var seriesSchema = z14.strictObject({
+  limit: z14.number().int().positive().max(MAX_SERIES_LIMIT),
+  overflow: z14.enum(SERIES_OVERFLOWS)
+});
+// ../../protocols/log-query/src/plan/field-ref.ts
+import { z as z15 } from "zod";
+var fieldRefSchema = z15.looseObject({
+  kind: z15.string().min(1)
+});
+// ../../protocols/log-query/src/spec-v2.ts
+var nonEmptyString2 = z16.string().trim().min(1).max(1024);
+var logFieldRefSchema = z16.discriminatedUnion("kind", [
+  z16.strictObject({ kind: z16.literal("service") }),
+  z16.strictObject({ kind: z16.literal("severity_number") }),
+  z16.strictObject({ kind: z16.literal("column"), name: nonEmptyString2 }),
+  z16.strictObject({
+    kind: z16.literal("attribute"),
+    source: logAttributeSourceSchema,
+    key: nonEmptyString2
+  }),
+  z16.strictObject({ kind: z16.literal("pattern") }),
+  bodyJsonFieldSchema
+]);
+var logPredicateTreeSchema = createPredicateTreeSchema(logFieldRefSchema);
+var LOG_DURATION_AGGREGATES = [
+  "sum",
+  "avg",
+  "max",
+  "p50",
+  "p95",
+  "p99"
+];
+var logMeasureV2Schema = z16.discriminatedUnion("op", [
+  ...createMeasureSchema(logFieldRefSchema).options,
+  z16.strictObject({ op: z16.literal("error_count") }),
+  z16.strictObject({
+    op: z16.literal("duration"),
+    aggregate: z16.enum(LOG_DURATION_AGGREGATES)
+  })
+]);
+var LOG_QUERY_BUCKETS = ["1m", "5m", "1h", "1d"];
+var logQueryAnchorSchema = z16.discriminatedUnion("kind", [
+  z16.strictObject({ kind: z16.literal("pattern"), query: nonEmptyString2 }),
+  z16.strictObject({
+    kind: z16.literal("patterns"),
+    patternIds: z16.array(z16.uuid()).min(1).max(1e4)
+  })
+]);
+var logQuerySpecV2Schema = z16.strictObject({
+  version: z16.literal(2),
+  source: z16.strictObject({ kind: z16.literal("logs") }),
+  predicate: logPredicateTreeSchema,
+  dimensions: z16.array(logFieldRefSchema).max(3),
+  measure: logMeasureV2Schema,
+  bucket: z16.enum(LOG_QUERY_BUCKETS).optional(),
+  output: z16.enum(PLAN_OUTPUTS),
+  series: seriesSchema.optional(),
+  exactness: z16.enum(["exact", "approximate_ok"]),
+  approximation: z16.strictObject({ maxRelativeError: z16.number().gt(0).lte(1) }).optional(),
+  anchor: logQueryAnchorSchema.optional()
+}).refine((spec) => spec.exactness === "approximate_ok" === (spec.approximation !== undefined), {
+  path: ["approximation"],
+  message: "approximation is required exactly when exactness is approximate_ok"
+});
+// ../../contracts/public-api/src/logs.ts
+import { z as z17 } from "zod";
+var FilterOperatorSchema = z17.enum([
   "eq",
   "neq",
   "in",
@@ -23248,29 +18605,29 @@ var FilterOperatorSchema = z13.enum([
   "between",
   "exists"
 ]).describe("Filter operator: 'eq' (equals), 'neq' (not equals), 'in' (in array), 'contains' (substring), 'starts_with' (prefix), 'gt' (greater than), 'gte' (greater than or equal), 'lt' (less than), 'lte' (less than or equal), 'between' (range), 'exists' (field exists)");
-var SearchModeSchema = z13.enum(["any", "all", "phrase"]).describe("Search mode: 'any' (match any token), 'all' (match all tokens), 'phrase' (exact phrase match)");
-var LogSearchSchema = z13.object({
-  query: z13.string().min(1, "Search query must be at least 1 character").max(500, "Search query must be at most 500 characters").describe("Search query text (1-500 characters)"),
-  fields: z13.array(z13.string()).optional().describe("Fields to search in (defaults to backend allowlist)"),
+var SearchModeSchema = z17.enum(["any", "all", "phrase"]).describe("Search mode: 'any' (match any token), 'all' (match all tokens), 'phrase' (exact phrase match)");
+var LogSearchSchema = z17.object({
+  query: z17.string().min(1, "Search query must be at least 1 character").max(500, "Search query must be at most 500 characters").describe("Search query text (1-500 characters)"),
+  fields: z17.array(z17.string()).optional().describe("Fields to search in (defaults to the native query allowlist)"),
   mode: SearchModeSchema.optional().default("all").describe("Token matching mode")
 });
-var LogFilterSchema = z13.object({
-  field: z13.string().describe("Field name to filter on"),
+var LogFilterSchema = z17.object({
+  field: z17.string().describe("Field name to filter on"),
   op: FilterOperatorSchema.describe("Filter operator"),
-  value: z13.union([
-    z13.string(),
-    z13.number(),
-    z13.boolean(),
-    z13.array(z13.union([z13.string(), z13.number()])),
-    z13.object({
-      from: z13.string(),
-      to: z13.string()
+  value: z17.union([
+    z17.string(),
+    z17.number(),
+    z17.boolean(),
+    z17.array(z17.union([z17.string(), z17.number()])),
+    z17.object({
+      from: z17.string(),
+      to: z17.string()
     })
   ]).describe("Filter value (type depends on operator)")
 }).superRefine((filter, ctx) => {
   if (filter.op === "in" && !Array.isArray(filter.value)) {
     ctx.addIssue({
-      code: z13.ZodIssueCode.custom,
+      code: z17.ZodIssueCode.custom,
       message: "Value must be an array when op is 'in'",
       path: ["value"]
     });
@@ -23280,7 +18637,7 @@ var LogFilterSchema = z13.object({
     const isRange = typeof v === "object" && v !== null && "from" in v && "to" in v;
     if (!isRange) {
       ctx.addIssue({
-        code: z13.ZodIssueCode.custom,
+        code: z17.ZodIssueCode.custom,
         message: "Value must be an object with from/to when op is 'between'",
         path: ["value"]
       });
@@ -23288,199 +18645,189 @@ var LogFilterSchema = z13.object({
   }
   if (filter.op === "exists" && typeof filter.value !== "boolean") {
     ctx.addIssue({
-      code: z13.ZodIssueCode.custom,
+      code: z17.ZodIssueCode.custom,
       message: "Value must be boolean when op is 'exists'",
       path: ["value"]
     });
   }
 });
-var LogSortSchema = z13.object({
-  field: z13.string().describe("Field name to sort by"),
-  direction: z13.enum(["asc", "desc"]).default("desc").describe("Sort direction: 'asc' for ascending, 'desc' for descending")
+var LogSortSchema = z17.object({
+  field: z17.string().describe("Field name to sort by"),
+  direction: z17.enum(["asc", "desc"]).default("desc").describe("Sort direction: 'asc' for ascending, 'desc' for descending")
 });
-var LogPaginationSchema = z13.object({
-  limit: z13.number().int().min(1, "Limit must be at least 1").max(1000, "Limit must be at most 1000").default(50).describe("Maximum number of rows to return"),
-  cursor: z13.string().optional().describe("Opaque cursor from previous response for pagination")
+var LogPaginationSchema = z17.object({
+  limit: z17.number().int().min(1, "Limit must be at least 1").max(1000, "Limit must be at most 1000").default(50).describe("Maximum number of rows to return"),
+  cursor: z17.string().optional().describe("Opaque cursor from previous response for pagination")
 });
-var QueryLogsInputSchema = z13.object({
-  projectId: z13.string().uuid().optional().describe("Project to query logs for. Auto-filled from CLI and SDK context when omitted."),
+var QueryLogsInputSchema = z17.object({
+  projectId: z17.string().uuid().optional().describe("Project to query logs for. Auto-filled from CLI and SDK context when omitted."),
   search: LogSearchSchema.optional().describe("Full-text search configuration"),
-  filters: z13.array(LogFilterSchema).optional().describe("Structured filter clauses (ANDed together). When no `timestamp` filter is provided, queries default to a 24h look-back window; pass an explicit `timestamp` filter to query a different range."),
-  select: z13.array(z13.string()).optional().describe("Fields to return (defaults to backend default set)"),
+  filters: z17.array(LogFilterSchema).optional().describe("Structured filter clauses (ANDed together). When no `timestamp` filter is provided, queries default to a 24h look-back window; pass an explicit `timestamp` filter to query a different range."),
+  select: z17.array(z17.string()).optional().describe("Fields to return (defaults to the native query field set)"),
   sort: LogSortSchema.optional().describe("Sort configuration (defaults to timestamp desc)"),
   pagination: LogPaginationSchema.optional().describe("Pagination configuration")
 });
 var DEFAULT_QUERY_WINDOW_MS = 24 * 60 * 60 * 1000;
 var DEFAULT_PHRASE_QUERY_WINDOW_MS = 60 * 60 * 1000;
-var LogBackendIdSchema = z13.enum([
-  "clickhouse",
-  "better-stack",
-  "datadog",
-  "gcp",
-  "axiom",
-  "cloudwatch",
-  "sentry",
-  "posthog",
-  "mezmo"
-]);
-var LogBackendKindSchema = z13.enum(["native", "external"]);
-var LogsSchemaInputSchema = z13.object({
-  projectId: z13.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted."),
-  question: z13.string().trim().min(1).max(2000).optional().describe("Optional natural-language question used to retrieve coherent schema bundles."),
-  topK: z13.number().int().min(1).max(32).optional().describe("Max schema bundles to return when question is set (default 8)")
+var NativeLogStorageIdSchema = z17.literal("clickhouse");
+var NativeLogStorageKindSchema = z17.literal("native");
+var LogsSchemaInputSchema = z17.object({
+  projectId: z17.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted."),
+  question: z17.string().trim().min(1).max(2000).optional().describe("Optional natural-language question used to retrieve coherent schema bundles."),
+  topK: z17.number().int().min(1).max(32).optional().describe("Max schema bundles to return when question is set (default 8)")
 });
-var LogsSchemaBundleSchema = z13.object({
-  id: z13.string().describe("Stable schema-bundle document id"),
-  service: z13.string().describe("Emitting service for this co-occurrence shape"),
-  keys: z13.array(z13.string()).describe("Co-occurring otel_log_attributes keys in this bundle"),
-  rowCount: z13.number().nonnegative().describe("Observed row count when the bundle was compiled"),
-  score: z13.number().optional().describe("Retrieval rank score when returned from vector search")
+var LogsSchemaBundleSchema = z17.object({
+  id: z17.string().describe("Stable schema-bundle document id"),
+  service: z17.string().describe("Emitting service for this co-occurrence shape"),
+  keys: z17.array(z17.string()).describe("Co-occurring otel_log_attributes keys in this bundle"),
+  rowCount: z17.number().nonnegative().describe("Observed row count when the bundle was compiled"),
+  score: z17.number().optional().describe("Retrieval rank score when returned from vector search")
 });
-var LogsSchemaOutputSchema = z13.object({
-  backend: z13.object({
-    id: LogBackendIdSchema,
-    name: z13.string(),
-    kind: LogBackendKindSchema
-  }).describe("Active log backend for the project"),
-  features: z13.array(z13.string()).describe("Backend features registered on the server"),
-  commands: z13.array(z13.enum(["schema", "query", "volume", "patterns", "nativeQuery"])).describe("CLI/API commands available for this backend"),
-  queryableFields: z13.array(z13.string()).describe("Fields accepted by the normalized logs.query contract"),
-  searchableFields: z13.array(z13.string()).describe("Fields accepted by logs.query full-text search"),
-  question: z13.string().optional().describe("Echo of the question used for retrieval when provided"),
-  selectedBundles: z13.array(LogsSchemaBundleSchema).describe("Question-conditioned coherent schema bundles (empty when question omitted)"),
-  selectedAttributeKeys: z13.array(z13.string()).describe("Flattened attribute keys from selectedBundles, or recent keys when question omitted"),
-  observedServiceNames: z13.array(z13.string()).describe("Recently observed service names for this project"),
-  observedAttributeKeys: z13.array(z13.string()).describe("Observed / selected attribute keys for agent and CLI schema discovery"),
-  indexStatus: z13.enum(["ready", "empty", "unavailable", "skipped"]).describe("ready: bundles retrieved; empty: index missing/empty; unavailable: retrieval failed; skipped: no question (legacy path)"),
-  schemaContext: z13.record(z13.string(), z13.any()).optional().describe("Backend-specific schema guidance and examples")
+var LogsSchemaOutputSchema = z17.object({
+  backend: z17.object({
+    id: NativeLogStorageIdSchema,
+    name: z17.string(),
+    kind: NativeLogStorageKindSchema
+  }).describe("Native ClickHouse log storage for the project"),
+  features: z17.array(z17.string()).describe("Native log capabilities available on the server"),
+  commands: z17.array(z17.enum(["schema", "query", "volume", "patterns", "nativeQuery"])).describe("CLI/API commands available for native log storage"),
+  queryableFields: z17.array(z17.string()).describe("Fields accepted by the normalized logs.query contract"),
+  searchableFields: z17.array(z17.string()).describe("Fields accepted by logs.query full-text search"),
+  question: z17.string().optional().describe("Echo of the question used for retrieval when provided"),
+  selectedBundles: z17.array(LogsSchemaBundleSchema).describe("Question-conditioned coherent schema bundles (empty when question omitted)"),
+  selectedAttributeKeys: z17.array(z17.string()).describe("Flattened attribute keys from selectedBundles, or recent keys when question omitted"),
+  observedServiceNames: z17.array(z17.string()).describe("Recently observed service names for this project"),
+  observedAttributeKeys: z17.array(z17.string()).describe("Observed / selected attribute keys for agent and CLI schema discovery"),
+  indexStatus: z17.enum(["ready", "empty", "unavailable", "skipped"]).describe("ready: bundles retrieved; empty: index missing/empty; unavailable: retrieval failed; skipped: no question (legacy path)"),
+  schemaContext: z17.record(z17.string(), z17.any()).optional().describe("Native ClickHouse schema guidance and examples")
 });
-var LogsVolumeIntervalSchema = z13.enum(["1m", "5m", "15m", "1h"]);
-var LogsVolumeDimensionSchema = z13.enum([
+var LogsVolumeIntervalSchema = z17.enum(["1m", "5m", "15m", "1h"]);
+var LogsVolumeDimensionSchema = z17.enum([
   "service_name",
   "severity_text",
   "environment"
 ]);
-var LogsVolumeInputSchema = z13.object({
-  projectId: z13.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
-  startDate: z13.string().datetime({ offset: true }),
-  endDate: z13.string().datetime({ offset: true }),
+var LogsVolumeInputSchema = z17.object({
+  projectId: z17.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
+  startDate: z17.string().datetime({ offset: true }),
+  endDate: z17.string().datetime({ offset: true }),
   interval: LogsVolumeIntervalSchema.optional().describe("Aggregation bucket size for the volume series"),
   groupBy: LogsVolumeDimensionSchema.optional().describe("Optional field to split volume series by"),
-  filters: z13.object({
-    service_name: z13.string().optional(),
-    severity_text: z13.string().optional(),
-    environment: z13.string().optional()
+  filters: z17.object({
+    service_name: z17.string().optional(),
+    severity_text: z17.string().optional(),
+    environment: z17.string().optional()
   }).optional()
 }).refine((data) => new Date(data.startDate) < new Date(data.endDate), {
   message: "startDate must be before endDate",
   path: ["endDate"]
 });
-var LogsVolumeOutputSchema = z13.object({
-  total: z13.number().nonnegative(),
-  startDate: z13.string().datetime({ offset: true }),
-  endDate: z13.string().datetime({ offset: true }),
+var LogsVolumeOutputSchema = z17.object({
+  total: z17.number().nonnegative(),
+  startDate: z17.string().datetime({ offset: true }),
+  endDate: z17.string().datetime({ offset: true }),
   interval: LogsVolumeIntervalSchema,
-  series: z13.array(z13.object({
-    group: z13.string(),
-    total: z13.number().nonnegative(),
-    points: z13.array(z13.object({
-      bucket: z13.string(),
-      count: z13.number().nonnegative()
+  series: z17.array(z17.object({
+    group: z17.string(),
+    total: z17.number().nonnegative(),
+    points: z17.array(z17.object({
+      bucket: z17.string(),
+      count: z17.number().nonnegative()
     }))
   }))
 });
-var LogsPatternsInputSchema = z13.object({
-  projectId: z13.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
-  query: z13.string().min(1).max(500).optional().describe("Optional text to match against normalized log patterns"),
-  severity: z13.string().optional().describe("Optional severity_text value, for example ERROR"),
-  startDate: z13.string().datetime({ offset: true }).optional().describe("Optional earliest last-seen timestamp"),
-  endDate: z13.string().datetime({ offset: true }).optional().describe("Optional latest last-seen timestamp"),
-  limit: z13.number().int().min(1).max(100).default(25).describe("Maximum number of log patterns to return")
+var LogsPatternsInputSchema = z17.object({
+  projectId: z17.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
+  query: z17.string().min(1).max(500).optional().describe("Optional text to match against normalized log patterns"),
+  severity: z17.string().optional().describe("Optional severity_text value, for example ERROR"),
+  startDate: z17.string().datetime({ offset: true }).optional().describe("Optional earliest last-seen timestamp"),
+  endDate: z17.string().datetime({ offset: true }).optional().describe("Optional latest last-seen timestamp"),
+  limit: z17.number().int().min(1).max(100).default(25).describe("Maximum number of log patterns to return")
 }).refine((data) => !data.startDate || !data.endDate || new Date(data.startDate) < new Date(data.endDate), {
   message: "startDate must be before endDate",
   path: ["endDate"]
 });
-var LogPatternSchema = z13.object({
-  serviceName: z13.string().nullable(),
-  fingerprint: z13.string().describe("Pattern id (UUID) of the matched code pattern"),
-  pattern: z13.string().describe("Sample log body for the pattern"),
-  severity: z13.string().nullable(),
-  occurrences: z13.number().nonnegative(),
-  firstSeen: z13.string().nullable(),
-  lastSeen: z13.string().nullable(),
-  representativeId: z13.string().nullable().describe("canonical_id of one matching log line")
+var LogPatternSchema = z17.object({
+  serviceName: z17.string().nullable(),
+  fingerprint: z17.string().describe("Pattern id (UUID) of the matched code pattern"),
+  pattern: z17.string().describe("Sample log body for the pattern"),
+  severity: z17.string().nullable(),
+  occurrences: z17.number().nonnegative(),
+  firstSeen: z17.string().nullable(),
+  lastSeen: z17.string().nullable(),
+  representativeId: z17.string().nullable().describe("canonical_id of one matching log line")
 });
-var LogsPatternsOutputSchema = z13.object({
-  patterns: z13.array(LogPatternSchema),
-  meta: z13.object({
-    backendId: LogBackendIdSchema,
-    count: z13.number().int().nonnegative(),
-    took: z13.number().nonnegative()
+var LogsPatternsOutputSchema = z17.object({
+  patterns: z17.array(LogPatternSchema),
+  meta: z17.object({
+    backendId: NativeLogStorageIdSchema,
+    count: z17.number().int().nonnegative(),
+    took: z17.number().nonnegative()
   })
 });
-var LogsNativeQueryInputSchema = z13.object({
-  projectId: z13.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
-  query: z13.string().min(1, "Query cannot be empty").max(1e4, "Query must be 10000 characters or less")
+var LogsNativeQueryInputSchema = z17.object({
+  projectId: z17.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
+  query: z17.string().min(1, "Query cannot be empty").max(1e4, "Query must be 10000 characters or less")
 });
-var LogsNativeQueryOutputSchema = z13.object({
-  result: z13.string().describe("Backend-formatted query result"),
-  format: z13.literal("text"),
-  meta: z13.object({
-    backendId: LogBackendIdSchema,
-    took: z13.number().nonnegative(),
-    truncated: z13.boolean()
+var LogsNativeQueryOutputSchema = z17.object({
+  result: z17.string().describe("ClickHouse-formatted query result"),
+  format: z17.literal("text"),
+  meta: z17.object({
+    backendId: NativeLogStorageIdSchema,
+    took: z17.number().nonnegative(),
+    truncated: z17.boolean()
   })
 });
-var LogPaginationResponseSchema = z13.object({
-  cursor: z13.string().nullable().describe("Cursor for next page (null if no more results)"),
-  hasMore: z13.boolean().describe("Whether more results are available")
+var LogPaginationResponseSchema = z17.object({
+  cursor: z17.string().nullable().describe("Cursor for next page (null if no more results)"),
+  hasMore: z17.boolean().describe("Whether more results are available")
 });
-var LogQueryMetaSchema = z13.object({
-  count: z13.number().int().nonnegative().describe("Number of log rows returned in this response"),
-  took: z13.number().nonnegative().describe("Query execution time in milliseconds")
+var LogQueryMetaSchema = z17.object({
+  count: z17.number().int().nonnegative().describe("Number of log rows returned in this response"),
+  took: z17.number().nonnegative().describe("Query execution time in milliseconds")
 });
-var QueryLogsOutputSchema = z13.object({
-  data: z13.array(z13.record(z13.string(), z13.any())).describe("Array of log rows with selected fields"),
-  nextCursor: z13.string().nullable().describe("Pass as 'cursor' in the next query to fetch the next page. Null when there are no more results."),
+var QueryLogsOutputSchema = z17.object({
+  data: z17.array(z17.record(z17.string(), z17.any())).describe("Array of log rows with selected fields"),
+  nextCursor: z17.string().nullable().describe("Pass as 'cursor' in the next query to fetch the next page. Null when there are no more results."),
   meta: LogQueryMetaSchema.describe("Query execution metadata")
 });
-var SearchLogsInputSchema = z13.object({
-  projectId: z13.string().uuid().optional().describe("Project to search. Auto-filled from CLI and SDK context when omitted."),
-  question: z13.string().trim().min(1).max(2000).describe("Natural-language question about the project's logs")
+var SearchLogsInputSchema = z17.object({
+  projectId: z17.string().uuid().optional().describe("Project to search. Auto-filled from CLI and SDK context when omitted."),
+  question: z17.string().trim().min(1).max(2000).describe("Natural-language question about the project's logs")
 });
-var SearchLogsMetaSchema = z13.object({
-  took: z13.number().nonnegative(),
-  retrievalMs: z13.number().nonnegative(),
-  planningMs: z13.number().nonnegative(),
-  executionMs: z13.number().nonnegative(),
-  candidateCount: z13.number().int().nonnegative(),
-  familyCount: z13.number().int().nonnegative(),
-  plannerModel: z13.string()
+var SearchLogsMetaSchema = z17.object({
+  took: z17.number().nonnegative(),
+  retrievalMs: z17.number().nonnegative(),
+  planningMs: z17.number().nonnegative(),
+  executionMs: z17.number().nonnegative(),
+  candidateCount: z17.number().int().nonnegative(),
+  familyCount: z17.number().int().nonnegative(),
+  plannerModel: z17.string()
 });
-var SearchLogsOutputSchema = z13.discriminatedUnion("status", [
-  z13.object({
-    status: z13.literal("no_match"),
-    explanation: z13.string(),
-    data: z13.array(z13.record(z13.string(), z13.any())).length(0),
+var SearchLogsOutputSchema = z17.discriminatedUnion("status", [
+  z17.object({
+    status: z17.literal("no_match"),
+    explanation: z17.string(),
+    data: z17.array(z17.record(z17.string(), z17.any())).length(0),
     meta: SearchLogsMetaSchema
   }),
-  z13.object({
-    status: z13.literal("query"),
-    explanation: z13.string(),
+  z17.object({
+    status: z17.literal("query"),
+    explanation: z17.string(),
     spec: logQuerySpecV1Schema,
     resolution: logQueryResolutionV1Schema,
-    resolvedTimeRange: z13.object({
-      from: z13.string().datetime({ offset: true }),
-      to: z13.string().datetime({ offset: true })
+    resolvedTimeRange: z17.object({
+      from: z17.string().datetime({ offset: true }),
+      to: z17.string().datetime({ offset: true })
     }),
-    coverage: z13.object({
-      status: z13.literal("complete"),
-      available: z13.object({
-        from: z13.string().datetime({ offset: true }),
-        to: z13.string().datetime({ offset: true })
+    coverage: z17.object({
+      status: z17.literal("complete"),
+      available: z17.object({
+        from: z17.string().datetime({ offset: true }),
+        to: z17.string().datetime({ offset: true })
       })
     }),
-    data: z13.array(z13.record(z13.string(), z13.any())),
+    data: z17.array(z17.record(z17.string(), z17.any())),
     meta: SearchLogsMetaSchema
   })
 ]);
@@ -23514,10 +18861,58 @@ var searchLogs = defineOperation({
   pagination: "none",
   async: "sync"
 });
+var ASK_LOGS_MAX_EVIDENCE_ROWS = 50;
+var AskLogsInputSchema = z17.object({
+  projectId: z17.string().uuid().optional().describe("Project to query. Auto-filled from CLI and SDK context when omitted."),
+  question: z17.string().trim().min(1).max(2000).describe("Natural-language question about the project's logs")
+});
+var AskLogsMetaSchema = z17.object({
+  took: z17.number().nonnegative(),
+  retrievalMs: z17.number().nonnegative(),
+  planningMs: z17.number().nonnegative(),
+  executionMs: z17.number().nonnegative(),
+  synthesisMs: z17.number().nonnegative(),
+  plannerModel: z17.string(),
+  answerModel: z17.string().nullable().describe("Model that synthesized the answer; null when the planner itself returned cannot_determine and no synthesis step ran")
+});
+var AskLogsOutputSchema = z17.discriminatedUnion("state", [
+  z17.object({
+    state: z17.literal("cannot_determine"),
+    reason: z17.string(),
+    meta: AskLogsMetaSchema
+  }),
+  z17.object({
+    state: z17.literal("answered"),
+    answer: z17.string(),
+    evidence: z17.array(z17.record(z17.string(), z17.any())).max(ASK_LOGS_MAX_EVIDENCE_ROWS).describe("Bounded sample of the rows the answer is grounded in; see evidenceCount for the true total"),
+    evidenceCount: z17.number().int().nonnegative().describe("Total matching log EVENTS when exactly knowable (details queries, and count-measure aggregate/timeseries queries by summing every group's count), otherwise the number of result rows/groups the query returned — check evidenceCountIsEventTotal before presenting this as an event total."),
+    evidenceCountIsEventTotal: z17.boolean().describe("True when evidenceCount counts matching log events; false when no event total is derivable for this query (a non-count aggregate/timeseries measure) and evidenceCount is the result row/group count instead."),
+    resolvedTimeRange: z17.object({
+      from: z17.string().datetime({ offset: true }),
+      to: z17.string().datetime({ offset: true })
+    }),
+    meta: AskLogsMetaSchema
+  })
+]);
+var askLogs = defineOperation({
+  operationId: "logs.ask",
+  summary: "Ask a natural-language question and get an answer from log evidence",
+  description: "Plan and execute a bounded log query from a natural-language question, then synthesize a grounded natural-language answer from the returned evidence. Reports an explicit cannot-determine state when the evidence cannot support an answer.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/logs/ask",
+    tags: ["Logs"]
+  },
+  input: AskLogsInputSchema,
+  output: AskLogsOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
 var logsSchema = defineOperation({
   operationId: "logs.schema",
   summary: "Get log schema",
-  description: "Describe the active log backend, supported commands, query fields, and schema context.",
+  description: "Describe native ClickHouse log storage, supported commands, query fields, and schema context.",
   backend: "api",
   route: {
     method: "POST",
@@ -23583,10 +18978,10 @@ var logsContract = {
   nativeQuery: logsNativeQuery.contract
 };
 
-// ../mcp-connector-provider/src/ai-sdk-tool-definitions.ts
-import { z as z14 } from "zod";
-// ../mcp-connector-provider/src/connection-schemas.ts
-import { z as z15 } from "zod";
+// ../../mcp-connector-provider/src/ai-sdk-tool-definitions.ts
+import { z as z18 } from "zod";
+// ../../mcp-connector-provider/src/connection-schemas.ts
+import { z as z19 } from "zod";
 var MCP_TRANSPORTS = ["streamable-http", "sse"];
 var MCP_AUTH_MODES = [
   "none",
@@ -23616,214 +19011,234 @@ var MCP_TOOL_AVAILABILITY_REASON_VALUES = [
   "write_blocked",
   "disabled"
 ];
-var mcpConnectionTransportSchema = z15.enum(MCP_TRANSPORTS);
-var mcpConnectionAuthModeSchema = z15.enum(MCP_AUTH_MODES);
-var mcpOauthTokenEndpointAuthMethodSchema = z15.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS);
-var mcpConnectionSourceSchema = z15.enum(MCP_CONNECTION_SOURCES);
-var mcpConnectionInstallStatusSchema = z15.enum(MCP_INSTALL_STATUSES);
-var mcpProviderAvailabilitySchema = z15.enum(MCP_PROVIDER_AVAILABILITY_VALUES);
-var mcpToolAvailabilitySchema = z15.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES);
-var mcpCustomHeaderSchema = z15.object({
-  id: z15.string().min(1),
-  name: z15.string().min(1),
-  value: z15.string().min(1)
+var mcpConnectionTransportSchema = z19.enum(MCP_TRANSPORTS);
+var mcpConnectionAuthModeSchema = z19.enum(MCP_AUTH_MODES);
+var mcpOauthTokenEndpointAuthMethodSchema = z19.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS);
+var mcpConnectionSourceSchema = z19.enum(MCP_CONNECTION_SOURCES);
+var mcpConnectionInstallStatusSchema = z19.enum(MCP_INSTALL_STATUSES);
+var mcpProviderAvailabilitySchema = z19.enum(MCP_PROVIDER_AVAILABILITY_VALUES);
+var mcpToolAvailabilitySchema = z19.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES);
+var mcpCustomHeaderSchema = z19.object({
+  id: z19.string().min(1),
+  name: z19.string().min(1),
+  value: z19.string().min(1)
 });
-var mcpMaskedHeaderSchema = z15.object({
-  id: z15.string().min(1),
-  name: z15.string().min(1),
-  maskedValue: z15.string().min(1)
+var mcpMaskedHeaderSchema = z19.object({
+  id: z19.string().min(1),
+  name: z19.string().min(1),
+  maskedValue: z19.string().min(1)
 });
-var mcpNoAuthConfigSchema = z15.object({
-  authMode: z15.literal("none")
+var mcpNoAuthConfigSchema = z19.object({
+  authMode: z19.literal("none")
 });
-var mcpHeaderRefreshCredentialsSchema = z15.object({
-  tokenUrl: z15.string().url(),
-  clientId: z15.string().min(1),
-  clientSecret: z15.string().min(1).optional(),
+var mcpHeaderRefreshCredentialsSchema = z19.object({
+  tokenUrl: z19.string().url(),
+  clientId: z19.string().min(1),
+  clientSecret: z19.string().min(1).optional(),
   tokenEndpointAuthMethod: mcpOauthTokenEndpointAuthMethodSchema.optional(),
-  refreshToken: z15.string().min(1),
-  headerName: z15.string().min(1).default("Authorization"),
-  headerValuePrefix: z15.string().default("Bearer "),
-  expiresAt: z15.string().datetime().optional()
+  refreshToken: z19.string().min(1),
+  headerName: z19.string().min(1).default("Authorization"),
+  headerValuePrefix: z19.string().default("Bearer "),
+  expiresAt: z19.string().datetime().optional()
 });
-var mcpHeadersAuthConfigSchema = z15.object({
-  authMode: z15.literal("headers"),
-  headers: z15.array(mcpCustomHeaderSchema),
+var mcpHeadersAuthConfigSchema = z19.object({
+  authMode: z19.literal("headers"),
+  headers: z19.array(mcpCustomHeaderSchema),
   refreshCredentials: mcpHeaderRefreshCredentialsSchema.optional()
 });
-var mcpAwsSigV4AuthConfigSchema = z15.object({
-  authMode: z15.literal("aws-sigv4"),
-  accessKeyId: z15.string().min(1),
-  secretAccessKey: z15.string().min(1),
-  sessionToken: z15.string().min(1).optional(),
-  region: z15.string().min(1),
-  service: z15.string().min(1).default("aws-mcp")
+var mcpAwsSigV4AuthConfigSchema = z19.object({
+  authMode: z19.literal("aws-sigv4"),
+  accessKeyId: z19.string().min(1),
+  secretAccessKey: z19.string().min(1),
+  sessionToken: z19.string().min(1).optional(),
+  region: z19.string().min(1),
+  service: z19.string().min(1).default("aws-mcp")
 });
-var optionalOauthScopeSchema = z15.preprocess((value) => {
+var optionalOauthScopeSchema = z19.preprocess((value) => {
   if (typeof value !== "string") {
     return;
   }
   const normalizedValue = value.trim();
   return normalizedValue.length > 0 ? normalizedValue : undefined;
-}, z15.string().min(1).optional()).optional();
-var mcpOauthTokenSchema = z15.object({
-  accessToken: z15.string().min(1),
-  refreshToken: z15.string().min(1).optional(),
-  tokenType: z15.string().min(1).optional(),
+}, z19.string().min(1).optional()).optional();
+var mcpOauthTokenSchema = z19.object({
+  accessToken: z19.string().min(1),
+  refreshToken: z19.string().min(1).optional(),
+  tokenType: z19.string().min(1).optional(),
   scope: optionalOauthScopeSchema,
-  expiresAt: z15.string().datetime().optional()
+  expiresAt: z19.string().datetime().optional()
 }).transform(({ scope, ...tokens }) => {
   return scope === undefined ? tokens : { ...tokens, scope };
 });
-var mcpOauthAuthConfigSchema = z15.object({
-  authMode: z15.literal("oauth"),
-  providerId: z15.string().min(1),
+var mcpOauthAuthConfigSchema = z19.object({
+  authMode: z19.literal("oauth"),
+  providerId: z19.string().min(1),
   tokens: mcpOauthTokenSchema,
-  headers: z15.array(mcpCustomHeaderSchema).optional()
+  headers: z19.array(mcpCustomHeaderSchema).optional()
 });
-var mcpAuthConfigSchema = z15.discriminatedUnion("authMode", [
+var mcpAuthConfigSchema = z19.discriminatedUnion("authMode", [
   mcpNoAuthConfigSchema,
   mcpHeadersAuthConfigSchema,
   mcpOauthAuthConfigSchema,
   mcpAwsSigV4AuthConfigSchema
 ]);
-var mcpEncryptedAuthConfigSchema = z15.string().min(1).regex(/^enc:v1:/, "Encrypted auth config must use enc:v1 format.");
-var mcpPendingOauthRequestConfigSchema = z15.object({
-  codeVerifier: z15.string().min(1),
-  clientId: z15.string().min(1),
-  clientSecret: z15.string().min(1).optional(),
+var mcpEncryptedAuthConfigSchema = z19.string().min(1).regex(/^enc:v1:/, "Encrypted auth config must use enc:v1 format.");
+var mcpPendingOauthRequestConfigSchema = z19.object({
+  codeVerifier: z19.string().min(1),
+  clientId: z19.string().min(1),
+  clientSecret: z19.string().min(1).optional(),
   tokenEndpointAuthMethod: mcpOauthTokenEndpointAuthMethodSchema.optional(),
-  tokenUrl: z15.string().url().optional(),
-  resourceUrl: z15.string().url().optional(),
-  projectId: z15.string().uuid().optional(),
-  returnTo: z15.string().min(1).max(2000).optional(),
-  messageId: z15.string().min(1).max(240).optional(),
-  scopes: z15.array(z15.string().min(1)).optional()
+  tokenUrl: z19.string().url().optional(),
+  resourceUrl: z19.string().url().optional(),
+  projectId: z19.string().uuid().optional(),
+  returnTo: z19.string().min(1).max(2000).optional(),
+  messageId: z19.string().min(1).max(240).optional(),
+  scopes: z19.array(z19.string().min(1)).optional()
 });
-var mcpToolInputSchemaSchema = z15.object({
-  type: z15.string().optional(),
-  properties: z15.record(z15.string(), z15.unknown()).optional(),
-  required: z15.array(z15.string()).optional(),
-  additionalProperties: z15.boolean().optional()
-}).catchall(z15.unknown());
-var mcpProviderCapabilitiesSchema = z15.object({
-  supportsOAuth: z15.boolean().default(false),
-  supportsCustomHeaders: z15.boolean().default(true),
-  supportsToolDiscovery: z15.boolean().default(true),
-  readOnlyToolNames: z15.array(z15.string()).default([])
+var mcpToolInputSchemaSchema = z19.object({
+  type: z19.string().optional(),
+  properties: z19.record(z19.string(), z19.unknown()).optional(),
+  required: z19.array(z19.string()).optional(),
+  additionalProperties: z19.boolean().optional()
+}).catchall(z19.unknown());
+var mcpProviderCapabilitiesSchema = z19.object({
+  supportsOAuth: z19.boolean().default(false),
+  supportsCustomHeaders: z19.boolean().default(true),
+  supportsToolDiscovery: z19.boolean().default(true),
+  readOnlyToolNames: z19.array(z19.string()).default([])
 });
-var mcpToolSnapshotEntrySchema = z15.object({
-  name: z15.string().min(1),
-  title: z15.string().min(1),
-  description: z15.string().min(1),
+var mcpToolSnapshotEntrySchema = z19.object({
+  name: z19.string().min(1),
+  title: z19.string().min(1),
+  description: z19.string().min(1),
   inputSchema: mcpToolInputSchemaSchema,
-  annotations: z15.record(z15.string(), z15.unknown()).default({}),
+  annotations: z19.record(z19.string(), z19.unknown()).default({}),
   availability: mcpToolAvailabilitySchema,
-  isReadOnly: z15.boolean()
+  isReadOnly: z19.boolean()
 });
-var mcpToolSnapshotSchema = z15.object({
-  discoveredAt: z15.string().datetime(),
-  tools: z15.array(mcpToolSnapshotEntrySchema)
+var mcpToolSnapshotSchema = z19.object({
+  discoveredAt: z19.string().datetime(),
+  tools: z19.array(mcpToolSnapshotEntrySchema)
 });
-var mcpConnectorManagementSchema = z15.object({
-  mode: z15.enum(["user", "system"]),
-  managedBy: z15.object({
-    type: z15.literal("integration"),
-    id: z15.string().min(1),
-    displayName: z15.string().min(1),
-    iconKey: z15.string().min(1)
+var mcpConnectorManagementSchema = z19.object({
+  mode: z19.enum(["user", "system"]),
+  managedBy: z19.object({
+    type: z19.literal("integration"),
+    id: z19.string().min(1),
+    displayName: z19.string().min(1),
+    iconKey: z19.string().min(1)
   }).nullable(),
-  capabilities: z15.object({
-    canRename: z15.boolean(),
-    canEditCredentials: z15.boolean(),
-    canSetReadOnly: z15.boolean(),
-    canConfigureTools: z15.boolean(),
-    canDisconnect: z15.boolean()
+  capabilities: z19.object({
+    canRename: z19.boolean(),
+    canEditCredentials: z19.boolean(),
+    canSetReadOnly: z19.boolean(),
+    canConfigureTools: z19.boolean(),
+    canDisconnect: z19.boolean()
   })
 });
-var mcpConnectionRecordSchema = z15.object({
-  id: z15.string().uuid(),
-  organizationId: z15.string().min(1),
-  projectId: z15.string().uuid(),
-  providerId: z15.string().min(1),
+var mcpConnectionRecordSchema = z19.object({
+  id: z19.string().uuid(),
+  organizationId: z19.string().min(1),
+  projectId: z19.string().uuid(),
+  providerId: z19.string().min(1),
   source: mcpConnectionSourceSchema,
-  displayName: z15.string().min(1),
-  connectionKey: z15.string().min(1),
-  serverUrl: z15.string().url(),
+  displayName: z19.string().min(1),
+  connectionKey: z19.string().min(1),
+  serverUrl: z19.string().url(),
   transport: mcpConnectionTransportSchema,
   authMode: mcpConnectionAuthModeSchema,
   installStatus: mcpConnectionInstallStatusSchema,
-  installedByUserId: z15.string().nullable(),
-  connectedAt: z15.string().datetime().nullable(),
+  installedByUserId: z19.string().nullable(),
+  connectedAt: z19.string().datetime().nullable(),
   toolSnapshot: mcpToolSnapshotSchema.nullable(),
-  enabledToolNames: z15.array(z15.string()),
-  readOnly: z15.boolean().default(false),
-  version: z15.number().int().nonnegative(),
-  createdAt: z15.string().datetime(),
-  updatedAt: z15.string().datetime(),
-  deletedAt: z15.string().datetime().nullable()
+  enabledToolNames: z19.array(z19.string()),
+  readOnly: z19.boolean().default(false),
+  version: z19.number().int().nonnegative(),
+  createdAt: z19.string().datetime(),
+  updatedAt: z19.string().datetime(),
+  deletedAt: z19.string().datetime().nullable()
 });
 var McpConnectorManagementSchema = mcpConnectorManagementSchema;
-// ../mcp-connector-provider/src/mcp-client.ts
+// ../../mcp-connector-provider/src/inline-json-schema-refs.ts
+var DEFINITION_CONTAINER_KEYS = new Set(["definitions", "$defs"]);
+var SCHEMA_MAP_KEYWORDS = new Set([
+  "properties",
+  "patternProperties",
+  "dependentSchemas",
+  "definitions",
+  "$defs"
+]);
+var DATA_KEYWORDS = new Set(["const", "enum", "default", "examples"]);
+var ANNOTATION_KEYWORDS = new Set([
+  "title",
+  "description",
+  "default",
+  "examples",
+  "deprecated",
+  "readOnly",
+  "writeOnly",
+  "$comment"
+]);
+// ../../mcp-connector-provider/src/mcp-client.ts
 var import_sha256_js = __toESM(require_main2(), 1);
 
-// ../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-compat.js
+// ../../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-compat.js
 import * as z3rt from "zod/v3";
 import * as z4mini from "zod/v4-mini";
 
-// ../../node_modules/@modelcontextprotocol/sdk/dist/esm/types.js
-import * as z16 from "zod/v4";
+// ../../../node_modules/@modelcontextprotocol/sdk/dist/esm/types.js
+import * as z20 from "zod/v4";
 var RELATED_TASK_META_KEY = "io.modelcontextprotocol/related-task";
 var JSONRPC_VERSION = "2.0";
-var AssertObjectSchema = z16.custom((v) => v !== null && (typeof v === "object" || typeof v === "function"));
-var ProgressTokenSchema = z16.union([z16.string(), z16.number().int()]);
-var CursorSchema = z16.string();
-var TaskCreationParamsSchema = z16.looseObject({
-  ttl: z16.number().optional(),
-  pollInterval: z16.number().optional()
+var AssertObjectSchema = z20.custom((v) => v !== null && (typeof v === "object" || typeof v === "function"));
+var ProgressTokenSchema = z20.union([z20.string(), z20.number().int()]);
+var CursorSchema = z20.string();
+var TaskCreationParamsSchema = z20.looseObject({
+  ttl: z20.number().optional(),
+  pollInterval: z20.number().optional()
 });
-var TaskMetadataSchema = z16.object({
-  ttl: z16.number().optional()
+var TaskMetadataSchema = z20.object({
+  ttl: z20.number().optional()
 });
-var RelatedTaskMetadataSchema = z16.object({
-  taskId: z16.string()
+var RelatedTaskMetadataSchema = z20.object({
+  taskId: z20.string()
 });
-var RequestMetaSchema = z16.looseObject({
+var RequestMetaSchema = z20.looseObject({
   progressToken: ProgressTokenSchema.optional(),
   [RELATED_TASK_META_KEY]: RelatedTaskMetadataSchema.optional()
 });
-var BaseRequestParamsSchema = z16.object({
+var BaseRequestParamsSchema = z20.object({
   _meta: RequestMetaSchema.optional()
 });
 var TaskAugmentedRequestParamsSchema = BaseRequestParamsSchema.extend({
   task: TaskMetadataSchema.optional()
 });
-var RequestSchema = z16.object({
-  method: z16.string(),
+var RequestSchema = z20.object({
+  method: z20.string(),
   params: BaseRequestParamsSchema.loose().optional()
 });
-var NotificationsParamsSchema = z16.object({
+var NotificationsParamsSchema = z20.object({
   _meta: RequestMetaSchema.optional()
 });
-var NotificationSchema = z16.object({
-  method: z16.string(),
+var NotificationSchema = z20.object({
+  method: z20.string(),
   params: NotificationsParamsSchema.loose().optional()
 });
-var ResultSchema = z16.looseObject({
+var ResultSchema = z20.looseObject({
   _meta: RequestMetaSchema.optional()
 });
-var RequestIdSchema = z16.union([z16.string(), z16.number().int()]);
-var JSONRPCRequestSchema = z16.object({
-  jsonrpc: z16.literal(JSONRPC_VERSION),
+var RequestIdSchema = z20.union([z20.string(), z20.number().int()]);
+var JSONRPCRequestSchema = z20.object({
+  jsonrpc: z20.literal(JSONRPC_VERSION),
   id: RequestIdSchema,
   ...RequestSchema.shape
 }).strict();
-var JSONRPCNotificationSchema = z16.object({
-  jsonrpc: z16.literal(JSONRPC_VERSION),
+var JSONRPCNotificationSchema = z20.object({
+  jsonrpc: z20.literal(JSONRPC_VERSION),
   ...NotificationSchema.shape
 }).strict();
-var JSONRPCResultResponseSchema = z16.object({
-  jsonrpc: z16.literal(JSONRPC_VERSION),
+var JSONRPCResultResponseSchema = z20.object({
+  jsonrpc: z20.literal(JSONRPC_VERSION),
   id: RequestIdSchema,
   result: ResultSchema
 }).strict();
@@ -23838,151 +19253,151 @@ var ErrorCode;
   ErrorCode2[ErrorCode2["InternalError"] = -32603] = "InternalError";
   ErrorCode2[ErrorCode2["UrlElicitationRequired"] = -32042] = "UrlElicitationRequired";
 })(ErrorCode || (ErrorCode = {}));
-var JSONRPCErrorResponseSchema = z16.object({
-  jsonrpc: z16.literal(JSONRPC_VERSION),
+var JSONRPCErrorResponseSchema = z20.object({
+  jsonrpc: z20.literal(JSONRPC_VERSION),
   id: RequestIdSchema.optional(),
-  error: z16.object({
-    code: z16.number().int(),
-    message: z16.string(),
-    data: z16.unknown().optional()
+  error: z20.object({
+    code: z20.number().int(),
+    message: z20.string(),
+    data: z20.unknown().optional()
   })
 }).strict();
-var JSONRPCMessageSchema = z16.union([
+var JSONRPCMessageSchema = z20.union([
   JSONRPCRequestSchema,
   JSONRPCNotificationSchema,
   JSONRPCResultResponseSchema,
   JSONRPCErrorResponseSchema
 ]);
-var JSONRPCResponseSchema = z16.union([JSONRPCResultResponseSchema, JSONRPCErrorResponseSchema]);
+var JSONRPCResponseSchema = z20.union([JSONRPCResultResponseSchema, JSONRPCErrorResponseSchema]);
 var EmptyResultSchema = ResultSchema.strict();
 var CancelledNotificationParamsSchema = NotificationsParamsSchema.extend({
   requestId: RequestIdSchema.optional(),
-  reason: z16.string().optional()
+  reason: z20.string().optional()
 });
 var CancelledNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/cancelled"),
+  method: z20.literal("notifications/cancelled"),
   params: CancelledNotificationParamsSchema
 });
-var IconSchema = z16.object({
-  src: z16.string(),
-  mimeType: z16.string().optional(),
-  sizes: z16.array(z16.string()).optional(),
-  theme: z16.enum(["light", "dark"]).optional()
+var IconSchema = z20.object({
+  src: z20.string(),
+  mimeType: z20.string().optional(),
+  sizes: z20.array(z20.string()).optional(),
+  theme: z20.enum(["light", "dark"]).optional()
 });
-var IconsSchema = z16.object({
-  icons: z16.array(IconSchema).optional()
+var IconsSchema = z20.object({
+  icons: z20.array(IconSchema).optional()
 });
-var BaseMetadataSchema = z16.object({
-  name: z16.string(),
-  title: z16.string().optional()
+var BaseMetadataSchema = z20.object({
+  name: z20.string(),
+  title: z20.string().optional()
 });
 var ImplementationSchema = BaseMetadataSchema.extend({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  version: z16.string(),
-  websiteUrl: z16.string().optional(),
-  description: z16.string().optional()
+  version: z20.string(),
+  websiteUrl: z20.string().optional(),
+  description: z20.string().optional()
 });
-var FormElicitationCapabilitySchema = z16.intersection(z16.object({
-  applyDefaults: z16.boolean().optional()
-}), z16.record(z16.string(), z16.unknown()));
-var ElicitationCapabilitySchema = z16.preprocess((value) => {
+var FormElicitationCapabilitySchema = z20.intersection(z20.object({
+  applyDefaults: z20.boolean().optional()
+}), z20.record(z20.string(), z20.unknown()));
+var ElicitationCapabilitySchema = z20.preprocess((value) => {
   if (value && typeof value === "object" && !Array.isArray(value)) {
     if (Object.keys(value).length === 0) {
       return { form: {} };
     }
   }
   return value;
-}, z16.intersection(z16.object({
+}, z20.intersection(z20.object({
   form: FormElicitationCapabilitySchema.optional(),
   url: AssertObjectSchema.optional()
-}), z16.record(z16.string(), z16.unknown()).optional()));
-var ClientTasksCapabilitySchema = z16.looseObject({
+}), z20.record(z20.string(), z20.unknown()).optional()));
+var ClientTasksCapabilitySchema = z20.looseObject({
   list: AssertObjectSchema.optional(),
   cancel: AssertObjectSchema.optional(),
-  requests: z16.looseObject({
-    sampling: z16.looseObject({
+  requests: z20.looseObject({
+    sampling: z20.looseObject({
       createMessage: AssertObjectSchema.optional()
     }).optional(),
-    elicitation: z16.looseObject({
+    elicitation: z20.looseObject({
       create: AssertObjectSchema.optional()
     }).optional()
   }).optional()
 });
-var ServerTasksCapabilitySchema = z16.looseObject({
+var ServerTasksCapabilitySchema = z20.looseObject({
   list: AssertObjectSchema.optional(),
   cancel: AssertObjectSchema.optional(),
-  requests: z16.looseObject({
-    tools: z16.looseObject({
+  requests: z20.looseObject({
+    tools: z20.looseObject({
       call: AssertObjectSchema.optional()
     }).optional()
   }).optional()
 });
-var ClientCapabilitiesSchema = z16.object({
-  experimental: z16.record(z16.string(), AssertObjectSchema).optional(),
-  sampling: z16.object({
+var ClientCapabilitiesSchema = z20.object({
+  experimental: z20.record(z20.string(), AssertObjectSchema).optional(),
+  sampling: z20.object({
     context: AssertObjectSchema.optional(),
     tools: AssertObjectSchema.optional()
   }).optional(),
   elicitation: ElicitationCapabilitySchema.optional(),
-  roots: z16.object({
-    listChanged: z16.boolean().optional()
+  roots: z20.object({
+    listChanged: z20.boolean().optional()
   }).optional(),
   tasks: ClientTasksCapabilitySchema.optional(),
-  extensions: z16.record(z16.string(), AssertObjectSchema).optional()
+  extensions: z20.record(z20.string(), AssertObjectSchema).optional()
 });
 var InitializeRequestParamsSchema = BaseRequestParamsSchema.extend({
-  protocolVersion: z16.string(),
+  protocolVersion: z20.string(),
   capabilities: ClientCapabilitiesSchema,
   clientInfo: ImplementationSchema
 });
 var InitializeRequestSchema = RequestSchema.extend({
-  method: z16.literal("initialize"),
+  method: z20.literal("initialize"),
   params: InitializeRequestParamsSchema
 });
-var ServerCapabilitiesSchema = z16.object({
-  experimental: z16.record(z16.string(), AssertObjectSchema).optional(),
+var ServerCapabilitiesSchema = z20.object({
+  experimental: z20.record(z20.string(), AssertObjectSchema).optional(),
   logging: AssertObjectSchema.optional(),
   completions: AssertObjectSchema.optional(),
-  prompts: z16.object({
-    listChanged: z16.boolean().optional()
+  prompts: z20.object({
+    listChanged: z20.boolean().optional()
   }).optional(),
-  resources: z16.object({
-    subscribe: z16.boolean().optional(),
-    listChanged: z16.boolean().optional()
+  resources: z20.object({
+    subscribe: z20.boolean().optional(),
+    listChanged: z20.boolean().optional()
   }).optional(),
-  tools: z16.object({
-    listChanged: z16.boolean().optional()
+  tools: z20.object({
+    listChanged: z20.boolean().optional()
   }).optional(),
   tasks: ServerTasksCapabilitySchema.optional(),
-  extensions: z16.record(z16.string(), AssertObjectSchema).optional()
+  extensions: z20.record(z20.string(), AssertObjectSchema).optional()
 });
 var InitializeResultSchema = ResultSchema.extend({
-  protocolVersion: z16.string(),
+  protocolVersion: z20.string(),
   capabilities: ServerCapabilitiesSchema,
   serverInfo: ImplementationSchema,
-  instructions: z16.string().optional()
+  instructions: z20.string().optional()
 });
 var InitializedNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/initialized"),
+  method: z20.literal("notifications/initialized"),
   params: NotificationsParamsSchema.optional()
 });
 var PingRequestSchema = RequestSchema.extend({
-  method: z16.literal("ping"),
+  method: z20.literal("ping"),
   params: BaseRequestParamsSchema.optional()
 });
-var ProgressSchema = z16.object({
-  progress: z16.number(),
-  total: z16.optional(z16.number()),
-  message: z16.optional(z16.string())
+var ProgressSchema = z20.object({
+  progress: z20.number(),
+  total: z20.optional(z20.number()),
+  message: z20.optional(z20.string())
 });
-var ProgressNotificationParamsSchema = z16.object({
+var ProgressNotificationParamsSchema = z20.object({
   ...NotificationsParamsSchema.shape,
   ...ProgressSchema.shape,
   progressToken: ProgressTokenSchema
 });
 var ProgressNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/progress"),
+  method: z20.literal("notifications/progress"),
   params: ProgressNotificationParamsSchema
 });
 var PaginatedRequestParamsSchema = BaseRequestParamsSchema.extend({
@@ -23994,60 +19409,60 @@ var PaginatedRequestSchema = RequestSchema.extend({
 var PaginatedResultSchema = ResultSchema.extend({
   nextCursor: CursorSchema.optional()
 });
-var TaskStatusSchema = z16.enum(["working", "input_required", "completed", "failed", "cancelled"]);
-var TaskSchema = z16.object({
-  taskId: z16.string(),
+var TaskStatusSchema = z20.enum(["working", "input_required", "completed", "failed", "cancelled"]);
+var TaskSchema = z20.object({
+  taskId: z20.string(),
   status: TaskStatusSchema,
-  ttl: z16.union([z16.number(), z16.null()]),
-  createdAt: z16.string(),
-  lastUpdatedAt: z16.string(),
-  pollInterval: z16.optional(z16.number()),
-  statusMessage: z16.optional(z16.string())
+  ttl: z20.union([z20.number(), z20.null()]),
+  createdAt: z20.string(),
+  lastUpdatedAt: z20.string(),
+  pollInterval: z20.optional(z20.number()),
+  statusMessage: z20.optional(z20.string())
 });
 var CreateTaskResultSchema = ResultSchema.extend({
   task: TaskSchema
 });
 var TaskStatusNotificationParamsSchema = NotificationsParamsSchema.merge(TaskSchema);
 var TaskStatusNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/tasks/status"),
+  method: z20.literal("notifications/tasks/status"),
   params: TaskStatusNotificationParamsSchema
 });
 var GetTaskRequestSchema = RequestSchema.extend({
-  method: z16.literal("tasks/get"),
+  method: z20.literal("tasks/get"),
   params: BaseRequestParamsSchema.extend({
-    taskId: z16.string()
+    taskId: z20.string()
   })
 });
 var GetTaskResultSchema = ResultSchema.merge(TaskSchema);
 var GetTaskPayloadRequestSchema = RequestSchema.extend({
-  method: z16.literal("tasks/result"),
+  method: z20.literal("tasks/result"),
   params: BaseRequestParamsSchema.extend({
-    taskId: z16.string()
+    taskId: z20.string()
   })
 });
 var GetTaskPayloadResultSchema = ResultSchema.loose();
 var ListTasksRequestSchema = PaginatedRequestSchema.extend({
-  method: z16.literal("tasks/list")
+  method: z20.literal("tasks/list")
 });
 var ListTasksResultSchema = PaginatedResultSchema.extend({
-  tasks: z16.array(TaskSchema)
+  tasks: z20.array(TaskSchema)
 });
 var CancelTaskRequestSchema = RequestSchema.extend({
-  method: z16.literal("tasks/cancel"),
+  method: z20.literal("tasks/cancel"),
   params: BaseRequestParamsSchema.extend({
-    taskId: z16.string()
+    taskId: z20.string()
   })
 });
 var CancelTaskResultSchema = ResultSchema.merge(TaskSchema);
-var ResourceContentsSchema = z16.object({
-  uri: z16.string(),
-  mimeType: z16.optional(z16.string()),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+var ResourceContentsSchema = z20.object({
+  uri: z20.string(),
+  mimeType: z20.optional(z20.string()),
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
 var TextResourceContentsSchema = ResourceContentsSchema.extend({
-  text: z16.string()
+  text: z20.string()
 });
-var Base64Schema = z16.string().refine((val) => {
+var Base64Schema = z20.string().refine((val) => {
   try {
     atob(val);
     return true;
@@ -24058,447 +19473,447 @@ var Base64Schema = z16.string().refine((val) => {
 var BlobResourceContentsSchema = ResourceContentsSchema.extend({
   blob: Base64Schema
 });
-var RoleSchema = z16.enum(["user", "assistant"]);
-var AnnotationsSchema = z16.object({
-  audience: z16.array(RoleSchema).optional(),
-  priority: z16.number().min(0).max(1).optional(),
-  lastModified: z16.iso.datetime({ offset: true }).optional()
+var RoleSchema = z20.enum(["user", "assistant"]);
+var AnnotationsSchema = z20.object({
+  audience: z20.array(RoleSchema).optional(),
+  priority: z20.number().min(0).max(1).optional(),
+  lastModified: z20.iso.datetime({ offset: true }).optional()
 });
-var ResourceSchema = z16.object({
+var ResourceSchema = z20.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  uri: z16.string(),
-  description: z16.optional(z16.string()),
-  mimeType: z16.optional(z16.string()),
-  size: z16.optional(z16.number()),
+  uri: z20.string(),
+  description: z20.optional(z20.string()),
+  mimeType: z20.optional(z20.string()),
+  size: z20.optional(z20.number()),
   annotations: AnnotationsSchema.optional(),
-  _meta: z16.optional(z16.looseObject({}))
+  _meta: z20.optional(z20.looseObject({}))
 });
-var ResourceTemplateSchema = z16.object({
+var ResourceTemplateSchema = z20.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  uriTemplate: z16.string(),
-  description: z16.optional(z16.string()),
-  mimeType: z16.optional(z16.string()),
+  uriTemplate: z20.string(),
+  description: z20.optional(z20.string()),
+  mimeType: z20.optional(z20.string()),
   annotations: AnnotationsSchema.optional(),
-  _meta: z16.optional(z16.looseObject({}))
+  _meta: z20.optional(z20.looseObject({}))
 });
 var ListResourcesRequestSchema = PaginatedRequestSchema.extend({
-  method: z16.literal("resources/list")
+  method: z20.literal("resources/list")
 });
 var ListResourcesResultSchema = PaginatedResultSchema.extend({
-  resources: z16.array(ResourceSchema)
+  resources: z20.array(ResourceSchema)
 });
 var ListResourceTemplatesRequestSchema = PaginatedRequestSchema.extend({
-  method: z16.literal("resources/templates/list")
+  method: z20.literal("resources/templates/list")
 });
 var ListResourceTemplatesResultSchema = PaginatedResultSchema.extend({
-  resourceTemplates: z16.array(ResourceTemplateSchema)
+  resourceTemplates: z20.array(ResourceTemplateSchema)
 });
 var ResourceRequestParamsSchema = BaseRequestParamsSchema.extend({
-  uri: z16.string()
+  uri: z20.string()
 });
 var ReadResourceRequestParamsSchema = ResourceRequestParamsSchema;
 var ReadResourceRequestSchema = RequestSchema.extend({
-  method: z16.literal("resources/read"),
+  method: z20.literal("resources/read"),
   params: ReadResourceRequestParamsSchema
 });
 var ReadResourceResultSchema = ResultSchema.extend({
-  contents: z16.array(z16.union([TextResourceContentsSchema, BlobResourceContentsSchema]))
+  contents: z20.array(z20.union([TextResourceContentsSchema, BlobResourceContentsSchema]))
 });
 var ResourceListChangedNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/resources/list_changed"),
+  method: z20.literal("notifications/resources/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
 var SubscribeRequestParamsSchema = ResourceRequestParamsSchema;
 var SubscribeRequestSchema = RequestSchema.extend({
-  method: z16.literal("resources/subscribe"),
+  method: z20.literal("resources/subscribe"),
   params: SubscribeRequestParamsSchema
 });
 var UnsubscribeRequestParamsSchema = ResourceRequestParamsSchema;
 var UnsubscribeRequestSchema = RequestSchema.extend({
-  method: z16.literal("resources/unsubscribe"),
+  method: z20.literal("resources/unsubscribe"),
   params: UnsubscribeRequestParamsSchema
 });
 var ResourceUpdatedNotificationParamsSchema = NotificationsParamsSchema.extend({
-  uri: z16.string()
+  uri: z20.string()
 });
 var ResourceUpdatedNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/resources/updated"),
+  method: z20.literal("notifications/resources/updated"),
   params: ResourceUpdatedNotificationParamsSchema
 });
-var PromptArgumentSchema = z16.object({
-  name: z16.string(),
-  description: z16.optional(z16.string()),
-  required: z16.optional(z16.boolean())
+var PromptArgumentSchema = z20.object({
+  name: z20.string(),
+  description: z20.optional(z20.string()),
+  required: z20.optional(z20.boolean())
 });
-var PromptSchema = z16.object({
+var PromptSchema = z20.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  description: z16.optional(z16.string()),
-  arguments: z16.optional(z16.array(PromptArgumentSchema)),
-  _meta: z16.optional(z16.looseObject({}))
+  description: z20.optional(z20.string()),
+  arguments: z20.optional(z20.array(PromptArgumentSchema)),
+  _meta: z20.optional(z20.looseObject({}))
 });
 var ListPromptsRequestSchema = PaginatedRequestSchema.extend({
-  method: z16.literal("prompts/list")
+  method: z20.literal("prompts/list")
 });
 var ListPromptsResultSchema = PaginatedResultSchema.extend({
-  prompts: z16.array(PromptSchema)
+  prompts: z20.array(PromptSchema)
 });
 var GetPromptRequestParamsSchema = BaseRequestParamsSchema.extend({
-  name: z16.string(),
-  arguments: z16.record(z16.string(), z16.string()).optional()
+  name: z20.string(),
+  arguments: z20.record(z20.string(), z20.string()).optional()
 });
 var GetPromptRequestSchema = RequestSchema.extend({
-  method: z16.literal("prompts/get"),
+  method: z20.literal("prompts/get"),
   params: GetPromptRequestParamsSchema
 });
-var TextContentSchema = z16.object({
-  type: z16.literal("text"),
-  text: z16.string(),
+var TextContentSchema = z20.object({
+  type: z20.literal("text"),
+  text: z20.string(),
   annotations: AnnotationsSchema.optional(),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
-var ImageContentSchema = z16.object({
-  type: z16.literal("image"),
+var ImageContentSchema = z20.object({
+  type: z20.literal("image"),
   data: Base64Schema,
-  mimeType: z16.string(),
+  mimeType: z20.string(),
   annotations: AnnotationsSchema.optional(),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
-var AudioContentSchema = z16.object({
-  type: z16.literal("audio"),
+var AudioContentSchema = z20.object({
+  type: z20.literal("audio"),
   data: Base64Schema,
-  mimeType: z16.string(),
+  mimeType: z20.string(),
   annotations: AnnotationsSchema.optional(),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
-var ToolUseContentSchema = z16.object({
-  type: z16.literal("tool_use"),
-  name: z16.string(),
-  id: z16.string(),
-  input: z16.record(z16.string(), z16.unknown()),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+var ToolUseContentSchema = z20.object({
+  type: z20.literal("tool_use"),
+  name: z20.string(),
+  id: z20.string(),
+  input: z20.record(z20.string(), z20.unknown()),
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
-var EmbeddedResourceSchema = z16.object({
-  type: z16.literal("resource"),
-  resource: z16.union([TextResourceContentsSchema, BlobResourceContentsSchema]),
+var EmbeddedResourceSchema = z20.object({
+  type: z20.literal("resource"),
+  resource: z20.union([TextResourceContentsSchema, BlobResourceContentsSchema]),
   annotations: AnnotationsSchema.optional(),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
 var ResourceLinkSchema = ResourceSchema.extend({
-  type: z16.literal("resource_link")
+  type: z20.literal("resource_link")
 });
-var ContentBlockSchema = z16.union([
+var ContentBlockSchema = z20.union([
   TextContentSchema,
   ImageContentSchema,
   AudioContentSchema,
   ResourceLinkSchema,
   EmbeddedResourceSchema
 ]);
-var PromptMessageSchema = z16.object({
+var PromptMessageSchema = z20.object({
   role: RoleSchema,
   content: ContentBlockSchema
 });
 var GetPromptResultSchema = ResultSchema.extend({
-  description: z16.string().optional(),
-  messages: z16.array(PromptMessageSchema)
+  description: z20.string().optional(),
+  messages: z20.array(PromptMessageSchema)
 });
 var PromptListChangedNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/prompts/list_changed"),
+  method: z20.literal("notifications/prompts/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
-var ToolAnnotationsSchema = z16.object({
-  title: z16.string().optional(),
-  readOnlyHint: z16.boolean().optional(),
-  destructiveHint: z16.boolean().optional(),
-  idempotentHint: z16.boolean().optional(),
-  openWorldHint: z16.boolean().optional()
+var ToolAnnotationsSchema = z20.object({
+  title: z20.string().optional(),
+  readOnlyHint: z20.boolean().optional(),
+  destructiveHint: z20.boolean().optional(),
+  idempotentHint: z20.boolean().optional(),
+  openWorldHint: z20.boolean().optional()
 });
-var ToolExecutionSchema = z16.object({
-  taskSupport: z16.enum(["required", "optional", "forbidden"]).optional()
+var ToolExecutionSchema = z20.object({
+  taskSupport: z20.enum(["required", "optional", "forbidden"]).optional()
 });
-var ToolSchema = z16.object({
+var ToolSchema = z20.object({
   ...BaseMetadataSchema.shape,
   ...IconsSchema.shape,
-  description: z16.string().optional(),
-  inputSchema: z16.object({
-    type: z16.literal("object"),
-    properties: z16.record(z16.string(), AssertObjectSchema).optional(),
-    required: z16.array(z16.string()).optional()
-  }).catchall(z16.unknown()),
-  outputSchema: z16.object({
-    type: z16.literal("object"),
-    properties: z16.record(z16.string(), AssertObjectSchema).optional(),
-    required: z16.array(z16.string()).optional()
-  }).catchall(z16.unknown()).optional(),
+  description: z20.string().optional(),
+  inputSchema: z20.object({
+    type: z20.literal("object"),
+    properties: z20.record(z20.string(), AssertObjectSchema).optional(),
+    required: z20.array(z20.string()).optional()
+  }).catchall(z20.unknown()),
+  outputSchema: z20.object({
+    type: z20.literal("object"),
+    properties: z20.record(z20.string(), AssertObjectSchema).optional(),
+    required: z20.array(z20.string()).optional()
+  }).catchall(z20.unknown()).optional(),
   annotations: ToolAnnotationsSchema.optional(),
   execution: ToolExecutionSchema.optional(),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
 var ListToolsRequestSchema = PaginatedRequestSchema.extend({
-  method: z16.literal("tools/list")
+  method: z20.literal("tools/list")
 });
 var ListToolsResultSchema = PaginatedResultSchema.extend({
-  tools: z16.array(ToolSchema)
+  tools: z20.array(ToolSchema)
 });
 var CallToolResultSchema = ResultSchema.extend({
-  content: z16.array(ContentBlockSchema).default([]),
-  structuredContent: z16.record(z16.string(), z16.unknown()).optional(),
-  isError: z16.boolean().optional()
+  content: z20.array(ContentBlockSchema).default([]),
+  structuredContent: z20.record(z20.string(), z20.unknown()).optional(),
+  isError: z20.boolean().optional()
 });
 var CompatibilityCallToolResultSchema = CallToolResultSchema.or(ResultSchema.extend({
-  toolResult: z16.unknown()
+  toolResult: z20.unknown()
 }));
 var CallToolRequestParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  name: z16.string(),
-  arguments: z16.record(z16.string(), z16.unknown()).optional()
+  name: z20.string(),
+  arguments: z20.record(z20.string(), z20.unknown()).optional()
 });
 var CallToolRequestSchema = RequestSchema.extend({
-  method: z16.literal("tools/call"),
+  method: z20.literal("tools/call"),
   params: CallToolRequestParamsSchema
 });
 var ToolListChangedNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/tools/list_changed"),
+  method: z20.literal("notifications/tools/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
-var ListChangedOptionsBaseSchema = z16.object({
-  autoRefresh: z16.boolean().default(true),
-  debounceMs: z16.number().int().nonnegative().default(300)
+var ListChangedOptionsBaseSchema = z20.object({
+  autoRefresh: z20.boolean().default(true),
+  debounceMs: z20.number().int().nonnegative().default(300)
 });
-var LoggingLevelSchema = z16.enum(["debug", "info", "notice", "warning", "error", "critical", "alert", "emergency"]);
+var LoggingLevelSchema = z20.enum(["debug", "info", "notice", "warning", "error", "critical", "alert", "emergency"]);
 var SetLevelRequestParamsSchema = BaseRequestParamsSchema.extend({
   level: LoggingLevelSchema
 });
 var SetLevelRequestSchema = RequestSchema.extend({
-  method: z16.literal("logging/setLevel"),
+  method: z20.literal("logging/setLevel"),
   params: SetLevelRequestParamsSchema
 });
 var LoggingMessageNotificationParamsSchema = NotificationsParamsSchema.extend({
   level: LoggingLevelSchema,
-  logger: z16.string().optional(),
-  data: z16.unknown()
+  logger: z20.string().optional(),
+  data: z20.unknown()
 });
 var LoggingMessageNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/message"),
+  method: z20.literal("notifications/message"),
   params: LoggingMessageNotificationParamsSchema
 });
-var ModelHintSchema = z16.object({
-  name: z16.string().optional()
+var ModelHintSchema = z20.object({
+  name: z20.string().optional()
 });
-var ModelPreferencesSchema = z16.object({
-  hints: z16.array(ModelHintSchema).optional(),
-  costPriority: z16.number().min(0).max(1).optional(),
-  speedPriority: z16.number().min(0).max(1).optional(),
-  intelligencePriority: z16.number().min(0).max(1).optional()
+var ModelPreferencesSchema = z20.object({
+  hints: z20.array(ModelHintSchema).optional(),
+  costPriority: z20.number().min(0).max(1).optional(),
+  speedPriority: z20.number().min(0).max(1).optional(),
+  intelligencePriority: z20.number().min(0).max(1).optional()
 });
-var ToolChoiceSchema = z16.object({
-  mode: z16.enum(["auto", "required", "none"]).optional()
+var ToolChoiceSchema = z20.object({
+  mode: z20.enum(["auto", "required", "none"]).optional()
 });
-var ToolResultContentSchema = z16.object({
-  type: z16.literal("tool_result"),
-  toolUseId: z16.string().describe("The unique identifier for the corresponding tool call."),
-  content: z16.array(ContentBlockSchema).default([]),
-  structuredContent: z16.object({}).loose().optional(),
-  isError: z16.boolean().optional(),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+var ToolResultContentSchema = z20.object({
+  type: z20.literal("tool_result"),
+  toolUseId: z20.string().describe("The unique identifier for the corresponding tool call."),
+  content: z20.array(ContentBlockSchema).default([]),
+  structuredContent: z20.object({}).loose().optional(),
+  isError: z20.boolean().optional(),
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
-var SamplingContentSchema = z16.discriminatedUnion("type", [TextContentSchema, ImageContentSchema, AudioContentSchema]);
-var SamplingMessageContentBlockSchema = z16.discriminatedUnion("type", [
+var SamplingContentSchema = z20.discriminatedUnion("type", [TextContentSchema, ImageContentSchema, AudioContentSchema]);
+var SamplingMessageContentBlockSchema = z20.discriminatedUnion("type", [
   TextContentSchema,
   ImageContentSchema,
   AudioContentSchema,
   ToolUseContentSchema,
   ToolResultContentSchema
 ]);
-var SamplingMessageSchema = z16.object({
+var SamplingMessageSchema = z20.object({
   role: RoleSchema,
-  content: z16.union([SamplingMessageContentBlockSchema, z16.array(SamplingMessageContentBlockSchema)]),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+  content: z20.union([SamplingMessageContentBlockSchema, z20.array(SamplingMessageContentBlockSchema)]),
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
 var CreateMessageRequestParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  messages: z16.array(SamplingMessageSchema),
+  messages: z20.array(SamplingMessageSchema),
   modelPreferences: ModelPreferencesSchema.optional(),
-  systemPrompt: z16.string().optional(),
-  includeContext: z16.enum(["none", "thisServer", "allServers"]).optional(),
-  temperature: z16.number().optional(),
-  maxTokens: z16.number().int(),
-  stopSequences: z16.array(z16.string()).optional(),
+  systemPrompt: z20.string().optional(),
+  includeContext: z20.enum(["none", "thisServer", "allServers"]).optional(),
+  temperature: z20.number().optional(),
+  maxTokens: z20.number().int(),
+  stopSequences: z20.array(z20.string()).optional(),
   metadata: AssertObjectSchema.optional(),
-  tools: z16.array(ToolSchema).optional(),
+  tools: z20.array(ToolSchema).optional(),
   toolChoice: ToolChoiceSchema.optional()
 });
 var CreateMessageRequestSchema = RequestSchema.extend({
-  method: z16.literal("sampling/createMessage"),
+  method: z20.literal("sampling/createMessage"),
   params: CreateMessageRequestParamsSchema
 });
 var CreateMessageResultSchema = ResultSchema.extend({
-  model: z16.string(),
-  stopReason: z16.optional(z16.enum(["endTurn", "stopSequence", "maxTokens"]).or(z16.string())),
+  model: z20.string(),
+  stopReason: z20.optional(z20.enum(["endTurn", "stopSequence", "maxTokens"]).or(z20.string())),
   role: RoleSchema,
   content: SamplingContentSchema
 });
 var CreateMessageResultWithToolsSchema = ResultSchema.extend({
-  model: z16.string(),
-  stopReason: z16.optional(z16.enum(["endTurn", "stopSequence", "maxTokens", "toolUse"]).or(z16.string())),
+  model: z20.string(),
+  stopReason: z20.optional(z20.enum(["endTurn", "stopSequence", "maxTokens", "toolUse"]).or(z20.string())),
   role: RoleSchema,
-  content: z16.union([SamplingMessageContentBlockSchema, z16.array(SamplingMessageContentBlockSchema)])
+  content: z20.union([SamplingMessageContentBlockSchema, z20.array(SamplingMessageContentBlockSchema)])
 });
-var BooleanSchemaSchema = z16.object({
-  type: z16.literal("boolean"),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  default: z16.boolean().optional()
+var BooleanSchemaSchema = z20.object({
+  type: z20.literal("boolean"),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  default: z20.boolean().optional()
 });
-var StringSchemaSchema = z16.object({
-  type: z16.literal("string"),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  minLength: z16.number().optional(),
-  maxLength: z16.number().optional(),
-  format: z16.enum(["email", "uri", "date", "date-time"]).optional(),
-  default: z16.string().optional()
+var StringSchemaSchema = z20.object({
+  type: z20.literal("string"),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  minLength: z20.number().optional(),
+  maxLength: z20.number().optional(),
+  format: z20.enum(["email", "uri", "date", "date-time"]).optional(),
+  default: z20.string().optional()
 });
-var NumberSchemaSchema = z16.object({
-  type: z16.enum(["number", "integer"]),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  minimum: z16.number().optional(),
-  maximum: z16.number().optional(),
-  default: z16.number().optional()
+var NumberSchemaSchema = z20.object({
+  type: z20.enum(["number", "integer"]),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  minimum: z20.number().optional(),
+  maximum: z20.number().optional(),
+  default: z20.number().optional()
 });
-var UntitledSingleSelectEnumSchemaSchema = z16.object({
-  type: z16.literal("string"),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  enum: z16.array(z16.string()),
-  default: z16.string().optional()
+var UntitledSingleSelectEnumSchemaSchema = z20.object({
+  type: z20.literal("string"),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  enum: z20.array(z20.string()),
+  default: z20.string().optional()
 });
-var TitledSingleSelectEnumSchemaSchema = z16.object({
-  type: z16.literal("string"),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  oneOf: z16.array(z16.object({
-    const: z16.string(),
-    title: z16.string()
+var TitledSingleSelectEnumSchemaSchema = z20.object({
+  type: z20.literal("string"),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  oneOf: z20.array(z20.object({
+    const: z20.string(),
+    title: z20.string()
   })),
-  default: z16.string().optional()
+  default: z20.string().optional()
 });
-var LegacyTitledEnumSchemaSchema = z16.object({
-  type: z16.literal("string"),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  enum: z16.array(z16.string()),
-  enumNames: z16.array(z16.string()).optional(),
-  default: z16.string().optional()
+var LegacyTitledEnumSchemaSchema = z20.object({
+  type: z20.literal("string"),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  enum: z20.array(z20.string()),
+  enumNames: z20.array(z20.string()).optional(),
+  default: z20.string().optional()
 });
-var SingleSelectEnumSchemaSchema = z16.union([UntitledSingleSelectEnumSchemaSchema, TitledSingleSelectEnumSchemaSchema]);
-var UntitledMultiSelectEnumSchemaSchema = z16.object({
-  type: z16.literal("array"),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  minItems: z16.number().optional(),
-  maxItems: z16.number().optional(),
-  items: z16.object({
-    type: z16.literal("string"),
-    enum: z16.array(z16.string())
+var SingleSelectEnumSchemaSchema = z20.union([UntitledSingleSelectEnumSchemaSchema, TitledSingleSelectEnumSchemaSchema]);
+var UntitledMultiSelectEnumSchemaSchema = z20.object({
+  type: z20.literal("array"),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  minItems: z20.number().optional(),
+  maxItems: z20.number().optional(),
+  items: z20.object({
+    type: z20.literal("string"),
+    enum: z20.array(z20.string())
   }),
-  default: z16.array(z16.string()).optional()
+  default: z20.array(z20.string()).optional()
 });
-var TitledMultiSelectEnumSchemaSchema = z16.object({
-  type: z16.literal("array"),
-  title: z16.string().optional(),
-  description: z16.string().optional(),
-  minItems: z16.number().optional(),
-  maxItems: z16.number().optional(),
-  items: z16.object({
-    anyOf: z16.array(z16.object({
-      const: z16.string(),
-      title: z16.string()
+var TitledMultiSelectEnumSchemaSchema = z20.object({
+  type: z20.literal("array"),
+  title: z20.string().optional(),
+  description: z20.string().optional(),
+  minItems: z20.number().optional(),
+  maxItems: z20.number().optional(),
+  items: z20.object({
+    anyOf: z20.array(z20.object({
+      const: z20.string(),
+      title: z20.string()
     }))
   }),
-  default: z16.array(z16.string()).optional()
+  default: z20.array(z20.string()).optional()
 });
-var MultiSelectEnumSchemaSchema = z16.union([UntitledMultiSelectEnumSchemaSchema, TitledMultiSelectEnumSchemaSchema]);
-var EnumSchemaSchema = z16.union([LegacyTitledEnumSchemaSchema, SingleSelectEnumSchemaSchema, MultiSelectEnumSchemaSchema]);
-var PrimitiveSchemaDefinitionSchema = z16.union([EnumSchemaSchema, BooleanSchemaSchema, StringSchemaSchema, NumberSchemaSchema]);
+var MultiSelectEnumSchemaSchema = z20.union([UntitledMultiSelectEnumSchemaSchema, TitledMultiSelectEnumSchemaSchema]);
+var EnumSchemaSchema = z20.union([LegacyTitledEnumSchemaSchema, SingleSelectEnumSchemaSchema, MultiSelectEnumSchemaSchema]);
+var PrimitiveSchemaDefinitionSchema = z20.union([EnumSchemaSchema, BooleanSchemaSchema, StringSchemaSchema, NumberSchemaSchema]);
 var ElicitRequestFormParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  mode: z16.literal("form").optional(),
-  message: z16.string(),
-  requestedSchema: z16.object({
-    type: z16.literal("object"),
-    properties: z16.record(z16.string(), PrimitiveSchemaDefinitionSchema),
-    required: z16.array(z16.string()).optional()
+  mode: z20.literal("form").optional(),
+  message: z20.string(),
+  requestedSchema: z20.object({
+    type: z20.literal("object"),
+    properties: z20.record(z20.string(), PrimitiveSchemaDefinitionSchema),
+    required: z20.array(z20.string()).optional()
   })
 });
 var ElicitRequestURLParamsSchema = TaskAugmentedRequestParamsSchema.extend({
-  mode: z16.literal("url"),
-  message: z16.string(),
-  elicitationId: z16.string(),
-  url: z16.string().url()
+  mode: z20.literal("url"),
+  message: z20.string(),
+  elicitationId: z20.string(),
+  url: z20.string().url()
 });
-var ElicitRequestParamsSchema = z16.union([ElicitRequestFormParamsSchema, ElicitRequestURLParamsSchema]);
+var ElicitRequestParamsSchema = z20.union([ElicitRequestFormParamsSchema, ElicitRequestURLParamsSchema]);
 var ElicitRequestSchema = RequestSchema.extend({
-  method: z16.literal("elicitation/create"),
+  method: z20.literal("elicitation/create"),
   params: ElicitRequestParamsSchema
 });
 var ElicitationCompleteNotificationParamsSchema = NotificationsParamsSchema.extend({
-  elicitationId: z16.string()
+  elicitationId: z20.string()
 });
 var ElicitationCompleteNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/elicitation/complete"),
+  method: z20.literal("notifications/elicitation/complete"),
   params: ElicitationCompleteNotificationParamsSchema
 });
 var ElicitResultSchema = ResultSchema.extend({
-  action: z16.enum(["accept", "decline", "cancel"]),
-  content: z16.preprocess((val) => val === null ? undefined : val, z16.record(z16.string(), z16.union([z16.string(), z16.number(), z16.boolean(), z16.array(z16.string())])).optional())
+  action: z20.enum(["accept", "decline", "cancel"]),
+  content: z20.preprocess((val) => val === null ? undefined : val, z20.record(z20.string(), z20.union([z20.string(), z20.number(), z20.boolean(), z20.array(z20.string())])).optional())
 });
-var ResourceTemplateReferenceSchema = z16.object({
-  type: z16.literal("ref/resource"),
-  uri: z16.string()
+var ResourceTemplateReferenceSchema = z20.object({
+  type: z20.literal("ref/resource"),
+  uri: z20.string()
 });
-var PromptReferenceSchema = z16.object({
-  type: z16.literal("ref/prompt"),
-  name: z16.string()
+var PromptReferenceSchema = z20.object({
+  type: z20.literal("ref/prompt"),
+  name: z20.string()
 });
 var CompleteRequestParamsSchema = BaseRequestParamsSchema.extend({
-  ref: z16.union([PromptReferenceSchema, ResourceTemplateReferenceSchema]),
-  argument: z16.object({
-    name: z16.string(),
-    value: z16.string()
+  ref: z20.union([PromptReferenceSchema, ResourceTemplateReferenceSchema]),
+  argument: z20.object({
+    name: z20.string(),
+    value: z20.string()
   }),
-  context: z16.object({
-    arguments: z16.record(z16.string(), z16.string()).optional()
+  context: z20.object({
+    arguments: z20.record(z20.string(), z20.string()).optional()
   }).optional()
 });
 var CompleteRequestSchema = RequestSchema.extend({
-  method: z16.literal("completion/complete"),
+  method: z20.literal("completion/complete"),
   params: CompleteRequestParamsSchema
 });
 var CompleteResultSchema = ResultSchema.extend({
-  completion: z16.looseObject({
-    values: z16.array(z16.string()).max(100),
-    total: z16.optional(z16.number().int()),
-    hasMore: z16.optional(z16.boolean())
+  completion: z20.looseObject({
+    values: z20.array(z20.string()).max(100),
+    total: z20.optional(z20.number().int()),
+    hasMore: z20.optional(z20.boolean())
   })
 });
-var RootSchema = z16.object({
-  uri: z16.string().startsWith("file://"),
-  name: z16.string().optional(),
-  _meta: z16.record(z16.string(), z16.unknown()).optional()
+var RootSchema = z20.object({
+  uri: z20.string().startsWith("file://"),
+  name: z20.string().optional(),
+  _meta: z20.record(z20.string(), z20.unknown()).optional()
 });
 var ListRootsRequestSchema = RequestSchema.extend({
-  method: z16.literal("roots/list"),
+  method: z20.literal("roots/list"),
   params: BaseRequestParamsSchema.optional()
 });
 var ListRootsResultSchema = ResultSchema.extend({
-  roots: z16.array(RootSchema)
+  roots: z20.array(RootSchema)
 });
 var RootsListChangedNotificationSchema = NotificationSchema.extend({
-  method: z16.literal("notifications/roots/list_changed"),
+  method: z20.literal("notifications/roots/list_changed"),
   params: NotificationsParamsSchema.optional()
 });
-var ClientRequestSchema = z16.union([
+var ClientRequestSchema = z20.union([
   PingRequestSchema,
   InitializeRequestSchema,
   CompleteRequestSchema,
@@ -24517,14 +19932,14 @@ var ClientRequestSchema = z16.union([
   ListTasksRequestSchema,
   CancelTaskRequestSchema
 ]);
-var ClientNotificationSchema = z16.union([
+var ClientNotificationSchema = z20.union([
   CancelledNotificationSchema,
   ProgressNotificationSchema,
   InitializedNotificationSchema,
   RootsListChangedNotificationSchema,
   TaskStatusNotificationSchema
 ]);
-var ClientResultSchema = z16.union([
+var ClientResultSchema = z20.union([
   EmptyResultSchema,
   CreateMessageResultSchema,
   CreateMessageResultWithToolsSchema,
@@ -24534,7 +19949,7 @@ var ClientResultSchema = z16.union([
   ListTasksResultSchema,
   CreateTaskResultSchema
 ]);
-var ServerRequestSchema = z16.union([
+var ServerRequestSchema = z20.union([
   PingRequestSchema,
   CreateMessageRequestSchema,
   ElicitRequestSchema,
@@ -24544,7 +19959,7 @@ var ServerRequestSchema = z16.union([
   ListTasksRequestSchema,
   CancelTaskRequestSchema
 ]);
-var ServerNotificationSchema = z16.union([
+var ServerNotificationSchema = z20.union([
   CancelledNotificationSchema,
   ProgressNotificationSchema,
   LoggingMessageNotificationSchema,
@@ -24555,7 +19970,7 @@ var ServerNotificationSchema = z16.union([
   TaskStatusNotificationSchema,
   ElicitationCompleteNotificationSchema
 ]);
-var ServerResultSchema = z16.union([
+var ServerResultSchema = z20.union([
   EmptyResultSchema,
   InitializeResultSchema,
   CompleteResultSchema,
@@ -24571,176 +19986,176 @@ var ServerResultSchema = z16.union([
   CreateTaskResultSchema
 ]);
 
-// ../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-json-schema-compat.js
+// ../../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/zod-json-schema-compat.js
 import * as z4mini2 from "zod/v4-mini";
 
-// ../../node_modules/zod-to-json-schema/dist/esm/Options.js
+// ../../../node_modules/zod-to-json-schema/dist/esm/Options.js
 var ignoreOverride = Symbol("Let zodToJsonSchema decide on which parser to use");
-// ../../node_modules/zod-to-json-schema/dist/esm/selectParser.js
+// ../../../node_modules/zod-to-json-schema/dist/esm/selectParser.js
 import { ZodFirstPartyTypeKind as ZodFirstPartyTypeKind3 } from "zod/v3";
 
-// ../../node_modules/zod-to-json-schema/dist/esm/parsers/array.js
+// ../../../node_modules/zod-to-json-schema/dist/esm/parsers/array.js
 import { ZodFirstPartyTypeKind } from "zod/v3";
 
-// ../../node_modules/zod-to-json-schema/dist/esm/parsers/record.js
+// ../../../node_modules/zod-to-json-schema/dist/esm/parsers/record.js
 import { ZodFirstPartyTypeKind as ZodFirstPartyTypeKind2 } from "zod/v3";
 
-// ../../node_modules/zod-to-json-schema/dist/esm/parsers/string.js
+// ../../../node_modules/zod-to-json-schema/dist/esm/parsers/string.js
 var ALPHA_NUMERIC = new Set("ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz0123456789");
-// ../../node_modules/@modelcontextprotocol/sdk/dist/esm/validation/ajv-provider.js
+// ../../../node_modules/@modelcontextprotocol/sdk/dist/esm/validation/ajv-provider.js
 var import_ajv_formats = __toESM(require_dist(), 1);
 
-// ../../node_modules/pkce-challenge/dist/index.node.js
+// ../../../node_modules/pkce-challenge/dist/index.node.js
 var crypto;
 crypto = globalThis.crypto?.webcrypto ?? globalThis.crypto ?? import("node:crypto").then((m) => m.webcrypto);
 
-// ../../node_modules/@modelcontextprotocol/sdk/dist/esm/shared/auth.js
-import * as z17 from "zod/v4";
-var SafeUrlSchema = z17.url().superRefine((val, ctx) => {
+// ../../../node_modules/@modelcontextprotocol/sdk/dist/esm/shared/auth.js
+import * as z21 from "zod/v4";
+var SafeUrlSchema = z21.url().superRefine((val, ctx) => {
   if (!URL.canParse(val)) {
     ctx.addIssue({
-      code: z17.ZodIssueCode.custom,
+      code: z21.ZodIssueCode.custom,
       message: "URL must be parseable",
       fatal: true
     });
-    return z17.NEVER;
+    return z21.NEVER;
   }
 }).refine((url2) => {
   const u = new URL(url2);
   return u.protocol !== "javascript:" && u.protocol !== "data:" && u.protocol !== "vbscript:";
 }, { message: "URL cannot use javascript:, data:, or vbscript: scheme" });
-var OAuthProtectedResourceMetadataSchema = z17.looseObject({
-  resource: z17.string().url(),
-  authorization_servers: z17.array(SafeUrlSchema).optional(),
-  jwks_uri: z17.string().url().optional(),
-  scopes_supported: z17.array(z17.string()).optional(),
-  bearer_methods_supported: z17.array(z17.string()).optional(),
-  resource_signing_alg_values_supported: z17.array(z17.string()).optional(),
-  resource_name: z17.string().optional(),
-  resource_documentation: z17.string().optional(),
-  resource_policy_uri: z17.string().url().optional(),
-  resource_tos_uri: z17.string().url().optional(),
-  tls_client_certificate_bound_access_tokens: z17.boolean().optional(),
-  authorization_details_types_supported: z17.array(z17.string()).optional(),
-  dpop_signing_alg_values_supported: z17.array(z17.string()).optional(),
-  dpop_bound_access_tokens_required: z17.boolean().optional()
+var OAuthProtectedResourceMetadataSchema = z21.looseObject({
+  resource: z21.string().url(),
+  authorization_servers: z21.array(SafeUrlSchema).optional(),
+  jwks_uri: z21.string().url().optional(),
+  scopes_supported: z21.array(z21.string()).optional(),
+  bearer_methods_supported: z21.array(z21.string()).optional(),
+  resource_signing_alg_values_supported: z21.array(z21.string()).optional(),
+  resource_name: z21.string().optional(),
+  resource_documentation: z21.string().optional(),
+  resource_policy_uri: z21.string().url().optional(),
+  resource_tos_uri: z21.string().url().optional(),
+  tls_client_certificate_bound_access_tokens: z21.boolean().optional(),
+  authorization_details_types_supported: z21.array(z21.string()).optional(),
+  dpop_signing_alg_values_supported: z21.array(z21.string()).optional(),
+  dpop_bound_access_tokens_required: z21.boolean().optional()
 });
-var OAuthMetadataSchema = z17.looseObject({
-  issuer: z17.string(),
+var OAuthMetadataSchema = z21.looseObject({
+  issuer: z21.string(),
   authorization_endpoint: SafeUrlSchema,
   token_endpoint: SafeUrlSchema,
   registration_endpoint: SafeUrlSchema.optional(),
-  scopes_supported: z17.array(z17.string()).optional(),
-  response_types_supported: z17.array(z17.string()),
-  response_modes_supported: z17.array(z17.string()).optional(),
-  grant_types_supported: z17.array(z17.string()).optional(),
-  token_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
-  token_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
+  scopes_supported: z21.array(z21.string()).optional(),
+  response_types_supported: z21.array(z21.string()),
+  response_modes_supported: z21.array(z21.string()).optional(),
+  grant_types_supported: z21.array(z21.string()).optional(),
+  token_endpoint_auth_methods_supported: z21.array(z21.string()).optional(),
+  token_endpoint_auth_signing_alg_values_supported: z21.array(z21.string()).optional(),
   service_documentation: SafeUrlSchema.optional(),
   revocation_endpoint: SafeUrlSchema.optional(),
-  revocation_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
-  revocation_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
-  introspection_endpoint: z17.string().optional(),
-  introspection_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
-  introspection_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
-  code_challenge_methods_supported: z17.array(z17.string()).optional(),
-  client_id_metadata_document_supported: z17.boolean().optional()
+  revocation_endpoint_auth_methods_supported: z21.array(z21.string()).optional(),
+  revocation_endpoint_auth_signing_alg_values_supported: z21.array(z21.string()).optional(),
+  introspection_endpoint: z21.string().optional(),
+  introspection_endpoint_auth_methods_supported: z21.array(z21.string()).optional(),
+  introspection_endpoint_auth_signing_alg_values_supported: z21.array(z21.string()).optional(),
+  code_challenge_methods_supported: z21.array(z21.string()).optional(),
+  client_id_metadata_document_supported: z21.boolean().optional()
 });
-var OpenIdProviderMetadataSchema = z17.looseObject({
-  issuer: z17.string(),
+var OpenIdProviderMetadataSchema = z21.looseObject({
+  issuer: z21.string(),
   authorization_endpoint: SafeUrlSchema,
   token_endpoint: SafeUrlSchema,
   userinfo_endpoint: SafeUrlSchema.optional(),
   jwks_uri: SafeUrlSchema,
   registration_endpoint: SafeUrlSchema.optional(),
-  scopes_supported: z17.array(z17.string()).optional(),
-  response_types_supported: z17.array(z17.string()),
-  response_modes_supported: z17.array(z17.string()).optional(),
-  grant_types_supported: z17.array(z17.string()).optional(),
-  acr_values_supported: z17.array(z17.string()).optional(),
-  subject_types_supported: z17.array(z17.string()),
-  id_token_signing_alg_values_supported: z17.array(z17.string()),
-  id_token_encryption_alg_values_supported: z17.array(z17.string()).optional(),
-  id_token_encryption_enc_values_supported: z17.array(z17.string()).optional(),
-  userinfo_signing_alg_values_supported: z17.array(z17.string()).optional(),
-  userinfo_encryption_alg_values_supported: z17.array(z17.string()).optional(),
-  userinfo_encryption_enc_values_supported: z17.array(z17.string()).optional(),
-  request_object_signing_alg_values_supported: z17.array(z17.string()).optional(),
-  request_object_encryption_alg_values_supported: z17.array(z17.string()).optional(),
-  request_object_encryption_enc_values_supported: z17.array(z17.string()).optional(),
-  token_endpoint_auth_methods_supported: z17.array(z17.string()).optional(),
-  token_endpoint_auth_signing_alg_values_supported: z17.array(z17.string()).optional(),
-  display_values_supported: z17.array(z17.string()).optional(),
-  claim_types_supported: z17.array(z17.string()).optional(),
-  claims_supported: z17.array(z17.string()).optional(),
-  service_documentation: z17.string().optional(),
-  claims_locales_supported: z17.array(z17.string()).optional(),
-  ui_locales_supported: z17.array(z17.string()).optional(),
-  claims_parameter_supported: z17.boolean().optional(),
-  request_parameter_supported: z17.boolean().optional(),
-  request_uri_parameter_supported: z17.boolean().optional(),
-  require_request_uri_registration: z17.boolean().optional(),
+  scopes_supported: z21.array(z21.string()).optional(),
+  response_types_supported: z21.array(z21.string()),
+  response_modes_supported: z21.array(z21.string()).optional(),
+  grant_types_supported: z21.array(z21.string()).optional(),
+  acr_values_supported: z21.array(z21.string()).optional(),
+  subject_types_supported: z21.array(z21.string()),
+  id_token_signing_alg_values_supported: z21.array(z21.string()),
+  id_token_encryption_alg_values_supported: z21.array(z21.string()).optional(),
+  id_token_encryption_enc_values_supported: z21.array(z21.string()).optional(),
+  userinfo_signing_alg_values_supported: z21.array(z21.string()).optional(),
+  userinfo_encryption_alg_values_supported: z21.array(z21.string()).optional(),
+  userinfo_encryption_enc_values_supported: z21.array(z21.string()).optional(),
+  request_object_signing_alg_values_supported: z21.array(z21.string()).optional(),
+  request_object_encryption_alg_values_supported: z21.array(z21.string()).optional(),
+  request_object_encryption_enc_values_supported: z21.array(z21.string()).optional(),
+  token_endpoint_auth_methods_supported: z21.array(z21.string()).optional(),
+  token_endpoint_auth_signing_alg_values_supported: z21.array(z21.string()).optional(),
+  display_values_supported: z21.array(z21.string()).optional(),
+  claim_types_supported: z21.array(z21.string()).optional(),
+  claims_supported: z21.array(z21.string()).optional(),
+  service_documentation: z21.string().optional(),
+  claims_locales_supported: z21.array(z21.string()).optional(),
+  ui_locales_supported: z21.array(z21.string()).optional(),
+  claims_parameter_supported: z21.boolean().optional(),
+  request_parameter_supported: z21.boolean().optional(),
+  request_uri_parameter_supported: z21.boolean().optional(),
+  require_request_uri_registration: z21.boolean().optional(),
   op_policy_uri: SafeUrlSchema.optional(),
   op_tos_uri: SafeUrlSchema.optional(),
-  client_id_metadata_document_supported: z17.boolean().optional()
+  client_id_metadata_document_supported: z21.boolean().optional()
 });
-var OpenIdProviderDiscoveryMetadataSchema = z17.object({
+var OpenIdProviderDiscoveryMetadataSchema = z21.object({
   ...OpenIdProviderMetadataSchema.shape,
   ...OAuthMetadataSchema.pick({
     code_challenge_methods_supported: true
   }).shape
 });
-var OAuthTokensSchema = z17.object({
-  access_token: z17.string(),
-  id_token: z17.string().optional(),
-  token_type: z17.string(),
-  expires_in: z17.coerce.number().optional(),
-  scope: z17.string().optional(),
-  refresh_token: z17.string().optional()
+var OAuthTokensSchema = z21.object({
+  access_token: z21.string(),
+  id_token: z21.string().optional(),
+  token_type: z21.string(),
+  expires_in: z21.coerce.number().optional(),
+  scope: z21.string().optional(),
+  refresh_token: z21.string().optional()
 }).strip();
-var OAuthErrorResponseSchema = z17.object({
-  error: z17.string(),
-  error_description: z17.string().optional(),
-  error_uri: z17.string().optional()
+var OAuthErrorResponseSchema = z21.object({
+  error: z21.string(),
+  error_description: z21.string().optional(),
+  error_uri: z21.string().optional()
 });
-var OptionalSafeUrlSchema = SafeUrlSchema.optional().or(z17.literal("").transform(() => {
+var OptionalSafeUrlSchema = SafeUrlSchema.optional().or(z21.literal("").transform(() => {
   return;
 }));
-var OAuthClientMetadataSchema = z17.object({
-  redirect_uris: z17.array(SafeUrlSchema),
-  token_endpoint_auth_method: z17.string().optional(),
-  grant_types: z17.array(z17.string()).optional(),
-  response_types: z17.array(z17.string()).optional(),
-  client_name: z17.string().optional(),
+var OAuthClientMetadataSchema = z21.object({
+  redirect_uris: z21.array(SafeUrlSchema),
+  token_endpoint_auth_method: z21.string().optional(),
+  grant_types: z21.array(z21.string()).optional(),
+  response_types: z21.array(z21.string()).optional(),
+  client_name: z21.string().optional(),
   client_uri: SafeUrlSchema.optional(),
   logo_uri: OptionalSafeUrlSchema,
-  scope: z17.string().optional(),
-  contacts: z17.array(z17.string()).optional(),
+  scope: z21.string().optional(),
+  contacts: z21.array(z21.string()).optional(),
   tos_uri: OptionalSafeUrlSchema,
-  policy_uri: z17.string().optional(),
+  policy_uri: z21.string().optional(),
   jwks_uri: SafeUrlSchema.optional(),
-  jwks: z17.any().optional(),
-  software_id: z17.string().optional(),
-  software_version: z17.string().optional(),
-  software_statement: z17.string().optional()
+  jwks: z21.any().optional(),
+  software_id: z21.string().optional(),
+  software_version: z21.string().optional(),
+  software_statement: z21.string().optional()
 }).strip();
-var OAuthClientInformationSchema = z17.object({
-  client_id: z17.string(),
-  client_secret: z17.string().optional(),
-  client_id_issued_at: z17.number().optional(),
-  client_secret_expires_at: z17.number().optional()
+var OAuthClientInformationSchema = z21.object({
+  client_id: z21.string(),
+  client_secret: z21.string().optional(),
+  client_id_issued_at: z21.number().optional(),
+  client_secret_expires_at: z21.number().optional()
 }).strip();
 var OAuthClientInformationFullSchema = OAuthClientMetadataSchema.merge(OAuthClientInformationSchema);
-var OAuthClientRegistrationErrorSchema = z17.object({
-  error: z17.string(),
-  error_description: z17.string().optional()
+var OAuthClientRegistrationErrorSchema = z21.object({
+  error: z21.string(),
+  error_description: z21.string().optional()
 }).strip();
-var OAuthTokenRevocationRequestSchema = z17.object({
-  token: z17.string(),
-  token_type_hint: z17.string().optional()
+var OAuthTokenRevocationRequestSchema = z21.object({
+  token: z21.string(),
+  token_type_hint: z21.string().optional()
 }).strip();
 
-// ../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/errors.js
+// ../../../node_modules/@modelcontextprotocol/sdk/dist/esm/server/auth/errors.js
 class OAuthError extends Error {
   constructor(message, errorUri) {
     super(message);
@@ -24849,15 +20264,15 @@ var OAUTH_ERRORS = {
   [InvalidTargetError.errorCode]: InvalidTargetError
 };
 
-// ../webhook-fetch/src/pinned-fetch.ts
+// ../../webhook-fetch/src/pinned-fetch.ts
 import { request as httpRequest } from "node:http";
 import { request as httpsRequest } from "node:https";
 import { Readable } from "node:stream";
-var requestWithPinnedAddress = async (input, init2, resolved, redirect) => {
-  const request = new Request(input, init2);
+var requestWithPinnedAddress = async (input, init, resolved, redirect) => {
+  const request = new Request(input, init);
   const url2 = new URL(request.url);
   const headers = request.headers;
-  const body2 = request.body;
+  const body = request.body;
   const signal = request.signal;
   const requestOptions = {
     protocol: url2.protocol,
@@ -24872,7 +20287,7 @@ var requestWithPinnedAddress = async (input, init2, resolved, redirect) => {
     ]) : callback(null, resolved.address, resolved.family)
   };
   const requestFunction = url2.protocol === "https:" ? httpsRequest : httpRequest;
-  return new Promise((resolve4, reject) => {
+  return new Promise((resolve, reject) => {
     let incoming;
     let responseStarted = false;
     let abortReason;
@@ -24903,7 +20318,7 @@ var requestWithPinnedAddress = async (input, init2, resolved, redirect) => {
       const hasBody = status !== 204 && status !== 205 && status !== 304;
       if (!hasBody)
         incoming.resume();
-      resolve4(new Response(hasBody ? Readable.toWeb(incoming) : null, {
+      resolve(new Response(hasBody ? Readable.toWeb(incoming) : null, {
         status,
         statusText: incoming.statusMessage ?? "",
         headers: incoming.headers
@@ -24914,7 +20329,7 @@ var requestWithPinnedAddress = async (input, init2, resolved, redirect) => {
         reject(abortReason ?? error);
     });
     if (signal) {
-      const abort2 = () => {
+      const abort = () => {
         abortReason = signal.reason;
         const destroyReason = abortReason instanceof Error ? abortReason : new Error(String(abortReason));
         incoming?.destroy(destroyReason);
@@ -24922,26 +20337,26 @@ var requestWithPinnedAddress = async (input, init2, resolved, redirect) => {
         if (!responseStarted)
           reject(abortReason);
       };
-      abortListener = abort2;
+      abortListener = abort;
       if (signal.aborted)
-        abort2();
+        abort();
       else {
-        signal.addEventListener("abort", abort2, { once: true });
+        signal.addEventListener("abort", abort, { once: true });
       }
     }
     (async () => {
-      if (!body2) {
+      if (!body) {
         outgoing.end();
         return;
       }
-      const reader = body2.getReader();
+      const reader = body.getReader();
       try {
         for (;; ) {
           const { done, value } = await reader.read();
           if (done)
             break;
           if (!outgoing.write(value)) {
-            await new Promise((resolve5) => outgoing.once("drain", resolve5));
+            await new Promise((resolve2) => outgoing.once("drain", resolve2));
           }
         }
         outgoing.end();
@@ -24955,10 +20370,10 @@ var requestWithPinnedAddress = async (input, init2, resolved, redirect) => {
 };
 async function createPinnedFetch(resolved, options) {
   const redirect = options?.redirect ?? "error";
-  return (input, init2) => requestWithPinnedAddress(input, init2, resolved, redirect);
+  return (input, init) => requestWithPinnedAddress(input, init, resolved, redirect);
 }
 
-// ../webhook-fetch/src/validate-url.ts
+// ../../webhook-fetch/src/validate-url.ts
 import { lookup as dnsLookup } from "node:dns/promises";
 import { isIP } from "node:net";
 var BLOCKED_HOSTNAME_PATTERNS = [
@@ -25011,14 +20426,14 @@ function ipv6Hextets(address) {
     if (!part) {
       return [];
     }
-    const out2 = [];
+    const out = [];
     for (const piece of part.split(":")) {
       if (!/^[0-9a-f]{1,4}$/i.test(piece)) {
         return null;
       }
-      out2.push(Number.parseInt(piece, 16));
+      out.push(Number.parseInt(piece, 16));
     }
-    return out2;
+    return out;
   };
   const head = toHextets(halves[0]);
   if (head === null) {
@@ -25149,7 +20564,7 @@ async function validatePublicHttpUrl(url2, options) {
   return { address: first.address, family: first.family };
 }
 
-// ../webhook-fetch/src/guarded-fetch.ts
+// ../../webhook-fetch/src/guarded-fetch.ts
 class OutboundUrlRejectedError extends Error {
   transient;
   constructor(cause, options) {
@@ -25203,12 +20618,12 @@ class OutboundRedirectError extends Error {
     this.name = "OutboundRedirectError";
   }
 }
-var stripCrossOriginHeaders = (init2) => {
-  const headers = new Headers(init2.headers);
-  for (const name2 of CROSS_ORIGIN_STRIPPED_HEADERS) {
-    headers.delete(name2);
+var stripCrossOriginHeaders = (init) => {
+  const headers = new Headers(init.headers);
+  for (const name of CROSS_ORIGIN_STRIPPED_HEADERS) {
+    headers.delete(name);
   }
-  return { ...init2, headers };
+  return { ...init, headers };
 };
 var discardBody = async (response) => {
   try {
@@ -25222,7 +20637,7 @@ var raceWithSignal = (promise2, signal) => {
   if (signal.aborted) {
     return Promise.reject(signal.reason);
   }
-  return new Promise((resolve4, reject) => {
+  return new Promise((resolve, reject) => {
     const onAbort = () => {
       signal.removeEventListener("abort", onAbort);
       reject(signal.reason);
@@ -25230,21 +20645,21 @@ var raceWithSignal = (promise2, signal) => {
     signal.addEventListener("abort", onAbort, { once: true });
     promise2.then((value) => {
       signal.removeEventListener("abort", onAbort);
-      resolve4(value);
+      resolve(value);
     }, (error) => {
       signal.removeEventListener("abort", onAbort);
       reject(error);
     });
   });
 };
-var guardedFetch = async (url2, init2, options) => {
+var guardedFetch = async (url2, init, options) => {
   const maxRedirects = options?.maxRedirects ?? 0;
-  const method = (init2.method ?? "GET").toUpperCase();
+  const method = (init.method ?? "GET").toUpperCase();
   const canFollow = maxRedirects > 0 && REPLAYABLE_METHODS.has(method);
   const redirectMode = canFollow ? "manual" : "error";
-  const signal = init2.signal;
+  const signal = init.signal;
   let currentUrl = url2;
-  let currentInit = init2;
+  let currentInit = init;
   let redirectsFollowed = 0;
   for (;; ) {
     let resolved;
@@ -25296,51 +20711,51 @@ var guardedFetch = async (url2, init2, options) => {
     redirectsFollowed += 1;
   }
 };
-// ../mcp-connector-provider/src/mcp-client.ts
-import { z as z18 } from "zod";
+// ../../mcp-connector-provider/src/mcp-client.ts
+import { z as z22 } from "zod";
 
-// ../mcp-connector-provider/src/platform-hosted-mcp-servers.ts
+// ../../mcp-connector-provider/src/platform-hosted-mcp-servers.ts
 var PLAIN_MCP_INTERNAL_SERVER_URL = "http://plain-mcp/mcp";
 
-// ../mcp-connector-provider/src/mcp-client.ts
-var mcpSdkToolSchema = z18.object({
-  name: z18.string().min(1),
-  description: z18.string().optional(),
-  inputSchema: z18.record(z18.string(), z18.unknown()).optional(),
-  annotations: z18.record(z18.string(), z18.unknown()).optional()
+// ../../mcp-connector-provider/src/mcp-client.ts
+var mcpSdkToolSchema = z22.object({
+  name: z22.string().min(1),
+  description: z22.string().optional(),
+  inputSchema: z22.record(z22.string(), z22.unknown()).optional(),
+  annotations: z22.record(z22.string(), z22.unknown()).optional()
 });
-var elasticCloudToolsMetadataResponseSchema = z18.object({
-  results: z18.array(z18.object({
-    id: z18.string().min(1),
-    readonly: z18.boolean().optional()
+var elasticCloudToolsMetadataResponseSchema = z22.object({
+  results: z22.array(z22.object({
+    id: z22.string().min(1),
+    readonly: z22.boolean().optional()
   }))
 });
-var mcpCallToolContentSchema = z18.object({
-  type: z18.string()
-}).catchall(z18.unknown());
-var mcpCallToolResultSchema = z18.object({
-  content: z18.array(mcpCallToolContentSchema),
-  structuredContent: z18.unknown().optional(),
-  isError: z18.boolean().optional()
+var mcpCallToolContentSchema = z22.object({
+  type: z22.string()
+}).catchall(z22.unknown());
+var mcpCallToolResultSchema = z22.object({
+  content: z22.array(mcpCallToolContentSchema),
+  structuredContent: z22.unknown().optional(),
+  isError: z22.boolean().optional()
 });
-var mcpServerVersionSchema = z18.object({
-  name: z18.string().min(1),
-  version: z18.string().min(1)
+var mcpServerVersionSchema = z22.object({
+  name: z22.string().min(1),
+  version: z22.string().min(1)
 });
-var structuredErrorSchema = z18.object({
-  status: z18.number().int().optional(),
-  data: z18.object({
-    status: z18.number().int().optional()
+var structuredErrorSchema = z22.object({
+  status: z22.number().int().optional(),
+  data: z22.object({
+    status: z22.number().int().optional()
   }).passthrough().optional(),
-  cause: z18.object({
-    status: z18.number().int().optional()
+  cause: z22.object({
+    status: z22.number().int().optional()
   }).passthrough().optional()
 }).passthrough();
-var jwtPayloadSchema = z18.object({
-  exp: z18.number().int().positive().optional()
+var jwtPayloadSchema = z22.object({
+  exp: z22.number().int().positive().optional()
 }).passthrough();
 var oauthRefreshSkewMs = 2 * 60 * 1000;
-// ../mcp-connector-provider/src/mcp-keybased-validation.ts
+// ../../mcp-connector-provider/src/mcp-keybased-validation.ts
 var ELASTIC_CLOUD_AUTHORIZATION_HEADER = "Authorization";
 var DATADOG_API_KEY_HEADER = "DD_API_KEY";
 var DATADOG_APPLICATION_KEY_HEADER = "DD_APPLICATION_KEY";
@@ -25361,7 +20776,7 @@ var RESEND_AUTHORIZATION_HEADER = "Authorization";
 var RESPAN_AUTHORIZATION_HEADER = "Authorization";
 var SIGNOZ_API_KEY_HEADER = "SIGNOZ-API-KEY";
 var SIGNOZ_URL_HEADER = "X-SigNoz-URL";
-var findHeader = (headers, name2) => headers.find((h) => h.name.trim() === name2);
+var findHeader = (headers, name) => headers.find((h) => h.name.trim() === name);
 var normalizeElasticCloudHeaders = (headers) => {
   const authHeader = findHeader(headers, ELASTIC_CLOUD_AUTHORIZATION_HEADER);
   if (!authHeader)
@@ -25522,7 +20937,7 @@ var normalizeContextCompanyHeaders = (headers) => {
 var validateContextCompanyCredentials = ({
   headers
 }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === CONTEXT_COMPANY_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === CONTEXT_COMPANY_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25532,7 +20947,7 @@ var validateContextCompanyCredentials = ({
   return { success: true };
 };
 var validateXCredentials = ({ headers }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === X_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === X_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25556,7 +20971,7 @@ var normalizeBraintrustHeaders = (headers) => {
 var validateBraintrustCredentials = ({
   headers
 }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === BRAINTRUST_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === BRAINTRUST_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25580,7 +20995,7 @@ var normalizeIntercomHeaders = (headers) => {
 var validateIntercomCredentials = ({
   headers
 }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === INTERCOM_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === INTERCOM_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25766,7 +21181,7 @@ var validateAutumnCredentials = ({
 var validateLangfuseCredentials = ({
   headers
 }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === LANGFUSE_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === LANGFUSE_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25790,7 +21205,7 @@ var normalizeResendHeaders = (headers) => {
 var validateResendCredentials = ({
   headers
 }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === RESEND_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === RESEND_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25814,7 +21229,7 @@ var normalizeRespanHeaders = (headers) => {
 var validateRespanCredentials = ({
   headers
 }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === RESPAN_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === RESPAN_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25836,7 +21251,7 @@ var normalizeGcpHeaders = (headers) => {
   ];
 };
 var validateGcpCredentials = ({ headers }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === GCP_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === GCP_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25866,7 +21281,7 @@ var plainGraphqlApiUrl = "https://core-api.uk.plain.com/graphql/v1";
 var validatePlainCredentials = async ({
   headers
 }) => {
-  const authValue = Object.entries(headers).find(([name2]) => name2.trim().toLowerCase() === PLAIN_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
+  const authValue = Object.entries(headers).find(([name]) => name.trim().toLowerCase() === PLAIN_AUTHORIZATION_HEADER.toLowerCase())?.[1]?.trim();
   if (!authValue) {
     return { success: false, errorMessage: MCP_KEYBASED_MISSING_FIELDS_ERROR };
   }
@@ -25894,13 +21309,13 @@ var validatePlainCredentials = async ({
       errorMessage: response.status === 401 || response.status === 403 ? MCP_KEYBASED_INVALID_INPUTS_ERROR : MCP_KEYBASED_UNREACHABLE_ERROR
     };
   }
-  let body2;
+  let body;
   try {
-    body2 = await response.json();
+    body = await response.json();
   } catch {
     return { success: false, errorMessage: MCP_KEYBASED_UNREACHABLE_ERROR };
   }
-  if (!body2.data?.myWorkspace?.id) {
+  if (!body.data?.myWorkspace?.id) {
     return { success: false, errorMessage: MCP_KEYBASED_INVALID_INPUTS_ERROR };
   }
   return { success: true };
@@ -25934,7 +21349,7 @@ var validateCekuraCredentials = async ({
   }
   return { success: false, errorMessage: MCP_KEYBASED_UNREACHABLE_ERROR };
 };
-// ../mcp-connector-provider/src/provider-about-content.ts
+// ../../mcp-connector-provider/src/provider-about-content.ts
 var atlassian = `
 ## Overview
 
@@ -27171,6 +22586,28 @@ Respan hosts an MCP server at \`https://mcp.respan.ai/api/mcp\` over Streamable 
 - A Respan account
 - A Respan API key from the [Respan dashboard](https://platform.respan.ai/platform/api/api-keys)
 `.trim();
+var rivet = `
+## Overview
+
+Connect Rivet to Sazabi agents to inspect actors, call actions, open the Actor Inspector, manage compute pools, and debug distributed actor workflows.
+
+## How it works
+
+Rivet hosts an MCP server at \`https://mcp.rivet.dev/mcp\` over Streamable HTTP. The connector authenticates via OAuth with dynamic client registration against Rivet's authorization server. Access can be scoped globally to the connected account or narrowed to a specific organization, project, or namespace via URL query parameters. Once connected, agents can list running actors, query actor state, execute actor actions, and open the Actor Inspector inline.
+
+## Features
+
+- List and inspect actors, actor lifecycles, and running statuses
+- Execute actor actions and query actor history
+- Inspect actor state, connections, queues, workflows, and SQLite databases
+- Manage Rivet compute pools and runners
+- Monitor compute metrics and server performance
+
+## Requirements
+
+- An active Rivet account
+- Membership in the Rivet organization, project, or namespace you want to connect
+`.trim();
 var theContextCompany = `
 ## Overview
 
@@ -27252,11 +22689,11 @@ Connect 1Password so Sazabi agents can work with your vaults and secrets through
 - A 1Password account with permission to create a service account
 - The 1Password CLI (\`op\`) sandbox preset, since no hosted MCP endpoint is available yet
 `.trim();
-// ../mcp-connector-provider/src/providers/lib/mcp-provider.ts
-import { dirname, resolve as resolve4 } from "node:path";
+// ../../mcp-connector-provider/src/providers/lib/mcp-provider.ts
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { z as z19 } from "zod";
-var MCP_CONNECTOR_SKILLS_DIR = resolve4(dirname(fileURLToPath(import.meta.url)), "../../../skills");
+import { z as z23 } from "zod";
+var MCP_CONNECTOR_SKILLS_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "../../../skills");
 var MCP_PROVIDER_ICON_KEYS = [
   "airbyte",
   "agentcat",
@@ -27309,6 +22746,7 @@ var MCP_PROVIDER_ICON_KEYS = [
   "rentahuman",
   "resend",
   "respan",
+  "rivet",
   "salesforce",
   "secureframe",
   "sentry",
@@ -27322,68 +22760,68 @@ var MCP_PROVIDER_ICON_KEYS = [
   "vercel",
   "x"
 ];
-var mcpProviderIconKeySchema = z19.enum(MCP_PROVIDER_ICON_KEYS);
-var mcpProviderCapabilityOverridesSchema = z19.object({
-  readOnlyToolNames: z19.array(z19.string()).optional(),
-  blockedToolNames: z19.array(z19.string()).optional(),
-  defaultUnavailableReason: z19.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES).optional(),
-  allowWriteTools: z19.boolean().optional()
+var mcpProviderIconKeySchema = z23.enum(MCP_PROVIDER_ICON_KEYS);
+var mcpProviderCapabilityOverridesSchema = z23.object({
+  readOnlyToolNames: z23.array(z23.string()).optional(),
+  blockedToolNames: z23.array(z23.string()).optional(),
+  defaultUnavailableReason: z23.enum(MCP_TOOL_AVAILABILITY_REASON_VALUES).optional(),
+  allowWriteTools: z23.boolean().optional()
 });
-var mcpDynamicClientRegistrationSchema = z19.object({
-  registrationEndpoint: z19.string().url(),
-  tokenEndpointAuthMethod: z19.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS).optional(),
-  includeScopesInRegistration: z19.boolean().optional()
+var mcpDynamicClientRegistrationSchema = z23.object({
+  registrationEndpoint: z23.string().url(),
+  tokenEndpointAuthMethod: z23.enum(MCP_OAUTH_TOKEN_ENDPOINT_AUTH_METHODS).optional(),
+  includeScopesInRegistration: z23.boolean().optional()
 });
-var mcpProviderOauthMetadataSchema = z19.object({
-  providerConfigKey: z19.string().min(1),
-  callbackPathSegment: z19.string().min(1),
-  authorizationUrl: z19.string().url().optional(),
-  tokenUrl: z19.string().url().optional(),
-  resourceUrl: z19.string().url().optional(),
-  useServerUrlAsResource: z19.boolean().optional(),
-  omitScopeFromAuthorizationUrl: z19.boolean().optional(),
-  authorizationUrlParams: z19.record(z19.string(), z19.string()).optional(),
-  defaultAccessTokenTtlSeconds: z19.number().int().positive().optional(),
+var mcpProviderOauthMetadataSchema = z23.object({
+  providerConfigKey: z23.string().min(1),
+  callbackPathSegment: z23.string().min(1),
+  authorizationUrl: z23.string().url().optional(),
+  tokenUrl: z23.string().url().optional(),
+  resourceUrl: z23.string().url().optional(),
+  useServerUrlAsResource: z23.boolean().optional(),
+  omitScopeFromAuthorizationUrl: z23.boolean().optional(),
+  authorizationUrlParams: z23.record(z23.string(), z23.string()).optional(),
+  defaultAccessTokenTtlSeconds: z23.number().int().positive().optional(),
   dynamicClientRegistration: mcpDynamicClientRegistrationSchema.optional()
 });
-var mcpProviderRegionSchema = z19.object({
-  label: z19.string().min(1),
-  serverUrl: z19.string().url(),
-  authorizationUrl: z19.string().url().optional(),
-  tokenUrl: z19.string().url().optional(),
-  resourceUrl: z19.string().url().optional(),
+var mcpProviderRegionSchema = z23.object({
+  label: z23.string().min(1),
+  serverUrl: z23.string().url(),
+  authorizationUrl: z23.string().url().optional(),
+  tokenUrl: z23.string().url().optional(),
+  resourceUrl: z23.string().url().optional(),
   dynamicClientRegistration: mcpDynamicClientRegistrationSchema.optional()
 });
-var mcpProviderSetupGroupSchema = z19.object({
-  id: z19.string().min(1),
-  title: z19.string().min(1),
-  description: z19.string().optional(),
-  body: z19.string().min(1),
-  fieldKeys: z19.array(z19.string().min(1)).optional(),
-  imageKeys: z19.array(z19.string().min(1)).optional()
+var mcpProviderSetupGroupSchema = z23.object({
+  id: z23.string().min(1),
+  title: z23.string().min(1),
+  description: z23.string().optional(),
+  body: z23.string().min(1),
+  fieldKeys: z23.array(z23.string().min(1)).optional(),
+  imageKeys: z23.array(z23.string().min(1)).optional()
 });
-var mcpProvider = z19.object({
-  id: z19.string().min(1),
-  label: z19.string().min(1),
+var mcpProvider = z23.object({
+  id: z23.string().min(1),
+  label: z23.string().min(1),
   iconKey: mcpProviderIconKeySchema,
-  defaultServerUrl: z19.string().url().nullable(),
-  serverUrlPathSuffixMaxSegments: z19.number().int().positive().optional(),
-  serverUrlHostnameSuffixes: z19.array(z19.string().min(2)).optional(),
-  transport: z19.enum(MCP_TRANSPORTS),
-  authMode: z19.enum(MCP_AUTH_MODES),
-  availability: z19.enum(MCP_PROVIDER_AVAILABILITY_VALUES),
+  defaultServerUrl: z23.string().url().nullable(),
+  serverUrlPathSuffixMaxSegments: z23.number().int().positive().optional(),
+  serverUrlHostnameSuffixes: z23.array(z23.string().min(2)).optional(),
+  transport: z23.enum(MCP_TRANSPORTS),
+  authMode: z23.enum(MCP_AUTH_MODES),
+  availability: z23.enum(MCP_PROVIDER_AVAILABILITY_VALUES),
   oauth: mcpProviderOauthMetadataSchema.optional(),
-  regions: z19.array(mcpProviderRegionSchema).optional(),
+  regions: z23.array(mcpProviderRegionSchema).optional(),
   capabilityOverrides: mcpProviderCapabilityOverridesSchema.optional(),
-  helpText: z19.string().optional(),
-  setupGroups: z19.array(mcpProviderSetupGroupSchema).optional(),
-  evidenceHints: z19.array(z19.string().min(1)).optional(),
-  skill: z19.string().min(1).optional(),
-  setupSkill: z19.string().min(1).optional(),
-  scopesUserSelectable: z19.boolean().optional()
+  helpText: z23.string().optional(),
+  setupGroups: z23.array(mcpProviderSetupGroupSchema).optional(),
+  evidenceHints: z23.array(z23.string().min(1)).optional(),
+  skill: z23.string().min(1).optional(),
+  setupSkill: z23.string().min(1).optional(),
+  scopesUserSelectable: z23.boolean().optional()
 });
 
-// ../mcp-connector-provider/src/providers/lib/define-mcp-preset.ts
+// ../../mcp-connector-provider/src/providers/lib/define-mcp-preset.ts
 var defineMcpPreset = (preset) => {
   const parsed = mcpProvider.parse(preset);
   return {
@@ -27395,7 +22833,7 @@ var defineMcpPreset = (preset) => {
   };
 };
 
-// ../mcp-connector-provider/src/providers/agentcat.ts
+// ../../mcp-connector-provider/src/providers/agentcat.ts
 var agentcat2 = defineMcpPreset({
   id: "agentcat",
   label: "AgentCat",
@@ -27432,7 +22870,7 @@ var agentcat2 = defineMcpPreset({
   helpText: "Inspect agent usage analytics and debug AgentCat issues."
 });
 
-// ../mcp-connector-provider/src/providers/airbyte.ts
+// ../../mcp-connector-provider/src/providers/airbyte.ts
 var airbyte2 = defineMcpPreset({
   id: "airbyte",
   label: "Airbyte",
@@ -27466,7 +22904,7 @@ var airbyte2 = defineMcpPreset({
   setupSkill: "airbyte-setup"
 });
 
-// ../mcp-connector-provider/src/providers/atlassian.ts
+// ../../mcp-connector-provider/src/providers/atlassian.ts
 var atlassian2 = defineMcpPreset({
   id: "atlassian",
   label: "Atlassian",
@@ -27500,7 +22938,7 @@ var atlassian2 = defineMcpPreset({
   setupSkill: "atlassian-setup"
 });
 
-// ../mcp-connector-provider/src/providers/attio.ts
+// ../../mcp-connector-provider/src/providers/attio.ts
 var attio2 = defineMcpPreset({
   id: "attio",
   label: "Attio",
@@ -27543,7 +22981,7 @@ var attio2 = defineMcpPreset({
   setupSkill: "attio-setup"
 });
 
-// ../mcp-connector-provider/src/providers/autumn.ts
+// ../../mcp-connector-provider/src/providers/autumn.ts
 var autumn2 = defineMcpPreset({
   id: "autumn",
   label: "Autumn",
@@ -27574,7 +23012,7 @@ var autumn2 = defineMcpPreset({
   normalizeHeaders: normalizeAutumnHeaders
 });
 
-// ../mcp-connector-provider/src/providers/aws.ts
+// ../../mcp-connector-provider/src/providers/aws.ts
 var AWS_MCP_ENDPOINT_REGIONS = [
   { value: "us-east-1", label: "US East (N. Virginia) — us-east-1" },
   { value: "eu-central-1", label: "Europe (Frankfurt) — eu-central-1" }
@@ -27614,7 +23052,7 @@ var aws2 = defineMcpPreset({
     }
   ]
 });
-// ../mcp-connector-provider/src/providers/axiom.ts
+// ../../mcp-connector-provider/src/providers/axiom.ts
 var axiom2 = defineMcpPreset({
   id: "axiom",
   label: "Axiom",
@@ -27652,7 +23090,7 @@ var axiom2 = defineMcpPreset({
   helpText: "Query Axiom datasets and logs with APL to investigate production events and incidents."
 });
 
-// ../mcp-connector-provider/src/providers/better-stack.ts
+// ../../mcp-connector-provider/src/providers/better-stack.ts
 var betterStack2 = defineMcpPreset({
   id: "better-stack",
   label: "Better Stack",
@@ -27696,7 +23134,7 @@ var betterStack2 = defineMcpPreset({
   helpText: "Browse Better Stack incidents, monitors, and log sources, build telemetry queries to investigate production issues, and acknowledge, resolve, and manage incidents."
 });
 
-// ../mcp-connector-provider/src/providers/braintrust.ts
+// ../../mcp-connector-provider/src/providers/braintrust.ts
 var braintrust2 = defineMcpPreset({
   id: "braintrust",
   label: "Braintrust",
@@ -27734,7 +23172,7 @@ var braintrust2 = defineMcpPreset({
   normalizeHeaders: normalizeBraintrustHeaders
 });
 
-// ../mcp-connector-provider/src/providers/calendly.ts
+// ../../mcp-connector-provider/src/providers/calendly.ts
 var calendly2 = defineMcpPreset({
   id: "calendly",
   label: "Calendly",
@@ -27767,7 +23205,7 @@ var calendly2 = defineMcpPreset({
   helpText: "Check availability, create scheduling links, and manage meetings in Calendly."
 });
 
-// ../mcp-connector-provider/src/providers/cekura.ts
+// ../../mcp-connector-provider/src/providers/cekura.ts
 var cekura2 = defineMcpPreset({
   id: "cekura",
   label: "Cekura",
@@ -27794,7 +23232,7 @@ var cekura2 = defineMcpPreset({
   validateCredentials: validateCekuraCredentials
 });
 
-// ../mcp-connector-provider/src/providers/checkly.ts
+// ../../mcp-connector-provider/src/providers/checkly.ts
 var checkly2 = defineMcpPreset({
   id: "checkly",
   label: "Checkly MCP",
@@ -27834,7 +23272,7 @@ var checkly2 = defineMcpPreset({
   helpText: "Query Checkly synthetic monitoring (checks, check results, test sessions, RCA, status pages, and incidents) over Checkly's official OAuth MCP server. Disabled until Sazabi has a Checkly-approved OAuth client, because Checkly rejects Dynamic Client Registration."
 });
 
-// ../mcp-connector-provider/src/providers/circleback.ts
+// ../../mcp-connector-provider/src/providers/circleback.ts
 var circleback2 = defineMcpPreset({
   id: "circleback",
   label: "Circleback",
@@ -27867,7 +23305,7 @@ var circleback2 = defineMcpPreset({
   helpText: "Search your Circleback meeting notes, transcripts, and action items."
 });
 
-// ../mcp-connector-provider/src/providers/clay.ts
+// ../../mcp-connector-provider/src/providers/clay.ts
 var clay2 = defineMcpPreset({
   id: "clay",
   label: "Clay",
@@ -27911,7 +23349,7 @@ var clay2 = defineMcpPreset({
   helpText: "Search Clay contacts, interactions, notes, and workspace workflows, and create or update records and workflows."
 });
 
-// ../mcp-connector-provider/src/providers/clerk.ts
+// ../../mcp-connector-provider/src/providers/clerk.ts
 var clerk2 = defineMcpPreset({
   id: "clerk",
   label: "Clerk",
@@ -27931,7 +23369,7 @@ var clerk2 = defineMcpPreset({
   helpText: "Search Clerk's public documentation and SDK implementation snippets via Clerk's hosted MCP server."
 });
 
-// ../mcp-connector-provider/src/providers/cloudflare.ts
+// ../../mcp-connector-provider/src/providers/cloudflare.ts
 var cloudflare2 = defineMcpPreset({
   id: "cloudflare",
   label: "Cloudflare",
@@ -28009,7 +23447,7 @@ var cloudflare2 = defineMcpPreset({
   helpText: "By default, use Cloudflare's unified all-products API server (mcp.cloudflare.com), scoped by your account's permissions. Optionally pick a per-product server for observability logs and analytics, bindings (D1, R2, KV), builds, or Radar insights."
 });
 
-// ../mcp-connector-provider/src/providers/cloudflare-api-token.ts
+// ../../mcp-connector-provider/src/providers/cloudflare-api-token.ts
 var cloudflareApiToken2 = defineMcpPreset({
   id: "cloudflare-api-token",
   label: "Cloudflare (API token)",
@@ -28040,7 +23478,7 @@ var cloudflareApiToken2 = defineMcpPreset({
   normalizeHeaders: normalizeCloudflareHeaders
 });
 
-// ../mcp-connector-provider/src/providers/composio.ts
+// ../../mcp-connector-provider/src/providers/composio.ts
 var composio2 = defineMcpPreset({
   id: "composio",
   label: "Composio",
@@ -28077,7 +23515,7 @@ var composio2 = defineMcpPreset({
   normalizeHeaders: normalizeComposioHeaders
 });
 
-// ../mcp-connector-provider/src/providers/context-dev.ts
+// ../../mcp-connector-provider/src/providers/context-dev.ts
 var contextDev2 = defineMcpPreset({
   id: "context-dev",
   label: "Context.dev",
@@ -28110,7 +23548,7 @@ var contextDev2 = defineMcpPreset({
   setupSkill: "context-dev-setup"
 });
 
-// ../mcp-connector-provider/src/providers/datadog.ts
+// ../../mcp-connector-provider/src/providers/datadog.ts
 var datadog2 = defineMcpPreset({
   id: "datadog",
   label: "Datadog",
@@ -28152,7 +23590,7 @@ var datadog2 = defineMcpPreset({
   normalizeHeaders: normalizeDatadogHeaders
 });
 
-// ../mcp-connector-provider/src/providers/deepwiki.ts
+// ../../mcp-connector-provider/src/providers/deepwiki.ts
 var deepwiki2 = defineMcpPreset({
   id: "deepwiki",
   label: "DeepWiki",
@@ -28176,7 +23614,7 @@ var deepwiki2 = defineMcpPreset({
   helpText: "Query public GitHub repository documentation and ask questions about open-source code via DeepWiki's hosted MCP server."
 });
 
-// ../mcp-connector-provider/src/providers/elastic-cloud.ts
+// ../../mcp-connector-provider/src/providers/elastic-cloud.ts
 var elasticCloud2 = defineMcpPreset({
   id: "elastic-cloud",
   label: "Elastic Cloud",
@@ -28219,7 +23657,7 @@ var elasticCloud2 = defineMcpPreset({
   normalizeHeaders: normalizeElasticCloudHeaders
 });
 
-// ../mcp-connector-provider/src/providers/exa.ts
+// ../../mcp-connector-provider/src/providers/exa.ts
 var exa2 = defineMcpPreset({
   id: "exa",
   label: "Exa",
@@ -28252,7 +23690,7 @@ var exa2 = defineMcpPreset({
   setupSkill: "exa-setup"
 });
 
-// ../mcp-connector-provider/src/providers/gcp.ts
+// ../../mcp-connector-provider/src/providers/gcp.ts
 var gcp2 = defineMcpPreset({
   id: "gcp",
   label: "Google Cloud (GCP)",
@@ -28290,7 +23728,7 @@ var gcp2 = defineMcpPreset({
   normalizeHeaders: normalizeGcpHeaders
 });
 
-// ../mcp-connector-provider/src/providers/google-drive.ts
+// ../../mcp-connector-provider/src/providers/google-drive.ts
 var googleDrive2 = defineMcpPreset({
   id: "google-drive",
   label: "Google Drive",
@@ -28340,7 +23778,7 @@ var googleDrive2 = defineMcpPreset({
   helpText: "Search and read files and metadata in a Google Drive through Google's hosted MCP server. Coming soon — requires a Sazabi-provisioned Google OAuth client and isn't self-serve connectable yet."
 });
 
-// ../mcp-connector-provider/src/providers/grafana.ts
+// ../../mcp-connector-provider/src/providers/grafana.ts
 var grafana2 = defineMcpPreset({
   id: "grafana",
   label: "Grafana Cloud",
@@ -28384,7 +23822,7 @@ var grafana2 = defineMcpPreset({
   helpText: "Browse Grafana dashboards, metrics, logs, traces, and alerts across your Grafana Cloud stack."
 });
 
-// ../mcp-connector-provider/src/providers/granola.ts
+// ../../mcp-connector-provider/src/providers/granola.ts
 var granola2 = defineMcpPreset({
   id: "granola",
   label: "Granola",
@@ -28417,7 +23855,7 @@ var granola2 = defineMcpPreset({
   helpText: "Search and browse Granola meeting notes, transcripts, and folders."
 });
 
-// ../mcp-connector-provider/src/providers/happenstance.ts
+// ../../mcp-connector-provider/src/providers/happenstance.ts
 var happenstance2 = defineMcpPreset({
   id: "happenstance",
   label: "Happenstance",
@@ -28466,7 +23904,7 @@ var happenstance2 = defineMcpPreset({
   helpText: "Search your Happenstance network to find and get introduced to people."
 });
 
-// ../mcp-connector-provider/src/providers/herd.ts
+// ../../mcp-connector-provider/src/providers/herd.ts
 var herd2 = defineMcpPreset({
   id: "herd",
   label: "Herd",
@@ -28498,7 +23936,7 @@ var herd2 = defineMcpPreset({
   helpText: "Analyze contracts, transactions, wallets, and on-chain activity."
 });
 
-// ../mcp-connector-provider/src/providers/honeycomb.ts
+// ../../mcp-connector-provider/src/providers/honeycomb.ts
 var honeycomb2 = defineMcpPreset({
   id: "honeycomb",
   label: "Honeycomb",
@@ -28557,7 +23995,7 @@ var honeycomb2 = defineMcpPreset({
   helpText: "Query Honeycomb environments, datasets, columns, boards, and triggers, run queries, and create or update boards and triggers. Choose the US or EU region when connecting."
 });
 
-// ../mcp-connector-provider/src/providers/incident-io.ts
+// ../../mcp-connector-provider/src/providers/incident-io.ts
 var incidentIo2 = defineMcpPreset({
   id: "incident-io",
   label: "incident.io",
@@ -28592,7 +24030,7 @@ var incidentIo2 = defineMcpPreset({
   setupSkill: "incident-io-setup"
 });
 
-// ../mcp-connector-provider/src/providers/intercom.ts
+// ../../mcp-connector-provider/src/providers/intercom.ts
 var intercom2 = defineMcpPreset({
   id: "intercom",
   label: "Intercom",
@@ -28629,7 +24067,7 @@ var intercom2 = defineMcpPreset({
   normalizeHeaders: normalizeIntercomHeaders
 });
 
-// ../mcp-connector-provider/src/providers/langfuse.ts
+// ../../mcp-connector-provider/src/providers/langfuse.ts
 var langfuse2 = defineMcpPreset({
   id: "langfuse",
   label: "Langfuse",
@@ -28680,7 +24118,7 @@ var langfuse2 = defineMcpPreset({
   normalizeHeaders: normalizeLangfuseHeaders
 });
 
-// ../mcp-connector-provider/src/providers/langsmith.ts
+// ../../mcp-connector-provider/src/providers/langsmith.ts
 var langsmith2 = defineMcpPreset({
   id: "langsmith",
   label: "LangSmith",
@@ -28753,7 +24191,7 @@ var langsmith2 = defineMcpPreset({
   helpText: "Query LangSmith tracing projects, runs, datasets, and evaluations to investigate LLM application behavior. Choose the region where your LangSmith organization lives when connecting."
 });
 
-// ../mcp-connector-provider/src/providers/linear.ts
+// ../../mcp-connector-provider/src/providers/linear.ts
 var linear2 = defineMcpPreset({
   id: "linear",
   label: "Linear",
@@ -28799,7 +24237,7 @@ var linear2 = defineMcpPreset({
   helpText: "Browse and search Linear issues and projects, and create or update issues, comments, and project data."
 });
 
-// ../mcp-connector-provider/src/providers/logfire.ts
+// ../../mcp-connector-provider/src/providers/logfire.ts
 var logfire2 = defineMcpPreset({
   id: "logfire",
   label: "Pydantic Logfire",
@@ -28839,7 +24277,7 @@ var logfire2 = defineMcpPreset({
   helpText: "Query Pydantic Logfire traces, metrics, and exceptions, and browse projects, alerts, and dashboards. Hosted on Logfire's US region (logfire-us.pydantic.dev)."
 });
 
-// ../mcp-connector-provider/src/providers/mercury.ts
+// ../../mcp-connector-provider/src/providers/mercury.ts
 var mercury2 = defineMcpPreset({
   id: "mercury",
   label: "Mercury",
@@ -28884,7 +24322,7 @@ var mercury2 = defineMcpPreset({
   helpText: "Search Mercury banking data including accounts, cards, recipients, transactions, treasury, and organization records. Read-only: this connection cannot move money or change your Mercury account."
 });
 
-// ../mcp-connector-provider/src/providers/neon.ts
+// ../../mcp-connector-provider/src/providers/neon.ts
 var neon2 = defineMcpPreset({
   id: "neon",
   label: "Neon",
@@ -28937,7 +24375,7 @@ var neon2 = defineMcpPreset({
   helpText: "Manage Neon projects, branches, databases, and run SQL queries."
 });
 
-// ../mcp-connector-provider/src/providers/notion.ts
+// ../../mcp-connector-provider/src/providers/notion.ts
 var notion = defineMcpPreset({
   id: "notion",
   label: "Notion",
@@ -28979,7 +24417,7 @@ var notion = defineMcpPreset({
   helpText: "Browse and manage Notion pages, databases, and workspace content. During authorization, choose which pages and databases to share with the connection."
 });
 
-// ../mcp-connector-provider/src/providers/onepassword.ts
+// ../../mcp-connector-provider/src/providers/onepassword.ts
 var onepassword2 = defineMcpPreset({
   id: "1password",
   label: "1Password",
@@ -28997,7 +24435,7 @@ var onepassword2 = defineMcpPreset({
   helpText: "Access 1Password via its documented secure AI access options. A general-purpose hosted MCP server is not available today; use the 1Password CLI (op) sandbox preset instead."
 });
 
-// ../mcp-connector-provider/src/providers/paper.ts
+// ../../mcp-connector-provider/src/providers/paper.ts
 var paper2 = defineMcpPreset({
   id: "paper",
   label: "Paper MCP",
@@ -29018,7 +24456,7 @@ var paper2 = defineMcpPreset({
   helpText: "Read and write Paper design files, including nodes, selections, text content, and design-system elements. Coming soon — Paper's MCP server runs on desktop localhost and can't be reached by hosted Sazabi agents yet."
 });
 
-// ../mcp-connector-provider/src/providers/plain.ts
+// ../../mcp-connector-provider/src/providers/plain.ts
 var plain2 = defineMcpPreset({
   id: "plain",
   label: "Plain",
@@ -29056,7 +24494,7 @@ var plain2 = defineMcpPreset({
   setupSkill: "plain-setup"
 });
 
-// ../mcp-connector-provider/src/providers/plain-api-token.ts
+// ../../mcp-connector-provider/src/providers/plain-api-token.ts
 var plainApiToken2 = defineMcpPreset({
   id: "plain-api-token",
   label: "Plain (API key)",
@@ -29110,7 +24548,7 @@ var plainApiToken2 = defineMcpPreset({
   normalizeHeaders: normalizePlainHeaders
 });
 
-// ../mcp-connector-provider/src/providers/planetscale.ts
+// ../../mcp-connector-provider/src/providers/planetscale.ts
 var planetscale2 = defineMcpPreset({
   id: "planetscale",
   label: "PlanetScale",
@@ -29151,7 +24589,7 @@ var planetscale2 = defineMcpPreset({
   setupSkill: "planetscale-setup"
 });
 
-// ../mcp-connector-provider/src/providers/posthog.ts
+// ../../mcp-connector-provider/src/providers/posthog.ts
 var posthog2 = defineMcpPreset({
   id: "posthog",
   label: "PostHog",
@@ -29221,7 +24659,7 @@ var posthog2 = defineMcpPreset({
   setupSkill: "posthog-setup"
 });
 
-// ../mcp-connector-provider/src/providers/pylon.ts
+// ../../mcp-connector-provider/src/providers/pylon.ts
 var pylon2 = defineMcpPreset({
   id: "pylon",
   label: "Pylon",
@@ -29259,7 +24697,7 @@ var pylon2 = defineMcpPreset({
   setupSkill: "pylon-setup"
 });
 
-// ../mcp-connector-provider/src/providers/railway.ts
+// ../../mcp-connector-provider/src/providers/railway.ts
 var railway2 = defineMcpPreset({
   id: "railway",
   label: "Railway",
@@ -29305,7 +24743,7 @@ var railway2 = defineMcpPreset({
   helpText: "Manage Railway projects, services, deployments, variables, and logs."
 });
 
-// ../mcp-connector-provider/src/providers/render.ts
+// ../../mcp-connector-provider/src/providers/render.ts
 var render2 = defineMcpPreset({
   id: "render",
   label: "Render",
@@ -29336,7 +24774,7 @@ var render2 = defineMcpPreset({
   normalizeHeaders: normalizeRenderHeaders
 });
 
-// ../mcp-connector-provider/src/providers/rentahuman.ts
+// ../../mcp-connector-provider/src/providers/rentahuman.ts
 var rentahuman2 = defineMcpPreset({
   id: "rentahuman",
   label: "RentAHuman",
@@ -29369,7 +24807,7 @@ var rentahuman2 = defineMcpPreset({
   setupSkill: "rentahuman-setup"
 });
 
-// ../mcp-connector-provider/src/providers/resend.ts
+// ../../mcp-connector-provider/src/providers/resend.ts
 var resend2 = defineMcpPreset({
   id: "resend",
   label: "Resend",
@@ -29402,7 +24840,7 @@ var resend2 = defineMcpPreset({
   setupSkill: "resend-setup"
 });
 
-// ../mcp-connector-provider/src/providers/respan.ts
+// ../../mcp-connector-provider/src/providers/respan.ts
 var respan2 = defineMcpPreset({
   id: "respan",
   label: "Respan",
@@ -29435,7 +24873,81 @@ var respan2 = defineMcpPreset({
   setupSkill: "respan-setup"
 });
 
-// ../mcp-connector-provider/src/providers/salesforce.ts
+// ../../mcp-connector-provider/src/providers/rivet.ts
+var rivet2 = defineMcpPreset({
+  id: "rivet",
+  label: "Rivet",
+  iconKey: "rivet",
+  defaultServerUrl: "https://mcp.rivet.dev/mcp",
+  transport: "streamable-http",
+  authMode: "oauth",
+  availability: "enabled",
+  oauth: {
+    providerConfigKey: "rivet",
+    callbackPathSegment: "rivet",
+    authorizationUrl: "https://cloud-api.rivet.dev/api/auth/oauth2/authorize",
+    tokenUrl: "https://cloud-api.rivet.dev/api/auth/oauth2/token",
+    resourceUrl: "https://mcp.rivet.dev/mcp",
+    dynamicClientRegistration: {
+      registrationEndpoint: "https://cloud-api.rivet.dev/api/auth/oauth2/register",
+      tokenEndpointAuthMethod: "none"
+    }
+  },
+  scopesUserSelectable: false,
+  getAvailableScopes: async () => [
+    { value: "openid", required: true },
+    { value: "offline_access", required: true },
+    {
+      value: "rivet:cloud:read",
+      label: "Read cloud resources",
+      description: "Read Rivet compute pools, servers, and metrics."
+    },
+    {
+      value: "rivet:cloud:write",
+      label: "Manage cloud resources",
+      description: "Manage Rivet compute pools and server configuration."
+    },
+    {
+      value: "rivet:actors:read",
+      label: "Read actors",
+      description: "List actors, inspect actor lifecycles, and view actor status."
+    },
+    {
+      value: "rivet:actors:write",
+      label: "Manage actors",
+      description: "Create and destroy actors and invoke actor actions."
+    },
+    {
+      value: "rivet:inspector:read",
+      label: "Read inspector",
+      description: "Inspect actor state, connections, queue, workflow, and database tabs."
+    },
+    {
+      value: "rivet:inspector:write",
+      label: "Manage inspector",
+      description: "Perform actions in the Rivet Actor Inspector."
+    }
+  ],
+  getUrlConfiguration: async () => ({
+    docsUrl: "https://rivet.dev/docs/mcp#scope-hosted-connections",
+    instructions: "Copy the hosted MCP server URL below. Optional: to narrow access to a specific organization, project, or namespace, append query parameters (for example ?organization=ORG&project=PROJECT&namespace=NS), then copy the edited URL.",
+    defaultServerUrl: "https://mcp.rivet.dev/mcp",
+    optional: true
+  }),
+  capabilityOverrides: {
+    allowWriteTools: true
+  },
+  skill: "rivet",
+  setupSkill: "rivet-setup",
+  evidenceHints: [
+    "rivet.dev links, @rivet-dev packages, or rivet.json in the repository",
+    "RIVET_* environment variables or Rivet Actor framework imports",
+    "Documentation or runbooks referencing Rivet actors, agentOS, or compute pools"
+  ],
+  helpText: "Inspect actors, call actions, view the Actor Inspector, and manage compute pools."
+});
+
+// ../../mcp-connector-provider/src/providers/salesforce.ts
 var salesforce2 = defineMcpPreset({
   id: "salesforce",
   label: "Salesforce",
@@ -29490,7 +25002,7 @@ var salesforce2 = defineMcpPreset({
   helpText: "Query Salesforce data and metadata, and run Apex invocable actions and Flows exposed by a hosted MCP server. Coming soon — a Salesforce admin registers an External Client App in your org and Sazabi provisions its credentials, so it isn't self-serve connectable yet."
 });
 
-// ../mcp-connector-provider/src/providers/secureframe.ts
+// ../../mcp-connector-provider/src/providers/secureframe.ts
 var secureframe2 = defineMcpPreset({
   id: "secureframe",
   label: "Secureframe",
@@ -29548,7 +25060,7 @@ var secureframe2 = defineMcpPreset({
   setupSkill: "secureframe-setup"
 });
 
-// ../mcp-connector-provider/src/providers/sentry.ts
+// ../../mcp-connector-provider/src/providers/sentry.ts
 var sentry2 = defineMcpPreset({
   id: "sentry",
   label: "Sentry",
@@ -29593,7 +25105,7 @@ var sentry2 = defineMcpPreset({
   helpText: "Browse Sentry organizations, teams, projects, and events."
 });
 
-// ../mcp-connector-provider/src/providers/signoz.ts
+// ../../mcp-connector-provider/src/providers/signoz.ts
 var signoz2 = defineMcpPreset({
   id: "signoz",
   label: "SigNoz",
@@ -29631,7 +25143,7 @@ var signoz2 = defineMcpPreset({
   normalizeHeaders: normalizeSignozHeaders
 });
 
-// ../mcp-connector-provider/src/providers/slack.ts
+// ../../mcp-connector-provider/src/providers/slack.ts
 var slack2 = defineMcpPreset({
   id: "slack",
   label: "Slack",
@@ -29671,7 +25183,7 @@ var slack2 = defineMcpPreset({
   setupSkill: "slack-setup"
 });
 
-// ../mcp-connector-provider/src/providers/stripe.ts
+// ../../mcp-connector-provider/src/providers/stripe.ts
 var stripe2 = defineMcpPreset({
   id: "stripe",
   label: "Stripe MCP",
@@ -29713,7 +25225,7 @@ var stripe2 = defineMcpPreset({
   helpText: "Query and manage Stripe payments, customers, and billing."
 });
 
-// ../mcp-connector-provider/src/providers/supabase.ts
+// ../../mcp-connector-provider/src/providers/supabase.ts
 var supabase2 = defineMcpPreset({
   id: "supabase",
   label: "Supabase",
@@ -29773,7 +25285,7 @@ var supabase2 = defineMcpPreset({
   setupSkill: "supabase-setup"
 });
 
-// ../mcp-connector-provider/src/providers/superhuman.ts
+// ../../mcp-connector-provider/src/providers/superhuman.ts
 var superhuman2 = defineMcpPreset({
   id: "superhuman",
   label: "Superhuman",
@@ -29811,7 +25323,7 @@ var superhuman2 = defineMcpPreset({
   helpText: "Search, draft, send, and triage emails in Superhuman Mail."
 });
 
-// ../mcp-connector-provider/src/providers/the-context-company.ts
+// ../../mcp-connector-provider/src/providers/the-context-company.ts
 var theContextCompany2 = defineMcpPreset({
   id: "the-context-company",
   label: "The Context Company",
@@ -29842,7 +25354,7 @@ var theContextCompany2 = defineMcpPreset({
   setupSkill: "the-context-company-setup"
 });
 
-// ../mcp-connector-provider/src/providers/vercel.ts
+// ../../mcp-connector-provider/src/providers/vercel.ts
 var vercel2 = defineMcpPreset({
   id: "vercel",
   label: "Vercel",
@@ -29879,7 +25391,7 @@ var vercel2 = defineMcpPreset({
   helpText: "Manage Vercel projects, deployments, and access Vercel platform documentation. Coming soon — Vercel's hosted MCP only authorizes allowlisted clients and Sazabi is pending approval, so it isn't connectable yet."
 });
 
-// ../mcp-connector-provider/src/providers/x.ts
+// ../../mcp-connector-provider/src/providers/x.ts
 var x2 = defineMcpPreset({
   id: "x",
   label: "X",
@@ -29940,7 +25452,7 @@ var x2 = defineMcpPreset({
   setupSkill: "x-setup"
 });
 
-// ../mcp-connector-provider/src/providers/index.ts
+// ../../mcp-connector-provider/src/providers/index.ts
 var MCP_PROVIDERS = [
   supabase2,
   datadog2,
@@ -29994,6 +25506,7 @@ var MCP_PROVIDERS = [
   render2,
   resend2,
   respan2,
+  rivet2,
   salesforce2,
   secureframe2,
   sentry2,
@@ -30006,59 +25519,59 @@ var MCP_PROVIDERS = [
   x2
 ];
 var mcpProviderById = new Map(MCP_PROVIDERS.map((provider) => [provider.id, provider]));
-// ../public-api-contracts/src/mcp-connectors.ts
-import { z as z20 } from "zod";
+// ../../contracts/public-api/src/mcp-connectors.ts
+import { z as z24 } from "zod";
 var MCP_CONNECTOR_INSTALL_STATUS_VALUES = [
   "configured",
   "authorizing",
   "connected",
   "error"
 ];
-var McpConnectorInstallStatusEnum = z20.enum(MCP_CONNECTOR_INSTALL_STATUS_VALUES);
+var McpConnectorInstallStatusEnum = z24.enum(MCP_CONNECTOR_INSTALL_STATUS_VALUES);
 var MCP_CONNECTOR_SOURCE_VALUES = ["preset", "custom"];
-var McpConnectorSourceEnum = z20.enum(MCP_CONNECTOR_SOURCE_VALUES);
+var McpConnectorSourceEnum = z24.enum(MCP_CONNECTOR_SOURCE_VALUES);
 var MCP_CONNECTOR_TRANSPORT_VALUES = [
   "streamable-http",
   "sse"
 ];
-var McpConnectorTransportEnum = z20.enum(MCP_CONNECTOR_TRANSPORT_VALUES);
+var McpConnectorTransportEnum = z24.enum(MCP_CONNECTOR_TRANSPORT_VALUES);
 var MCP_CONNECTOR_AUTH_MODE_VALUES = [
   "none",
   "headers",
   "oauth",
   "aws-sigv4"
 ];
-var McpConnectorAuthModeEnum = z20.enum(MCP_CONNECTOR_AUTH_MODE_VALUES);
-var McpConnectorSchema = z20.object({
-  connectionId: z20.string().uuid().describe("Connection ID."),
-  connectionKey: z20.string().describe("Stable key used to reference this connector in tool calls."),
-  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
-  displayName: z20.string().describe("Human-readable connector name."),
+var McpConnectorAuthModeEnum = z24.enum(MCP_CONNECTOR_AUTH_MODE_VALUES);
+var McpConnectorSchema = z24.object({
+  connectionId: z24.string().uuid().describe("Connection ID."),
+  connectionKey: z24.string().describe("Stable key used to reference this connector in tool calls."),
+  providerId: z24.string().describe('Provider identifier, e.g. "linear".'),
+  displayName: z24.string().describe("Human-readable connector name."),
   source: McpConnectorSourceEnum.describe("Whether the connector is a built-in preset or a custom server."),
   installStatus: McpConnectorInstallStatusEnum.describe("Current connection lifecycle status."),
   authMode: McpConnectorAuthModeEnum.describe("Authentication mode."),
   transport: McpConnectorTransportEnum.describe("Transport protocol."),
-  serverUrl: z20.string().describe("MCP server URL."),
-  readOnly: z20.boolean().describe("Whether the connector is restricted to read-only tools."),
+  serverUrl: z24.string().describe("MCP server URL."),
+  readOnly: z24.boolean().describe("Whether the connector is restricted to read-only tools."),
   management: McpConnectorManagementSchema.describe("Lifecycle owner and supported connector mutations."),
-  enabledToolCount: z20.number().int().nonnegative().describe("Number of tools enabled and available for this connector."),
-  connectedAt: z20.string().datetime().nullable().describe("When the connector last became connected, if ever."),
-  createdAt: z20.string().datetime(),
-  updatedAt: z20.string().datetime()
+  enabledToolCount: z24.number().int().nonnegative().describe("Number of tools enabled and available for this connector."),
+  connectedAt: z24.string().datetime().nullable().describe("When the connector last became connected, if ever."),
+  createdAt: z24.string().datetime(),
+  updatedAt: z24.string().datetime()
 });
-var McpConnectorToolSchema = z20.object({
-  name: z20.string().describe("Tool name as invoked."),
-  title: z20.string().describe("Human-readable tool title."),
-  description: z20.string().describe("Tool description."),
-  isReadOnly: z20.boolean().describe("Whether the tool is considered read-only."),
-  enabled: z20.boolean().describe("Whether the tool is enabled and available given the connector config.")
+var McpConnectorToolSchema = z24.object({
+  name: z24.string().describe("Tool name as invoked."),
+  title: z24.string().describe("Human-readable tool title."),
+  description: z24.string().describe("Tool description."),
+  isReadOnly: z24.boolean().describe("Whether the tool is considered read-only."),
+  enabled: z24.boolean().describe("Whether the tool is enabled and available given the connector config.")
 });
-var ListMcpConnectorsInputSchema = z20.object({
-  projectId: z20.string().uuid().optional().describe("Project to list connectors for. Auto-filled from SDK context when omitted."),
-  connectedOnly: z20.union([z20.boolean(), z20.stringbool()]).optional().describe("When true, only return connectors that are connected.")
+var ListMcpConnectorsInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project to list connectors for. Auto-filled from SDK context when omitted."),
+  connectedOnly: z24.union([z24.boolean(), z24.stringbool()]).optional().describe("When true, only return connectors that are connected.")
 });
-var ListMcpConnectorsOutputSchema = z20.object({
-  connectors: z20.array(McpConnectorSchema)
+var ListMcpConnectorsOutputSchema = z24.object({
+  connectors: z24.array(McpConnectorSchema)
 });
 var listMcpConnectors = defineOperation({
   operationId: "mcpConnectors.list",
@@ -30075,11 +25588,11 @@ var listMcpConnectors = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetMcpConnectorInputSchema = z20.object({
-  connectionId: z20.string().uuid().describe("Connection ID to fetch."),
-  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
+var GetMcpConnectorInputSchema = z24.object({
+  connectionId: z24.string().uuid().describe("Connection ID to fetch."),
+  projectId: z24.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
 });
-var GetMcpConnectorOutputSchema = z20.object({
+var GetMcpConnectorOutputSchema = z24.object({
   connector: McpConnectorSchema
 });
 var getMcpConnector = defineOperation({
@@ -30097,13 +25610,13 @@ var getMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetMcpConnectorDetailsInputSchema = z20.object({
-  connectionId: z20.string().uuid().describe("Connection ID to inspect."),
-  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
+var GetMcpConnectorDetailsInputSchema = z24.object({
+  connectionId: z24.string().uuid().describe("Connection ID to inspect."),
+  projectId: z24.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
 });
-var GetMcpConnectorDetailsOutputSchema = z20.object({
+var GetMcpConnectorDetailsOutputSchema = z24.object({
   connector: McpConnectorSchema,
-  tools: z20.array(McpConnectorToolSchema)
+  tools: z24.array(McpConnectorToolSchema)
 });
 var getMcpConnectorDetails = defineOperation({
   operationId: "mcpConnectors.details",
@@ -30120,16 +25633,16 @@ var getMcpConnectorDetails = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var McpProviderInfoSchema = z20.object({
-  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
-  label: z20.string().describe("Human-readable provider name."),
+var McpProviderInfoSchema = z24.object({
+  providerId: z24.string().describe('Provider identifier, e.g. "linear".'),
+  label: z24.string().describe("Human-readable provider name."),
   authMode: McpConnectorAuthModeEnum.describe("Authentication mode."),
-  availability: z20.enum(MCP_PROVIDER_AVAILABILITY_VALUES).describe("Whether the provider is enabled or coming soon."),
-  setupSkill: z20.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
+  availability: z24.enum(MCP_PROVIDER_AVAILABILITY_VALUES).describe("Whether the provider is enabled or coming soon."),
+  setupSkill: z24.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
 });
-var ListMcpProvidersInputSchema = z20.object({});
-var ListMcpProvidersOutputSchema = z20.object({
-  providers: z20.array(McpProviderInfoSchema)
+var ListMcpProvidersInputSchema = z24.object({});
+var ListMcpProvidersOutputSchema = z24.object({
+  providers: z24.array(McpProviderInfoSchema)
 });
 var listMcpProviders2 = defineOperation({
   operationId: "mcpConnectors.listProviders",
@@ -30146,29 +25659,29 @@ var listMcpProviders2 = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var McpConnectorIndexEntrySchema = z20.object({
-  connectionKey: z20.string().describe("Stable key used to call this connector."),
-  displayName: z20.string().describe("Human-readable connector name."),
-  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
-  toolCount: z20.number().int().nonnegative().describe("Number of executable tools on this connector.")
+var McpConnectorIndexEntrySchema = z24.object({
+  connectionKey: z24.string().describe("Stable key used to call this connector."),
+  displayName: z24.string().describe("Human-readable connector name."),
+  providerId: z24.string().describe('Provider identifier, e.g. "linear".'),
+  toolCount: z24.number().int().nonnegative().describe("Number of executable tools on this connector.")
 });
-var McpConnectorToolSearchHitSchema = z20.object({
-  connectionKey: z20.string().describe("Connector that exposes this tool."),
-  toolName: z20.string().describe("Tool name as invoked."),
-  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
-  displayName: z20.string().describe("Human-readable connector name."),
-  isReadOnly: z20.boolean().describe("Whether the tool is considered read-only."),
-  description: z20.string().describe("Tool description from the stored snapshot."),
-  score: z20.number().describe("BM25 rank score. Zero when enumerating a namespace."),
-  inputSchema: z20.record(z20.string(), z20.unknown()).optional().describe("JSON Schema for the tool's arguments, when requested.")
+var McpConnectorToolSearchHitSchema = z24.object({
+  connectionKey: z24.string().describe("Connector that exposes this tool."),
+  toolName: z24.string().describe("Tool name as invoked."),
+  providerId: z24.string().describe('Provider identifier, e.g. "linear".'),
+  displayName: z24.string().describe("Human-readable connector name."),
+  isReadOnly: z24.boolean().describe("Whether the tool is considered read-only."),
+  description: z24.string().describe("Tool description from the stored snapshot."),
+  score: z24.number().describe("BM25 rank score. Zero when enumerating a namespace."),
+  inputSchema: z24.record(z24.string(), z24.unknown()).optional().describe("JSON Schema for the tool's arguments, when requested.")
 });
-var SearchMcpConnectorToolsInputSchema = z20.object({
-  projectId: z20.string().uuid().optional().describe("Project to search connectors in. Auto-filled from SDK context when omitted."),
-  query: z20.string().optional().describe("Free-text query over tool names, titles, connector keys, and descriptions. Omit or empty to list connectors, or to enumerate one connector when namespace is set."),
-  namespace: z20.string().min(1).optional().describe("Restrict results to one connectionKey or providerId."),
-  limit: z20.coerce.number().int().min(1).max(100).default(10).describe("Maximum number of connectors or tool hits to return."),
-  offset: z20.coerce.number().int().min(0).default(0).describe("Number of connectors or tool hits to skip."),
-  includeInputSchema: z20.union([z20.boolean(), z20.stringbool()]).optional().describe("Load one exact tool's inputSchema. Requires a connectionKey namespace and non-empty query; accepts either toolName or the hit's copy-paste name.")
+var SearchMcpConnectorToolsInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project to search connectors in. Auto-filled from SDK context when omitted."),
+  query: z24.string().optional().describe("Free-text query over tool names, titles, connector keys, and descriptions. Omit or empty to list connectors, or to enumerate one connector when namespace is set."),
+  namespace: z24.string().min(1).optional().describe("Restrict results to one connectionKey or providerId."),
+  limit: z24.coerce.number().int().min(1).max(100).default(10).describe("Maximum number of connectors or tool hits to return."),
+  offset: z24.coerce.number().int().min(0).default(0).describe("Number of connectors or tool hits to skip."),
+  includeInputSchema: z24.union([z24.boolean(), z24.stringbool()]).optional().describe("Load one exact tool's inputSchema. Requires a connectionKey namespace and non-empty query; accepts either toolName or the hit's copy-paste name.")
 }).superRefine((input, ctx) => {
   if (input.includeInputSchema === true && (!input.namespace?.trim() || !input.query?.trim())) {
     ctx.addIssue({
@@ -30178,11 +25691,11 @@ var SearchMcpConnectorToolsInputSchema = z20.object({
     });
   }
 });
-var SearchMcpConnectorToolsOutputSchema = z20.object({
-  kind: z20.enum(["connectors", "tools"]).describe("connectors when the query is empty and no namespace is set; tools otherwise."),
-  total: z20.number().int().nonnegative().describe("Total matches before limit and offset."),
-  connectors: z20.array(McpConnectorIndexEntrySchema).describe("Connector index. Empty when kind is tools."),
-  tools: z20.array(McpConnectorToolSearchHitSchema).describe("Ranked or enumerated tool hits. Empty when kind is connectors.")
+var SearchMcpConnectorToolsOutputSchema = z24.object({
+  kind: z24.enum(["connectors", "tools"]).describe("connectors when the query is empty and no namespace is set; tools otherwise."),
+  total: z24.number().int().nonnegative().describe("Total matches before limit and offset."),
+  connectors: z24.array(McpConnectorIndexEntrySchema).describe("Connector index. Empty when kind is tools."),
+  tools: z24.array(McpConnectorToolSearchHitSchema).describe("Ranked or enumerated tool hits. Empty when kind is connectors.")
 });
 var searchMcpConnectorTools = defineOperation({
   operationId: "mcpConnectors.search",
@@ -30199,20 +25712,20 @@ var searchMcpConnectorTools = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DescribeMcpConnectorToolInputSchema = z20.object({
-  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  connectionKey: z20.string().min(1).describe("Connector key from search or mcpConnectors.list."),
-  toolName: z20.string().min(1).describe("Tool name as invoked.")
+var DescribeMcpConnectorToolInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  connectionKey: z24.string().min(1).describe("Connector key from search or mcpConnectors.list."),
+  toolName: z24.string().min(1).describe("Tool name as invoked.")
 });
-var DescribeMcpConnectorToolOutputSchema = z20.object({
-  connectionKey: z20.string().describe("Connector that exposes this tool."),
-  toolName: z20.string().describe("Tool name as invoked."),
-  providerId: z20.string().describe('Provider identifier, e.g. "linear".'),
-  displayName: z20.string().describe("Human-readable connector name."),
-  title: z20.string().describe("Human-readable tool title."),
-  description: z20.string().describe("Tool description from the stored snapshot."),
-  isReadOnly: z20.boolean().describe("Whether the tool is considered read-only."),
-  inputSchema: z20.record(z20.string(), z20.unknown()).describe("JSON Schema for the tool's arguments.")
+var DescribeMcpConnectorToolOutputSchema = z24.object({
+  connectionKey: z24.string().describe("Connector that exposes this tool."),
+  toolName: z24.string().describe("Tool name as invoked."),
+  providerId: z24.string().describe('Provider identifier, e.g. "linear".'),
+  displayName: z24.string().describe("Human-readable connector name."),
+  title: z24.string().describe("Human-readable tool title."),
+  description: z24.string().describe("Tool description from the stored snapshot."),
+  isReadOnly: z24.boolean().describe("Whether the tool is considered read-only."),
+  inputSchema: z24.record(z24.string(), z24.unknown()).describe("JSON Schema for the tool's arguments.")
 });
 var describeMcpConnectorTool = defineOperation({
   operationId: "mcpConnectors.describe",
@@ -30229,26 +25742,26 @@ var describeMcpConnectorTool = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var CallMcpConnectorToolInputSchema = z20.object({
-  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  connectionKey: z20.string().min(1).describe("Connector key from search or mcpConnectors.list."),
-  toolName: z20.string().min(1).describe("Tool name as invoked."),
-  arguments: z20.record(z20.string(), z20.unknown()).optional().describe("Arguments matching the tool's input schema.")
+var CallMcpConnectorToolInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  connectionKey: z24.string().min(1).describe("Connector key from search or mcpConnectors.list."),
+  toolName: z24.string().min(1).describe("Tool name as invoked."),
+  arguments: z24.record(z24.string(), z24.unknown()).optional().describe("Arguments matching the tool's input schema.")
 });
-var CallMcpConnectorToolOutputSchema = z20.discriminatedUnion("ok", [
-  z20.object({
-    ok: z20.literal(true),
-    connectionKey: z20.string().describe("Connector that ran the tool."),
-    toolName: z20.string().describe("Tool name as invoked."),
-    result: z20.unknown().describe("Vendor tool result payload."),
-    structuredContent: z20.unknown().optional().describe("Structured content from the vendor when present."),
-    content: z20.array(z20.record(z20.string(), z20.unknown())).describe("Raw MCP content parts from the vendor."),
-    text: z20.string().nullable().describe("Concatenated text content, if any.")
+var CallMcpConnectorToolOutputSchema = z24.discriminatedUnion("ok", [
+  z24.object({
+    ok: z24.literal(true),
+    connectionKey: z24.string().describe("Connector that ran the tool."),
+    toolName: z24.string().describe("Tool name as invoked."),
+    result: z24.unknown().describe("Vendor tool result payload."),
+    structuredContent: z24.unknown().optional().describe("Structured content from the vendor when present."),
+    content: z24.array(z24.record(z24.string(), z24.unknown())).describe("Raw MCP content parts from the vendor."),
+    text: z24.string().nullable().describe("Concatenated text content, if any.")
   }),
-  z20.object({
-    ok: z20.literal(false),
-    code: z20.enum(["TOOL_NOT_ENABLED", "READ_ONLY", "MCP_ERROR"]).describe("Why the tool did not run."),
-    message: z20.string().describe("Caller-facing error message.")
+  z24.object({
+    ok: z24.literal(false),
+    code: z24.enum(["TOOL_NOT_ENABLED", "READ_ONLY", "MCP_ERROR"]).describe("Why the tool did not run."),
+    message: z24.string().describe("Caller-facing error message.")
   })
 ]);
 var callMcpConnectorTool = defineOperation({
@@ -30266,27 +25779,27 @@ var callMcpConnectorTool = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var McpConnectorHeaderSchema = z20.object({
-  id: z20.string().min(1).describe("Stable ID for this header (must be unique within the connector)."),
-  name: z20.string().trim().min(1).describe("HTTP header name."),
-  value: z20.string().min(1).describe("HTTP header value (passed verbatim).")
+var McpConnectorHeaderSchema = z24.object({
+  id: z24.string().min(1).describe("Stable ID for this header (must be unique within the connector)."),
+  name: z24.string().trim().min(1).describe("HTTP header name."),
+  value: z24.string().min(1).describe("HTTP header value (passed verbatim).")
 });
-var McpConnectorAwsSigV4Schema = z20.object({
-  accessKeyId: z20.string().trim().min(1).describe("AWS access key ID."),
-  secretAccessKey: z20.string().min(1).describe("AWS secret access key."),
-  sessionToken: z20.string().min(1).optional().describe("Optional session token for temporary credentials."),
-  region: z20.string().trim().min(1).describe("AWS region.")
+var McpConnectorAwsSigV4Schema = z24.object({
+  accessKeyId: z24.string().trim().min(1).describe("AWS access key ID."),
+  secretAccessKey: z24.string().min(1).describe("AWS secret access key."),
+  sessionToken: z24.string().min(1).optional().describe("Optional session token for temporary credentials."),
+  region: z24.string().trim().min(1).describe("AWS region.")
 });
-var CreateMcpConnectorInputSchema = z20.object({
-  projectId: z20.string().uuid().optional().describe("Project to create the connector in. Auto-filled from SDK context when omitted."),
-  serverUrl: z20.string().url().describe("MCP server URL (must be https)."),
+var CreateMcpConnectorInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project to create the connector in. Auto-filled from SDK context when omitted."),
+  serverUrl: z24.string().url().describe("MCP server URL (must be https)."),
   transport: McpConnectorTransportEnum.describe("Transport protocol."),
-  headers: z20.array(McpConnectorHeaderSchema).optional().describe("HTTP headers to send with each request."),
+  headers: z24.array(McpConnectorHeaderSchema).optional().describe("HTTP headers to send with each request."),
   awsSigV4: McpConnectorAwsSigV4Schema.optional().describe("AWS SigV4 credentials for AWS MCP servers."),
-  providerId: z20.string().min(1).describe("Built-in preset provider ID (for example, linear or datadog)."),
-  readOnly: z20.boolean().optional().describe("Restrict the connector to read-only tools. Defaults to false.")
+  providerId: z24.string().min(1).describe("Built-in preset provider ID (for example, linear or datadog)."),
+  readOnly: z24.boolean().optional().describe("Restrict the connector to read-only tools. Defaults to false.")
 });
-var CreateMcpConnectorOutputSchema = z20.object({
+var CreateMcpConnectorOutputSchema = z24.object({
   connector: McpConnectorSchema
 });
 var createMcpConnector = defineOperation({
@@ -30305,15 +25818,15 @@ var createMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpdateMcpConnectorInputSchema = z20.object({
-  connectionId: z20.string().uuid().describe("Connection ID to update."),
-  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  serverUrl: z20.string().url().optional().describe("New MCP server URL."),
+var UpdateMcpConnectorInputSchema = z24.object({
+  connectionId: z24.string().uuid().describe("Connection ID to update."),
+  projectId: z24.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  serverUrl: z24.string().url().optional().describe("New MCP server URL."),
   transport: McpConnectorTransportEnum.optional().describe("New transport protocol."),
-  headers: z20.array(McpConnectorHeaderSchema).optional().describe("Complete replacement header set. Replaces all existing headers."),
+  headers: z24.array(McpConnectorHeaderSchema).optional().describe("Complete replacement header set. Replaces all existing headers."),
   awsSigV4: McpConnectorAwsSigV4Schema.optional().describe("Replacement AWS SigV4 credentials. Mutually exclusive with headers.")
 });
-var UpdateMcpConnectorOutputSchema = z20.object({
+var UpdateMcpConnectorOutputSchema = z24.object({
   connector: McpConnectorSchema
 });
 var updateMcpConnector = defineOperation({
@@ -30331,11 +25844,11 @@ var updateMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DisconnectMcpConnectorInputSchema = z20.object({
-  connectionId: z20.string().uuid().describe("Connection ID to disconnect."),
-  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
+var DisconnectMcpConnectorInputSchema = z24.object({
+  connectionId: z24.string().uuid().describe("Connection ID to disconnect."),
+  projectId: z24.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted.")
 });
-var DisconnectMcpConnectorOutputSchema = z20.void();
+var DisconnectMcpConnectorOutputSchema = z24.void();
 var disconnectMcpConnector = defineOperation({
   operationId: "mcpConnectors.disconnect",
   summary: "Disconnect an MCP connector",
@@ -30352,12 +25865,12 @@ var disconnectMcpConnector = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SetMcpConnectorReadOnlyInputSchema = z20.object({
-  connectionId: z20.string().uuid().describe("Connection ID to update."),
-  projectId: z20.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
-  readOnly: z20.boolean().describe("True to restrict to read-only tools; false to allow all enabled tools.")
+var SetMcpConnectorReadOnlyInputSchema = z24.object({
+  connectionId: z24.string().uuid().describe("Connection ID to update."),
+  projectId: z24.string().uuid().optional().describe("Project the connector belongs to. Auto-filled from SDK context when omitted."),
+  readOnly: z24.boolean().describe("True to restrict to read-only tools; false to allow all enabled tools.")
 });
-var SetMcpConnectorReadOnlyOutputSchema = z20.object({
+var SetMcpConnectorReadOnlyOutputSchema = z24.object({
   connector: McpConnectorSchema
 });
 var setMcpConnectorReadOnly = defineOperation({
@@ -30375,18 +25888,18 @@ var setMcpConnectorReadOnly = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var BeginMcpOAuthInstallInputSchema = z20.object({
-  projectId: z20.string().uuid().optional().describe("Project to install into. Auto-filled from SDK context when omitted."),
-  providerId: z20.string().min(1).describe('Provider ID to install, e.g. "linear".'),
-  requestedScopes: z20.array(z20.string()).optional().describe("Scopes to request. Defaults to the provider's recommended scope set."),
-  serverUrl: z20.string().url().optional().describe("Server URL for multi-region providers; defaults to the provider's primary server."),
-  readOnly: z20.boolean().optional().describe("Restrict the connector to read-only tools after install. Defaults to false."),
-  returnTo: z20.string().optional().describe("Path to redirect the user to after OAuth completes.")
+var BeginMcpOAuthInstallInputSchema = z24.object({
+  projectId: z24.string().uuid().optional().describe("Project to install into. Auto-filled from SDK context when omitted."),
+  providerId: z24.string().min(1).describe('Provider ID to install, e.g. "linear".'),
+  requestedScopes: z24.array(z24.string()).optional().describe("Scopes to request. Defaults to the provider's recommended scope set."),
+  serverUrl: z24.string().url().optional().describe("Server URL for multi-region providers; defaults to the provider's primary server."),
+  readOnly: z24.boolean().optional().describe("Restrict the connector to read-only tools after install. Defaults to false."),
+  returnTo: z24.string().optional().describe("Path to redirect the user to after OAuth completes.")
 });
-var BeginMcpOAuthInstallOutputSchema = z20.object({
-  authorizationUrl: z20.string().describe("Authorization URL to open in the user's browser."),
-  connectionId: z20.string().uuid().describe("Connection ID to poll for completion via getMcpOAuthInstallAttempt."),
-  expiresAt: z20.string().datetime().describe("When the OAuth authorization attempt expires.")
+var BeginMcpOAuthInstallOutputSchema = z24.object({
+  authorizationUrl: z24.string().describe("Authorization URL to open in the user's browser."),
+  connectionId: z24.string().uuid().describe("Connection ID to poll for completion via getMcpOAuthInstallAttempt."),
+  expiresAt: z24.string().datetime().describe("When the OAuth authorization attempt expires.")
 });
 var beginMcpOAuthInstall = defineOperation({
   operationId: "mcpConnectors.beginOAuthInstall",
@@ -30404,12 +25917,12 @@ var beginMcpOAuthInstall = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetMcpOAuthInstallAttemptInputSchema = z20.object({
-  connectionId: z20.string().uuid().describe("Connection ID returned by beginMcpOAuthInstall."),
-  projectId: z20.string().uuid().optional().describe("Project the connection belongs to. Auto-filled from SDK context when omitted.")
+var GetMcpOAuthInstallAttemptInputSchema = z24.object({
+  connectionId: z24.string().uuid().describe("Connection ID returned by beginMcpOAuthInstall."),
+  projectId: z24.string().uuid().optional().describe("Project the connection belongs to. Auto-filled from SDK context when omitted.")
 });
-var GetMcpOAuthInstallAttemptOutputSchema = z20.object({
-  status: z20.enum(["authorizing", "connected", "error"]).describe("Current install status."),
+var GetMcpOAuthInstallAttemptOutputSchema = z24.object({
+  status: z24.enum(["authorizing", "connected", "error"]).describe("Current install status."),
   connector: McpConnectorSchema.optional().describe("Connector details once connected or in error state.")
 });
 var getMcpOAuthInstallAttempt = defineOperation({
@@ -30443,47 +25956,47 @@ var mcpConnectorsContract = {
   getOAuthInstallAttempt: getMcpOAuthInstallAttempt.contract
 };
 
-// ../public-api-contracts/src/me.ts
-import { z as z21 } from "zod";
-var OrganizationMembershipRoleSchema = z21.enum(["admin", "member"]);
-var AuthOrganizationSchema = z21.object({
-  id: z21.string().min(1),
-  name: z21.string(),
-  slug: z21.string(),
-  logo: z21.string().nullable().optional(),
+// ../../contracts/public-api/src/me.ts
+import { z as z25 } from "zod";
+var OrganizationMembershipRoleSchema = z25.enum(["admin", "member"]);
+var AuthOrganizationSchema = z25.object({
+  id: z25.string().min(1),
+  name: z25.string(),
+  slug: z25.string(),
+  logo: z25.string().nullable().optional(),
   role: OrganizationMembershipRoleSchema
 });
-var AuthUserSchema = z21.object({
-  id: z21.string().min(1),
-  name: z21.string().nullable(),
-  email: z21.string().email()
+var AuthUserSchema = z25.object({
+  id: z25.string().min(1),
+  name: z25.string().nullable(),
+  email: z25.string().email()
 });
-var UserMeSchema = z21.object({
-  credentialType: z21.literal("user"),
+var UserMeSchema = z25.object({
+  credentialType: z25.literal("user"),
   user: AuthUserSchema,
-  authorizedOrganizationId: z21.string().min(1).nullable(),
-  authorizedProjectId: z21.string().min(1).nullable(),
-  organizations: z21.array(AuthOrganizationSchema).describe("Organizations the user belongs to, including membership role.")
+  authorizedOrganizationId: z25.string().min(1).nullable(),
+  authorizedProjectId: z25.string().min(1).nullable(),
+  organizations: z25.array(AuthOrganizationSchema).describe("Organizations the user belongs to, including membership role.")
 });
-var SecretMeSchema = z21.object({
-  credentialType: z21.literal("secret"),
-  organization: z21.object({
-    id: z21.string().min(1),
-    name: z21.string(),
-    slug: z21.string(),
-    logo: z21.string().nullable().optional()
+var SecretMeSchema = z25.object({
+  credentialType: z25.literal("secret"),
+  organization: z25.object({
+    id: z25.string().min(1),
+    name: z25.string(),
+    slug: z25.string(),
+    logo: z25.string().nullable().optional()
   }),
-  keyName: z21.string()
+  keyName: z25.string()
 });
-var PartnerMeSchema = z21.object({
-  credentialType: z21.literal("partner"),
-  superorganization: z21.object({
-    id: z21.string().uuid(),
-    name: z21.string()
+var PartnerMeSchema = z25.object({
+  credentialType: z25.literal("partner"),
+  superorganization: z25.object({
+    id: z25.string().uuid(),
+    name: z25.string()
   })
 });
-var MeInputSchema = z21.object({});
-var MeOutputSchema = z21.discriminatedUnion("credentialType", [
+var MeInputSchema = z25.object({});
+var MeOutputSchema = z25.discriminatedUnion("credentialType", [
   UserMeSchema,
   SecretMeSchema,
   PartnerMeSchema
@@ -30505,53 +26018,53 @@ var me = defineOperation({
 });
 var meContract = me.contract;
 
-// ../public-api-contracts/src/members.ts
-import { z as z22 } from "zod";
-var OrganizationMemberSchema = z22.object({
-  membershipId: z22.string().min(1).describe("Organization membership record ID."),
-  userId: z22.string().min(1).describe("User ID for the organization member."),
-  name: z22.string().nullable().describe("Display name for the member, when available."),
-  email: z22.string().email().describe("Email address for the member."),
-  imageUrl: z22.string().nullable().describe("Profile image URL for the member, when available."),
+// ../../contracts/public-api/src/members.ts
+import { z as z26 } from "zod";
+var OrganizationMemberSchema = z26.object({
+  membershipId: z26.string().min(1).describe("Organization membership record ID."),
+  userId: z26.string().min(1).describe("User ID for the organization member."),
+  name: z26.string().nullable().describe("Display name for the member, when available."),
+  email: z26.string().email().describe("Email address for the member."),
+  imageUrl: z26.string().nullable().describe("Profile image URL for the member, when available."),
   role: OrganizationMembershipRoleSchema.describe("Organization role."),
-  createdAt: z22.string().datetime().describe("When the membership was created.")
+  createdAt: z26.string().datetime().describe("When the membership was created.")
 });
-var OrganizationInvitationSchema = z22.object({
-  id: z22.string().min(1).describe("Invitation ID."),
-  email: z22.string().email().describe("Invited email address."),
+var OrganizationInvitationSchema = z26.object({
+  id: z26.string().min(1).describe("Invitation ID."),
+  email: z26.string().email().describe("Invited email address."),
   role: OrganizationMembershipRoleSchema.describe("Role the invitee will receive when they accept."),
-  status: z22.string().min(1).describe('Invitation status (e.g. "pending").'),
-  createdAt: z22.string().datetime().describe("When the invitation was created."),
-  expiresAt: z22.string().datetime().describe("When the invitation expires.")
+  status: z26.string().min(1).describe('Invitation status (e.g. "pending").'),
+  createdAt: z26.string().datetime().describe("When the invitation was created."),
+  expiresAt: z26.string().datetime().describe("When the invitation expires.")
 });
-var MemberSelectorSchema = z22.string().min(1).describe("A user ID, or a URL-encoded email address, of the member.");
-var ListMembersInputSchema = z22.object({
-  organizationId: z22.string().min(1).optional().describe("Organization to list members for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
+var MemberSelectorSchema = z26.string().min(1).describe("A user ID, or a URL-encoded email address, of the member.");
+var ListMembersInputSchema = z26.object({
+  organizationId: z26.string().min(1).optional().describe("Organization to list members for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
-var ListMembersOutputSchema = z22.object({
-  members: z22.array(OrganizationMemberSchema).describe("Members visible within the selected organization.")
+var ListMembersOutputSchema = z26.object({
+  members: z26.array(OrganizationMemberSchema).describe("Members visible within the selected organization.")
 });
-var UpdateMemberRoleInputSchema = z22.object({
-  organizationId: z22.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+var UpdateMemberRoleInputSchema = z26.object({
+  organizationId: z26.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to update."),
   role: OrganizationMembershipRoleSchema.describe("Role to assign.")
 });
-var UpdateMemberRoleOutputSchema = z22.object({
+var UpdateMemberRoleOutputSchema = z26.object({
   member: OrganizationMemberSchema.describe("Updated organization member.")
 });
-var RemoveMemberInputSchema = z22.object({
-  params: z22.object({
+var RemoveMemberInputSchema = z26.object({
+  params: z26.object({
     member: MemberSelectorSchema.describe("User ID, or URL-encoded email address, of the member to remove.")
   }),
-  query: z22.object({
-    organizationId: z22.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
+  query: z26.object({
+    organizationId: z26.string().min(1).optional().describe("Organization containing the member. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RemoveMemberOutputSchema = z22.object({
-  removedUserId: z22.string().min(1).describe("User ID removed from the organization.")
+var RemoveMemberOutputSchema = z26.object({
+  removedUserId: z26.string().min(1).describe("User ID removed from the organization.")
 });
 var listMembers = defineOperation({
   operationId: "members.list",
@@ -30641,33 +26154,33 @@ var removeMember = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var InviteMemberInputSchema = z22.object({
-  organizationId: z22.string().min(1).optional().describe("Organization to invite into. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
-  email: z22.string().email().describe("Email address to invite."),
+var InviteMemberInputSchema = z26.object({
+  organizationId: z26.string().min(1).optional().describe("Organization to invite into. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  email: z26.string().email().describe("Email address to invite."),
   role: OrganizationMembershipRoleSchema.optional().default("member").describe('Role to grant on acceptance. Defaults to "member".')
 });
-var InviteMemberOutputSchema = z22.object({
+var InviteMemberOutputSchema = z26.object({
   invitation: OrganizationInvitationSchema.describe("The created pending invitation.")
 });
-var ListInvitationsInputSchema = z22.object({
-  organizationId: z22.string().min(1).optional().describe("Organization to list invitations for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
+var ListInvitationsInputSchema = z26.object({
+  organizationId: z26.string().min(1).optional().describe("Organization to list invitations for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
-var ListInvitationsOutputSchema = z22.object({
-  invitations: z22.array(OrganizationInvitationSchema).describe("Pending invitations visible within the selected organization.")
+var ListInvitationsOutputSchema = z26.object({
+  invitations: z26.array(OrganizationInvitationSchema).describe("Pending invitations visible within the selected organization.")
 });
-var RevokeInvitationInputSchema = z22.object({
-  params: z22.object({
-    invitationId: z22.string().min(1).describe("ID of the invitation to revoke.")
+var RevokeInvitationInputSchema = z26.object({
+  params: z26.object({
+    invitationId: z26.string().min(1).describe("ID of the invitation to revoke.")
   }),
-  query: z22.object({
-    organizationId: z22.string().min(1).optional().describe("Organization containing the invitation. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
+  query: z26.object({
+    organizationId: z26.string().min(1).optional().describe("Organization containing the invitation. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RevokeInvitationOutputSchema = z22.object({
-  revokedInvitationId: z22.string().min(1).describe("ID of the revoked invitation.")
+var RevokeInvitationOutputSchema = z26.object({
+  revokedInvitationId: z26.string().min(1).describe("ID of the revoked invitation.")
 });
 var inviteMember = defineOperation({
   operationId: "members.invite",
@@ -30765,57 +26278,57 @@ var membersContract = {
   revokeInvitation: revokeInvitation.contract
 };
 
-// ../public-api-contracts/src/memory.ts
-import { z as z23 } from "zod";
+// ../../contracts/public-api/src/memory.ts
+import { z as z27 } from "zod";
 var MEMORY_CURATED_KINDS = ["note", "runbook"];
 var MEMORY_KINDS = ["note", "runbook", "change"];
-var MemoryKindSchema = z23.enum(MEMORY_KINDS);
-var MemoryCuratedKindSchema = z23.enum(MEMORY_CURATED_KINDS);
-var MemoryPathSchema = z23.string().min(1).max(512).refine((value) => !value.startsWith("/"), {
+var MemoryKindSchema = z27.enum(MEMORY_KINDS);
+var MemoryCuratedKindSchema = z27.enum(MEMORY_CURATED_KINDS);
+var MemoryPathSchema = z27.string().min(1).max(512).refine((value) => !value.startsWith("/"), {
   message: "Path must be relative without a leading slash."
 }).describe("Relative memory path, for example AGENTS.md or notes/architecture.md.");
 var MEMORY_BODY_MAX_BYTES = 4194304;
-var MemoryBodySchema = z23.string().min(1).refine((value) => new TextEncoder().encode(value).length <= MEMORY_BODY_MAX_BYTES, {
+var MemoryBodySchema = z27.string().min(1).refine((value) => new TextEncoder().encode(value).length <= MEMORY_BODY_MAX_BYTES, {
   message: `Memory body must be at most ${MEMORY_BODY_MAX_BYTES} bytes (4 MiB).`
 }).describe("Document body stored in project memory.");
-var MemoryDurationSchema = z23.string().regex(/^(\d+)(s|m|h|d)$/u, "Duration must use s, m, h, or d units, for example 7d or 30m.").describe("Relative time window, for example 7d or 30m.");
+var MemoryDurationSchema = z27.string().regex(/^(\d+)(s|m|h|d)$/u, "Duration must use s, m, h, or d units, for example 7d or 30m.").describe("Relative time window, for example 7d or 30m.");
 var parseKindFilter = (value) => {
   const kinds = value.split(",").map((part) => part.trim()).filter(Boolean);
-  const parsed = z23.array(MemoryKindSchema).safeParse(kinds);
+  const parsed = z27.array(MemoryKindSchema).safeParse(kinds);
   if (!parsed.success) {
     throw new Error("Kind filter must be a comma-separated list of note, runbook, or change.");
   }
   return parsed.data;
 };
-var MemoryKindFilterSchema = z23.string().min(1).transform(parseKindFilter).describe("Comma-separated kinds, for example note,runbook.");
-var MemoryDocumentSchema = z23.object({
-  id: z23.string().uuid(),
-  projectId: z23.string().uuid(),
+var MemoryKindFilterSchema = z27.string().min(1).transform(parseKindFilter).describe("Comma-separated kinds, for example note,runbook.");
+var MemoryDocumentSchema = z27.object({
+  id: z27.string().uuid(),
+  projectId: z27.string().uuid(),
   kind: MemoryKindSchema,
-  managed: z23.boolean(),
-  path: z23.string().nullable(),
-  title: z23.string().nullable(),
-  contentHash: z23.string(),
-  attrs: z23.record(z23.string(), z23.unknown()),
-  createdAt: z23.string().datetime(),
-  updatedAt: z23.string().datetime()
+  managed: z27.boolean(),
+  path: z27.string().nullable(),
+  title: z27.string().nullable(),
+  contentHash: z27.string(),
+  attrs: z27.record(z27.string(), z27.unknown()),
+  createdAt: z27.string().datetime(),
+  updatedAt: z27.string().datetime()
 });
 var MemoryDocumentDetailSchema = MemoryDocumentSchema.extend({
   body: MemoryBodySchema
 });
-var PutProjectMemoryInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+var PutProjectMemoryInputSchema = z27.object({
+  projectId: z27.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
   path: MemoryPathSchema.describe("Relative path for the curated document."),
   body: MemoryBodySchema,
   kind: MemoryCuratedKindSchema.default("note").describe("Curated document kind. Only note and runbook may be written through the API."),
-  title: z23.string().max(500).optional().describe("Optional display title. Defaults to the path basename.")
+  title: z27.string().max(500).optional().describe("Optional display title. Defaults to the path basename.")
 });
-var PutProjectMemoryOutputSchema = z23.object({
+var PutProjectMemoryOutputSchema = z27.object({
   document: MemoryDocumentDetailSchema
 });
-var GetProjectMemoryInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
-  id: z23.string().uuid().optional().describe("Document id."),
+var GetProjectMemoryInputSchema = z27.object({
+  projectId: z27.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+  id: z27.string().uuid().optional().describe("Document id."),
   path: MemoryPathSchema.optional().describe("Relative curated path.")
 }).superRefine((value, ctx) => {
   const hasId = value.id !== undefined;
@@ -30827,55 +26340,55 @@ var GetProjectMemoryInputSchema = z23.object({
     });
   }
 });
-var GetProjectMemoryOutputSchema = z23.object({
+var GetProjectMemoryOutputSchema = z27.object({
   document: MemoryDocumentDetailSchema
 });
-var ListProjectMemoryInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project to list memory for. Auto-filled from CLI and SDK context when omitted."),
+var ListProjectMemoryInputSchema = z27.object({
+  projectId: z27.string().uuid().optional().describe("Project to list memory for. Auto-filled from CLI and SDK context when omitted."),
   kind: MemoryKindFilterSchema.optional(),
   since: MemoryDurationSchema.optional().describe("Only return documents updated within this window, for example 7d."),
-  service: z23.string().min(1).optional().describe("Filter to documents whose attrs.services contains this value."),
-  pathPrefix: z23.string().min(1).optional().describe("Filter to paths starting with this prefix."),
-  managed: z23.coerce.boolean().optional(),
-  cursor: z23.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  limit: z23.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of documents to return per page.")
+  service: z27.string().min(1).optional().describe("Filter to documents whose attrs.services contains this value."),
+  pathPrefix: z27.string().min(1).optional().describe("Filter to paths starting with this prefix."),
+  managed: z27.coerce.boolean().optional(),
+  cursor: z27.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  limit: z27.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of documents to return per page.")
 });
-var ListProjectMemoryOutputSchema = z23.object({
-  documents: z23.array(MemoryDocumentSchema),
-  nextCursor: z23.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListProjectMemoryOutputSchema = z27.object({
+  documents: z27.array(MemoryDocumentSchema),
+  nextCursor: z27.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var MemorySearchHitSchema = z23.object({
-  documentId: z23.string().uuid(),
+var MemorySearchHitSchema = z27.object({
+  documentId: z27.string().uuid(),
   kind: MemoryKindSchema,
-  managed: z23.boolean(),
-  path: z23.string().nullable(),
-  title: z23.string().nullable(),
-  snippet: z23.string(),
-  score: z23.number()
+  managed: z27.boolean(),
+  path: z27.string().nullable(),
+  title: z27.string().nullable(),
+  snippet: z27.string(),
+  score: z27.number()
 });
-var MemorySearchEmptyVerdictSchema = z23.object({
-  calibrated: z23.literal(true),
-  minScoreThreshold: z23.number(),
-  queryTerms: z23.array(z23.string()),
-  message: z23.string()
+var MemorySearchEmptyVerdictSchema = z27.object({
+  calibrated: z27.literal(true),
+  minScoreThreshold: z27.number(),
+  queryTerms: z27.array(z27.string()),
+  message: z27.string()
 });
-var SearchProjectMemoryInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project to search memory for. Auto-filled from CLI and SDK context when omitted."),
-  query: z23.string().trim().min(1).max(500).describe("Natural-language search query."),
+var SearchProjectMemoryInputSchema = z27.object({
+  projectId: z27.string().uuid().optional().describe("Project to search memory for. Auto-filled from CLI and SDK context when omitted."),
+  query: z27.string().trim().min(1).max(500).describe("Natural-language search query."),
   kind: MemoryKindFilterSchema.optional(),
   since: MemoryDurationSchema.optional(),
-  service: z23.string().min(1).optional(),
-  pathPrefix: z23.string().min(1).optional(),
-  managed: z23.coerce.boolean().optional(),
-  limit: z23.coerce.number().int().min(1).max(50).default(10).describe("Maximum ranked search hits to return.")
+  service: z27.string().min(1).optional(),
+  pathPrefix: z27.string().min(1).optional(),
+  managed: z27.coerce.boolean().optional(),
+  limit: z27.coerce.number().int().min(1).max(50).default(10).describe("Maximum ranked search hits to return.")
 });
-var SearchProjectMemoryOutputSchema = z23.object({
-  hits: z23.array(MemorySearchHitSchema),
+var SearchProjectMemoryOutputSchema = z27.object({
+  hits: z27.array(MemorySearchHitSchema),
   emptyVerdict: MemorySearchEmptyVerdictSchema.nullable()
 });
-var DeleteProjectMemoryInputSchema = z23.object({
-  projectId: z23.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
-  id: z23.string().uuid().optional().describe("Document id."),
+var DeleteProjectMemoryInputSchema = z27.object({
+  projectId: z27.string().uuid().optional().describe("Project that owns the document. Auto-filled from CLI and SDK context when omitted."),
+  id: z27.string().uuid().optional().describe("Document id."),
   path: MemoryPathSchema.optional()
 }).superRefine((value, ctx) => {
   const hasId = value.id !== undefined;
@@ -30887,7 +26400,7 @@ var DeleteProjectMemoryInputSchema = z23.object({
     });
   }
 });
-var DeleteProjectMemoryOutputSchema = z23.void();
+var DeleteProjectMemoryOutputSchema = z27.void();
 var putProjectMemory = defineOperation({
   operationId: "memory.put",
   summary: "Create or replace a memory document",
@@ -30972,20 +26485,20 @@ var memoryContract = {
   delete: deleteProjectMemory.contract
 };
 
-// ../public-api-contracts/src/messages.ts
-import { z as z26 } from "zod";
+// ../../contracts/public-api/src/messages.ts
+import { z as z30 } from "zod";
 
-// ../public-api-contracts/src/runs.ts
-import { z as z24 } from "zod";
-var RunStatusSchema = z24.enum(["processing", "completed", "aborted", "error"]);
-var RunSchema = z24.object({
-  id: z24.string().uuid(),
-  threadId: z24.string().uuid(),
-  userMessageId: z24.string().uuid().nullable(),
-  assistantMessageId: z24.string().uuid().nullable(),
-  workflowRunId: z24.string().nullable(),
+// ../../contracts/public-api/src/runs.ts
+import { z as z28 } from "zod";
+var RunStatusSchema = z28.enum(["processing", "completed", "aborted", "error"]);
+var RunSchema = z28.object({
+  id: z28.string().uuid(),
+  threadId: z28.string().uuid(),
+  userMessageId: z28.string().uuid().nullable(),
+  assistantMessageId: z28.string().uuid().nullable(),
+  workflowRunId: z28.string().nullable(),
   status: RunStatusSchema,
-  source: z24.enum([
+  source: z28.enum([
     "app",
     "api",
     "mcp",
@@ -31000,45 +26513,45 @@ var RunSchema = z24.object({
     "bitbucket",
     "system"
   ]),
-  createdAt: z24.string().datetime(),
-  updatedAt: z24.string().datetime(),
-  completedAt: z24.string().datetime().nullable()
+  createdAt: z28.string().datetime(),
+  updatedAt: z28.string().datetime(),
+  completedAt: z28.string().datetime().nullable()
 });
-var ListRunsInputSchema = z24.object({
-  projectId: z24.string().uuid().optional().describe("Project ID to list runs for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z24.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
-  cursor: z24.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListRunsInputSchema = z28.object({
+  projectId: z28.string().uuid().optional().describe("Project ID to list runs for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z28.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
+  cursor: z28.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListRunsOutputSchema = z24.object({
-  runs: z24.array(RunSchema),
-  nextCursor: z24.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListRunsOutputSchema = z28.object({
+  runs: z28.array(RunSchema),
+  nextCursor: z28.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var ListThreadRunsInputSchema = z24.object({
-  threadId: z24.string().uuid().describe("Thread ID to list runs for."),
-  limit: z24.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
-  cursor: z24.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+var ListThreadRunsInputSchema = z28.object({
+  threadId: z28.string().uuid().describe("Thread ID to list runs for."),
+  limit: z28.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of runs to return per page."),
+  cursor: z28.string().datetime().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListThreadRunsOutputSchema = z24.object({
-  runs: z24.array(RunSchema),
-  nextCursor: z24.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListThreadRunsOutputSchema = z28.object({
+  runs: z28.array(RunSchema),
+  nextCursor: z28.string().datetime().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetRunInputSchema = z24.object({
-  runId: z24.string().uuid().describe("Run ID returned by a deferred operation.")
+var GetRunInputSchema = z28.object({
+  runId: z28.string().uuid().describe("Run ID returned by a deferred operation.")
 });
-var RunResultSchema = z24.object({
-  completed: z24.boolean().describe("Whether the run has reached a terminal status."),
-  threadId: z24.string().uuid().describe("Thread ID associated with the run."),
-  runId: z24.string().uuid().describe("Run ID for subsequent polling."),
-  messageId: z24.string().uuid().optional().describe("ID of the user message that triggered this run."),
+var RunResultSchema = z28.object({
+  completed: z28.boolean().describe("Whether the run has reached a terminal status."),
+  threadId: z28.string().uuid().describe("Thread ID associated with the run."),
+  runId: z28.string().uuid().describe("Run ID for subsequent polling."),
+  messageId: z28.string().uuid().optional().describe("ID of the user message that triggered this run."),
   status: RunStatusSchema.describe("Current run lifecycle status."),
-  response: z24.string().nullable().describe("Assistant response text when the run has completed.")
+  response: z28.string().nullable().describe("Assistant response text when the run has completed.")
 });
 var GetRunOutputSchema = RunResultSchema.describe("Current run state and, when complete, the assistant response.");
-var CancelRunInputSchema = z24.object({
-  runId: z24.string().uuid().describe("Run ID of the in-flight run to request cancellation for.")
+var CancelRunInputSchema = z28.object({
+  runId: z28.string().uuid().describe("Run ID of the in-flight run to request cancellation for.")
 });
-var CancelRunOutputSchema = z24.object({
-  success: z24.literal(true).describe("Always true when the cancellation request was accepted.")
+var CancelRunOutputSchema = z28.object({
+  success: z28.literal(true).describe("Always true when the cancellation request was accepted.")
 });
 var listRuns = defineOperation({
   operationId: "runs.list",
@@ -31133,7 +26646,7 @@ var runsContract = {
   cancel: cancelRun.contract
 };
 
-// ../public-api-contracts/src/thread-message-input-validation.ts
+// ../../contracts/public-api/src/thread-message-input-validation.ts
 var DEFAULT_PUBLIC_THREAD_MESSAGE_MAX_LENGTH = 1e4;
 var AUTOMATION_PUBLIC_THREAD_MESSAGE_MAX_LENGTH = 20000;
 var validatePublicThreadMessageLength = (message, automationId, ctx) => {
@@ -31160,9 +26673,9 @@ var validatePublicThreadAmbientMarker = (ambientServiceRun, automationId, ctx) =
   }
 };
 
-// ../public-api-contracts/src/threads.ts
-import { z as z25 } from "zod";
-var MessageSourceSchema = z25.enum([
+// ../../contracts/public-api/src/threads.ts
+import { z as z29 } from "zod";
+var MessageSourceSchema = z29.enum([
   "slack",
   "teams",
   "linear",
@@ -31177,36 +26690,36 @@ var MessageSourceSchema = z25.enum([
   "bitbucket",
   "system"
 ]);
-var ThreadSchema = z25.object({
-  id: z25.string().uuid(),
-  projectId: z25.string().uuid(),
-  title: z25.string().nullable(),
-  status: z25.enum(["regular", "archived"]),
+var ThreadSchema = z29.object({
+  id: z29.string().uuid(),
+  projectId: z29.string().uuid(),
+  title: z29.string().nullable(),
+  status: z29.enum(["regular", "archived"]),
   source: MessageSourceSchema.nullable(),
-  createdAt: z25.string().datetime(),
-  updatedAt: z25.string().datetime()
+  createdAt: z29.string().datetime(),
+  updatedAt: z29.string().datetime()
 });
-var MessagePartSchema = z25.object({
-  type: z25.literal("message"),
-  message: z25.string()
+var MessagePartSchema = z29.object({
+  type: z29.literal("message"),
+  message: z29.string()
 });
-var ReasoningPartSchema = z25.object({
-  type: z25.literal("reasoning"),
-  reasoning: z25.string(),
-  status: z25.enum(["in_progress", "complete"]).optional()
+var ReasoningPartSchema = z29.object({
+  type: z29.literal("reasoning"),
+  reasoning: z29.string(),
+  status: z29.enum(["in_progress", "complete"]).optional()
 });
-var ToolCallPartSchema = z25.object({
-  type: z25.literal("tool_call"),
-  name: z25.string(),
-  params: z25.any().optional(),
-  result: z25.any().optional(),
-  status: z25.enum(["in_progress", "success", "error", "unknown"]).optional(),
-  toolCallId: z25.string().optional(),
-  durationMs: z25.number().nonnegative().optional()
+var ToolCallPartSchema = z29.object({
+  type: z29.literal("tool_call"),
+  name: z29.string(),
+  params: z29.any().optional(),
+  result: z29.any().optional(),
+  status: z29.enum(["in_progress", "success", "error", "unknown"]).optional(),
+  toolCallId: z29.string().optional(),
+  durationMs: z29.number().nonnegative().optional()
 });
-var ArtifactPartSchema = z25.object({
-  type: z25.literal("artifact"),
-  name: z25.enum([
+var ArtifactPartSchema = z29.object({
+  type: z29.literal("artifact"),
+  name: z29.enum([
     "timeseries",
     "table",
     "log_detail",
@@ -31215,35 +26728,35 @@ var ArtifactPartSchema = z25.object({
     "issue_card",
     "mdx"
   ]),
-  data: z25.any(),
-  toolCallId: z25.string().optional()
+  data: z29.any(),
+  toolCallId: z29.string().optional()
 });
-var ForkPartSchema = z25.object({
-  type: z25.literal("fork"),
-  sourceThreadId: z25.string(),
-  sourceMessageId: z25.string(),
-  sourceThreadTitle: z25.string().nullable()
+var ForkPartSchema = z29.object({
+  type: z29.literal("fork"),
+  sourceThreadId: z29.string(),
+  sourceMessageId: z29.string(),
+  sourceThreadTitle: z29.string().nullable()
 });
-var SummaryPartSchema = z25.object({
-  type: z25.literal("summary"),
-  summary: z25.string()
+var SummaryPartSchema = z29.object({
+  type: z29.literal("summary"),
+  summary: z29.string()
 });
-var SlackContextPartSchema = z25.object({
-  type: z25.literal("slack_context"),
-  channelId: z25.string(),
-  isTruncated: z25.boolean().optional(),
-  messages: z25.array(z25.object({
-    timestamp: z25.string(),
-    slackUserId: z25.string().optional(),
-    displayName: z25.string(),
-    text: z25.string(),
-    isBot: z25.boolean(),
-    files: z25.array(z25.object({
-      name: z25.string(),
-      mimetype: z25.string(),
-      size: z25.number().optional(),
-      attachmentId: z25.string().uuid().optional(),
-      ingestionStatus: z25.enum([
+var SlackContextPartSchema = z29.object({
+  type: z29.literal("slack_context"),
+  channelId: z29.string(),
+  isTruncated: z29.boolean().optional(),
+  messages: z29.array(z29.object({
+    timestamp: z29.string(),
+    slackUserId: z29.string().optional(),
+    displayName: z29.string(),
+    text: z29.string(),
+    isBot: z29.boolean(),
+    files: z29.array(z29.object({
+      name: z29.string(),
+      mimetype: z29.string(),
+      size: z29.number().optional(),
+      attachmentId: z29.string().uuid().optional(),
+      ingestionStatus: z29.enum([
         "attached",
         "unsupported",
         "oversized",
@@ -31253,19 +26766,19 @@ var SlackContextPartSchema = z25.object({
     })).optional()
   }))
 });
-var MicrosoftTeamsContextPartSchema = z25.object({
-  type: z25.literal("teams_context"),
-  conversationId: z25.string(),
-  isTruncated: z25.boolean().optional(),
-  messages: z25.array(z25.object({
-    activityId: z25.string().optional(),
-    displayName: z25.string(),
-    text: z25.string(),
-    isBot: z25.boolean(),
-    createdDateTime: z25.string().optional()
+var MicrosoftTeamsContextPartSchema = z29.object({
+  type: z29.literal("teams_context"),
+  conversationId: z29.string(),
+  isTruncated: z29.boolean().optional(),
+  messages: z29.array(z29.object({
+    activityId: z29.string().optional(),
+    displayName: z29.string(),
+    text: z29.string(),
+    isBot: z29.boolean(),
+    createdDateTime: z29.string().optional()
   }))
 });
-var ContentPartSchema = z25.union([
+var ContentPartSchema = z29.union([
   MessagePartSchema,
   ReasoningPartSchema,
   ToolCallPartSchema,
@@ -31275,60 +26788,60 @@ var ContentPartSchema = z25.union([
   SlackContextPartSchema,
   MicrosoftTeamsContextPartSchema
 ]);
-var MessageSchema = z25.object({
-  id: z25.string().uuid(),
-  role: z25.enum(["user", "assistant"]),
-  content: z25.array(ContentPartSchema),
+var MessageSchema = z29.object({
+  id: z29.string().uuid(),
+  role: z29.enum(["user", "assistant"]),
+  content: z29.array(ContentPartSchema),
   source: MessageSourceSchema,
-  createdAt: z25.string().datetime()
+  createdAt: z29.string().datetime()
 });
-var ListThreadsInputSchema = z25.object({
-  projectId: z25.string().uuid().optional().describe("Project to list threads for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z25.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of threads to return per page."),
-  cursor: z25.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  status: z25.enum(["regular", "archived"]).optional().describe("Filter by thread status. 'regular' returns active threads, 'archived' returns archived threads.")
+var ListThreadsInputSchema = z29.object({
+  projectId: z29.string().uuid().optional().describe("Project to list threads for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z29.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of threads to return per page."),
+  cursor: z29.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  status: z29.enum(["regular", "archived"]).optional().describe("Filter by thread status. 'regular' returns active threads, 'archived' returns archived threads.")
 });
-var ListThreadsOutputSchema = z25.object({
-  threads: z25.array(ThreadSchema).describe("The page of threads matching the query."),
-  nextCursor: z25.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListThreadsOutputSchema = z29.object({
+  threads: z29.array(ThreadSchema).describe("The page of threads matching the query."),
+  nextCursor: z29.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetThreadInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID returned by threads.list or threads.create.")
+var GetThreadInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID returned by threads.list or threads.create.")
 });
-var GetThreadOutputSchema = z25.object({
+var GetThreadOutputSchema = z29.object({
   thread: ThreadSchema.describe("The requested thread."),
-  messages: z25.array(MessageSchema).describe("Messages currently stored on the thread in chronological order.")
+  messages: z29.array(MessageSchema).describe("Messages currently stored on the thread in chronological order.")
 });
-var CreateThreadInputSchema = z25.object({
-  projectId: z25.string().uuid().optional().describe("Project to create the thread in. Auto-filled from CLI and SDK context when omitted."),
-  message: z25.string().min(1, "Message cannot be empty").describe("Initial user message that starts the thread."),
-  wait: z25.boolean().default(true).describe("Whether the server should wait for the agent run before responding."),
-  timeoutSeconds: z25.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
-  automationId: z25.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
-  ambientServiceRun: z25.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
+var CreateThreadInputSchema = z29.object({
+  projectId: z29.string().uuid().optional().describe("Project to create the thread in. Auto-filled from CLI and SDK context when omitted."),
+  message: z29.string().min(1, "Message cannot be empty").describe("Initial user message that starts the thread."),
+  wait: z29.boolean().default(true).describe("Whether the server should wait for the agent run before responding."),
+  timeoutSeconds: z29.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
+  automationId: z29.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
+  ambientServiceRun: z29.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
 }).superRefine((input, ctx) => {
   validatePublicThreadMessageLength(input.message, input.automationId, ctx);
   validatePublicThreadAmbientMarker(input.ambientServiceRun, input.automationId, ctx);
 });
 var CreateThreadOutputSchema = RunResultSchema.describe("Deferred run result for creating a thread.");
-var GetThreadStatusInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID whose current processing status should be returned.")
+var GetThreadStatusInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID whose current processing status should be returned.")
 });
-var GetThreadStatusOutputSchema = z25.object({
-  status: z25.enum(["idle", "processing"]),
-  lastRunStatus: z25.enum(["error"]).nullable()
+var GetThreadStatusOutputSchema = z29.object({
+  status: z29.enum(["idle", "processing"]),
+  lastRunStatus: z29.enum(["error"]).nullable()
 });
-var StopThreadInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID whose active run should be stopped.")
+var StopThreadInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID whose active run should be stopped.")
 });
-var StopThreadOutputSchema = z25.object({
-  success: z25.literal(true).describe("Always true when the stop request was accepted.")
+var StopThreadOutputSchema = z29.object({
+  success: z29.literal(true).describe("Always true when the stop request was accepted.")
 });
-var UpdateThreadInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID of the thread to update."),
-  status: z25.enum(["regular", "archived"]).describe("New status for the thread. 'archived' hides the thread from the sidebar.")
+var UpdateThreadInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID of the thread to update."),
+  status: z29.enum(["regular", "archived"]).describe("New status for the thread. 'archived' hides the thread from the sidebar.")
 });
-var UpdateThreadOutputSchema = z25.object({
+var UpdateThreadOutputSchema = z29.object({
   thread: ThreadSchema.describe("The updated thread.")
 });
 var listThreads = defineOperation({
@@ -31507,44 +27020,44 @@ var updateThread = defineOperation({
     }
   ]
 });
-var ThreadVisibilitySchema = z25.enum(["private", "organization"]);
-var ForkThreadInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID of the source thread to fork."),
-  messageId: z25.string().uuid().describe("Message ID in the source thread to fork from. The new thread copies messages up to and including this message.")
+var ThreadVisibilitySchema = z29.enum(["private", "organization"]);
+var ForkThreadInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID of the source thread to fork."),
+  messageId: z29.string().uuid().describe("Message ID in the source thread to fork from. The new thread copies messages up to and including this message.")
 });
-var ForkThreadOutputSchema = z25.object({
+var ForkThreadOutputSchema = z29.object({
   thread: ThreadSchema.describe("The newly created forked thread.")
 });
-var SetThreadVisibilityInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID of the thread to update."),
+var SetThreadVisibilityInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID of the thread to update."),
   visibility: ThreadVisibilitySchema.describe("New visibility. 'private' restricts the thread to its owner; 'organization' shares it with the organization.")
 });
-var SetThreadVisibilityOutputSchema = z25.object({
+var SetThreadVisibilityOutputSchema = z29.object({
   thread: ThreadSchema.describe("The updated thread."),
   visibility: ThreadVisibilitySchema.describe("The thread's resulting visibility.")
 });
-var ThreadShareLinkSchema = z25.object({
-  shareId: z25.string().uuid().describe("Unique identifier for the snapshot."),
-  threadId: z25.string().uuid().describe("Thread the snapshot was taken from."),
-  url: z25.string().describe("Public read-only URL for the snapshot."),
-  createdAt: z25.string().datetime()
+var ThreadShareLinkSchema = z29.object({
+  shareId: z29.string().uuid().describe("Unique identifier for the snapshot."),
+  threadId: z29.string().uuid().describe("Thread the snapshot was taken from."),
+  url: z29.string().describe("Public read-only URL for the snapshot."),
+  createdAt: z29.string().datetime()
 });
-var CreateThreadShareLinkInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID to create a public read-only snapshot for.")
+var CreateThreadShareLinkInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID to create a public read-only snapshot for.")
 });
-var CreateThreadShareLinkOutputSchema = z25.object({
+var CreateThreadShareLinkOutputSchema = z29.object({
   share: ThreadShareLinkSchema.describe("The created share link.")
 });
-var RevokeThreadShareLinkInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID the snapshot belongs to."),
-  shareId: z25.string().uuid().describe("Snapshot ID to revoke.")
+var RevokeThreadShareLinkInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID the snapshot belongs to."),
+  shareId: z29.string().uuid().describe("Snapshot ID to revoke.")
 });
-var RevokeThreadShareLinkOutputSchema = z25.void();
-var ListThreadShareLinksInputSchema = z25.object({
-  threadId: z25.string().uuid().describe("Thread ID to list public snapshots for.")
+var RevokeThreadShareLinkOutputSchema = z29.void();
+var ListThreadShareLinksInputSchema = z29.object({
+  threadId: z29.string().uuid().describe("Thread ID to list public snapshots for.")
 });
-var ListThreadShareLinksOutputSchema = z25.object({
-  shares: z25.array(ThreadShareLinkSchema).describe("Active share links for the thread.")
+var ListThreadShareLinksOutputSchema = z29.object({
+  shares: z29.array(ThreadShareLinkSchema).describe("Active share links for the thread.")
 });
 var SAMPLE_THREAD_ID = "22222222-2222-4222-8222-222222222222";
 var SAMPLE_PROJECT_ID = "11111111-1111-4111-8111-111111111111";
@@ -31717,23 +27230,23 @@ var threadsContract = {
   revokeShareLink: revokeThreadShareLink.contract
 };
 
-// ../public-api-contracts/src/messages.ts
-var ListMessagesInputSchema = z26.object({
-  threadId: z26.string().uuid().describe("Thread ID to list messages for."),
-  limit: z26.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of messages to return per page."),
-  cursor: z26.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
+// ../../contracts/public-api/src/messages.ts
+var ListMessagesInputSchema = z30.object({
+  threadId: z30.string().uuid().describe("Thread ID to list messages for."),
+  limit: z30.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of messages to return per page."),
+  cursor: z30.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page.")
 });
-var ListMessagesOutputSchema = z26.object({
-  messages: z26.array(MessageSchema),
-  nextCursor: z26.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListMessagesOutputSchema = z30.object({
+  messages: z30.array(MessageSchema),
+  nextCursor: z30.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var AppendMessageInputSchema = z26.object({
-  threadId: z26.string().uuid().describe("Thread ID to append the message to."),
-  message: z26.string().min(1, "Message cannot be empty").describe("Message body to append to the thread."),
-  wait: z26.boolean().default(true).describe("Whether the server should wait for the appended message run before responding."),
-  timeoutSeconds: z26.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
-  automationId: z26.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
-  ambientServiceRun: z26.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
+var AppendMessageInputSchema = z30.object({
+  threadId: z30.string().uuid().describe("Thread ID to append the message to."),
+  message: z30.string().min(1, "Message cannot be empty").describe("Message body to append to the thread."),
+  wait: z30.boolean().default(true).describe("Whether the server should wait for the appended message run before responding."),
+  timeoutSeconds: z30.coerce.number().int().min(1).max(20).default(20).describe("Maximum seconds to wait when wait is true before handing off to polling."),
+  automationId: z30.string().uuid().optional().describe("Internal automation context. Set by the Sazabi CLI when an automation script starts an agent run."),
+  ambientServiceRun: z30.literal(true).optional().describe("Internal marker for scheduler-originated ambient service work. Honored only for system secret-key requests with matching automation context.")
 }).superRefine((input, ctx) => {
   validatePublicThreadMessageLength(input.message, input.automationId, ctx);
   validatePublicThreadAmbientMarker(input.ambientServiceRun, input.automationId, ctx);
@@ -31815,36 +27328,47 @@ var appendMessage = defineOperation({
   ]
 });
 
-// ../notifications/src/browser.ts
+// ../../notifications/src/browser.ts
 init_src();
 
-// ../notifications/src/catalog/registry.ts
+// ../../notifications/src/catalog/registry.ts
 var registeredDefinitionsByValue = new Map;
-var definitionsEqual = (left, right) => left.value === right.value && left.label === right.label && left.scope === right.scope && left.role === right.role && left.defaultOff === right.defaultOff && (left.defaultOffChannels ?? []).join(",") === (right.defaultOffChannels ?? []).join(",") && left.email?.template === right.email?.template && left.email?.ctaLabel === right.email?.ctaLabel && (left.deliveryConditions ?? []).join(",") === (right.deliveryConditions ?? []).join(",");
+var definitionsEqual = (left, right) => left.value === right.value && left.label === right.label && left.scope === right.scope && left.role === right.role && left.defaultOff === right.defaultOff && (left.defaultOffChannels ?? []).join(",") === (right.defaultOffChannels ?? []).join(",") && left.email?.template === right.email?.template && left.email?.ctaLabel === right.email?.ctaLabel && left.aggregation?.kind === right.aggregation?.kind && left.aggregation?.threshold === right.aggregation?.threshold && left.aggregation?.decisionWindowMs === right.aggregation?.decisionWindowMs && left.aggregation?.hardCapMs === right.aggregation?.hardCapMs && (left.deliveryConditions ?? []).join(",") === (right.deliveryConditions ?? []).join(",");
 var registerNotificationTypes = (definitions) => {
-  for (const definition2 of Object.values(definitions)) {
-    const existing = registeredDefinitionsByValue.get(definition2.value);
-    if (existing && !definitionsEqual(existing, definition2)) {
-      throw new Error(`Notification type registered twice with conflicting definitions: ${definition2.value}`);
+  for (const definition of Object.values(definitions)) {
+    const existing = registeredDefinitionsByValue.get(definition.value);
+    if (existing && !definitionsEqual(existing, definition)) {
+      throw new Error(`Notification type registered twice with conflicting definitions: ${definition.value}`);
     }
-    if (definition2.role !== undefined && definition2.scope !== "org") {
-      throw new Error(`Notification type role restrictions require org scope: ${definition2.value}`);
+    if (definition.role !== undefined && definition.scope !== "org") {
+      throw new Error(`Notification type role restrictions require org scope: ${definition.value}`);
     }
-    if (definition2.label.trim().length === 0) {
-      throw new Error(`Notification type needs a display label: ${definition2.value}`);
+    if (definition.label.trim().length === 0) {
+      throw new Error(`Notification type needs a display label: ${definition.value}`);
     }
-    if (definition2.email && definition2.email.ctaLabel.trim().length === 0) {
-      throw new Error(`Notification email presentation needs a CTA label: ${definition2.value}`);
+    if (definition.email && definition.email.ctaLabel.trim().length === 0) {
+      throw new Error(`Notification email presentation needs a CTA label: ${definition.value}`);
     }
-    if (definition2.defaultOff && definition2.defaultOffChannels) {
-      throw new Error(`Notification type declares both defaultOff and defaultOffChannels: ${definition2.value}`);
+    if (definition.defaultOff && definition.defaultOffChannels) {
+      throw new Error(`Notification type declares both defaultOff and defaultOffChannels: ${definition.value}`);
     }
-    registeredDefinitionsByValue.set(definition2.value, definition2);
+    if (definition.aggregation) {
+      if (definition.scope !== "project") {
+        throw new Error(`Notification aggregation requires project scope: ${definition.value}`);
+      }
+      if (!Number.isSafeInteger(definition.aggregation.threshold) || definition.aggregation.threshold < 2) {
+        throw new Error(`Notification aggregation threshold must be an integer of at least 2: ${definition.value}`);
+      }
+      if (!Number.isSafeInteger(definition.aggregation.decisionWindowMs) || definition.aggregation.decisionWindowMs <= 0 || !Number.isSafeInteger(definition.aggregation.hardCapMs) || definition.aggregation.hardCapMs < definition.aggregation.decisionWindowMs) {
+        throw new Error(`Notification aggregation needs a positive window within its hard cap: ${definition.value}`);
+      }
+    }
+    registeredDefinitionsByValue.set(definition.value, definition);
   }
   return definitions;
 };
 
-// ../notifications/src/catalog/automations.ts
+// ../../notifications/src/catalog/automations.ts
 var AUTOMATION_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   AUTOMATION_FINISHED: {
     value: "automation_finished",
@@ -31860,7 +27384,7 @@ var AUTOMATION_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   }
 });
 
-// ../notifications/src/catalog/billing.ts
+// ../../notifications/src/catalog/billing.ts
 var BILLING_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   BILLING_PLAN_UPGRADE_APPLIED: {
     value: "billing_plan_upgrade_applied",
@@ -31968,7 +27492,7 @@ var BILLING_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
     email: { template: "billing", ctaLabel: "Manage payment method" }
   }
 });
-// ../notifications/src/catalog/integrations.ts
+// ../../notifications/src/catalog/integrations.ts
 var INTEGRATION_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   INTEGRATION_CONNECTED: {
     value: "integration_connected",
@@ -31983,7 +27507,13 @@ var INTEGRATION_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   }
 });
 
-// ../notifications/src/catalog/issues.ts
+// ../../notifications/src/catalog/issues.ts
+var ISSUE_TERMINAL_DIGEST_POLICY = {
+  kind: "project_digest",
+  threshold: 20,
+  decisionWindowMs: 30000,
+  hardCapMs: 5 * 60000
+};
 var ISSUE_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   ISSUE_TRIGGERED: {
     value: "issue_triggered",
@@ -31997,18 +27527,20 @@ var ISSUE_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
     label: "Issue resolved",
     scope: "project",
     defaultOffChannels: ["email"],
-    deliveryConditions: ["component", "severity"]
+    deliveryConditions: ["component", "severity"],
+    aggregation: ISSUE_TERMINAL_DIGEST_POLICY
   },
   ISSUE_IGNORED: {
     value: "issue_ignored",
     label: "Issue ignored",
     scope: "project",
     defaultOffChannels: ["email"],
-    deliveryConditions: ["component", "severity"]
+    deliveryConditions: ["component", "severity"],
+    aggregation: ISSUE_TERMINAL_DIGEST_POLICY
   }
 });
 
-// ../notifications/src/catalog/organization.ts
+// ../../notifications/src/catalog/organization.ts
 var ORGANIZATION_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   PROJECT_CREATED: {
     value: "project_created",
@@ -32060,7 +27592,7 @@ var ORGANIZATION_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   }
 });
 
-// ../notifications/src/catalog/project-resources.ts
+// ../../notifications/src/catalog/project-resources.ts
 var PROJECT_RESOURCE_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   SANDBOX_CREATED: {
     value: "sandbox_created",
@@ -32114,7 +27646,7 @@ var PROJECT_RESOURCE_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   }
 });
 
-// ../notifications/src/catalog/security.ts
+// ../../notifications/src/catalog/security.ts
 var SECURITY_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   SECURITY_ALERT: {
     value: "security_alert",
@@ -32124,7 +27656,7 @@ var SECURITY_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
   }
 });
 
-// ../notifications/src/catalog/index.ts
+// ../../notifications/src/catalog/index.ts
 var NOTIFICATION_TYPE_DEFINITIONS = {
   ...SECURITY_NOTIFICATION_TYPE_DEFINITIONS,
   ...ORGANIZATION_NOTIFICATION_TYPE_DEFINITIONS,
@@ -32134,13 +27666,13 @@ var NOTIFICATION_TYPE_DEFINITIONS = {
   ...PROJECT_RESOURCE_NOTIFICATION_TYPE_DEFINITIONS,
   ...BILLING_NOTIFICATION_TYPE_DEFINITIONS
 };
-var NOTIFICATION_TYPES = Object.fromEntries(Object.entries(NOTIFICATION_TYPE_DEFINITIONS).map(([key, definition2]) => [
+var NOTIFICATION_TYPES = Object.fromEntries(Object.entries(NOTIFICATION_TYPE_DEFINITIONS).map(([key, definition]) => [
   key,
-  definition2.value
+  definition.value
 ]));
-var definitionsByValue = new Map(Object.values(NOTIFICATION_TYPE_DEFINITIONS).map((definition2) => [
-  definition2.value,
-  definition2
+var definitionsByValue = new Map(Object.values(NOTIFICATION_TYPE_DEFINITIONS).map((definition) => [
+  definition.value,
+  definition
 ]));
 var getNotificationTypeLabel = (notificationType) => {
   const label = definitionsByValue.get(notificationType)?.label;
@@ -32150,7 +27682,7 @@ var getNotificationTypeLabel = (notificationType) => {
   const humanized = notificationType.replace(/_/g, " ").trim();
   return humanized ? humanized.charAt(0).toUpperCase() + humanized.slice(1) : notificationType;
 };
-// ../notifications/src/constants.ts
+// ../../notifications/src/constants.ts
 init_src();
 init_src();
 var ALL_NOTIFICATION_TYPES = Object.values(NOTIFICATION_TYPES);
@@ -32179,22 +27711,29 @@ var PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES = [
   NOTIFICATION_TYPES.AUTOMATION_RUN_FAILED
 ];
 var PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPE_SET = new Set(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES);
-// ../notifications/src/events.ts
+// ../../notifications/src/events.ts
 init_src();
-import { z as z28 } from "zod";
-var NotificationTypeSchema = z28.enum(ALL_NOTIFICATION_TYPES);
+import { z as z32 } from "zod";
+var NotificationTypeSchema = z32.enum(ALL_NOTIFICATION_TYPES);
 var DEPRECATED_NOTIFICATION_TYPE_ALIASES = {
   data_source_connected: "log_source_connected",
   data_source_disconnected: "log_source_disconnected"
 };
 var normalizeNotificationTypeInput = (value) => typeof value === "string" && (value in DEPRECATED_NOTIFICATION_TYPE_ALIASES) ? DEPRECATED_NOTIFICATION_TYPE_ALIASES[value] : value;
-var NotificationTypeInputSchema = z28.preprocess(normalizeNotificationTypeInput, NotificationTypeSchema);
-// ../notifications/src/project-shared-notification-types.ts
+var NotificationTypeInputSchema = z32.preprocess(normalizeNotificationTypeInput, NotificationTypeSchema);
+// ../../notifications/src/project-shared-notification-types.ts
 var PROJECT_SHARED_NOTIFICATION_TYPE_DEFINITIONS = PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES.map((notificationType) => ({
   notificationType,
   label: getNotificationTypeLabel(notificationType)
 }));
-// ../notifications/src/notification-delivery-records.ts
+// ../../notifications/src/notification-delivery-ledger.ts
+var TERMINAL_DELIVERY_STATES = new Set([
+  "delivered",
+  "failed",
+  "suppressed",
+  "uncertain"
+]);
+// ../../notifications/src/notification-delivery-records.ts
 var PERSONAL_RECORD_CHANNELS = new Set([
   "in_app",
   "slack",
@@ -32202,66 +27741,66 @@ var PERSONAL_RECORD_CHANNELS = new Set([
   "sms"
 ]);
 var STATEFUL_INCIDENT_RECORD_CHANNELS = new Set(["incident_io", "pagerduty", "rootly"]);
-// ../public-api-contracts/src/notification-channels.ts
-import { z as z29 } from "zod";
-var NotificationChannelPrerequisiteStatusSchema = z29.enum([
+// ../../contracts/public-api/src/notification-channels.ts
+import { z as z33 } from "zod";
+var NotificationChannelPrerequisiteStatusSchema = z33.enum([
   "ready",
   "missing",
   "degraded",
   "unavailable"
 ]);
-var NotificationChannelDestinationSchema = z29.object({
-  id: z29.string(),
-  label: z29.string(),
-  status: z29.enum(["active", "inactive", "degraded"]),
-  statusLabel: z29.string()
+var NotificationChannelDestinationSchema = z33.object({
+  id: z33.string(),
+  label: z33.string(),
+  status: z33.enum(["active", "inactive", "degraded"]),
+  statusLabel: z33.string()
 });
-var NotificationChannelCardSchema = z29.object({
+var NotificationChannelCardSchema = z33.object({
   channel: NotificationChannelSchema,
-  name: z29.string(),
-  description: z29.string(),
-  scope: z29.enum(["personal", "project"]),
-  enabled: z29.boolean().nullable(),
-  preferenceId: z29.string().nullable(),
-  prerequisite: z29.object({
+  name: z33.string(),
+  description: z33.string(),
+  scope: z33.enum(["personal", "project"]),
+  enabled: z33.boolean().nullable(),
+  preferenceId: z33.string().nullable(),
+  prerequisite: z33.object({
     status: NotificationChannelPrerequisiteStatusSchema,
-    statusLabel: z29.string(),
-    message: z29.string()
+    statusLabel: z33.string(),
+    message: z33.string()
   }),
-  action: z29.object({
-    label: z29.string(),
-    href: z29.string()
+  action: z33.object({
+    label: z33.string(),
+    href: z33.string()
   }).nullable(),
-  destinations: z29.array(NotificationChannelDestinationSchema),
-  destinationManagement: z29.enum([
+  destinations: z33.array(NotificationChannelDestinationSchema),
+  destinationManagement: z33.enum([
     "none",
     "slack_channels",
     "teams_channels",
     "integration_connections",
     "webhook_endpoints"
   ]),
-  canCreateDestinations: z29.boolean(),
-  supportedNotificationTypes: z29.array(NotificationTypeSchema)
+  canCreateDestinations: z33.boolean(),
+  supportedNotificationTypes: z33.array(NotificationTypeSchema)
 });
-var ProjectNotificationChannelPreferenceSchema = z29.object({
+var ProjectNotificationChannelPreferenceSchema = z33.object({
   channel: ProjectNotificationChannelSchema,
-  enabled: z29.boolean(),
-  preferenceId: z29.string().nullable()
+  enabled: z33.boolean(),
+  preferenceId: z33.string().nullable()
 });
-var ProjectNotificationTypePreferenceSchema = z29.object({
+var ProjectNotificationTypePreferenceSchema = z33.object({
   channel: ProjectNotificationChannelSchema,
   notificationType: NotificationTypeSchema,
-  enabled: z29.boolean(),
-  preferenceId: z29.string()
+  enabled: z33.boolean(),
+  preferenceId: z33.string()
 });
-var GetProjectNotificationChannelsInputSchema = z29.object({
-  projectId: z29.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
+var GetProjectNotificationChannelsInputSchema = z33.object({
+  projectId: z33.string().uuid().optional().describe("Project to inspect. Auto-filled from CLI and SDK context when omitted.")
 });
-var GetProjectNotificationChannelsOutputSchema = z29.object({
-  channelCards: z29.array(NotificationChannelCardSchema).length(10),
-  channels: z29.array(ProjectNotificationChannelPreferenceSchema),
-  notificationTypePreferences: z29.array(ProjectNotificationTypePreferenceSchema),
-  issueNotificationMinSeverity: z29.enum(["low", "medium", "high", "critical"])
+var GetProjectNotificationChannelsOutputSchema = z33.object({
+  channelCards: z33.array(NotificationChannelCardSchema).length(10),
+  channels: z33.array(ProjectNotificationChannelPreferenceSchema),
+  notificationTypePreferences: z33.array(ProjectNotificationTypePreferenceSchema),
+  issueNotificationMinSeverity: z33.enum(["low", "medium", "high", "critical"])
 });
 var getProjectNotificationChannels = defineOperation({
   operationId: "notificationChannels.getProject",
@@ -32282,44 +27821,44 @@ var notificationChannelsContract = {
   getProject: getProjectNotificationChannels.contract
 };
 
-// ../public-api-contracts/src/notification-delivery-rules.ts
-import { z as z30 } from "zod";
-var DeliveryRuleSeveritySchema = z30.enum([
+// ../../contracts/public-api/src/notification-delivery-rules.ts
+import { z as z34 } from "zod";
+var DeliveryRuleSeveritySchema = z34.enum([
   "low",
   "medium",
   "high",
   "critical"
 ]);
-var DeliveryRuleConditionSchema = z30.object({
-  severities: z30.array(DeliveryRuleSeveritySchema).min(1).optional()
+var DeliveryRuleConditionSchema = z34.object({
+  severities: z34.array(DeliveryRuleSeveritySchema).min(1).optional()
 }).strict();
-var LegacyDeliveryRuleConditionSchema = z30.object({
-  componentIds: z30.array(z30.string().uuid()).min(1).optional(),
-  severities: z30.array(DeliveryRuleSeveritySchema).min(1).optional()
+var LegacyDeliveryRuleConditionSchema = z34.object({
+  componentIds: z34.array(z34.string().uuid()).min(1).optional(),
+  severities: z34.array(DeliveryRuleSeveritySchema).min(1).optional()
 }).strict();
-var DeliveryRuleDestinationInputSchema = z30.object({
+var DeliveryRuleDestinationInputSchema = z34.object({
   channel: ProjectNotificationChannelSchema,
-  destinationKey: z30.string().min(1)
+  destinationKey: z34.string().min(1)
 });
-var DeliveryRuleDefinitionSchema = z30.object({
-  destinations: z30.array(DeliveryRuleDestinationInputSchema).min(1),
-  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
-  componentIds: z30.array(z30.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
-  includeDescendants: z30.boolean().default(false).describe("Whether the rule also matches descendant components."),
+var DeliveryRuleDefinitionSchema = z34.object({
+  destinations: z34.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z34.array(z34.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+  componentIds: z34.array(z34.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
+  includeDescendants: z34.boolean().default(false).describe("Whether the rule also matches descendant components."),
   condition: DeliveryRuleConditionSchema
 });
-var LegacyDeliveryRuleDefinitionSchema = z30.object({
-  destinations: z30.array(DeliveryRuleDestinationInputSchema).min(1),
-  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+var LegacyDeliveryRuleDefinitionSchema = z34.object({
+  destinations: z34.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z34.array(z34.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
   condition: LegacyDeliveryRuleConditionSchema
 });
-var DeliveryRuleDefinitionInputObjectSchema = z30.object({
-  destinations: z30.array(DeliveryRuleDestinationInputSchema).min(1),
-  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
-  componentIds: z30.array(z30.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
-  componentId: z30.string().uuid().optional().describe("Deprecated single-component compatibility input."),
-  includeDescendants: z30.boolean().default(false).describe("Whether the rule also matches descendant components."),
-  condition: z30.union([
+var DeliveryRuleDefinitionInputObjectSchema = z34.object({
+  destinations: z34.array(DeliveryRuleDestinationInputSchema).min(1),
+  notificationTypes: z34.array(z34.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)).min(1),
+  componentIds: z34.array(z34.string().uuid()).min(1).optional().describe("Stable component registry IDs matched by this rule."),
+  componentId: z34.string().uuid().optional().describe("Deprecated single-component compatibility input."),
+  includeDescendants: z34.boolean().default(false).describe("Whether the rule also matches descendant components."),
+  condition: z34.union([
     DeliveryRuleConditionSchema,
     LegacyDeliveryRuleConditionSchema
   ])
@@ -32341,54 +27880,54 @@ var rejectConflictingComponentInputs = (input, context) => {
   }
 };
 var DeliveryRuleDefinitionInputSchema = DeliveryRuleDefinitionInputObjectSchema.superRefine(rejectConflictingComponentInputs);
-var DeliveryRuleDestinationSchema = z30.object({
-  id: z30.string(),
+var DeliveryRuleDestinationSchema = z34.object({
+  id: z34.string(),
   channel: ProjectNotificationChannelSchema,
-  destinationKey: z30.string(),
-  displayName: z30.string()
+  destinationKey: z34.string(),
+  displayName: z34.string()
 });
-var DeliveryRuleComponentSchema = z30.object({
-  id: z30.string().uuid(),
-  label: z30.string(),
-  lifecycle: z30.enum(["active", "inactive", "merged"])
+var DeliveryRuleComponentSchema = z34.object({
+  id: z34.string().uuid(),
+  label: z34.string(),
+  lifecycle: z34.enum(["active", "inactive", "merged"])
 });
-var ProjectDeliveryRuleSchema = z30.object({
-  id: z30.string().uuid(),
-  projectId: z30.string().uuid(),
-  notificationTypes: z30.array(z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)),
-  destinations: z30.array(DeliveryRuleDestinationSchema),
+var ProjectDeliveryRuleSchema = z34.object({
+  id: z34.string().uuid(),
+  projectId: z34.string().uuid(),
+  notificationTypes: z34.array(z34.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES)),
+  destinations: z34.array(DeliveryRuleDestinationSchema),
   condition: DeliveryRuleConditionSchema,
   component: DeliveryRuleComponentSchema.nullable(),
-  componentId: z30.string().uuid().nullable(),
-  includeDescendants: z30.boolean(),
-  suspendedAt: z30.string().datetime().nullable(),
-  suspensionReason: z30.string().nullable(),
-  components: z30.array(DeliveryRuleComponentSchema),
-  createdAt: z30.string().datetime(),
-  updatedAt: z30.string().datetime()
+  componentId: z34.string().uuid().nullable(),
+  includeDescendants: z34.boolean(),
+  suspendedAt: z34.string().datetime().nullable(),
+  suspensionReason: z34.string().nullable(),
+  components: z34.array(DeliveryRuleComponentSchema),
+  createdAt: z34.string().datetime(),
+  updatedAt: z34.string().datetime()
 });
-var ProjectScopeSchema = z30.object({
-  projectId: z30.string().uuid().optional().describe("Project whose notification delivery rules are being managed.")
+var ProjectScopeSchema = z34.object({
+  projectId: z34.string().uuid().optional().describe("Project whose notification delivery rules are being managed.")
 });
-var DeliveryRuleIdSchema = z30.string().uuid().describe("Logical notification delivery rule ID.");
+var DeliveryRuleIdSchema = z34.string().uuid().describe("Logical notification delivery rule ID.");
 var ListDeliveryRulesInputSchema = ProjectScopeSchema;
-var ListDeliveryRulesOutputSchema = z30.object({
-  rules: z30.array(ProjectDeliveryRuleSchema)
+var ListDeliveryRulesOutputSchema = z34.object({
+  rules: z34.array(ProjectDeliveryRuleSchema)
 });
-var DeliveryRuleChannelCatalogStateSchema = z30.object({
-  status: z30.enum(["pending", "refreshing", "ready", "error"]),
-  lastSucceededAt: z30.string().nullable(),
-  isInitialSyncPending: z30.boolean().describe("True while the provider's channel catalog has never completed its first sync. Destinations for that provider appear once the initial background sync finishes; treat an empty destination list as loading, not empty.")
+var DeliveryRuleChannelCatalogStateSchema = z34.object({
+  status: z34.enum(["pending", "refreshing", "ready", "error"]),
+  lastSucceededAt: z34.string().nullable(),
+  isInitialSyncPending: z34.boolean().describe("True while the provider's channel catalog has never completed its first sync. Destinations for that provider appear once the initial background sync finishes; treat an empty destination list as loading, not empty.")
 }).describe("Sync state of a provider's channel catalog backing the destination list.");
-var DeliveryRuleOptionsOutputSchema = z30.object({
-  destinations: z30.array(DeliveryRuleDestinationSchema),
-  notificationTypes: z30.array(z30.object({
-    notificationType: z30.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES),
-    label: z30.string(),
-    conditions: z30.array(z30.enum(["component", "severity"]))
+var DeliveryRuleOptionsOutputSchema = z34.object({
+  destinations: z34.array(DeliveryRuleDestinationSchema),
+  notificationTypes: z34.array(z34.object({
+    notificationType: z34.enum(PROJECT_SLACK_CHANNEL_NOTIFICATION_TYPES),
+    label: z34.string(),
+    conditions: z34.array(z34.enum(["component", "severity"]))
   })),
-  components: z30.array(DeliveryRuleComponentSchema),
-  channelCatalogs: z30.object({
+  components: z34.array(DeliveryRuleComponentSchema),
+  channelCatalogs: z34.object({
     slack: DeliveryRuleChannelCatalogStateSchema.nullable(),
     microsoftTeams: DeliveryRuleChannelCatalogStateSchema.nullable()
   }).optional()
@@ -32403,8 +27942,8 @@ var UpdateDeliveryRuleOutputSchema = ProjectDeliveryRuleSchema;
 var DeleteDeliveryRuleInputSchema = ProjectScopeSchema.extend({
   ruleId: DeliveryRuleIdSchema
 });
-var DeleteDeliveryRuleOutputSchema = z30.object({
-  removed: z30.boolean()
+var DeleteDeliveryRuleOutputSchema = z34.object({
+  removed: z34.boolean()
 });
 var listDeliveryRules = defineOperation({
   operationId: "notificationDeliveryRules.list",
@@ -32489,9 +28028,9 @@ var notificationDeliveryRulesContract = {
   delete: deleteDeliveryRule.contract
 };
 
-// ../public-api-contracts/src/onboarding.ts
-import { z as z31 } from "zod";
-var OnboardingStepIdSchema = z31.enum([
+// ../../contracts/public-api/src/onboarding.ts
+import { z as z35 } from "zod";
+var OnboardingStepIdSchema = z35.enum([
   "verify-email",
   "accept-invite",
   "create-organization",
@@ -32506,49 +28045,49 @@ var OnboardingStepIdSchema = z31.enum([
   "confirm-issue",
   "finish"
 ]);
-var OnboardingGateSchema = z31.enum([
+var OnboardingGateSchema = z35.enum([
   "needs-onboarding",
   "blocked",
   "access-denied",
   "ready"
 ]);
-var OnboardingCompletionStatusSchema = z31.enum([
+var OnboardingCompletionStatusSchema = z35.enum([
   "incomplete",
   "complete",
   "skipped"
 ]);
-var OnboardingInvitationSchema = z31.object({
-  invitationId: z31.string(),
-  organizationId: z31.string(),
-  organizationName: z31.string(),
-  organizationSlug: z31.string(),
-  organizationImageUrl: z31.string().nullable(),
-  inviterName: z31.string().nullable()
+var OnboardingInvitationSchema = z35.object({
+  invitationId: z35.string(),
+  organizationId: z35.string(),
+  organizationName: z35.string(),
+  organizationSlug: z35.string(),
+  organizationImageUrl: z35.string().nullable(),
+  inviterName: z35.string().nullable()
 });
-var OnboardingSnapshotSchema = z31.object({
+var OnboardingSnapshotSchema = z35.object({
   gate: OnboardingGateSchema,
   canonicalStep: OnboardingStepIdSchema.nullable(),
-  organizationId: z31.string().nullable(),
-  projectId: z31.string().nullable(),
-  completionByStep: z31.record(OnboardingStepIdSchema, OnboardingCompletionStatusSchema),
-  githubSkipped: z31.boolean(),
-  githubAppSkipped: z31.boolean(),
-  slackSkipped: z31.boolean(),
-  sampleIssueId: z31.string().nullable(),
-  actorRole: z31.enum(["admin", "member"]).nullable(),
-  requiredStep: z31.union([OnboardingStepIdSchema, z31.literal("select-organization")]).nullable(),
-  isCompleted: z31.boolean(),
-  onboardingRecommendationsThreadId: z31.string().nullable(),
-  hasOrganizations: z31.boolean(),
-  hasPaidBillingSubscription: z31.boolean(),
-  billingStepEnabled: z31.boolean(),
-  pendingInvitations: z31.array(OnboardingInvitationSchema)
+  organizationId: z35.string().nullable(),
+  projectId: z35.string().nullable(),
+  completionByStep: z35.record(OnboardingStepIdSchema, OnboardingCompletionStatusSchema),
+  githubSkipped: z35.boolean(),
+  githubAppSkipped: z35.boolean(),
+  slackSkipped: z35.boolean(),
+  sampleIssueId: z35.string().nullable(),
+  actorRole: z35.enum(["admin", "member"]).nullable(),
+  requiredStep: z35.union([OnboardingStepIdSchema, z35.literal("select-organization")]).nullable(),
+  isCompleted: z35.boolean(),
+  onboardingRecommendationsThreadId: z35.string().nullable(),
+  hasOrganizations: z35.boolean(),
+  hasPaidBillingSubscription: z35.boolean(),
+  billingStepEnabled: z35.boolean(),
+  pendingInvitations: z35.array(OnboardingInvitationSchema)
 });
-var GetOnboardingStateInputSchema = z31.object({
-  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
-  projectId: z31.string().uuid().optional().describe("Project whose onboarding state to bind (sample-issue attempt and project-scoped facts). Auto-filled from CLI and SDK context when omitted.")
+var GetOnboardingStateInputSchema = z35.object({
+  organizationId: z35.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z35.string().uuid().optional().describe("Project whose onboarding state to bind (sample-issue attempt and project-scoped facts). Auto-filled from CLI and SDK context when omitted.")
 });
-var GetOnboardingStateOutputSchema = z31.object({
+var GetOnboardingStateOutputSchema = z35.object({
   onboarding: OnboardingSnapshotSchema
 });
 var getOnboardingState = defineOperation({
@@ -32566,13 +28105,13 @@ var getOnboardingState = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingIntegrationInputSchema = z31.object({
-  integration: z31.enum(["github", "slack"]).describe("Integration onboarding step to skip."),
-  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
-  projectId: z31.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+var SkipOnboardingIntegrationInputSchema = z35.object({
+  integration: z35.enum(["github", "slack"]).describe("Integration onboarding step to skip."),
+  organizationId: z35.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z35.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
-var SkipOnboardingIntegrationOutputSchema = z31.object({
-  skipped: z31.literal(true)
+var SkipOnboardingIntegrationOutputSchema = z35.object({
+  skipped: z35.literal(true)
 });
 var skipOnboardingIntegration = defineOperation({
   operationId: "onboarding.skipIntegration",
@@ -32589,12 +28128,12 @@ var skipOnboardingIntegration = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingGithubAppInstallationInputSchema = z31.object({
-  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
-  projectId: z31.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+var SkipOnboardingGithubAppInstallationInputSchema = z35.object({
+  organizationId: z35.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z35.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
-var SkipOnboardingGithubAppInstallationOutputSchema = z31.object({
-  skipped: z31.literal(true)
+var SkipOnboardingGithubAppInstallationOutputSchema = z35.object({
+  skipped: z35.literal(true)
 });
 var skipOnboardingGithubAppInstallation = defineOperation({
   operationId: "onboarding.skipGithubAppInstallation",
@@ -32611,12 +28150,12 @@ var skipOnboardingGithubAppInstallation = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SkipOnboardingSampleIssueInputSchema = z31.object({
-  organizationId: z31.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
-  projectId: z31.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+var SkipOnboardingSampleIssueInputSchema = z35.object({
+  organizationId: z35.string().min(1).optional().describe("Organization to resolve onboarding state for. User credentials must belong to it. Defaults to the credential's organization context. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+  projectId: z35.string().uuid().optional().describe("Project used to resolve the organization whose onboarding state is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
 });
-var SkipOnboardingSampleIssueOutputSchema = z31.object({
-  skipped: z31.literal(true)
+var SkipOnboardingSampleIssueOutputSchema = z35.object({
+  skipped: z35.literal(true)
 });
 var skipOnboardingSampleIssue = defineOperation({
   operationId: "onboarding.skipSampleIssue",
@@ -32633,11 +28172,11 @@ var skipOnboardingSampleIssue = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var FinishOnboardingInputSchema = z31.object({
-  projectId: z31.string().uuid().describe("Project that completed onboarding.")
+var FinishOnboardingInputSchema = z35.object({
+  projectId: z35.string().uuid().describe("Project that completed onboarding.")
 });
-var FinishOnboardingOutputSchema = z31.object({
-  completed: z31.boolean()
+var FinishOnboardingOutputSchema = z35.object({
+  completed: z35.boolean()
 });
 var finishOnboarding = defineOperation({
   operationId: "onboarding.finish",
@@ -32662,39 +28201,39 @@ var onboardingContract = {
   finish: finishOnboarding.contract
 };
 
-// ../public-api-contracts/src/organizations.ts
-import { z as z32 } from "zod";
-var OrganizationSchema = z32.object({
-  id: z32.string().min(1),
-  name: z32.string(),
-  slug: z32.string(),
-  logo: z32.string().nullable().optional()
+// ../../contracts/public-api/src/organizations.ts
+import { z as z36 } from "zod";
+var OrganizationSchema = z36.object({
+  id: z36.string().min(1),
+  name: z36.string(),
+  slug: z36.string(),
+  logo: z36.string().nullable().optional()
 });
 var ListedOrganizationSchema = OrganizationSchema.extend({
   role: OrganizationMembershipRoleSchema.optional()
 });
-var ListOrganizationsInputSchema = z32.object({});
-var ListOrganizationsOutputSchema = z32.object({
-  organizations: z32.array(ListedOrganizationSchema).describe("Organizations available to the current credential.")
+var ListOrganizationsInputSchema = z36.object({});
+var ListOrganizationsOutputSchema = z36.object({
+  organizations: z36.array(ListedOrganizationSchema).describe("Organizations available to the current credential.")
 });
-var GetOrganizationInputSchema = z32.object({
-  organizationId: z32.string().min(1).describe("Organization ID to fetch.")
+var GetOrganizationInputSchema = z36.object({
+  organizationId: z36.string().min(1).describe("Organization ID to fetch.")
 });
-var GetOrganizationOutputSchema = z32.object({
+var GetOrganizationOutputSchema = z36.object({
   organization: OrganizationSchema
 });
-var UpdateOrganizationInputSchema = z32.object({
-  organizationId: z32.string().min(1).describe("Organization ID to update. SDK and CLI callers can auto-fill this before dispatch."),
-  name: z32.string().trim().min(1).max(100).describe("New organization name.")
+var UpdateOrganizationInputSchema = z36.object({
+  organizationId: z36.string().min(1).describe("Organization ID to update. SDK and CLI callers can auto-fill this before dispatch."),
+  name: z36.string().trim().min(1).max(100).describe("New organization name.")
 });
-var UpdateOrganizationOutputSchema = z32.object({
+var UpdateOrganizationOutputSchema = z36.object({
   organization: OrganizationSchema.describe("Updated organization.")
 });
-var OrganizationNameSchema = z32.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
-var CreateOrganizationInputSchema = z32.object({
+var OrganizationNameSchema = z36.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
+var CreateOrganizationInputSchema = z36.object({
   name: OrganizationNameSchema.describe("Organization display name.")
 });
-var CreateOrganizationOutputSchema = z32.object({
+var CreateOrganizationOutputSchema = z36.object({
   organization: OrganizationSchema
 });
 var createOrganization = defineOperation({
@@ -32782,9 +28321,9 @@ var organizationsContract = {
   update: updateOrganization.contract
 };
 
-// ../public-api-contracts/src/project.ts
-import { z as z33 } from "zod";
-var ProjectRegionSchema = z33.enum([
+// ../../contracts/public-api/src/project.ts
+import { z as z37 } from "zod";
+var ProjectRegionSchema = z37.enum([
   "us-east-1",
   "us-east-2",
   "us-west-1",
@@ -32798,31 +28337,31 @@ var ProjectRegionSchema = z33.enum([
   "eu-west-2",
   "eu-west-3"
 ]);
-var ProjectSchema = z33.object({
-  id: z33.string().uuid(),
-  organizationId: z33.string().min(1),
-  name: z33.string(),
+var ProjectSchema = z37.object({
+  id: z37.string().uuid(),
+  organizationId: z37.string().min(1),
+  name: z37.string(),
   region: ProjectRegionSchema
 });
-var ListProjectsInputSchema = z33.object({
-  organizationId: z33.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
+var ListProjectsInputSchema = z37.object({
+  organizationId: z37.string().min(1).optional().describe("Organization to list projects for. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).")
 });
-var ListProjectsOutputSchema = z33.object({
-  projects: z33.array(ProjectSchema).describe("Projects visible within the selected organization.")
+var ListProjectsOutputSchema = z37.object({
+  projects: z37.array(ProjectSchema).describe("Projects visible within the selected organization.")
 });
-var GetProjectInputSchema = z33.object({
-  projectId: z33.string().uuid().describe("Project ID to fetch.")
+var GetProjectInputSchema = z37.object({
+  projectId: z37.string().uuid().describe("Project ID to fetch.")
 });
-var ProjectNameSchema = z33.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
-var CreateProjectInputSchema = z33.object({
-  organizationId: z33.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
+var ProjectNameSchema = z37.string().trim().min(1, "Name is required").max(100, "Name must be 100 characters or less").regex(/^[\p{L}\p{N} _-]+$/u, "Name can only contain letters, numbers, spaces, hyphens, and underscores");
+var CreateProjectInputSchema = z37.object({
+  organizationId: z37.string().min(1).optional().describe("Organization to create the project under. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies)."),
   name: ProjectNameSchema.describe("Project name."),
   region: ProjectRegionSchema.optional().default("us-west-2").describe("AWS region where the new project should be created.")
 });
-var CreateProjectOutputSchema = z33.object({
+var CreateProjectOutputSchema = z37.object({
   project: ProjectSchema
 });
-var GetProjectDetailsOutputSchema = z33.object({
+var GetProjectDetailsOutputSchema = z37.object({
   project: ProjectSchema
 });
 var listProjects = defineOperation({
@@ -32871,11 +28410,11 @@ var createProject = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpdateProjectInputSchema = z33.object({
-  projectId: z33.string().uuid().describe("Project ID to update."),
+var UpdateProjectInputSchema = z37.object({
+  projectId: z37.string().uuid().describe("Project ID to update."),
   name: ProjectNameSchema.optional().describe("New project name.")
 });
-var UpdateProjectOutputSchema = z33.object({
+var UpdateProjectOutputSchema = z37.object({
   project: ProjectSchema
 });
 var updateProject = defineOperation({
@@ -32893,10 +28432,10 @@ var updateProject = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteProjectInputSchema = z33.object({
-  projectId: z33.string().uuid().describe("Project ID to delete.")
+var DeleteProjectInputSchema = z37.object({
+  projectId: z37.string().uuid().describe("Project ID to delete.")
 });
-var DeleteProjectOutputSchema = z33.void();
+var DeleteProjectOutputSchema = z37.void();
 var deleteProject = defineOperation({
   operationId: "projects.delete",
   summary: "Delete a project",
@@ -32921,50 +28460,50 @@ var projectsContract = {
   delete: deleteProject.contract
 };
 
-// ../public-api-contracts/src/pull-requests.ts
-import { z as z34 } from "zod";
-var PullRequestStatusSchema = z34.enum(["open", "merged", "closed"]);
-var PullRequestReviewStateSchema = z34.enum([
+// ../../contracts/public-api/src/pull-requests.ts
+import { z as z38 } from "zod";
+var PullRequestStatusSchema = z38.enum(["open", "merged", "closed"]);
+var PullRequestReviewStateSchema = z38.enum([
   "review_required",
   "approved",
   "changes_requested"
 ]);
-var PullRequestChecksStateSchema = z34.enum([
+var PullRequestChecksStateSchema = z38.enum([
   "passing",
   "failing",
   "pending"
 ]);
-var PullRequestSchema = z34.object({
-  id: z34.string().uuid(),
-  projectId: z34.string().uuid(),
-  repositoryFullName: z34.string(),
-  pullRequestId: z34.string().describe("Provider-native pull request identifier (GitHub PR number or Bitbucket PR id), serialized as a string."),
-  githubPullRequestId: z34.number().int().describe("Deprecated: use pullRequestId. Numeric form of the provider-native pull request identifier; kept for backward compatibility."),
-  title: z34.string().nullable(),
-  url: z34.string().nullable(),
+var PullRequestSchema = z38.object({
+  id: z38.string().uuid(),
+  projectId: z38.string().uuid(),
+  repositoryFullName: z38.string(),
+  pullRequestId: z38.string().describe("Provider-native pull request identifier (GitHub PR number or Bitbucket PR id), serialized as a string."),
+  githubPullRequestId: z38.number().int().describe("Deprecated: use pullRequestId. Numeric form of the provider-native pull request identifier; kept for backward compatibility."),
+  title: z38.string().nullable(),
+  url: z38.string().nullable(),
   status: PullRequestStatusSchema.nullable(),
   reviewState: PullRequestReviewStateSchema.nullable(),
   checksState: PullRequestChecksStateSchema.nullable(),
-  requestedByUserId: z34.string().nullable(),
-  authorLogin: z34.string().nullable().describe("Forge login that authored the pull request (often the Sazabi app identity)."),
-  githubAuthorLogin: z34.string().nullable().describe("Deprecated: use authorLogin. Kept for backward compatibility."),
-  threadId: z34.string().uuid().nullable(),
-  runId: z34.string().uuid().nullable(),
-  createdAt: z34.string().datetime(),
-  mergedAt: z34.string().datetime().nullable(),
-  closedAt: z34.string().datetime().nullable()
+  requestedByUserId: z38.string().nullable(),
+  authorLogin: z38.string().nullable().describe("Forge login that authored the pull request (often the Sazabi app identity)."),
+  githubAuthorLogin: z38.string().nullable().describe("Deprecated: use authorLogin. Kept for backward compatibility."),
+  threadId: z38.string().uuid().nullable(),
+  runId: z38.string().uuid().nullable(),
+  createdAt: z38.string().datetime(),
+  mergedAt: z38.string().datetime().nullable(),
+  closedAt: z38.string().datetime().nullable()
 });
-var ListPullRequestsInputSchema = z34.object({
-  projectId: z34.string().uuid().optional().describe("Project to list pull requests for. Auto-filled from CLI and SDK context when omitted."),
-  limit: z34.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of pull requests to return per page."),
-  cursor: z34.string().min(1).optional().describe("Opaque cursor from a previous response's nextCursor to fetch the next page. Pass it back verbatim; its format is not part of the API contract."),
+var ListPullRequestsInputSchema = z38.object({
+  projectId: z38.string().uuid().optional().describe("Project to list pull requests for. Auto-filled from CLI and SDK context when omitted."),
+  limit: z38.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of pull requests to return per page."),
+  cursor: z38.string().min(1).optional().describe("Opaque cursor from a previous response's nextCursor to fetch the next page. Pass it back verbatim; its format is not part of the API contract."),
   status: PullRequestStatusSchema.optional().describe("Filter by pull request status (open, merged, or closed)."),
-  repositoryFullName: z34.string().trim().optional().describe("Filter by repository full name, for example owner/repo. Case-insensitive."),
-  requestedByUserId: z34.string().trim().optional().describe("Filter by the Sazabi user who requested the pull request. Pass 'me' to filter to the authenticated user.")
+  repositoryFullName: z38.string().trim().optional().describe("Filter by repository full name, for example owner/repo. Case-insensitive."),
+  requestedByUserId: z38.string().trim().optional().describe("Filter by the Sazabi user who requested the pull request. Pass 'me' to filter to the authenticated user.")
 });
-var ListPullRequestsOutputSchema = z34.object({
-  pullRequests: z34.array(PullRequestSchema),
-  nextCursor: z34.string().nullable().describe("Opaque cursor to pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListPullRequestsOutputSchema = z38.object({
+  pullRequests: z38.array(PullRequestSchema),
+  nextCursor: z38.string().nullable().describe("Opaque cursor to pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
 var listPullRequests = defineOperation({
   operationId: "pullRequests.list",
@@ -32981,31 +28520,31 @@ var pullRequestsContract = {
   list: listPullRequests.contract
 };
 
-// ../public-api-contracts/src/recommendations.ts
-import { z as z35 } from "zod";
-var RecommendationKindSchema = z35.enum([
+// ../../contracts/public-api/src/recommendations.ts
+import { z as z39 } from "zod";
+var RecommendationKindSchema = z39.enum([
   "log_source",
   "mcp_connector",
   "sandbox_cli",
   "integration"
 ]);
-var RecommendationStatusSchema = z35.enum(["connected", "recommended"]);
-var RecommendationSchema = z35.object({
+var RecommendationStatusSchema = z39.enum(["connected", "recommended"]);
+var RecommendationSchema = z39.object({
   kind: RecommendationKindSchema.describe("What the recommendation targets: a log source, MCP connector, sandbox CLI, or integration."),
-  targetId: z35.string().describe("Exact catalog id for the kind (log source type, MCP provider id, sandbox CLI preset type, or integration provider id)."),
+  targetId: z39.string().describe("Exact catalog id for the kind (log source type, MCP provider id, sandbox CLI preset type, or integration provider id)."),
   status: RecommendationStatusSchema.describe("Resolved live against current connections: connected (already set up) or recommended (suggested, not yet connected)."),
-  roiScore: z35.number().int().min(0).max(100).describe("Intrinsic ROI score, 0–100 — a normalized blend of how valuable, how easy to connect, and how proven the item is. A pure function of the item; computed live on read, never stored."),
-  priority: z35.number().int().min(1).describe("1-based rank within this list, sorted by roiScore (best first). Items are already returned in priority order; the field lets consumers recover the rank without trusting array position."),
-  components: z35.array(z35.object({
-    id: z35.string().uuid().describe("Component id."),
-    name: z35.string().describe("Component display name.")
+  roiScore: z39.number().int().min(0).max(100).describe("Intrinsic ROI score, 0–100 — a normalized blend of how valuable, how easy to connect, and how proven the item is. A pure function of the item; computed live on read, never stored."),
+  priority: z39.number().int().min(1).describe("1-based rank within this list, sorted by roiScore (best first). Items are already returned in priority order; the field lets consumers recover the rank without trusting array position."),
+  components: z39.array(z39.object({
+    id: z39.string().uuid().describe("Component id."),
+    name: z39.string().describe("Component display name.")
   })).describe('Components whose live evidence motivates this recommendation ("because you run pubsub, bigquery"). Live links only, resolved against current component lifecycle — merged components attribute to the surviving component. Empty when the recommendation has no component attribution.')
 });
-var ListRecommendationsInputSchema = z35.object({
-  projectId: z35.string().uuid().optional().describe("Project to list recommendations for. Auto-filled from CLI and SDK context when omitted.")
+var ListRecommendationsInputSchema = z39.object({
+  projectId: z39.string().uuid().optional().describe("Project to list recommendations for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListRecommendationsOutputSchema = z35.object({
-  recommendations: z35.array(RecommendationSchema).describe("The project's configuration recommendations, deduped by (kind, targetId), with status resolved live and each item's ROI score. Returned in priority order (highest roiScore first).")
+var ListRecommendationsOutputSchema = z39.object({
+  recommendations: z39.array(RecommendationSchema).describe("The project's configuration recommendations, deduped by (kind, targetId), with status resolved live and each item's ROI score. Returned in priority order (highest roiScore first).")
 });
 var listRecommendations = defineOperation({
   operationId: "recommendations.list",
@@ -33023,40 +28562,40 @@ var listRecommendations = defineOperation({
   async: "sync"
 });
 
-// ../public-api-contracts/src/repos.ts
-import { z as z36 } from "zod";
-var RepoProviderSchema = z36.enum(["github", "bitbucket"]);
-var RepoSchema = z36.object({
-  id: z36.string().uuid().describe("Repository row id — stable across access sources; use it as the path id for repos.remove."),
-  accessSourceId: z36.string().uuid().describe("Access source granting this view of the repository (GitHub App installation, personal connection, or integration). Pass to repos.add to link the repository through this source."),
-  source: z36.enum(["githubApp", "personal", "integration"]).describe("Kind of access source granting this view: an organization GitHub App installation, the caller's personal forge connection, or an organization integration."),
-  sourceLabel: z36.string().describe('Display label for the access source (e.g. "GitHub app", "Personal").'),
+// ../../contracts/public-api/src/repos.ts
+import { z as z40 } from "zod";
+var RepoProviderSchema = z40.enum(["github", "bitbucket"]);
+var RepoSchema = z40.object({
+  id: z40.string().uuid().describe("Repository row id — stable across access sources; use it as the path id for repos.remove."),
+  accessSourceId: z40.string().uuid().describe("Access source granting this view of the repository (GitHub App installation, personal connection, or integration). Pass to repos.add to link the repository through this source."),
+  source: z40.enum(["githubApp", "personal", "integration"]).describe("Kind of access source granting this view: an organization GitHub App installation, the caller's personal forge connection, or an organization integration."),
+  sourceLabel: z40.string().describe('Display label for the access source (e.g. "GitHub app", "Personal").'),
   provider: RepoProviderSchema.describe("Forge hosting the repository."),
-  owner: z36.string().describe("Repository owner (user or organization)."),
-  name: z36.string().describe("Repository name without the owner."),
-  fullName: z36.string().describe("Full name in owner/name form."),
-  defaultBranch: z36.string().nullable().describe("Default branch, when the forge reports one."),
-  isPrivate: z36.boolean().describe("Whether the repository is private."),
-  linked: z36.boolean().describe("Whether the repository is already linked to the project.")
+  owner: z40.string().describe("Repository owner (user or organization)."),
+  name: z40.string().describe("Repository name without the owner."),
+  fullName: z40.string().describe("Full name in owner/name form."),
+  defaultBranch: z40.string().nullable().describe("Default branch, when the forge reports one."),
+  isPrivate: z40.boolean().describe("Whether the repository is private."),
+  linked: z40.boolean().describe("Whether the repository is already linked to the project.")
 });
-var ListReposInputSchema = z36.object({
-  projectId: z36.string().uuid().optional().describe("Project to list repositories for. Auto-filled from CLI and SDK context when omitted.")
+var ListReposInputSchema = z40.object({
+  projectId: z40.string().uuid().optional().describe("Project to list repositories for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListReposOutputSchema = z36.object({
-  repos: z36.array(RepoSchema).describe("Every repository available to the project's organization (from GitHub App installations, the caller's personal forge connections, and integrations), with `linked` marking the ones already linked to the project.")
+var ListReposOutputSchema = z40.object({
+  repos: z40.array(RepoSchema).describe("Every repository available to the project's organization (from GitHub App installations, the caller's personal forge connections, and integrations), with `linked` marking the ones already linked to the project.")
 });
-var AddReposInputSchema = z36.object({
-  projectId: z36.string().uuid().optional().describe("Project to link the repositories to. Auto-filled from CLI and SDK context when omitted."),
-  accessSourceIds: z36.array(z36.string().uuid()).min(1).describe("Access source ids (from repos.list) to link. Select only one access source per repository.")
+var AddReposInputSchema = z40.object({
+  projectId: z40.string().uuid().optional().describe("Project to link the repositories to. Auto-filled from CLI and SDK context when omitted."),
+  accessSourceIds: z40.array(z40.string().uuid()).min(1).describe("Access source ids (from repos.list) to link. Select only one access source per repository.")
 });
-var AddReposOutputSchema = z36.object({
-  repos: z36.array(RepoSchema).describe("The now-linked repositories.")
+var AddReposOutputSchema = z40.object({
+  repos: z40.array(RepoSchema).describe("The now-linked repositories.")
 });
-var RemoveRepoInputSchema = z36.object({
-  id: z36.string().uuid().describe("Repository row id (from repos.list) to unlink."),
-  projectId: z36.string().uuid().optional().describe("Project to unlink the repository from. Auto-filled from CLI and SDK context when omitted.")
+var RemoveRepoInputSchema = z40.object({
+  id: z40.string().uuid().describe("Repository row id (from repos.list) to unlink."),
+  projectId: z40.string().uuid().optional().describe("Project to unlink the repository from. Auto-filled from CLI and SDK context when omitted.")
 });
-var RemoveRepoOutputSchema = z36.void();
+var RemoveRepoOutputSchema = z40.void();
 var listRepos = defineOperation({
   operationId: "repos.list",
   summary: "List repositories",
@@ -33104,18 +28643,18 @@ var removeRepo = defineOperation({
   async: "sync"
 });
 
-// ../public-api-contracts/src/sandbox-clis.ts
-import { z as z37 } from "zod";
-var SandboxCliTypeInfoSchema = z37.object({
-  type: z37.string().describe("CLI type identifier."),
-  label: z37.string().describe("Human-readable display name."),
-  executableNames: z37.array(z37.string()).describe("CLI binary names installed by this sandbox CLI."),
-  envVarKeys: z37.array(z37.string()).describe("Environment variables required for authentication."),
-  setupSkill: z37.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
+// ../../contracts/public-api/src/sandbox-clis.ts
+import { z as z41 } from "zod";
+var SandboxCliTypeInfoSchema = z41.object({
+  type: z41.string().describe("CLI type identifier."),
+  label: z41.string().describe("Human-readable display name."),
+  executableNames: z41.array(z41.string()).describe("CLI binary names installed by this sandbox CLI."),
+  envVarKeys: z41.array(z41.string()).describe("Environment variables required for authentication."),
+  setupSkill: z41.string().nullable().describe("Markdown setup skill for AI agents. Null when no skill is available.")
 });
-var ListSandboxCliTypesInputSchema = z37.object({});
-var ListSandboxCliTypesOutputSchema = z37.object({
-  types: z37.array(SandboxCliTypeInfoSchema)
+var ListSandboxCliTypesInputSchema = z41.object({});
+var ListSandboxCliTypesOutputSchema = z41.object({
+  types: z41.array(SandboxCliTypeInfoSchema)
 });
 var listSandboxCliTypes = defineOperation({
   operationId: "sandboxClis.listTypes",
@@ -33132,25 +28671,25 @@ var listSandboxCliTypes = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SandboxCliCredentialSourceSchema = z37.enum([
+var SandboxCliCredentialSourceSchema = z41.enum([
   "github_app",
   "bitbucket_integration",
   "personal_access_token",
   "stored_credentials",
   "tailscale_federated_identity"
 ]);
-var SandboxCliConnectionSchema = z37.object({
-  cliType: z37.string().describe("CLI type identifier."),
+var SandboxCliConnectionSchema = z41.object({
+  cliType: z41.string().describe("CLI type identifier."),
   credentialSource: SandboxCliCredentialSourceSchema.describe("Authoritative credential source for the sandbox CLI."),
-  isSystemManaged: z37.boolean().describe("Whether the connection follows an integration lifecycle."),
-  fallbackConfigured: z37.boolean().describe("Whether user-provided fallback credentials are stored for this sandbox CLI."),
-  envVarKeys: z37.array(z37.string()).describe("Stored environment variable names. Secret values are omitted.")
+  isSystemManaged: z41.boolean().describe("Whether the connection follows an integration lifecycle."),
+  fallbackConfigured: z41.boolean().describe("Whether user-provided fallback credentials are stored for this sandbox CLI."),
+  envVarKeys: z41.array(z41.string()).describe("Stored environment variable names. Secret values are omitted.")
 });
-var ListSandboxCliConnectionsInputSchema = z37.object({
-  projectId: z37.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
+var ListSandboxCliConnectionsInputSchema = z41.object({
+  projectId: z41.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
 });
-var ListSandboxCliConnectionsOutputSchema = z37.object({
-  connections: z37.array(SandboxCliConnectionSchema)
+var ListSandboxCliConnectionsOutputSchema = z41.object({
+  connections: z41.array(SandboxCliConnectionSchema)
 });
 var listSandboxCliConnections = defineOperation({
   operationId: "sandboxClis.listConnections",
@@ -33167,19 +28706,19 @@ var listSandboxCliConnections = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var SandboxCliEnvVarSchema = z37.object({
-  key: z37.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must match /^[A-Za-z_][A-Za-z0-9_]*$/.").describe("Environment variable name (e.g. KUBECONFIG_CONTENTS)."),
-  value: z37.string().max(10 * 1024).describe("Secret value. Encrypted at rest; never returned by any API response.")
+var SandboxCliEnvVarSchema = z41.object({
+  key: z41.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must match /^[A-Za-z_][A-Za-z0-9_]*$/.").describe("Environment variable name (e.g. KUBECONFIG_CONTENTS)."),
+  value: z41.string().max(10 * 1024).describe("Secret value. Encrypted at rest; never returned by any API response.")
 });
-var UpsertSandboxCliInputSchema = z37.object({
-  projectId: z37.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  cliType: z37.string().min(1).describe("CLI type identifier (e.g. kubectl, aws, github)."),
-  environmentVariables: z37.array(SandboxCliEnvVarSchema).max(100).describe("Full set of env vars for this sandbox CLI. Replaces any previously stored values for the CLI.")
+var UpsertSandboxCliInputSchema = z41.object({
+  projectId: z41.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  cliType: z41.string().min(1).describe("CLI type identifier (e.g. kubectl, aws, github)."),
+  environmentVariables: z41.array(SandboxCliEnvVarSchema).max(100).describe("Full set of env vars for this sandbox CLI. Replaces any previously stored values for the CLI.")
 });
-var UpsertSandboxCliOutputSchema = z37.object({
-  projectId: z37.string().uuid().describe("Project the CLI connection was written to."),
-  cliType: z37.string().describe("CLI type that was upserted."),
-  envVarKeys: z37.array(z37.string()).describe("Env var key names now stored for this sandbox CLI. Values are never returned.")
+var UpsertSandboxCliOutputSchema = z41.object({
+  projectId: z41.string().uuid().describe("Project the CLI connection was written to."),
+  cliType: z41.string().describe("CLI type that was upserted."),
+  envVarKeys: z41.array(z41.string()).describe("Env var key names now stored for this sandbox CLI. Values are never returned.")
 });
 var upsertSandboxCli = defineOperation({
   operationId: "sandboxClis.upsertCli",
@@ -33197,14 +28736,14 @@ var upsertSandboxCli = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteSandboxCliInputSchema = z37.object({
-  projectId: z37.string().uuid().optional().describe("Project to update. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  cliType: z37.string().min(1).describe("CLI type identifier.")
+var DeleteSandboxCliInputSchema = z41.object({
+  projectId: z41.string().uuid().optional().describe("Project to update. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  cliType: z41.string().min(1).describe("CLI type identifier.")
 });
-var DeleteSandboxCliOutputSchema = z37.object({
-  projectId: z37.string().uuid().describe("Project the CLI connection belonged to."),
-  cliType: z37.string().describe("CLI type that was disconnected."),
-  deleted: z37.boolean().describe("Whether a stored CLI connection was deleted.")
+var DeleteSandboxCliOutputSchema = z41.object({
+  projectId: z41.string().uuid().describe("Project the CLI connection belonged to."),
+  cliType: z41.string().describe("CLI type that was disconnected."),
+  deleted: z41.boolean().describe("Whether a stored CLI connection was deleted.")
 });
 var deleteSandboxCli = defineOperation({
   operationId: "sandboxClis.deleteCli",
@@ -33221,16 +28760,16 @@ var deleteSandboxCli = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var TestSandboxCliInputSchema = z37.object({
-  projectId: z37.string().uuid().optional().describe("Project to test from. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  cliType: z37.string().min(1).describe("CLI type identifier."),
-  environmentVariables: z37.array(SandboxCliEnvVarSchema).max(100).describe("Unsaved credentials to validate in a readonly sandbox.")
+var TestSandboxCliInputSchema = z41.object({
+  projectId: z41.string().uuid().optional().describe("Project to test from. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  cliType: z41.string().min(1).describe("CLI type identifier."),
+  environmentVariables: z41.array(SandboxCliEnvVarSchema).max(100).describe("Unsaved credentials to validate in a readonly sandbox.")
 });
-var TestSandboxCliOutputSchema = z37.object({
-  status: z37.enum(["success", "failed"]),
-  message: z37.string().nullable(),
-  stdout: z37.string().describe("Truncated command output with submitted credentials redacted."),
-  stderr: z37.string().describe("Truncated command errors with submitted credentials redacted.")
+var TestSandboxCliOutputSchema = z41.object({
+  status: z41.enum(["success", "failed"]),
+  message: z41.string().nullable(),
+  stdout: z41.string().describe("Truncated command output with submitted credentials redacted."),
+  stderr: z41.string().describe("Truncated command errors with submitted credentials redacted.")
 });
 var testSandboxCli = defineOperation({
   operationId: "sandboxClis.testCli",
@@ -33255,26 +28794,26 @@ var sandboxClisContract = {
   upsertCli: upsertSandboxCli.contract
 };
 
-// ../public-api-contracts/src/sandbox-environment-variables.ts
-import { z as z38 } from "zod";
-var SandboxEnvironmentVariableKeySchema = z38.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must start with a letter or underscore and contain only letters, numbers, and underscores (max 256 characters).").refine((key) => key !== "SAZABI_TOKEN", {
+// ../../contracts/public-api/src/sandbox-environment-variables.ts
+import { z as z42 } from "zod";
+var SandboxEnvironmentVariableKeySchema = z42.string().min(1).max(256).regex(/^[A-Za-z_][A-Za-z0-9_]*$/, "Environment variable keys must start with a letter or underscore and contain only letters, numbers, and underscores (max 256 characters).").refine((key) => key !== "SAZABI_TOKEN", {
   message: '"SAZABI_TOKEN" is a reserved environment variable.'
 }).describe("Environment variable name (e.g. API_KEY).");
-var SandboxEnvironmentVariableValueSchema = z38.string().max(10 * 1024).refine((value) => new TextEncoder().encode(value).length <= 10 * 1024, {
+var SandboxEnvironmentVariableValueSchema = z42.string().max(10 * 1024).refine((value) => new TextEncoder().encode(value).length <= 10 * 1024, {
   message: "Environment variable values must be at most 10 KiB."
 }).describe("Secret value. Encrypted at rest; never returned by any API response.");
-var SandboxEnvironmentVariableSchema = z38.object({
+var SandboxEnvironmentVariableSchema = z42.object({
   key: SandboxEnvironmentVariableKeySchema,
   value: SandboxEnvironmentVariableValueSchema
 });
-var SandboxEnvironmentVariableItemSchema = z38.object({
+var SandboxEnvironmentVariableItemSchema = z42.object({
   key: SandboxEnvironmentVariableKeySchema.describe("Stored environment variable name.")
 });
-var ListSandboxEnvironmentVariablesInputSchema = z38.object({
-  projectId: z38.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
+var ListSandboxEnvironmentVariablesInputSchema = z42.object({
+  projectId: z42.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted.")
 });
-var ListSandboxEnvironmentVariablesOutputSchema = z38.object({
-  environmentVariables: z38.array(SandboxEnvironmentVariableItemSchema).describe("Stored environment variable names. Secret values are omitted.")
+var ListSandboxEnvironmentVariablesOutputSchema = z42.object({
+  environmentVariables: z42.array(SandboxEnvironmentVariableItemSchema).describe("Stored environment variable names. Secret values are omitted.")
 });
 var listSandboxEnvironmentVariables = defineOperation({
   operationId: "sandboxEnvironmentVariables.list",
@@ -33291,11 +28830,11 @@ var listSandboxEnvironmentVariables = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var GetSandboxEnvironmentVariableInputSchema = z38.object({
-  projectId: z38.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+var GetSandboxEnvironmentVariableInputSchema = z42.object({
+  projectId: z42.string().uuid().optional().describe("Project to inspect. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
   key: SandboxEnvironmentVariableKeySchema.describe("Environment variable name to fetch.")
 });
-var GetSandboxEnvironmentVariableOutputSchema = z38.object({
+var GetSandboxEnvironmentVariableOutputSchema = z42.object({
   environmentVariable: SandboxEnvironmentVariableItemSchema
 });
 var getSandboxEnvironmentVariable = defineOperation({
@@ -33313,13 +28852,13 @@ var getSandboxEnvironmentVariable = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var UpsertSandboxEnvironmentVariablesInputSchema = z38.object({
-  projectId: z38.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
-  environmentVariables: z38.array(SandboxEnvironmentVariableSchema).min(1).max(100).describe("Environment variables to add or update. Merges with existing environment variables.")
+var UpsertSandboxEnvironmentVariablesInputSchema = z42.object({
+  projectId: z42.string().uuid().optional().describe("Project to configure. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+  environmentVariables: z42.array(SandboxEnvironmentVariableSchema).min(1).max(100).describe("Environment variables to add or update. Merges with existing environment variables.")
 });
-var UpsertSandboxEnvironmentVariablesOutputSchema = z38.object({
-  projectId: z38.string().uuid().describe("Project the environment variables belong to."),
-  environmentVariables: z38.array(SandboxEnvironmentVariableItemSchema).describe("All configured custom environment variable names for the project after upsert.")
+var UpsertSandboxEnvironmentVariablesOutputSchema = z42.object({
+  projectId: z42.string().uuid().describe("Project the environment variables belong to."),
+  environmentVariables: z42.array(SandboxEnvironmentVariableItemSchema).describe("All configured custom environment variable names for the project after upsert.")
 });
 var upsertSandboxEnvironmentVariables = defineOperation({
   operationId: "sandboxEnvironmentVariables.upsert",
@@ -33337,14 +28876,14 @@ var upsertSandboxEnvironmentVariables = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteSandboxEnvironmentVariableInputSchema = z38.object({
-  projectId: z38.string().uuid().optional().describe("Project to update. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
+var DeleteSandboxEnvironmentVariableInputSchema = z42.object({
+  projectId: z42.string().uuid().optional().describe("Project to update. Required for organization-scoped keys; auto-filled from a project-scoped key when omitted."),
   key: SandboxEnvironmentVariableKeySchema.describe("Environment variable name to delete.")
 });
-var DeleteSandboxEnvironmentVariableOutputSchema = z38.object({
-  projectId: z38.string().uuid().describe("Project the environment variable belonged to."),
+var DeleteSandboxEnvironmentVariableOutputSchema = z42.object({
+  projectId: z42.string().uuid().describe("Project the environment variable belonged to."),
   key: SandboxEnvironmentVariableKeySchema.describe("Environment variable name that was deleted."),
-  deleted: z38.boolean().describe("Whether a stored environment variable was deleted.")
+  deleted: z42.boolean().describe("Whether a stored environment variable was deleted.")
 });
 var deleteSandboxEnvironmentVariable = defineOperation({
   operationId: "sandboxEnvironmentVariables.delete",
@@ -33368,65 +28907,65 @@ var sandboxEnvironmentVariablesContract = {
   delete: deleteSandboxEnvironmentVariable.contract
 };
 
-// ../public-api-contracts/src/scripts.ts
-import { z as z39 } from "zod";
-var ProjectScriptNameSchema = z39.string().min(1).max(64).regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/, "Name must start with a letter or digit and contain only letters, digits, underscores, and hyphens (max 64 characters).").describe("Script name. Must be unique within the project among non-deleted scripts.");
+// ../../contracts/public-api/src/scripts.ts
+import { z as z43 } from "zod";
+var ProjectScriptNameSchema = z43.string().min(1).max(64).regex(/^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/, "Name must start with a letter or digit and contain only letters, digits, underscores, and hyphens (max 64 characters).").describe("Script name. Must be unique within the project among non-deleted scripts.");
 var PROJECT_SCRIPT_CONTENT_MAX_BYTES = 1024 * 1024;
-var ProjectScriptContentSchema = z39.string().min(1).refine((value) => new TextEncoder().encode(value).length <= PROJECT_SCRIPT_CONTENT_MAX_BYTES, {
+var ProjectScriptContentSchema = z43.string().min(1).refine((value) => new TextEncoder().encode(value).length <= PROJECT_SCRIPT_CONTENT_MAX_BYTES, {
   message: `Script content must be at most ${PROJECT_SCRIPT_CONTENT_MAX_BYTES} bytes (1 MiB).`
 }).describe("Bash script body materialized as /home/sazabi/scripts/<name>.sh in the sandbox.");
-var ProjectScriptSchema = z39.object({
-  id: z39.string().uuid(),
-  projectId: z39.string().uuid(),
-  name: z39.string(),
-  description: z39.string().nullable(),
-  contentHash: z39.string().describe("sha256 hex digest of the script content."),
-  createdAt: z39.string().datetime(),
-  updatedAt: z39.string().datetime()
+var ProjectScriptSchema = z43.object({
+  id: z43.string().uuid(),
+  projectId: z43.string().uuid(),
+  name: z43.string(),
+  description: z43.string().nullable(),
+  contentHash: z43.string().describe("sha256 hex digest of the script content."),
+  createdAt: z43.string().datetime(),
+  updatedAt: z43.string().datetime()
 });
 var ProjectScriptDetailSchema = ProjectScriptSchema.extend({
   content: ProjectScriptContentSchema
 });
-var ListProjectScriptsInputSchema = z39.object({
-  projectId: z39.string().uuid().optional().describe("Project to list scripts for. Auto-filled from CLI and SDK context when omitted."),
-  search: z39.string().optional().describe("Case-insensitive partial match on script name."),
-  cursor: z39.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  limit: z39.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of scripts to return per page.")
+var ListProjectScriptsInputSchema = z43.object({
+  projectId: z43.string().uuid().optional().describe("Project to list scripts for. Auto-filled from CLI and SDK context when omitted."),
+  search: z43.string().optional().describe("Case-insensitive partial match on script name."),
+  cursor: z43.string().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
+  limit: z43.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of scripts to return per page.")
 });
-var ListProjectScriptsOutputSchema = z39.object({
-  scripts: z39.array(ProjectScriptSchema),
-  nextCursor: z39.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
+var ListProjectScriptsOutputSchema = z43.object({
+  scripts: z43.array(ProjectScriptSchema),
+  nextCursor: z43.string().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
-var GetProjectScriptInputSchema = z39.object({
+var GetProjectScriptInputSchema = z43.object({
   name: ProjectScriptNameSchema.describe("Script name to fetch."),
-  projectId: z39.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z43.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
 });
-var GetProjectScriptOutputSchema = z39.object({
+var GetProjectScriptOutputSchema = z43.object({
   script: ProjectScriptDetailSchema
 });
-var CreateProjectScriptInputSchema = z39.object({
-  projectId: z39.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
+var CreateProjectScriptInputSchema = z43.object({
+  projectId: z43.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
   name: ProjectScriptNameSchema.describe("Script name. Must be unique within the project among non-deleted scripts."),
   content: ProjectScriptContentSchema,
-  description: z39.string().max(500).nullable().optional().describe("Optional human-readable description.")
+  description: z43.string().max(500).nullable().optional().describe("Optional human-readable description.")
 });
-var CreateProjectScriptOutputSchema = z39.object({
+var CreateProjectScriptOutputSchema = z43.object({
   script: ProjectScriptDetailSchema
 });
-var UpdateProjectScriptInputSchema = z39.object({
+var UpdateProjectScriptInputSchema = z43.object({
   name: ProjectScriptNameSchema.describe("Script to update."),
-  projectId: z39.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
+  projectId: z43.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted."),
   content: ProjectScriptContentSchema.optional().describe("New script body. Omit to leave content unchanged."),
-  description: z39.string().max(500).nullable().optional().describe("New description, or null to clear it. Omit to leave unchanged.")
+  description: z43.string().max(500).nullable().optional().describe("New description, or null to clear it. Omit to leave unchanged.")
 });
-var UpdateProjectScriptOutputSchema = z39.object({
+var UpdateProjectScriptOutputSchema = z43.object({
   script: ProjectScriptDetailSchema
 });
-var DeleteProjectScriptInputSchema = z39.object({
+var DeleteProjectScriptInputSchema = z43.object({
   name: ProjectScriptNameSchema.describe("Script to delete."),
-  projectId: z39.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z43.string().uuid().optional().describe("Project that owns the script. Auto-filled from CLI and SDK context when omitted.")
 });
-var DeleteProjectScriptOutputSchema = z39.void();
+var DeleteProjectScriptOutputSchema = z43.void();
 var listProjectScripts = defineOperation({
   operationId: "scripts.list",
   summary: "List scripts",
@@ -33512,57 +29051,57 @@ var scriptsContract = {
   delete: deleteProjectScript.contract
 };
 
-// ../public-api-contracts/src/search.ts
-import { z as z40 } from "zod";
-var SearchInputSchema = z40.object({
-  projectId: z40.string().uuid().optional().describe("Project to search within. Auto-filled from CLI and SDK context when omitted."),
-  query: z40.string().trim().min(1, "Query must be at least 1 character").max(500, "Query must be at most 500 characters"),
-  limit: z40.coerce.number().min(1).max(100).default(20).describe("Maximum number of search results to return."),
-  page: z40.coerce.number().min(1).default(1).describe("One-based page number.")
+// ../../contracts/public-api/src/search.ts
+import { z as z44 } from "zod";
+var SearchInputSchema = z44.object({
+  projectId: z44.string().uuid().optional().describe("Project to search within. Auto-filled from CLI and SDK context when omitted."),
+  query: z44.string().trim().min(1, "Query must be at least 1 character").max(500, "Query must be at most 500 characters"),
+  limit: z44.coerce.number().min(1).max(100).default(20).describe("Maximum number of search results to return."),
+  page: z44.coerce.number().min(1).default(1).describe("One-based page number.")
 });
 var SearchThreadsInputSchema = SearchInputSchema.extend({
-  status: z40.enum(["regular", "archived"]).optional().describe("Optional thread status filter.")
+  status: z44.enum(["regular", "archived"]).optional().describe("Optional thread status filter.")
 });
 var SearchMessagesInputSchema = SearchInputSchema.extend({
-  threadId: z40.string().uuid().optional().describe("Optional thread restriction for message search."),
-  role: z40.enum(["user", "assistant"]).optional().describe("Optional message role filter.")
+  threadId: z44.string().uuid().optional().describe("Optional thread restriction for message search."),
+  role: z44.enum(["user", "assistant"]).optional().describe("Optional message role filter.")
 });
-var SearchThreadsOutputSchema = z40.object({
-  threads: z40.array(z40.object({
-    id: z40.string().uuid(),
-    projectId: z40.string().uuid().optional(),
-    title: z40.string(),
-    status: z40.enum(["regular", "archived"]),
-    labels: z40.array(z40.string()),
-    createdAt: z40.string().datetime(),
-    updatedAt: z40.string().datetime(),
-    highlights: z40.array(z40.string()),
-    score: z40.number().optional()
+var SearchThreadsOutputSchema = z44.object({
+  threads: z44.array(z44.object({
+    id: z44.string().uuid(),
+    projectId: z44.string().uuid().optional(),
+    title: z44.string(),
+    status: z44.enum(["regular", "archived"]),
+    labels: z44.array(z44.string()),
+    createdAt: z44.string().datetime(),
+    updatedAt: z44.string().datetime(),
+    highlights: z44.array(z44.string()),
+    score: z44.number().optional()
   })),
-  pagination: z40.object({
-    page: z40.number(),
-    limit: z40.number(),
-    totalResults: z40.number(),
-    totalPages: z40.number()
+  pagination: z44.object({
+    page: z44.number(),
+    limit: z44.number(),
+    totalResults: z44.number(),
+    totalPages: z44.number()
   }).describe("Page-based pagination metadata for the current search result.")
 });
-var SearchMessagesOutputSchema = z40.object({
-  messages: z40.array(z40.object({
-    id: z40.string().uuid(),
-    threadId: z40.string().uuid(),
-    threadTitle: z40.string(),
-    role: z40.enum(["user", "assistant"]),
-    content: z40.string(),
-    createdAt: z40.string().datetime(),
-    updatedAt: z40.string().datetime(),
-    highlights: z40.array(z40.string()),
-    score: z40.number().optional()
+var SearchMessagesOutputSchema = z44.object({
+  messages: z44.array(z44.object({
+    id: z44.string().uuid(),
+    threadId: z44.string().uuid(),
+    threadTitle: z44.string(),
+    role: z44.enum(["user", "assistant"]),
+    content: z44.string(),
+    createdAt: z44.string().datetime(),
+    updatedAt: z44.string().datetime(),
+    highlights: z44.array(z44.string()),
+    score: z44.number().optional()
   })),
-  pagination: z40.object({
-    page: z40.number(),
-    limit: z40.number(),
-    totalResults: z40.number(),
-    totalPages: z40.number()
+  pagination: z44.object({
+    page: z44.number(),
+    limit: z44.number(),
+    totalResults: z44.number(),
+    totalPages: z44.number()
   }).describe("Page-based pagination metadata for the current search result.")
 });
 var searchThreads = defineOperation({
@@ -33666,59 +29205,59 @@ var searchContract = {
   messages: searchMessages.contract
 };
 
-// ../public-api-contracts/src/signal-definitions.ts
-import { z as z41 } from "zod";
-var SignalDefinitionIdSchema = z41.string().uuid().describe("Signal definition ID.");
-var SignalDefinitionNameSchema = z41.string().min(1).max(200).describe("Human-readable expression name.");
-var SignalDefinitionCelExpressionSchema = z41.string().min(1).max(8192).describe("CEL expression evaluated against ingested log events.");
-var SignalDefinitionSchema = z41.object({
-  id: z41.string().uuid(),
-  projectId: z41.string().uuid(),
-  name: z41.string(),
+// ../../contracts/public-api/src/signal-definitions.ts
+import { z as z45 } from "zod";
+var SignalDefinitionIdSchema = z45.string().uuid().describe("Signal definition ID.");
+var SignalDefinitionNameSchema = z45.string().min(1).max(200).describe("Human-readable expression name.");
+var SignalDefinitionCelExpressionSchema = z45.string().min(1).max(8192).describe("CEL expression evaluated against ingested log events.");
+var SignalDefinitionSchema = z45.object({
+  id: z45.string().uuid(),
+  projectId: z45.string().uuid(),
+  name: z45.string(),
   expression: SignalDefinitionCelExpressionSchema,
-  enabled: z41.boolean(),
-  compiledVersion: z41.number().int(),
-  linkedAutomationIds: z41.array(z41.string().uuid()).optional().describe("Automations bound to this expression. Included on list/get when available."),
-  createdAt: z41.string().datetime(),
-  updatedAt: z41.string().datetime()
+  enabled: z45.boolean(),
+  compiledVersion: z45.number().int(),
+  linkedAutomationIds: z45.array(z45.string().uuid()).optional().describe("Automations bound to this expression. Included on list/get when available."),
+  createdAt: z45.string().datetime(),
+  updatedAt: z45.string().datetime()
 });
-var ListSignalDefinitionsInputSchema = z41.object({
-  projectId: z41.string().uuid().optional().describe("Project to list signal definitions for. Auto-filled from CLI and SDK context when omitted.")
+var ListSignalDefinitionsInputSchema = z45.object({
+  projectId: z45.string().uuid().optional().describe("Project to list signal definitions for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListSignalDefinitionsOutputSchema = z41.object({
-  signalDefinitions: z41.array(SignalDefinitionSchema)
+var ListSignalDefinitionsOutputSchema = z45.object({
+  signalDefinitions: z45.array(SignalDefinitionSchema)
 });
-var GetSignalDefinitionInputSchema = z41.object({
+var GetSignalDefinitionInputSchema = z45.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z41.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z45.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
 });
-var GetSignalDefinitionOutputSchema = z41.object({
+var GetSignalDefinitionOutputSchema = z45.object({
   signalDefinition: SignalDefinitionSchema
 });
-var CreateSignalDefinitionInputSchema = z41.object({
-  projectId: z41.string().uuid().optional().describe("Project to create the expression in. Auto-filled from CLI and SDK context when omitted."),
+var CreateSignalDefinitionInputSchema = z45.object({
+  projectId: z45.string().uuid().optional().describe("Project to create the expression in. Auto-filled from CLI and SDK context when omitted."),
   name: SignalDefinitionNameSchema,
   expression: SignalDefinitionCelExpressionSchema,
-  enabled: z41.boolean().optional().describe("Whether the expression starts enabled. Defaults to true.")
+  enabled: z45.boolean().optional().describe("Whether the expression starts enabled. Defaults to true.")
 });
-var CreateSignalDefinitionOutputSchema = z41.object({
+var CreateSignalDefinitionOutputSchema = z45.object({
   signalDefinition: SignalDefinitionSchema
 });
-var UpdateSignalDefinitionInputSchema = z41.object({
+var UpdateSignalDefinitionInputSchema = z45.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z41.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted."),
+  projectId: z45.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted."),
   name: SignalDefinitionNameSchema.optional(),
   expression: SignalDefinitionCelExpressionSchema.optional(),
-  enabled: z41.boolean().optional().describe("Whether the expression is enabled.")
+  enabled: z45.boolean().optional().describe("Whether the expression is enabled.")
 });
-var UpdateSignalDefinitionOutputSchema = z41.object({
+var UpdateSignalDefinitionOutputSchema = z45.object({
   signalDefinition: SignalDefinitionSchema
 });
-var DisableSignalDefinitionInputSchema = z41.object({
+var DisableSignalDefinitionInputSchema = z45.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z41.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z45.string().uuid().optional().describe("Project that owns the expression. Auto-filled from CLI and SDK context when omitted.")
 });
-var DisableSignalDefinitionOutputSchema = z41.object({
+var DisableSignalDefinitionOutputSchema = z45.object({
   signalDefinition: SignalDefinitionSchema
 });
 var listSignalDefinitions = defineOperation({
@@ -33797,11 +29336,11 @@ var disableSignalDefinition = defineOperation({
   pagination: "none",
   async: "sync"
 });
-var DeleteSignalDefinitionInputSchema = z41.object({
+var DeleteSignalDefinitionInputSchema = z45.object({
   signalDefinitionId: SignalDefinitionIdSchema,
-  projectId: z41.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
+  projectId: z45.string().uuid().optional().describe("Project that owns the signal definition. Auto-filled from CLI and SDK context when omitted.")
 });
-var DeleteSignalDefinitionOutputSchema = z41.void();
+var DeleteSignalDefinitionOutputSchema = z45.void();
 var deleteSignalDefinition = defineOperation({
   operationId: "signalDefinitions.delete",
   summary: "Delete a signal definition",
@@ -33827,125 +29366,523 @@ var signalDefinitionsContract = {
   delete: deleteSignalDefinition.contract
 };
 
-// ../task-checklist/src/index.ts
-var TASK_CATEGORIES = ["onboarding", "setup"];
+// ../../contracts/public-api/src/support-tickets.ts
+import { z as z46 } from "zod";
+var SUPPORT_TICKET_TYPES = [
+  "question",
+  "bug",
+  "feature_request",
+  "billing"
+];
+var SupportTicketTypeSchema = z46.enum(SUPPORT_TICKET_TYPES).describe("What kind of help is needed. feature_request keeps auto-filtering for the support team.");
+var SUPPORT_TICKET_CHANNELS = ["cli", "agent", "mcp", "api"];
+var SupportTicketChannelSchema = z46.enum(SUPPORT_TICKET_CHANNELS).describe("How the ticket reached Sazabi; derived by the server, never sent by the client.");
+var SupportTicketSchema = z46.object({
+  id: z46.string().describe("Opaque support desk ticket id."),
+  number: z46.number().int().describe("Ticket number, the reference a person quotes."),
+  organizationId: z46.string(),
+  projectId: z46.string().uuid().nullable(),
+  threadId: z46.string().uuid().nullable(),
+  type: SupportTicketTypeSchema,
+  title: z46.string(),
+  state: z46.string().describe("Support desk state slug; new at creation."),
+  filedThrough: SupportTicketChannelSchema,
+  requester: z46.object({
+    email: z46.string(),
+    name: z46.string().nullable()
+  }),
+  createdAt: z46.string().datetime()
+});
+var CreateSupportTicketInputSchema = z46.object({
+  organizationId: z46.string().optional().describe("Organization the ticket is filed for. Auto-filled from CLI and SDK context when omitted."),
+  projectId: z46.string().uuid().optional().describe("Project the ticket is about. Auto-filled from CLI and SDK context when omitted; optional."),
+  threadId: z46.string().uuid().optional().describe("Thread the ticket came out of. Must belong to the same organization and project; its URL is added to the ticket."),
+  type: SupportTicketTypeSchema,
+  title: z46.string().trim().min(1).max(200).describe("One-line summary."),
+  body: z46.string().trim().min(1).max(20000).describe("Ticket body in markdown. Sazabi appends organization, project, and thread context.")
+});
+var CreateSupportTicketOutputSchema = z46.object({
+  supportTicket: SupportTicketSchema
+});
+var GetSupportTicketAvailabilityInputSchema = z46.object({});
+var SupportTicketAvailabilityReasonSchema = z46.enum([
+  "not_configured",
+  "provider_unavailable"
+]);
+var GetSupportTicketAvailabilityOutputSchema = z46.object({
+  available: z46.boolean().describe("Whether this environment can file support tickets right now."),
+  reason: SupportTicketAvailabilityReasonSchema.nullable().describe("Why filing is unavailable; null when available.")
+});
+var createSupportTicket = defineOperation({
+  operationId: "supportTickets.create",
+  summary: "File a support ticket",
+  description: "File a support ticket or feature request with Sazabi support. The requester is the authenticated person; replies arrive in the dashboard support widget and by email.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/support-tickets",
+    tags: ["Support Tickets"],
+    successStatus: 201
+  },
+  input: CreateSupportTicketInputSchema,
+  output: CreateSupportTicketOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var getSupportTicketAvailability = defineOperation({
+  operationId: "supportTickets.availability",
+  summary: "Check whether support tickets can be filed",
+  description: "Report whether this environment can file support tickets: the support desk is configured and reachable.",
+  backend: "api",
+  route: {
+    method: "GET",
+    path: "/support-tickets/availability",
+    tags: ["Support Tickets"]
+  },
+  input: GetSupportTicketAvailabilityInputSchema,
+  output: GetSupportTicketAvailabilityOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var supportTicketsContract = {
+  create: createSupportTicket.contract,
+  availability: getSupportTicketAvailability.contract
+};
 
-// ../public-api-contracts/src/tasks.ts
-import { z as z42 } from "zod";
-var TaskCategorySchema = z42.enum(TASK_CATEGORIES);
-var TaskSchema2 = z42.object({
-  id: z42.string().describe("Unique task identifier (e.g. install_github_app)."),
-  label: z42.string().describe("Short human-readable task name."),
-  description: z42.string().describe("Explanation of what needs to be completed to satisfy this task."),
-  instructions: z42.string().describe("Step-by-step instructions for completing this task."),
-  completed: z42.boolean().describe("Whether the task has been completed."),
-  completedAt: z42.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
-  category: TaskCategorySchema.describe("Task category: onboarding (core setup steps) or setup (additional configuration).")
+// ../../task-checklist/src/index.ts
+var TASK_CATEGORIES = ["onboarding", "setup"];
+var ONBOARDING_TASKS = [
+  {
+    id: "set_up_billing",
+    label: "Set up billing",
+    description: "Choose a plan and add a payment method so your organization has credits for agent investigations and log ingestion. Completion mirrors the onboarding billing gate: an active paid subscription completes it.",
+    instructions: "Go to Settings > Billing and choose a plan. You will be redirected to a secure checkout to add a payment method.",
+    category: "onboarding",
+    appliesTo: "billing-step-enabled",
+    web: { do: "show-screen", target: "billing" },
+    cli: { do: "open-browser", target: "billing-checkout" }
+  },
+  {
+    id: "install_github_app",
+    label: "Install GitHub or Bitbucket",
+    description: "Connect GitHub or Bitbucket to enable code search, pull request mention handling, and repository-triggered agent runs. The task key keeps its github spelling for compatibility, but either forge connection satisfies it.",
+    instructions: "Go to Settings > Integrations and connect GitHub (install the Sazabi GitHub App on your GitHub organization) or Bitbucket (add a workspace access token).",
+    category: "onboarding",
+    web: { do: "show-screen", target: "connect-forge" },
+    cli: { do: "run-step", target: "connect_forge" }
+  },
+  {
+    id: "configure_code_search",
+    label: "Configure code search",
+    description: "Link at least one GitHub repository to your project so agents can search and read your codebase during investigations.",
+    instructions: "Go to Settings > Code Search and click 'Add repository'. Select the GitHub repositories you want agents to have access to.",
+    category: "onboarding",
+    dependsOn: ["install_github_app"],
+    web: { do: "show-screen", target: "configure-code-search" },
+    cli: { do: "run-step", target: "configure_code_search" }
+  },
+  {
+    id: "install_slack_app",
+    label: "Install Slack or Microsoft Teams",
+    description: "Connect Slack or Microsoft Teams so your team receives issue alerts and can trigger agent runs from chat. Either chat connection satisfies this task; the key keeps its slack spelling for compatibility.",
+    instructions: "Go to Settings > Integrations and connect Slack or Microsoft Teams. You will be redirected to authorize the Sazabi app on your workspace.",
+    category: "onboarding",
+    web: { do: "show-screen", target: "install-slack-app" },
+    cli: { do: "run-step", target: "configure_chat" }
+  },
+  {
+    id: "configure_slack_alerts",
+    label: "Configure Slack alerts",
+    description: "Select a Slack channel to receive issue alerts and agent summaries when something goes wrong in production.",
+    instructions: "Go to Settings > Project Notifications and select a Slack channel for issue alerts. Sazabi will post issue alerts and agent summaries to that channel.",
+    category: "onboarding",
+    dependsOn: ["install_slack_app"],
+    web: { do: "show-screen", target: "configure-slack-notifications" },
+    cli: { do: "run-step", target: "configure_chat" }
+  },
+  {
+    id: "trigger_sample_issue",
+    label: "See your first issue",
+    description: "Trigger a sample issue and watch Sazabi detect it, alert your channel, and walk it to resolution. This proves the wiring end to end before your own telemetry produces a real issue.",
+    instructions: "Run 'sazabi issues create --sample' from the CLI, or trigger the sample issue during onboarding. Watch the alert arrive, then resolve the issue to complete the loop.",
+    category: "onboarding",
+    optional: true,
+    web: { do: "show-screen", target: "sample-issue" },
+    cli: { do: "run-step", target: "trigger_sample_issue" }
+  }
+];
+var GETTING_STARTED_TASKS = [
+  {
+    id: "connect_log_sources",
+    label: "Connect log sources",
+    description: "Connect a telemetry data source such as Datadog, Sentry, or AWS CloudWatch so agents have access to your logs, metrics, and traces.",
+    instructions: "Go to Settings > Data Sources and click 'Add data source'. Choose a provider such as Datadog, Sentry, or AWS CloudWatch and follow the configuration steps.",
+    category: "setup"
+  },
+  {
+    id: "invite_team",
+    label: "Invite team",
+    description: "Invite at least one other team member so your whole team can collaborate on investigations and share context.",
+    instructions: "Go to Settings > Members and click 'Invite member'. Enter your teammate's email address and select their role.",
+    category: "setup"
+  },
+  {
+    id: "add_mcp_connectors",
+    label: "Add MCP connectors",
+    description: "Add a Model Context Protocol (MCP) connector to extend agent capabilities with tools from external services.",
+    instructions: "Go to Settings > MCP Connectors and click 'Add connector'. Choose a connector from the available list and follow the setup steps.",
+    category: "setup"
+  },
+  {
+    id: "install_agent_skills",
+    label: "Install agent skills",
+    description: "Install Sazabi skills for your coding agents so tools like Claude Code can query your logs, search project memory, and follow Sazabi workflows from your terminal.",
+    instructions: "Run 'sazabi skill install' and choose the coding agents on your machine. The skills install into each agent's skills directory.",
+    category: "setup"
+  },
+  {
+    id: "send_message",
+    label: "Send message",
+    description: "Start your first conversation by sending a message to an agent in any project thread.",
+    instructions: "Open your project and type a message in the composer at the bottom of any thread. Press Enter or click Send to start a conversation.",
+    category: "setup"
+  },
+  {
+    id: "customize_sandbox",
+    label: "Customize sandbox",
+    description: "Add environment variables or an init script to the agent sandbox so it has the credentials and context it needs to work with your codebase.",
+    instructions: "Go to Settings > Sandbox and add environment variables or an init script. Environment variables are available to all agent commands; the init script runs once when the sandbox starts.",
+    category: "setup"
+  },
+  {
+    id: "explore_integrations",
+    label: "Explore integrations",
+    description: "Visit the integrations page to discover available third-party integrations for your project.",
+    instructions: "Go to Settings > Integrations to browse the available integrations. Click any integration to view setup instructions and connect it to your project.",
+    category: "setup"
+  },
+  {
+    id: "resolve_first_issue",
+    label: "Resolve first issue",
+    description: "Use Sazabi to investigate and resolve your first production issue to experience the full agent-to-resolution workflow.",
+    instructions: "Open an issue from the issue inbox and send a message asking the agent to investigate. Once the root cause is identified, follow the agent's recommendation to resolve it.",
+    category: "setup"
+  },
+  {
+    id: "visit_status_page",
+    label: "Visit status page",
+    description: "Visit your project's status page to see how Sazabi monitors and displays the health of your services.",
+    instructions: "Click 'Status Page' in the project navigation sidebar to open your project's public status page.",
+    category: "setup"
+  },
+  {
+    id: "configure_auto_top_up",
+    label: "Set up auto top-up",
+    description: "Turn on automatic credit reloads so agents never pause mid-investigation when your balance runs low. Auto top-up adds credits automatically whenever your balance falls below a threshold you choose.",
+    instructions: "Go to Settings > Billing and enable automatic reload under Auto top-up. Choose the balance threshold that triggers a reload and the amount to add each time.",
+    category: "setup"
+  }
+];
+var TASK_METADATA = [
+  ...ONBOARDING_TASKS,
+  ...GETTING_STARTED_TASKS
+];
+var TASK_LISTS = ["onboarding", "getting-started"];
+var onboardingTaskIds = new Set(ONBOARDING_TASKS.map((task) => task.id));
+
+// ../../contracts/public-api/src/tasks.ts
+import { z as z47 } from "zod";
+var TaskCategorySchema = z47.enum(TASK_CATEGORIES);
+var TaskListSchema = z47.enum(TASK_LISTS);
+var WebActionSchema = z47.discriminatedUnion("do", [
+  z47.object({
+    do: z47.literal("show-screen").describe("Render a bespoke onboarding screen."),
+    target: z47.string().describe("The web onboarding screen key.")
+  }),
+  z47.object({
+    do: z47.literal("open-page").describe("Navigate to an existing page."),
+    target: z47.string().describe("The dashboard page to open.")
+  }),
+  z47.object({
+    do: z47.literal("show-command").describe("Render a command card for CLI-executed work."),
+    target: z47.string().describe("The command card key.")
+  })
+]);
+var CliActionSchema = z47.discriminatedUnion("do", [
+  z47.object({
+    do: z47.literal("run-step").describe("Run a bespoke terminal step."),
+    target: z47.string().describe("The CLI onboarding step id.")
+  }),
+  z47.object({
+    do: z47.literal("open-page").describe("Open a dashboard page in the browser."),
+    target: z47.string().describe("The dashboard page to open.")
+  }),
+  z47.object({
+    do: z47.literal("open-browser").describe("Open a URL in the browser and poll for completion (browser-executed work)."),
+    target: z47.string().describe("The browser handoff key.")
+  })
+]);
+var TaskSchema2 = z47.object({
+  id: z47.string().describe("Unique task identifier (e.g. install_github_app)."),
+  label: z47.string().describe("Short human-readable task name."),
+  description: z47.string().describe("Explanation of what needs to be completed to satisfy this task."),
+  instructions: z47.string().describe("Step-by-step instructions for completing this task."),
+  completed: z47.boolean().describe("Whether the task has been completed."),
+  completedAt: z47.string().datetime().nullable().describe("ISO 8601 timestamp of when the task was completed, or null."),
+  category: TaskCategorySchema.describe("Task category: onboarding (core setup steps) or setup (additional configuration)."),
+  list: TaskListSchema.describe("Which card array the task belongs to: onboarding (walked by both onboarding flows in array order) or getting-started (checklists only)."),
+  optional: z47.boolean().describe("Whether the onboarding flows offer Skip for this task."),
+  web: WebActionSchema.nullable().describe("What the web onboarding flow does when it reaches this card, or null for checklist-only tasks."),
+  cli: CliActionSchema.nullable().describe("What the CLI onboarding flow does when it reaches this card, or null for checklist-only tasks.")
 });
-var ListTasksInputSchema = z42.object({
-  projectId: z42.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
+var ListTasksInputSchema = z47.object({
+  projectId: z47.string().uuid().optional().describe("Project to list tasks for. Auto-filled from CLI and SDK context when omitted.")
 });
-var ListTasksOutputSchema = z42.object({
-  tasks: z42.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
+var ListTasksOutputSchema = z47.object({
+  tasks: z47.array(TaskSchema2).describe("All onboarding and setup tasks with their current completion status.")
 });
 var listTasks = defineOperation({
   operationId: "tasks.list",
-  summary: "List tasks",
+  summary: "List onboarding tasks",
   description: "List all onboarding and setup tasks for a project, including their current completion status and a description of what is required to complete each task.",
   backend: "api",
   route: {
     method: "GET",
     path: "/tasks",
-    tags: ["Tasks"]
+    tags: ["Onboarding Tasks"]
   },
   input: ListTasksInputSchema,
   output: ListTasksOutputSchema,
   pagination: "none",
   async: "sync"
 });
+var SKIPPABLE_TASK_IDS = [
+  "install_github_app",
+  "install_slack_app",
+  "trigger_sample_issue"
+];
+var SkippableTaskIdSchema = z47.enum(SKIPPABLE_TASK_IDS);
+var SkipTaskInputSchema = z47.object({
+  taskId: SkippableTaskIdSchema.describe("The onboarding task to skip. Only optional onboarding cards backed by the organization skip ledger are skippable; setup tasks and the remaining onboarding cards are rejected."),
+  organizationId: z47.string().min(1).optional().describe("Organization whose onboarding skip ledger is written. User credentials must belong to it. User tokens must supply it unless the credential's fixed scope resolves it."),
+  projectId: z47.string().uuid().optional().describe("Project used to resolve the organization whose skip ledger is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+});
+var SkipTaskOutputSchema = z47.object({
+  skipped: z47.literal(true).describe("The task is recorded as skipped for the whole organization.")
+});
+var skipTask = defineOperation({
+  operationId: "tasks.skip",
+  summary: "Skip an onboarding task",
+  description: "Record an organization-wide skip for an optional onboarding task. The skip is shared across surfaces and teammates; completing the task through any door still outranks a recorded skip. Idempotent — re-skipping keeps the original skip record.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/tasks/{taskId}/skip",
+    tags: ["Onboarding Tasks"]
+  },
+  input: SkipTaskInputSchema,
+  output: SkipTaskOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var UnskipTaskInputSchema = z47.object({
+  taskId: SkippableTaskIdSchema.describe("The onboarding task to reopen. Only optional onboarding cards backed by the organization skip ledger are skippable; setup tasks and the remaining onboarding cards are rejected."),
+  organizationId: z47.string().min(1).optional().describe("Organization whose onboarding skip ledger is written. User credentials must belong to it. User tokens must supply it unless the credential's fixed scope resolves it."),
+  projectId: z47.string().uuid().optional().describe("Project used to resolve the organization whose skip ledger is written. Without it, the credential's active organization is used — which for CLI user tokens is the server session's organization, not the CLI's selected one.")
+});
+var UnskipTaskOutputSchema = z47.object({
+  unskipped: z47.literal(true).describe("The task's organization-wide skip record is removed.")
+});
+var unskipTask = defineOperation({
+  operationId: "tasks.unskip",
+  summary: "Reopen a skipped onboarding task",
+  description: "Remove the organization-wide skip record for an onboarding task, reopening it in every onboarding walk. Idempotent — unskipping a task that is not skipped is a no-op.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/tasks/{taskId}/unskip",
+    tags: ["Onboarding Tasks"]
+  },
+  input: UnskipTaskInputSchema,
+  output: UnskipTaskOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
 
-// ../public-api-contracts/src/teams.ts
-import { z as z43 } from "zod";
-var TeamSchema = z43.object({
-  id: z43.string().uuid().describe("Team ID."),
-  name: z43.string().describe("Team name, unique among the org's active teams."),
-  description: z43.string().nullable().describe("Optional team description."),
-  createdAt: z43.string().datetime().describe("When the team was created."),
-  memberCount: z43.number().int().nonnegative().describe("Number of active members in the team.")
+// ../../contracts/public-api/src/tasks-write.ts
+import { z as z48 } from "zod";
+var TaskAttributionSchema = z48.object({
+  kind: z48.enum(["user", "workspace"]),
+  name: z48.string().optional(),
+  email: z48.string().optional()
 });
-var TeamMemberSchema = z43.object({
-  userId: z43.string().min(1).describe("User ID of the team member."),
-  name: z43.string().nullable().describe("Display name for the member, when available."),
-  email: z43.string().email().describe("Email address for the member."),
-  addedAt: z43.string().datetime().describe("When the member was added to the team.")
+var CreateTaskInputSchema = z48.object({
+  container: z48.string().min(1).describe("The container to create the task in: its id, short key (e.g. a Linear team key like ENG), or display name."),
+  title: z48.string().min(1),
+  bodyMarkdown: z48.string().optional(),
+  state: z48.string().optional(),
+  itemType: z48.string().optional(),
+  organizationId: z48.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers."),
+  clientRequestId: z48.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external task.")
+}).strict();
+var CreateTaskOutputSchema = z48.object({
+  identifier: z48.string(),
+  title: z48.string(),
+  url: z48.string(),
+  state: z48.string(),
+  attribution: TaskAttributionSchema.optional(),
+  reused: z48.boolean()
 });
-var OrganizationIdInputSchema2 = z43.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).");
-var ListTeamsInputSchema = z43.object({
+var createTask = defineOperation({
+  operationId: "tasks.create",
+  summary: "Create a task",
+  description: "Create a task (e.g. a Linear issue) in a connected external tracker, attributing the write to the requesting user.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/tasks",
+    tags: ["Tasks"],
+    successStatus: 201
+  },
+  input: CreateTaskInputSchema,
+  output: CreateTaskOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var CommentOnTaskInputSchema = z48.object({
+  taskId: z48.string().min(1).describe("The task to comment on."),
+  bodyMarkdown: z48.string().min(1),
+  organizationId: z48.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
+}).strict();
+var CommentOnTaskOutputSchema = z48.object({
+  identifier: z48.string(),
+  url: z48.string()
+});
+var commentOnTask = defineOperation({
+  operationId: "tasks.comment",
+  summary: "Comment on a task",
+  description: "Add a comment to an existing task.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/tasks/{taskId}/comment",
+    tags: ["Tasks"]
+  },
+  input: CommentOnTaskInputSchema,
+  output: CommentOnTaskOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+var TransitionTaskInputSchema = z48.object({
+  taskId: z48.string().min(1).describe("The task to transition."),
+  state: z48.string().min(1).describe("The target workflow state."),
+  organizationId: z48.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
+}).strict();
+var TransitionTaskOutputSchema = z48.object({
+  identifier: z48.string(),
+  title: z48.string(),
+  url: z48.string(),
+  state: z48.string(),
+  changed: z48.boolean()
+});
+var transitionTask = defineOperation({
+  operationId: "tasks.transition",
+  summary: "Transition a task",
+  description: "Move a task to a target workflow state.",
+  backend: "api",
+  route: {
+    method: "POST",
+    path: "/tasks/{taskId}/transition",
+    tags: ["Tasks"]
+  },
+  input: TransitionTaskInputSchema,
+  output: TransitionTaskOutputSchema,
+  pagination: "none",
+  async: "sync"
+});
+
+// ../../contracts/public-api/src/teams.ts
+import { z as z49 } from "zod";
+var TeamSchema = z49.object({
+  id: z49.string().uuid().describe("Team ID."),
+  name: z49.string().describe("Team name, unique among the org's active teams."),
+  description: z49.string().nullable().describe("Optional team description."),
+  createdAt: z49.string().datetime().describe("When the team was created."),
+  memberCount: z49.number().int().nonnegative().describe("Number of active members in the team.")
+});
+var TeamMemberSchema = z49.object({
+  userId: z49.string().min(1).describe("User ID of the team member."),
+  name: z49.string().nullable().describe("Display name for the member, when available."),
+  email: z49.string().email().describe("Email address for the member."),
+  addedAt: z49.string().datetime().describe("When the member was added to the team.")
+});
+var OrganizationIdInputSchema2 = z49.string().min(1).optional().describe("Organization to operate on. Auto-filled from CLI and SDK context when omitted. User tokens must supply it unless the credential's fixed scope resolves it; secret keys may omit it (the key's organization applies).");
+var ListTeamsInputSchema = z49.object({
   organizationId: OrganizationIdInputSchema2
 });
-var ListTeamsOutputSchema = z43.object({
-  teams: z43.array(TeamSchema).describe("Active teams in the organization.")
+var ListTeamsOutputSchema = z49.object({
+  teams: z49.array(TeamSchema).describe("Active teams in the organization.")
 });
-var CreateTeamInputSchema = z43.object({
+var CreateTeamInputSchema = z49.object({
   organizationId: OrganizationIdInputSchema2,
-  name: z43.string().trim().min(1).describe("Team name."),
-  description: z43.string().trim().min(1).optional().describe("Optional team description.")
+  name: z49.string().trim().min(1).describe("Team name."),
+  description: z49.string().trim().min(1).optional().describe("Optional team description.")
 });
-var CreateTeamOutputSchema = z43.object({
-  id: z43.string().uuid().describe("ID of the created team.")
+var CreateTeamOutputSchema = z49.object({
+  id: z49.string().uuid().describe("ID of the created team.")
 });
-var UpdateTeamInputSchema = z43.object({
+var UpdateTeamInputSchema = z49.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z43.string().uuid().describe("Team to update."),
-  name: z43.string().trim().min(1).optional().describe("New team name."),
-  description: z43.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
+  teamId: z49.string().uuid().describe("Team to update."),
+  name: z49.string().trim().min(1).optional().describe("New team name."),
+  description: z49.string().trim().min(1).nullable().optional().describe("New team description; null clears it.")
 });
-var UpdateTeamOutputSchema = z43.object({
-  id: z43.string().uuid().describe("ID of the updated team.")
+var UpdateTeamOutputSchema = z49.object({
+  id: z49.string().uuid().describe("ID of the updated team.")
 });
-var DeleteTeamInputSchema = z43.object({
-  params: z43.object({
-    teamId: z43.string().uuid().describe("Team to delete.")
+var DeleteTeamInputSchema = z49.object({
+  params: z49.object({
+    teamId: z49.string().uuid().describe("Team to delete.")
   }),
-  query: z43.object({
+  query: z49.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var DeleteTeamOutputSchema = z43.object({
-  success: z43.literal(true).describe("The team and its memberships were removed.")
+var DeleteTeamOutputSchema = z49.object({
+  success: z49.literal(true).describe("The team and its memberships were removed.")
 });
-var AddTeamMemberInputSchema = z43.object({
+var AddTeamMemberInputSchema = z49.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z43.string().uuid().describe("Team to add the member to."),
-  userId: z43.string().min(1).describe("User ID of an active organization member to add.")
+  teamId: z49.string().uuid().describe("Team to add the member to."),
+  userId: z49.string().min(1).describe("User ID of an active organization member to add.")
 });
-var AddTeamMemberOutputSchema = z43.object({
-  id: z43.string().uuid().describe("ID of the team membership.")
+var AddTeamMemberOutputSchema = z49.object({
+  id: z49.string().uuid().describe("ID of the team membership.")
 });
-var RemoveTeamMemberInputSchema = z43.object({
-  params: z43.object({
-    teamId: z43.string().uuid().describe("Team to remove the member from."),
-    userId: z43.string().min(1).describe("User ID of the member to remove.")
+var RemoveTeamMemberInputSchema = z49.object({
+  params: z49.object({
+    teamId: z49.string().uuid().describe("Team to remove the member from."),
+    userId: z49.string().min(1).describe("User ID of the member to remove.")
   }),
-  query: z43.object({
+  query: z49.object({
     organizationId: OrganizationIdInputSchema2
   })
 }).transform(({ params, query }) => ({
   ...query,
   ...params
 }));
-var RemoveTeamMemberOutputSchema = z43.object({
-  success: z43.literal(true).describe("The membership was removed.")
+var RemoveTeamMemberOutputSchema = z49.object({
+  success: z49.literal(true).describe("The membership was removed.")
 });
-var ListTeamMembersInputSchema = z43.object({
+var ListTeamMembersInputSchema = z49.object({
   organizationId: OrganizationIdInputSchema2,
-  teamId: z43.string().uuid().describe("Team to list members for.")
+  teamId: z49.string().uuid().describe("Team to list members for.")
 });
-var ListTeamMembersOutputSchema = z43.object({
-  members: z43.array(TeamMemberSchema).describe("Active members of the team.")
+var ListTeamMembersOutputSchema = z49.object({
+  members: z49.array(TeamMemberSchema).describe("Active members of the team.")
 });
 var listTeams = defineOperation({
   operationId: "teams.list",
@@ -34085,91 +30022,94 @@ var teamsContract = {
   listMembers: listTeamMembers.contract
 };
 
-// ../public-api-contracts/src/work-items.ts
-import { z as z44 } from "zod";
-var WorkItemAttributionSchema = z44.object({
-  kind: z44.enum(["user", "workspace"]),
-  name: z44.string().optional(),
-  email: z44.string().optional()
+// ../../contracts/public-api/src/work-items.ts
+import { z as z50 } from "zod";
+var WorkItemAttributionSchema = z50.object({
+  kind: z50.enum(["user", "workspace"]),
+  name: z50.string().optional(),
+  email: z50.string().optional()
 });
-var CreateWorkItemInputSchema = z44.object({
-  container: z44.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
-  title: z44.string().min(1),
-  bodyMarkdown: z44.string().optional(),
-  state: z44.string().optional(),
-  itemType: z44.string().optional(),
-  organizationId: z44.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers."),
-  clientRequestId: z44.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
+var CreateWorkItemInputSchema = z50.object({
+  container: z50.string().min(1).describe("The container to create the work item in: its id, short key (e.g. a Linear team key like ENG), or display name."),
+  title: z50.string().min(1),
+  bodyMarkdown: z50.string().optional(),
+  state: z50.string().optional(),
+  itemType: z50.string().optional(),
+  organizationId: z50.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers."),
+  clientRequestId: z50.string().min(1).optional().describe("Optional caller-supplied idempotency key. When provided, retrying the same " + "logical create with the same clientRequestId reuses the original result " + "instead of creating a duplicate external work item.")
 }).strict();
-var CreateWorkItemOutputSchema = z44.object({
-  identifier: z44.string(),
-  title: z44.string(),
-  url: z44.string(),
-  state: z44.string(),
+var CreateWorkItemOutputSchema = z50.object({
+  identifier: z50.string(),
+  title: z50.string(),
+  url: z50.string(),
+  state: z50.string(),
   attribution: WorkItemAttributionSchema.optional(),
-  reused: z44.boolean()
+  reused: z50.boolean()
 });
 var createWorkItem = defineOperation({
   operationId: "work-items.create",
-  summary: "Create a work item",
-  description: "Create a work item (e.g. a Linear issue) in a connected issue tracker, attributing the write to the requesting user.",
+  summary: "Create a work item (deprecated)",
+  description: "Deprecated alias for `POST /tasks` (create a task); removed in v2.0 (2027-03-01). " + "Create a work item (e.g. a Linear issue) in a connected issue tracker, attributing the write to the requesting user.",
   backend: "api",
   route: {
     method: "POST",
     path: "/work-items",
     tags: ["Work Items"],
-    successStatus: 201
+    successStatus: 201,
+    deprecated: true
   },
   input: CreateWorkItemInputSchema,
   output: CreateWorkItemOutputSchema,
   pagination: "none",
   async: "sync"
 });
-var CommentOnWorkItemInputSchema = z44.object({
-  itemId: z44.string().min(1).describe("The work item to comment on."),
-  bodyMarkdown: z44.string().min(1),
-  organizationId: z44.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
+var CommentOnWorkItemInputSchema = z50.object({
+  itemId: z50.string().min(1).describe("The work item to comment on."),
+  bodyMarkdown: z50.string().min(1),
+  organizationId: z50.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
 }).strict();
-var CommentOnWorkItemOutputSchema = z44.object({
-  identifier: z44.string(),
-  url: z44.string()
+var CommentOnWorkItemOutputSchema = z50.object({
+  identifier: z50.string(),
+  url: z50.string()
 });
 var commentOnWorkItem = defineOperation({
   operationId: "work-items.comment",
-  summary: "Comment on a work item",
-  description: "Add a comment to an existing work item.",
+  summary: "Comment on a work item (deprecated)",
+  description: "Deprecated alias for `POST /tasks/{taskId}/comment` (comment on a task); removed in v2.0 (2027-03-01). " + "Add a comment to an existing work item.",
   backend: "api",
   route: {
     method: "POST",
     path: "/work-items/{itemId}/comment",
-    tags: ["Work Items"]
+    tags: ["Work Items"],
+    deprecated: true
   },
   input: CommentOnWorkItemInputSchema,
   output: CommentOnWorkItemOutputSchema,
   pagination: "none",
   async: "sync"
 });
-var TransitionWorkItemInputSchema = z44.object({
-  itemId: z44.string().min(1).describe("The work item to transition."),
-  state: z44.string().min(1).describe("The target workflow state."),
-  organizationId: z44.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
+var TransitionWorkItemInputSchema = z50.object({
+  itemId: z50.string().min(1).describe("The work item to transition."),
+  state: z50.string().min(1).describe("The target workflow state."),
+  organizationId: z50.string().min(1).optional().describe("Optional organization ID to scope the request to. User credentials must " + "belong to it; a secret key may only reference its own organization. " + "Omitting it currently falls back to the session's active organization " + "for user tokens (deprecated); a future release will require it for " + "user-token callers.")
 }).strict();
-var TransitionWorkItemOutputSchema = z44.object({
-  identifier: z44.string(),
-  title: z44.string(),
-  url: z44.string(),
-  state: z44.string(),
-  changed: z44.boolean()
+var TransitionWorkItemOutputSchema = z50.object({
+  identifier: z50.string(),
+  title: z50.string(),
+  url: z50.string(),
+  state: z50.string(),
+  changed: z50.boolean()
 });
 var transitionWorkItem = defineOperation({
   operationId: "work-items.transition",
-  summary: "Transition a work item",
-  description: "Move a work item to a target workflow state.",
+  summary: "Transition a work item (deprecated)",
+  description: "Deprecated alias for `POST /tasks/{taskId}/transition` (transition a task); removed in v2.0 (2027-03-01). " + "Move a work item to a target workflow state.",
   backend: "api",
   route: {
     method: "POST",
     path: "/work-items/{itemId}/transition",
-    tags: ["Work Items"]
+    tags: ["Work Items"],
+    deprecated: true
   },
   input: TransitionWorkItemInputSchema,
   output: TransitionWorkItemOutputSchema,
@@ -34182,7 +30122,7 @@ var workItemsContract = {
   transition: transitionWorkItem.contract
 };
 
-// ../public-api-contracts/src/contract.ts
+// ../../contracts/public-api/src/contract.ts
 var publicApiContract = {
   me: me.contract,
   automations: {
@@ -34202,6 +30142,7 @@ var publicApiContract = {
   logs: {
     query: queryLogs.contract,
     search: searchLogs.contract,
+    ask: askLogs.contract,
     schema: logsSchema.contract,
     volume: logsVolume.contract,
     patterns: logsPatterns.contract,
@@ -34246,6 +30187,7 @@ var publicApiContract = {
     updateOrganizationExternalIdentityJitPolicy: updateOrganizationExternalIdentityJitPolicy.contract,
     getConnectionExternalIdentityJitPolicy: getConnectionExternalIdentityJitPolicy.contract,
     updateConnectionExternalIdentityJitPolicy: updateConnectionExternalIdentityJitPolicy.contract,
+    getMicrosoftTeamsAdminConsent: getMicrosoftTeamsAdminConsent.contract,
     getSlackConfiguration: getSlackConfiguration.contract,
     updateSlackConfiguration: updateSlackConfiguration.contract,
     listSlackChannelProjectMappings: listSlackChannelProjectMappings.contract,
@@ -34311,6 +30253,10 @@ var publicApiContract = {
     list: listProjectMemory.contract,
     search: searchProjectMemory.contract,
     delete: deleteProjectMemory.contract
+  },
+  supportTickets: {
+    create: createSupportTicket.contract,
+    availability: getSupportTicketAvailability.contract
   },
   onboarding: {
     getState: getOnboardingState.contract,
@@ -34432,7 +30378,12 @@ var publicApiContract = {
     getPaymentMethod: getPaymentMethod.contract
   },
   tasks: {
-    list: listTasks.contract
+    list: listTasks.contract,
+    skip: skipTask.contract,
+    unskip: unskipTask.contract,
+    create: createTask.contract,
+    comment: commentOnTask.contract,
+    transition: transitionTask.contract
   },
   recommendations: {
     list: listRecommendations.contract
@@ -34533,8 +30484,8 @@ var createAgentSseStream = async (options) => {
     finished = true;
     pendingError = error;
     while (pendingResolvers.length > 0) {
-      const resolve5 = pendingResolvers.shift();
-      resolve5?.({ value: undefined, done: true });
+      const resolve2 = pendingResolvers.shift();
+      resolve2?.({ value: undefined, done: true });
     }
   };
   const pushEvent = (event) => {
@@ -34597,8 +30548,8 @@ var createAgentSseStream = async (options) => {
         }
         return { value: undefined, done: true };
       }
-      return new Promise((resolve5) => {
-        pendingResolvers.push(resolve5);
+      return new Promise((resolve2) => {
+        pendingResolvers.push(resolve2);
       }).then((result) => {
         if (result.done && pendingError) {
           throw pendingError;
@@ -34788,43 +30739,43 @@ var toStreamError = (error) => {
 // src/log-transports.ts
 import { ORPCError } from "@orpc/client";
 
-// ../tail-ws-contracts/src/index.ts
-import { z as z45 } from "zod";
-var LogFiltersSchema = z45.object({
-  severities: z45.array(z45.string()).optional().describe("Limit results to the listed severities."),
-  services: z45.array(z45.string()).optional().describe("Limit results to the listed service names."),
-  environments: z45.array(z45.string()).optional().describe("Limit results to the listed deployment environments."),
-  searchTerm: z45.string().optional().describe("Case-insensitive substring match against the log body."),
-  traceId: z45.string().optional().describe("Limit results to one trace ID."),
-  attributes: z45.record(z45.string(), z45.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
+// ../../protocols/tail-ws-contracts/src/index.ts
+import { z as z51 } from "zod";
+var LogFiltersSchema = z51.object({
+  severities: z51.array(z51.string()).optional().describe("Limit results to the listed severities."),
+  services: z51.array(z51.string()).optional().describe("Limit results to the listed service names."),
+  environments: z51.array(z51.string()).optional().describe("Limit results to the listed deployment environments."),
+  searchTerm: z51.string().optional().describe("Case-insensitive substring match against the log body."),
+  traceId: z51.string().optional().describe("Limit results to one trace ID."),
+  attributes: z51.record(z51.string(), z51.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
 });
-var WebSocketLogResourceSchema = z45.object({
-  service: z45.string(),
-  namespace: z45.string(),
-  environment: z45.string(),
-  host: z45.string(),
-  container: z45.string(),
-  pod: z45.string()
+var WebSocketLogResourceSchema = z51.object({
+  service: z51.string(),
+  namespace: z51.string(),
+  environment: z51.string(),
+  host: z51.string(),
+  container: z51.string(),
+  pod: z51.string()
 });
-var WebSocketLogEntrySchema = z45.object({
-  id: z45.string(),
-  timestamp: z45.string().datetime(),
-  severity: z45.string(),
-  body: z45.string(),
-  service: z45.string(),
-  traceId: z45.string(),
-  spanId: z45.string(),
-  attributes: z45.record(z45.string(), z45.string()),
+var WebSocketLogEntrySchema = z51.object({
+  id: z51.string(),
+  timestamp: z51.string().datetime(),
+  severity: z51.string(),
+  body: z51.string(),
+  service: z51.string(),
+  traceId: z51.string(),
+  spanId: z51.string(),
+  attributes: z51.record(z51.string(), z51.string()),
   resource: WebSocketLogResourceSchema
 });
-var WebSocketLogMessageSchema = z45.object({
-  type: z45.literal("logs"),
-  timestamp: z45.string().datetime(),
-  data: z45.array(WebSocketLogEntrySchema)
+var WebSocketLogMessageSchema = z51.object({
+  type: z51.literal("logs"),
+  timestamp: z51.string().datetime(),
+  data: z51.array(WebSocketLogEntrySchema)
 });
 
 // src/log-transports.ts
-import { z as z46 } from "zod";
+import { z as z52 } from "zod";
 var DEFAULT_INTAKE_BASE_URL = "https://{region}.intake.sazabi.com";
 var DEFAULT_TAIL_BASE_URL = "https://{region}.tail.sazabi.com";
 var TAIL_RECONNECT_BASE_DELAY_MS = 500;
@@ -34839,17 +30790,17 @@ var isLoopbackHostname = (hostname) => {
   const normalizedHostname = normalizeLoopbackHostname(hostname);
   return normalizedHostname === "localhost" || normalizedHostname === "127.0.0.1" || normalizedHostname === "::1";
 };
-var TailLogsInputSchema = z46.object({
-  projectId: z46.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
+var TailLogsInputSchema = z52.object({
+  projectId: z52.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
   filters: LogFiltersSchema.optional().describe("Optional filters applied by the tail SSE service.")
 });
-var ForwardLogsInputSchema = z46.object({
-  publicKey: z46.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
-  logs: z46.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
+var ForwardLogsInputSchema = z52.object({
+  publicKey: z52.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
+  logs: z52.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
 });
-var ForwardLogsOutputSchema = z46.object({
-  forwardedCount: z46.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
-  failedCount: z46.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
+var ForwardLogsOutputSchema = z52.object({
+  forwardedCount: z52.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
+  failedCount: z52.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
 });
 var forwardLogsExamples = [
   {
@@ -35134,9 +31085,9 @@ var createSseTailStream = async (options) => {
     finished = true;
     pendingError = error;
     while (pendingResolvers.length > 0) {
-      const resolve5 = pendingResolvers.shift();
-      if (resolve5) {
-        resolve5({ value: undefined, done: true });
+      const resolve2 = pendingResolvers.shift();
+      if (resolve2) {
+        resolve2({ value: undefined, done: true });
       }
     }
   };
@@ -35226,12 +31177,12 @@ var createSseTailStream = async (options) => {
     closeActiveRequest();
     finish();
   }
-  const ready = new Promise((resolve5, reject) => {
+  const ready = new Promise((resolve2, reject) => {
     let settled = false;
     const markReady = () => {
       if (!settled) {
         settled = true;
-        resolve5();
+        resolve2();
       }
     };
     connectAndRead(markReady).catch((error) => {
@@ -35268,8 +31219,8 @@ var createSseTailStream = async (options) => {
           done: true
         };
       }
-      return new Promise((resolve5) => {
-        pendingResolvers.push(resolve5);
+      return new Promise((resolve2) => {
+        pendingResolvers.push(resolve2);
       }).then((result) => {
         if (result.done && pendingError) {
           throw pendingError;
@@ -35477,11 +31428,11 @@ var delay = async (milliseconds, signal) => {
   if (signal?.aborted) {
     return;
   }
-  await new Promise((resolve5) => {
-    const timeoutId = globalThis.setTimeout(resolve5, milliseconds);
+  await new Promise((resolve2) => {
+    const timeoutId = globalThis.setTimeout(resolve2, milliseconds);
     signal?.addEventListener("abort", () => {
       globalThis.clearTimeout(timeoutId);
-      resolve5();
+      resolve2();
     }, { once: true });
   });
 };
@@ -35519,8 +31470,8 @@ var createClient = (options) => {
       return headers;
     },
     fetch: options.fetch,
-    customErrorResponseBodyDecoder: (body2, response) => {
-      const apiError = toApiErrorPayload(body2);
+    customErrorResponseBodyDecoder: (body, response) => {
+      const apiError = toApiErrorPayload(body);
       if (!apiError) {
         return null;
       }
@@ -35551,6 +31502,9 @@ var createClient = (options) => {
     clientSource: options.clientSource,
     clientVersion: options.clientVersion
   });
+  const createTrackerTask = async (input, operationId) => raw.tasks.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, operationId));
+  const commentOnTrackerTask = async (input, operationId) => raw.tasks.comment(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, operationId));
+  const transitionTrackerTask = async (input, operationId) => raw.tasks.transition(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, operationId));
   return {
     raw,
     me: async () => raw.me({}),
@@ -35571,6 +31525,7 @@ var createClient = (options) => {
       ...logs,
       query: async (input = {}) => raw.logs.query(await resolveRequiredProjectScopedInput(options.credentialProvider, input, queryLogs.operationId)),
       search: async (input) => raw.logs.search(await resolveRequiredProjectScopedInput(options.credentialProvider, input, searchLogs.operationId)),
+      ask: async (input) => raw.logs.ask(await resolveRequiredProjectScopedInput(options.credentialProvider, input, askLogs.operationId)),
       schema: async (input = {}) => raw.logs.schema(await resolveRequiredProjectScopedInput(options.credentialProvider, input, logsSchema.operationId)),
       volume: async (input) => raw.logs.volume(await resolveRequiredProjectScopedInput(options.credentialProvider, input, logsVolume.operationId)),
       patterns: async (input = {}) => raw.logs.patterns(await resolveRequiredProjectScopedInput(options.credentialProvider, input, logsPatterns.operationId)),
@@ -35780,6 +31735,10 @@ var createClient = (options) => {
       search: async (input) => raw.memory.search(await resolveRequiredProjectScopedInput(options.credentialProvider, input, searchProjectMemory.operationId)),
       delete: async (input) => raw.memory.delete(await resolveRequiredProjectScopedInput(options.credentialProvider, input, deleteProjectMemory.operationId))
     },
+    supportTickets: {
+      create: async (input) => raw.supportTickets.create(await resolveProjectScopedInput(options.credentialProvider, await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, createSupportTicket.operationId))),
+      availability: async () => raw.supportTickets.availability({})
+    },
     signalDefinitions: {
       list: async (input = {}) => raw.signalDefinitions.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.list")),
       get: async (input) => raw.signalDefinitions.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "signalDefinitions.get")),
@@ -35857,7 +31816,12 @@ var createClient = (options) => {
       getPaymentMethod: async (input = {}) => raw.billing.getPaymentMethod(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getPaymentMethod"))
     },
     tasks: {
-      list: async (input = {}) => raw.tasks.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listTasks.operationId))
+      list: async (input = {}) => raw.tasks.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listTasks.operationId)),
+      skip: async (input) => raw.tasks.skip(await resolveOrganizationScopedInput(options.credentialProvider, await resolveProjectScopedInput(options.credentialProvider, input))),
+      unskip: async (input) => raw.tasks.unskip(await resolveOrganizationScopedInput(options.credentialProvider, await resolveProjectScopedInput(options.credentialProvider, input))),
+      create: async (input) => createTrackerTask(input, "tasks.create"),
+      comment: async (input) => commentOnTrackerTask(input, "tasks.comment"),
+      transition: async (input) => transitionTrackerTask(input, "tasks.transition")
     },
     recommendations: {
       list: async (input = {}) => raw.recommendations.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, listRecommendations.operationId))
@@ -35894,14 +31858,14 @@ var startDeviceAuthorization = async (options = {}) => {
   if (!response.ok) {
     throw toDeviceAuthorizationError(payload, response.status);
   }
-  const body2 = payload;
+  const body = payload;
   return {
-    deviceCode: expectString(body2.device_code, "device_code"),
-    userCode: expectString(body2.user_code, "user_code"),
-    verificationUri: expectString(body2.verification_uri, "verification_uri"),
-    verificationUriComplete: expectString(body2.verification_uri_complete, "verification_uri_complete"),
-    expiresIn: expectNumber(body2.expires_in, "expires_in"),
-    interval: expectNumber(body2.interval, "interval")
+    deviceCode: expectString(body.device_code, "device_code"),
+    userCode: expectString(body.user_code, "user_code"),
+    verificationUri: expectString(body.verification_uri, "verification_uri"),
+    verificationUriComplete: expectString(body.verification_uri_complete, "verification_uri_complete"),
+    expiresIn: expectNumber(body.expires_in, "expires_in"),
+    interval: expectNumber(body.interval, "interval")
   };
 };
 var pollDeviceAuthorization = async (options) => {
@@ -35918,13 +31882,13 @@ var pollDeviceAuthorization = async (options) => {
   });
   const payload = await response.json();
   if (response.ok) {
-    const body2 = payload;
+    const body = payload;
     return {
       status: "authorized",
-      accessToken: expectString(body2.access_token, "access_token"),
-      tokenType: expectString(body2.token_type, "token_type"),
-      expiresIn: expectNumber(body2.expires_in, "expires_in"),
-      scope: typeof body2.scope === "string" ? body2.scope : ""
+      accessToken: expectString(body.access_token, "access_token"),
+      tokenType: expectString(body.token_type, "token_type"),
+      expiresIn: expectNumber(body.expires_in, "expires_in"),
+      scope: typeof body.scope === "string" ? body.scope : ""
     };
   }
   const error = toDeviceAuthorizationErrorPayload(payload);
@@ -36083,7 +32047,7 @@ var waitForDeferredCompletion = async (raw, initialResult, options) => {
   return currentResult;
 };
 var delay2 = async (milliseconds) => {
-  await new Promise((resolve5) => globalThis.setTimeout(resolve5, milliseconds));
+  await new Promise((resolve2) => globalThis.setTimeout(resolve2, milliseconds));
 };
 var expectString = (value, fieldName) => {
   if (typeof value === "string") {

@@ -1,6 +1,6 @@
 import type { ContractRouterClient } from "@orpc/contract";
 import type { OtlpLogsRequest } from "../otlp-contracts/index.js";
-import type { ProjectRegion, PublicApiContract } from "../public-api-contracts/index.js";
+import type { ProjectRegion, PublicApiContract } from "../public-api/index.js";
 import { type WebSocketLogEntry as TailLogEntry, WebSocketLogEntrySchema as TailLogEntrySchema, type LogFilters as TailLogFilters, LogFiltersSchema as TailLogFiltersSchema, type WebSocketLogResource as TailLogResource, WebSocketLogResourceSchema as TailLogResourceSchema } from "../tail-ws-contracts/index.js";
 import { z } from "zod";
 export type { TailLogEntry, TailLogFilters, TailLogResource };

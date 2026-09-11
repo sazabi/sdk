@@ -81,10 +81,13 @@ export declare const AutomationSignalTypeSchema: z.ZodEnum<{
     expression_matched: "expression_matched";
 }>;
 export type AutomationSignalType = z.infer<typeof AutomationSignalTypeSchema>;
+export declare const AUTOMATION_DESCRIPTION_MAX_CHARACTERS = 2000;
+export declare const AUTOMATION_DESCRIPTION_LIMIT_MESSAGE: string;
 export declare const AutomationSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
     name: z.ZodString;
+    description: z.ZodNullable<z.ZodString>;
     kind: z.ZodEnum<{
         log_match: "log_match";
         script: "script";
@@ -132,6 +135,7 @@ export declare const AutomationDetailSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
     name: z.ZodString;
+    description: z.ZodNullable<z.ZodString>;
     kind: z.ZodEnum<{
         log_match: "log_match";
         script: "script";
@@ -211,6 +215,7 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -266,6 +271,7 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -333,6 +339,7 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -397,6 +404,7 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -456,6 +464,7 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -515,6 +524,7 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -600,6 +610,7 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -652,6 +663,7 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -716,6 +728,7 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -777,6 +790,7 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -833,6 +847,7 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -889,6 +904,7 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
             log_match: "log_match";
             script: "script";
@@ -1190,6 +1206,7 @@ export declare const automationsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
                 log_match: "log_match";
                 script: "script";
@@ -1242,6 +1259,7 @@ export declare const automationsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
                 log_match: "log_match";
                 script: "script";
@@ -1306,6 +1324,7 @@ export declare const automationsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
                 log_match: "log_match";
                 script: "script";
@@ -1367,6 +1386,7 @@ export declare const automationsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
                 log_match: "log_match";
                 script: "script";
@@ -1423,6 +1443,7 @@ export declare const automationsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
                 log_match: "log_match";
                 script: "script";
@@ -1479,6 +1500,7 @@ export declare const automationsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
                 log_match: "log_match";
                 script: "script";

@@ -144,6 +144,7 @@ export declare const BillingUsageRowSchema: z.ZodObject<{
         pull_requests_created: "pull_requests_created";
     }>;
     totalQuantity: z.ZodString;
+    weightedQuantity: z.ZodOptional<z.ZodString>;
     ratedQuantity: z.ZodString;
     creditsConsumed: z.ZodString;
     sourceBreakdown: z.ZodRecord<z.ZodString, z.ZodString>;
@@ -168,6 +169,7 @@ export declare const GetBillingUsageOutputSchema: z.ZodObject<{
             pull_requests_created: "pull_requests_created";
         }>;
         totalQuantity: z.ZodString;
+        weightedQuantity: z.ZodOptional<z.ZodString>;
         ratedQuantity: z.ZodString;
         creditsConsumed: z.ZodString;
         sourceBreakdown: z.ZodRecord<z.ZodString, z.ZodString>;
@@ -354,6 +356,7 @@ export declare const getBillingUsage: import("../orpc-contracts/index.js").Opera
             pull_requests_created: "pull_requests_created";
         }>;
         totalQuantity: z.ZodString;
+        weightedQuantity: z.ZodOptional<z.ZodString>;
         ratedQuantity: z.ZodString;
         creditsConsumed: z.ZodString;
         sourceBreakdown: z.ZodRecord<z.ZodString, z.ZodString>;
@@ -1238,6 +1241,7 @@ export declare const billingContract: {
                 pull_requests_created: "pull_requests_created";
             }>;
             totalQuantity: z.ZodString;
+            weightedQuantity: z.ZodOptional<z.ZodString>;
             ratedQuantity: z.ZodString;
             creditsConsumed: z.ZodString;
             sourceBreakdown: z.ZodRecord<z.ZodString, z.ZodString>;

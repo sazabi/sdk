@@ -26,6 +26,10 @@ export declare const ListLogStreamsOutputSchema: z.ZodObject<{
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -64,6 +68,10 @@ export declare const listLogStreams: import("../orpc-contracts/index.js").Operat
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -188,6 +196,10 @@ export declare const GetLogStreamOutputSchema: z.ZodObject<{
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -225,6 +237,10 @@ export declare const getLogStream: import("../orpc-contracts/index.js").Operatio
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -262,6 +278,10 @@ export declare const UpdateLogStreamOutputSchema: z.ZodObject<{
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -300,6 +320,10 @@ export declare const updateLogStream: import("../orpc-contracts/index.js").Opera
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -350,6 +374,10 @@ export declare const ReassignLogStreamOutputSchema: z.ZodObject<{
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -388,6 +416,10 @@ export declare const reassignLogStream: import("../orpc-contracts/index.js").Ope
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -425,6 +457,10 @@ export declare const logStreamsContract: {
             }>;
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
+            provisionedVia: z.ZodEnum<{
+                auto: "auto";
+                manual: "manual";
+            }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 kind: z.ZodEnum<{
@@ -493,6 +529,10 @@ export declare const logStreamsContract: {
             }>;
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
+            provisionedVia: z.ZodEnum<{
+                auto: "auto";
+                manual: "manual";
+            }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 kind: z.ZodEnum<{
@@ -529,6 +569,10 @@ export declare const logStreamsContract: {
             }>;
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
+            provisionedVia: z.ZodEnum<{
+                auto: "auto";
+                manual: "manual";
+            }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 kind: z.ZodEnum<{
@@ -570,6 +614,10 @@ export declare const logStreamsContract: {
             }>;
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
+            provisionedVia: z.ZodEnum<{
+                auto: "auto";
+                manual: "manual";
+            }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 kind: z.ZodEnum<{

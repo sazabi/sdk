@@ -841,6 +841,27 @@ export declare const updateConnectionExternalIdentityJitPolicy: import("../orpc-
     connectionEnabled: z.ZodBoolean;
     effectiveEnabled: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const MicrosoftTeamsAdminConsentSchema: z.ZodObject<{
+    status: z.ZodEnum<{
+        declined: "declined";
+        granted: "granted";
+        pending: "pending";
+    }>;
+    grantedAt: z.ZodNullable<z.ZodString>;
+    consentUrl: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export declare const getMicrosoftTeamsAdminConsent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodEnum<{
+        declined: "declined";
+        granted: "granted";
+        pending: "pending";
+    }>;
+    grantedAt: z.ZodNullable<z.ZodString>;
+    consentUrl: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, "api">;
 export declare const SlackConfigurationSchema: z.ZodObject<{
     connectionId: z.ZodString;
     defaultProjectId: z.ZodNullable<z.ZodString>;

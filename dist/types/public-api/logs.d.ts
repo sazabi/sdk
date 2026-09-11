@@ -143,7 +143,7 @@ export type QueryLogsInput = z.infer<typeof QueryLogsInputSchema>;
  * Default look-back window applied to logs.query when a request supplies no
  * `timestamp` filter. Without a time bound the query scans the project's entire
  * history (log stores prune only on a timestamp predicate), which is slow
- * enough to hit the backend query timeout. 24h keeps "latest logs" fast while
+ * enough to hit the ClickHouse query timeout. 24h keeps "latest logs" fast while
  * staying generous for active-but-sparse projects.
  */
 export declare const DEFAULT_QUERY_WINDOW_MS: number;
@@ -158,34 +158,21 @@ export declare const DEFAULT_PHRASE_QUERY_WINDOW_MS: number;
  * Applies the default query window at the public API boundary: when the caller
  * provided no explicit `timestamp` filter, returns the input with a
  * `timestamp >= now - DEFAULT_QUERY_WINDOW_MS` (or 1h for phrase mode) lower bound
- * appended so the query stays pruned to recent data. Keeps log backends unaware of
+ * appended so the query stays pruned to recent data. Keeps callers independent of
  * defaulting policy. An explicit `timestamp` filter (any operator) opts out and is
  * returned unchanged.
  */
 export declare const applyDefaultLogQueryWindow: (input: QueryLogsInput) => QueryLogsInput;
 /**
- * Log backend identifiers exposed by the public API.
+ * Native log-storage identifier exposed by the public API.
  */
-export declare const LogBackendIdSchema: z.ZodEnum<{
-    axiom: "axiom";
-    "better-stack": "better-stack";
-    clickhouse: "clickhouse";
-    cloudwatch: "cloudwatch";
-    datadog: "datadog";
-    gcp: "gcp";
-    mezmo: "mezmo";
-    posthog: "posthog";
-    sentry: "sentry";
-}>;
-export type LogBackendId = z.infer<typeof LogBackendIdSchema>;
+export declare const NativeLogStorageIdSchema: z.ZodLiteral<"clickhouse">;
+export type NativeLogStorageId = z.infer<typeof NativeLogStorageIdSchema>;
 /**
- * Log backend kind.
+ * Native log-storage kind.
  */
-export declare const LogBackendKindSchema: z.ZodEnum<{
-    external: "external";
-    native: "native";
-}>;
-export type LogBackendKind = z.infer<typeof LogBackendKindSchema>;
+export declare const NativeLogStorageKindSchema: z.ZodLiteral<"native">;
+export type NativeLogStorageKind = z.infer<typeof NativeLogStorageKindSchema>;
 /**
  * Shared project-scoped input for log metadata operations.
  *
@@ -209,22 +196,9 @@ export declare const LogsSchemaBundleSchema: z.ZodObject<{
 export type LogsSchemaBundle = z.infer<typeof LogsSchemaBundleSchema>;
 export declare const LogsSchemaOutputSchema: z.ZodObject<{
     backend: z.ZodObject<{
-        id: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
+        id: z.ZodLiteral<"clickhouse">;
         name: z.ZodString;
-        kind: z.ZodEnum<{
-            external: "external";
-            native: "native";
-        }>;
+        kind: z.ZodLiteral<"native">;
     }, z.core.$strip>;
     features: z.ZodArray<z.ZodString>;
     commands: z.ZodArray<z.ZodEnum<{
@@ -343,17 +317,7 @@ export declare const LogsPatternsOutputSchema: z.ZodObject<{
         representativeId: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     meta: z.ZodObject<{
-        backendId: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
+        backendId: z.ZodLiteral<"clickhouse">;
         count: z.ZodNumber;
         took: z.ZodNumber;
     }, z.core.$strip>;
@@ -368,17 +332,7 @@ export declare const LogsNativeQueryOutputSchema: z.ZodObject<{
     result: z.ZodString;
     format: z.ZodLiteral<"text">;
     meta: z.ZodObject<{
-        backendId: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
+        backendId: z.ZodLiteral<"clickhouse">;
         took: z.ZodNumber;
         truncated: z.ZodBoolean;
     }, z.core.$strip>;
@@ -948,6 +902,84 @@ export declare const searchLogs: import("../orpc-contracts/index.js").OperationD
         plannerModel: z.ZodString;
     }, z.core.$strip>;
 }, z.core.$strip>], "status">, "api">;
+/** Bounded evidence sample returned alongside an answered `logs.ask` verdict. */
+export declare const ASK_LOGS_MAX_EVIDENCE_ROWS = 50;
+export declare const AskLogsInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    question: z.ZodString;
+}, z.core.$strip>;
+export type AskLogsInput = z.infer<typeof AskLogsInputSchema>;
+export declare const AskLogsOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    state: z.ZodLiteral<"cannot_determine">;
+    reason: z.ZodString;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        synthesisMs: z.ZodNumber;
+        plannerModel: z.ZodString;
+        answerModel: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
+    state: z.ZodLiteral<"answered">;
+    answer: z.ZodString;
+    evidence: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    evidenceCount: z.ZodNumber;
+    evidenceCountIsEventTotal: z.ZodBoolean;
+    resolvedTimeRange: z.ZodObject<{
+        from: z.ZodString;
+        to: z.ZodString;
+    }, z.core.$strip>;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        synthesisMs: z.ZodNumber;
+        plannerModel: z.ZodString;
+        answerModel: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+}, z.core.$strip>], "state">;
+export type AskLogsOutput = z.infer<typeof AskLogsOutputSchema>;
+/**
+ * Contract definition for logs.ask.
+ */
+export declare const askLogs: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    question: z.ZodString;
+}, z.core.$strip>, z.ZodDiscriminatedUnion<[z.ZodObject<{
+    state: z.ZodLiteral<"cannot_determine">;
+    reason: z.ZodString;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        synthesisMs: z.ZodNumber;
+        plannerModel: z.ZodString;
+        answerModel: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
+    state: z.ZodLiteral<"answered">;
+    answer: z.ZodString;
+    evidence: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    evidenceCount: z.ZodNumber;
+    evidenceCountIsEventTotal: z.ZodBoolean;
+    resolvedTimeRange: z.ZodObject<{
+        from: z.ZodString;
+        to: z.ZodString;
+    }, z.core.$strip>;
+    meta: z.ZodObject<{
+        took: z.ZodNumber;
+        retrievalMs: z.ZodNumber;
+        planningMs: z.ZodNumber;
+        executionMs: z.ZodNumber;
+        synthesisMs: z.ZodNumber;
+        plannerModel: z.ZodString;
+        answerModel: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+}, z.core.$strip>], "state">, "api">;
 /**
  * Contract definition for logs.schema.
  */
@@ -957,22 +989,9 @@ export declare const logsSchema: import("../orpc-contracts/index.js").OperationD
     topK: z.ZodOptional<z.ZodNumber>;
 }, z.core.$strip>, z.ZodObject<{
     backend: z.ZodObject<{
-        id: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
+        id: z.ZodLiteral<"clickhouse">;
         name: z.ZodString;
-        kind: z.ZodEnum<{
-            external: "external";
-            native: "native";
-        }>;
+        kind: z.ZodLiteral<"native">;
     }, z.core.$strip>;
     features: z.ZodArray<z.ZodString>;
     commands: z.ZodArray<z.ZodEnum<{
@@ -1067,17 +1086,7 @@ export declare const logsPatterns: import("../orpc-contracts/index.js").Operatio
         representativeId: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
     meta: z.ZodObject<{
-        backendId: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
+        backendId: z.ZodLiteral<"clickhouse">;
         count: z.ZodNumber;
         took: z.ZodNumber;
     }, z.core.$strip>;
@@ -1092,17 +1101,7 @@ export declare const logsNativeQuery: import("../orpc-contracts/index.js").Opera
     result: z.ZodString;
     format: z.ZodLiteral<"text">;
     meta: z.ZodObject<{
-        backendId: z.ZodEnum<{
-            axiom: "axiom";
-            "better-stack": "better-stack";
-            clickhouse: "clickhouse";
-            cloudwatch: "cloudwatch";
-            datadog: "datadog";
-            gcp: "gcp";
-            mezmo: "mezmo";
-            posthog: "posthog";
-            sentry: "sentry";
-        }>;
+        backendId: z.ZodLiteral<"clickhouse">;
         took: z.ZodNumber;
         truncated: z.ZodBoolean;
     }, z.core.$strip>;
@@ -1406,22 +1405,9 @@ export declare const logsContract: {
         topK: z.ZodOptional<z.ZodNumber>;
     }, z.core.$strip>, z.ZodObject<{
         backend: z.ZodObject<{
-            id: z.ZodEnum<{
-                axiom: "axiom";
-                "better-stack": "better-stack";
-                clickhouse: "clickhouse";
-                cloudwatch: "cloudwatch";
-                datadog: "datadog";
-                gcp: "gcp";
-                mezmo: "mezmo";
-                posthog: "posthog";
-                sentry: "sentry";
-            }>;
+            id: z.ZodLiteral<"clickhouse">;
             name: z.ZodString;
-            kind: z.ZodEnum<{
-                external: "external";
-                native: "native";
-            }>;
+            kind: z.ZodLiteral<"native">;
         }, z.core.$strip>;
         features: z.ZodArray<z.ZodString>;
         commands: z.ZodArray<z.ZodEnum<{
@@ -1510,17 +1496,7 @@ export declare const logsContract: {
             representativeId: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
         meta: z.ZodObject<{
-            backendId: z.ZodEnum<{
-                axiom: "axiom";
-                "better-stack": "better-stack";
-                clickhouse: "clickhouse";
-                cloudwatch: "cloudwatch";
-                datadog: "datadog";
-                gcp: "gcp";
-                mezmo: "mezmo";
-                posthog: "posthog";
-                sentry: "sentry";
-            }>;
+            backendId: z.ZodLiteral<"clickhouse">;
             count: z.ZodNumber;
             took: z.ZodNumber;
         }, z.core.$strip>;
@@ -1532,17 +1508,7 @@ export declare const logsContract: {
         result: z.ZodString;
         format: z.ZodLiteral<"text">;
         meta: z.ZodObject<{
-            backendId: z.ZodEnum<{
-                axiom: "axiom";
-                "better-stack": "better-stack";
-                clickhouse: "clickhouse";
-                cloudwatch: "cloudwatch";
-                datadog: "datadog";
-                gcp: "gcp";
-                mezmo: "mezmo";
-                posthog: "posthog";
-                sentry: "sentry";
-            }>;
+            backendId: z.ZodLiteral<"clickhouse">;
             took: z.ZodNumber;
             truncated: z.ZodBoolean;
         }, z.core.$strip>;

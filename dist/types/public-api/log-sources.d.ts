@@ -96,6 +96,10 @@ export declare const LogStreamSchema: z.ZodObject<{
     }>;
     errorMessage: z.ZodNullable<z.ZodString>;
     enabled: z.ZodBoolean;
+    provisionedVia: z.ZodEnum<{
+        auto: "auto";
+        manual: "manual";
+    }>;
     createdAt: z.ZodString;
     endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
         kind: z.ZodEnum<{
@@ -249,6 +253,10 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         }>;
         errorMessage: z.ZodNullable<z.ZodString>;
         enabled: z.ZodBoolean;
+        provisionedVia: z.ZodEnum<{
+            auto: "auto";
+            manual: "manual";
+        }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
             kind: z.ZodEnum<{
@@ -847,6 +855,10 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             }>;
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
+            provisionedVia: z.ZodEnum<{
+                auto: "auto";
+                manual: "manual";
+            }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 kind: z.ZodEnum<{
@@ -941,6 +953,10 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             }>;
             errorMessage: z.ZodNullable<z.ZodString>;
             enabled: z.ZodBoolean;
+            provisionedVia: z.ZodEnum<{
+                auto: "auto";
+                manual: "manual";
+            }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 kind: z.ZodEnum<{
@@ -1433,6 +1449,10 @@ export declare const logSourcesContract: {
                 }>;
                 errorMessage: z.ZodNullable<z.ZodString>;
                 enabled: z.ZodBoolean;
+                provisionedVia: z.ZodEnum<{
+                    auto: "auto";
+                    manual: "manual";
+                }>;
                 createdAt: z.ZodString;
                 endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
                     kind: z.ZodEnum<{

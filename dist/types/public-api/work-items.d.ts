@@ -1,4 +1,11 @@
 import { z } from "zod";
+/**
+ * Deprecated `/work-items*` alias operations (ENG-6687). The canonical
+ * tracker-task operations live in `tasks-write.ts` (`POST /tasks*`); these
+ * aliases keep the original wire shapes (`itemId` path param, `work-items.*`
+ * operation ids) and are served by the same handlers until their removal in
+ * v2.0 (2027-03-01). Responses on these routes carry a `Deprecation` header.
+ */
 export declare const WorkItemAttributionSchema: z.ZodObject<{
     kind: z.ZodEnum<{
         user: "user";

@@ -1,4 +1,4 @@
-import { type AgentStreamCursor, type PublicAgentStreamEvent } from "../public-api-contracts/index.js";
+import { type AgentStreamCursor, type PublicAgentStreamEvent } from "../public-api/index.js";
 /**
  * Minimal credential provider shape needed by the agent stream transports.
  */
