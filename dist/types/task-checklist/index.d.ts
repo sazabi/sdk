@@ -1,15 +1,23 @@
 /**
- * Task-card registry (the data-driven-onboarding design, ENG-6410).
+ * Task-card registry (the data-driven-onboarding design, ENG-6410; flow and
+ * verb shape from the onboarding-task-registry-v2 design).
  *
  * Packaging contract:
- * - `ONBOARDING_TASKS` and `GETTING_STARTED_TASKS` are the single source of
- *   truth for every task card. Array position is the only order: the
- *   onboarding array's order is the flow order both onboarding flows walk,
- *   and the checklists render both arrays in array order. There is no
- *   stored `next`, no weights, and no per-surface order.
+ * - `ONBOARDING_FLOW` is the walk both surfaces render (the web tour and the
+ *   CLI wizard, consumed by the registry-v2 surface PRs): a card line renders
+ *   that card, the single `gate("create-project")` line renders that
+ *   surface's create-project step. The gate's position among the cards is
+ *   declared here exactly once — no surface hardcodes where the project
+ *   split falls.
+ * - `ONBOARDING_TASKS` (the cards, in walk order) is derived from
+ *   `ONBOARDING_FLOW`, and `SETUP_TASKS` is the second array. Together they
+ *   are the single source of truth for every task card. Array position is
+ *   the only order: the flow array's order is the order both onboarding
+ *   flows walk, and the checklists render both arrays in array order. There
+ *   is no stored `next`, no weights, and no per-surface order.
  * - `TASK_METADATA` is derived from the two arrays (onboarding first, then
- *   getting-started) so existing checklist consumers keep compiling and
- *   rendering from one source.
+ *   setup) so existing checklist consumers keep compiling and rendering
+ *   from one source.
  * - Cards are plain serializable data (no functions): they cross the public
  *   `tasks.list` contract and the dashboard `taskChecklist` router as-is.
  * - This root entrypoint stays browser-safe; the completion writers live
@@ -80,9 +88,10 @@ export type TaskApplicabilityRule = (typeof TASK_APPLICABILITY_RULES)[number];
 /**
  * One task card: one checklist row, one flow stop, one completion row. A
  * card may span multiple web screens or CLI prompts internally; the card
- * boundary is the checkmark. `web`/`cli` actions are required for
- * `ONBOARDING_TASKS` entries (guard-tested) and omitted on
- * getting-started cards, whose checklist rows render `instructions`.
+ * boundary is the checkmark. Every card carries both a `web:` and a `cli:`
+ * action (guard-tested): membership never differs by surface, only the verb
+ * does — terminal-shaped work shows a command on the web, web-shaped work
+ * opens the page (and polls the fact) from the CLI.
  */
 export type Task = TaskMetadata & {
     /** The flow offers Skip. */
@@ -93,37 +102,73 @@ export type Task = TaskMetadata & {
     readonly cli?: CliAction;
 };
 /**
- * The onboarding tour: walked by both onboarding flows in this order and
- * shown in the checklists. Reordering the tour is reordering this array.
- *
- * Action targets reference the existing surface identifiers (the design's
- * consistency ruling): web `show-screen` targets are the web flow's step
- * ids where a card maps to one screen, or a card-level key where a card
- * spans several (`connect-forge`, `sample-issue`); cli `run-step` targets
- * are the CLI flow's step ids.
+ * One line of the onboarding walk: a card, or the create-project gate.
+ * Gates are not tasks (their done-ness is existence and they cannot be
+ * skipped), but the gate's *position* among the cards is a product choice
+ * this array declares exactly once — each surface renders its own
+ * create-project step at the gate line instead of hardcoding where the
+ * project split falls.
+ */
+export type OnboardingFlowEntry = {
+    readonly kind: "card";
+    readonly id: TaskKey;
+} | {
+    readonly kind: "gate";
+    readonly id: "create-project";
+};
+/**
+ * The onboarding walk both surfaces render, top to bottom (the registry-v2
+ * design): a card line renders that card (unless done / skipped / not
+ * applicable), the gate line renders the surface's create-project step
+ * (unless the project exists). Sign-in and create-org stay outside the
+ * array — they are "before everything" by definition. Reordering the tour
+ * or moving the project gate is reordering this array.
+ */
+export declare const ONBOARDING_FLOW: readonly OnboardingFlowEntry[];
+/**
+ * The onboarding tour's cards in walk order, derived from
+ * {@link ONBOARDING_FLOW} so the flow and the card list cannot drift. A
+ * flow entry naming a card with no definition fails at module evaluation —
+ * loudly, everywhere — rather than silently dropping a stop from the tour.
  */
 export declare const ONBOARDING_TASKS: readonly Task[];
 /**
- * Checklist-only cards: shown in the Get Started panel and the CLI tasks
- * list (in this order, after the onboarding cards) but walked by neither
- * onboarding flow. Promoting a card into the tour is a cut-paste into
- * `ONBOARDING_TASKS`.
+ * Setup cards (renamed from `GETTING_STARTED_TASKS`, the registry-v2
+ * one-vocabulary decision — the wire `list` value keeps its legacy
+ * `getting-started` spelling for published-client compatibility): shown in
+ * the web Setup guide and the CLI tasks list (in this order, after the
+ * onboarding cards) but walked by neither onboarding tour; the CLI's setup
+ * round offers them after the finish recap. Promoting a card into the tour
+ * is a cut-paste into the onboarding cards + a flow line.
+ *
+ * Verb targets: web `open-page` / cli `open-page` targets are
+ * project-relative dashboard paths (each surface prefixes the active
+ * project's `/projects/<projectId>`, matching the dashboard checklist's
+ * hrefs); web `show-command` targets are the command the card renders for
+ * copying; cli `run-step` targets are CLI setup-round step ids
+ * (forward-declared for the wizard-derivation PR).
  */
-export declare const GETTING_STARTED_TASKS: readonly Task[];
+export declare const SETUP_TASKS: readonly Task[];
 /**
  * Flat task list derived from the two card arrays (onboarding first, then
- * getting-started). Kept for the existing checklist consumers; new code
- * should read the arrays directly.
+ * setup). Kept for the existing checklist consumers; new code should read
+ * the arrays directly.
  */
 export declare const TASK_METADATA: readonly Task[];
-/** Which card array a task belongs to, as serialized on the wire. */
+/**
+ * Which card array a task belongs to, as serialized on the wire. The
+ * `getting-started` value is the legacy spelling of the setup array — it
+ * stays on the wire for published-client compatibility even though the
+ * code identifier renamed to `SETUP_TASKS`.
+ */
 export declare const TASK_LISTS: readonly ["onboarding", "getting-started"];
 export type TaskList = (typeof TASK_LISTS)[number];
 /**
  * The additive card fields both task-list APIs serialize per task. `web` and
- * `cli` are `null` (never omitted) for checklist-only cards so the dashboard
- * tRPC surface and the public `tasks.list` contract emit byte-identical
- * shapes for the same card.
+ * `cli` stay nullable on the wire (every registry card now carries both, but
+ * published clients already parse `null`) so the dashboard tRPC surface and
+ * the public `tasks.list` contract emit byte-identical shapes for the same
+ * card.
  */
 export type TaskCardProjection = {
     /** Which card array the task belongs to. */
@@ -195,6 +240,14 @@ export type TaskChecklistStatus = {
         inviteTeam: boolean;
         connectLogSources: boolean;
         addMcpConnectors: boolean;
+        /**
+         * Whether someone in the organization installed the agent skills.
+         * Completion-row only (the org `install_agent_skills` completion written
+         * by `sazabi skill install`): the install is machine-global, so no
+         * database fact can observe it live — mirroring the public `tasks.list`
+         * treatment of the same task.
+         */
+        installAgentSkills: boolean;
         customizeSandbox: boolean;
         sendMessage: boolean;
         exploreIntegrations: boolean;
