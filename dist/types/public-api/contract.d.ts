@@ -574,10 +574,7 @@ export declare const publicApiContract: {
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{}, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             templates: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                templateGroup: import("zod").ZodEnum<{
-                    "investigate-source-events": "investigate-source-events";
-                    "status-page-monitor": "status-page-monitor";
-                }>;
+                templateGroup: import("zod").ZodString;
                 kind: import("zod").ZodEnum<{
                     script: "script";
                     signal: "signal";
@@ -7845,10 +7842,7 @@ export declare const publicApiOperations: {
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{}, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             templates: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
-                templateGroup: import("zod").ZodEnum<{
-                    "investigate-source-events": "investigate-source-events";
-                    "status-page-monitor": "status-page-monitor";
-                }>;
+                templateGroup: import("zod").ZodString;
                 kind: import("zod").ZodEnum<{
                     script: "script";
                     signal: "signal";

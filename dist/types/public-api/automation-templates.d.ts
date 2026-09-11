@@ -1,8 +1,5 @@
 import { z } from "zod";
-export declare const AutomationTemplateGroupSchema: z.ZodEnum<{
-    "investigate-source-events": "investigate-source-events";
-    "status-page-monitor": "status-page-monitor";
-}>;
+export declare const AutomationTemplateGroupSchema: z.ZodString;
 export type AutomationTemplateGroup = z.infer<typeof AutomationTemplateGroupSchema>;
 export declare const AutomationTemplateKindSchema: z.ZodEnum<{
     script: "script";
@@ -11,10 +8,7 @@ export declare const AutomationTemplateKindSchema: z.ZodEnum<{
 export type AutomationTemplateKind = z.infer<typeof AutomationTemplateKindSchema>;
 export declare const AutomationTemplateSchema: z.ZodObject<{
     id: z.ZodString;
-    templateGroup: z.ZodEnum<{
-        "investigate-source-events": "investigate-source-events";
-        "status-page-monitor": "status-page-monitor";
-    }>;
+    templateGroup: z.ZodString;
     kind: z.ZodEnum<{
         script: "script";
         signal: "signal";
@@ -33,10 +27,7 @@ export type ListAutomationTemplatesInput = z.infer<typeof ListAutomationTemplate
 export declare const ListAutomationTemplatesOutputSchema: z.ZodObject<{
     templates: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
-        templateGroup: z.ZodEnum<{
-            "investigate-source-events": "investigate-source-events";
-            "status-page-monitor": "status-page-monitor";
-        }>;
+        templateGroup: z.ZodString;
         kind: z.ZodEnum<{
             script: "script";
             signal: "signal";
@@ -54,10 +45,7 @@ export type ListAutomationTemplatesOutput = z.infer<typeof ListAutomationTemplat
 export declare const listAutomationTemplates: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
     templates: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
-        templateGroup: z.ZodEnum<{
-            "investigate-source-events": "investigate-source-events";
-            "status-page-monitor": "status-page-monitor";
-        }>;
+        templateGroup: z.ZodString;
         kind: z.ZodEnum<{
             script: "script";
             signal: "signal";
@@ -75,10 +63,7 @@ export declare const automationTemplatesContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
         templates: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
-            templateGroup: z.ZodEnum<{
-                "investigate-source-events": "investigate-source-events";
-                "status-page-monitor": "status-page-monitor";
-            }>;
+            templateGroup: z.ZodString;
             kind: z.ZodEnum<{
                 script: "script";
                 signal: "signal";

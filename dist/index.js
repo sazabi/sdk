@@ -46589,6 +46589,7 @@ __export(exports_schema, {
   taskLinks: () => taskLinks,
   teamMembers: () => teamMembers,
   teams: () => teams,
+  templateGroups: () => templateGroups,
   threadKind: () => threadKind,
   threadReadCursors: () => threadReadCursors,
   threadReadCursorsRelations: () => threadReadCursorsRelations,
@@ -46623,7 +46624,7 @@ var threadRecordsStatus, projectRegion, threadVisibility, projectAccessMode, pro
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull().$onUpdate(() => new Date)
   };
-}, threads, sandboxCommands, projectRepoHeads, codeLogTemplateExtractionRuns, messageStatus, messages2, threadReadCursors, MESSAGE_FEEDBACK_MAX_COMMENT_SIZE = 5000, messageFeedbackSentiment, messageFeedbackSource, messageFeedbackItems, ISSUE_FEEDBACK_MAX_COMMENT_SIZE = 5000, issueFeedbackItems, connectedAccounts, githubInstallations, githubInstallationInstallers, repos, repoAccessSources, projectRepos, linearOrganizations, linearUsers, intakeRegions, projects, projectMembers, teams, teamMembers, publicKeys, secretKeys, userPinnedThreads, orgPinnedThreads, notifications, projectNotificationPreferences, userNotificationPreferences, projectNotificationSlackChannels, projectNotificationMicrosoftTeamsChannels, projectNotificationDestinations, projectNotificationDeliveryRules, notificationDeliveries, slackChannelProjectMappings, userPhoneNumbers, snapshots, mdxPages, attachmentStatus, attachmentRecords, s3ObjectStatus, s3Objects, artifacts, superorganizations, partnerKeys, organizations, configScope, agentToolGates, systemPromptInjections, agentPromptTemplates, agentModelPins, logRetentionPolicyScope, logRetentionPolicies, webSearchDomainRules, webSearchDomainSettings, users, authUsers, userAccessEvents, authSessions, authAccounts, authVerifications, authOrganizations, organizationAccessEvents, authMembers, authInvitations, authDeviceCodes, authTwoFactors, oauthClientProjectScopeCeiling, oauthClients, oauthRefreshTokens, oauthAccessTokens, oauthConsents, authJwks, authRateLimits, betterAuthSchema, sudoAuthUsers, sudoAuthSessions, sudoAuthAccounts, sudoAuthVerifications, sudoAuthDeviceCodes, sudoOauthClients, sudoOauthRefreshTokens, sudoOauthAccessTokens, sudoOauthConsents, sudoJwks, sudoBetterAuthSchema, oauthGrantScopes, billingAccounts, billingAccountAuditLogs, billingPlans, billingSubscriptions, billingEvents, billingUsageMaterializerFailures, billingUsageMaterializerLogBucketStates, billingUsageSourceCoverage, billingUsageSourceCutovers, billingUsageSourceCutoverTransitions, billingProviderLinks, billingInvoices, billingAutoTopUpSettings, billingHealthCheckResults, billingCollectionCases, billingCollectionAttempts, billingAutoTopUpAttempts, billingAutoTopUpPaymentAttempts, billingCreditBalances, billingCreditLedgerEntries, billingCycles, billingCycleConfigurations, billingSubscriptionChanges, webhookEndpoints, logSourceConnections, logSources, LOG_STREAM_PROVISIONED_VIA, logStreams, projectToolPermissions, toolPermissionRequests, mcpConnections, mcpOauthRequests, clickhouseConnectionDetails, components, componentRegistryOperations, componentNames, componentObservations, componentRelationships, componentLogStreams, componentTeams, componentEvents, componentRegistryOutbox, componentIssues, sandboxConfigurations, sandboxConfigurationScripts, projectScripts, memoryDocuments, runStatus, stepStatus, automationSource, automationTriggerType, automationSignalType, signalType, signalStatus, automationRunStatus, runs, runWorkerCorrelations, automationTemplates, automations, automationComponentBindings, signals, reportedErrorFingerprints, signalDefinitions, planeSignalDefinitionProjection, automationRuns, steps, llmUsageHourly, llmRunHourModel, llmToolCallUsageHourly, llmRunUsage, llmTopStepsHourly, llmUsageRollupState, slackAppMentions, microsoftTeamsAppMentions, microsoftTeamsUnmappedTenantSource, microsoftTeamsUnmappedTenants, issueEventType, issueActorType, mdxDocuments, issueEvents, getIssueColumnBuilders = () => ({
+}, threads, sandboxCommands, projectRepoHeads, codeLogTemplateExtractionRuns, messageStatus, messages2, threadReadCursors, MESSAGE_FEEDBACK_MAX_COMMENT_SIZE = 5000, messageFeedbackSentiment, messageFeedbackSource, messageFeedbackItems, ISSUE_FEEDBACK_MAX_COMMENT_SIZE = 5000, issueFeedbackItems, connectedAccounts, githubInstallations, githubInstallationInstallers, repos, repoAccessSources, projectRepos, linearOrganizations, linearUsers, intakeRegions, projects, projectMembers, teams, teamMembers, publicKeys, secretKeys, userPinnedThreads, orgPinnedThreads, notifications, projectNotificationPreferences, userNotificationPreferences, projectNotificationSlackChannels, projectNotificationMicrosoftTeamsChannels, projectNotificationDestinations, projectNotificationDeliveryRules, notificationDeliveries, slackChannelProjectMappings, userPhoneNumbers, snapshots, mdxPages, attachmentStatus, attachmentRecords, s3ObjectStatus, s3Objects, artifacts, superorganizations, partnerKeys, organizations, configScope, agentToolGates, systemPromptInjections, agentPromptTemplates, agentModelPins, logRetentionPolicyScope, logRetentionPolicies, webSearchDomainRules, webSearchDomainSettings, users, authUsers, userAccessEvents, authSessions, authAccounts, authVerifications, authOrganizations, organizationAccessEvents, authMembers, authInvitations, authDeviceCodes, authTwoFactors, oauthClientProjectScopeCeiling, oauthClients, oauthRefreshTokens, oauthAccessTokens, oauthConsents, authJwks, authRateLimits, betterAuthSchema, sudoAuthUsers, sudoAuthSessions, sudoAuthAccounts, sudoAuthVerifications, sudoAuthDeviceCodes, sudoOauthClients, sudoOauthRefreshTokens, sudoOauthAccessTokens, sudoOauthConsents, sudoJwks, sudoBetterAuthSchema, oauthGrantScopes, billingAccounts, billingAccountAuditLogs, billingPlans, billingSubscriptions, billingEvents, billingUsageMaterializerFailures, billingUsageMaterializerLogBucketStates, billingUsageSourceCoverage, billingUsageSourceCutovers, billingUsageSourceCutoverTransitions, billingProviderLinks, billingInvoices, billingAutoTopUpSettings, billingHealthCheckResults, billingCollectionCases, billingCollectionAttempts, billingAutoTopUpAttempts, billingAutoTopUpPaymentAttempts, billingCreditBalances, billingCreditLedgerEntries, billingCycles, billingCycleConfigurations, billingSubscriptionChanges, webhookEndpoints, logSourceConnections, logSources, LOG_STREAM_PROVISIONED_VIA, logStreams, projectToolPermissions, toolPermissionRequests, mcpConnections, mcpOauthRequests, clickhouseConnectionDetails, components, componentRegistryOperations, componentNames, componentObservations, componentRelationships, componentLogStreams, componentTeams, componentEvents, componentRegistryOutbox, componentIssues, sandboxConfigurations, sandboxConfigurationScripts, projectScripts, memoryDocuments, runStatus, stepStatus, automationSource, automationTriggerType, automationSignalType, signalType, signalStatus, automationRunStatus, runs, runWorkerCorrelations, templateGroups, automationTemplates, automations, automationComponentBindings, signals, reportedErrorFingerprints, signalDefinitions, planeSignalDefinitionProjection, automationRuns, steps, llmUsageHourly, llmRunHourModel, llmToolCallUsageHourly, llmRunUsage, llmTopStepsHourly, llmUsageRollupState, slackAppMentions, microsoftTeamsAppMentions, microsoftTeamsUnmappedTenantSource, microsoftTeamsUnmappedTenants, issueEventType, issueActorType, mdxDocuments, issueEvents, getIssueColumnBuilders = () => ({
   id: uuid("id").primaryKey(),
   organizationId: text("organization_id").notNull(),
   projectId: uuid("project_id").references(() => projects.id).notNull(),
@@ -49388,7 +49389,8 @@ var init_schema2 = __esm(() => {
     statusChk: check("webhook_endpoints_status_chk", sql`${table3.status} IN ('active', 'disabled')`),
     signingSecretEncryptedChk: check("webhook_endpoints_signing_secret_encrypted_chk", sql`${table3.signingSecret} IS NULL OR ${table3.signingSecret} LIKE 'enc:v1:%'`),
     secretHeaderValueEncryptedChk: check("webhook_endpoints_secret_header_value_encrypted_chk", sql`${table3.secretHeaderValue} IS NULL OR ${table3.secretHeaderValue} LIKE 'enc:v1:%'`),
-    secretHeaderPairChk: check("webhook_endpoints_secret_header_pair_chk", sql`(${table3.secretHeaderName} IS NULL) = (${table3.secretHeaderValue} IS NULL)`)
+    secretHeaderPairChk: check("webhook_endpoints_secret_header_pair_chk", sql`(${table3.secretHeaderName} IS NULL) = (${table3.secretHeaderValue} IS NULL)`),
+    liveSigningSecretChk: check("webhook_endpoints_live_signing_secret_chk", sql`${table3.deletedAt} IS NOT NULL OR ${table3.signingSecret} IS NOT NULL`)
   }));
   logSourceConnections = pgTable("log_source_connections", {
     id: uuid("id").primaryKey().defaultRandom(),
@@ -50209,9 +50211,18 @@ var init_schema2 = __esm(() => {
     workerLastSeenIdx: index("run_worker_correlations_worker_last_seen_idx").on(table3.workerIdentity, table3.lastSeenAt),
     runExecutionWorkerUniqueIdx: uniqueIndex("run_worker_correlations_execution_worker_idx").on(table3.runId, table3.workflowExecutionRunId, table3.workerIdentity)
   }));
+  templateGroups = pgTable("template_groups", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    description: text("description"),
+    sortOrder: integer("sort_order"),
+    ...getTimestampColumns()
+  }, (table3) => ({
+    idFormatChk: check("template_groups_id_format_chk", sql`${table3.id} ~ '^[a-z0-9]+(-[a-z0-9]+)*$'`)
+  }));
   automationTemplates = pgTable("automation_templates", {
     id: text("id").primaryKey(),
-    templateGroup: text("template_group").notNull(),
+    templateGroup: text("template_group").notNull().references(() => templateGroups.id),
     kind: text("kind").notNull(),
     name: text("name").notNull(),
     description: text("description").notNull(),
@@ -50222,12 +50233,17 @@ var init_schema2 = __esm(() => {
     contentHash: text("content_hash").notNull(),
     version: integer("version").notNull().default(1),
     publishedAt: timestamp("published_at", { withTimezone: true }),
+    lastTestedAt: timestamp("last_tested_at", { withTimezone: true }),
+    lastTestVerdict: text("last_test_verdict"),
     ...getTimestampColumns()
   }, (table3) => ({
     kindChk: check("automation_templates_kind_chk", sql`${table3.kind} IN ('script', 'signal')`),
     kindShapeChk: check("automation_templates_kind_shape_chk", sql`(${table3.kind} = 'script' AND ${table3.expression} IS NULL)
         OR (${table3.kind} = 'signal' AND ${table3.defaultCron} IS NULL)`),
     contentHashFormatChk: check("automation_templates_content_hash_format_chk", sql`${table3.contentHash} ~ '^[a-f0-9]{64}$'`),
+    testProvenanceShapeChk: check("automation_templates_test_provenance_shape_chk", sql`(${table3.lastTestedAt} IS NULL) = (${table3.lastTestVerdict} IS NULL)
+        AND (${table3.lastTestVerdict} IS NULL
+          OR ${table3.lastTestVerdict} IN ('ok', 'unhealthy', 'broken'))`),
     groupPublishedIdx: index("automation_templates_group_published_idx").on(table3.templateGroup).where(sql`${table3.publishedAt} IS NOT NULL`)
   }));
   automations = pgTable("automations", {
@@ -75159,14 +75175,11 @@ var artifactsDelete = defineOperation({
 
 // ../../contracts/public-api/src/automation-templates.ts
 import { z as z4 } from "zod";
-var AutomationTemplateGroupSchema = z4.enum([
-  "status-page-monitor",
-  "investigate-source-events"
-]);
+var AutomationTemplateGroupSchema = z4.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "Template group ids are kebab-case published identifiers");
 var AutomationTemplateKindSchema = z4.enum(["script", "signal"]);
 var AutomationTemplateSchema = z4.object({
   id: z4.string().describe('Published template identifier, e.g. "status-page-github".'),
-  templateGroup: AutomationTemplateGroupSchema.describe("Template group the entry was generated from: status-page-monitor entries poll a vendor status page, investigate-source-events entries react to a log source's events."),
+  templateGroup: AutomationTemplateGroupSchema.describe("Template group (catalog shelf) the entry sits on, independent of the entry's kind."),
   kind: AutomationTemplateKindSchema.describe("How an installed copy would run: script entries are bash checks on a cron schedule, signal entries fire an agent run when their match expression matches an ingested event."),
   name: z4.string().describe("Template display name."),
   description: z4.string().describe("Human-facing summary of what the template does."),
@@ -93691,7 +93704,7 @@ var AUTOMATION_NOTIFICATION_TYPE_DEFINITIONS = registerNotificationTypes({
     value: "automation_run_failed",
     label: "Automation run failed",
     scope: "project",
-    defaultOffChannels: ["email"]
+    defaultOff: true
   }
 });
 
