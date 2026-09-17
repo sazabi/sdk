@@ -105,6 +105,58 @@ export declare const IntegrationProviderSchema: z.ZodObject<{
  * encrypted credentials are never returned.
  */
 export declare const IntegrationConnectionSchema: z.ZodObject<{
+    connectionStatus: z.ZodOptional<z.ZodObject<{
+        state: z.ZodEnum<{
+            connected: "connected";
+            connecting: "connecting";
+            needs_attention: "needs_attention";
+            not_connected: "not_connected";
+        }>;
+        reasonCode: z.ZodNullable<z.ZodEnum<{
+            configuration_invalid: "configuration_invalid";
+            credentials_rejected: "credentials_rejected";
+            discovery_failed: "discovery_failed";
+            health_check_failed: "health_check_failed";
+            permissions_missing: "permissions_missing";
+            recovery_required: "recovery_required";
+            stream_failed: "stream_failed";
+        }>>;
+        checkedAt: z.ZodNullable<z.ZodString>;
+        verification: z.ZodEnum<{
+            unverified: "unverified";
+            verified: "verified";
+        }>;
+    }, z.core.$strip>>;
+    recovery: z.ZodOptional<z.ZodObject<{
+        action: z.ZodNullable<z.ZodEnum<{
+            manage_installation: "manage_installation";
+            manage_owner: "manage_owner";
+            reconnect: "reconnect";
+            review_setup: "review_setup";
+            update_credentials: "update_credentials";
+        }>>;
+        canCheck: z.ZodBoolean;
+        canDisconnect: z.ZodBoolean;
+        target: z.ZodOptional<z.ZodObject<{
+            kind: z.ZodEnum<{
+                connected_account: "connected_account";
+                integration: "integration";
+                log_source: "log_source";
+                mcp_connector: "mcp_connector";
+                sandbox_cli: "sandbox_cli";
+            }>;
+            resourceId: z.ZodString;
+            providerId: z.ZodString;
+            scope: z.ZodObject<{
+                kind: z.ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
+                id: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
     id: z.ZodString;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
@@ -251,6 +303,58 @@ export declare const ListIntegrationConnectionsInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const ListIntegrationConnectionsOutputSchema: z.ZodObject<{
     connections: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -307,6 +411,58 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
     }>>;
 }, z.core.$strip>, z.ZodObject<{
     connections: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -350,6 +506,58 @@ export declare const GetIntegrationConnectionInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const GetIntegrationConnectionOutputSchema: z.ZodObject<{
     connection: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -394,6 +602,58 @@ export declare const getIntegrationConnection: import("../orpc-contracts/index.j
     connectionId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     connection: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -451,6 +711,58 @@ export declare const CreateIntegrationConnectionInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const CreateIntegrationConnectionOutputSchema: z.ZodObject<{
     connection: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -509,6 +821,58 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
     credentials: z.ZodRecord<z.ZodString, z.ZodUnknown>;
 }, z.core.$strip>, z.ZodObject<{
     connection: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -612,8 +976,61 @@ export declare const GetIntegrationConnectAttemptOutputSchema: z.ZodObject<{
         not_connected: "not_connected";
         pending: "pending";
     }>;
+    conflictPending: z.ZodOptional<z.ZodBoolean>;
     errorCode: z.ZodNullable<z.ZodString>;
     connection: z.ZodOptional<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -664,8 +1081,61 @@ export declare const getIntegrationConnectAttempt: import("../orpc-contracts/ind
         not_connected: "not_connected";
         pending: "pending";
     }>;
+    conflictPending: z.ZodOptional<z.ZodBoolean>;
     errorCode: z.ZodNullable<z.ZodString>;
     connection: z.ZodOptional<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -725,6 +1195,58 @@ export declare const UpdateIntegrationConnectionCredentialsInputSchema: z.ZodObj
 }, z.core.$strip>;
 export declare const UpdateIntegrationConnectionCredentialsOutputSchema: z.ZodObject<{
     connection: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -770,6 +1292,58 @@ export declare const updateIntegrationConnectionCredentials: import("../orpc-con
     credentials: z.ZodRecord<z.ZodString, z.ZodUnknown>;
 }, z.core.$strip>, z.ZodObject<{
     connection: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
@@ -1131,3 +1705,44 @@ export declare const deleteSlackChannelProjectMapping: import("../orpc-contracts
 }, z.core.$strip>, z.ZodObject<{
     success: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    provider: z.ZodEnum<{
+        bitbucket: "bitbucket";
+        github: "github";
+        incident_io: "incident_io";
+        jira: "jira";
+        linear: "linear";
+        pagerduty: "pagerduty";
+        rootly: "rootly";
+        slack: "slack";
+        teams: "teams";
+        victorops: "victorops";
+        webhook: "webhook";
+    }>;
+}, z.core.$strip>;
+export declare const GetActiveCLIAttemptOutputSchema: z.ZodNullable<z.ZodObject<{
+    attemptId: z.ZodString;
+    expiresAt: z.ZodString;
+}, z.core.$strip>>;
+export type GetActiveCLIAttemptInput = z.infer<typeof GetActiveCLIAttemptInputSchema>;
+export type GetActiveCLIAttemptOutput = z.infer<typeof GetActiveCLIAttemptOutputSchema>;
+export declare const getActiveCLIAttempt: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    provider: z.ZodEnum<{
+        bitbucket: "bitbucket";
+        github: "github";
+        incident_io: "incident_io";
+        jira: "jira";
+        linear: "linear";
+        pagerduty: "pagerduty";
+        rootly: "rootly";
+        slack: "slack";
+        teams: "teams";
+        victorops: "victorops";
+        webhook: "webhook";
+    }>;
+}, z.core.$strip>, z.ZodNullable<z.ZodObject<{
+    attemptId: z.ZodString;
+    expiresAt: z.ZodString;
+}, z.core.$strip>>, "api">;

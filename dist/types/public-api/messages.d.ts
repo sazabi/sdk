@@ -22,11 +22,11 @@ export declare const ListMessagesOutputSchema: z.ZodObject<{
             message: z.ZodString;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"reasoning">;
-            reasoning: z.ZodString;
             status: z.ZodOptional<z.ZodEnum<{
                 complete: "complete";
                 in_progress: "in_progress";
             }>>;
+            reasoningTokens: z.ZodOptional<z.ZodNumber>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"tool_call">;
             name: z.ZodString;
@@ -166,11 +166,11 @@ export declare const listMessages: import("../orpc-contracts/index.js").Operatio
             message: z.ZodString;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"reasoning">;
-            reasoning: z.ZodString;
             status: z.ZodOptional<z.ZodEnum<{
                 complete: "complete";
                 in_progress: "in_progress";
             }>>;
+            reasoningTokens: z.ZodOptional<z.ZodNumber>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"tool_call">;
             name: z.ZodString;

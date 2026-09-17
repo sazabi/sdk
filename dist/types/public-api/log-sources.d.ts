@@ -2,7 +2,7 @@ import { z } from "zod";
 /**
  * Supported log source provider values derived from canonical catalog specs.
  */
-export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk"];
+export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey"];
 /**
  * Log source setup modes. `managed` log sources hold vendor credentials that
  * Sazabi uses to provision delivery; `connectionless` log sources mint a keyed
@@ -124,6 +124,58 @@ export declare const LogStreamSchema: z.ZodObject<{
  * `connectionless` (the sender pushes to a keyed Sazabi intake endpoint).
  */
 export declare const LogSourceSchema: z.ZodObject<{
+    connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        state: z.ZodEnum<{
+            connected: "connected";
+            connecting: "connecting";
+            needs_attention: "needs_attention";
+            not_connected: "not_connected";
+        }>;
+        reasonCode: z.ZodNullable<z.ZodEnum<{
+            configuration_invalid: "configuration_invalid";
+            credentials_rejected: "credentials_rejected";
+            discovery_failed: "discovery_failed";
+            health_check_failed: "health_check_failed";
+            permissions_missing: "permissions_missing";
+            recovery_required: "recovery_required";
+            stream_failed: "stream_failed";
+        }>>;
+        checkedAt: z.ZodNullable<z.ZodString>;
+        verification: z.ZodEnum<{
+            unverified: "unverified";
+            verified: "verified";
+        }>;
+    }, z.core.$strip>>>;
+    recovery: z.ZodOptional<z.ZodObject<{
+        action: z.ZodNullable<z.ZodEnum<{
+            manage_installation: "manage_installation";
+            manage_owner: "manage_owner";
+            reconnect: "reconnect";
+            review_setup: "review_setup";
+            update_credentials: "update_credentials";
+        }>>;
+        canCheck: z.ZodBoolean;
+        canDisconnect: z.ZodBoolean;
+        target: z.ZodOptional<z.ZodObject<{
+            kind: z.ZodEnum<{
+                connected_account: "connected_account";
+                integration: "integration";
+                log_source: "log_source";
+                mcp_connector: "mcp_connector";
+                sandbox_cli: "sandbox_cli";
+            }>;
+            resourceId: z.ZodString;
+            providerId: z.ZodString;
+            scope: z.ZodObject<{
+                kind: z.ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
+                id: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
     id: z.ZodString;
     provider: z.ZodEnum<{
         claude_code: "claude_code";
@@ -146,6 +198,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         mastra: "mastra";
         neon: "neon";
         netlify: "netlify";
+        oh_my_pi: "oh_my_pi";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -164,6 +217,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         supabase: "supabase";
         temporal: "temporal";
         trigger_dev: "trigger_dev";
+        unkey: "unkey";
         vector: "vector";
         vercel: "vercel";
         webhook_events: "webhook_events";
@@ -185,6 +239,58 @@ export declare const LogSourceSchema: z.ZodObject<{
  * own delivery key include server-computed `endpointCards`.
  */
 export declare const LogSourceDetailSchema: z.ZodObject<{
+    connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        state: z.ZodEnum<{
+            connected: "connected";
+            connecting: "connecting";
+            needs_attention: "needs_attention";
+            not_connected: "not_connected";
+        }>;
+        reasonCode: z.ZodNullable<z.ZodEnum<{
+            configuration_invalid: "configuration_invalid";
+            credentials_rejected: "credentials_rejected";
+            discovery_failed: "discovery_failed";
+            health_check_failed: "health_check_failed";
+            permissions_missing: "permissions_missing";
+            recovery_required: "recovery_required";
+            stream_failed: "stream_failed";
+        }>>;
+        checkedAt: z.ZodNullable<z.ZodString>;
+        verification: z.ZodEnum<{
+            unverified: "unverified";
+            verified: "verified";
+        }>;
+    }, z.core.$strip>>>;
+    recovery: z.ZodOptional<z.ZodObject<{
+        action: z.ZodNullable<z.ZodEnum<{
+            manage_installation: "manage_installation";
+            manage_owner: "manage_owner";
+            reconnect: "reconnect";
+            review_setup: "review_setup";
+            update_credentials: "update_credentials";
+        }>>;
+        canCheck: z.ZodBoolean;
+        canDisconnect: z.ZodBoolean;
+        target: z.ZodOptional<z.ZodObject<{
+            kind: z.ZodEnum<{
+                connected_account: "connected_account";
+                integration: "integration";
+                log_source: "log_source";
+                mcp_connector: "mcp_connector";
+                sandbox_cli: "sandbox_cli";
+            }>;
+            resourceId: z.ZodString;
+            providerId: z.ZodString;
+            scope: z.ZodObject<{
+                kind: z.ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
+                id: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
     id: z.ZodString;
     provider: z.ZodEnum<{
         claude_code: "claude_code";
@@ -207,6 +313,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         mastra: "mastra";
         neon: "neon";
         netlify: "netlify";
+        oh_my_pi: "oh_my_pi";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -225,6 +332,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         supabase: "supabase";
         temporal: "temporal";
         trigger_dev: "trigger_dev";
+        unkey: "unkey";
         vector: "vector";
         vercel: "vercel";
         webhook_events: "webhook_events";
@@ -337,6 +445,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         mastra: "mastra";
         neon: "neon";
         netlify: "netlify";
+        oh_my_pi: "oh_my_pi";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -355,6 +464,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         supabase: "supabase";
         temporal: "temporal";
         trigger_dev: "trigger_dev";
+        unkey: "unkey";
         vector: "vector";
         vercel: "vercel";
         webhook_events: "webhook_events";
@@ -362,6 +472,58 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const ListLogSourcesOutputSchema: z.ZodObject<{
     logSources: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -384,6 +546,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -402,6 +565,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -444,6 +608,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         mastra: "mastra";
         neon: "neon";
         netlify: "netlify";
+        oh_my_pi: "oh_my_pi";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -462,12 +627,65 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         supabase: "supabase";
         temporal: "temporal";
         trigger_dev: "trigger_dev";
+        unkey: "unkey";
         vector: "vector";
         vercel: "vercel";
         webhook_events: "webhook_events";
     }>>;
 }, z.core.$strip>, z.ZodObject<{
     logSources: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -490,6 +708,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -508,6 +727,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -548,6 +768,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         mastra: "mastra";
         neon: "neon";
         netlify: "netlify";
+        oh_my_pi: "oh_my_pi";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -566,6 +787,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         supabase: "supabase";
         temporal: "temporal";
         trigger_dev: "trigger_dev";
+        unkey: "unkey";
         vector: "vector";
         vercel: "vercel";
         webhook_events: "webhook_events";
@@ -578,6 +800,58 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
 }, z.core.$strict>;
 export declare const CreateLogSourceOutputSchema: z.ZodObject<{
     logSource: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -600,6 +874,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -618,6 +893,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -678,6 +954,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         mastra: "mastra";
         neon: "neon";
         netlify: "netlify";
+        oh_my_pi: "oh_my_pi";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -696,6 +973,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         supabase: "supabase";
         temporal: "temporal";
         trigger_dev: "trigger_dev";
+        unkey: "unkey";
         vector: "vector";
         vercel: "vercel";
         webhook_events: "webhook_events";
@@ -707,6 +985,58 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strict>, z.ZodObject<{
     logSource: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -729,6 +1059,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -747,6 +1078,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -787,6 +1119,58 @@ export declare const GetLogSourceInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const GetLogSourceOutputSchema: z.ZodObject<{
     logSource: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -809,6 +1193,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -827,6 +1212,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -885,6 +1271,58 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
     logSourceId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     logSource: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -907,6 +1345,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -925,6 +1364,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -987,6 +1427,58 @@ export declare const UpdateLogSourceInputSchema: z.ZodObject<{
 }, z.core.$strict>;
 export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
     logSource: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -1009,6 +1501,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1027,6 +1520,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -1055,6 +1549,58 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
     }, z.core.$strip>>>;
 }, z.core.$strict>, z.ZodObject<{
     logSource: z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
             claude_code: "claude_code";
@@ -1077,6 +1623,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1095,6 +1642,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -1169,6 +1717,7 @@ export declare const logSourcesContract: {
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1187,12 +1736,65 @@ export declare const logSourcesContract: {
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
         }>>;
     }, z.core.$strip>, z.ZodObject<{
         logSources: z.ZodArray<z.ZodObject<{
+            connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                state: z.ZodEnum<{
+                    connected: "connected";
+                    connecting: "connecting";
+                    needs_attention: "needs_attention";
+                    not_connected: "not_connected";
+                }>;
+                reasonCode: z.ZodNullable<z.ZodEnum<{
+                    configuration_invalid: "configuration_invalid";
+                    credentials_rejected: "credentials_rejected";
+                    discovery_failed: "discovery_failed";
+                    health_check_failed: "health_check_failed";
+                    permissions_missing: "permissions_missing";
+                    recovery_required: "recovery_required";
+                    stream_failed: "stream_failed";
+                }>>;
+                checkedAt: z.ZodNullable<z.ZodString>;
+                verification: z.ZodEnum<{
+                    unverified: "unverified";
+                    verified: "verified";
+                }>;
+            }, z.core.$strip>>>;
+            recovery: z.ZodOptional<z.ZodObject<{
+                action: z.ZodNullable<z.ZodEnum<{
+                    manage_installation: "manage_installation";
+                    manage_owner: "manage_owner";
+                    reconnect: "reconnect";
+                    review_setup: "review_setup";
+                    update_credentials: "update_credentials";
+                }>>;
+                canCheck: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+                target: z.ZodOptional<z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        connected_account: "connected_account";
+                        integration: "integration";
+                        log_source: "log_source";
+                        mcp_connector: "mcp_connector";
+                        sandbox_cli: "sandbox_cli";
+                    }>;
+                    resourceId: z.ZodString;
+                    providerId: z.ZodString;
+                    scope: z.ZodObject<{
+                        kind: z.ZodEnum<{
+                            organization: "organization";
+                            project: "project";
+                            user: "user";
+                        }>;
+                        id: z.ZodString;
+                    }, z.core.$strip>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
                 claude_code: "claude_code";
@@ -1215,6 +1817,7 @@ export declare const logSourcesContract: {
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                oh_my_pi: "oh_my_pi";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -1233,6 +1836,7 @@ export declare const logSourcesContract: {
                 supabase: "supabase";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
+                unkey: "unkey";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
@@ -1273,6 +1877,7 @@ export declare const logSourcesContract: {
             mastra: "mastra";
             neon: "neon";
             netlify: "netlify";
+            oh_my_pi: "oh_my_pi";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1291,6 +1896,7 @@ export declare const logSourcesContract: {
             supabase: "supabase";
             temporal: "temporal";
             trigger_dev: "trigger_dev";
+            unkey: "unkey";
             vector: "vector";
             vercel: "vercel";
             webhook_events: "webhook_events";
@@ -1302,6 +1908,58 @@ export declare const logSourcesContract: {
         metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     }, z.core.$strict>, z.ZodObject<{
         logSource: z.ZodObject<{
+            connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                state: z.ZodEnum<{
+                    connected: "connected";
+                    connecting: "connecting";
+                    needs_attention: "needs_attention";
+                    not_connected: "not_connected";
+                }>;
+                reasonCode: z.ZodNullable<z.ZodEnum<{
+                    configuration_invalid: "configuration_invalid";
+                    credentials_rejected: "credentials_rejected";
+                    discovery_failed: "discovery_failed";
+                    health_check_failed: "health_check_failed";
+                    permissions_missing: "permissions_missing";
+                    recovery_required: "recovery_required";
+                    stream_failed: "stream_failed";
+                }>>;
+                checkedAt: z.ZodNullable<z.ZodString>;
+                verification: z.ZodEnum<{
+                    unverified: "unverified";
+                    verified: "verified";
+                }>;
+            }, z.core.$strip>>>;
+            recovery: z.ZodOptional<z.ZodObject<{
+                action: z.ZodNullable<z.ZodEnum<{
+                    manage_installation: "manage_installation";
+                    manage_owner: "manage_owner";
+                    reconnect: "reconnect";
+                    review_setup: "review_setup";
+                    update_credentials: "update_credentials";
+                }>>;
+                canCheck: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+                target: z.ZodOptional<z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        connected_account: "connected_account";
+                        integration: "integration";
+                        log_source: "log_source";
+                        mcp_connector: "mcp_connector";
+                        sandbox_cli: "sandbox_cli";
+                    }>;
+                    resourceId: z.ZodString;
+                    providerId: z.ZodString;
+                    scope: z.ZodObject<{
+                        kind: z.ZodEnum<{
+                            organization: "organization";
+                            project: "project";
+                            user: "user";
+                        }>;
+                        id: z.ZodString;
+                    }, z.core.$strip>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
                 claude_code: "claude_code";
@@ -1324,6 +1982,7 @@ export declare const logSourcesContract: {
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                oh_my_pi: "oh_my_pi";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -1342,6 +2001,7 @@ export declare const logSourcesContract: {
                 supabase: "supabase";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
+                unkey: "unkey";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
@@ -1381,6 +2041,58 @@ export declare const logSourcesContract: {
         logSourceId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         logSource: z.ZodObject<{
+            connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                state: z.ZodEnum<{
+                    connected: "connected";
+                    connecting: "connecting";
+                    needs_attention: "needs_attention";
+                    not_connected: "not_connected";
+                }>;
+                reasonCode: z.ZodNullable<z.ZodEnum<{
+                    configuration_invalid: "configuration_invalid";
+                    credentials_rejected: "credentials_rejected";
+                    discovery_failed: "discovery_failed";
+                    health_check_failed: "health_check_failed";
+                    permissions_missing: "permissions_missing";
+                    recovery_required: "recovery_required";
+                    stream_failed: "stream_failed";
+                }>>;
+                checkedAt: z.ZodNullable<z.ZodString>;
+                verification: z.ZodEnum<{
+                    unverified: "unverified";
+                    verified: "verified";
+                }>;
+            }, z.core.$strip>>>;
+            recovery: z.ZodOptional<z.ZodObject<{
+                action: z.ZodNullable<z.ZodEnum<{
+                    manage_installation: "manage_installation";
+                    manage_owner: "manage_owner";
+                    reconnect: "reconnect";
+                    review_setup: "review_setup";
+                    update_credentials: "update_credentials";
+                }>>;
+                canCheck: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+                target: z.ZodOptional<z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        connected_account: "connected_account";
+                        integration: "integration";
+                        log_source: "log_source";
+                        mcp_connector: "mcp_connector";
+                        sandbox_cli: "sandbox_cli";
+                    }>;
+                    resourceId: z.ZodString;
+                    providerId: z.ZodString;
+                    scope: z.ZodObject<{
+                        kind: z.ZodEnum<{
+                            organization: "organization";
+                            project: "project";
+                            user: "user";
+                        }>;
+                        id: z.ZodString;
+                    }, z.core.$strip>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
                 claude_code: "claude_code";
@@ -1403,6 +2115,7 @@ export declare const logSourcesContract: {
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                oh_my_pi: "oh_my_pi";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -1421,6 +2134,7 @@ export declare const logSourcesContract: {
                 supabase: "supabase";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
+                unkey: "unkey";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
@@ -1482,6 +2196,58 @@ export declare const logSourcesContract: {
         }, z.core.$strip>>>;
     }, z.core.$strict>, z.ZodObject<{
         logSource: z.ZodObject<{
+            connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                state: z.ZodEnum<{
+                    connected: "connected";
+                    connecting: "connecting";
+                    needs_attention: "needs_attention";
+                    not_connected: "not_connected";
+                }>;
+                reasonCode: z.ZodNullable<z.ZodEnum<{
+                    configuration_invalid: "configuration_invalid";
+                    credentials_rejected: "credentials_rejected";
+                    discovery_failed: "discovery_failed";
+                    health_check_failed: "health_check_failed";
+                    permissions_missing: "permissions_missing";
+                    recovery_required: "recovery_required";
+                    stream_failed: "stream_failed";
+                }>>;
+                checkedAt: z.ZodNullable<z.ZodString>;
+                verification: z.ZodEnum<{
+                    unverified: "unverified";
+                    verified: "verified";
+                }>;
+            }, z.core.$strip>>>;
+            recovery: z.ZodOptional<z.ZodObject<{
+                action: z.ZodNullable<z.ZodEnum<{
+                    manage_installation: "manage_installation";
+                    manage_owner: "manage_owner";
+                    reconnect: "reconnect";
+                    review_setup: "review_setup";
+                    update_credentials: "update_credentials";
+                }>>;
+                canCheck: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+                target: z.ZodOptional<z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        connected_account: "connected_account";
+                        integration: "integration";
+                        log_source: "log_source";
+                        mcp_connector: "mcp_connector";
+                        sandbox_cli: "sandbox_cli";
+                    }>;
+                    resourceId: z.ZodString;
+                    providerId: z.ZodString;
+                    scope: z.ZodObject<{
+                        kind: z.ZodEnum<{
+                            organization: "organization";
+                            project: "project";
+                            user: "user";
+                        }>;
+                        id: z.ZodString;
+                    }, z.core.$strip>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
                 claude_code: "claude_code";
@@ -1504,6 +2270,7 @@ export declare const logSourcesContract: {
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                oh_my_pi: "oh_my_pi";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -1522,6 +2289,7 @@ export declare const logSourcesContract: {
                 supabase: "supabase";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
+                unkey: "unkey";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
@@ -1546,3 +2314,14 @@ export declare const logSourcesContract: {
         teardownError: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };
+export declare const verifyLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    logSourceId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    outcome: z.ZodEnum<{
+        healthy: "healthy";
+        inconclusive: "inconclusive";
+        superseded: "superseded";
+        unhealthy: "unhealthy";
+        unsupported: "unsupported";
+    }>;
+}, z.core.$strip>, "api">;

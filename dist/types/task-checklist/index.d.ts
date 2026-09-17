@@ -23,13 +23,13 @@
  * - This root entrypoint stays browser-safe; the completion writers live
  *   behind `@sazabi/task-checklist/server`.
  */
-export declare const TASK_KEYS: readonly ["set_up_billing", "install_github_app", "configure_code_search", "install_slack_app", "configure_slack_alerts", "trigger_sample_issue", "invite_team", "connect_log_sources", "add_mcp_connectors", "install_agent_skills", "customize_sandbox", "send_message", "explore_integrations", "resolve_first_issue", "visit_status_page", "configure_auto_top_up"];
+export declare const TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "configure_code_search", "install_slack_app", "configure_slack_alerts", "trigger_sample_issue", "invite_team", "connect_log_sources", "add_mcp_connectors", "install_cli", "customize_sandbox", "send_message", "explore_integrations", "visit_status_page", "configure_auto_top_up"];
 export type TaskKey = (typeof TASK_KEYS)[number];
 /** Task keys written to org_task_completions. */
-export declare const ORG_TASK_KEYS: readonly ["set_up_billing", "install_github_app", "install_slack_app", "configure_slack_alerts", "invite_team", "add_mcp_connectors", "install_agent_skills", "configure_auto_top_up"];
+export declare const ORG_TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "install_slack_app", "configure_slack_alerts", "invite_team", "add_mcp_connectors", "install_cli", "configure_auto_top_up"];
 export type OrgTaskKey = (typeof ORG_TASK_KEYS)[number];
 /** Task keys written to project_task_completions. */
-export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "trigger_sample_issue", "connect_log_sources", "customize_sandbox", "send_message", "explore_integrations", "resolve_first_issue", "visit_status_page"];
+export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "trigger_sample_issue", "connect_log_sources", "customize_sandbox", "send_message", "explore_integrations", "visit_status_page"];
 export type ProjectTaskKey = (typeof PROJECT_TASK_KEYS)[number];
 export declare const TASK_CATEGORIES: readonly ["onboarding", "setup"];
 export type TaskCategory = (typeof TASK_CATEGORIES)[number];
@@ -42,12 +42,15 @@ export type TaskMetadata = {
     readonly dependsOn?: readonly TaskKey[];
 };
 /**
- * What the web onboarding flow does when it reaches a card. A closed 3-kind
+ * What the web onboarding flow does when it reaches a card. A closed 4-kind
  * menu so the flow's interpreter is a small `switch` that never grows:
  * - `show-screen`: render a bespoke screen (may span several internal pages;
  *   the card derives which one fits the current facts).
  * - `open-page`: navigate to an existing product page.
  * - `show-command`: render a command card for work the CLI must execute.
+ * - `open-url`: leave the app for an absolute URL in a new tab, with the
+ *   external-link affordance (design.md §5.b.i) — for work whose home is
+ *   outside the dashboard entirely (the CLI install docs).
  */
 export type WebAction = {
     readonly do: "show-screen";
@@ -57,6 +60,9 @@ export type WebAction = {
     readonly target: string;
 } | {
     readonly do: "show-command";
+    readonly target: string;
+} | {
+    readonly do: "open-url";
     readonly target: string;
 };
 /**
@@ -185,6 +191,39 @@ export type TaskCardProjection = {
  */
 export declare const toTaskCardProjection: (task: Task) => TaskCardProjection;
 /**
+ * The onboarding cards backed by an `organizations` skip column pair — the
+ * org-wide skip ledger the public `tasks.skip`/`tasks.unskip` operations
+ * write (task-registry-v2 Decision 6). The public contract's
+ * `SKIPPABLE_TASK_IDS` enum derives from this tuple, so wire membership and
+ * the ledger mapping below cannot drift.
+ */
+export declare const TASKS_WITH_SKIP_LEDGER: readonly ["connect_github_account", "install_github_app", "install_slack_app", "trigger_sample_issue"];
+export type TaskWithSkipLedger = (typeof TASKS_WITH_SKIP_LEDGER)[number];
+/**
+ * The org-wide skip ledger as booleans, one per `organizations` skip column
+ * pair. Surfaces derive it from whatever shape carries the columns — the
+ * task routers from the organization row (`getOrgOnboardingTaskFacts` in
+ * the server entrypoint), the CLI walk from the onboarding snapshot
+ * (`cardSkippedOnServer`) — and evaluate cards through
+ * {@link isTaskSkippedInLedger} so the per-card pair mapping exists once.
+ */
+export type OrgTaskSkipLedger = {
+    readonly githubSkipped: boolean;
+    readonly githubAppSkipped: boolean;
+    readonly slackSkipped: boolean;
+    readonly sampleIssueSkipped: boolean;
+};
+/**
+ * The per-card skip-pair mapping (the one source both task-list routers and
+ * the CLI walk evaluate): one column pair per card since the GitHub
+ * two-card split — `connect_github_account` owns the `github` (personal
+ * account) pair and `install_github_app` owns the `github_app` (org
+ * installation) pair. Cards outside {@link TASKS_WITH_SKIP_LEDGER} have no
+ * ledger entry and never read skipped. Completion outranks a recorded skip
+ * everywhere; callers gate on their done fact before consulting this.
+ */
+export declare const isTaskSkippedInLedger: (ledger: OrgTaskSkipLedger, taskKey: TaskKey) => boolean;
+/**
  * The facts an onboarding-flow interpreter derives its position from. All
  * three predicates answer from current truth (completion rows, recorded
  * skips, surface facts); nothing is a stored cursor.
@@ -200,21 +239,63 @@ export type OnboardingCardState = {
     readonly applies?: (rule: TaskApplicabilityRule) => boolean;
 };
 /**
+ * A card is unavailable when EVERY card it depends on was skipped:
+ * `dependsOn` lists the cards able to satisfy the dependent's prerequisite
+ * (the grants that can provide repositories, the chat install that alerts
+ * deliver through), so any un-skipped one keeps the dependent reachable.
+ * With a single dependency this is the familiar "skipped dependency
+ * suppresses the dependent" (alerts after a skipped Slack install); with the
+ * split GitHub cards it is exactly the shipped web rule — code search stays
+ * eligible unless BOTH GitHub grants were declined
+ * (`!(githubSkipped && githubAppSkipped)`).
+ */
+export declare const areDependenciesSkipped: (task: Task, skipped: (id: TaskKey) => boolean) => boolean;
+/**
  * The shared onboarding interpreter core: the next card is the first entry
- * in `ONBOARDING_TASKS` that is neither done nor skipped, none of whose
- * `dependsOn` targets were skipped, and whose applicability rule (if any)
+ * in `ONBOARDING_TASKS` that is neither done nor skipped, not suppressed by
+ * {@link areDependenciesSkipped}, and whose applicability rule (if any)
  * holds. Returns `undefined` when the tour is exhausted. Pure: same state
  * in, same card out.
  *
- * A skipped dependency makes its dependents ineligible, mirroring the
- * shipped web flow's eligibility rules (`configure-code-search` is
- * ineligible when the forge install was skipped, `configure-slack-
- * notifications` when Slack was skipped — see
- * apps/dashboard/src/features/onboarding/onboarding-steps.ts). A merely
- * pending dependency needs no check: dependencies precede their dependents
- * in the array (guard-tested), so the dependency itself is selected first.
+ * A merely pending dependency needs no check: dependencies precede their
+ * dependents in the array (guard-tested), so the dependency itself is
+ * selected first.
  */
 export declare const nextCard: (state: OnboardingCardState) => Task | undefined;
+/** Which way {@link adjacentFlowEntry} walks the tour: -1 back, 1 forward. */
+export type FlowDirection = -1 | 1;
+/** A position in the onboarding walk: a card key or the create-project gate. */
+export type OnboardingFlowEntryId = OnboardingFlowEntry["id"];
+/**
+ * The first eligible flow entry adjacent to `from` in `direction`, or `null`
+ * at the tour's edge — the CLI port of the web's
+ * `deriveAdjacentViewableScreen`
+ * (`apps/dashboard/src/features/onboarding/onboarding-flow.ts`), the
+ * cli-onboarding-back-navigation design's adjacency decision. Pure, like
+ * {@link nextCard}: same state in, same entry out.
+ *
+ * The walk covers {@link ONBOARDING_FLOW} — cards AND the create-project
+ * gate — because the web's ordered-screens walk includes the gate screen:
+ * backing up from the first project-scoped card lands on configure-project,
+ * not on billing. The gate is always admitted: it cannot be skipped, has no
+ * dependencies or applicability rule, and its web eligibility (an
+ * organization exists) holds whenever the walk runs; a gate whose project
+ * already exists is a satisfied entry, admitted like any other. The gate
+ * offering no Back of its own in the flow's render is a ruling about its
+ * outgoing option, not about being a back target.
+ *
+ * Unlike `nextCard`, satisfied (done or skipped) entries are admitted: a
+ * back/forward target renders its completed or actionable state rather than
+ * being invisible, so navigation can revisit finished work. Only pruning
+ * excludes a card — every dependency skipped ({@link areDependenciesSkipped})
+ * or its applicability rule reporting false — because those cards cannot be
+ * acted on at all. An unknown `from` returns `null`.
+ *
+ * Navigation only: choosing an adjacent entry must never write anything —
+ * entry status stays server-derived, and only explicit user actions
+ * (connect, install, configure, skip) mutate state.
+ */
+export declare const adjacentFlowEntry: (state: OnboardingCardState, from: OnboardingFlowEntryId, direction: FlowDirection) => OnboardingFlowEntry | null;
 /**
  * Completion status for all checklist tasks, grouped by display category.
  * The "onboarding" group maps to tasks with category "onboarding";
@@ -231,6 +312,12 @@ export type TaskChecklistStatus = {
          * the org with a task the product never asks it to complete.
          */
         setUpBilling: boolean | null;
+        /**
+         * Whether anyone in the organization has a live (non-reconnect) GitHub
+         * connected account — the personal-login half of the former fused
+         * GitHub card.
+         */
+        connectGithubAccount: boolean;
         installGithubApp: boolean;
         configureCodeSearch: boolean;
         installSlackApp: boolean;
@@ -241,17 +328,15 @@ export type TaskChecklistStatus = {
         connectLogSources: boolean;
         addMcpConnectors: boolean;
         /**
-         * Whether someone in the organization installed the agent skills.
-         * Completion-row only (the org `install_agent_skills` completion written
-         * by `sazabi skill install`): the install is machine-global, so no
-         * database fact can observe it live — mirroring the public `tasks.list`
-         * treatment of the same task.
+         * Whether someone in the organization authenticated the Sazabi CLI: an
+         * org `install_cli` completion row (stamped by the public API on
+         * CLI-sourced requests) or a live device-grant session bound to the
+         * organization (`hasCliAuthenticatedSession`).
          */
-        installAgentSkills: boolean;
+        installCli: boolean;
         customizeSandbox: boolean;
         sendMessage: boolean;
         exploreIntegrations: boolean;
-        resolveFirstIssue: boolean;
         visitStatusPage: boolean;
         /**
          * Whether auto top-up (automatic reload) is enabled, or `null` when the

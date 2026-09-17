@@ -2,16 +2,11 @@ import { z } from "zod";
 /**
  * Support tickets: a customer's request for help from Sazabi's own support
  * desk. Pylon is the system of record; Sazabi stores nothing and returns
- * Pylon's ticket. Feature requests are a ticket type, not a separate resource.
+ * Pylon's ticket. A feature request is a support ticket flagged as one, the
+ * same explicit path the dashboard widget's feature request form takes; the
+ * support desk classifies everything else itself.
  */
-export declare const SUPPORT_TICKET_TYPES: readonly ["question", "bug", "feature_request", "billing"];
-export declare const SupportTicketTypeSchema: z.ZodEnum<{
-    billing: "billing";
-    bug: "bug";
-    feature_request: "feature_request";
-    question: "question";
-}>;
-export type SupportTicketType = z.infer<typeof SupportTicketTypeSchema>;
+export declare const FeatureRequestFlagSchema: z.ZodBoolean;
 export declare const SUPPORT_TICKET_CHANNELS: readonly ["cli", "agent", "mcp", "api"];
 export declare const SupportTicketChannelSchema: z.ZodEnum<{
     agent: "agent";
@@ -26,12 +21,7 @@ export declare const SupportTicketSchema: z.ZodObject<{
     organizationId: z.ZodString;
     projectId: z.ZodNullable<z.ZodString>;
     threadId: z.ZodNullable<z.ZodString>;
-    type: z.ZodEnum<{
-        billing: "billing";
-        bug: "bug";
-        feature_request: "feature_request";
-        question: "question";
-    }>;
+    featureRequest: z.ZodBoolean;
     title: z.ZodString;
     state: z.ZodString;
     filedThrough: z.ZodEnum<{
@@ -51,12 +41,7 @@ export declare const CreateSupportTicketInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     threadId: z.ZodOptional<z.ZodString>;
-    type: z.ZodEnum<{
-        billing: "billing";
-        bug: "bug";
-        feature_request: "feature_request";
-        question: "question";
-    }>;
+    featureRequest: z.ZodOptional<z.ZodBoolean>;
     title: z.ZodString;
     body: z.ZodString;
 }, z.core.$strip>;
@@ -68,12 +53,7 @@ export declare const CreateSupportTicketOutputSchema: z.ZodObject<{
         organizationId: z.ZodString;
         projectId: z.ZodNullable<z.ZodString>;
         threadId: z.ZodNullable<z.ZodString>;
-        type: z.ZodEnum<{
-            billing: "billing";
-            bug: "bug";
-            feature_request: "feature_request";
-            question: "question";
-        }>;
+        featureRequest: z.ZodBoolean;
         title: z.ZodString;
         state: z.ZodString;
         filedThrough: z.ZodEnum<{
@@ -109,12 +89,7 @@ export declare const createSupportTicket: import("../orpc-contracts/index.js").O
     organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     threadId: z.ZodOptional<z.ZodString>;
-    type: z.ZodEnum<{
-        billing: "billing";
-        bug: "bug";
-        feature_request: "feature_request";
-        question: "question";
-    }>;
+    featureRequest: z.ZodOptional<z.ZodBoolean>;
     title: z.ZodString;
     body: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
@@ -124,12 +99,7 @@ export declare const createSupportTicket: import("../orpc-contracts/index.js").O
         organizationId: z.ZodString;
         projectId: z.ZodNullable<z.ZodString>;
         threadId: z.ZodNullable<z.ZodString>;
-        type: z.ZodEnum<{
-            billing: "billing";
-            bug: "bug";
-            feature_request: "feature_request";
-            question: "question";
-        }>;
+        featureRequest: z.ZodBoolean;
         title: z.ZodString;
         state: z.ZodString;
         filedThrough: z.ZodEnum<{
@@ -157,12 +127,7 @@ export declare const supportTicketsContract: {
         organizationId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
         threadId: z.ZodOptional<z.ZodString>;
-        type: z.ZodEnum<{
-            billing: "billing";
-            bug: "bug";
-            feature_request: "feature_request";
-            question: "question";
-        }>;
+        featureRequest: z.ZodOptional<z.ZodBoolean>;
         title: z.ZodString;
         body: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
@@ -172,12 +137,7 @@ export declare const supportTicketsContract: {
             organizationId: z.ZodString;
             projectId: z.ZodNullable<z.ZodString>;
             threadId: z.ZodNullable<z.ZodString>;
-            type: z.ZodEnum<{
-                billing: "billing";
-                bug: "bug";
-                feature_request: "feature_request";
-                question: "question";
-            }>;
+            featureRequest: z.ZodBoolean;
             title: z.ZodString;
             state: z.ZodString;
             filedThrough: z.ZodEnum<{

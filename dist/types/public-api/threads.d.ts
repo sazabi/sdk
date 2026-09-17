@@ -42,11 +42,11 @@ export declare const MessageSchema: z.ZodObject<{
         message: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"reasoning">;
-        reasoning: z.ZodString;
         status: z.ZodOptional<z.ZodEnum<{
             complete: "complete";
             in_progress: "in_progress";
         }>>;
+        reasoningTokens: z.ZodOptional<z.ZodNumber>;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"tool_call">;
         name: z.ZodString;
@@ -225,11 +225,11 @@ export declare const GetThreadOutputSchema: z.ZodObject<{
             message: z.ZodString;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"reasoning">;
-            reasoning: z.ZodString;
             status: z.ZodOptional<z.ZodEnum<{
                 complete: "complete";
                 in_progress: "in_progress";
             }>>;
+            reasoningTokens: z.ZodOptional<z.ZodNumber>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"tool_call">;
             name: z.ZodString;
@@ -327,6 +327,9 @@ export declare const CreateThreadInputSchema: z.ZodObject<{
     wait: z.ZodDefault<z.ZodBoolean>;
     timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     automationId: z.ZodOptional<z.ZodString>;
+    kind: z.ZodOptional<z.ZodEnum<{
+        support: "support";
+    }>>;
     ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
 }, z.core.$strip>;
 /**
@@ -517,11 +520,11 @@ export declare const getThread: import("../orpc-contracts/index.js").OperationDe
             message: z.ZodString;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"reasoning">;
-            reasoning: z.ZodString;
             status: z.ZodOptional<z.ZodEnum<{
                 complete: "complete";
                 in_progress: "in_progress";
             }>>;
+            reasoningTokens: z.ZodOptional<z.ZodNumber>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"tool_call">;
             name: z.ZodString;
@@ -641,6 +644,9 @@ export declare const createThread: import("../orpc-contracts/index.js").Operatio
     wait: z.ZodDefault<z.ZodBoolean>;
     timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     automationId: z.ZodOptional<z.ZodString>;
+    kind: z.ZodOptional<z.ZodEnum<{
+        support: "support";
+    }>>;
     ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
 }, z.core.$strip>, z.ZodObject<{
     completed: z.ZodBoolean;
@@ -1040,11 +1046,11 @@ export declare const threadsContract: {
                 message: z.ZodString;
             }, z.core.$strip>, z.ZodObject<{
                 type: z.ZodLiteral<"reasoning">;
-                reasoning: z.ZodString;
                 status: z.ZodOptional<z.ZodEnum<{
                     complete: "complete";
                     in_progress: "in_progress";
                 }>>;
+                reasoningTokens: z.ZodOptional<z.ZodNumber>;
             }, z.core.$strip>, z.ZodObject<{
                 type: z.ZodLiteral<"tool_call">;
                 name: z.ZodString;
@@ -1155,6 +1161,9 @@ export declare const threadsContract: {
         wait: z.ZodDefault<z.ZodBoolean>;
         timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
         automationId: z.ZodOptional<z.ZodString>;
+        kind: z.ZodOptional<z.ZodEnum<{
+            support: "support";
+        }>>;
         ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
     }, z.core.$strip>, z.ZodObject<{
         completed: z.ZodBoolean;

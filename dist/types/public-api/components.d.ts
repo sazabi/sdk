@@ -3,7 +3,10 @@ export declare const ComponentSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
     name: z.ZodString;
+    slug: z.ZodNullable<z.ZodString>;
     description: z.ZodNullable<z.ZodString>;
+    teamId: z.ZodNullable<z.ZodString>;
+    teamName: z.ZodNullable<z.ZodString>;
     origin: z.ZodEnum<{
         code_detected: "code_detected";
         log_observed: "log_observed";
@@ -47,7 +50,10 @@ export declare const ListComponentsOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -90,7 +96,10 @@ export declare const GetComponentOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -126,6 +135,7 @@ export type GetComponentOutput = z.infer<typeof GetComponentOutputSchema>;
 export declare const RegisterComponentInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
+    slug: z.ZodOptional<z.ZodString>;
     description: z.ZodOptional<z.ZodString>;
     requestId: z.ZodOptional<z.ZodString>;
     origin: z.ZodOptional<z.ZodEnum<{
@@ -139,7 +149,10 @@ export declare const RegisterComponentOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -184,7 +197,10 @@ export declare const RenameComponentOutputSchema: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -374,7 +390,10 @@ export declare const listComponents: import("../orpc-contracts/index.js").Operat
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -414,7 +433,10 @@ export declare const getComponent: import("../orpc-contracts/index.js").Operatio
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -449,6 +471,7 @@ export declare const getComponent: import("../orpc-contracts/index.js").Operatio
 export declare const registerComponent: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
+    slug: z.ZodOptional<z.ZodString>;
     description: z.ZodOptional<z.ZodString>;
     requestId: z.ZodOptional<z.ZodString>;
     origin: z.ZodOptional<z.ZodEnum<{
@@ -460,7 +483,10 @@ export declare const registerComponent: import("../orpc-contracts/index.js").Ope
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -577,7 +603,10 @@ export declare const renameComponent: import("../orpc-contracts/index.js").Opera
         id: z.ZodString;
         projectId: z.ZodString;
         name: z.ZodString;
+        slug: z.ZodNullable<z.ZodString>;
         description: z.ZodNullable<z.ZodString>;
+        teamId: z.ZodNullable<z.ZodString>;
+        teamName: z.ZodNullable<z.ZodString>;
         origin: z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
@@ -2164,7 +2193,10 @@ export declare const componentsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            slug: z.ZodNullable<z.ZodString>;
             description: z.ZodNullable<z.ZodString>;
+            teamId: z.ZodNullable<z.ZodString>;
+            teamName: z.ZodNullable<z.ZodString>;
             origin: z.ZodEnum<{
                 code_detected: "code_detected";
                 log_observed: "log_observed";
@@ -2204,7 +2236,10 @@ export declare const componentsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            slug: z.ZodNullable<z.ZodString>;
             description: z.ZodNullable<z.ZodString>;
+            teamId: z.ZodNullable<z.ZodString>;
+            teamName: z.ZodNullable<z.ZodString>;
             origin: z.ZodEnum<{
                 code_detected: "code_detected";
                 log_observed: "log_observed";
@@ -2239,6 +2274,7 @@ export declare const componentsContract: {
     readonly register: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodString;
+        slug: z.ZodOptional<z.ZodString>;
         description: z.ZodOptional<z.ZodString>;
         requestId: z.ZodOptional<z.ZodString>;
         origin: z.ZodOptional<z.ZodEnum<{
@@ -2250,7 +2286,10 @@ export declare const componentsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            slug: z.ZodNullable<z.ZodString>;
             description: z.ZodNullable<z.ZodString>;
+            teamId: z.ZodNullable<z.ZodString>;
+            teamName: z.ZodNullable<z.ZodString>;
             origin: z.ZodEnum<{
                 code_detected: "code_detected";
                 log_observed: "log_observed";
@@ -2367,7 +2406,10 @@ export declare const componentsContract: {
             id: z.ZodString;
             projectId: z.ZodString;
             name: z.ZodString;
+            slug: z.ZodNullable<z.ZodString>;
             description: z.ZodNullable<z.ZodString>;
+            teamId: z.ZodNullable<z.ZodString>;
+            teamName: z.ZodNullable<z.ZodString>;
             origin: z.ZodEnum<{
                 code_detected: "code_detected";
                 log_observed: "log_observed";

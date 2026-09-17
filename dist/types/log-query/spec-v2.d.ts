@@ -23,6 +23,8 @@ export declare const logFieldRefSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
 }, z.core.$strict>, z.ZodObject<{
     kind: z.ZodLiteral<"pattern">;
 }, z.core.$strict>, z.ZodObject<{
+    kind: z.ZodLiteral<"body">;
+}, z.core.$strict>, z.ZodObject<{
     kind: z.ZodLiteral<"body_json">;
     path: z.ZodArray<z.ZodString>;
 }, z.core.$strict>], "kind">;
@@ -41,6 +43,8 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
 } | {
     kind: "pattern";
 } | {
+    kind: "body";
+} | {
     kind: "body_json";
     path: string[];
 }>, unknown, z.core.$ZodTypeInternals<PredicateTree<{
@@ -56,6 +60,8 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
     key: string;
 } | {
     kind: "pattern";
+} | {
+    kind: "body";
 } | {
     kind: "body_json";
     path: string[];
@@ -83,6 +89,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     } | {
         kind: "pattern";
     } | {
+        kind: "body";
+    } | {
         kind: "body_json";
         path: string[];
     }, unknown, z.core.$ZodTypeInternals<{
@@ -98,6 +106,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         key: string;
     } | {
         kind: "pattern";
+    } | {
+        kind: "body";
     } | {
         kind: "body_json";
         path: string[];
@@ -118,6 +128,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     } | {
         kind: "pattern";
     } | {
+        kind: "body";
+    } | {
         kind: "body_json";
         path: string[];
     }, unknown, z.core.$ZodTypeInternals<{
@@ -133,6 +145,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         key: string;
     } | {
         kind: "pattern";
+    } | {
+        kind: "body";
     } | {
         kind: "body_json";
         path: string[];
@@ -168,6 +182,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     } | {
         kind: "pattern";
     } | {
+        kind: "body";
+    } | {
         kind: "body_json";
         path: string[];
     }, unknown, z.core.$ZodTypeInternals<{
@@ -183,6 +199,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         key: string;
     } | {
         kind: "pattern";
+    } | {
+        kind: "body";
     } | {
         kind: "body_json";
         path: string[];
@@ -235,6 +253,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
     } | {
         kind: "pattern";
     } | {
+        kind: "body";
+    } | {
         kind: "body_json";
         path: string[];
     }>, unknown, z.core.$ZodTypeInternals<PredicateTree<{
@@ -250,6 +270,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         key: string;
     } | {
         kind: "pattern";
+    } | {
+        kind: "body";
     } | {
         kind: "body_json";
         path: string[];
@@ -271,6 +293,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         key: z.ZodString;
     }, z.core.$strict>, z.ZodObject<{
         kind: z.ZodLiteral<"pattern">;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"body">;
     }, z.core.$strict>, z.ZodObject<{
         kind: z.ZodLiteral<"body_json">;
         path: z.ZodArray<z.ZodString>;
@@ -295,6 +319,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         } | {
             kind: "pattern";
         } | {
+            kind: "body";
+        } | {
             kind: "body_json";
             path: string[];
         }, unknown, z.core.$ZodTypeInternals<{
@@ -310,6 +336,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             key: string;
         } | {
             kind: "pattern";
+        } | {
+            kind: "body";
         } | {
             kind: "body_json";
             path: string[];
@@ -330,6 +358,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         } | {
             kind: "pattern";
         } | {
+            kind: "body";
+        } | {
             kind: "body_json";
             path: string[];
         }, unknown, z.core.$ZodTypeInternals<{
@@ -345,6 +375,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             key: string;
         } | {
             kind: "pattern";
+        } | {
+            kind: "body";
         } | {
             kind: "body_json";
             path: string[];
@@ -380,6 +412,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         } | {
             kind: "pattern";
         } | {
+            kind: "body";
+        } | {
             kind: "body_json";
             path: string[];
         }, unknown, z.core.$ZodTypeInternals<{
@@ -395,6 +429,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             key: string;
         } | {
             kind: "pattern";
+        } | {
+            kind: "body";
         } | {
             kind: "body_json";
             path: string[];

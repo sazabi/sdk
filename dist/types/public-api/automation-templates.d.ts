@@ -15,7 +15,6 @@ export declare const AutomationTemplateSchema: z.ZodObject<{
     }>;
     name: z.ZodString;
     description: z.ZodString;
-    sourceKey: z.ZodNullable<z.ZodString>;
     defaultCron: z.ZodNullable<z.ZodString>;
     expression: z.ZodNullable<z.ZodString>;
     version: z.ZodNumber;
@@ -34,7 +33,6 @@ export declare const ListAutomationTemplatesOutputSchema: z.ZodObject<{
         }>;
         name: z.ZodString;
         description: z.ZodString;
-        sourceKey: z.ZodNullable<z.ZodString>;
         defaultCron: z.ZodNullable<z.ZodString>;
         expression: z.ZodNullable<z.ZodString>;
         version: z.ZodNumber;
@@ -52,7 +50,6 @@ export declare const listAutomationTemplates: import("../orpc-contracts/index.js
         }>;
         name: z.ZodString;
         description: z.ZodString;
-        sourceKey: z.ZodNullable<z.ZodString>;
         defaultCron: z.ZodNullable<z.ZodString>;
         expression: z.ZodNullable<z.ZodString>;
         version: z.ZodNumber;
@@ -70,7 +67,6 @@ export declare const automationTemplatesContract: {
             }>;
             name: z.ZodString;
             description: z.ZodString;
-            sourceKey: z.ZodNullable<z.ZodString>;
             defaultCron: z.ZodNullable<z.ZodString>;
             expression: z.ZodNullable<z.ZodString>;
             version: z.ZodNumber;

@@ -331,6 +331,25 @@ export declare const skipOnboardingSampleIssue: import("../orpc-contracts/index.
 }, z.core.$strip>, z.ZodObject<{
     skipped: z.ZodLiteral<true>;
 }, z.core.$strip>, "api">;
+export declare const CompleteOnboardingSampleIssueInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const CompleteOnboardingSampleIssueOutputSchema: z.ZodObject<{
+    completed: z.ZodLiteral<true>;
+}, z.core.$strip>;
+/**
+ * Completes the sample-issue onboarding step (ENG-7347): the step is a static
+ * exhibit viewed in the dashboard (or acknowledged from the CLI), and this
+ * stamp is its only completion path. Mirrors the dashboard tRPC
+ * `onboarding.completeSampleIssue` mutation (self-use §4.c parity).
+ */
+export declare const completeOnboardingSampleIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    completed: z.ZodLiteral<true>;
+}, z.core.$strip>, "api">;
 export declare const FinishOnboardingInputSchema: z.ZodObject<{
     projectId: z.ZodString;
 }, z.core.$strip>;
@@ -450,6 +469,12 @@ export declare const onboardingContract: {
     }, z.core.$strip>, z.ZodObject<{
         skipped: z.ZodLiteral<true>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly completeSampleIssue: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        projectId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        completed: z.ZodLiteral<true>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly finish: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
@@ -469,5 +494,7 @@ export type SkipOnboardingGithubAppInstallationInput = z.infer<typeof SkipOnboar
 export type SkipOnboardingGithubAppInstallationOutput = z.infer<typeof SkipOnboardingGithubAppInstallationOutputSchema>;
 export type SkipOnboardingSampleIssueInput = z.infer<typeof SkipOnboardingSampleIssueInputSchema>;
 export type SkipOnboardingSampleIssueOutput = z.infer<typeof SkipOnboardingSampleIssueOutputSchema>;
+export type CompleteOnboardingSampleIssueInput = z.infer<typeof CompleteOnboardingSampleIssueInputSchema>;
+export type CompleteOnboardingSampleIssueOutput = z.infer<typeof CompleteOnboardingSampleIssueOutputSchema>;
 export type FinishOnboardingInput = z.infer<typeof FinishOnboardingInputSchema>;
 export type FinishOnboardingOutput = z.infer<typeof FinishOnboardingOutputSchema>;

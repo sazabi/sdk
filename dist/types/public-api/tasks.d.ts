@@ -18,6 +18,9 @@ export declare const WebActionSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
 }, z.core.$strip>, z.ZodObject<{
     do: z.ZodLiteral<"show-command">;
     target: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    do: z.ZodLiteral<"open-url">;
+    target: z.ZodString;
 }, z.core.$strip>], "do">;
 export declare const CliActionSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     do: z.ZodLiteral<"run-step">;
@@ -36,6 +39,7 @@ export declare const TaskSchema: z.ZodObject<{
     instructions: z.ZodString;
     completed: z.ZodBoolean;
     completedAt: z.ZodNullable<z.ZodString>;
+    skipped: z.ZodBoolean;
     category: z.ZodEnum<{
         onboarding: "onboarding";
         setup: "setup";
@@ -53,6 +57,9 @@ export declare const TaskSchema: z.ZodObject<{
         target: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         do: z.ZodLiteral<"show-command">;
+        target: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        do: z.ZodLiteral<"open-url">;
         target: z.ZodString;
     }, z.core.$strip>], "do">>;
     cli: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -79,6 +86,7 @@ export declare const ListTasksOutputSchema: z.ZodObject<{
         instructions: z.ZodString;
         completed: z.ZodBoolean;
         completedAt: z.ZodNullable<z.ZodString>;
+        skipped: z.ZodBoolean;
         category: z.ZodEnum<{
             onboarding: "onboarding";
             setup: "setup";
@@ -96,6 +104,9 @@ export declare const ListTasksOutputSchema: z.ZodObject<{
             target: z.ZodString;
         }, z.core.$strip>, z.ZodObject<{
             do: z.ZodLiteral<"show-command">;
+            target: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            do: z.ZodLiteral<"open-url">;
             target: z.ZodString;
         }, z.core.$strip>], "do">>;
         cli: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -121,6 +132,7 @@ export declare const listTasks: import("../orpc-contracts/index.js").OperationDe
         instructions: z.ZodString;
         completed: z.ZodBoolean;
         completedAt: z.ZodNullable<z.ZodString>;
+        skipped: z.ZodBoolean;
         category: z.ZodEnum<{
             onboarding: "onboarding";
             setup: "setup";
@@ -138,6 +150,9 @@ export declare const listTasks: import("../orpc-contracts/index.js").OperationDe
             target: z.ZodString;
         }, z.core.$strip>, z.ZodObject<{
             do: z.ZodLiteral<"show-command">;
+            target: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            do: z.ZodLiteral<"open-url">;
             target: z.ZodString;
         }, z.core.$strip>], "do">>;
         cli: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -157,12 +172,17 @@ export declare const listTasks: import("../orpc-contracts/index.js").OperationDe
  * skip column pair (`onboarding_<step>_skipped_at` + `_by_user_id`). Skips
  * are onboarding-only and org-wide (task-registry-v2 Decision 6): setup
  * tasks are never skipped, and a task key outside this set is a validation
- * error, not a new column. `install_github_app` spans the `github` (personal
- * account) and `github_app` (org installation) column pairs the web flow
- * writes from its two screens.
+ * error, not a new column. One pair per card since the GitHub two-card
+ * split: `connect_github_account` owns the `github` (personal account) pair
+ * and `install_github_app` owns the `github_app` (org installation) pair.
+ *
+ * Membership is the registry's `TASKS_WITH_SKIP_LEDGER` tuple, which also
+ * anchors the per-card pair mapping (`isTaskSkippedInLedger`) both task-list
+ * routers read — the wire enum and the ledger derivation cannot drift.
  */
-export declare const SKIPPABLE_TASK_IDS: readonly ["install_github_app", "install_slack_app", "trigger_sample_issue"];
+export declare const SKIPPABLE_TASK_IDS: readonly ["connect_github_account", "install_github_app", "install_slack_app", "trigger_sample_issue"];
 export declare const SkippableTaskIdSchema: z.ZodEnum<{
+    connect_github_account: "connect_github_account";
     install_github_app: "install_github_app";
     install_slack_app: "install_slack_app";
     trigger_sample_issue: "trigger_sample_issue";
@@ -170,6 +190,7 @@ export declare const SkippableTaskIdSchema: z.ZodEnum<{
 export type SkippableTaskId = z.infer<typeof SkippableTaskIdSchema>;
 export declare const SkipTaskInputSchema: z.ZodObject<{
     taskId: z.ZodEnum<{
+        connect_github_account: "connect_github_account";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";
@@ -184,6 +205,7 @@ export declare const SkipTaskOutputSchema: z.ZodObject<{
 export type SkipTaskOutput = z.infer<typeof SkipTaskOutputSchema>;
 export declare const skipTask: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     taskId: z.ZodEnum<{
+        connect_github_account: "connect_github_account";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";
@@ -195,6 +217,7 @@ export declare const skipTask: import("../orpc-contracts/index.js").OperationDef
 }, z.core.$strip>, "api">;
 export declare const UnskipTaskInputSchema: z.ZodObject<{
     taskId: z.ZodEnum<{
+        connect_github_account: "connect_github_account";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";
@@ -209,6 +232,7 @@ export declare const UnskipTaskOutputSchema: z.ZodObject<{
 export type UnskipTaskOutput = z.infer<typeof UnskipTaskOutputSchema>;
 export declare const unskipTask: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     taskId: z.ZodEnum<{
+        connect_github_account: "connect_github_account";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";

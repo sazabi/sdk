@@ -196,10 +196,7 @@ export declare const ListAutomationsInputSchema: z.ZodObject<{
         healthy: "healthy";
         never_run: "never_run";
     }>>;
-    source: z.ZodOptional<z.ZodEnum<{
-        custom: "custom";
-        sazabi_managed: "sazabi_managed";
-    }>>;
+    source: z.ZodOptional<z.ZodLiteral<"custom">>;
     sort: z.ZodDefault<z.ZodEnum<{
         failures: "failures";
         last_run: "last_run";
@@ -593,10 +590,7 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         healthy: "healthy";
         never_run: "never_run";
     }>>;
-    source: z.ZodOptional<z.ZodEnum<{
-        custom: "custom";
-        sazabi_managed: "sazabi_managed";
-    }>>;
+    source: z.ZodOptional<z.ZodLiteral<"custom">>;
     sort: z.ZodDefault<z.ZodEnum<{
         failures: "failures";
         last_run: "last_run";
@@ -1189,10 +1183,7 @@ export declare const automationsContract: {
             healthy: "healthy";
             never_run: "never_run";
         }>>;
-        source: z.ZodOptional<z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>>;
+        source: z.ZodOptional<z.ZodLiteral<"custom">>;
         sort: z.ZodDefault<z.ZodEnum<{
             failures: "failures";
             last_run: "last_run";

@@ -84,6 +84,58 @@ export declare const ListConnectedAccountsInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const ConnectedAccountSchema: z.ZodObject<{
+    connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        state: z.ZodEnum<{
+            connected: "connected";
+            connecting: "connecting";
+            needs_attention: "needs_attention";
+            not_connected: "not_connected";
+        }>;
+        reasonCode: z.ZodNullable<z.ZodEnum<{
+            configuration_invalid: "configuration_invalid";
+            credentials_rejected: "credentials_rejected";
+            discovery_failed: "discovery_failed";
+            health_check_failed: "health_check_failed";
+            permissions_missing: "permissions_missing";
+            recovery_required: "recovery_required";
+            stream_failed: "stream_failed";
+        }>>;
+        checkedAt: z.ZodNullable<z.ZodString>;
+        verification: z.ZodEnum<{
+            unverified: "unverified";
+            verified: "verified";
+        }>;
+    }, z.core.$strip>>>;
+    recovery: z.ZodOptional<z.ZodObject<{
+        action: z.ZodNullable<z.ZodEnum<{
+            manage_installation: "manage_installation";
+            manage_owner: "manage_owner";
+            reconnect: "reconnect";
+            review_setup: "review_setup";
+            update_credentials: "update_credentials";
+        }>>;
+        canCheck: z.ZodBoolean;
+        canDisconnect: z.ZodBoolean;
+        target: z.ZodOptional<z.ZodObject<{
+            kind: z.ZodEnum<{
+                connected_account: "connected_account";
+                integration: "integration";
+                log_source: "log_source";
+                mcp_connector: "mcp_connector";
+                sandbox_cli: "sandbox_cli";
+            }>;
+            resourceId: z.ZodString;
+            providerId: z.ZodString;
+            scope: z.ZodObject<{
+                kind: z.ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
+                id: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
     provider: z.ZodString;
     externalName: z.ZodNullable<z.ZodString>;
     externalLogin: z.ZodNullable<z.ZodString>;
@@ -96,6 +148,58 @@ export declare const ConnectedAccountSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const ListConnectedAccountsOutputSchema: z.ZodObject<{
     accounts: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         provider: z.ZodString;
         externalName: z.ZodNullable<z.ZodString>;
         externalLogin: z.ZodNullable<z.ZodString>;
@@ -114,6 +218,58 @@ export declare const listConnectedAccounts: import("../orpc-contracts/index.js")
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     accounts: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         provider: z.ZodString;
         externalName: z.ZodNullable<z.ZodString>;
         externalLogin: z.ZodNullable<z.ZodString>;

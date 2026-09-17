@@ -1,10 +1,3 @@
-/**
- * Public API contracts for sandbox CLIs.
- *
- * These operations expose the available sandbox CLIs with their environment
- * variable requirements and setup skills, and manage a project's sandbox CLI
- * connections, without returning any secret material.
- */
 import { z } from "zod";
 /**
  * One sandbox CLI type in the catalog.
@@ -45,6 +38,58 @@ export declare const SandboxCliCredentialSourceSchema: z.ZodEnum<{
     tailscale_federated_identity: "tailscale_federated_identity";
 }>;
 export declare const SandboxCliConnectionSchema: z.ZodObject<{
+    connectionStatus: z.ZodOptional<z.ZodObject<{
+        state: z.ZodEnum<{
+            connected: "connected";
+            connecting: "connecting";
+            needs_attention: "needs_attention";
+            not_connected: "not_connected";
+        }>;
+        reasonCode: z.ZodNullable<z.ZodEnum<{
+            configuration_invalid: "configuration_invalid";
+            credentials_rejected: "credentials_rejected";
+            discovery_failed: "discovery_failed";
+            health_check_failed: "health_check_failed";
+            permissions_missing: "permissions_missing";
+            recovery_required: "recovery_required";
+            stream_failed: "stream_failed";
+        }>>;
+        checkedAt: z.ZodNullable<z.ZodString>;
+        verification: z.ZodEnum<{
+            unverified: "unverified";
+            verified: "verified";
+        }>;
+    }, z.core.$strip>>;
+    recovery: z.ZodOptional<z.ZodObject<{
+        action: z.ZodNullable<z.ZodEnum<{
+            manage_installation: "manage_installation";
+            manage_owner: "manage_owner";
+            reconnect: "reconnect";
+            review_setup: "review_setup";
+            update_credentials: "update_credentials";
+        }>>;
+        canCheck: z.ZodBoolean;
+        canDisconnect: z.ZodBoolean;
+        target: z.ZodOptional<z.ZodObject<{
+            kind: z.ZodEnum<{
+                connected_account: "connected_account";
+                integration: "integration";
+                log_source: "log_source";
+                mcp_connector: "mcp_connector";
+                sandbox_cli: "sandbox_cli";
+            }>;
+            resourceId: z.ZodString;
+            providerId: z.ZodString;
+            scope: z.ZodObject<{
+                kind: z.ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
+                id: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
     cliType: z.ZodString;
     credentialSource: z.ZodEnum<{
         bitbucket_integration: "bitbucket_integration";
@@ -63,6 +108,58 @@ export declare const ListSandboxCliConnectionsInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const ListSandboxCliConnectionsOutputSchema: z.ZodObject<{
     connections: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
@@ -82,6 +179,58 @@ export declare const listSandboxCliConnections: import("../orpc-contracts/index.
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     connections: z.ZodArray<z.ZodObject<{
+        connectionStatus: z.ZodOptional<z.ZodObject<{
+            state: z.ZodEnum<{
+                connected: "connected";
+                connecting: "connecting";
+                needs_attention: "needs_attention";
+                not_connected: "not_connected";
+            }>;
+            reasonCode: z.ZodNullable<z.ZodEnum<{
+                configuration_invalid: "configuration_invalid";
+                credentials_rejected: "credentials_rejected";
+                discovery_failed: "discovery_failed";
+                health_check_failed: "health_check_failed";
+                permissions_missing: "permissions_missing";
+                recovery_required: "recovery_required";
+                stream_failed: "stream_failed";
+            }>>;
+            checkedAt: z.ZodNullable<z.ZodString>;
+            verification: z.ZodEnum<{
+                unverified: "unverified";
+                verified: "verified";
+            }>;
+        }, z.core.$strip>>;
+        recovery: z.ZodOptional<z.ZodObject<{
+            action: z.ZodNullable<z.ZodEnum<{
+                manage_installation: "manage_installation";
+                manage_owner: "manage_owner";
+                reconnect: "reconnect";
+                review_setup: "review_setup";
+                update_credentials: "update_credentials";
+            }>>;
+            canCheck: z.ZodBoolean;
+            canDisconnect: z.ZodBoolean;
+            target: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodEnum<{
+                    connected_account: "connected_account";
+                    integration: "integration";
+                    log_source: "log_source";
+                    mcp_connector: "mcp_connector";
+                    sandbox_cli: "sandbox_cli";
+                }>;
+                resourceId: z.ZodString;
+                providerId: z.ZodString;
+                scope: z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
+                    id: z.ZodString;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
         cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
@@ -203,6 +352,58 @@ export declare const sandboxClisContract: {
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         connections: z.ZodArray<z.ZodObject<{
+            connectionStatus: z.ZodOptional<z.ZodObject<{
+                state: z.ZodEnum<{
+                    connected: "connected";
+                    connecting: "connecting";
+                    needs_attention: "needs_attention";
+                    not_connected: "not_connected";
+                }>;
+                reasonCode: z.ZodNullable<z.ZodEnum<{
+                    configuration_invalid: "configuration_invalid";
+                    credentials_rejected: "credentials_rejected";
+                    discovery_failed: "discovery_failed";
+                    health_check_failed: "health_check_failed";
+                    permissions_missing: "permissions_missing";
+                    recovery_required: "recovery_required";
+                    stream_failed: "stream_failed";
+                }>>;
+                checkedAt: z.ZodNullable<z.ZodString>;
+                verification: z.ZodEnum<{
+                    unverified: "unverified";
+                    verified: "verified";
+                }>;
+            }, z.core.$strip>>;
+            recovery: z.ZodOptional<z.ZodObject<{
+                action: z.ZodNullable<z.ZodEnum<{
+                    manage_installation: "manage_installation";
+                    manage_owner: "manage_owner";
+                    reconnect: "reconnect";
+                    review_setup: "review_setup";
+                    update_credentials: "update_credentials";
+                }>>;
+                canCheck: z.ZodBoolean;
+                canDisconnect: z.ZodBoolean;
+                target: z.ZodOptional<z.ZodObject<{
+                    kind: z.ZodEnum<{
+                        connected_account: "connected_account";
+                        integration: "integration";
+                        log_source: "log_source";
+                        mcp_connector: "mcp_connector";
+                        sandbox_cli: "sandbox_cli";
+                    }>;
+                    resourceId: z.ZodString;
+                    providerId: z.ZodString;
+                    scope: z.ZodObject<{
+                        kind: z.ZodEnum<{
+                            organization: "organization";
+                            project: "project";
+                            user: "user";
+                        }>;
+                        id: z.ZodString;
+                    }, z.core.$strip>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
             cliType: z.ZodString;
             credentialSource: z.ZodEnum<{
                 bitbucket_integration: "bitbucket_integration";
@@ -254,3 +455,15 @@ export declare const sandboxClisContract: {
         envVarKeys: z.ZodArray<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };
+/** Check only the currently stored revision; draft testing remains separate. */
+export declare const verifySandboxCli: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    cliType: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    outcome: z.ZodEnum<{
+        healthy: "healthy";
+        inconclusive: "inconclusive";
+        superseded: "superseded";
+        unhealthy: "unhealthy";
+    }>;
+}, z.core.$strip>, "api">;

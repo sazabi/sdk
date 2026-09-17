@@ -3,11 +3,7 @@ import { z } from "zod";
  * Public agent-run event stream contracts.
  *
  * These schemas describe the Server-Sent Events (SSE) surface that public API
- * consumers use to follow an agent run in real time. They intentionally mirror
- * the canonical internal event vocabulary defined by `AgentStreamEvent` in
- * `@sazabi/agent-adapters` (`src/types/events.ts`) so the public API does not
- * introduce a third, divergent event taxonomy. The `type` discriminants and
- * payload field names are kept identical to the internal union.
+ * consumers use to follow an agent run in real time.
  *
  * Deliberate wire adaptations (documented per field):
  * - `error` carries a serializable `message` (and optional `name`) instead of
@@ -58,14 +54,6 @@ export declare const TextChunkStreamEventSchema: z.ZodObject<{
     content: z.ZodString;
 }, z.core.$strip>;
 /**
- * Incremental reasoning/thinking chunk.
- */
-export declare const ReasoningChunkStreamEventSchema: z.ZodObject<{
-    type: z.ZodLiteral<"reasoning_chunk">;
-    messageId: z.ZodString;
-    content: z.ZodString;
-}, z.core.$strip>;
-/**
  * Complete assistant text message (final text for a message).
  */
 export declare const TextCompleteStreamEventSchema: z.ZodObject<{
@@ -74,12 +62,19 @@ export declare const TextCompleteStreamEventSchema: z.ZodObject<{
     content: z.ZodString;
 }, z.core.$strip>;
 /**
- * Complete reasoning message (final reasoning for a message).
+ * Cumulative estimate for the current thinking block.
+ */
+export declare const ReasoningProgressStreamEventSchema: z.ZodObject<{
+    type: z.ZodLiteral<"reasoning_progress">;
+    messageId: z.ZodString;
+    estimatedTokens: z.ZodNumber;
+}, z.core.$strip>;
+/**
+ * Complete reasoning marker for a message. Reasoning text is never exposed.
  */
 export declare const ReasoningCompleteStreamEventSchema: z.ZodObject<{
     type: z.ZodLiteral<"reasoning_complete">;
     messageId: z.ZodString;
-    content: z.ZodString;
 }, z.core.$strip>;
 /**
  * Tool call is pending: params are still streaming. Emitted early so consumers
@@ -169,17 +164,16 @@ export declare const PublicAgentStreamEventSchema: z.ZodDiscriminatedUnion<[z.Zo
     messageId: z.ZodString;
     content: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
-    type: z.ZodLiteral<"reasoning_chunk">;
-    messageId: z.ZodString;
-    content: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"text_complete">;
     messageId: z.ZodString;
     content: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
+    type: z.ZodLiteral<"reasoning_progress">;
+    messageId: z.ZodString;
+    estimatedTokens: z.ZodNumber;
+}, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"reasoning_complete">;
     messageId: z.ZodString;
-    content: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"tool_call_pending">;
     toolCallId: z.ZodString;
@@ -224,8 +218,8 @@ export declare const PublicAgentStreamEventTypeSchema: z.ZodEnum<{
     disconnected: "disconnected";
     error: "error";
     message_started: "message_started";
-    reasoning_chunk: "reasoning_chunk";
     reasoning_complete: "reasoning_complete";
+    reasoning_progress: "reasoning_progress";
     run_started: "run_started";
     stream_reset: "stream_reset";
     text_chunk: "text_chunk";
@@ -309,17 +303,16 @@ export declare const runStreamEndpoint: {
         messageId: z.ZodString;
         content: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
-        type: z.ZodLiteral<"reasoning_chunk">;
-        messageId: z.ZodString;
-        content: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"text_complete">;
         messageId: z.ZodString;
         content: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
+        type: z.ZodLiteral<"reasoning_progress">;
+        messageId: z.ZodString;
+        estimatedTokens: z.ZodNumber;
+    }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"reasoning_complete">;
         messageId: z.ZodString;
-        content: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"tool_call_pending">;
         toolCallId: z.ZodString;
@@ -379,17 +372,16 @@ export declare const threadStreamEndpoint: {
         messageId: z.ZodString;
         content: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
-        type: z.ZodLiteral<"reasoning_chunk">;
-        messageId: z.ZodString;
-        content: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"text_complete">;
         messageId: z.ZodString;
         content: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
+        type: z.ZodLiteral<"reasoning_progress">;
+        messageId: z.ZodString;
+        estimatedTokens: z.ZodNumber;
+    }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"reasoning_complete">;
         messageId: z.ZodString;
-        content: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"tool_call_pending">;
         toolCallId: z.ZodString;

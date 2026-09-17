@@ -34,6 +34,39 @@ export declare const IssueSlackChannelSchema: z.ZodObject<{
     workspaceName: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type IssueSlackChannel = z.infer<typeof IssueSlackChannelSchema>;
+export declare const IssueTaskLinkSchema: z.ZodObject<{
+    provider: z.ZodEnum<{
+        github: "github";
+        jira: "jira";
+        linear: "linear";
+    }>;
+    identifier: z.ZodString;
+    url: z.ZodString;
+}, z.core.$strip>;
+export type IssueTaskLink = z.infer<typeof IssueTaskLinkSchema>;
+export declare const IssuePullRequestSchema: z.ZodObject<{
+    id: z.ZodString;
+    number: z.ZodNumber;
+    repositoryFullName: z.ZodString;
+    title: z.ZodNullable<z.ZodString>;
+    url: z.ZodNullable<z.ZodString>;
+    status: z.ZodNullable<z.ZodEnum<{
+        closed: "closed";
+        merged: "merged";
+        open: "open";
+    }>>;
+    reviewState: z.ZodNullable<z.ZodEnum<{
+        approved: "approved";
+        changes_requested: "changes_requested";
+        review_required: "review_required";
+    }>>;
+    checksState: z.ZodNullable<z.ZodEnum<{
+        failing: "failing";
+        passing: "passing";
+        pending: "pending";
+    }>>;
+}, z.core.$strip>;
+export type IssuePullRequest = z.infer<typeof IssuePullRequestSchema>;
 export declare const IssueDetailSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
@@ -65,6 +98,37 @@ export declare const IssueDetailSchema: z.ZodObject<{
         threadTs: z.ZodNullable<z.ZodString>;
         permalink: z.ZodNullable<z.ZodString>;
         workspaceName: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    taskLinks: z.ZodArray<z.ZodObject<{
+        provider: z.ZodEnum<{
+            github: "github";
+            jira: "jira";
+            linear: "linear";
+        }>;
+        identifier: z.ZodString;
+        url: z.ZodString;
+    }, z.core.$strip>>;
+    pullRequests: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        number: z.ZodNumber;
+        repositoryFullName: z.ZodString;
+        title: z.ZodNullable<z.ZodString>;
+        url: z.ZodNullable<z.ZodString>;
+        status: z.ZodNullable<z.ZodEnum<{
+            closed: "closed";
+            merged: "merged";
+            open: "open";
+        }>>;
+        reviewState: z.ZodNullable<z.ZodEnum<{
+            approved: "approved";
+            changes_requested: "changes_requested";
+            review_required: "review_required";
+        }>>;
+        checksState: z.ZodNullable<z.ZodEnum<{
+            failing: "failing";
+            passing: "passing";
+            pending: "pending";
+        }>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type IssueDetail = z.infer<typeof IssueDetailSchema>;
@@ -108,6 +172,14 @@ export declare const CreateIssueInputObjectSchema: z.ZodObject<{
     }>>;
     componentId: z.ZodOptional<z.ZodString>;
     statusStartedAt: z.ZodOptional<z.ZodString>;
+    suspectedPullRequest: z.ZodOptional<z.ZodObject<{
+        provider: z.ZodDefault<z.ZodEnum<{
+            bitbucket: "bitbucket";
+            github: "github";
+        }>>;
+        repositoryFullName: z.ZodString;
+        number: z.ZodNumber;
+    }, z.core.$strip>>;
     sample: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 export declare const CreateIssueInputSchema: z.ZodObject<{
@@ -122,6 +194,14 @@ export declare const CreateIssueInputSchema: z.ZodObject<{
     }>>;
     componentId: z.ZodOptional<z.ZodString>;
     statusStartedAt: z.ZodOptional<z.ZodString>;
+    suspectedPullRequest: z.ZodOptional<z.ZodObject<{
+        provider: z.ZodDefault<z.ZodEnum<{
+            bitbucket: "bitbucket";
+            github: "github";
+        }>>;
+        repositoryFullName: z.ZodString;
+        number: z.ZodNumber;
+    }, z.core.$strip>>;
     sample: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 export type CreateIssueInput = z.infer<typeof CreateIssueInputSchema>;
@@ -153,6 +233,7 @@ export declare const CreateIssueOutputSchema: z.ZodObject<{
         redacted: z.ZodBoolean;
     }, z.core.$strip>;
     duplicateIssueId: z.ZodOptional<z.ZodString>;
+    possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type CreateIssueOutput = z.infer<typeof CreateIssueOutputSchema>;
 export declare const ListIssuesInputSchema: z.ZodObject<{
@@ -348,6 +429,37 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
             threadTs: z.ZodNullable<z.ZodString>;
             permalink: z.ZodNullable<z.ZodString>;
             workspaceName: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        taskLinks: z.ZodArray<z.ZodObject<{
+            provider: z.ZodEnum<{
+                github: "github";
+                jira: "jira";
+                linear: "linear";
+            }>;
+            identifier: z.ZodString;
+            url: z.ZodString;
+        }, z.core.$strip>>;
+        pullRequests: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            number: z.ZodNumber;
+            repositoryFullName: z.ZodString;
+            title: z.ZodNullable<z.ZodString>;
+            url: z.ZodNullable<z.ZodString>;
+            status: z.ZodNullable<z.ZodEnum<{
+                closed: "closed";
+                merged: "merged";
+                open: "open";
+            }>>;
+            reviewState: z.ZodNullable<z.ZodEnum<{
+                approved: "approved";
+                changes_requested: "changes_requested";
+                review_required: "review_required";
+            }>>;
+            checksState: z.ZodNullable<z.ZodEnum<{
+                failing: "failing";
+                passing: "passing";
+                pending: "pending";
+            }>>;
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -566,6 +678,14 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
     }>>;
     componentId: z.ZodOptional<z.ZodString>;
     statusStartedAt: z.ZodOptional<z.ZodString>;
+    suspectedPullRequest: z.ZodOptional<z.ZodObject<{
+        provider: z.ZodDefault<z.ZodEnum<{
+            bitbucket: "bitbucket";
+            github: "github";
+        }>>;
+        repositoryFullName: z.ZodString;
+        number: z.ZodNumber;
+    }, z.core.$strip>>;
     sample: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     issue: z.ZodObject<{
@@ -595,6 +715,7 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
         redacted: z.ZodBoolean;
     }, z.core.$strip>;
     duplicateIssueId: z.ZodOptional<z.ZodString>;
+    possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const listIssues: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
@@ -767,6 +888,37 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
             threadTs: z.ZodNullable<z.ZodString>;
             permalink: z.ZodNullable<z.ZodString>;
             workspaceName: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        taskLinks: z.ZodArray<z.ZodObject<{
+            provider: z.ZodEnum<{
+                github: "github";
+                jira: "jira";
+                linear: "linear";
+            }>;
+            identifier: z.ZodString;
+            url: z.ZodString;
+        }, z.core.$strip>>;
+        pullRequests: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            number: z.ZodNumber;
+            repositoryFullName: z.ZodString;
+            title: z.ZodNullable<z.ZodString>;
+            url: z.ZodNullable<z.ZodString>;
+            status: z.ZodNullable<z.ZodEnum<{
+                closed: "closed";
+                merged: "merged";
+                open: "open";
+            }>>;
+            reviewState: z.ZodNullable<z.ZodEnum<{
+                approved: "approved";
+                changes_requested: "changes_requested";
+                review_required: "review_required";
+            }>>;
+            checksState: z.ZodNullable<z.ZodEnum<{
+                failing: "failing";
+                passing: "passing";
+                pending: "pending";
+            }>>;
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
@@ -1011,6 +1163,14 @@ export declare const issuesContract: {
         }>>;
         componentId: z.ZodOptional<z.ZodString>;
         statusStartedAt: z.ZodOptional<z.ZodString>;
+        suspectedPullRequest: z.ZodOptional<z.ZodObject<{
+            provider: z.ZodDefault<z.ZodEnum<{
+                bitbucket: "bitbucket";
+                github: "github";
+            }>>;
+            repositoryFullName: z.ZodString;
+            number: z.ZodNumber;
+        }, z.core.$strip>>;
         sample: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodObject<{
         issue: z.ZodObject<{
@@ -1040,6 +1200,7 @@ export declare const issuesContract: {
             redacted: z.ZodBoolean;
         }, z.core.$strip>;
         duplicateIssueId: z.ZodOptional<z.ZodString>;
+        possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
@@ -1168,6 +1329,37 @@ export declare const issuesContract: {
                 threadTs: z.ZodNullable<z.ZodString>;
                 permalink: z.ZodNullable<z.ZodString>;
                 workspaceName: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            taskLinks: z.ZodArray<z.ZodObject<{
+                provider: z.ZodEnum<{
+                    github: "github";
+                    jira: "jira";
+                    linear: "linear";
+                }>;
+                identifier: z.ZodString;
+                url: z.ZodString;
+            }, z.core.$strip>>;
+            pullRequests: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                number: z.ZodNumber;
+                repositoryFullName: z.ZodString;
+                title: z.ZodNullable<z.ZodString>;
+                url: z.ZodNullable<z.ZodString>;
+                status: z.ZodNullable<z.ZodEnum<{
+                    closed: "closed";
+                    merged: "merged";
+                    open: "open";
+                }>>;
+                reviewState: z.ZodNullable<z.ZodEnum<{
+                    approved: "approved";
+                    changes_requested: "changes_requested";
+                    review_required: "review_required";
+                }>>;
+                checksState: z.ZodNullable<z.ZodEnum<{
+                    failing: "failing";
+                    passing: "passing";
+                    pending: "pending";
+                }>>;
             }, z.core.$strip>>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
