@@ -385,9 +385,8 @@ export type LogQuerySpecAny = LogQuerySpecV1 | LogQuerySpecV2;
  * Execution snapshot produced by pattern retrieval. Field names are part of
  * the published `AskLogsOutputSchema` contract and therefore stay as they
  * were under the retired Drain catalog:
- * - `familyIds` carries the code pattern ids (`pattern_id` on
- *   `logs_by_pattern`, i.e. `codePatternId({ projectId, identityKey })`) of
- *   every call site of every selected template.
+ * - `familyIds` carries the `pattern_id`s the anchor resolved to (registry
+ *   key ids — a family anchor expands to its member keys).
  * - `catalogRevision` carries the pattern index revision as a decimal string.
  */
 export declare const logQueryResolutionV1Schema: z.ZodObject<{

@@ -64,6 +64,13 @@ export declare const LogSourceProviderInfoSchema: z.ZodObject<{
  * non-keyed listener plus the credential the sender must attach.
  */
 export declare const LogSourceEndpointCardSchema: z.ZodObject<{
+    id: z.ZodEnum<{
+        endpoint: "endpoint";
+        listener: "listener";
+        logs: "logs";
+        metrics: "metrics";
+        traces: "traces";
+    }>;
     kind: z.ZodEnum<{
         hostPort: "hostPort";
         url: "url";
@@ -102,6 +109,13 @@ export declare const LogStreamSchema: z.ZodObject<{
     }>;
     createdAt: z.ZodString;
     endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodEnum<{
+            endpoint: "endpoint";
+            listener: "listener";
+            logs: "logs";
+            metrics: "metrics";
+            traces: "traces";
+        }>;
         kind: z.ZodEnum<{
             hostPort: "hostPort";
             url: "url";
@@ -367,6 +381,13 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -913,6 +934,13 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
     streamId: z.ZodOptional<z.ZodString>;
     publicKey: z.ZodOptional<z.ZodString>;
     endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodEnum<{
+            endpoint: "endpoint";
+            listener: "listener";
+            logs: "logs";
+            metrics: "metrics";
+            traces: "traces";
+        }>;
         kind: z.ZodEnum<{
             hostPort: "hostPort";
             url: "url";
@@ -1098,6 +1126,13 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
     streamId: z.ZodOptional<z.ZodString>;
     publicKey: z.ZodOptional<z.ZodString>;
     endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodEnum<{
+            endpoint: "endpoint";
+            listener: "listener";
+            logs: "logs";
+            metrics: "metrics";
+            traces: "traces";
+        }>;
         kind: z.ZodEnum<{
             hostPort: "hostPort";
             url: "url";
@@ -1247,6 +1282,13 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodEnum<{
+                    endpoint: "endpoint";
+                    listener: "listener";
+                    logs: "logs";
+                    metrics: "metrics";
+                    traces: "traces";
+                }>;
                 kind: z.ZodEnum<{
                     hostPort: "hostPort";
                     url: "url";
@@ -1399,6 +1441,13 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodEnum<{
+                    endpoint: "endpoint";
+                    listener: "listener";
+                    logs: "logs";
+                    metrics: "metrics";
+                    traces: "traces";
+                }>;
                 kind: z.ZodEnum<{
                     hostPort: "hostPort";
                     url: "url";
@@ -1418,6 +1467,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const UpdateLogSourceInputSchema: z.ZodObject<{
+    credentials: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     logSourceId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
     streamAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
@@ -1541,6 +1591,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
 export type UpdateLogSourceInput = z.infer<typeof UpdateLogSourceInputSchema>;
 export type UpdateLogSourceOutput = z.infer<typeof UpdateLogSourceOutputSchema>;
 export declare const updateLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    credentials: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
     logSourceId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
     streamAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{
@@ -2021,6 +2072,13 @@ export declare const logSourcesContract: {
         streamId: z.ZodOptional<z.ZodString>;
         publicKey: z.ZodOptional<z.ZodString>;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -2169,6 +2227,13 @@ export declare const logSourcesContract: {
                 }>;
                 createdAt: z.ZodString;
                 endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    id: z.ZodEnum<{
+                        endpoint: "endpoint";
+                        listener: "listener";
+                        logs: "logs";
+                        metrics: "metrics";
+                        traces: "traces";
+                    }>;
                     kind: z.ZodEnum<{
                         hostPort: "hostPort";
                         url: "url";
@@ -2188,6 +2253,7 @@ export declare const logSourcesContract: {
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        credentials: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
         logSourceId: z.ZodString;
         enabled: z.ZodOptional<z.ZodBoolean>;
         streamAutoProvisionFilter: z.ZodOptional<z.ZodNullable<z.ZodObject<{

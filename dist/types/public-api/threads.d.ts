@@ -336,6 +336,25 @@ export declare const CreateThreadInputSchema: z.ZodObject<{
  * Output schema for deferred thread creation responses.
  */
 export declare const CreateThreadOutputSchema: z.ZodObject<{
+    failureClass: z.ZodNullable<z.ZodEnum<{
+        ambient_denied: "ambient_denied";
+        cancelled: "cancelled";
+        grpc_message_too_large: "grpc_message_too_large";
+        permission: "permission";
+        policy: "policy";
+        provider: "provider";
+        provider_rejected: "provider_rejected";
+        rate_limit: "rate_limit";
+        sandbox_concurrency: "sandbox_concurrency";
+        sandbox_failed: "sandbox_failed";
+        sandbox_missing: "sandbox_missing";
+        timeout: "timeout";
+        tool_failed: "tool_failed";
+        unknown: "unknown";
+        workflow_died: "workflow_died";
+        workflow_start_failed: "workflow_start_failed";
+    }>>;
+    failureRetryable: z.ZodNullable<z.ZodBoolean>;
     completed: z.ZodBoolean;
     threadId: z.ZodString;
     runId: z.ZodString;
@@ -649,6 +668,25 @@ export declare const createThread: import("../orpc-contracts/index.js").Operatio
     }>>;
     ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
 }, z.core.$strip>, z.ZodObject<{
+    failureClass: z.ZodNullable<z.ZodEnum<{
+        ambient_denied: "ambient_denied";
+        cancelled: "cancelled";
+        grpc_message_too_large: "grpc_message_too_large";
+        permission: "permission";
+        policy: "policy";
+        provider: "provider";
+        provider_rejected: "provider_rejected";
+        rate_limit: "rate_limit";
+        sandbox_concurrency: "sandbox_concurrency";
+        sandbox_failed: "sandbox_failed";
+        sandbox_missing: "sandbox_missing";
+        timeout: "timeout";
+        tool_failed: "tool_failed";
+        unknown: "unknown";
+        workflow_died: "workflow_died";
+        workflow_start_failed: "workflow_start_failed";
+    }>>;
+    failureRetryable: z.ZodNullable<z.ZodBoolean>;
     completed: z.ZodBoolean;
     threadId: z.ZodString;
     runId: z.ZodString;
@@ -1166,6 +1204,25 @@ export declare const threadsContract: {
         }>>;
         ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
     }, z.core.$strip>, z.ZodObject<{
+        failureClass: z.ZodNullable<z.ZodEnum<{
+            ambient_denied: "ambient_denied";
+            cancelled: "cancelled";
+            grpc_message_too_large: "grpc_message_too_large";
+            permission: "permission";
+            policy: "policy";
+            provider: "provider";
+            provider_rejected: "provider_rejected";
+            rate_limit: "rate_limit";
+            sandbox_concurrency: "sandbox_concurrency";
+            sandbox_failed: "sandbox_failed";
+            sandbox_missing: "sandbox_missing";
+            timeout: "timeout";
+            tool_failed: "tool_failed";
+            unknown: "unknown";
+            workflow_died: "workflow_died";
+            workflow_start_failed: "workflow_start_failed";
+        }>>;
+        failureRetryable: z.ZodNullable<z.ZodBoolean>;
         completed: z.ZodBoolean;
         threadId: z.ZodString;
         runId: z.ZodString;

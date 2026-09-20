@@ -1479,6 +1479,27 @@ export declare const updateSlackConfiguration: import("../orpc-contracts/index.j
     automaticResponses: z.ZodBoolean;
     acknowledgementMessage: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const CreateSlackChannelInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    name: z.ZodString;
+}, z.core.$strip>;
+export type CreateSlackChannelInput = z.infer<typeof CreateSlackChannelInputSchema>;
+export declare const CreateSlackChannelOutputSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    isPrivate: z.ZodBoolean;
+    isMember: z.ZodBoolean;
+}, z.core.$strip>;
+export type CreateSlackChannelOutput = z.infer<typeof CreateSlackChannelOutputSchema>;
+export declare const createSlackChannel: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    name: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    isPrivate: z.ZodBoolean;
+    isMember: z.ZodBoolean;
+}, z.core.$strip>, "api">;
 export declare const LinearSeverityActionSchema: z.ZodEnum<{
     create: "create";
     skip: "skip";

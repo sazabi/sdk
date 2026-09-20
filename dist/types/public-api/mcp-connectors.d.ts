@@ -1290,6 +1290,7 @@ export declare const createMcpConnector: import("../orpc-contracts/index.js").Op
 }, z.core.$strip>, "api">;
 export declare const UpdateMcpConnectorInputSchema: z.ZodObject<{
     connectionId: z.ZodString;
+    providerId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     serverUrl: z.ZodOptional<z.ZodString>;
     transport: z.ZodOptional<z.ZodEnum<{
@@ -1417,6 +1418,7 @@ export type UpdateMcpConnectorInput = z.infer<typeof UpdateMcpConnectorInputSche
 export type UpdateMcpConnectorOutput = z.infer<typeof UpdateMcpConnectorOutputSchema>;
 export declare const updateMcpConnector: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     connectionId: z.ZodString;
+    providerId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     serverUrl: z.ZodOptional<z.ZodString>;
     transport: z.ZodOptional<z.ZodEnum<{
@@ -1771,6 +1773,7 @@ export declare const setMcpConnectorReadOnly: import("../orpc-contracts/index.js
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const BeginMcpOAuthInstallInputSchema: z.ZodObject<{
+    targetConnectionId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     providerId: z.ZodString;
     requestedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -1779,6 +1782,7 @@ export declare const BeginMcpOAuthInstallInputSchema: z.ZodObject<{
     returnTo: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const BeginMcpOAuthInstallOutputSchema: z.ZodObject<{
+    requestId: z.ZodString;
     authorizationUrl: z.ZodString;
     connectionId: z.ZodString;
     expiresAt: z.ZodString;
@@ -1786,6 +1790,7 @@ export declare const BeginMcpOAuthInstallOutputSchema: z.ZodObject<{
 export type BeginMcpOAuthInstallInput = z.infer<typeof BeginMcpOAuthInstallInputSchema>;
 export type BeginMcpOAuthInstallOutput = z.infer<typeof BeginMcpOAuthInstallOutputSchema>;
 export declare const beginMcpOAuthInstall: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    targetConnectionId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     providerId: z.ZodString;
     requestedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -1793,11 +1798,13 @@ export declare const beginMcpOAuthInstall: import("../orpc-contracts/index.js").
     readOnly: z.ZodOptional<z.ZodBoolean>;
     returnTo: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
+    requestId: z.ZodString;
     authorizationUrl: z.ZodString;
     connectionId: z.ZodString;
     expiresAt: z.ZodString;
 }, z.core.$strip>, "api">;
 export declare const GetMcpOAuthInstallAttemptInputSchema: z.ZodObject<{
+    requestId: z.ZodOptional<z.ZodString>;
     connectionId: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -1914,6 +1921,7 @@ export declare const GetMcpOAuthInstallAttemptOutputSchema: z.ZodObject<{
 export type GetMcpOAuthInstallAttemptInput = z.infer<typeof GetMcpOAuthInstallAttemptInputSchema>;
 export type GetMcpOAuthInstallAttemptOutput = z.infer<typeof GetMcpOAuthInstallAttemptOutputSchema>;
 export declare const getMcpOAuthInstallAttempt: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    requestId: z.ZodOptional<z.ZodString>;
     connectionId: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -2569,6 +2577,7 @@ export declare const mcpConnectorsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         connectionId: z.ZodString;
+        providerId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
         serverUrl: z.ZodOptional<z.ZodString>;
         transport: z.ZodOptional<z.ZodEnum<{
@@ -2805,6 +2814,7 @@ export declare const mcpConnectorsContract: {
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly beginOAuthInstall: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        targetConnectionId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
         providerId: z.ZodString;
         requestedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -2812,11 +2822,13 @@ export declare const mcpConnectorsContract: {
         readOnly: z.ZodOptional<z.ZodBoolean>;
         returnTo: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
+        requestId: z.ZodString;
         authorizationUrl: z.ZodString;
         connectionId: z.ZodString;
         expiresAt: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly getOAuthInstallAttempt: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        requestId: z.ZodOptional<z.ZodString>;
         connectionId: z.ZodString;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{

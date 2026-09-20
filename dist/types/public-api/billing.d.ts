@@ -498,6 +498,7 @@ export declare const ListPlansInputSchema: z.ZodObject<{
 export type ListPlansInput = z.infer<typeof ListPlansInputSchema>;
 export declare const BillingPlanSchema: z.ZodObject<{
     slug: z.ZodString;
+    isVisible: z.ZodOptional<z.ZodBoolean>;
     billingModel: z.ZodString;
     name: z.ZodString;
     description: z.ZodString;
@@ -516,6 +517,7 @@ export declare const ListPlansOutputSchema: z.ZodObject<{
     hasActiveStripeBilling: z.ZodBoolean;
     plans: z.ZodArray<z.ZodObject<{
         slug: z.ZodString;
+        isVisible: z.ZodOptional<z.ZodBoolean>;
         billingModel: z.ZodString;
         name: z.ZodString;
         description: z.ZodString;
@@ -804,6 +806,7 @@ export declare const listPlans: import("../orpc-contracts/index.js").OperationDe
     hasActiveStripeBilling: z.ZodBoolean;
     plans: z.ZodArray<z.ZodObject<{
         slug: z.ZodString;
+        isVisible: z.ZodOptional<z.ZodBoolean>;
         billingModel: z.ZodString;
         name: z.ZodString;
         description: z.ZodString;
@@ -1475,6 +1478,7 @@ export declare const billingContract: {
         hasActiveStripeBilling: z.ZodBoolean;
         plans: z.ZodArray<z.ZodObject<{
             slug: z.ZodString;
+            isVisible: z.ZodOptional<z.ZodBoolean>;
             billingModel: z.ZodString;
             name: z.ZodString;
             description: z.ZodString;

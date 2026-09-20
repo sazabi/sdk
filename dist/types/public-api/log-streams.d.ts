@@ -32,6 +32,13 @@ export declare const ListLogStreamsOutputSchema: z.ZodObject<{
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -74,6 +81,13 @@ export declare const listLogStreams: import("../orpc-contracts/index.js").Operat
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -202,6 +216,13 @@ export declare const GetLogStreamOutputSchema: z.ZodObject<{
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -243,6 +264,13 @@ export declare const getLogStream: import("../orpc-contracts/index.js").Operatio
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -284,6 +312,13 @@ export declare const UpdateLogStreamOutputSchema: z.ZodObject<{
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -326,6 +361,13 @@ export declare const updateLogStream: import("../orpc-contracts/index.js").Opera
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -380,6 +422,13 @@ export declare const ReassignLogStreamOutputSchema: z.ZodObject<{
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -422,6 +471,13 @@ export declare const reassignLogStream: import("../orpc-contracts/index.js").Ope
         }>;
         createdAt: z.ZodString;
         endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodEnum<{
+                endpoint: "endpoint";
+                listener: "listener";
+                logs: "logs";
+                metrics: "metrics";
+                traces: "traces";
+            }>;
             kind: z.ZodEnum<{
                 hostPort: "hostPort";
                 url: "url";
@@ -463,6 +519,13 @@ export declare const logStreamsContract: {
             }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodEnum<{
+                    endpoint: "endpoint";
+                    listener: "listener";
+                    logs: "logs";
+                    metrics: "metrics";
+                    traces: "traces";
+                }>;
                 kind: z.ZodEnum<{
                     hostPort: "hostPort";
                     url: "url";
@@ -535,6 +598,13 @@ export declare const logStreamsContract: {
             }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodEnum<{
+                    endpoint: "endpoint";
+                    listener: "listener";
+                    logs: "logs";
+                    metrics: "metrics";
+                    traces: "traces";
+                }>;
                 kind: z.ZodEnum<{
                     hostPort: "hostPort";
                     url: "url";
@@ -575,6 +645,13 @@ export declare const logStreamsContract: {
             }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodEnum<{
+                    endpoint: "endpoint";
+                    listener: "listener";
+                    logs: "logs";
+                    metrics: "metrics";
+                    traces: "traces";
+                }>;
                 kind: z.ZodEnum<{
                     hostPort: "hostPort";
                     url: "url";
@@ -620,6 +697,13 @@ export declare const logStreamsContract: {
             }>;
             createdAt: z.ZodString;
             endpointCards: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodEnum<{
+                    endpoint: "endpoint";
+                    listener: "listener";
+                    logs: "logs";
+                    metrics: "metrics";
+                    traces: "traces";
+                }>;
                 kind: z.ZodEnum<{
                     hostPort: "hostPort";
                     url: "url";

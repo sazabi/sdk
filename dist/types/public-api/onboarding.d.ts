@@ -103,6 +103,7 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
     onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;
     hasOrganizations: z.ZodBoolean;
     hasPaidBillingSubscription: z.ZodBoolean;
+    hasServiceableBillingSubscription: z.ZodBoolean;
     billingStepEnabled: z.ZodBoolean;
     pendingInvitations: z.ZodArray<z.ZodObject<{
         invitationId: z.ZodString;
@@ -188,6 +189,7 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
         onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;
         hasOrganizations: z.ZodBoolean;
         hasPaidBillingSubscription: z.ZodBoolean;
+        hasServiceableBillingSubscription: z.ZodBoolean;
         billingStepEnabled: z.ZodBoolean;
         pendingInvitations: z.ZodArray<z.ZodObject<{
             invitationId: z.ZodString;
@@ -273,6 +275,7 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
         onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;
         hasOrganizations: z.ZodBoolean;
         hasPaidBillingSubscription: z.ZodBoolean;
+        hasServiceableBillingSubscription: z.ZodBoolean;
         billingStepEnabled: z.ZodBoolean;
         pendingInvitations: z.ZodArray<z.ZodObject<{
             invitationId: z.ZodString;
@@ -284,6 +287,21 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
         }, z.core.$strip>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const ContinueOnboardingWithFreeInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const ContinueOnboardingWithFreeOutputSchema: z.ZodObject<{
+    completed: z.ZodLiteral<true>;
+}, z.core.$strip>;
+export declare const continueOnboardingWithFree: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    completed: z.ZodLiteral<true>;
+}, z.core.$strip>, "api">;
+export type ContinueOnboardingWithFreeInput = z.infer<typeof ContinueOnboardingWithFreeInputSchema>;
+export type ContinueOnboardingWithFreeOutput = z.infer<typeof ContinueOnboardingWithFreeOutputSchema>;
 export declare const SkipOnboardingIntegrationInputSchema: z.ZodObject<{
     integration: z.ZodEnum<{
         github: "github";
@@ -362,6 +380,12 @@ export declare const finishOnboarding: import("../orpc-contracts/index.js").Oper
     completed: z.ZodBoolean;
 }, z.core.$strip>, "api">;
 export declare const onboardingContract: {
+    readonly continueWithFree: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        projectId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        completed: z.ZodLiteral<true>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly getState: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
@@ -436,6 +460,7 @@ export declare const onboardingContract: {
             onboardingRecommendationsThreadId: z.ZodNullable<z.ZodString>;
             hasOrganizations: z.ZodBoolean;
             hasPaidBillingSubscription: z.ZodBoolean;
+            hasServiceableBillingSubscription: z.ZodBoolean;
             billingStepEnabled: z.ZodBoolean;
             pendingInvitations: z.ZodArray<z.ZodObject<{
                 invitationId: z.ZodString;

@@ -144,8 +144,10 @@ export declare const ONBOARDING_TASKS: readonly Task[];
  * `getting-started` spelling for published-client compatibility): shown in
  * the web Setup guide and the CLI tasks list (in this order, after the
  * onboarding cards) but walked by neither onboarding tour; the CLI's setup
- * round offers them after the finish recap. Promoting a card into the tour
- * is a cut-paste into the onboarding cards + a flow line.
+ * round offers them on demand via `sazabi onboarding setup` (ENG-7562 — the
+ * onboarding walk's finish recap only points there, never chains into the
+ * round). Promoting a card into the tour is a cut-paste into the onboarding
+ * cards + a flow line.
  *
  * Verb targets: web `open-page` / cli `open-page` targets are
  * project-relative dashboard paths (each surface prefixes the active
@@ -304,10 +306,10 @@ export declare const adjacentFlowEntry: (state: OnboardingCardState, from: Onboa
 export type TaskChecklistStatus = {
     onboarding: {
         /**
-         * Whether the organization has completed billing setup (an active paid
-         * subscription — the same predicate as the onboarding billing gate), or
-         * `null` when billing does not participate for this org (the onboarding
-         * billing step is disabled and no paid subscription exists). A `null`
+         * Whether the organization has an active paid subscription or a recorded
+         * choice with serviceable Free billing, matching the onboarding gate.
+         * `null` when the billing step is disabled and neither completion condition
+         * holds. The saved choice is retained when billing becomes inactive. A `null`
          * value hides the task from the checklist entirely rather than stranding
          * the org with a task the product never asks it to complete.
          */
