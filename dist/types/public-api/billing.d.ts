@@ -161,6 +161,7 @@ export declare const BillingUsageRowSchema: z.ZodObject<{
     pricingStatus: z.ZodOptional<z.ZodEnum<{
         mixed: "mixed";
         not_configured: "not_configured";
+        priced: "priced";
         zero_rated: "zero_rated";
     }>>;
 }, z.core.$strip>;
@@ -200,6 +201,7 @@ export declare const GetBillingUsageOutputSchema: z.ZodObject<{
         pricingStatus: z.ZodOptional<z.ZodEnum<{
             mixed: "mixed";
             not_configured: "not_configured";
+            priced: "priced";
             zero_rated: "zero_rated";
         }>>;
     }, z.core.$strip>>;
@@ -401,6 +403,7 @@ export declare const getBillingUsage: import("../orpc-contracts/index.js").Opera
         pricingStatus: z.ZodOptional<z.ZodEnum<{
             mixed: "mixed";
             not_configured: "not_configured";
+            priced: "priced";
             zero_rated: "zero_rated";
         }>>;
     }, z.core.$strip>>;
@@ -1143,6 +1146,18 @@ export declare const GetAccruedUsageChargesOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     currency: z.ZodNullable<z.ZodString>;
     settlesInCents: z.ZodBoolean;
+    settlementProductKeys: z.ZodArray<z.ZodEnum<{
+        ai_tokens: "ai_tokens";
+        automation_runs_completed: "automation_runs_completed";
+        input_tokens: "input_tokens";
+        issues_created: "issues_created";
+        logs_accepted_bytes: "logs_accepted_bytes";
+        logs_ingested_bytes: "logs_ingested_bytes";
+        logs_query_bytes_scanned: "logs_query_bytes_scanned";
+        output_tokens: "output_tokens";
+        pull_request_reviews_completed: "pull_request_reviews_completed";
+        pull_requests_created: "pull_requests_created";
+    }>>;
     lineItems: z.ZodArray<z.ZodObject<{
         productKey: z.ZodEnum<{
             ai_tokens: "ai_tokens";
@@ -1174,6 +1189,18 @@ export declare const getAccruedUsageCharges: import("../orpc-contracts/index.js"
     }, z.core.$strip>>;
     currency: z.ZodNullable<z.ZodString>;
     settlesInCents: z.ZodBoolean;
+    settlementProductKeys: z.ZodArray<z.ZodEnum<{
+        ai_tokens: "ai_tokens";
+        automation_runs_completed: "automation_runs_completed";
+        input_tokens: "input_tokens";
+        issues_created: "issues_created";
+        logs_accepted_bytes: "logs_accepted_bytes";
+        logs_ingested_bytes: "logs_ingested_bytes";
+        logs_query_bytes_scanned: "logs_query_bytes_scanned";
+        output_tokens: "output_tokens";
+        pull_request_reviews_completed: "pull_request_reviews_completed";
+        pull_requests_created: "pull_requests_created";
+    }>>;
     lineItems: z.ZodArray<z.ZodObject<{
         productKey: z.ZodEnum<{
             ai_tokens: "ai_tokens";
@@ -1309,6 +1336,7 @@ export declare const billingContract: {
             pricingStatus: z.ZodOptional<z.ZodEnum<{
                 mixed: "mixed";
                 not_configured: "not_configured";
+                priced: "priced";
                 zero_rated: "zero_rated";
             }>>;
         }, z.core.$strip>>;
@@ -1322,6 +1350,18 @@ export declare const billingContract: {
         }, z.core.$strip>>;
         currency: z.ZodNullable<z.ZodString>;
         settlesInCents: z.ZodBoolean;
+        settlementProductKeys: z.ZodArray<z.ZodEnum<{
+            ai_tokens: "ai_tokens";
+            automation_runs_completed: "automation_runs_completed";
+            input_tokens: "input_tokens";
+            issues_created: "issues_created";
+            logs_accepted_bytes: "logs_accepted_bytes";
+            logs_ingested_bytes: "logs_ingested_bytes";
+            logs_query_bytes_scanned: "logs_query_bytes_scanned";
+            output_tokens: "output_tokens";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>>;
         lineItems: z.ZodArray<z.ZodObject<{
             productKey: z.ZodEnum<{
                 ai_tokens: "ai_tokens";

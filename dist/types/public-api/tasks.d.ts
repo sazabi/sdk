@@ -1,6 +1,6 @@
-import { type CliAction, type TaskCategory, type TaskList, type WebAction } from "../task-checklist/index.js";
+import { type TaskCategory, type TaskList, type TaskStatus } from "../task-checklist/index.js";
 import { z } from "zod";
-export type { CliAction, TaskCategory, TaskList, WebAction };
+export type { TaskCategory, TaskList, TaskStatus };
 export declare const TaskCategorySchema: z.ZodEnum<{
     onboarding: "onboarding";
     setup: "setup";
@@ -9,29 +9,19 @@ export declare const TaskListSchema: z.ZodEnum<{
     "getting-started": "getting-started";
     onboarding: "onboarding";
 }>;
-export declare const WebActionSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
-    do: z.ZodLiteral<"show-screen">;
-    target: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    do: z.ZodLiteral<"open-page">;
-    target: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    do: z.ZodLiteral<"show-command">;
-    target: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    do: z.ZodLiteral<"open-url">;
-    target: z.ZodString;
-}, z.core.$strip>], "do">;
-export declare const CliActionSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
-    do: z.ZodLiteral<"run-step">;
-    target: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    do: z.ZodLiteral<"open-page">;
-    target: z.ZodString;
-}, z.core.$strip>, z.ZodObject<{
-    do: z.ZodLiteral<"open-browser">;
-    target: z.ZodString;
-}, z.core.$strip>], "do">;
+/**
+ * The server-evaluated task status (ENG-7745). Both task-list routers emit
+ * it from the one registry function, so a client renders it instead of
+ * re-deriving skips and skipped dependencies from the onboarding snapshot.
+ * `completed` and `skipped` stay on the row for published clients; this
+ * field is the one to read going forward.
+ */
+export declare const TaskStatusSchema: z.ZodEnum<{
+    complete: "complete";
+    incomplete: "incomplete";
+    skipped: "skipped";
+    unavailable: "unavailable";
+}>;
 export declare const TaskSchema: z.ZodObject<{
     id: z.ZodString;
     label: z.ZodString;
@@ -40,6 +30,12 @@ export declare const TaskSchema: z.ZodObject<{
     completed: z.ZodBoolean;
     completedAt: z.ZodNullable<z.ZodString>;
     skipped: z.ZodBoolean;
+    status: z.ZodEnum<{
+        complete: "complete";
+        incomplete: "incomplete";
+        skipped: "skipped";
+        unavailable: "unavailable";
+    }>;
     category: z.ZodEnum<{
         onboarding: "onboarding";
         setup: "setup";
@@ -48,30 +44,7 @@ export declare const TaskSchema: z.ZodObject<{
         "getting-started": "getting-started";
         onboarding: "onboarding";
     }>;
-    optional: z.ZodBoolean;
-    web: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        do: z.ZodLiteral<"show-screen">;
-        target: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
-        do: z.ZodLiteral<"open-page">;
-        target: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
-        do: z.ZodLiteral<"show-command">;
-        target: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
-        do: z.ZodLiteral<"open-url">;
-        target: z.ZodString;
-    }, z.core.$strip>], "do">>;
-    cli: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        do: z.ZodLiteral<"run-step">;
-        target: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
-        do: z.ZodLiteral<"open-page">;
-        target: z.ZodString;
-    }, z.core.$strip>, z.ZodObject<{
-        do: z.ZodLiteral<"open-browser">;
-        target: z.ZodString;
-    }, z.core.$strip>], "do">>;
+    skippable: z.ZodBoolean;
 }, z.core.$strip>;
 export type Task = z.infer<typeof TaskSchema>;
 export declare const ListTasksInputSchema: z.ZodObject<{
@@ -87,6 +60,12 @@ export declare const ListTasksOutputSchema: z.ZodObject<{
         completed: z.ZodBoolean;
         completedAt: z.ZodNullable<z.ZodString>;
         skipped: z.ZodBoolean;
+        status: z.ZodEnum<{
+            complete: "complete";
+            incomplete: "incomplete";
+            skipped: "skipped";
+            unavailable: "unavailable";
+        }>;
         category: z.ZodEnum<{
             onboarding: "onboarding";
             setup: "setup";
@@ -95,30 +74,7 @@ export declare const ListTasksOutputSchema: z.ZodObject<{
             "getting-started": "getting-started";
             onboarding: "onboarding";
         }>;
-        optional: z.ZodBoolean;
-        web: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            do: z.ZodLiteral<"show-screen">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-page">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"show-command">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-url">;
-            target: z.ZodString;
-        }, z.core.$strip>], "do">>;
-        cli: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            do: z.ZodLiteral<"run-step">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-page">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-browser">;
-            target: z.ZodString;
-        }, z.core.$strip>], "do">>;
+        skippable: z.ZodBoolean;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListTasksOutput = z.infer<typeof ListTasksOutputSchema>;
@@ -133,6 +89,12 @@ export declare const listTasks: import("../orpc-contracts/index.js").OperationDe
         completed: z.ZodBoolean;
         completedAt: z.ZodNullable<z.ZodString>;
         skipped: z.ZodBoolean;
+        status: z.ZodEnum<{
+            complete: "complete";
+            incomplete: "incomplete";
+            skipped: "skipped";
+            unavailable: "unavailable";
+        }>;
         category: z.ZodEnum<{
             onboarding: "onboarding";
             setup: "setup";
@@ -141,30 +103,7 @@ export declare const listTasks: import("../orpc-contracts/index.js").OperationDe
             "getting-started": "getting-started";
             onboarding: "onboarding";
         }>;
-        optional: z.ZodBoolean;
-        web: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            do: z.ZodLiteral<"show-screen">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-page">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"show-command">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-url">;
-            target: z.ZodString;
-        }, z.core.$strip>], "do">>;
-        cli: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            do: z.ZodLiteral<"run-step">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-page">;
-            target: z.ZodString;
-        }, z.core.$strip>, z.ZodObject<{
-            do: z.ZodLiteral<"open-browser">;
-            target: z.ZodString;
-        }, z.core.$strip>], "do">>;
+        skippable: z.ZodBoolean;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 /**

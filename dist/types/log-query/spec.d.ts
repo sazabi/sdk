@@ -1,21 +1,5 @@
 import { z } from "zod";
-import type { LogQuerySpecV2 } from "./spec-v2.js";
-export declare const logAttributeSourceSchema: z.ZodEnum<{
-    log: "log";
-    resource: "resource";
-    scope: "scope";
-}>;
-export type LogAttributeSource = z.infer<typeof logAttributeSourceSchema>;
-/**
- * A value inside the JSON log body (`otel_body`), addressed by object path:
- * `["metadata", "durationMs"]` reads `otel_body.metadata.durationMs`. Most
- * numeric facts live here rather than in the attribute map.
- */
-export declare const bodyJsonFieldSchema: z.ZodObject<{
-    kind: z.ZodLiteral<"body_json">;
-    path: z.ZodArray<z.ZodString>;
-}, z.core.$strict>;
-export type BodyJsonField = z.infer<typeof bodyJsonFieldSchema>;
+import { type LogQuerySpecV2 } from "./spec-v2.js";
 export declare const logFieldSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     kind: z.ZodLiteral<"service">;
 }, z.core.$strict>, z.ZodObject<{
@@ -115,23 +99,6 @@ export declare const logPredicateSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     value: z.ZodNumber;
 }, z.core.$strict>], "operator">;
 export type LogPredicate = z.infer<typeof logPredicateSchema>;
-/**
- * The longest relative window a query may name: the raw `logs` retention
- * (`log_volume_per_minute` keeps the same 90 days). Absolute windows are the
- * caller's own; a window older than what storage holds answers with partial
- * coverage, never a refusal.
- */
-export declare const MAX_LOG_QUERY_LOOKBACK_SECONDS: number;
-export declare const DEFAULT_LOG_QUERY_LOOKBACK_SECONDS: number;
-export declare const logTimeRangeSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
-    kind: z.ZodLiteral<"absolute">;
-    from: z.ZodISODateTime;
-    to: z.ZodISODateTime;
-}, z.core.$strict>, z.ZodObject<{
-    kind: z.ZodLiteral<"relative">;
-    lookbackSeconds: z.ZodNumber;
-}, z.core.$strict>], "kind">;
-export type LogTimeRange = z.infer<typeof logTimeRangeSchema>;
 export declare const logMeasureSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     operation: z.ZodLiteral<"count">;
 }, z.core.$strict>, z.ZodObject<{
@@ -398,7 +365,3 @@ export declare const logQueryResolutionV1Schema: z.ZodObject<{
     resolvedAt: z.ZodISODateTime;
 }, z.core.$strict>;
 export type LogQueryResolutionV1 = z.infer<typeof logQueryResolutionV1Schema>;
-export interface ResolvedTimeRange {
-    from: string;
-    to: string;
-}

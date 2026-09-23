@@ -1,13 +1,13 @@
 {
-  "sourceSha": "67b050099b5bbd8ceda0bb04969cd05bf2ea0a5b",
-  "sourceRunId": "35522205709",
-  "builtAt": "2026-09-20T16:17:41Z",
-  "distSha256": "ac3acde65245fde986164e7dcaf7cd5cd9ba791ecd172c91df6bc2360369e770",
-  "baseVersion": "1.2.0",
+  "sourceSha": "2e9dc5c6f88e10f560a114bfc5c33a22e2826cce",
+  "sourceRunId": "35882369948",
+  "builtAt": "2026-09-23T15:34:16Z",
+  "distSha256": "bdbd5880f351899ea3e970b7627a31c080fa15ba7098cbcbd782e3b4d2d81a43",
+  "baseVersion": "1.3.0",
   "syncFiles": [
     "dist",
     "package.json",
     "release-manifest.json"
   ],
-  "version": "1.2.0"
+  "version": "1.3.0"
 }

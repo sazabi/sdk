@@ -37,8 +37,7 @@ export declare const MAX_PREDICATE_NODES = 200;
  * Most characters (UTF-16 code units, the measure `z.string().max()` applies to
  * each operand) the operand strings of one tree may hold together. The
  * per-operand and per-list bounds multiply out to well over 100 million code
- * units across a maximal tree; this caps their product. v1 filters share the
- * bound so every valid v1 spec adapts to a valid v2 spec.
+ * units across a maximal tree; this caps their product.
  */
 export declare const MAX_PREDICATE_OPERAND_CHARS = 65536;
 export declare const createPredicateTreeSchema: <F extends FieldRef>(fieldRef: z.ZodType<F>) => z.ZodType<PredicateTree<F>>;

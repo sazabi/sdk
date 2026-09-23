@@ -133,6 +133,27 @@ export declare const DeliveryRuleDestinationSchema: z.ZodObject<{
     destinationKey: z.ZodString;
     displayName: z.ZodString;
 }, z.core.$strip>;
+/**
+ * A destination the options list offers, with whether it can receive today.
+ * `isDeliverable` is optional on the wire so a CLI carrying this contract
+ * still accepts responses from a server deployed before the field existed
+ * (the CLI and the API release independently); the server always sends it,
+ * and a missing value reads as deliverable.
+ */
+export declare const DeliveryRuleOptionDestinationSchema: z.ZodObject<{
+    id: z.ZodString;
+    channel: z.ZodEnum<{
+        incident_io: "incident_io";
+        pagerduty: "pagerduty";
+        rootly: "rootly";
+        slack_channel: "slack_channel";
+        teams_channel: "teams_channel";
+        webhook: "webhook";
+    }>;
+    destinationKey: z.ZodString;
+    displayName: z.ZodString;
+    isDeliverable: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>;
 export declare const DeliveryRuleComponentSchema: z.ZodObject<{
     id: z.ZodString;
     label: z.ZodString;
@@ -281,6 +302,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
         }>;
         destinationKey: z.ZodString;
         displayName: z.ZodString;
+        isDeliverable: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodObject<{
         notificationType: z.ZodEnum<{
@@ -606,6 +628,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
         }>;
         destinationKey: z.ZodString;
         displayName: z.ZodString;
+        isDeliverable: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodObject<{
         notificationType: z.ZodEnum<{
@@ -920,6 +943,7 @@ export declare const notificationDeliveryRulesContract: {
             }>;
             destinationKey: z.ZodString;
             displayName: z.ZodString;
+            isDeliverable: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strip>>;
         notificationTypes: z.ZodArray<z.ZodObject<{
             notificationType: z.ZodEnum<{

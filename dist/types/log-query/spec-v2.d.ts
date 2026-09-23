@@ -1,9 +1,26 @@
 import { z } from "zod";
 import { type Measure, type PredicateTree } from "./plan/index.js";
+/** Which OTLP attribute map a field reads: the log record's, its resource's or its scope's. */
+export declare const logAttributeSourceSchema: z.ZodEnum<{
+    log: "log";
+    resource: "resource";
+    scope: "scope";
+}>;
+export type LogAttributeSource = z.infer<typeof logAttributeSourceSchema>;
+/**
+ * A value inside the JSON log body (`otel_body`), addressed by object path:
+ * `["metadata", "durationMs"]` reads `otel_body.metadata.durationMs`. Most
+ * numeric facts live here rather than in the attribute map.
+ */
+export declare const bodyJsonFieldSchema: z.ZodObject<{
+    kind: z.ZodLiteral<"body_json">;
+    path: z.ZodArray<z.ZodString>;
+}, z.core.$strict>;
+export type BodyJsonField = z.infer<typeof bodyJsonFieldSchema>;
 /**
  * `column` names a promoted semconv column (e.g. `http.route`); `pattern` is a
- * `pattern_id` from the log_patterns catalog. `body_json` is not in the design's
- * type block: it is carried so every v1 spec has a v2 form.
+ * `pattern_id` from the log_patterns catalog. `body` and `body_json` read the
+ * log body as text and by JSON path; only a scan serves them.
  */
 export declare const logFieldRefSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     kind: z.ZodLiteral<"service">;
@@ -30,6 +47,9 @@ export declare const logFieldRefSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
 }, z.core.$strict>], "kind">;
 export type LogFieldRef = z.infer<typeof logFieldRefSchema>;
 export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
+    kind: "body_json";
+    path: string[];
+} | {
     kind: "service";
 } | {
     kind: "severity_number";
@@ -44,10 +64,10 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
     kind: "pattern";
 } | {
     kind: "body";
-} | {
-    kind: "body_json";
-    path: string[];
 }>, unknown, z.core.$ZodTypeInternals<PredicateTree<{
+    kind: "body_json";
+    path: string[];
+} | {
     kind: "service";
 } | {
     kind: "severity_number";
@@ -62,9 +82,6 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
     kind: "pattern";
 } | {
     kind: "body";
-} | {
-    kind: "body_json";
-    path: string[];
 }>, unknown>>;
 export type LogPredicateTree = PredicateTree<LogFieldRef>;
 export declare const LOG_DURATION_AGGREGATES: readonly ["sum", "avg", "max", "p50", "p95", "p99"];
@@ -76,6 +93,9 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"distinct">;
     field: z.ZodType<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -90,10 +110,10 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }, unknown, z.core.$ZodTypeInternals<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -108,13 +128,13 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }, unknown>>;
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"numeric">;
     field: z.ZodType<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -129,10 +149,10 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }, unknown, z.core.$ZodTypeInternals<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -147,9 +167,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }, unknown>>;
     parseAs: z.ZodLiteral<"float64">;
     aggregate: z.ZodEnum<{
@@ -169,6 +186,9 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     op: z.ZodLiteral<"recent_rows">;
     limit: z.ZodNumber;
     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -183,10 +203,10 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }, unknown, z.core.$ZodTypeInternals<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -201,9 +221,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }, unknown>>>>;
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"error_count">;
@@ -240,6 +257,9 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         kind: z.ZodLiteral<"logs">;
     }, z.core.$strict>;
     predicate: z.ZodType<PredicateTree<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -254,10 +274,10 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }>, unknown, z.core.$ZodTypeInternals<PredicateTree<{
+        kind: "body_json";
+        path: string[];
+    } | {
         kind: "service";
     } | {
         kind: "severity_number";
@@ -272,9 +292,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
-    } | {
-        kind: "body_json";
-        path: string[];
     }>, unknown>>;
     dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"service">;
@@ -306,6 +323,9 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
     }, z.core.$strict>, z.ZodObject<{
         op: z.ZodLiteral<"distinct">;
         field: z.ZodType<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity_number";
@@ -320,10 +340,10 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
-        } | {
-            kind: "body_json";
-            path: string[];
         }, unknown, z.core.$ZodTypeInternals<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity_number";
@@ -338,13 +358,13 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
-        } | {
-            kind: "body_json";
-            path: string[];
         }, unknown>>;
     }, z.core.$strict>, z.ZodObject<{
         op: z.ZodLiteral<"numeric">;
         field: z.ZodType<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity_number";
@@ -359,10 +379,10 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
-        } | {
-            kind: "body_json";
-            path: string[];
         }, unknown, z.core.$ZodTypeInternals<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity_number";
@@ -377,9 +397,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
-        } | {
-            kind: "body_json";
-            path: string[];
         }, unknown>>;
         parseAs: z.ZodLiteral<"float64">;
         aggregate: z.ZodEnum<{
@@ -399,6 +416,9 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         op: z.ZodLiteral<"recent_rows">;
         limit: z.ZodNumber;
         fields: z.ZodOptional<z.ZodArray<z.ZodType<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity_number";
@@ -413,10 +433,10 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
-        } | {
-            kind: "body_json";
-            path: string[];
         }, unknown, z.core.$ZodTypeInternals<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity_number";
@@ -431,9 +451,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
-        } | {
-            kind: "body_json";
-            path: string[];
         }, unknown>>>>;
     }, z.core.$strict>, z.ZodObject<{
         op: z.ZodLiteral<"error_count">;

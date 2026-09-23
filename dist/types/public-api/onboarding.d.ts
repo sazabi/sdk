@@ -33,6 +33,26 @@ export declare const OnboardingInvitationSchema: z.ZodObject<{
     organizationImageUrl: z.ZodNullable<z.ZodString>;
     inviterName: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
+/**
+ * One task's server-evaluated status on the onboarding snapshot (ENG-7745):
+ * the row every current surface renders card state from. Keyed by the task
+ * list's own ids and covering setup tasks; copy comes from the registry.
+ */
+export declare const OnboardingTaskStatusSchema: z.ZodObject<{
+    id: z.ZodString;
+    status: z.ZodEnum<{
+        complete: "complete";
+        incomplete: "incomplete";
+        skipped: "skipped";
+        unavailable: "unavailable";
+    }>;
+    list: z.ZodEnum<{
+        "getting-started": "getting-started";
+        onboarding: "onboarding";
+    }>;
+    skippable: z.ZodBoolean;
+}, z.core.$strip>;
+export type OnboardingTaskStatus = z.infer<typeof OnboardingTaskStatusSchema>;
 export declare const OnboardingSnapshotSchema: z.ZodObject<{
     gate: z.ZodEnum<{
         "access-denied": "access-denied";
@@ -80,6 +100,20 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
     githubAppSkipped: z.ZodBoolean;
     slackSkipped: z.ZodBoolean;
     sampleIssueId: z.ZodNullable<z.ZodString>;
+    tasks: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        status: z.ZodEnum<{
+            complete: "complete";
+            incomplete: "incomplete";
+            skipped: "skipped";
+            unavailable: "unavailable";
+        }>;
+        list: z.ZodEnum<{
+            "getting-started": "getting-started";
+            onboarding: "onboarding";
+        }>;
+        skippable: z.ZodBoolean;
+    }, z.core.$strip>>;
     actorRole: z.ZodNullable<z.ZodEnum<{
         admin: "admin";
         member: "member";
@@ -166,6 +200,20 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
         githubAppSkipped: z.ZodBoolean;
         slackSkipped: z.ZodBoolean;
         sampleIssueId: z.ZodNullable<z.ZodString>;
+        tasks: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            status: z.ZodEnum<{
+                complete: "complete";
+                incomplete: "incomplete";
+                skipped: "skipped";
+                unavailable: "unavailable";
+            }>;
+            list: z.ZodEnum<{
+                "getting-started": "getting-started";
+                onboarding: "onboarding";
+            }>;
+            skippable: z.ZodBoolean;
+        }, z.core.$strip>>;
         actorRole: z.ZodNullable<z.ZodEnum<{
             admin: "admin";
             member: "member";
@@ -252,6 +300,20 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
         githubAppSkipped: z.ZodBoolean;
         slackSkipped: z.ZodBoolean;
         sampleIssueId: z.ZodNullable<z.ZodString>;
+        tasks: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            status: z.ZodEnum<{
+                complete: "complete";
+                incomplete: "incomplete";
+                skipped: "skipped";
+                unavailable: "unavailable";
+            }>;
+            list: z.ZodEnum<{
+                "getting-started": "getting-started";
+                onboarding: "onboarding";
+            }>;
+            skippable: z.ZodBoolean;
+        }, z.core.$strip>>;
         actorRole: z.ZodNullable<z.ZodEnum<{
             admin: "admin";
             member: "member";
@@ -437,6 +499,20 @@ export declare const onboardingContract: {
             githubAppSkipped: z.ZodBoolean;
             slackSkipped: z.ZodBoolean;
             sampleIssueId: z.ZodNullable<z.ZodString>;
+            tasks: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                status: z.ZodEnum<{
+                    complete: "complete";
+                    incomplete: "incomplete";
+                    skipped: "skipped";
+                    unavailable: "unavailable";
+                }>;
+                list: z.ZodEnum<{
+                    "getting-started": "getting-started";
+                    onboarding: "onboarding";
+                }>;
+                skippable: z.ZodBoolean;
+            }, z.core.$strip>>;
             actorRole: z.ZodNullable<z.ZodEnum<{
                 admin: "admin";
                 member: "member";
@@ -523,3 +599,88 @@ export type CompleteOnboardingSampleIssueInput = z.infer<typeof CompleteOnboardi
 export type CompleteOnboardingSampleIssueOutput = z.infer<typeof CompleteOnboardingSampleIssueOutputSchema>;
 export type FinishOnboardingInput = z.infer<typeof FinishOnboardingInputSchema>;
 export type FinishOnboardingOutput = z.infer<typeof FinishOnboardingOutputSchema>;
+export declare const EnsureOnboardingDefaultProjectInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    region: z.ZodDefault<z.ZodOptional<z.ZodEnum<{
+        "eu-central-1": "eu-central-1";
+        "eu-central-2": "eu-central-2";
+        "eu-north-1": "eu-north-1";
+        "eu-south-1": "eu-south-1";
+        "eu-south-2": "eu-south-2";
+        "eu-west-1": "eu-west-1";
+        "eu-west-2": "eu-west-2";
+        "eu-west-3": "eu-west-3";
+        "us-east-1": "us-east-1";
+        "us-east-2": "us-east-2";
+        "us-west-1": "us-west-1";
+        "us-west-2": "us-west-2";
+    }>>>;
+}, z.core.$strip>;
+export declare const EnsureOnboardingDefaultProjectOutputSchema: z.ZodObject<{
+    project: z.ZodObject<{
+        id: z.ZodString;
+        organizationId: z.ZodString;
+        name: z.ZodString;
+        region: z.ZodEnum<{
+            "eu-central-1": "eu-central-1";
+            "eu-central-2": "eu-central-2";
+            "eu-north-1": "eu-north-1";
+            "eu-south-1": "eu-south-1";
+            "eu-south-2": "eu-south-2";
+            "eu-west-1": "eu-west-1";
+            "eu-west-2": "eu-west-2";
+            "eu-west-3": "eu-west-3";
+            "us-east-1": "us-east-1";
+            "us-east-2": "us-east-2";
+            "us-west-1": "us-west-1";
+            "us-west-2": "us-west-2";
+        }>;
+    }, z.core.$strip>;
+    created: z.ZodBoolean;
+}, z.core.$strip>;
+/**
+ * The onboarding project gate (ENG-7857). Creating a project and checking
+ * whether one exists are one server-side decision under a per-organization
+ * lock, so two onboarding surfaces running side by side (the dashboard and
+ * the CLI) cannot both create the organization's first project.
+ */
+export declare const ensureOnboardingDefaultProject: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    region: z.ZodDefault<z.ZodOptional<z.ZodEnum<{
+        "eu-central-1": "eu-central-1";
+        "eu-central-2": "eu-central-2";
+        "eu-north-1": "eu-north-1";
+        "eu-south-1": "eu-south-1";
+        "eu-south-2": "eu-south-2";
+        "eu-west-1": "eu-west-1";
+        "eu-west-2": "eu-west-2";
+        "eu-west-3": "eu-west-3";
+        "us-east-1": "us-east-1";
+        "us-east-2": "us-east-2";
+        "us-west-1": "us-west-1";
+        "us-west-2": "us-west-2";
+    }>>>;
+}, z.core.$strip>, z.ZodObject<{
+    project: z.ZodObject<{
+        id: z.ZodString;
+        organizationId: z.ZodString;
+        name: z.ZodString;
+        region: z.ZodEnum<{
+            "eu-central-1": "eu-central-1";
+            "eu-central-2": "eu-central-2";
+            "eu-north-1": "eu-north-1";
+            "eu-south-1": "eu-south-1";
+            "eu-south-2": "eu-south-2";
+            "eu-west-1": "eu-west-1";
+            "eu-west-2": "eu-west-2";
+            "eu-west-3": "eu-west-3";
+            "us-east-1": "us-east-1";
+            "us-east-2": "us-east-2";
+            "us-west-1": "us-west-1";
+            "us-west-2": "us-west-2";
+        }>;
+    }, z.core.$strip>;
+    created: z.ZodBoolean;
+}, z.core.$strip>, "api">;
+export type EnsureOnboardingDefaultProjectInput = z.infer<typeof EnsureOnboardingDefaultProjectInputSchema>;
+export type EnsureOnboardingDefaultProjectOutput = z.infer<typeof EnsureOnboardingDefaultProjectOutputSchema>;
