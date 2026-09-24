@@ -512,6 +512,9 @@ export declare const BillingPlanSchema: z.ZodObject<{
     targetCreditBalance: z.ZodNullable<z.ZodString>;
     logsIncludedBytes: z.ZodString;
     aiTokensIncluded: z.ZodString;
+    includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    featuresHeading: z.ZodOptional<z.ZodString>;
+    features: z.ZodOptional<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>;
 export type BillingPlan = z.infer<typeof BillingPlanSchema>;
 export declare const ListPlansOutputSchema: z.ZodObject<{
@@ -531,6 +534,9 @@ export declare const ListPlansOutputSchema: z.ZodObject<{
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         logsIncludedBytes: z.ZodString;
         aiTokensIncluded: z.ZodString;
+        includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        featuresHeading: z.ZodOptional<z.ZodString>;
+        features: z.ZodOptional<z.ZodArray<z.ZodString>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListPlansOutput = z.infer<typeof ListPlansOutputSchema>;
@@ -820,6 +826,9 @@ export declare const listPlans: import("../orpc-contracts/index.js").OperationDe
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         logsIncludedBytes: z.ZodString;
         aiTokensIncluded: z.ZodString;
+        includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        featuresHeading: z.ZodOptional<z.ZodString>;
+        features: z.ZodOptional<z.ZodArray<z.ZodString>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const previewPlanChange: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -1529,6 +1538,9 @@ export declare const billingContract: {
             targetCreditBalance: z.ZodNullable<z.ZodString>;
             logsIncludedBytes: z.ZodString;
             aiTokensIncluded: z.ZodString;
+            includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            featuresHeading: z.ZodOptional<z.ZodString>;
+            features: z.ZodOptional<z.ZodArray<z.ZodString>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly previewPlanChange: import("@orpc/contract").ContractProcedure<z.ZodObject<{

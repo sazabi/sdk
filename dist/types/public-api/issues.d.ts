@@ -335,64 +335,6 @@ export declare const SearchIssuesOutputSchema: z.ZodObject<{
     nextCursor: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type SearchIssuesOutput = z.infer<typeof SearchIssuesOutputSchema>;
-export declare const CountIssuesInputSchema: z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    status: z.ZodOptional<z.ZodEnum<{
-        ignored: "ignored";
-        open: "open";
-        resolved: "resolved";
-    }>>;
-    severity: z.ZodOptional<z.ZodEnum<{
-        critical: "critical";
-        high: "high";
-        low: "low";
-        medium: "medium";
-    }>>;
-    componentId: z.ZodOptional<z.ZodString>;
-    name: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>;
-export type CountIssuesInput = z.infer<typeof CountIssuesInputSchema>;
-export declare const IssueCountBreakdownSchema: z.ZodObject<{
-    open: z.ZodNumber;
-    resolved: z.ZodNumber;
-    ignored: z.ZodNumber;
-}, z.core.$strip>;
-export declare const IssueSeverityCountBreakdownSchema: z.ZodObject<{
-    low: z.ZodNumber;
-    medium: z.ZodNumber;
-    high: z.ZodNumber;
-    critical: z.ZodNumber;
-}, z.core.$strip>;
-export declare const CountIssuesOutputSchema: z.ZodObject<{
-    total: z.ZodNumber;
-    byStatus: z.ZodObject<{
-        open: z.ZodNumber;
-        resolved: z.ZodNumber;
-        ignored: z.ZodNumber;
-    }, z.core.$strip>;
-    bySeverity: z.ZodObject<{
-        low: z.ZodNumber;
-        medium: z.ZodNumber;
-        high: z.ZodNumber;
-        critical: z.ZodNumber;
-    }, z.core.$strip>;
-    filters: z.ZodObject<{
-        name: z.ZodNullable<z.ZodString>;
-        status: z.ZodNullable<z.ZodEnum<{
-            ignored: "ignored";
-            open: "open";
-            resolved: "resolved";
-        }>>;
-        severity: z.ZodNullable<z.ZodEnum<{
-            critical: "critical";
-            high: "high";
-            low: "low";
-            medium: "medium";
-        }>>;
-        componentId: z.ZodNullable<z.ZodString>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type CountIssuesOutput = z.infer<typeof CountIssuesOutputSchema>;
 export declare const GetIssueInputSchema: z.ZodObject<{
     issueId: z.ZodString;
 }, z.core.$strip>;
@@ -810,50 +752,6 @@ export declare const searchIssues: import("../orpc-contracts/index.js").Operatio
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
-export declare const countIssues: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    status: z.ZodOptional<z.ZodEnum<{
-        ignored: "ignored";
-        open: "open";
-        resolved: "resolved";
-    }>>;
-    severity: z.ZodOptional<z.ZodEnum<{
-        critical: "critical";
-        high: "high";
-        low: "low";
-        medium: "medium";
-    }>>;
-    componentId: z.ZodOptional<z.ZodString>;
-    name: z.ZodOptional<z.ZodString>;
-}, z.core.$strip>, z.ZodObject<{
-    total: z.ZodNumber;
-    byStatus: z.ZodObject<{
-        open: z.ZodNumber;
-        resolved: z.ZodNumber;
-        ignored: z.ZodNumber;
-    }, z.core.$strip>;
-    bySeverity: z.ZodObject<{
-        low: z.ZodNumber;
-        medium: z.ZodNumber;
-        high: z.ZodNumber;
-        critical: z.ZodNumber;
-    }, z.core.$strip>;
-    filters: z.ZodObject<{
-        name: z.ZodNullable<z.ZodString>;
-        status: z.ZodNullable<z.ZodEnum<{
-            ignored: "ignored";
-            open: "open";
-            resolved: "resolved";
-        }>>;
-        severity: z.ZodNullable<z.ZodEnum<{
-            critical: "critical";
-            high: "high";
-            low: "low";
-            medium: "medium";
-        }>>;
-        componentId: z.ZodNullable<z.ZodString>;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
 export declare const getIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
@@ -1107,50 +1005,6 @@ export declare const unmuteIssue: import("../orpc-contracts/index.js").Operation
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const issuesContract: {
-    readonly count: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-        projectId: z.ZodOptional<z.ZodString>;
-        status: z.ZodOptional<z.ZodEnum<{
-            ignored: "ignored";
-            open: "open";
-            resolved: "resolved";
-        }>>;
-        severity: z.ZodOptional<z.ZodEnum<{
-            critical: "critical";
-            high: "high";
-            low: "low";
-            medium: "medium";
-        }>>;
-        componentId: z.ZodOptional<z.ZodString>;
-        name: z.ZodOptional<z.ZodString>;
-    }, z.core.$strip>, z.ZodObject<{
-        total: z.ZodNumber;
-        byStatus: z.ZodObject<{
-            open: z.ZodNumber;
-            resolved: z.ZodNumber;
-            ignored: z.ZodNumber;
-        }, z.core.$strip>;
-        bySeverity: z.ZodObject<{
-            low: z.ZodNumber;
-            medium: z.ZodNumber;
-            high: z.ZodNumber;
-            critical: z.ZodNumber;
-        }, z.core.$strip>;
-        filters: z.ZodObject<{
-            name: z.ZodNullable<z.ZodString>;
-            status: z.ZodNullable<z.ZodEnum<{
-                ignored: "ignored";
-                open: "open";
-                resolved: "resolved";
-            }>>;
-            severity: z.ZodNullable<z.ZodEnum<{
-                critical: "critical";
-                high: "high";
-                low: "low";
-                medium: "medium";
-            }>>;
-            componentId: z.ZodNullable<z.ZodString>;
-        }, z.core.$strip>;
-    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;

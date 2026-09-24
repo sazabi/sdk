@@ -43,46 +43,87 @@ export declare const ListComponentsInputSchema: z.ZodObject<{
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     cursor: z.ZodOptional<z.ZodString>;
     includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
+    compact: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>;
 export type ListComponentsInput = z.infer<typeof ListComponentsInputSchema>;
+/** A listed component; only the summary fields are present in compact mode. */
+export declare const ComponentListItemSchema: z.ZodObject<{
+    id: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+    projectId: z.ZodOptional<z.ZodString>;
+    name: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+    slug: z.ZodNonOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+    description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    teamId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    teamName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    origin: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
+        code_detected: "code_detected";
+        log_observed: "log_observed";
+        user_declared: "user_declared";
+    }>>>;
+    lifecycle: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
+        active: "active";
+        inactive: "inactive";
+        merged: "merged";
+    }>>>;
+    observationState: z.ZodOptional<z.ZodEnum<{
+        observed: "observed";
+        stale: "stale";
+        unobserved: "unobserved";
+    }>>;
+    registryRevision: z.ZodOptional<z.ZodNumber>;
+    canonicalComponentId: z.ZodOptional<z.ZodString>;
+    mergedIntoComponentId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    currentStatus: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
+        degraded: "degraded";
+        operational: "operational";
+        outage: "outage";
+    }>>>;
+    firstSeenAt: z.ZodOptional<z.ZodString>;
+    lastSeenAt: z.ZodOptional<z.ZodString>;
+    deletedAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    inactiveAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    inactiveReason: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    legacyStateUnknown: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>;
+export type ComponentListItem = z.infer<typeof ComponentListItemSchema>;
 export declare const ListComponentsOutputSchema: z.ZodObject<{
     components: z.ZodArray<z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        slug: z.ZodNullable<z.ZodString>;
-        description: z.ZodNullable<z.ZodString>;
-        teamId: z.ZodNullable<z.ZodString>;
-        teamName: z.ZodNullable<z.ZodString>;
-        origin: z.ZodEnum<{
+        id: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+        projectId: z.ZodOptional<z.ZodString>;
+        name: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+        slug: z.ZodNonOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+        description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        teamId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        teamName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        origin: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
             user_declared: "user_declared";
-        }>;
-        lifecycle: z.ZodEnum<{
+        }>>>;
+        lifecycle: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
             active: "active";
             inactive: "inactive";
             merged: "merged";
-        }>;
-        observationState: z.ZodEnum<{
+        }>>>;
+        observationState: z.ZodOptional<z.ZodEnum<{
             observed: "observed";
             stale: "stale";
             unobserved: "unobserved";
-        }>;
-        registryRevision: z.ZodNumber;
-        canonicalComponentId: z.ZodString;
-        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
+        }>>;
+        registryRevision: z.ZodOptional<z.ZodNumber>;
+        canonicalComponentId: z.ZodOptional<z.ZodString>;
+        mergedIntoComponentId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        currentStatus: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
             degraded: "degraded";
             operational: "operational";
             outage: "outage";
-        }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
-        inactiveAt: z.ZodNullable<z.ZodString>;
-        inactiveReason: z.ZodNullable<z.ZodString>;
-        legacyStateUnknown: z.ZodBoolean;
+        }>>>;
+        firstSeenAt: z.ZodOptional<z.ZodString>;
+        lastSeenAt: z.ZodOptional<z.ZodString>;
+        deletedAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        inactiveAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        inactiveReason: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        legacyStateUnknown: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
@@ -385,44 +426,45 @@ export declare const listComponents: import("../orpc-contracts/index.js").Operat
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     cursor: z.ZodOptional<z.ZodString>;
     includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
+    compact: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>, z.ZodObject<{
     components: z.ZodArray<z.ZodObject<{
-        id: z.ZodString;
-        projectId: z.ZodString;
-        name: z.ZodString;
-        slug: z.ZodNullable<z.ZodString>;
-        description: z.ZodNullable<z.ZodString>;
-        teamId: z.ZodNullable<z.ZodString>;
-        teamName: z.ZodNullable<z.ZodString>;
-        origin: z.ZodEnum<{
+        id: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+        projectId: z.ZodOptional<z.ZodString>;
+        name: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+        slug: z.ZodNonOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+        description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        teamId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        teamName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        origin: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
             code_detected: "code_detected";
             log_observed: "log_observed";
             user_declared: "user_declared";
-        }>;
-        lifecycle: z.ZodEnum<{
+        }>>>;
+        lifecycle: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
             active: "active";
             inactive: "inactive";
             merged: "merged";
-        }>;
-        observationState: z.ZodEnum<{
+        }>>>;
+        observationState: z.ZodOptional<z.ZodEnum<{
             observed: "observed";
             stale: "stale";
             unobserved: "unobserved";
-        }>;
-        registryRevision: z.ZodNumber;
-        canonicalComponentId: z.ZodString;
-        mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-        currentStatus: z.ZodEnum<{
+        }>>;
+        registryRevision: z.ZodOptional<z.ZodNumber>;
+        canonicalComponentId: z.ZodOptional<z.ZodString>;
+        mergedIntoComponentId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        currentStatus: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
             degraded: "degraded";
             operational: "operational";
             outage: "outage";
-        }>;
-        firstSeenAt: z.ZodString;
-        lastSeenAt: z.ZodString;
-        deletedAt: z.ZodNullable<z.ZodString>;
-        inactiveAt: z.ZodNullable<z.ZodString>;
-        inactiveReason: z.ZodNullable<z.ZodString>;
-        legacyStateUnknown: z.ZodBoolean;
+        }>>>;
+        firstSeenAt: z.ZodOptional<z.ZodString>;
+        lastSeenAt: z.ZodOptional<z.ZodString>;
+        deletedAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        inactiveAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        inactiveReason: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        legacyStateUnknown: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
@@ -2188,44 +2230,45 @@ export declare const componentsContract: {
         limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
         cursor: z.ZodOptional<z.ZodString>;
         includeDeleted: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
+        compact: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     }, z.core.$strip>, z.ZodObject<{
         components: z.ZodArray<z.ZodObject<{
-            id: z.ZodString;
-            projectId: z.ZodString;
-            name: z.ZodString;
-            slug: z.ZodNullable<z.ZodString>;
-            description: z.ZodNullable<z.ZodString>;
-            teamId: z.ZodNullable<z.ZodString>;
-            teamName: z.ZodNullable<z.ZodString>;
-            origin: z.ZodEnum<{
+            id: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+            projectId: z.ZodOptional<z.ZodString>;
+            name: z.ZodNonOptional<z.ZodOptional<z.ZodString>>;
+            slug: z.ZodNonOptional<z.ZodOptional<z.ZodNullable<z.ZodString>>>;
+            description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            teamId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            teamName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            origin: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
                 code_detected: "code_detected";
                 log_observed: "log_observed";
                 user_declared: "user_declared";
-            }>;
-            lifecycle: z.ZodEnum<{
+            }>>>;
+            lifecycle: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
                 active: "active";
                 inactive: "inactive";
                 merged: "merged";
-            }>;
-            observationState: z.ZodEnum<{
+            }>>>;
+            observationState: z.ZodOptional<z.ZodEnum<{
                 observed: "observed";
                 stale: "stale";
                 unobserved: "unobserved";
-            }>;
-            registryRevision: z.ZodNumber;
-            canonicalComponentId: z.ZodString;
-            mergedIntoComponentId: z.ZodNullable<z.ZodString>;
-            currentStatus: z.ZodEnum<{
+            }>>;
+            registryRevision: z.ZodOptional<z.ZodNumber>;
+            canonicalComponentId: z.ZodOptional<z.ZodString>;
+            mergedIntoComponentId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            currentStatus: z.ZodNonOptional<z.ZodOptional<z.ZodEnum<{
                 degraded: "degraded";
                 operational: "operational";
                 outage: "outage";
-            }>;
-            firstSeenAt: z.ZodString;
-            lastSeenAt: z.ZodString;
-            deletedAt: z.ZodNullable<z.ZodString>;
-            inactiveAt: z.ZodNullable<z.ZodString>;
-            inactiveReason: z.ZodNullable<z.ZodString>;
-            legacyStateUnknown: z.ZodBoolean;
+            }>>>;
+            firstSeenAt: z.ZodOptional<z.ZodString>;
+            lastSeenAt: z.ZodOptional<z.ZodString>;
+            deletedAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            inactiveAt: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            inactiveReason: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            legacyStateUnknown: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strip>>;
         nextCursor: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;

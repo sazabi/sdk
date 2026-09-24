@@ -51540,7 +51540,11 @@ var init_schema2 = __esm(() => {
     "unmuted",
     "updated"
   ]);
-  issueActorType = pgEnum("issue_actor_type", ["agent", "user"]);
+  issueActorType = pgEnum("issue_actor_type", [
+    "agent",
+    "user",
+    "system"
+  ]);
   mdxDocuments = pgTable("mdx_documents", {
     id: uuid("id").defaultRandom().primaryKey(),
     organizationId: text("organization_id").notNull(),
@@ -75247,10 +75251,20 @@ var ListComponentsInputSchema = z2.object({
   projectId: z2.string().uuid().optional().describe("Project to list components for. Auto-filled from CLI and SDK context when omitted."),
   limit: z2.coerce.number().int().min(1).max(100).default(50).describe("Maximum number of components to return per page."),
   cursor: z2.string().uuid().optional().describe("Cursor from a previous response's nextCursor to fetch the next page."),
-  includeDeleted: z2.union([z2.boolean(), z2.stringbool()]).default(false).describe("When true, include inactive and merged components.")
+  includeDeleted: z2.union([z2.boolean(), z2.stringbool()]).default(false).describe("When true, include inactive and merged components."),
+  compact: z2.union([z2.boolean(), z2.stringbool()]).default(false).describe("When true, return only id, name, slug, origin, lifecycle, and currentStatus for each component.")
 });
+var componentSummaryFields = {
+  id: true,
+  name: true,
+  slug: true,
+  origin: true,
+  lifecycle: true,
+  currentStatus: true
+};
+var ComponentListItemSchema = ComponentSchema.partial().required(componentSummaryFields);
 var ListComponentsOutputSchema = z2.object({
-  components: z2.array(ComponentSchema),
+  components: z2.array(ComponentListItemSchema),
   nextCursor: z2.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
 var GetComponentInputSchema = z2.object({
@@ -76744,7 +76758,10 @@ var BillingPlanSchema = z6.object({
   cycleCredits: z6.string().nullable().describe("Credits added to the balance each paid cycle (billing_plans.config.cycleCredits). Additive, never a balance target."),
   targetCreditBalance: z6.string().nullable(),
   logsIncludedBytes: z6.string(),
-  aiTokensIncluded: z6.string()
+  aiTokensIncluded: z6.string(),
+  includedUsage: z6.array(z6.string()).optional(),
+  featuresHeading: z6.string().optional(),
+  features: z6.array(z6.string()).optional()
 });
 var ListPlansOutputSchema = z6.object({
   billingModel: z6.string(),
@@ -78030,39 +78047,12 @@ var ListIssuesOutputSchema = z10.object({
   nextCursor: z10.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
 });
 var SearchIssuesInputSchema = ListIssuesInputSchema.extend({
-  name: z10.string().trim().optional().describe("Case-insensitive partial match on issue name."),
+  name: z10.string().trim().optional().describe("Text search over issue name and description: ranked, any word, prefix match on the last word. Text with no searchable words (only numbers or symbols) is a case-insensitive partial match on the issue name."),
   includeDeliveryMetadata: z10.union([z10.boolean(), z10.stringbool()]).default(false).describe("When true, include raw delivery metadata in each issue.")
 });
 var SearchIssuesOutputSchema = z10.object({
   issues: z10.array(IssueSearchItemSchema),
   nextCursor: z10.string().uuid().nullable().describe("Pass as 'cursor' to fetch the next page. Null when there are no more results.")
-});
-var CountIssuesInputSchema = SearchIssuesInputSchema.omit({
-  limit: true,
-  cursor: true,
-  includeDeliveryMetadata: true
-});
-var IssueCountBreakdownSchema = z10.object({
-  open: z10.number().int().nonnegative(),
-  resolved: z10.number().int().nonnegative(),
-  ignored: z10.number().int().nonnegative()
-});
-var IssueSeverityCountBreakdownSchema = z10.object({
-  low: z10.number().int().nonnegative(),
-  medium: z10.number().int().nonnegative(),
-  high: z10.number().int().nonnegative(),
-  critical: z10.number().int().nonnegative()
-});
-var CountIssuesOutputSchema = z10.object({
-  total: z10.number().int().nonnegative(),
-  byStatus: IssueCountBreakdownSchema,
-  bySeverity: IssueSeverityCountBreakdownSchema,
-  filters: z10.object({
-    name: z10.string().nullable(),
-    status: z10.enum(["open", "resolved", "ignored"]).nullable(),
-    severity: z10.enum(["low", "medium", "high", "critical"]).nullable(),
-    componentId: z10.string().uuid().nullable()
-  })
 });
 var GetIssueInputSchema = z10.object({
   issueId: z10.string().uuid().describe("Issue ID to retrieve.")
@@ -78128,23 +78118,12 @@ var listIssues = defineOperation({
 var searchIssues = defineOperation({
   operationId: "issues.search",
   summary: "Search issues",
-  description: "Search issues in a project by name, status, and severity.",
+  description: "Search issues in a project by ranked text over name and description, status, and severity.",
   backend: "api",
   route: { method: "GET", path: "/issues/search", tags: ["Issues"] },
   input: SearchIssuesInputSchema,
   output: SearchIssuesOutputSchema,
   pagination: "cursor",
-  async: "sync"
-});
-var countIssues = defineOperation({
-  operationId: "issues.count",
-  summary: "Count issues",
-  description: "Count issues in a project with status and severity breakdowns.",
-  backend: "api",
-  route: { method: "GET", path: "/issues/count", tags: ["Issues"] },
-  input: CountIssuesInputSchema,
-  output: CountIssuesOutputSchema,
-  pagination: "none",
   async: "sync"
 });
 var getIssue = defineOperation({
@@ -78249,7 +78228,6 @@ var unmuteIssue = defineOperation({
   async: "sync"
 });
 var issuesContract = {
-  count: countIssues.contract,
   create: createIssue.contract,
   list: listIssues.contract,
   search: searchIssues.contract,
@@ -80372,11 +80350,10 @@ var digitalOceanConnectionless = vendorConsoleFlow({
     action: "and add a **Datadog** destination"
   },
   repeat: {
-    instruction: "Repeat this setup for every app you want to forward — log destinations are configured **per app** and attach to each service, worker, and job.",
+    instruction: "Repeat this setup for every app you want to forward — log destinations are configured **per app** and attach to each service, worker, and job. App Platform Functions, Droplets, Spaces, Managed Databases, and Managed Kubernetes are not covered by this path; forward those with Sazabi's [OpenTelemetry endpoint](https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/opentelemetry).",
     notes: [
       "You can also add the destination through your app spec (`app.yaml`) or `doctl apps update`.",
-      "To add forwarding across an app in one step from a picker, connect your DigitalOcean account instead.",
-      "App Platform Functions, Droplets, Spaces, Managed Databases, and Managed Kubernetes are not covered by this path — forward those with Sazabi's [OpenTelemetry endpoint](https://docs.sazabi.com/catalogs/log-sources/send-to-an-endpoint/opentelemetry)."
+      "To add forwarding across an app in one step from a picker, connect your DigitalOcean account instead."
     ]
   },
   form: [
@@ -91371,6 +91348,7 @@ var VENDOR_DEFAULT_BASE_URLS = Object.freeze({
   slackApi: "https://slack.com/api",
   githubApi: "https://api.github.com",
   githubWeb: "https://github.com",
+  githubMcp: "https://api.githubcopilot.com/mcp",
   bitbucketApi: "https://api.bitbucket.org/2.0",
   bitbucketWeb: "https://bitbucket.org",
   linearApi: "https://api.linear.app",
@@ -110259,7 +110237,7 @@ var WebhookIssueEventSchema = z60.object({
   id: z60.string().uuid(),
   type: z60.enum(["created", "resolved", "ignored", "updated"]),
   actor: z60.object({
-    type: z60.enum(["agent", "user"]),
+    type: z60.enum(["agent", "user", "system"]),
     id: z60.string().nullable()
   }),
   note: z60.string().nullable(),
@@ -110852,7 +110830,6 @@ var publicApiContract = {
     list: listPullRequests.contract
   },
   issues: {
-    count: countIssues.contract,
     create: createIssue.contract,
     list: listIssues.contract,
     search: searchIssues.contract,
@@ -112291,7 +112268,6 @@ var createClient2 = (options) => {
       delete: async (input) => raw.scripts.delete(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "scripts.delete"))
     },
     issues: {
-      count: async (input = {}) => raw.issues.count(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "issues.count")),
       create: async (input) => raw.issues.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, createIssue.operationId)),
       list: async (input = {}) => raw.issues.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "issues.list")),
       search: async (input = {}) => raw.issues.search(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "issues.search")),

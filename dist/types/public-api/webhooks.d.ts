@@ -84,6 +84,7 @@ export declare const WebhookIssueEventSchema: z.ZodObject<{
     actor: z.ZodObject<{
         type: z.ZodEnum<{
             agent: "agent";
+            system: "system";
             user: "user";
         }>;
         id: z.ZodNullable<z.ZodString>;
@@ -148,6 +149,7 @@ export declare const WebhookIssueSchema: z.ZodObject<{
         actor: z.ZodObject<{
             type: z.ZodEnum<{
                 agent: "agent";
+                system: "system";
                 user: "user";
             }>;
             id: z.ZodNullable<z.ZodString>;
@@ -259,6 +261,7 @@ export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
             actor: z.ZodObject<{
                 type: z.ZodEnum<{
                     agent: "agent";
+                    system: "system";
                     user: "user";
                 }>;
                 id: z.ZodNullable<z.ZodString>;
@@ -385,6 +388,7 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
             actor: z.ZodObject<{
                 type: z.ZodEnum<{
                     agent: "agent";
+                    system: "system";
                     user: "user";
                 }>;
                 id: z.ZodNullable<z.ZodString>;
