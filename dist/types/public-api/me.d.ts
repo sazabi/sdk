@@ -62,6 +62,7 @@ export declare const SecretMeSchema: z.ZodObject<{
         logo: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>;
     keyName: z.ZodString;
+    projectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
 /**
  * Output for partner-key current-credential responses.
@@ -108,6 +109,7 @@ export declare const MeOutputSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         logo: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>;
     keyName: z.ZodString;
+    projectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
     credentialType: z.ZodLiteral<"partner">;
     superorganization: z.ZodObject<{
@@ -146,6 +148,7 @@ export declare const me: import("../orpc-contracts/index.js").OperationDefinitio
         logo: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>;
     keyName: z.ZodString;
+    projectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
     credentialType: z.ZodLiteral<"partner">;
     superorganization: z.ZodObject<{
@@ -184,6 +187,7 @@ export declare const meContract: import("@orpc/contract").ContractProcedure<z.Zo
         logo: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>;
     keyName: z.ZodString;
+    projectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
     credentialType: z.ZodLiteral<"partner">;
     superorganization: z.ZodObject<{

@@ -1,24 +1,10 @@
 import { z } from "zod";
-export declare const MEMORY_CURATED_KINDS: readonly ["note", "runbook"];
-export declare const MEMORY_KINDS: readonly ["note", "runbook", "change"];
-export declare const MemoryKindSchema: z.ZodEnum<{
-    change: "change";
-    note: "note";
-    runbook: "runbook";
-}>;
-export type MemoryKind = z.infer<typeof MemoryKindSchema>;
-export declare const MemoryCuratedKindSchema: z.ZodEnum<{
-    note: "note";
-    runbook: "runbook";
-}>;
-export type MemoryCuratedKind = z.infer<typeof MemoryCuratedKindSchema>;
 export declare const MemoryPathSchema: z.ZodString;
 export type MemoryPath = z.infer<typeof MemoryPathSchema>;
 export declare const MemoryBodySchema: z.ZodString;
 export type MemoryBody = z.infer<typeof MemoryBodySchema>;
 export declare const MemoryDurationSchema: z.ZodString;
 export type MemoryDuration = z.infer<typeof MemoryDurationSchema>;
-export declare const MemoryKindFilterSchema: z.ZodPipe<z.ZodString, z.ZodTransform<("change" | "note" | "runbook")[], string>>;
 export declare const MemoryDocumentSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
@@ -85,6 +71,68 @@ export declare const PutProjectMemoryOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type PutProjectMemoryOutput = z.infer<typeof PutProjectMemoryOutputSchema>;
+export declare const CreateProjectMemoryInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    path: z.ZodString;
+    body: z.ZodString;
+    kind: z.ZodDefault<z.ZodEnum<{
+        note: "note";
+        runbook: "runbook";
+    }>>;
+    title: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type CreateProjectMemoryInput = z.infer<typeof CreateProjectMemoryInputSchema>;
+export declare const CreateProjectMemoryOutputSchema: z.ZodObject<{
+    document: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        kind: z.ZodEnum<{
+            change: "change";
+            note: "note";
+            runbook: "runbook";
+        }>;
+        managed: z.ZodBoolean;
+        path: z.ZodNullable<z.ZodString>;
+        title: z.ZodNullable<z.ZodString>;
+        contentHash: z.ZodString;
+        attrs: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        body: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type CreateProjectMemoryOutput = z.infer<typeof CreateProjectMemoryOutputSchema>;
+export declare const UpdateProjectMemoryInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    path: z.ZodString;
+    body: z.ZodString;
+    kind: z.ZodOptional<z.ZodEnum<{
+        note: "note";
+        runbook: "runbook";
+    }>>;
+    title: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type UpdateProjectMemoryInput = z.infer<typeof UpdateProjectMemoryInputSchema>;
+export declare const UpdateProjectMemoryOutputSchema: z.ZodObject<{
+    document: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        kind: z.ZodEnum<{
+            change: "change";
+            note: "note";
+            runbook: "runbook";
+        }>;
+        managed: z.ZodBoolean;
+        path: z.ZodNullable<z.ZodString>;
+        title: z.ZodNullable<z.ZodString>;
+        contentHash: z.ZodString;
+        attrs: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        body: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type UpdateProjectMemoryOutput = z.infer<typeof UpdateProjectMemoryOutputSchema>;
 export declare const GetProjectMemoryInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     id: z.ZodOptional<z.ZodString>;
@@ -232,6 +280,62 @@ export declare const putProjectMemory: import("../orpc-contracts/index.js").Oper
         body: z.ZodString;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const createProjectMemory: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    path: z.ZodString;
+    body: z.ZodString;
+    kind: z.ZodDefault<z.ZodEnum<{
+        note: "note";
+        runbook: "runbook";
+    }>>;
+    title: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    document: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        kind: z.ZodEnum<{
+            change: "change";
+            note: "note";
+            runbook: "runbook";
+        }>;
+        managed: z.ZodBoolean;
+        path: z.ZodNullable<z.ZodString>;
+        title: z.ZodNullable<z.ZodString>;
+        contentHash: z.ZodString;
+        attrs: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        body: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const updateProjectMemory: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+    path: z.ZodString;
+    body: z.ZodString;
+    kind: z.ZodOptional<z.ZodEnum<{
+        note: "note";
+        runbook: "runbook";
+    }>>;
+    title: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    document: z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        kind: z.ZodEnum<{
+            change: "change";
+            note: "note";
+            runbook: "runbook";
+        }>;
+        managed: z.ZodBoolean;
+        path: z.ZodNullable<z.ZodString>;
+        title: z.ZodNullable<z.ZodString>;
+        contentHash: z.ZodString;
+        attrs: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        body: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
 export declare const getProjectMemory: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     id: z.ZodOptional<z.ZodString>;
@@ -324,6 +428,62 @@ export declare const memoryContract: {
         path: z.ZodString;
         body: z.ZodString;
         kind: z.ZodDefault<z.ZodEnum<{
+            note: "note";
+            runbook: "runbook";
+        }>>;
+        title: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        document: z.ZodObject<{
+            id: z.ZodString;
+            projectId: z.ZodString;
+            kind: z.ZodEnum<{
+                change: "change";
+                note: "note";
+                runbook: "runbook";
+            }>;
+            managed: z.ZodBoolean;
+            path: z.ZodNullable<z.ZodString>;
+            title: z.ZodNullable<z.ZodString>;
+            contentHash: z.ZodString;
+            attrs: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+            body: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        path: z.ZodString;
+        body: z.ZodString;
+        kind: z.ZodDefault<z.ZodEnum<{
+            note: "note";
+            runbook: "runbook";
+        }>>;
+        title: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        document: z.ZodObject<{
+            id: z.ZodString;
+            projectId: z.ZodString;
+            kind: z.ZodEnum<{
+                change: "change";
+                note: "note";
+                runbook: "runbook";
+            }>;
+            managed: z.ZodBoolean;
+            path: z.ZodNullable<z.ZodString>;
+            title: z.ZodNullable<z.ZodString>;
+            contentHash: z.ZodString;
+            attrs: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+            body: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodOptional<z.ZodString>;
+        path: z.ZodString;
+        body: z.ZodString;
+        kind: z.ZodOptional<z.ZodEnum<{
             note: "note";
             runbook: "runbook";
         }>>;

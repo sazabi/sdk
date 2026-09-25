@@ -1,11 +1,12 @@
 import { z } from "zod";
 /** Representations a log query can execute against, in the router's fixed order. */
-export declare const LOG_QUERY_REPRESENTATIONS: readonly ["request_metrics", "event_volume", "pattern_volume", "log_volume", "standing", "exact_scan", "sampled_scan"];
+export declare const LOG_QUERY_REPRESENTATIONS: readonly ["request_metrics", "event_volume", "pattern_volume", "log_volume", "standing", "pattern_index", "exact_scan", "sampled_scan"];
 export type LogQueryRepresentation = (typeof LOG_QUERY_REPRESENTATIONS)[number];
 export declare const logQueryRepresentationSchema: z.ZodEnum<{
     event_volume: "event_volume";
     exact_scan: "exact_scan";
     log_volume: "log_volume";
+    pattern_index: "pattern_index";
     pattern_volume: "pattern_volume";
     request_metrics: "request_metrics";
     sampled_scan: "sampled_scan";
@@ -88,6 +89,7 @@ export declare const logQueryResultMetaSchema: z.ZodObject<{
         event_volume: "event_volume";
         exact_scan: "exact_scan";
         log_volume: "log_volume";
+        pattern_index: "pattern_index";
         pattern_volume: "pattern_volume";
         request_metrics: "request_metrics";
         sampled_scan: "sampled_scan";
@@ -184,6 +186,7 @@ export declare const logQueryRouteSkipSchema: z.ZodObject<{
         event_volume: "event_volume";
         exact_scan: "exact_scan";
         log_volume: "log_volume";
+        pattern_index: "pattern_index";
         pattern_volume: "pattern_volume";
         request_metrics: "request_metrics";
         sampled_scan: "sampled_scan";

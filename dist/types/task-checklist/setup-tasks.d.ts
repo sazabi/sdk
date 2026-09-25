@@ -32,7 +32,7 @@ export declare const SETUP_TASKS: readonly [{
     readonly id: "install_cli";
     readonly label: "Use Sazabi CLI";
     readonly description: "Install the Sazabi CLI so you and your coding agents can query logs, search project memory, and manage Sazabi from the terminal. The task is complete once any member of your organization signs in with the CLI.";
-    readonly instructions: "Run 'npm install -g @sazabi/cli' to install the CLI, then 'sazabi auth login' to sign in. The full command reference lives at https://docs.sazabi.com/reference/cli.";
+    readonly instructions: "Run 'npm install -g @sazabi/cli' to install the CLI, then 'sazabi auth sign-in' to sign in. The full command reference lives at https://docs.sazabi.com/reference/cli.";
     readonly category: "setup";
 }, {
     readonly id: "invite_team";
@@ -54,7 +54,7 @@ export declare const SETUP_TASKS: readonly [{
     readonly category: "setup";
 }, {
     readonly id: "customize_sandbox";
-    readonly label: "Add sandbox CLIs";
+    readonly label: "Connect sandbox CLIs";
     readonly description: "Connect a sandbox CLI so agents can use your infrastructure and deployment tooling from inside the agent sandbox during investigations.";
     readonly instructions: "Go to Settings > Sandbox CLIs and connect a CLI. Sazabi validates the credentials and makes the CLI available in every agent sandbox for this project.";
     readonly category: "setup";

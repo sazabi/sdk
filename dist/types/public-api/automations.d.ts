@@ -81,8 +81,6 @@ export declare const AutomationSignalTypeSchema: z.ZodEnum<{
     expression_matched: "expression_matched";
 }>;
 export type AutomationSignalType = z.infer<typeof AutomationSignalTypeSchema>;
-export declare const AUTOMATION_DESCRIPTION_MAX_CHARACTERS = 2000;
-export declare const AUTOMATION_DESCRIPTION_LIMIT_MESSAGE: string;
 export declare const AutomationSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
@@ -98,10 +96,6 @@ export declare const AutomationSchema: z.ZodObject<{
     signalType: z.ZodNullable<z.ZodEnum<{
         expression_matched: "expression_matched";
     }>>;
-    source: z.ZodEnum<{
-        custom: "custom";
-        sazabi_managed: "sazabi_managed";
-    }>;
     enabled: z.ZodBoolean;
     cronExpression: z.ZodNullable<z.ZodString>;
     timezone: z.ZodString;
@@ -146,10 +140,6 @@ export declare const AutomationDetailSchema: z.ZodObject<{
     signalType: z.ZodNullable<z.ZodEnum<{
         expression_matched: "expression_matched";
     }>>;
-    source: z.ZodEnum<{
-        custom: "custom";
-        sazabi_managed: "sazabi_managed";
-    }>;
     enabled: z.ZodBoolean;
     cronExpression: z.ZodNullable<z.ZodString>;
     timezone: z.ZodString;
@@ -196,7 +186,6 @@ export declare const ListAutomationsInputSchema: z.ZodObject<{
         healthy: "healthy";
         never_run: "never_run";
     }>>;
-    source: z.ZodOptional<z.ZodLiteral<"custom">>;
     sort: z.ZodDefault<z.ZodEnum<{
         failures: "failures";
         last_run: "last_run";
@@ -223,10 +212,6 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -279,10 +264,6 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -347,10 +328,6 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -412,10 +389,6 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -472,10 +445,6 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -532,10 +501,6 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -590,7 +555,6 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         healthy: "healthy";
         never_run: "never_run";
     }>>;
-    source: z.ZodOptional<z.ZodLiteral<"custom">>;
     sort: z.ZodDefault<z.ZodEnum<{
         failures: "failures";
         last_run: "last_run";
@@ -615,10 +579,6 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -668,10 +628,6 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -733,10 +689,6 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -795,10 +747,6 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -852,10 +800,6 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -909,10 +853,6 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         signalType: z.ZodNullable<z.ZodEnum<{
             expression_matched: "expression_matched";
         }>>;
-        source: z.ZodEnum<{
-            custom: "custom";
-            sazabi_managed: "sazabi_managed";
-        }>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -1183,7 +1123,6 @@ export declare const automationsContract: {
             healthy: "healthy";
             never_run: "never_run";
         }>>;
-        source: z.ZodOptional<z.ZodLiteral<"custom">>;
         sort: z.ZodDefault<z.ZodEnum<{
             failures: "failures";
             last_run: "last_run";
@@ -1208,10 +1147,6 @@ export declare const automationsContract: {
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
-            source: z.ZodEnum<{
-                custom: "custom";
-                sazabi_managed: "sazabi_managed";
-            }>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1261,10 +1196,6 @@ export declare const automationsContract: {
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
-            source: z.ZodEnum<{
-                custom: "custom";
-                sazabi_managed: "sazabi_managed";
-            }>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1326,10 +1257,6 @@ export declare const automationsContract: {
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
-            source: z.ZodEnum<{
-                custom: "custom";
-                sazabi_managed: "sazabi_managed";
-            }>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1388,10 +1315,6 @@ export declare const automationsContract: {
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
-            source: z.ZodEnum<{
-                custom: "custom";
-                sazabi_managed: "sazabi_managed";
-            }>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1445,10 +1368,6 @@ export declare const automationsContract: {
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
-            source: z.ZodEnum<{
-                custom: "custom";
-                sazabi_managed: "sazabi_managed";
-            }>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1502,10 +1421,6 @@ export declare const automationsContract: {
             signalType: z.ZodNullable<z.ZodEnum<{
                 expression_matched: "expression_matched";
             }>>;
-            source: z.ZodEnum<{
-                custom: "custom";
-                sazabi_managed: "sazabi_managed";
-            }>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;

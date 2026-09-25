@@ -42,6 +42,8 @@ export declare const logFieldRefSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
 }, z.core.$strict>, z.ZodObject<{
     kind: z.ZodLiteral<"body">;
 }, z.core.$strict>, z.ZodObject<{
+    kind: z.ZodLiteral<"message">;
+}, z.core.$strict>, z.ZodObject<{
     kind: z.ZodLiteral<"body_json">;
     path: z.ZodArray<z.ZodString>;
 }, z.core.$strict>], "kind">;
@@ -64,6 +66,8 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
     kind: "pattern";
 } | {
     kind: "body";
+} | {
+    kind: "message";
 }>, unknown, z.core.$ZodTypeInternals<PredicateTree<{
     kind: "body_json";
     path: string[];
@@ -82,6 +86,8 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
     kind: "pattern";
 } | {
     kind: "body";
+} | {
+    kind: "message";
 }>, unknown>>;
 export type LogPredicateTree = PredicateTree<LogFieldRef>;
 export declare const LOG_DURATION_AGGREGATES: readonly ["sum", "avg", "max", "p50", "p95", "p99"];
@@ -110,6 +116,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }, unknown, z.core.$ZodTypeInternals<{
         kind: "body_json";
         path: string[];
@@ -128,6 +136,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }, unknown>>;
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"numeric">;
@@ -149,6 +159,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }, unknown, z.core.$ZodTypeInternals<{
         kind: "body_json";
         path: string[];
@@ -167,6 +179,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }, unknown>>;
     parseAs: z.ZodLiteral<"float64">;
     aggregate: z.ZodEnum<{
@@ -203,6 +217,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }, unknown, z.core.$ZodTypeInternals<{
         kind: "body_json";
         path: string[];
@@ -221,6 +237,8 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }, unknown>>>>;
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"error_count">;
@@ -274,6 +292,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }>, unknown, z.core.$ZodTypeInternals<PredicateTree<{
         kind: "body_json";
         path: string[];
@@ -292,6 +312,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         kind: "pattern";
     } | {
         kind: "body";
+    } | {
+        kind: "message";
     }>, unknown>>;
     dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"service">;
@@ -312,6 +334,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         kind: z.ZodLiteral<"pattern">;
     }, z.core.$strict>, z.ZodObject<{
         kind: z.ZodLiteral<"body">;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"message">;
     }, z.core.$strict>, z.ZodObject<{
         kind: z.ZodLiteral<"body_json">;
         path: z.ZodArray<z.ZodString>;
@@ -340,6 +364,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
+        } | {
+            kind: "message";
         }, unknown, z.core.$ZodTypeInternals<{
             kind: "body_json";
             path: string[];
@@ -358,6 +384,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
+        } | {
+            kind: "message";
         }, unknown>>;
     }, z.core.$strict>, z.ZodObject<{
         op: z.ZodLiteral<"numeric">;
@@ -379,6 +407,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
+        } | {
+            kind: "message";
         }, unknown, z.core.$ZodTypeInternals<{
             kind: "body_json";
             path: string[];
@@ -397,6 +427,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
+        } | {
+            kind: "message";
         }, unknown>>;
         parseAs: z.ZodLiteral<"float64">;
         aggregate: z.ZodEnum<{
@@ -433,6 +465,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
+        } | {
+            kind: "message";
         }, unknown, z.core.$ZodTypeInternals<{
             kind: "body_json";
             path: string[];
@@ -451,6 +485,8 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "pattern";
         } | {
             kind: "body";
+        } | {
+            kind: "message";
         }, unknown>>>>;
     }, z.core.$strict>, z.ZodObject<{
         op: z.ZodLiteral<"error_count">;
