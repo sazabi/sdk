@@ -1489,12 +1489,52 @@ var public_api_client_contract_gen_default = {
       }
     }
   },
-  logs: {
-    query: {
+  dashboards: {
+    list: {
       "~orpc": {
         errorMap: {},
         meta: {
-          operationId: "logs.query",
+          operationId: "dashboards.list",
+          backend: "api",
+          pagination: "cursor",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/dashboards",
+          tags: ["Dashboards"],
+          operationId: "dashboards.list",
+          summary: "List dashboards",
+          description: "List the project's dashboards by most recent update: title, description, revision, timestamps, and your capabilities. Metadata only; never runs queries."
+        }
+      }
+    },
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "dashboards.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/dashboards/{id}",
+          tags: ["Dashboards"],
+          operationId: "dashboards.get",
+          summary: "Get a dashboard",
+          description: "Read a dashboard's current MDX source (with its edit base), metadata, and static file descriptors. Set includeFiles to also receive the static file contents, giving a copy you can edit and pass back to dashboards.update. Never runs queries."
+        }
+      }
+    },
+    validate: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "dashboards.validate",
           backend: "api",
           pagination: "none",
           async: "sync",
@@ -1502,14 +1542,97 @@ var public_api_client_contract_gen_default = {
         },
         route: {
           method: "POST",
-          path: "/logs/query",
-          tags: ["Logs"],
-          operationId: "logs.query",
-          summary: "Query logs",
-          description: "Execute a structured log query for one project. A pattern is an identity every log row carries as pattern_id: a statement template learned from the rows (placeholders such as <*>, <num>, <dur>, <uuid> mark runtime values), a reported error keyed by its Sentry fingerprint, or, on older projects, a code-site template with {} placeholders / a declared event. Query and ask answers include coverage.patterns for selected, observed, and silent pattern ids plus coverage.rows for matched and total customer rows; result.kind patterns is the best default for open-ended questions about which statements fired. Use resolution.familyIds from an ask response as patternIds on a follow-up logs.query request to keep the same population."
+          path: "/dashboards/validate",
+          tags: ["Dashboards"],
+          operationId: "dashboards.validate",
+          summary: "Validate a dashboard",
+          description: "Check dashboard MDX, static files, layout, query shapes, and your permission without saving or running queries. Optional: create and update always validate too. Each diagnostic carries its source line and column, component id, code, and repair hint."
         }
       }
     },
+    create: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "dashboards.create",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/dashboards",
+          tags: ["Dashboards"],
+          operationId: "dashboards.create",
+          summary: "Create a dashboard",
+          description: "Save a new dashboard from one MDX document (DashboardMeta, layout, and inline Log Query Spec v2 artifacts) plus any static files it references by path. Generate the id yourself and reuse it on retries: an identical retry returns the original result. The response's editBase goes into DashboardMeta before the next update.",
+          successStatus: 201
+        }
+      }
+    },
+    update: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "dashboards.update",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/dashboards/{id}",
+          tags: ["Dashboards"],
+          operationId: "dashboards.update",
+          summary: "Update a dashboard",
+          description: "Save the next revision from a complete edited MDX document. DashboardMeta.editBase must name the revision you edited (from dashboards.get or the last create/update); if the dashboard changed since, the update is rejected with 409 and the current revision so you can reconcile."
+        }
+      }
+    },
+    render: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "dashboards.render",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/dashboards/{id}/render",
+          tags: ["Dashboards"],
+          operationId: "dashboards.render",
+          summary: "Render a dashboard",
+          description: "Run a saved dashboard's queries over one time window and return its layout with one outcome per requested component (ok, empty, rejected, or error). Omit timeRange for the dashboard's default window, revision for the current one, and componentIds for every bound component."
+        }
+      }
+    },
+    delete: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "dashboards.delete",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "DELETE",
+          path: "/dashboards/{id}",
+          tags: ["Dashboards"],
+          operationId: "dashboards.delete",
+          summary: "Delete a dashboard",
+          description: "Delete a dashboard if expectedRevision is still its current revision. Deleting an already-deleted dashboard succeeds again."
+        }
+      }
+    }
+  },
+  logs: {
     querySpec: {
       "~orpc": {
         errorMap: {},
@@ -1546,7 +1669,27 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.ask",
           summary: "Ask about logs",
-          description: "Plan and execute a bounded natural-language log question for one project. A pattern is an identity every log row carries as pattern_id: a statement template learned from the rows (placeholders such as <*>, <num>, <dur>, <uuid> mark runtime values), a reported error keyed by its Sentry fingerprint, or, on older projects, a code-site template with {} placeholders / a declared event. Query and ask answers include coverage.patterns for selected, observed, and silent pattern ids plus coverage.rows for matched and total customer rows; result.kind patterns is the best default for open-ended questions about which statements fired. Use resolution.familyIds from an ask response as patternIds on a follow-up logs.query request to keep the same population."
+          description: "Answer a natural-language question about one project's stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), how exact and complete the numbers are (`meta`), and a `queryId`. With `results: true` it also returns the rows, value, table or series the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found` and the answer says so, with how the question was read."
+        }
+      }
+    },
+    executeQuery: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "logs.executeQuery",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/logs/queries/{queryId}/execute",
+          tags: ["Logs"],
+          operationId: "logs.executeQuery",
+          summary: "Run an earlier log query",
+          description: "Run the query behind an earlier `logs.ask` answer again, by its `queryId`, with no model involved: over the window the answer covered or a new one, with a new `limit`, or narrowed to the log lines of one `group` of a table. Returns `results` without an answer, and a new `queryId` whose `parentId` is the one that was run. Queries expire 90 days after they were asked; an expired or unknown id is not found, and asking the question again yields a new id."
         }
       }
     },
@@ -5500,6 +5643,46 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    getRejectionContext: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.getRejectionContext",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/issues/{issueId}/rejection",
+          tags: ["Issues"],
+          operationId: "issues.getRejectionContext",
+          summary: "Get issue rejection eligibility",
+          description: "Get the rejection deadline, cycle quota, and billing effect for an issue."
+        }
+      }
+    },
+    reject: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.reject",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/issues/{issueId}/reject",
+          tags: ["Issues"],
+          operationId: "issues.reject",
+          summary: "Reject an issue",
+          description: "Permanently reject an eligible issue and correct one issue usage unit."
+        }
+      }
+    },
     resolve: {
       "~orpc": {
         errorMap: {},
@@ -6848,8 +7031,15 @@ var createClient = (options) => {
           operationId: apiError.operationId,
           missingContext: apiError.missingContext,
           ...apiError.reason !== undefined ? { reason: apiError.reason } : {},
+          ...apiError.entitlementId !== undefined ? { entitlementId: apiError.entitlementId } : {},
+          ...apiError.planSlug !== undefined ? { planSlug: apiError.planSlug } : {},
+          ...apiError.limit !== undefined ? { limit: apiError.limit } : {},
+          ...apiError.current !== undefined ? { current: apiError.current } : {},
+          ...apiError.actionPath !== undefined ? { actionPath: apiError.actionPath } : {},
           ...apiError.retryAfterSeconds !== undefined ? { retryAfterSeconds: apiError.retryAfterSeconds } : {},
-          ...apiError.issues !== undefined ? { issues: apiError.issues } : {}
+          ...apiError.issues !== undefined ? { issues: apiError.issues } : {},
+          ...apiError.diagnostics !== undefined ? { diagnostics: apiError.diagnostics } : {},
+          ...apiError.currentRevision !== undefined ? { currentRevision: apiError.currentRevision } : {}
         }
       });
     }
@@ -6889,6 +7079,7 @@ var createClient = (options) => {
       update: async (input) => raw.automations.update(await resolveProjectScopedInput(options.credentialProvider, input)),
       enable: async (input) => raw.automations.enable(await resolveProjectScopedInput(options.credentialProvider, input)),
       disable: async (input) => raw.automations.disable(await resolveProjectScopedInput(options.credentialProvider, input)),
+      delete: async (input) => raw.automations.delete(await resolveProjectScopedInput(options.credentialProvider, input)),
       runs: {
         list: async (input) => raw.automations.runs.list(await resolveProjectScopedInput(options.credentialProvider, input)),
         get: async (input) => raw.automations.runs.get(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -6898,16 +7089,27 @@ var createClient = (options) => {
     automationTemplates: {
       list: () => raw.automationTemplates.list({})
     },
+    dashboards: {
+      list: async (input = {}) => raw.dashboards.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.list")),
+      get: async (input) => raw.dashboards.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.get")),
+      validate: async (input) => raw.dashboards.validate(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.validate")),
+      create: async (input) => raw.dashboards.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.create")),
+      update: async (input) => raw.dashboards.update(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.update")),
+      render: async (input) => raw.dashboards.render(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.render")),
+      delete: async (input) => raw.dashboards.delete(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.delete"))
+    },
     logs: {
       ...logs,
-      query: async (input) => raw.logs.query(await resolveProjectScopedInput(options.credentialProvider, input)),
       querySpec: async (input) => raw.logs.querySpec(await resolveProjectScopedInput(options.credentialProvider, input)),
       ask: async (input) => raw.logs.ask(await resolveProjectScopedInput(options.credentialProvider, input)),
+      executeQuery: async (input) => raw.logs.executeQuery(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logs.executeQuery")),
       volume: async (input) => raw.logs.volume(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     onboarding: {
       getState: async (input = {}) => raw.onboarding.getState(await resolveOrganizationScopedInput(options.credentialProvider, await resolveProjectScopedInput(options.credentialProvider, input))),
       skipSampleIssue: async (input) => raw.onboarding.skipSampleIssue(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
+      skipIntegration: async (input) => raw.onboarding.skipIntegration(await resolveOnboardingSkipInput(options.credentialProvider, input)),
+      skipGithubAppInstallation: async (input) => raw.onboarding.skipGithubAppInstallation(await resolveOnboardingSkipInput(options.credentialProvider, input ?? {})),
       continueWithFree: async (input) => raw.onboarding.continueWithFree(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       ensureDefaultProject: async (input) => raw.onboarding.ensureDefaultProject(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       completeSampleIssue: async (input) => raw.onboarding.completeSampleIssue(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
@@ -7016,7 +7218,9 @@ var createClient = (options) => {
     projects: {
       list: async (input = {}) => raw.projects.list(await resolveListProjectsInput(options.credentialProvider, input)),
       get: async (input) => raw.projects.get(input),
-      create: async (input) => raw.projects.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "projects.create"))
+      create: async (input) => raw.projects.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "projects.create")),
+      update: async (input) => raw.projects.update(input),
+      delete: async (input) => raw.projects.delete(input)
     },
     messages: {
       list: async (input) => raw.messages.list(input),
@@ -7049,7 +7253,8 @@ var createClient = (options) => {
       get: async (input) => raw.logSources.get(input),
       create: async (input) => raw.logSources.create(await resolveProjectScopedInput(options.credentialProvider, input)),
       update: async (input) => raw.logSources.update(input),
-      delete: async (input) => raw.logSources.delete(input)
+      delete: async (input) => raw.logSources.delete(input),
+      verify: async (input) => raw.logSources.verify(input)
     },
     logStreams: {
       list: async (input) => raw.logStreams.list(input),
@@ -7057,7 +7262,9 @@ var createClient = (options) => {
       create: async (input) => raw.logStreams.create(input),
       update: async (input) => raw.logStreams.update(input),
       delete: async (input) => raw.logStreams.delete(input),
-      reassign: async (input) => raw.logStreams.reassign(input)
+      reassign: async (input) => raw.logStreams.reassign(input),
+      createBatch: async (input) => raw.logStreams.createBatch(input),
+      volumeStats: async (input) => raw.logStreams.volumeStats(input)
     },
     connectedAccounts: {
       beginConnect: async (input) => raw.connectedAccounts.beginConnect(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "connectedAccounts.beginConnect")),
@@ -7074,7 +7281,20 @@ var createClient = (options) => {
       getConnectAttempt: async (input) => raw.integrations.getConnectAttempt(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getConnectAttempt")),
       disconnectConnection: async (input) => raw.integrations.disconnectConnection(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.disconnectConnection")),
       updateConnectionCredentials: async (input) => raw.integrations.updateConnectionCredentials(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.updateConnectionCredentials")),
-      createSlackChannel: async (input) => raw.integrations.createSlackChannel(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.createSlackChannel"))
+      createSlackChannel: async (input) => raw.integrations.createSlackChannel(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.createSlackChannel")),
+      getActiveCLIAttempt: async (input) => raw.integrations.getActiveCLIAttempt(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getActiveCLIAttempt")),
+      getLinearAutomationConfiguration: async (input) => raw.integrations.getLinearAutomationConfiguration(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getLinearAutomationConfiguration")),
+      updateLinearAutomationConfiguration: async (input) => raw.integrations.updateLinearAutomationConfiguration(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.updateLinearAutomationConfiguration")),
+      getOrganizationExternalIdentityJitPolicy: async (input = {}) => raw.integrations.getOrganizationExternalIdentityJitPolicy(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getOrganizationExternalIdentityJitPolicy")),
+      updateOrganizationExternalIdentityJitPolicy: async (input) => raw.integrations.updateOrganizationExternalIdentityJitPolicy(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.updateOrganizationExternalIdentityJitPolicy")),
+      getConnectionExternalIdentityJitPolicy: async (input) => raw.integrations.getConnectionExternalIdentityJitPolicy(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getConnectionExternalIdentityJitPolicy")),
+      updateConnectionExternalIdentityJitPolicy: async (input) => raw.integrations.updateConnectionExternalIdentityJitPolicy(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.updateConnectionExternalIdentityJitPolicy")),
+      getMicrosoftTeamsAdminConsent: async (input) => raw.integrations.getMicrosoftTeamsAdminConsent(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getMicrosoftTeamsAdminConsent")),
+      getSlackConfiguration: async (input) => raw.integrations.getSlackConfiguration(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.getSlackConfiguration")),
+      updateSlackConfiguration: async (input) => raw.integrations.updateSlackConfiguration(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.updateSlackConfiguration")),
+      listSlackChannelProjectMappings: async (input) => raw.integrations.listSlackChannelProjectMappings(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.listSlackChannelProjectMappings")),
+      setSlackChannelProjectMapping: async (input) => raw.integrations.setSlackChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.setSlackChannelProjectMapping")),
+      deleteSlackChannelProjectMapping: async (input) => raw.integrations.deleteSlackChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.deleteSlackChannelProjectMapping"))
     },
     mcpConnectors: {
       list: async (input = {}) => raw.mcpConnectors.list(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -7099,12 +7319,18 @@ var createClient = (options) => {
       list: async (input = {}) => raw.sandboxEnvironmentVariables.list(await resolveProjectScopedInput(options.credentialProvider, input)),
       upsert: async (input) => raw.sandboxEnvironmentVariables.upsert(await resolveProjectScopedInput(options.credentialProvider, input))
     },
+    sandboxInitScript: {
+      get: async (input = {}) => raw.sandboxInitScript.get(await resolveProjectScopedInput(options.credentialProvider, input)),
+      upsert: async (input) => raw.sandboxInitScript.upsert(await resolveProjectScopedInput(options.credentialProvider, input)),
+      delete: async (input = {}) => raw.sandboxInitScript.delete(await resolveProjectScopedInput(options.credentialProvider, input))
+    },
     sandboxClis: {
       delete: async (input) => raw.sandboxClis.deleteCli(await resolveProjectScopedInput(options.credentialProvider, input)),
       listConnections: async (input = {}) => raw.sandboxClis.listConnections(await resolveProjectScopedInput(options.credentialProvider, input)),
       listTypes: async () => raw.sandboxClis.listTypes({}),
       test: async (input) => raw.sandboxClis.testCli(await resolveProjectScopedInput(options.credentialProvider, input)),
-      upsert: async (input) => raw.sandboxClis.upsertCli(await resolveProjectScopedInput(options.credentialProvider, input))
+      upsert: async (input) => raw.sandboxClis.upsertCli(await resolveProjectScopedInput(options.credentialProvider, input)),
+      verify: async (input) => raw.sandboxClis.verify(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     memory: {
       list: async (input = {}) => raw.memory.list(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -7124,7 +7350,8 @@ var createClient = (options) => {
       get: async (input) => raw.signalDefinitions.get(await resolveProjectScopedInput(options.credentialProvider, input)),
       create: async (input) => raw.signalDefinitions.create(await resolveProjectScopedInput(options.credentialProvider, input)),
       update: async (input) => raw.signalDefinitions.update(await resolveProjectScopedInput(options.credentialProvider, input)),
-      disable: async (input) => raw.signalDefinitions.disable(await resolveProjectScopedInput(options.credentialProvider, input))
+      disable: async (input) => raw.signalDefinitions.disable(await resolveProjectScopedInput(options.credentialProvider, input)),
+      delete: async (input) => raw.signalDefinitions.delete(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     scripts: {
       list: async (input = {}) => raw.scripts.list(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -7138,11 +7365,14 @@ var createClient = (options) => {
       list: async (input = {}) => raw.issues.list(await resolveProjectScopedInput(options.credentialProvider, input)),
       search: async (input = {}) => raw.issues.search(await resolveProjectScopedInput(options.credentialProvider, input)),
       get: async (input) => raw.issues.get(input),
+      getRejectionContext: async (input) => raw.issues.getRejectionContext(input),
+      reject: async (input) => raw.issues.reject(input),
       resolve: async (input) => raw.issues.resolve(input),
       ignore: async (input) => raw.issues.ignore(input),
       reopen: async (input) => raw.issues.reopen(input),
       mute: async (input) => raw.issues.mute(input),
-      unmute: async (input) => raw.issues.unmute(input)
+      unmute: async (input) => raw.issues.unmute(input),
+      reassignAndReopen: async (input) => raw.issues.reassignAndReopen(input)
     },
     workItems: {
       create: async (input) => raw.workItems.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "work-items.create")),
@@ -7349,6 +7579,7 @@ var resolveRequiredOrganizationScopedInput = async (credentialProvider, input, o
   }
   return { ...input, organizationId };
 };
+var resolveOnboardingSkipInput = async (credentialProvider, input) => input.organizationId !== undefined ? input : resolveOrganizationScopedInput(credentialProvider, await resolveProjectScopedInput(credentialProvider, input));
 var resolveProjectScopedInput = async (credentialProvider, input) => {
   const projectId = input.projectId ?? await credentialProvider.getProjectId?.();
   return projectId ? { ...input, projectId } : input;
@@ -7402,9 +7633,16 @@ var toApiErrorPayload = (value) => {
     operationId: record.operationId,
     missingContext: Array.isArray(record.missingContext) ? record.missingContext.filter((missingContext) => typeof missingContext === "string") : [],
     ...typeof record.reason === "string" ? { reason: record.reason } : {},
+    ...typeof record.entitlementId === "string" ? { entitlementId: record.entitlementId } : {},
+    ...typeof record.planSlug === "string" || record.planSlug === null ? { planSlug: record.planSlug } : {},
+    ...typeof record.limit === "boolean" || typeof record.limit === "string" || typeof record.limit === "number" || record.limit === null ? { limit: record.limit } : {},
+    ...typeof record.current === "number" ? { current: record.current } : {},
+    ...typeof record.actionPath === "string" ? { actionPath: record.actionPath } : {},
     ...typeof record.retryAfterSeconds === "number" ? { retryAfterSeconds: record.retryAfterSeconds } : {},
     ...Array.isArray(record.issues) ? { issues: toApiErrorIssues(record.issues) } : {},
-    ...toApiErrorDetails(record.details)
+    ...toApiErrorDetails(record.details),
+    ...Array.isArray(record.diagnostics) ? { diagnostics: record.diagnostics } : {},
+    ...typeof record.currentRevision === "number" ? { currentRevision: record.currentRevision } : {}
   };
 };
 var toApiErrorDetails = (value) => {

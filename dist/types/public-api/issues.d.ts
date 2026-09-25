@@ -361,6 +361,220 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetIssueOutput = z.infer<typeof GetIssueOutputSchema>;
+export declare const IssueRejectionReasonSchema: z.ZodEnum<{
+    duplicate: "duplicate";
+    incorrect: "incorrect";
+    not_relevant: "not_relevant";
+}>;
+export type IssueRejectionReason = z.infer<typeof IssueRejectionReasonSchema>;
+export declare const IssueRejectionAdjustmentSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    status: z.ZodLiteral<"pending">;
+    rejectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"applied">;
+    rejectionId: z.ZodString;
+    originalBillingEventId: z.ZodString;
+    correctionBillingEventId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodLiteral<"not_needed">;
+    rejectionId: z.ZodString;
+    originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+}, z.core.$strip>], "status">;
+export declare const IssueRejectionReceiptSchema: z.ZodObject<{
+    id: z.ZodString;
+    issueId: z.ZodString;
+    billingCycleId: z.ZodString;
+    actorUserId: z.ZodString;
+    reason: z.ZodEnum<{
+        duplicate: "duplicate";
+        incorrect: "incorrect";
+        not_relevant: "not_relevant";
+    }>;
+    acceptedAt: z.ZodString;
+    deadlineAt: z.ZodString;
+    adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+        status: z.ZodLiteral<"pending">;
+        rejectionId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        status: z.ZodLiteral<"applied">;
+        rejectionId: z.ZodString;
+        originalBillingEventId: z.ZodString;
+        correctionBillingEventId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        status: z.ZodLiteral<"not_needed">;
+        rejectionId: z.ZodString;
+        originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    }, z.core.$strip>], "status">;
+}, z.core.$strip>;
+export type IssueRejectionReceipt = z.infer<typeof IssueRejectionReceiptSchema>;
+export declare const IssueRejectionContextSchema: z.ZodObject<{
+    issueId: z.ZodString;
+    reasonChoices: z.ZodArray<z.ZodEnum<{
+        duplicate: "duplicate";
+        incorrect: "incorrect";
+        not_relevant: "not_relevant";
+    }>>;
+    cycleLabel: z.ZodOptional<z.ZodString>;
+    eligible: z.ZodBoolean;
+    reason: z.ZodOptional<z.ZodEnum<{
+        already_invoiced: "already_invoiced";
+        already_rejected: "already_rejected";
+        configuration_unavailable: "configuration_unavailable";
+        expired: "expired";
+        invalid_issue_state: "invalid_issue_state";
+        issue_deleted: "issue_deleted";
+        issue_not_found: "issue_not_found";
+        quota_exhausted: "quota_exhausted";
+    }>>;
+    billingCycleId: z.ZodOptional<z.ZodString>;
+    cycleStartsAt: z.ZodOptional<z.ZodString>;
+    cycleEndsAt: z.ZodOptional<z.ZodString>;
+    deadlineAt: z.ZodOptional<z.ZodString>;
+    limit: z.ZodOptional<z.ZodNumber>;
+    used: z.ZodOptional<z.ZodNumber>;
+    remaining: z.ZodOptional<z.ZodNumber>;
+    billingEffect: z.ZodOptional<z.ZodObject<{
+        kind: z.ZodLiteral<"issue_usage_unit_correction">;
+        currency: z.ZodString;
+        unitPrice: z.ZodString;
+    }, z.core.$strip>>;
+    receipt: z.ZodOptional<z.ZodObject<{
+        id: z.ZodString;
+        issueId: z.ZodString;
+        billingCycleId: z.ZodString;
+        actorUserId: z.ZodString;
+        reason: z.ZodEnum<{
+            duplicate: "duplicate";
+            incorrect: "incorrect";
+            not_relevant: "not_relevant";
+        }>;
+        acceptedAt: z.ZodString;
+        deadlineAt: z.ZodString;
+        adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            status: z.ZodLiteral<"pending">;
+            rejectionId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            status: z.ZodLiteral<"applied">;
+            rejectionId: z.ZodString;
+            originalBillingEventId: z.ZodString;
+            correctionBillingEventId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            status: z.ZodLiteral<"not_needed">;
+            rejectionId: z.ZodString;
+            originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        }, z.core.$strip>], "status">;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type IssueRejectionContext = z.infer<typeof IssueRejectionContextSchema>;
+export declare const GetIssueRejectionContextInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>;
+export type GetIssueRejectionContextInput = z.infer<typeof GetIssueRejectionContextInputSchema>;
+export declare const GetIssueRejectionContextOutputSchema: z.ZodObject<{
+    context: z.ZodObject<{
+        issueId: z.ZodString;
+        reasonChoices: z.ZodArray<z.ZodEnum<{
+            duplicate: "duplicate";
+            incorrect: "incorrect";
+            not_relevant: "not_relevant";
+        }>>;
+        cycleLabel: z.ZodOptional<z.ZodString>;
+        eligible: z.ZodBoolean;
+        reason: z.ZodOptional<z.ZodEnum<{
+            already_invoiced: "already_invoiced";
+            already_rejected: "already_rejected";
+            configuration_unavailable: "configuration_unavailable";
+            expired: "expired";
+            invalid_issue_state: "invalid_issue_state";
+            issue_deleted: "issue_deleted";
+            issue_not_found: "issue_not_found";
+            quota_exhausted: "quota_exhausted";
+        }>>;
+        billingCycleId: z.ZodOptional<z.ZodString>;
+        cycleStartsAt: z.ZodOptional<z.ZodString>;
+        cycleEndsAt: z.ZodOptional<z.ZodString>;
+        deadlineAt: z.ZodOptional<z.ZodString>;
+        limit: z.ZodOptional<z.ZodNumber>;
+        used: z.ZodOptional<z.ZodNumber>;
+        remaining: z.ZodOptional<z.ZodNumber>;
+        billingEffect: z.ZodOptional<z.ZodObject<{
+            kind: z.ZodLiteral<"issue_usage_unit_correction">;
+            currency: z.ZodString;
+            unitPrice: z.ZodString;
+        }, z.core.$strip>>;
+        receipt: z.ZodOptional<z.ZodObject<{
+            id: z.ZodString;
+            issueId: z.ZodString;
+            billingCycleId: z.ZodString;
+            actorUserId: z.ZodString;
+            reason: z.ZodEnum<{
+                duplicate: "duplicate";
+                incorrect: "incorrect";
+                not_relevant: "not_relevant";
+            }>;
+            acceptedAt: z.ZodString;
+            deadlineAt: z.ZodString;
+            adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                status: z.ZodLiteral<"pending">;
+                rejectionId: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                status: z.ZodLiteral<"applied">;
+                rejectionId: z.ZodString;
+                originalBillingEventId: z.ZodString;
+                correctionBillingEventId: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                status: z.ZodLiteral<"not_needed">;
+                rejectionId: z.ZodString;
+                originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            }, z.core.$strip>], "status">;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type GetIssueRejectionContextOutput = z.infer<typeof GetIssueRejectionContextOutputSchema>;
+export declare const RejectIssueInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+    reason: z.ZodEnum<{
+        duplicate: "duplicate";
+        incorrect: "incorrect";
+        not_relevant: "not_relevant";
+    }>;
+}, z.core.$strip>;
+export type RejectIssueInput = z.infer<typeof RejectIssueInputSchema>;
+export declare const RejectIssueOutputSchema: z.ZodObject<{
+    replay: z.ZodBoolean;
+    receipt: z.ZodObject<{
+        id: z.ZodString;
+        issueId: z.ZodString;
+        billingCycleId: z.ZodString;
+        actorUserId: z.ZodString;
+        reason: z.ZodEnum<{
+            duplicate: "duplicate";
+            incorrect: "incorrect";
+            not_relevant: "not_relevant";
+        }>;
+        acceptedAt: z.ZodString;
+        deadlineAt: z.ZodString;
+        adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            status: z.ZodLiteral<"pending">;
+            rejectionId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            status: z.ZodLiteral<"applied">;
+            rejectionId: z.ZodString;
+            originalBillingEventId: z.ZodString;
+            correctionBillingEventId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            status: z.ZodLiteral<"not_needed">;
+            rejectionId: z.ZodString;
+            originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        }, z.core.$strip>], "status">;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export type RejectIssueOutput = z.infer<typeof RejectIssueOutputSchema>;
 export declare const ResolveIssueInputSchema: z.ZodObject<{
     issueId: z.ZodString;
     statusResolvedAt: z.ZodOptional<z.ZodString>;
@@ -806,6 +1020,106 @@ export declare const resolveIssue: import("../orpc-contracts/index.js").Operatio
         redacted: z.ZodBoolean;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const getIssueRejectionContext: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    context: z.ZodObject<{
+        issueId: z.ZodString;
+        reasonChoices: z.ZodArray<z.ZodEnum<{
+            duplicate: "duplicate";
+            incorrect: "incorrect";
+            not_relevant: "not_relevant";
+        }>>;
+        cycleLabel: z.ZodOptional<z.ZodString>;
+        eligible: z.ZodBoolean;
+        reason: z.ZodOptional<z.ZodEnum<{
+            already_invoiced: "already_invoiced";
+            already_rejected: "already_rejected";
+            configuration_unavailable: "configuration_unavailable";
+            expired: "expired";
+            invalid_issue_state: "invalid_issue_state";
+            issue_deleted: "issue_deleted";
+            issue_not_found: "issue_not_found";
+            quota_exhausted: "quota_exhausted";
+        }>>;
+        billingCycleId: z.ZodOptional<z.ZodString>;
+        cycleStartsAt: z.ZodOptional<z.ZodString>;
+        cycleEndsAt: z.ZodOptional<z.ZodString>;
+        deadlineAt: z.ZodOptional<z.ZodString>;
+        limit: z.ZodOptional<z.ZodNumber>;
+        used: z.ZodOptional<z.ZodNumber>;
+        remaining: z.ZodOptional<z.ZodNumber>;
+        billingEffect: z.ZodOptional<z.ZodObject<{
+            kind: z.ZodLiteral<"issue_usage_unit_correction">;
+            currency: z.ZodString;
+            unitPrice: z.ZodString;
+        }, z.core.$strip>>;
+        receipt: z.ZodOptional<z.ZodObject<{
+            id: z.ZodString;
+            issueId: z.ZodString;
+            billingCycleId: z.ZodString;
+            actorUserId: z.ZodString;
+            reason: z.ZodEnum<{
+                duplicate: "duplicate";
+                incorrect: "incorrect";
+                not_relevant: "not_relevant";
+            }>;
+            acceptedAt: z.ZodString;
+            deadlineAt: z.ZodString;
+            adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                status: z.ZodLiteral<"pending">;
+                rejectionId: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                status: z.ZodLiteral<"applied">;
+                rejectionId: z.ZodString;
+                originalBillingEventId: z.ZodString;
+                correctionBillingEventId: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                status: z.ZodLiteral<"not_needed">;
+                rejectionId: z.ZodString;
+                originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            }, z.core.$strip>], "status">;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const rejectIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+    reason: z.ZodEnum<{
+        duplicate: "duplicate";
+        incorrect: "incorrect";
+        not_relevant: "not_relevant";
+    }>;
+}, z.core.$strip>, z.ZodObject<{
+    replay: z.ZodBoolean;
+    receipt: z.ZodObject<{
+        id: z.ZodString;
+        issueId: z.ZodString;
+        billingCycleId: z.ZodString;
+        actorUserId: z.ZodString;
+        reason: z.ZodEnum<{
+            duplicate: "duplicate";
+            incorrect: "incorrect";
+            not_relevant: "not_relevant";
+        }>;
+        acceptedAt: z.ZodString;
+        deadlineAt: z.ZodString;
+        adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            status: z.ZodLiteral<"pending">;
+            rejectionId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            status: z.ZodLiteral<"applied">;
+            rejectionId: z.ZodString;
+            originalBillingEventId: z.ZodString;
+            correctionBillingEventId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            status: z.ZodLiteral<"not_needed">;
+            rejectionId: z.ZodString;
+            originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        }, z.core.$strip>], "status">;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
 export declare const ignoreIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
@@ -1170,6 +1484,106 @@ export declare const issuesContract: {
                     pending: "pending";
                 }>>;
             }, z.core.$strip>>;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly getRejectionContext: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        issueId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        context: z.ZodObject<{
+            issueId: z.ZodString;
+            reasonChoices: z.ZodArray<z.ZodEnum<{
+                duplicate: "duplicate";
+                incorrect: "incorrect";
+                not_relevant: "not_relevant";
+            }>>;
+            cycleLabel: z.ZodOptional<z.ZodString>;
+            eligible: z.ZodBoolean;
+            reason: z.ZodOptional<z.ZodEnum<{
+                already_invoiced: "already_invoiced";
+                already_rejected: "already_rejected";
+                configuration_unavailable: "configuration_unavailable";
+                expired: "expired";
+                invalid_issue_state: "invalid_issue_state";
+                issue_deleted: "issue_deleted";
+                issue_not_found: "issue_not_found";
+                quota_exhausted: "quota_exhausted";
+            }>>;
+            billingCycleId: z.ZodOptional<z.ZodString>;
+            cycleStartsAt: z.ZodOptional<z.ZodString>;
+            cycleEndsAt: z.ZodOptional<z.ZodString>;
+            deadlineAt: z.ZodOptional<z.ZodString>;
+            limit: z.ZodOptional<z.ZodNumber>;
+            used: z.ZodOptional<z.ZodNumber>;
+            remaining: z.ZodOptional<z.ZodNumber>;
+            billingEffect: z.ZodOptional<z.ZodObject<{
+                kind: z.ZodLiteral<"issue_usage_unit_correction">;
+                currency: z.ZodString;
+                unitPrice: z.ZodString;
+            }, z.core.$strip>>;
+            receipt: z.ZodOptional<z.ZodObject<{
+                id: z.ZodString;
+                issueId: z.ZodString;
+                billingCycleId: z.ZodString;
+                actorUserId: z.ZodString;
+                reason: z.ZodEnum<{
+                    duplicate: "duplicate";
+                    incorrect: "incorrect";
+                    not_relevant: "not_relevant";
+                }>;
+                acceptedAt: z.ZodString;
+                deadlineAt: z.ZodString;
+                adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    status: z.ZodLiteral<"pending">;
+                    rejectionId: z.ZodString;
+                }, z.core.$strip>, z.ZodObject<{
+                    status: z.ZodLiteral<"applied">;
+                    rejectionId: z.ZodString;
+                    originalBillingEventId: z.ZodString;
+                    correctionBillingEventId: z.ZodString;
+                }, z.core.$strip>, z.ZodObject<{
+                    status: z.ZodLiteral<"not_needed">;
+                    rejectionId: z.ZodString;
+                    originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                    correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                }, z.core.$strip>], "status">;
+            }, z.core.$strip>>;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly reject: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        issueId: z.ZodString;
+        reason: z.ZodEnum<{
+            duplicate: "duplicate";
+            incorrect: "incorrect";
+            not_relevant: "not_relevant";
+        }>;
+    }, z.core.$strip>, z.ZodObject<{
+        replay: z.ZodBoolean;
+        receipt: z.ZodObject<{
+            id: z.ZodString;
+            issueId: z.ZodString;
+            billingCycleId: z.ZodString;
+            actorUserId: z.ZodString;
+            reason: z.ZodEnum<{
+                duplicate: "duplicate";
+                incorrect: "incorrect";
+                not_relevant: "not_relevant";
+            }>;
+            acceptedAt: z.ZodString;
+            deadlineAt: z.ZodString;
+            adjustment: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                status: z.ZodLiteral<"pending">;
+                rejectionId: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                status: z.ZodLiteral<"applied">;
+                rejectionId: z.ZodString;
+                originalBillingEventId: z.ZodString;
+                correctionBillingEventId: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                status: z.ZodLiteral<"not_needed">;
+                rejectionId: z.ZodString;
+                originalBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                correctionBillingEventId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            }, z.core.$strip>], "status">;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly resolve: import("@orpc/contract").ContractProcedure<z.ZodObject<{

@@ -165,7 +165,7 @@ export declare const ListProjectMemoryInputSchema: z.ZodObject<{
     since: z.ZodOptional<z.ZodString>;
     service: z.ZodOptional<z.ZodString>;
     pathPrefix: z.ZodOptional<z.ZodString>;
-    managed: z.ZodOptional<z.ZodCoercedBoolean<unknown>>;
+    managed: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     cursor: z.ZodOptional<z.ZodString>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
 }, z.core.$strip>;
@@ -218,7 +218,7 @@ export declare const SearchProjectMemoryInputSchema: z.ZodObject<{
     since: z.ZodOptional<z.ZodString>;
     service: z.ZodOptional<z.ZodString>;
     pathPrefix: z.ZodOptional<z.ZodString>;
-    managed: z.ZodOptional<z.ZodCoercedBoolean<unknown>>;
+    managed: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
 }, z.core.$strip>;
 export type SearchProjectMemoryInput = z.infer<typeof SearchProjectMemoryInputSchema>;
@@ -365,7 +365,7 @@ export declare const listProjectMemory: import("../orpc-contracts/index.js").Ope
     since: z.ZodOptional<z.ZodString>;
     service: z.ZodOptional<z.ZodString>;
     pathPrefix: z.ZodOptional<z.ZodString>;
-    managed: z.ZodOptional<z.ZodCoercedBoolean<unknown>>;
+    managed: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     cursor: z.ZodOptional<z.ZodString>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
 }, z.core.$strip>, z.ZodObject<{
@@ -394,7 +394,7 @@ export declare const searchProjectMemory: import("../orpc-contracts/index.js").O
     since: z.ZodOptional<z.ZodString>;
     service: z.ZodOptional<z.ZodString>;
     pathPrefix: z.ZodOptional<z.ZodString>;
-    managed: z.ZodOptional<z.ZodCoercedBoolean<unknown>>;
+    managed: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
 }, z.core.$strip>, z.ZodObject<{
     hits: z.ZodArray<z.ZodObject<{
@@ -536,7 +536,7 @@ export declare const memoryContract: {
         since: z.ZodOptional<z.ZodString>;
         service: z.ZodOptional<z.ZodString>;
         pathPrefix: z.ZodOptional<z.ZodString>;
-        managed: z.ZodOptional<z.ZodCoercedBoolean<unknown>>;
+        managed: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
         cursor: z.ZodOptional<z.ZodString>;
         limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     }, z.core.$strip>, z.ZodObject<{
@@ -565,7 +565,7 @@ export declare const memoryContract: {
         since: z.ZodOptional<z.ZodString>;
         service: z.ZodOptional<z.ZodString>;
         pathPrefix: z.ZodOptional<z.ZodString>;
-        managed: z.ZodOptional<z.ZodCoercedBoolean<unknown>>;
+        managed: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
         limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     }, z.core.$strip>, z.ZodObject<{
         hits: z.ZodArray<z.ZodObject<{

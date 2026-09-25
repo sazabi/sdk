@@ -50,6 +50,68 @@ export declare const BillingPendingDowngradeSchema: z.ZodObject<{
     cycleCredits: z.ZodNullable<z.ZodString>;
     targetCreditBalance: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
+export declare const BillingResolvedEntitlementSchema: z.ZodUnion<readonly [z.ZodIntersection<z.ZodUnion<readonly [z.ZodObject<{
+    label: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodString>;
+    type: z.ZodLiteral<"binary">;
+    value: z.ZodBoolean;
+}, z.core.$strip>, z.ZodObject<{
+    label: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodString>;
+    type: z.ZodLiteral<"cap">;
+    unit: z.ZodEnum<{
+        bytes: "bytes";
+        count: "count";
+        days: "days";
+    }>;
+    value: z.ZodNullable<z.ZodNumber>;
+}, z.core.$strip>, z.ZodObject<{
+    label: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodString>;
+    type: z.ZodLiteral<"cap">;
+    levels: z.ZodArray<z.ZodString>;
+    value: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    label: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodString>;
+    type: z.ZodLiteral<"allowance">;
+    productKey: z.ZodEnum<{
+        ai_tokens: "ai_tokens";
+        automation_runs_completed: "automation_runs_completed";
+        input_tokens: "input_tokens";
+        issues_created: "issues_created";
+        logs_accepted_bytes: "logs_accepted_bytes";
+        logs_ingested_bytes: "logs_ingested_bytes";
+        logs_query_bytes_scanned: "logs_query_bytes_scanned";
+        output_tokens: "output_tokens";
+        pull_request_reviews_completed: "pull_request_reviews_completed";
+        pull_requests_created: "pull_requests_created";
+    }>;
+    value: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    label: z.ZodOptional<z.ZodString>;
+    description: z.ZodOptional<z.ZodString>;
+    type: z.ZodLiteral<"quota">;
+    unit: z.ZodLiteral<"count">;
+    period: z.ZodLiteral<"billing_cycle">;
+    value: z.ZodNumber;
+}, z.core.$strip>]>, z.ZodObject<{
+    id: z.ZodString;
+    source: z.ZodEnum<{
+        override: "override";
+        plan: "plan";
+    }>;
+    cycleId: z.ZodOptional<z.ZodString>;
+    preview: z.ZodOptional<z.ZodLiteral<true>>;
+    pending: z.ZodOptional<z.ZodObject<{
+        value: z.ZodUnion<readonly [z.ZodBoolean, z.ZodNumber, z.ZodString, z.ZodNull]>;
+        source: z.ZodEnum<{
+            override: "override";
+            plan: "plan";
+        }>;
+        effective: z.ZodLiteral<"next_cycle">;
+    }, z.core.$strip>>;
+}, z.core.$strip>>]>;
 export declare const GetBillingSummaryInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -97,6 +159,68 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
         cancelAt: z.ZodNullable<z.ZodString>;
         canceledAt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
+    entitlements: z.ZodArray<z.ZodUnion<readonly [z.ZodIntersection<z.ZodUnion<readonly [z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"binary">;
+        value: z.ZodBoolean;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"cap">;
+        unit: z.ZodEnum<{
+            bytes: "bytes";
+            count: "count";
+            days: "days";
+        }>;
+        value: z.ZodNullable<z.ZodNumber>;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"cap">;
+        levels: z.ZodArray<z.ZodString>;
+        value: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"allowance">;
+        productKey: z.ZodEnum<{
+            ai_tokens: "ai_tokens";
+            automation_runs_completed: "automation_runs_completed";
+            input_tokens: "input_tokens";
+            issues_created: "issues_created";
+            logs_accepted_bytes: "logs_accepted_bytes";
+            logs_ingested_bytes: "logs_ingested_bytes";
+            logs_query_bytes_scanned: "logs_query_bytes_scanned";
+            output_tokens: "output_tokens";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>;
+        value: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"quota">;
+        unit: z.ZodLiteral<"count">;
+        period: z.ZodLiteral<"billing_cycle">;
+        value: z.ZodNumber;
+    }, z.core.$strip>]>, z.ZodObject<{
+        id: z.ZodString;
+        source: z.ZodEnum<{
+            override: "override";
+            plan: "plan";
+        }>;
+        cycleId: z.ZodOptional<z.ZodString>;
+        preview: z.ZodOptional<z.ZodLiteral<true>>;
+        pending: z.ZodOptional<z.ZodObject<{
+            value: z.ZodUnion<readonly [z.ZodBoolean, z.ZodNumber, z.ZodString, z.ZodNull]>;
+            source: z.ZodEnum<{
+                override: "override";
+                plan: "plan";
+            }>;
+            effective: z.ZodLiteral<"next_cycle">;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>]>>;
     currentPlan: z.ZodNullable<z.ZodObject<{
         slug: z.ZodString;
         name: z.ZodString;
@@ -121,6 +245,68 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
         pendingCancellation: z.ZodNullable<z.ZodObject<{
             effectiveAt: z.ZodString;
         }, z.core.$strip>>;
+        entitlements: z.ZodArray<z.ZodUnion<readonly [z.ZodIntersection<z.ZodUnion<readonly [z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"binary">;
+            value: z.ZodBoolean;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            unit: z.ZodEnum<{
+                bytes: "bytes";
+                count: "count";
+                days: "days";
+            }>;
+            value: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            levels: z.ZodArray<z.ZodString>;
+            value: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"allowance">;
+            productKey: z.ZodEnum<{
+                ai_tokens: "ai_tokens";
+                automation_runs_completed: "automation_runs_completed";
+                input_tokens: "input_tokens";
+                issues_created: "issues_created";
+                logs_accepted_bytes: "logs_accepted_bytes";
+                logs_ingested_bytes: "logs_ingested_bytes";
+                logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                output_tokens: "output_tokens";
+                pull_request_reviews_completed: "pull_request_reviews_completed";
+                pull_requests_created: "pull_requests_created";
+            }>;
+            value: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"quota">;
+            unit: z.ZodLiteral<"count">;
+            period: z.ZodLiteral<"billing_cycle">;
+            value: z.ZodNumber;
+        }, z.core.$strip>]>, z.ZodObject<{
+            id: z.ZodString;
+            source: z.ZodEnum<{
+                override: "override";
+                plan: "plan";
+            }>;
+            cycleId: z.ZodOptional<z.ZodString>;
+            preview: z.ZodOptional<z.ZodLiteral<true>>;
+            pending: z.ZodOptional<z.ZodObject<{
+                value: z.ZodUnion<readonly [z.ZodBoolean, z.ZodNumber, z.ZodString, z.ZodNull]>;
+                source: z.ZodEnum<{
+                    override: "override";
+                    plan: "plan";
+                }>;
+                effective: z.ZodLiteral<"next_cycle">;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>]>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type GetBillingSummaryOutput = z.infer<typeof GetBillingSummaryOutputSchema>;
@@ -336,6 +522,68 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
         cancelAt: z.ZodNullable<z.ZodString>;
         canceledAt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
+    entitlements: z.ZodArray<z.ZodUnion<readonly [z.ZodIntersection<z.ZodUnion<readonly [z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"binary">;
+        value: z.ZodBoolean;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"cap">;
+        unit: z.ZodEnum<{
+            bytes: "bytes";
+            count: "count";
+            days: "days";
+        }>;
+        value: z.ZodNullable<z.ZodNumber>;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"cap">;
+        levels: z.ZodArray<z.ZodString>;
+        value: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"allowance">;
+        productKey: z.ZodEnum<{
+            ai_tokens: "ai_tokens";
+            automation_runs_completed: "automation_runs_completed";
+            input_tokens: "input_tokens";
+            issues_created: "issues_created";
+            logs_accepted_bytes: "logs_accepted_bytes";
+            logs_ingested_bytes: "logs_ingested_bytes";
+            logs_query_bytes_scanned: "logs_query_bytes_scanned";
+            output_tokens: "output_tokens";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>;
+        value: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"quota">;
+        unit: z.ZodLiteral<"count">;
+        period: z.ZodLiteral<"billing_cycle">;
+        value: z.ZodNumber;
+    }, z.core.$strip>]>, z.ZodObject<{
+        id: z.ZodString;
+        source: z.ZodEnum<{
+            override: "override";
+            plan: "plan";
+        }>;
+        cycleId: z.ZodOptional<z.ZodString>;
+        preview: z.ZodOptional<z.ZodLiteral<true>>;
+        pending: z.ZodOptional<z.ZodObject<{
+            value: z.ZodUnion<readonly [z.ZodBoolean, z.ZodNumber, z.ZodString, z.ZodNull]>;
+            source: z.ZodEnum<{
+                override: "override";
+                plan: "plan";
+            }>;
+            effective: z.ZodLiteral<"next_cycle">;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>]>>;
     currentPlan: z.ZodNullable<z.ZodObject<{
         slug: z.ZodString;
         name: z.ZodString;
@@ -360,6 +608,68 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
         pendingCancellation: z.ZodNullable<z.ZodObject<{
             effectiveAt: z.ZodString;
         }, z.core.$strip>>;
+        entitlements: z.ZodArray<z.ZodUnion<readonly [z.ZodIntersection<z.ZodUnion<readonly [z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"binary">;
+            value: z.ZodBoolean;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            unit: z.ZodEnum<{
+                bytes: "bytes";
+                count: "count";
+                days: "days";
+            }>;
+            value: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            levels: z.ZodArray<z.ZodString>;
+            value: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"allowance">;
+            productKey: z.ZodEnum<{
+                ai_tokens: "ai_tokens";
+                automation_runs_completed: "automation_runs_completed";
+                input_tokens: "input_tokens";
+                issues_created: "issues_created";
+                logs_accepted_bytes: "logs_accepted_bytes";
+                logs_ingested_bytes: "logs_ingested_bytes";
+                logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                output_tokens: "output_tokens";
+                pull_request_reviews_completed: "pull_request_reviews_completed";
+                pull_requests_created: "pull_requests_created";
+            }>;
+            value: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"quota">;
+            unit: z.ZodLiteral<"count">;
+            period: z.ZodLiteral<"billing_cycle">;
+            value: z.ZodNumber;
+        }, z.core.$strip>]>, z.ZodObject<{
+            id: z.ZodString;
+            source: z.ZodEnum<{
+                override: "override";
+                plan: "plan";
+            }>;
+            cycleId: z.ZodOptional<z.ZodString>;
+            preview: z.ZodOptional<z.ZodLiteral<true>>;
+            pending: z.ZodOptional<z.ZodObject<{
+                value: z.ZodUnion<readonly [z.ZodBoolean, z.ZodNumber, z.ZodString, z.ZodNull]>;
+                source: z.ZodEnum<{
+                    override: "override";
+                    plan: "plan";
+                }>;
+                effective: z.ZodLiteral<"next_cycle">;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>]>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const getBillingUsage: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -512,6 +822,52 @@ export declare const BillingPlanSchema: z.ZodObject<{
     targetCreditBalance: z.ZodNullable<z.ZodString>;
     logsIncludedBytes: z.ZodString;
     aiTokensIncluded: z.ZodString;
+    entitlements: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"binary">;
+        value: z.ZodBoolean;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"cap">;
+        unit: z.ZodEnum<{
+            bytes: "bytes";
+            count: "count";
+            days: "days";
+        }>;
+        value: z.ZodNullable<z.ZodNumber>;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"cap">;
+        levels: z.ZodArray<z.ZodString>;
+        value: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"allowance">;
+        productKey: z.ZodEnum<{
+            ai_tokens: "ai_tokens";
+            automation_runs_completed: "automation_runs_completed";
+            input_tokens: "input_tokens";
+            issues_created: "issues_created";
+            logs_accepted_bytes: "logs_accepted_bytes";
+            logs_ingested_bytes: "logs_ingested_bytes";
+            logs_query_bytes_scanned: "logs_query_bytes_scanned";
+            output_tokens: "output_tokens";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>;
+        value: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        label: z.ZodOptional<z.ZodString>;
+        description: z.ZodOptional<z.ZodString>;
+        type: z.ZodLiteral<"quota">;
+        unit: z.ZodLiteral<"count">;
+        period: z.ZodLiteral<"billing_cycle">;
+        value: z.ZodNumber;
+    }, z.core.$strip>]>>;
     includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
     featuresHeading: z.ZodOptional<z.ZodString>;
     features: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -534,6 +890,52 @@ export declare const ListPlansOutputSchema: z.ZodObject<{
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         logsIncludedBytes: z.ZodString;
         aiTokensIncluded: z.ZodString;
+        entitlements: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"binary">;
+            value: z.ZodBoolean;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            unit: z.ZodEnum<{
+                bytes: "bytes";
+                count: "count";
+                days: "days";
+            }>;
+            value: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            levels: z.ZodArray<z.ZodString>;
+            value: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"allowance">;
+            productKey: z.ZodEnum<{
+                ai_tokens: "ai_tokens";
+                automation_runs_completed: "automation_runs_completed";
+                input_tokens: "input_tokens";
+                issues_created: "issues_created";
+                logs_accepted_bytes: "logs_accepted_bytes";
+                logs_ingested_bytes: "logs_ingested_bytes";
+                logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                output_tokens: "output_tokens";
+                pull_request_reviews_completed: "pull_request_reviews_completed";
+                pull_requests_created: "pull_requests_created";
+            }>;
+            value: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"quota">;
+            unit: z.ZodLiteral<"count">;
+            period: z.ZodLiteral<"billing_cycle">;
+            value: z.ZodNumber;
+        }, z.core.$strip>]>>;
         includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
         featuresHeading: z.ZodOptional<z.ZodString>;
         features: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -826,6 +1228,52 @@ export declare const listPlans: import("../orpc-contracts/index.js").OperationDe
         targetCreditBalance: z.ZodNullable<z.ZodString>;
         logsIncludedBytes: z.ZodString;
         aiTokensIncluded: z.ZodString;
+        entitlements: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"binary">;
+            value: z.ZodBoolean;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            unit: z.ZodEnum<{
+                bytes: "bytes";
+                count: "count";
+                days: "days";
+            }>;
+            value: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            levels: z.ZodArray<z.ZodString>;
+            value: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"allowance">;
+            productKey: z.ZodEnum<{
+                ai_tokens: "ai_tokens";
+                automation_runs_completed: "automation_runs_completed";
+                input_tokens: "input_tokens";
+                issues_created: "issues_created";
+                logs_accepted_bytes: "logs_accepted_bytes";
+                logs_ingested_bytes: "logs_ingested_bytes";
+                logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                output_tokens: "output_tokens";
+                pull_request_reviews_completed: "pull_request_reviews_completed";
+                pull_requests_created: "pull_requests_created";
+            }>;
+            value: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"quota">;
+            unit: z.ZodLiteral<"count">;
+            period: z.ZodLiteral<"billing_cycle">;
+            value: z.ZodNumber;
+        }, z.core.$strip>]>>;
         includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
         featuresHeading: z.ZodOptional<z.ZodString>;
         features: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -1278,6 +1726,68 @@ export declare const billingContract: {
             cancelAt: z.ZodNullable<z.ZodString>;
             canceledAt: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
+        entitlements: z.ZodArray<z.ZodUnion<readonly [z.ZodIntersection<z.ZodUnion<readonly [z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"binary">;
+            value: z.ZodBoolean;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            unit: z.ZodEnum<{
+                bytes: "bytes";
+                count: "count";
+                days: "days";
+            }>;
+            value: z.ZodNullable<z.ZodNumber>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"cap">;
+            levels: z.ZodArray<z.ZodString>;
+            value: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"allowance">;
+            productKey: z.ZodEnum<{
+                ai_tokens: "ai_tokens";
+                automation_runs_completed: "automation_runs_completed";
+                input_tokens: "input_tokens";
+                issues_created: "issues_created";
+                logs_accepted_bytes: "logs_accepted_bytes";
+                logs_ingested_bytes: "logs_ingested_bytes";
+                logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                output_tokens: "output_tokens";
+                pull_request_reviews_completed: "pull_request_reviews_completed";
+                pull_requests_created: "pull_requests_created";
+            }>;
+            value: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            label: z.ZodOptional<z.ZodString>;
+            description: z.ZodOptional<z.ZodString>;
+            type: z.ZodLiteral<"quota">;
+            unit: z.ZodLiteral<"count">;
+            period: z.ZodLiteral<"billing_cycle">;
+            value: z.ZodNumber;
+        }, z.core.$strip>]>, z.ZodObject<{
+            id: z.ZodString;
+            source: z.ZodEnum<{
+                override: "override";
+                plan: "plan";
+            }>;
+            cycleId: z.ZodOptional<z.ZodString>;
+            preview: z.ZodOptional<z.ZodLiteral<true>>;
+            pending: z.ZodOptional<z.ZodObject<{
+                value: z.ZodUnion<readonly [z.ZodBoolean, z.ZodNumber, z.ZodString, z.ZodNull]>;
+                source: z.ZodEnum<{
+                    override: "override";
+                    plan: "plan";
+                }>;
+                effective: z.ZodLiteral<"next_cycle">;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>]>>;
         currentPlan: z.ZodNullable<z.ZodObject<{
             slug: z.ZodString;
             name: z.ZodString;
@@ -1302,6 +1812,68 @@ export declare const billingContract: {
             pendingCancellation: z.ZodNullable<z.ZodObject<{
                 effectiveAt: z.ZodString;
             }, z.core.$strip>>;
+            entitlements: z.ZodArray<z.ZodUnion<readonly [z.ZodIntersection<z.ZodUnion<readonly [z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"binary">;
+                value: z.ZodBoolean;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"cap">;
+                unit: z.ZodEnum<{
+                    bytes: "bytes";
+                    count: "count";
+                    days: "days";
+                }>;
+                value: z.ZodNullable<z.ZodNumber>;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"cap">;
+                levels: z.ZodArray<z.ZodString>;
+                value: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"allowance">;
+                productKey: z.ZodEnum<{
+                    ai_tokens: "ai_tokens";
+                    automation_runs_completed: "automation_runs_completed";
+                    input_tokens: "input_tokens";
+                    issues_created: "issues_created";
+                    logs_accepted_bytes: "logs_accepted_bytes";
+                    logs_ingested_bytes: "logs_ingested_bytes";
+                    logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                    output_tokens: "output_tokens";
+                    pull_request_reviews_completed: "pull_request_reviews_completed";
+                    pull_requests_created: "pull_requests_created";
+                }>;
+                value: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"quota">;
+                unit: z.ZodLiteral<"count">;
+                period: z.ZodLiteral<"billing_cycle">;
+                value: z.ZodNumber;
+            }, z.core.$strip>]>, z.ZodObject<{
+                id: z.ZodString;
+                source: z.ZodEnum<{
+                    override: "override";
+                    plan: "plan";
+                }>;
+                cycleId: z.ZodOptional<z.ZodString>;
+                preview: z.ZodOptional<z.ZodLiteral<true>>;
+                pending: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodUnion<readonly [z.ZodBoolean, z.ZodNumber, z.ZodString, z.ZodNull]>;
+                    source: z.ZodEnum<{
+                        override: "override";
+                        plan: "plan";
+                    }>;
+                    effective: z.ZodLiteral<"next_cycle">;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>]>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly getUsage: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -1538,6 +2110,52 @@ export declare const billingContract: {
             targetCreditBalance: z.ZodNullable<z.ZodString>;
             logsIncludedBytes: z.ZodString;
             aiTokensIncluded: z.ZodString;
+            entitlements: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"binary">;
+                value: z.ZodBoolean;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"cap">;
+                unit: z.ZodEnum<{
+                    bytes: "bytes";
+                    count: "count";
+                    days: "days";
+                }>;
+                value: z.ZodNullable<z.ZodNumber>;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"cap">;
+                levels: z.ZodArray<z.ZodString>;
+                value: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"allowance">;
+                productKey: z.ZodEnum<{
+                    ai_tokens: "ai_tokens";
+                    automation_runs_completed: "automation_runs_completed";
+                    input_tokens: "input_tokens";
+                    issues_created: "issues_created";
+                    logs_accepted_bytes: "logs_accepted_bytes";
+                    logs_ingested_bytes: "logs_ingested_bytes";
+                    logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                    output_tokens: "output_tokens";
+                    pull_request_reviews_completed: "pull_request_reviews_completed";
+                    pull_requests_created: "pull_requests_created";
+                }>;
+                value: z.ZodString;
+            }, z.core.$strip>, z.ZodObject<{
+                label: z.ZodOptional<z.ZodString>;
+                description: z.ZodOptional<z.ZodString>;
+                type: z.ZodLiteral<"quota">;
+                unit: z.ZodLiteral<"count">;
+                period: z.ZodLiteral<"billing_cycle">;
+                value: z.ZodNumber;
+            }, z.core.$strip>]>>;
             includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
             featuresHeading: z.ZodOptional<z.ZodString>;
             features: z.ZodOptional<z.ZodArray<z.ZodString>>;

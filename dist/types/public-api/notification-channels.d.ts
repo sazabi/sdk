@@ -14,6 +14,7 @@ export declare const NotificationChannelDestinationSchema: z.ZodObject<{
         inactive: "inactive";
     }>;
     statusLabel: z.ZodString;
+    message: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export declare const NotificationChannelCardSchema: z.ZodObject<{
     channel: z.ZodEnum<{
@@ -59,6 +60,7 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
             inactive: "inactive";
         }>;
         statusLabel: z.ZodString;
+        message: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>>;
     destinationManagement: z.ZodEnum<{
         integration_connections: "integration_connections";
@@ -94,6 +96,7 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         integration_disconnected: "integration_disconnected";
         issue_ignored: "issue_ignored";
         issue_open_digest: "issue_open_digest";
+        issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         log_source_connected: "log_source_connected";
@@ -159,6 +162,7 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         integration_disconnected: "integration_disconnected";
         issue_ignored: "issue_ignored";
         issue_open_digest: "issue_open_digest";
+        issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         log_source_connected: "log_source_connected";
@@ -227,6 +231,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
                 inactive: "inactive";
             }>;
             statusLabel: z.ZodString;
+            message: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
         destinationManagement: z.ZodEnum<{
             integration_connections: "integration_connections";
@@ -262,6 +267,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
             issue_open_digest: "issue_open_digest";
+            issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             log_source_connected: "log_source_connected";
@@ -327,6 +333,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
             issue_open_digest: "issue_open_digest";
+            issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             log_source_connected: "log_source_connected";
@@ -404,6 +411,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
                 inactive: "inactive";
             }>;
             statusLabel: z.ZodString;
+            message: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
         destinationManagement: z.ZodEnum<{
             integration_connections: "integration_connections";
@@ -439,6 +447,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
             issue_open_digest: "issue_open_digest";
+            issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             log_source_connected: "log_source_connected";
@@ -504,6 +513,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
             issue_open_digest: "issue_open_digest";
+            issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             log_source_connected: "log_source_connected";
@@ -579,6 +589,7 @@ export declare const notificationChannelsContract: {
                     inactive: "inactive";
                 }>;
                 statusLabel: z.ZodString;
+                message: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
             destinationManagement: z.ZodEnum<{
                 integration_connections: "integration_connections";
@@ -614,6 +625,7 @@ export declare const notificationChannelsContract: {
                 integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_open_digest: "issue_open_digest";
+                issue_rejected: "issue_rejected";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 log_source_connected: "log_source_connected";
@@ -679,6 +691,7 @@ export declare const notificationChannelsContract: {
                 integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
                 issue_open_digest: "issue_open_digest";
+                issue_rejected: "issue_rejected";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 log_source_connected: "log_source_connected";

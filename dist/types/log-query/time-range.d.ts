@@ -6,7 +6,6 @@ import { z } from "zod";
  * answers with partial coverage, never a refusal.
  */
 export declare const MAX_LOG_QUERY_LOOKBACK_SECONDS: number;
-export declare const DEFAULT_LOG_QUERY_LOOKBACK_SECONDS: number;
 /**
  * The window a query invocation reads. A v2 spec carries no time range: the
  * window is an invocation parameter, resolved by the caller against its
@@ -27,3 +26,17 @@ export declare const resolvedTimeRangeSchema: z.ZodObject<{
     to: z.ZodISODateTime;
 }, z.core.$strict>;
 export type ResolvedTimeRange = z.infer<typeof resolvedTimeRangeSchema>;
+/**
+ * A relative lookback resolved against `now` for a caller that does not name
+ * the edges, widened outward so the log rollups can answer it. Rollups hold
+ * whole minutes for two weeks and whole hours beyond, and answer only
+ * windows on their edges (the router never snaps one): a lookback of a day
+ * or more aligns to the hour, so every rollup can read hour states however
+ * far back it reaches; a shorter one aligns to the minute. The widening is at
+ * most one grain at each edge.
+ */
+export declare const alignedRelativeWindow: ({ lookbackSeconds, now, }: {
+    lookbackSeconds: number;
+    /** Epoch milliseconds the lookback ends at. */
+    now: number;
+}) => ResolvedTimeRange;

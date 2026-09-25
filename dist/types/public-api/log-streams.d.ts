@@ -10,7 +10,7 @@ import { z } from "zod";
  */
 export declare const ListLogStreamsInputSchema: z.ZodObject<{
     logSourceId: z.ZodString;
-    enabled: z.ZodOptional<z.ZodBoolean>;
+    enabled: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>;
 export declare const ListLogStreamsOutputSchema: z.ZodObject<{
     streams: z.ZodArray<z.ZodObject<{
@@ -60,7 +60,7 @@ export type ListLogStreamsInput = z.infer<typeof ListLogStreamsInputSchema>;
 export type ListLogStreamsOutput = z.infer<typeof ListLogStreamsOutputSchema>;
 export declare const listLogStreams: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     logSourceId: z.ZodString;
-    enabled: z.ZodOptional<z.ZodBoolean>;
+    enabled: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>, z.ZodObject<{
     streams: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -498,7 +498,7 @@ export declare const reassignLogStream: import("../orpc-contracts/index.js").Ope
 export declare const logStreamsContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         logSourceId: z.ZodString;
-        enabled: z.ZodOptional<z.ZodBoolean>;
+        enabled: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     }, z.core.$strip>, z.ZodObject<{
         streams: z.ZodArray<z.ZodObject<{
             id: z.ZodString;

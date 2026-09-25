@@ -180,6 +180,7 @@ export declare const WebhookEnvelopeBaseSchema: z.ZodObject<{
     type: z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         test: "test";
@@ -305,6 +306,7 @@ export declare const NonIssueWebhookEnvelopeSchema: z.ZodObject<{
     }, z.core.$strip>;
     type: z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        issue_rejected: "issue_rejected";
     }>;
     test: z.ZodLiteral<false>;
 }, z.core.$strip>;
@@ -431,6 +433,7 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
     }, z.core.$strip>;
     type: z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        issue_rejected: "issue_rejected";
     }>;
     test: z.ZodLiteral<false>;
 }, z.core.$strip>, z.ZodObject<{
@@ -600,6 +603,7 @@ export declare const webhooksSubscribe: import("../orpc-contracts/index.js").Ope
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
     }>>;

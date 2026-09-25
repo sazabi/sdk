@@ -21,11 +21,12 @@ export type Measure<F extends FieldRef = FieldRef> = {
     fields?: F[];
 };
 /**
- * Most rows a `recent_rows` measure may return: evidence is a row list like a
- * v1 aggregate table, so it shares that result's 1,000-row bound (v1 details
- * stop at 100).
+ * Most rows a `recent_rows` measure may return: the 5,000-result bound a
+ * natural-language answer carries (fast log search design, "an answer by
+ * default, results on request"), under the executor's 10,000-row
+ * `max_result_rows` guard.
  */
-export declare const MAX_RECENT_ROWS_LIMIT = 1000;
+export declare const MAX_RECENT_ROWS_LIMIT = 5000;
 /** Widest `recent_rows.fields` projection: bounds the copy, hash and result width per row. */
 export declare const MAX_RECENT_ROW_FIELDS = 32;
 export declare const createMeasureSchema: <F extends FieldRef>(fieldRef: z.ZodType<F>) => z.ZodDiscriminatedUnion<[z.ZodObject<{
