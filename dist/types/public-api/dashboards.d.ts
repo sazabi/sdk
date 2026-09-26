@@ -1768,6 +1768,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "body_json";
                         path: string[];
                     }, unknown>>>>;
+                    order: z.ZodOptional<z.ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -1871,6 +1875,11 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         complete: "complete";
                         partial: "partial";
                     }>;
+                    reason: z.ZodOptional<z.ZodEnum<{
+                        read_limit: "read_limit";
+                        request_columns: "request_columns";
+                        stored_range: "stored_range";
+                    }>>;
                 }, z.core.$strict>;
                 freshness: z.ZodObject<{
                     watermark: z.ZodISODateTime;
@@ -2109,6 +2118,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "body_json";
                         path: string[];
                     }, unknown>>>>;
+                    order: z.ZodOptional<z.ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -2212,6 +2225,11 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         complete: "complete";
                         partial: "partial";
                     }>;
+                    reason: z.ZodOptional<z.ZodEnum<{
+                        read_limit: "read_limit";
+                        request_columns: "request_columns";
+                        stored_range: "stored_range";
+                    }>>;
                 }, z.core.$strict>;
                 freshness: z.ZodObject<{
                     watermark: z.ZodISODateTime;
@@ -2451,6 +2469,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "body_json";
                         path: string[];
                     }, unknown>>>>;
+                    order: z.ZodOptional<z.ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -4334,6 +4356,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "body_json";
                         path: string[];
                     }, unknown>>>>;
+                    order: z.ZodOptional<z.ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -4437,6 +4463,11 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         complete: "complete";
                         partial: "partial";
                     }>;
+                    reason: z.ZodOptional<z.ZodEnum<{
+                        read_limit: "read_limit";
+                        request_columns: "request_columns";
+                        stored_range: "stored_range";
+                    }>>;
                 }, z.core.$strict>;
                 freshness: z.ZodObject<{
                     watermark: z.ZodISODateTime;
@@ -4675,6 +4706,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "body_json";
                         path: string[];
                     }, unknown>>>>;
+                    order: z.ZodOptional<z.ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -4778,6 +4813,11 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         complete: "complete";
                         partial: "partial";
                     }>;
+                    reason: z.ZodOptional<z.ZodEnum<{
+                        read_limit: "read_limit";
+                        request_columns: "request_columns";
+                        stored_range: "stored_range";
+                    }>>;
                 }, z.core.$strict>;
                 freshness: z.ZodObject<{
                     watermark: z.ZodISODateTime;
@@ -5017,6 +5057,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "body_json";
                         path: string[];
                     }, unknown>>>>;
+                    order: z.ZodOptional<z.ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{

@@ -1633,26 +1633,6 @@ var public_api_client_contract_gen_default = {
     }
   },
   logs: {
-    querySpec: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "logs.querySpec",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "POST",
-          path: "/logs/query-spec",
-          tags: ["Logs"],
-          operationId: "logs.querySpec",
-          summary: "Query logs with a typed spec",
-          description: "Execute a typed (v2) log query specification for one project over a time range. The log query router answers it from the cheapest representation that can, and reports which one, how exact the answer is and what it covered. An unanchored spec that reads attributes or body paths and pins its service is anchored to that service's patterns in the window before routing, which is how services outside the retrieval catalog (third-party OTel, agent telemetry) are read by attribute; `meta.population` then states the population read and the service's rows outside it."
-        }
-      }
-    },
     ask: {
       "~orpc": {
         errorMap: {},
@@ -1689,27 +1669,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.executeQuery",
           summary: "Run an earlier log query",
-          description: "Run the query behind an earlier `logs.ask` answer again, by its `queryId`, with no model involved: over the window the answer covered or a new one, with a new `limit`, or narrowed to the log lines of one `group` of a table. Returns `results` without an answer, and a new `queryId` whose `parentId` is the one that was run. Queries expire 90 days after they were asked; an expired or unknown id is not found, and asking the question again yields a new id."
-        }
-      }
-    },
-    volume: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "logs.volume",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "POST",
-          path: "/logs/volume",
-          tags: ["Logs"],
-          operationId: "logs.volume",
-          summary: "Get log volume",
-          description: "Query log volume for one project."
+          description: "Run the query behind an earlier `logs.ask` answer again, by its `queryId`, with no model involved: over the window the answer covered or a new one, with a new `limit`, or narrowed to the log lines of one `group` of a table. Returns `results` without an answer, and a new `queryId` whose `parentId` is the one that was run. An unknown id is not found; asking the question again yields a new id."
         }
       }
     }
@@ -7100,10 +7060,8 @@ var createClient = (options) => {
     },
     logs: {
       ...logs,
-      querySpec: async (input) => raw.logs.querySpec(await resolveProjectScopedInput(options.credentialProvider, input)),
       ask: async (input) => raw.logs.ask(await resolveProjectScopedInput(options.credentialProvider, input)),
-      executeQuery: async (input) => raw.logs.executeQuery(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logs.executeQuery")),
-      volume: async (input) => raw.logs.volume(await resolveProjectScopedInput(options.credentialProvider, input))
+      executeQuery: async (input) => raw.logs.executeQuery(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logs.executeQuery"))
     },
     onboarding: {
       getState: async (input = {}) => raw.onboarding.getState(await resolveOrganizationScopedInput(options.credentialProvider, await resolveProjectScopedInput(options.credentialProvider, input))),

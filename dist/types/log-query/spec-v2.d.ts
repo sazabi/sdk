@@ -240,6 +240,10 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     } | {
         kind: "message";
     }, unknown>>>>;
+    order: z.ZodOptional<z.ZodEnum<{
+        newest: "newest";
+        oldest: "oldest";
+    }>>;
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"error_count">;
 }, z.core.$strict>, z.ZodObject<{
@@ -488,6 +492,10 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         } | {
             kind: "message";
         }, unknown>>>>;
+        order: z.ZodOptional<z.ZodEnum<{
+            newest: "newest";
+            oldest: "oldest";
+        }>>;
     }, z.core.$strict>, z.ZodObject<{
         op: z.ZodLiteral<"error_count">;
     }, z.core.$strict>, z.ZodObject<{

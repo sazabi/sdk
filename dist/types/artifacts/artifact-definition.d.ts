@@ -637,6 +637,10 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{
@@ -910,6 +914,10 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{
@@ -1187,6 +1195,10 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{
@@ -1463,6 +1475,10 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{
@@ -2538,6 +2554,10 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{
@@ -2811,6 +2831,10 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{
@@ -3088,6 +3112,10 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{
@@ -3364,6 +3392,10 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             } | {
                 kind: "message";
             }, unknown>>>>;
+            order: z.ZodOptional<z.ZodEnum<{
+                newest: "newest";
+                oldest: "oldest";
+            }>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"error_count">;
         }, z.core.$strict>, z.ZodObject<{

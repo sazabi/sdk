@@ -19,7 +19,12 @@ export type Measure<F extends FieldRef = FieldRef> = {
     op: "recent_rows";
     limit: number;
     fields?: F[];
+    /** Which end of the window the lines come from: the newest (the default) or the oldest, first. */
+    order?: RecentRowsOrder;
 };
+/** `recent_rows` order: `newest` first (the default), or `oldest` first (when something first happened). */
+export declare const RECENT_ROWS_ORDERS: readonly ["newest", "oldest"];
+export type RecentRowsOrder = (typeof RECENT_ROWS_ORDERS)[number];
 /**
  * Most rows a `recent_rows` measure may return: the 5,000-result bound a
  * natural-language answer carries (fast log search design, "an answer by
@@ -57,4 +62,8 @@ export declare const createMeasureSchema: <F extends FieldRef>(fieldRef: z.ZodTy
     op: z.ZodLiteral<"recent_rows">;
     limit: z.ZodNumber;
     fields: z.ZodOptional<z.ZodArray<z.ZodType<F, unknown, z.core.$ZodTypeInternals<F, unknown>>>>;
+    order: z.ZodOptional<z.ZodEnum<{
+        newest: "newest";
+        oldest: "oldest";
+    }>>;
 }, z.core.$strict>], "op">;

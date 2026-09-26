@@ -364,6 +364,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -520,6 +521,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -676,6 +678,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -835,6 +838,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1196,6 +1200,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1352,6 +1357,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1508,6 +1514,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1667,6 +1674,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2037,6 +2045,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2193,6 +2202,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2349,6 +2359,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2508,6 +2519,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2869,6 +2881,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3025,6 +3038,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3181,6 +3195,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3340,6 +3355,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {

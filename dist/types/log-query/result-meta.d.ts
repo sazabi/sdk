@@ -75,6 +75,14 @@ export declare const logQueryResultErrorSchema: z.ZodDiscriminatedUnion<[z.ZodOb
     algorithm: z.ZodString;
 }, z.core.$strict>], "kind">;
 export type LogQueryResultError = z.infer<typeof logQueryResultErrorSchema>;
+/**
+ * Why a result covers only part of its window: stored logs (or a rollup) do
+ * not reach all of it, request fields start at their promotion, or the
+ * window held too many lines to read whole and only its most recent part was
+ * read.
+ */
+export declare const LOG_QUERY_COVERAGE_REASONS: readonly ["stored_range", "request_columns", "read_limit"];
+export type LogQueryCoverageReason = (typeof LOG_QUERY_COVERAGE_REASONS)[number];
 export declare const logQueryEstimateSchema: z.ZodObject<{
     rows: z.ZodNumber;
     bytes: z.ZodNumber;
@@ -158,6 +166,12 @@ export declare const logQueryResultMetaSchema: z.ZodObject<{
             complete: "complete";
             partial: "partial";
         }>;
+        /** Set with `partial`: why the result covers less than its window. */
+        reason: z.ZodOptional<z.ZodEnum<{
+            read_limit: "read_limit";
+            request_columns: "request_columns";
+            stored_range: "stored_range";
+        }>>;
     }, z.core.$strict>;
     freshness: z.ZodObject<{
         watermark: z.ZodISODateTime;

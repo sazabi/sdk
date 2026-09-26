@@ -360,6 +360,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -516,6 +517,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -672,6 +674,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -831,6 +834,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1197,6 +1201,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1353,6 +1358,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1509,6 +1515,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -1668,6 +1675,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2047,6 +2055,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2203,6 +2212,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2359,6 +2369,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2518,6 +2529,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -2884,6 +2896,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3040,6 +3053,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3196,6 +3210,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3355,6 +3370,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3721,6 +3737,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -3877,6 +3894,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -4033,6 +4051,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -4192,6 +4211,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -4558,6 +4578,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -4714,6 +4735,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -4870,6 +4892,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -5029,6 +5052,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -5395,6 +5419,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -5551,6 +5576,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -5707,6 +5733,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -5866,6 +5893,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -6256,6 +6284,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -6412,6 +6441,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -6568,6 +6598,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -6727,6 +6758,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -7202,6 +7234,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -7358,6 +7391,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -7514,6 +7548,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
@@ -7673,6 +7708,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "body_json";
                     path: string[];
                 })[] | undefined;
+                order?: "newest" | "oldest" | undefined;
             } | {
                 op: "error_count";
             } | {
