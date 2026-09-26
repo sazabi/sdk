@@ -2126,8 +2126,6 @@ export declare const publicApiContract: {
                             source: "log" | "resource" | "scope";
                             key: string;
                         } | {
-                            kind: "pattern";
-                        } | {
                             kind: "body";
                         } | {
                             kind: "message";
@@ -2145,8 +2143,6 @@ export declare const publicApiContract: {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
                             key: string;
-                        } | {
-                            kind: "pattern";
                         } | {
                             kind: "body";
                         } | {
@@ -2170,8 +2166,6 @@ export declare const publicApiContract: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"body">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -2198,8 +2192,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2217,8 +2209,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -2241,8 +2231,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2260,8 +2248,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -2299,8 +2285,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2318,8 +2302,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -2370,19 +2352,11 @@ export declare const publicApiContract: {
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
                             maxRelativeError: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>>;
-                        anchor: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
-                            query: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"patterns">;
-                            patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
-                        }, import("zod/v4/core").$strict>], "kind">>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
                     meta: import("zod").ZodObject<{
                         representation: import("zod").ZodEnum<{
                             event_volume: "event_volume";
@@ -2447,9 +2421,8 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>;
                         catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"service_patterns">;
+                            kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
-                            patternIds: import("zod").ZodNumber;
                             unmatchedRows: import("zod").ZodNullable<import("zod").ZodNumber>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
@@ -2476,8 +2449,6 @@ export declare const publicApiContract: {
                             source: "log" | "resource" | "scope";
                             key: string;
                         } | {
-                            kind: "pattern";
-                        } | {
                             kind: "body";
                         } | {
                             kind: "message";
@@ -2495,8 +2466,6 @@ export declare const publicApiContract: {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
                             key: string;
-                        } | {
-                            kind: "pattern";
                         } | {
                             kind: "body";
                         } | {
@@ -2520,8 +2489,6 @@ export declare const publicApiContract: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"body">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -2548,8 +2515,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2567,8 +2532,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -2591,8 +2554,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2610,8 +2571,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -2649,8 +2608,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2668,8 +2625,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -2720,19 +2675,11 @@ export declare const publicApiContract: {
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
                             maxRelativeError: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>>;
-                        anchor: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
-                            query: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"patterns">;
-                            patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
-                        }, import("zod/v4/core").$strict>], "kind">>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
                     meta: import("zod").ZodObject<{
                         representation: import("zod").ZodEnum<{
                             event_volume: "event_volume";
@@ -2797,9 +2744,8 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>;
                         catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"service_patterns">;
+                            kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
-                            patternIds: import("zod").ZodNumber;
                             unmatchedRows: import("zod").ZodNullable<import("zod").ZodNumber>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
@@ -2827,8 +2773,6 @@ export declare const publicApiContract: {
                             source: "log" | "resource" | "scope";
                             key: string;
                         } | {
-                            kind: "pattern";
-                        } | {
                             kind: "body";
                         } | {
                             kind: "message";
@@ -2846,8 +2790,6 @@ export declare const publicApiContract: {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
                             key: string;
-                        } | {
-                            kind: "pattern";
                         } | {
                             kind: "body";
                         } | {
@@ -2871,8 +2813,6 @@ export declare const publicApiContract: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"body">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -2899,8 +2839,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2918,8 +2856,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -2942,8 +2878,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -2961,8 +2895,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -3000,8 +2932,6 @@ export declare const publicApiContract: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -3019,8 +2949,6 @@ export declare const publicApiContract: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -3071,19 +2999,11 @@ export declare const publicApiContract: {
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
                             maxRelativeError: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>>;
-                        anchor: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
-                            query: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"patterns">;
-                            patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
-                        }, import("zod/v4/core").$strict>], "kind">>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
                     reason: import("zod").ZodString;
                     suggestion: import("zod").ZodOptional<import("zod").ZodEnum<{
                         allow_approximation: "allow_approximation";
@@ -3174,6 +3094,42 @@ export declare const publicApiContract: {
             explanation: import("zod").ZodString;
             interpretedAs: import("zod").ZodOptional<import("zod").ZodString>;
             results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"search">;
+                kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                    message: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    services: import("zod").ZodArray<import("zod").ZodObject<{
+                        service: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    count: import("zod").ZodNumber;
+                    previousCount: import("zod").ZodNumber;
+                    countBasis: import("zod").ZodEnum<{
+                        exact: "exact";
+                        sampled: "sampled";
+                    }>;
+                    firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    examples: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                approximate: import("zod").ZodBoolean;
+                truncated: import("zod").ZodBoolean;
+                previousWindow: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
@@ -3291,6 +3247,42 @@ export declare const publicApiContract: {
             explanation: import("zod").ZodString;
             interpretedAs: import("zod").ZodOptional<import("zod").ZodString>;
             results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"search">;
+                kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                    message: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    services: import("zod").ZodArray<import("zod").ZodObject<{
+                        service: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    count: import("zod").ZodNumber;
+                    previousCount: import("zod").ZodNumber;
+                    countBasis: import("zod").ZodEnum<{
+                        exact: "exact";
+                        sampled: "sampled";
+                    }>;
+                    firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    examples: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                approximate: import("zod").ZodBoolean;
+                truncated: import("zod").ZodBoolean;
+                previousWindow: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
@@ -13300,8 +13292,6 @@ export declare const publicApiOperations: {
                             source: "log" | "resource" | "scope";
                             key: string;
                         } | {
-                            kind: "pattern";
-                        } | {
                             kind: "body";
                         } | {
                             kind: "message";
@@ -13319,8 +13309,6 @@ export declare const publicApiOperations: {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
                             key: string;
-                        } | {
-                            kind: "pattern";
                         } | {
                             kind: "body";
                         } | {
@@ -13344,8 +13332,6 @@ export declare const publicApiOperations: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"body">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -13372,8 +13358,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -13391,8 +13375,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -13415,8 +13397,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -13434,8 +13414,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -13473,8 +13451,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -13492,8 +13468,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -13544,19 +13518,11 @@ export declare const publicApiOperations: {
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
                             maxRelativeError: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>>;
-                        anchor: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
-                            query: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"patterns">;
-                            patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
-                        }, import("zod/v4/core").$strict>], "kind">>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
                     meta: import("zod").ZodObject<{
                         representation: import("zod").ZodEnum<{
                             event_volume: "event_volume";
@@ -13621,9 +13587,8 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>;
                         catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"service_patterns">;
+                            kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
-                            patternIds: import("zod").ZodNumber;
                             unmatchedRows: import("zod").ZodNullable<import("zod").ZodNumber>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
@@ -13650,8 +13615,6 @@ export declare const publicApiOperations: {
                             source: "log" | "resource" | "scope";
                             key: string;
                         } | {
-                            kind: "pattern";
-                        } | {
                             kind: "body";
                         } | {
                             kind: "message";
@@ -13669,8 +13632,6 @@ export declare const publicApiOperations: {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
                             key: string;
-                        } | {
-                            kind: "pattern";
                         } | {
                             kind: "body";
                         } | {
@@ -13694,8 +13655,6 @@ export declare const publicApiOperations: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"body">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -13722,8 +13681,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -13741,8 +13698,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -13765,8 +13720,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -13784,8 +13737,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -13823,8 +13774,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -13842,8 +13791,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -13894,19 +13841,11 @@ export declare const publicApiOperations: {
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
                             maxRelativeError: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>>;
-                        anchor: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
-                            query: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"patterns">;
-                            patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
-                        }, import("zod/v4/core").$strict>], "kind">>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
                     meta: import("zod").ZodObject<{
                         representation: import("zod").ZodEnum<{
                             event_volume: "event_volume";
@@ -13971,9 +13910,8 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>;
                         catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"service_patterns">;
+                            kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
-                            patternIds: import("zod").ZodNumber;
                             unmatchedRows: import("zod").ZodNullable<import("zod").ZodNumber>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
@@ -14001,8 +13939,6 @@ export declare const publicApiOperations: {
                             source: "log" | "resource" | "scope";
                             key: string;
                         } | {
-                            kind: "pattern";
-                        } | {
                             kind: "body";
                         } | {
                             kind: "message";
@@ -14020,8 +13956,6 @@ export declare const publicApiOperations: {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
                             key: string;
-                        } | {
-                            kind: "pattern";
                         } | {
                             kind: "body";
                         } | {
@@ -14045,8 +13979,6 @@ export declare const publicApiOperations: {
                                 scope: "scope";
                             }>;
                             key: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"body">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -14073,8 +14005,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -14092,8 +14022,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -14116,8 +14044,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -14135,8 +14061,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -14174,8 +14098,6 @@ export declare const publicApiOperations: {
                                 source: "log" | "resource" | "scope";
                                 key: string;
                             } | {
-                                kind: "pattern";
-                            } | {
                                 kind: "body";
                             } | {
                                 kind: "message";
@@ -14193,8 +14115,6 @@ export declare const publicApiOperations: {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
                                 key: string;
-                            } | {
-                                kind: "pattern";
                             } | {
                                 kind: "body";
                             } | {
@@ -14245,19 +14165,11 @@ export declare const publicApiOperations: {
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
                             maxRelativeError: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>>;
-                        anchor: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"pattern">;
-                            query: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"patterns">;
-                            patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
-                        }, import("zod/v4/core").$strict>], "kind">>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    patternIds: import("zod").ZodArray<import("zod").ZodUUID>;
                     reason: import("zod").ZodString;
                     suggestion: import("zod").ZodOptional<import("zod").ZodEnum<{
                         allow_approximation: "allow_approximation";
@@ -14348,6 +14260,42 @@ export declare const publicApiOperations: {
             explanation: import("zod").ZodString;
             interpretedAs: import("zod").ZodOptional<import("zod").ZodString>;
             results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"search">;
+                kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                    message: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    services: import("zod").ZodArray<import("zod").ZodObject<{
+                        service: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    count: import("zod").ZodNumber;
+                    previousCount: import("zod").ZodNumber;
+                    countBasis: import("zod").ZodEnum<{
+                        exact: "exact";
+                        sampled: "sampled";
+                    }>;
+                    firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    examples: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                approximate: import("zod").ZodBoolean;
+                truncated: import("zod").ZodBoolean;
+                previousWindow: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
@@ -14465,6 +14413,42 @@ export declare const publicApiOperations: {
             explanation: import("zod").ZodString;
             interpretedAs: import("zod").ZodOptional<import("zod").ZodString>;
             results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"search">;
+                kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                    message: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    services: import("zod").ZodArray<import("zod").ZodObject<{
+                        service: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    count: import("zod").ZodNumber;
+                    previousCount: import("zod").ZodNumber;
+                    countBasis: import("zod").ZodEnum<{
+                        exact: "exact";
+                        sampled: "sampled";
+                    }>;
+                    firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    examples: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                approximate: import("zod").ZodBoolean;
+                truncated: import("zod").ZodBoolean;
+                previousWindow: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;

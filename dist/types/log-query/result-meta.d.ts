@@ -179,16 +179,14 @@ export declare const logQueryResultMetaSchema: z.ZodObject<{
     }, z.core.$strict>;
     catalogRevision: z.ZodOptional<z.ZodString>;
     /**
-     * Set when the platform anchored a spec that pinned its services to their
-     * patterns: the answer covers those services' rows under the anchored
-     * pattern ids. `unmatchedRows` of theirs in the window lie outside those
-     * patterns (no pattern id, or one minted after the anchor was named) and
-     * outside the answer; null when they could not be counted.
+     * Set when the platform answered a spec that pinned its services from the
+     * rows it had already sorted for those services, rather than every row:
+     * `unmatchedRows` of theirs in the window lie outside the answer; null
+     * when they could not be counted.
      */
     population: z.ZodOptional<z.ZodObject<{
-        kind: z.ZodLiteral<"service_patterns">;
+        kind: z.ZodLiteral<"services">;
         services: z.ZodArray<z.ZodString>;
-        patternIds: z.ZodNumber;
         unmatchedRows: z.ZodNullable<z.ZodNumber>;
     }, z.core.$strict>>;
 }, z.core.$strict>;

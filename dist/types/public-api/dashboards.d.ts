@@ -1566,8 +1566,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1585,8 +1583,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1610,8 +1606,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         scope: "scope";
                     }>;
                     key: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"body">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -1638,8 +1632,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -1657,8 +1649,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -1681,8 +1671,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -1700,8 +1688,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -1739,8 +1725,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -1758,8 +1742,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -1810,19 +1792,11 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 approximation: z.ZodOptional<z.ZodObject<{
                     maxRelativeError: z.ZodNumber;
                 }, z.core.$strict>>;
-                anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
-                    query: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"patterns">;
-                    patternIds: z.ZodArray<z.ZodUUID>;
-                }, z.core.$strict>], "kind">>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            patternIds: z.ZodArray<z.ZodUUID>;
             meta: z.ZodObject<{
                 representation: z.ZodEnum<{
                     event_volume: "event_volume";
@@ -1887,9 +1861,8 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 }, z.core.$strict>;
                 catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"service_patterns">;
+                    kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
-                    patternIds: z.ZodNumber;
                     unmatchedRows: z.ZodNullable<z.ZodNumber>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
@@ -1916,8 +1889,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1935,8 +1906,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1960,8 +1929,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         scope: "scope";
                     }>;
                     key: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"body">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -1988,8 +1955,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -2007,8 +1972,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -2031,8 +1994,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -2050,8 +2011,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -2089,8 +2048,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -2108,8 +2065,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -2160,19 +2115,11 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 approximation: z.ZodOptional<z.ZodObject<{
                     maxRelativeError: z.ZodNumber;
                 }, z.core.$strict>>;
-                anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
-                    query: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"patterns">;
-                    patternIds: z.ZodArray<z.ZodUUID>;
-                }, z.core.$strict>], "kind">>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            patternIds: z.ZodArray<z.ZodUUID>;
             meta: z.ZodObject<{
                 representation: z.ZodEnum<{
                     event_volume: "event_volume";
@@ -2237,9 +2184,8 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 }, z.core.$strict>;
                 catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"service_patterns">;
+                    kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
-                    patternIds: z.ZodNumber;
                     unmatchedRows: z.ZodNullable<z.ZodNumber>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
@@ -2267,8 +2213,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2286,8 +2230,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2311,8 +2253,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         scope: "scope";
                     }>;
                     key: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"body">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -2339,8 +2279,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -2358,8 +2296,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -2382,8 +2318,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -2401,8 +2335,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -2440,8 +2372,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -2459,8 +2389,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -2511,19 +2439,11 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 approximation: z.ZodOptional<z.ZodObject<{
                     maxRelativeError: z.ZodNumber;
                 }, z.core.$strict>>;
-                anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
-                    query: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"patterns">;
-                    patternIds: z.ZodArray<z.ZodUUID>;
-                }, z.core.$strict>], "kind">>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            patternIds: z.ZodArray<z.ZodUUID>;
             reason: z.ZodString;
             suggestion: z.ZodOptional<z.ZodEnum<{
                 allow_approximation: "allow_approximation";
@@ -4154,8 +4074,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4173,8 +4091,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4198,8 +4114,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         scope: "scope";
                     }>;
                     key: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"body">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -4226,8 +4140,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4245,8 +4157,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -4269,8 +4179,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4288,8 +4196,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -4327,8 +4233,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4346,8 +4250,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -4398,19 +4300,11 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 approximation: z.ZodOptional<z.ZodObject<{
                     maxRelativeError: z.ZodNumber;
                 }, z.core.$strict>>;
-                anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
-                    query: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"patterns">;
-                    patternIds: z.ZodArray<z.ZodUUID>;
-                }, z.core.$strict>], "kind">>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            patternIds: z.ZodArray<z.ZodUUID>;
             meta: z.ZodObject<{
                 representation: z.ZodEnum<{
                     event_volume: "event_volume";
@@ -4475,9 +4369,8 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 }, z.core.$strict>;
                 catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"service_patterns">;
+                    kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
-                    patternIds: z.ZodNumber;
                     unmatchedRows: z.ZodNullable<z.ZodNumber>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
@@ -4504,8 +4397,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4523,8 +4414,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4548,8 +4437,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         scope: "scope";
                     }>;
                     key: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"body">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -4576,8 +4463,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4595,8 +4480,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -4619,8 +4502,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4638,8 +4519,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -4677,8 +4556,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4696,8 +4573,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -4748,19 +4623,11 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 approximation: z.ZodOptional<z.ZodObject<{
                     maxRelativeError: z.ZodNumber;
                 }, z.core.$strict>>;
-                anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
-                    query: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"patterns">;
-                    patternIds: z.ZodArray<z.ZodUUID>;
-                }, z.core.$strict>], "kind">>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            patternIds: z.ZodArray<z.ZodUUID>;
             meta: z.ZodObject<{
                 representation: z.ZodEnum<{
                     event_volume: "event_volume";
@@ -4825,9 +4692,8 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 }, z.core.$strict>;
                 catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"service_patterns">;
+                    kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
-                    patternIds: z.ZodNumber;
                     unmatchedRows: z.ZodNullable<z.ZodNumber>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
@@ -4855,8 +4721,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4874,8 +4738,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4899,8 +4761,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         scope: "scope";
                     }>;
                     key: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"body">;
                 }, z.core.$strict>, z.ZodObject<{
@@ -4927,8 +4787,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4946,8 +4804,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -4970,8 +4826,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -4989,8 +4843,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -5028,8 +4880,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         source: "log" | "resource" | "scope";
                         key: string;
                     } | {
-                        kind: "pattern";
-                    } | {
                         kind: "body";
                     } | {
                         kind: "message";
@@ -5047,8 +4897,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
                         key: string;
-                    } | {
-                        kind: "pattern";
                     } | {
                         kind: "body";
                     } | {
@@ -5099,19 +4947,11 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 approximation: z.ZodOptional<z.ZodObject<{
                     maxRelativeError: z.ZodNumber;
                 }, z.core.$strict>>;
-                anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"pattern">;
-                    query: z.ZodString;
-                }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"patterns">;
-                    patternIds: z.ZodArray<z.ZodUUID>;
-                }, z.core.$strict>], "kind">>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            patternIds: z.ZodArray<z.ZodUUID>;
             reason: z.ZodString;
             suggestion: z.ZodOptional<z.ZodEnum<{
                 allow_approximation: "allow_approximation";

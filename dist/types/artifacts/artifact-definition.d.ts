@@ -418,7 +418,7 @@ export type StaticArtifactV2 = {
 export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"area_chart">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -438,8 +438,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -457,8 +455,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -479,8 +475,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -510,8 +504,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -529,8 +521,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -553,8 +543,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -572,8 +560,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -611,8 +597,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -630,8 +614,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -679,14 +661,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;
         unit: z.ZodOptional<z.ZodString>;
@@ -695,7 +670,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
 }, z.core.$strict>, z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"timeseries">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -715,8 +690,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -734,8 +707,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -756,8 +727,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -787,8 +756,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -806,8 +773,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -830,8 +795,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -849,8 +812,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -888,8 +849,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -907,8 +866,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -956,14 +913,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;
         unit: z.ZodOptional<z.ZodString>;
@@ -976,7 +926,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
 }, z.core.$strict>, z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"table">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -996,8 +946,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -1015,8 +963,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -1037,8 +983,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -1068,8 +1012,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1087,8 +1029,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1111,8 +1051,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1130,8 +1068,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1169,8 +1105,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1188,8 +1122,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1237,14 +1169,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;
         columns: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -1256,7 +1181,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
 }, z.core.$strict>, z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"metric">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -1276,8 +1201,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -1295,8 +1218,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -1317,8 +1238,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -1348,8 +1267,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1367,8 +1284,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1391,8 +1306,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1410,8 +1323,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1449,8 +1360,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1468,8 +1377,6 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1517,14 +1424,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         unit: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>;
@@ -2335,7 +2235,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
 }, z.core.$strict>], "type">, z.ZodDiscriminatedUnion<[z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"area_chart">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -2355,8 +2255,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -2374,8 +2272,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -2396,8 +2292,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -2427,8 +2321,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2446,8 +2338,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2470,8 +2360,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2489,8 +2377,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2528,8 +2414,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2547,8 +2431,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2596,14 +2478,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;
         unit: z.ZodOptional<z.ZodString>;
@@ -2612,7 +2487,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
 }, z.core.$strict>, z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"timeseries">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -2632,8 +2507,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -2651,8 +2524,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -2673,8 +2544,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -2704,8 +2573,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2723,8 +2590,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2747,8 +2612,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2766,8 +2629,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2805,8 +2666,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2824,8 +2683,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2873,14 +2730,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;
         unit: z.ZodOptional<z.ZodString>;
@@ -2893,7 +2743,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
 }, z.core.$strict>, z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"table">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -2913,8 +2763,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -2932,8 +2780,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -2954,8 +2800,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -2985,8 +2829,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3004,8 +2846,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3028,8 +2868,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3047,8 +2885,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3086,8 +2922,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3105,8 +2939,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3154,14 +2986,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;
         columns: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -3173,7 +2998,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
 }, z.core.$strict>, z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"metric">;
-    query: z.ZodObject<{
+    query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         source: z.ZodObject<{
             kind: z.ZodLiteral<"logs">;
@@ -3193,8 +3018,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -3212,8 +3035,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -3234,8 +3055,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 scope: "scope";
             }>;
             key: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
         }, z.core.$strict>, z.ZodObject<{
             kind: z.ZodLiteral<"body">;
         }, z.core.$strict>, z.ZodObject<{
@@ -3265,8 +3084,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3284,8 +3101,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3308,8 +3123,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3327,8 +3140,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3366,8 +3177,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3385,8 +3194,6 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3434,14 +3241,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
         approximation: z.ZodOptional<z.ZodObject<{
             maxRelativeError: z.ZodNumber;
         }, z.core.$strict>>;
-        anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"pattern">;
-            query: z.ZodString;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"patterns">;
-            patternIds: z.ZodArray<z.ZodUUID>;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>;
+    }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         unit: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>;

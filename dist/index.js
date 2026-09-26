@@ -1649,7 +1649,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.ask",
           summary: "Ask about logs",
-          description: "Answer a natural-language question about one project's stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), how exact and complete the numbers are (`meta`), and a `queryId`. With `results: true` it also returns the rows, value, table or series the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found` and the answer says so, with how the question was read."
+          description: "Answer a natural-language question about one project's stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), how exact and complete the numbers are (`meta`), and a `queryId`. An overview (what is broken, recent errors, what changed, what is new, with no specific topic, field or request for lines) is searched: its results are the window's kinds of log lines, with their counts in the window and the window before and example lines; every other question is measured exactly. With `results: true` it also returns the rows, value, table, series or kinds of log lines the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found` and the answer says so, with how the question was read."
         }
       }
     },

@@ -253,8 +253,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -273,8 +271,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -301,8 +297,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -323,8 +317,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -351,8 +343,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -376,13 +366,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -410,8 +393,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -430,8 +411,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -458,8 +437,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -480,8 +457,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -508,8 +483,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -533,13 +506,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -567,8 +533,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -587,8 +551,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -615,8 +577,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -637,8 +597,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -665,8 +623,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -690,13 +646,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -727,8 +676,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -747,8 +694,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -775,8 +720,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -797,8 +740,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -825,8 +766,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -850,13 +789,6 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1094,8 +1026,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1114,8 +1044,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1142,8 +1070,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1164,8 +1090,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1192,8 +1116,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1217,13 +1139,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1251,8 +1166,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1271,8 +1184,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1299,8 +1210,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1321,8 +1230,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1349,8 +1256,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1374,13 +1279,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1408,8 +1306,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1428,8 +1324,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1456,8 +1350,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1478,8 +1370,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1506,8 +1396,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1531,13 +1419,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1568,8 +1449,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1588,8 +1467,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1616,8 +1493,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1638,8 +1513,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1666,8 +1539,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1691,13 +1562,6 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1948,8 +1812,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1968,8 +1830,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1996,8 +1856,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2018,8 +1876,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2046,8 +1902,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2071,13 +1925,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2105,8 +1952,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2125,8 +1970,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2153,8 +1996,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2175,8 +2016,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2203,8 +2042,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2228,13 +2065,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2262,8 +2092,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2282,8 +2110,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2310,8 +2136,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2332,8 +2156,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2360,8 +2182,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2385,13 +2205,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2422,8 +2235,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2442,8 +2253,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2470,8 +2279,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2492,8 +2299,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2520,8 +2325,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2545,13 +2348,6 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2789,8 +2585,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2809,8 +2603,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2837,8 +2629,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2859,8 +2649,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2887,8 +2675,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2912,13 +2698,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2946,8 +2725,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2966,8 +2743,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2994,8 +2769,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3016,8 +2789,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3044,8 +2815,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3069,13 +2838,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -3103,8 +2865,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3123,8 +2883,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3151,8 +2909,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3173,8 +2929,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3201,8 +2955,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3226,13 +2978,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -3263,8 +3008,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3283,8 +3026,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3311,8 +3052,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3333,8 +3072,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3361,8 +3098,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3386,13 +3121,6 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -3630,8 +3358,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3650,8 +3376,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3678,8 +3402,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3700,8 +3422,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3728,8 +3448,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3753,13 +3471,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -3787,8 +3498,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3807,8 +3516,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3835,8 +3542,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3857,8 +3562,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3885,8 +3588,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3910,13 +3611,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -3944,8 +3638,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3964,8 +3656,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3992,8 +3682,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4014,8 +3702,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4042,8 +3728,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4067,13 +3751,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -4104,8 +3781,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -4124,8 +3799,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -4152,8 +3825,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4174,8 +3845,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4202,8 +3871,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4227,13 +3894,6 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -4471,8 +4131,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -4491,8 +4149,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -4519,8 +4175,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4541,8 +4195,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4569,8 +4221,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4594,13 +4244,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -4628,8 +4271,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -4648,8 +4289,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -4676,8 +4315,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4698,8 +4335,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4726,8 +4361,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4751,13 +4384,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -4785,8 +4411,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -4805,8 +4429,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -4833,8 +4455,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4855,8 +4475,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -4883,8 +4501,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -4908,13 +4524,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -4945,8 +4554,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -4965,8 +4572,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -4993,8 +4598,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5015,8 +4618,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -5043,8 +4644,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5068,13 +4667,6 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -5312,8 +4904,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -5332,8 +4922,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -5360,8 +4948,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5382,8 +4968,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -5410,8 +4994,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5435,13 +5017,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -5469,8 +5044,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -5489,8 +5062,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -5517,8 +5088,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5539,8 +5108,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -5567,8 +5134,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5592,13 +5157,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -5626,8 +5184,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -5646,8 +5202,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -5674,8 +5228,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5696,8 +5248,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -5724,8 +5274,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5749,13 +5297,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -5786,8 +5327,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -5806,8 +5345,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -5834,8 +5371,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5856,8 +5391,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -5884,8 +5417,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -5909,13 +5440,6 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -6177,8 +5701,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -6197,8 +5719,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -6225,8 +5745,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6247,8 +5765,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -6275,8 +5791,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6300,13 +5814,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -6334,8 +5841,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -6354,8 +5859,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -6382,8 +5885,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6404,8 +5905,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -6432,8 +5931,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6457,13 +5954,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -6491,8 +5981,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -6511,8 +5999,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -6539,8 +6025,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6561,8 +6045,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -6589,8 +6071,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6614,13 +6094,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -6651,8 +6124,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -6671,8 +6142,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -6699,8 +6168,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6721,8 +6188,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -6749,8 +6214,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -6774,13 +6237,6 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -7127,8 +6583,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -7147,8 +6601,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -7175,8 +6627,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7197,8 +6647,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -7225,8 +6673,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7250,13 +6696,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -7284,8 +6723,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -7304,8 +6741,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -7332,8 +6767,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7354,8 +6787,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -7382,8 +6813,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7407,13 +6836,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -7441,8 +6863,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -7461,8 +6881,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -7489,8 +6907,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7511,8 +6927,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -7539,8 +6953,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7564,13 +6976,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -7601,8 +7006,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -7621,8 +7024,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -7649,8 +7050,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7671,8 +7070,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -7699,8 +7096,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -7724,13 +7119,6 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {

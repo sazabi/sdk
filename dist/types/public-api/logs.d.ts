@@ -42,6 +42,42 @@ export declare const LogAskStatusSchema: z.ZodEnum<{
 export type LogAskStatus = z.infer<typeof LogAskStatusSchema>;
 /** The result shapes `logs.ask` and `logs.executeQuery` return, discriminated on `kind`. */
 export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    kind: z.ZodLiteral<"search">;
+    kinds: z.ZodArray<z.ZodObject<{
+        message: z.ZodString;
+        severity: z.ZodString;
+        services: z.ZodArray<z.ZodObject<{
+            service: z.ZodString;
+            count: z.ZodNumber;
+        }, z.core.$strip>>;
+        count: z.ZodNumber;
+        previousCount: z.ZodNumber;
+        countBasis: z.ZodEnum<{
+            exact: "exact";
+            sampled: "sampled";
+        }>;
+        firstSeen: z.ZodNullable<z.ZodString>;
+        firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+        lastSeen: z.ZodNullable<z.ZodString>;
+        examples: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            time: z.ZodString;
+            service: z.ZodString;
+            severity: z.ZodString;
+            body: z.ZodString;
+            attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+            traceId: z.ZodString;
+            spanId: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
+    matched: z.ZodNullable<z.ZodNumber>;
+    approximate: z.ZodBoolean;
+    truncated: z.ZodBoolean;
+    previousWindow: z.ZodObject<{
+        from: z.ZodString;
+        to: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
     kind: z.ZodLiteral<"rows">;
     rows: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -143,6 +179,42 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
     explanation: z.ZodString;
     interpretedAs: z.ZodOptional<z.ZodString>;
     results: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"search">;
+        kinds: z.ZodArray<z.ZodObject<{
+            message: z.ZodString;
+            severity: z.ZodString;
+            services: z.ZodArray<z.ZodObject<{
+                service: z.ZodString;
+                count: z.ZodNumber;
+            }, z.core.$strip>>;
+            count: z.ZodNumber;
+            previousCount: z.ZodNumber;
+            countBasis: z.ZodEnum<{
+                exact: "exact";
+                sampled: "sampled";
+            }>;
+            firstSeen: z.ZodNullable<z.ZodString>;
+            firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+            lastSeen: z.ZodNullable<z.ZodString>;
+            examples: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                time: z.ZodString;
+                service: z.ZodString;
+                severity: z.ZodString;
+                body: z.ZodString;
+                attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+                traceId: z.ZodString;
+                spanId: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        matched: z.ZodNullable<z.ZodNumber>;
+        approximate: z.ZodBoolean;
+        truncated: z.ZodBoolean;
+        previousWindow: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, z.ZodObject<{
         kind: z.ZodLiteral<"rows">;
         rows: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -249,6 +321,42 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
     explanation: z.ZodString;
     interpretedAs: z.ZodOptional<z.ZodString>;
     results: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"search">;
+        kinds: z.ZodArray<z.ZodObject<{
+            message: z.ZodString;
+            severity: z.ZodString;
+            services: z.ZodArray<z.ZodObject<{
+                service: z.ZodString;
+                count: z.ZodNumber;
+            }, z.core.$strip>>;
+            count: z.ZodNumber;
+            previousCount: z.ZodNumber;
+            countBasis: z.ZodEnum<{
+                exact: "exact";
+                sampled: "sampled";
+            }>;
+            firstSeen: z.ZodNullable<z.ZodString>;
+            firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+            lastSeen: z.ZodNullable<z.ZodString>;
+            examples: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                time: z.ZodString;
+                service: z.ZodString;
+                severity: z.ZodString;
+                body: z.ZodString;
+                attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+                traceId: z.ZodString;
+                spanId: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        matched: z.ZodNullable<z.ZodNumber>;
+        approximate: z.ZodBoolean;
+        truncated: z.ZodBoolean;
+        previousWindow: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, z.ZodObject<{
         kind: z.ZodLiteral<"rows">;
         rows: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -355,6 +463,42 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
     explanation: z.ZodString;
     interpretedAs: z.ZodOptional<z.ZodString>;
     results: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"search">;
+        kinds: z.ZodArray<z.ZodObject<{
+            message: z.ZodString;
+            severity: z.ZodString;
+            services: z.ZodArray<z.ZodObject<{
+                service: z.ZodString;
+                count: z.ZodNumber;
+            }, z.core.$strip>>;
+            count: z.ZodNumber;
+            previousCount: z.ZodNumber;
+            countBasis: z.ZodEnum<{
+                exact: "exact";
+                sampled: "sampled";
+            }>;
+            firstSeen: z.ZodNullable<z.ZodString>;
+            firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+            lastSeen: z.ZodNullable<z.ZodString>;
+            examples: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                time: z.ZodString;
+                service: z.ZodString;
+                severity: z.ZodString;
+                body: z.ZodString;
+                attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+                traceId: z.ZodString;
+                spanId: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        matched: z.ZodNullable<z.ZodNumber>;
+        approximate: z.ZodBoolean;
+        truncated: z.ZodBoolean;
+        previousWindow: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, z.ZodObject<{
         kind: z.ZodLiteral<"rows">;
         rows: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -473,6 +617,42 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
     explanation: z.ZodString;
     interpretedAs: z.ZodOptional<z.ZodString>;
     results: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"search">;
+        kinds: z.ZodArray<z.ZodObject<{
+            message: z.ZodString;
+            severity: z.ZodString;
+            services: z.ZodArray<z.ZodObject<{
+                service: z.ZodString;
+                count: z.ZodNumber;
+            }, z.core.$strip>>;
+            count: z.ZodNumber;
+            previousCount: z.ZodNumber;
+            countBasis: z.ZodEnum<{
+                exact: "exact";
+                sampled: "sampled";
+            }>;
+            firstSeen: z.ZodNullable<z.ZodString>;
+            firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+            lastSeen: z.ZodNullable<z.ZodString>;
+            examples: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                time: z.ZodString;
+                service: z.ZodString;
+                severity: z.ZodString;
+                body: z.ZodString;
+                attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+                traceId: z.ZodString;
+                spanId: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        matched: z.ZodNullable<z.ZodNumber>;
+        approximate: z.ZodBoolean;
+        truncated: z.ZodBoolean;
+        previousWindow: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, z.ZodObject<{
         kind: z.ZodLiteral<"rows">;
         rows: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -590,6 +770,42 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
     explanation: z.ZodString;
     interpretedAs: z.ZodOptional<z.ZodString>;
     results: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"search">;
+        kinds: z.ZodArray<z.ZodObject<{
+            message: z.ZodString;
+            severity: z.ZodString;
+            services: z.ZodArray<z.ZodObject<{
+                service: z.ZodString;
+                count: z.ZodNumber;
+            }, z.core.$strip>>;
+            count: z.ZodNumber;
+            previousCount: z.ZodNumber;
+            countBasis: z.ZodEnum<{
+                exact: "exact";
+                sampled: "sampled";
+            }>;
+            firstSeen: z.ZodNullable<z.ZodString>;
+            firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+            lastSeen: z.ZodNullable<z.ZodString>;
+            examples: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                time: z.ZodString;
+                service: z.ZodString;
+                severity: z.ZodString;
+                body: z.ZodString;
+                attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+                traceId: z.ZodString;
+                spanId: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        matched: z.ZodNullable<z.ZodNumber>;
+        approximate: z.ZodBoolean;
+        truncated: z.ZodBoolean;
+        previousWindow: z.ZodObject<{
+            from: z.ZodString;
+            to: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>, z.ZodObject<{
         kind: z.ZodLiteral<"rows">;
         rows: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -708,6 +924,42 @@ export declare const logsContract: {
         explanation: z.ZodString;
         interpretedAs: z.ZodOptional<z.ZodString>;
         results: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"search">;
+            kinds: z.ZodArray<z.ZodObject<{
+                message: z.ZodString;
+                severity: z.ZodString;
+                services: z.ZodArray<z.ZodObject<{
+                    service: z.ZodString;
+                    count: z.ZodNumber;
+                }, z.core.$strip>>;
+                count: z.ZodNumber;
+                previousCount: z.ZodNumber;
+                countBasis: z.ZodEnum<{
+                    exact: "exact";
+                    sampled: "sampled";
+                }>;
+                firstSeen: z.ZodNullable<z.ZodString>;
+                firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+                lastSeen: z.ZodNullable<z.ZodString>;
+                examples: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    time: z.ZodString;
+                    service: z.ZodString;
+                    severity: z.ZodString;
+                    body: z.ZodString;
+                    attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+                    traceId: z.ZodString;
+                    spanId: z.ZodString;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
+            matched: z.ZodNullable<z.ZodNumber>;
+            approximate: z.ZodBoolean;
+            truncated: z.ZodBoolean;
+            previousWindow: z.ZodObject<{
+                from: z.ZodString;
+                to: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>, z.ZodObject<{
             kind: z.ZodLiteral<"rows">;
             rows: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
@@ -825,6 +1077,42 @@ export declare const logsContract: {
         explanation: z.ZodString;
         interpretedAs: z.ZodOptional<z.ZodString>;
         results: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"search">;
+            kinds: z.ZodArray<z.ZodObject<{
+                message: z.ZodString;
+                severity: z.ZodString;
+                services: z.ZodArray<z.ZodObject<{
+                    service: z.ZodString;
+                    count: z.ZodNumber;
+                }, z.core.$strip>>;
+                count: z.ZodNumber;
+                previousCount: z.ZodNumber;
+                countBasis: z.ZodEnum<{
+                    exact: "exact";
+                    sampled: "sampled";
+                }>;
+                firstSeen: z.ZodNullable<z.ZodString>;
+                firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
+                lastSeen: z.ZodNullable<z.ZodString>;
+                examples: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    time: z.ZodString;
+                    service: z.ZodString;
+                    severity: z.ZodString;
+                    body: z.ZodString;
+                    attributes: z.ZodRecord<z.ZodString, z.ZodString>;
+                    traceId: z.ZodString;
+                    spanId: z.ZodString;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
+            matched: z.ZodNullable<z.ZodNumber>;
+            approximate: z.ZodBoolean;
+            truncated: z.ZodBoolean;
+            previousWindow: z.ZodObject<{
+                from: z.ZodString;
+                to: z.ZodString;
+            }, z.core.$strip>;
+        }, z.core.$strip>, z.ZodObject<{
             kind: z.ZodLiteral<"rows">;
             rows: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;

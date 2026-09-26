@@ -18,9 +18,9 @@ export declare const bodyJsonFieldSchema: z.ZodObject<{
 }, z.core.$strict>;
 export type BodyJsonField = z.infer<typeof bodyJsonFieldSchema>;
 /**
- * `column` names a promoted semconv column (e.g. `http.route`); `pattern` is a
- * `pattern_id` from the log_patterns catalog. `body` and `body_json` read the
- * log body as text and by JSON path; only a scan serves them.
+ * `column` names a promoted semconv column (e.g. `http.route`). `body` and
+ * `body_json` read the log body as text and by JSON path; only a scan serves
+ * them.
  */
 export declare const logFieldRefSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     kind: z.ZodLiteral<"service">;
@@ -37,8 +37,6 @@ export declare const logFieldRefSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         scope: "scope";
     }>;
     key: z.ZodString;
-}, z.core.$strict>, z.ZodObject<{
-    kind: z.ZodLiteral<"pattern">;
 }, z.core.$strict>, z.ZodObject<{
     kind: z.ZodLiteral<"body">;
 }, z.core.$strict>, z.ZodObject<{
@@ -63,8 +61,6 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
     source: "log" | "resource" | "scope";
     key: string;
 } | {
-    kind: "pattern";
-} | {
     kind: "body";
 } | {
     kind: "message";
@@ -82,8 +78,6 @@ export declare const logPredicateTreeSchema: z.ZodType<PredicateTree<{
     kind: "attribute";
     source: "log" | "resource" | "scope";
     key: string;
-} | {
-    kind: "pattern";
 } | {
     kind: "body";
 } | {
@@ -113,8 +107,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         source: "log" | "resource" | "scope";
         key: string;
     } | {
-        kind: "pattern";
-    } | {
         kind: "body";
     } | {
         kind: "message";
@@ -132,8 +124,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "attribute";
         source: "log" | "resource" | "scope";
         key: string;
-    } | {
-        kind: "pattern";
     } | {
         kind: "body";
     } | {
@@ -156,8 +146,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         source: "log" | "resource" | "scope";
         key: string;
     } | {
-        kind: "pattern";
-    } | {
         kind: "body";
     } | {
         kind: "message";
@@ -175,8 +163,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "attribute";
         source: "log" | "resource" | "scope";
         key: string;
-    } | {
-        kind: "pattern";
     } | {
         kind: "body";
     } | {
@@ -214,8 +200,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         source: "log" | "resource" | "scope";
         key: string;
     } | {
-        kind: "pattern";
-    } | {
         kind: "body";
     } | {
         kind: "message";
@@ -233,8 +217,6 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: "attribute";
         source: "log" | "resource" | "scope";
         key: string;
-    } | {
-        kind: "pattern";
     } | {
         kind: "body";
     } | {
@@ -265,14 +247,6 @@ export type LogMeasureV2 = Measure<LogFieldRef> | {
 };
 export declare const LOG_QUERY_BUCKETS: readonly ["1m", "5m", "1h", "1d"];
 export type LogQueryBucket = (typeof LOG_QUERY_BUCKETS)[number];
-export declare const logQueryAnchorSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
-    kind: z.ZodLiteral<"pattern">;
-    query: z.ZodString;
-}, z.core.$strict>, z.ZodObject<{
-    kind: z.ZodLiteral<"patterns">;
-    patternIds: z.ZodArray<z.ZodUUID>;
-}, z.core.$strict>], "kind">;
-export type LogQueryAnchor = z.infer<typeof logQueryAnchorSchema>;
 export declare const logQuerySpecV2Schema: z.ZodObject<{
     version: z.ZodLiteral<2>;
     source: z.ZodObject<{
@@ -293,8 +267,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         source: "log" | "resource" | "scope";
         key: string;
     } | {
-        kind: "pattern";
-    } | {
         kind: "body";
     } | {
         kind: "message";
@@ -312,8 +284,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         kind: "attribute";
         source: "log" | "resource" | "scope";
         key: string;
-    } | {
-        kind: "pattern";
     } | {
         kind: "body";
     } | {
@@ -334,8 +304,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             scope: "scope";
         }>;
         key: z.ZodString;
-    }, z.core.$strict>, z.ZodObject<{
-        kind: z.ZodLiteral<"pattern">;
     }, z.core.$strict>, z.ZodObject<{
         kind: z.ZodLiteral<"body">;
     }, z.core.$strict>, z.ZodObject<{
@@ -365,8 +333,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -384,8 +350,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -408,8 +372,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -427,8 +389,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -466,8 +426,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             source: "log" | "resource" | "scope";
             key: string;
         } | {
-            kind: "pattern";
-        } | {
             kind: "body";
         } | {
             kind: "message";
@@ -485,8 +443,6 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             kind: "attribute";
             source: "log" | "resource" | "scope";
             key: string;
-        } | {
-            kind: "pattern";
         } | {
             kind: "body";
         } | {
@@ -534,12 +490,5 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
     approximation: z.ZodOptional<z.ZodObject<{
         maxRelativeError: z.ZodNumber;
     }, z.core.$strict>>;
-    anchor: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        kind: z.ZodLiteral<"pattern">;
-        query: z.ZodString;
-    }, z.core.$strict>, z.ZodObject<{
-        kind: z.ZodLiteral<"patterns">;
-        patternIds: z.ZodArray<z.ZodUUID>;
-    }, z.core.$strict>], "kind">>;
 }, z.core.$strict>;
 export type LogQuerySpecV2 = z.infer<typeof logQuerySpecV2Schema>;

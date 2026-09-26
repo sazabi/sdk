@@ -257,8 +257,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -277,8 +275,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -305,8 +301,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -327,8 +321,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -355,8 +347,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -380,13 +370,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -414,8 +397,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -434,8 +415,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -462,8 +441,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -484,8 +461,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -512,8 +487,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -537,13 +510,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -571,8 +537,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -591,8 +555,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -619,8 +581,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -641,8 +601,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -669,8 +627,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -694,13 +650,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -731,8 +680,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -751,8 +698,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -779,8 +724,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -801,8 +744,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -829,8 +770,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -854,13 +793,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1093,8 +1025,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1113,8 +1043,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1141,8 +1069,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1163,8 +1089,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1191,8 +1115,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1216,13 +1138,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1250,8 +1165,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1270,8 +1183,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1298,8 +1209,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1320,8 +1229,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1348,8 +1255,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1373,13 +1278,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1407,8 +1305,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1427,8 +1323,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1455,8 +1349,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1477,8 +1369,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1505,8 +1395,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1530,13 +1418,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1567,8 +1448,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1587,8 +1466,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1615,8 +1492,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1637,8 +1512,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -1665,8 +1538,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -1690,13 +1561,6 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -1938,8 +1802,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -1958,8 +1820,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -1986,8 +1846,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2008,8 +1866,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2036,8 +1892,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2061,13 +1915,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2095,8 +1942,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2115,8 +1960,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2143,8 +1986,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2165,8 +2006,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2193,8 +2032,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2218,13 +2055,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2252,8 +2082,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2272,8 +2100,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2300,8 +2126,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2322,8 +2146,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2350,8 +2172,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2375,13 +2195,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2412,8 +2225,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2432,8 +2243,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2460,8 +2269,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2482,8 +2289,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2510,8 +2315,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2535,13 +2338,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2774,8 +2570,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2794,8 +2588,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2822,8 +2614,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2844,8 +2634,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -2872,8 +2660,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -2897,13 +2683,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -2931,8 +2710,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -2951,8 +2728,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -2979,8 +2754,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3001,8 +2774,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3029,8 +2800,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3054,13 +2823,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -3088,8 +2850,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3108,8 +2868,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3136,8 +2894,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3158,8 +2914,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3186,8 +2940,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3211,13 +2963,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
@@ -3248,8 +2993,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 source: "log" | "resource" | "scope";
                 key: string;
             } | {
-                kind: "pattern";
-            } | {
                 kind: "body";
             } | {
                 kind: "message";
@@ -3268,8 +3011,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
                 key: string;
-            } | {
-                kind: "pattern";
             } | {
                 kind: "body";
             } | {
@@ -3296,8 +3037,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3318,8 +3057,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
                     key: string;
-                } | {
-                    kind: "pattern";
                 } | {
                     kind: "body";
                 } | {
@@ -3346,8 +3083,6 @@ export declare const metricPropsSchema: z.ZodObject<{
                     source: "log" | "resource" | "scope";
                     key: string;
                 } | {
-                    kind: "pattern";
-                } | {
                     kind: "body";
                 } | {
                     kind: "message";
@@ -3371,13 +3106,6 @@ export declare const metricPropsSchema: z.ZodObject<{
             exactness: "approximate_ok" | "exact";
             approximation?: {
                 maxRelativeError: number;
-            } | undefined;
-            anchor?: {
-                kind: "pattern";
-                query: string;
-            } | {
-                kind: "patterns";
-                patternIds: string[];
             } | undefined;
         };
         view?: {
