@@ -49,6 +49,32 @@ export type OrgTaskKey = (typeof ORG_TASK_KEYS)[number];
 /** Task keys written to project_task_completions. */
 export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "trigger_sample_issue", "connect_log_sources", "customize_sandbox", "send_message", "explore_integrations", "visit_status_page"];
 export type ProjectTaskKey = (typeof PROJECT_TASK_KEYS)[number];
+/**
+ * Task keys written to user_task_completions: the personal setup tasks (the
+ * per-person-setup-tasks design, ENG-8097). Each one teaches Sazabi itself,
+ * so a person does it once and it stays done in every organization they
+ * belong to, like a connected account. Their status is the viewer's own row
+ * alone, with no live check, and a key-based caller (no person) gets no row.
+ *
+ * Until the contract migration drops them, the four keys also stay in
+ * `ORG_TASK_KEYS` / `PROJECT_TASK_KEYS`: every personal writer keeps writing
+ * the old organization or project row too (the design's "old writes
+ * continue" rollout), so reverting the readers loses nothing.
+ */
+export declare const USER_TASK_KEYS: readonly ["install_cli", "send_message", "explore_integrations", "visit_status_page"];
+export type UserTaskKey = (typeof USER_TASK_KEYS)[number];
+/**
+ * Who a task's completion belongs to: one person, the whole organization, or
+ * one project. Serialized as `scope` on every task row of both task-list
+ * APIs.
+ */
+export declare const TASK_SCOPES: readonly ["user", "organization", "project"];
+export type TaskScope = (typeof TASK_SCOPES)[number];
+/**
+ * A task's scope. A personal key wins over its legacy organization or
+ * project membership, which only the old writes still use.
+ */
+export declare const taskScopeFor: (id: TaskKey) => TaskScope;
 export declare const TASK_CATEGORIES: readonly ["onboarding", "setup"];
 export type TaskCategory = (typeof TASK_CATEGORIES)[number];
 /**
@@ -86,7 +112,8 @@ export declare const TASK_LISTS: readonly ["onboarding", "getting-started"];
 export type TaskList = (typeof TASK_LISTS)[number];
 /**
  * The additive card fields both task-list APIs serialize per task: which
- * array the card belongs to, and whether a walk offers Skip for it.
+ * array the card belongs to, whether a walk offers Skip for it, and who its
+ * completion belongs to.
  *
  * The per-surface verbs are deliberately absent. They named a web screen and
  * a terminal step — implementation identifiers of surfaces the API's callers
@@ -98,6 +125,8 @@ export type TaskCardProjection = {
     readonly list: TaskList;
     /** Whether the onboarding flows offer Skip for this card. */
     readonly skippable: boolean;
+    /** Who the card's completion belongs to ({@link taskScopeFor}). */
+    readonly scope: TaskScope;
 };
 /**
  * Projects a card into the shared wire shape. The dashboard `taskChecklist`

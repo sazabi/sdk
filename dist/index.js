@@ -3286,7 +3286,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Sandbox CLIs"],
           operationId: "sandboxClis.upsertCli",
           summary: "Upsert CLI connection",
-          description: "Set or replace a project's CLI connection credentials (e.g. the kubectl CLI's KUBECONFIG_CONTENTS). Values are encrypted server-side and never returned. Requires write access to the target project.",
+          description: "Set or replace a project's CLI connection credentials (e.g. the kubectl CLI's KUBECONFIG_CONTENTS). The credentials are tested in a read-only ephemeral sandbox first unless `skipTest` is set: a failed test saves nothing and is refused with `reason: connection_test_failed`, and a passed test records the connection as verified in the same step. Values are encrypted server-side and never returned. Requires write access to the target project.",
           successStatus: 200
         }
       }
@@ -4267,7 +4267,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Teams"],
           operationId: "teams.delete",
           summary: "Delete a team",
-          description: "Delete a team, its memberships, and its component-ownership assignments.",
+          description: "Delete a team, its memberships, and its component-ownership assignments. Fails with team_in_use (409) while a notification delivery rule, webhook subscription, or task-creation rule names the team in its condition.",
           inputStructure: "detailed"
         }
       }
@@ -5538,7 +5538,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Issues"],
           operationId: "issues.create",
           summary: "Create an issue",
-          description: "Create an issue in a project, returning an existing open issue when root-cause deduplication finds a match.",
+          description: "Create an issue in a project. When root-cause deduplication finds a match, no issue is created: the existing open issue is returned with `created: false` and records the report as a recurrence.",
           successStatus: 201
         }
       }
@@ -6541,6 +6541,28 @@ var public_api_client_contract_gen_default = {
       }
     }
   },
+  featureFlags: {
+    resolve: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "featureFlags.resolve",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/feature-flags",
+          tags: ["FeatureFlags"],
+          operationId: "featureFlags.resolve",
+          summary: "Resolve feature flags",
+          description: "Return the Sazabi feature flags that are on for the calling user and the requested organization and project; flags that are off are omitted. Used by Sazabi's own clients to gate features during staged rollouts."
+        }
+      }
+    }
+  },
   recommendations: {
     list: {
       "~orpc": {
@@ -6783,7 +6805,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Components"],
           operationId: "components.reactivate",
           summary: "Reactivate a component",
-          description: "Reactivate an inactive canonical component and only the explicitly selected eligible dependents. Prior rules, automations, and relationships stay detached unless explicitly selected."
+          description: "Reactivate an inactive canonical component and only the explicitly selected eligible dependents. Prior rules and automations stay detached unless explicitly selected."
         }
       }
     },
@@ -6803,7 +6825,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Components"],
           operationId: "components.mergePreview",
           summary: "Preview a component merge",
-          description: "Preview one-hop redirects, historical preservation, operational rebinding, topology contraction, and policy dispositions for component consolidation."
+          description: "Preview one-hop redirects, historical preservation, operational rebinding, and policy dispositions for component consolidation."
         }
       }
     },
@@ -6824,88 +6846,6 @@ var public_api_client_contract_gen_default = {
           operationId: "components.merge",
           summary: "Merge a component",
           description: "Consolidate a source into an active terminal target without rewriting historical issue or observation attribution."
-        }
-      }
-    },
-    relationships: {
-      list: {
-        "~orpc": {
-          errorMap: {},
-          meta: {
-            operationId: "components.relationships.list",
-            backend: "api",
-            pagination: "none",
-            async: "sync",
-            examples: []
-          },
-          route: {
-            method: "GET",
-            path: "/components/relationships",
-            tags: ["Components"],
-            operationId: "components.relationships.list",
-            summary: "List component relationships",
-            description: "List active or historical component topology edges."
-          }
-        }
-      },
-      preview: {
-        "~orpc": {
-          errorMap: {},
-          meta: {
-            operationId: "components.relationships.preview",
-            backend: "api",
-            pagination: "none",
-            async: "sync",
-            examples: []
-          },
-          route: {
-            method: "POST",
-            path: "/components/relationships/preview",
-            tags: ["Components"],
-            operationId: "components.relationships.preview",
-            summary: "Preview a component relationship change",
-            description: "Preview descendant-scoped notification and automation impact for a topology change."
-          }
-        }
-      },
-      add: {
-        "~orpc": {
-          errorMap: {},
-          meta: {
-            operationId: "components.relationships.add",
-            backend: "api",
-            pagination: "none",
-            async: "sync",
-            examples: []
-          },
-          route: {
-            method: "POST",
-            path: "/components/relationships",
-            tags: ["Components"],
-            operationId: "components.relationships.add",
-            summary: "Add a component relationship",
-            description: "Add a confirmed, tenant-safe component topology edge."
-          }
-        }
-      },
-      remove: {
-        "~orpc": {
-          errorMap: {},
-          meta: {
-            operationId: "components.relationships.remove",
-            backend: "api",
-            pagination: "none",
-            async: "sync",
-            examples: []
-          },
-          route: {
-            method: "POST",
-            path: "/components/relationships/remove",
-            tags: ["Components"],
-            operationId: "components.relationships.remove",
-            summary: "Remove a component relationship",
-            description: "Historically end a confirmed component topology edge."
-          }
         }
       }
     },
@@ -6975,6 +6915,8 @@ var createClient = (options) => {
       if (options.sandboxActorDescriptor) {
         headers.set("x-sazabi-sandbox-actor", options.sandboxActorDescriptor);
       }
+      if (options.queryExecutionReference)
+        headers.set("x-sazabi-query-execution", options.queryExecutionReference);
       return headers;
     },
     fetch: options.fetch,
@@ -7351,12 +7293,6 @@ var createClient = (options) => {
       reactivate: async (input) => raw.components.reactivate(input),
       mergePreview: async (input) => raw.components.mergePreview(await resolveProjectScopedInput(options.credentialProvider, input)),
       merge: async (input) => raw.components.merge(await resolveProjectScopedInput(options.credentialProvider, input)),
-      relationships: {
-        list: async (input = {}) => raw.components.relationships.list(await resolveProjectScopedInput(options.credentialProvider, input)),
-        preview: async (input) => raw.components.relationships.preview(await resolveProjectScopedInput(options.credentialProvider, input)),
-        add: async (input) => raw.components.relationships.add(await resolveProjectScopedInput(options.credentialProvider, input)),
-        remove: async (input) => raw.components.relationships.remove(await resolveProjectScopedInput(options.credentialProvider, input))
-      },
       incidents: {
         list: async (input = {}) => raw.components.incidents.list(await resolveProjectScopedInput(options.credentialProvider, input))
       },
@@ -7389,6 +7325,9 @@ var createClient = (options) => {
       create: async (input) => createTrackerTask(input, "tasks.create"),
       comment: async (input) => commentOnTrackerTask(input, "tasks.comment"),
       transition: async (input) => transitionTrackerTask(input, "tasks.transition")
+    },
+    featureFlags: {
+      resolve: async (input = {}) => raw.featureFlags.resolve(await resolveOnboardingSkipInput(options.credentialProvider, input))
     },
     recommendations: {
       list: async (input = {}) => raw.recommendations.list(await resolveProjectScopedInput(options.credentialProvider, input))

@@ -2115,6 +2115,9 @@ export declare const publicApiContract: {
                             kind: import("zod").ZodLiteral<"logs">;
                         }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -2129,10 +2132,10 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -2147,9 +2150,6 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
@@ -2181,6 +2181,9 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2195,10 +2198,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2213,13 +2216,13 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2234,10 +2237,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2252,9 +2255,6 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -2274,6 +2274,9 @@ export declare const publicApiContract: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2288,10 +2291,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2306,9 +2309,6 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
@@ -2438,6 +2438,9 @@ export declare const publicApiContract: {
                             kind: import("zod").ZodLiteral<"logs">;
                         }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -2452,10 +2455,10 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -2470,9 +2473,6 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
@@ -2504,6 +2504,9 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2518,10 +2521,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2536,13 +2539,13 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2557,10 +2560,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2575,9 +2578,6 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -2597,6 +2597,9 @@ export declare const publicApiContract: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2611,10 +2614,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2629,9 +2632,6 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
@@ -2762,6 +2762,9 @@ export declare const publicApiContract: {
                             kind: import("zod").ZodLiteral<"logs">;
                         }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -2776,10 +2779,10 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -2794,9 +2797,6 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
@@ -2828,6 +2828,9 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2842,10 +2845,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2860,13 +2863,13 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2881,10 +2884,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2899,9 +2902,6 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -2921,6 +2921,9 @@ export declare const publicApiContract: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2935,10 +2938,10 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -2953,9 +2956,6 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
@@ -4294,6 +4294,7 @@ export declare const publicApiContract: {
                 pending: "pending";
             }>;
             conflictPending: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            conflictDeclined: import("zod").ZodOptional<import("zod").ZodBoolean>;
             errorCode: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -4355,6 +4356,7 @@ export declare const publicApiContract: {
                 provider: import("zod").ZodString;
                 externalName: import("zod").ZodNullable<import("zod").ZodString>;
                 externalLogin: import("zod").ZodNullable<import("zod").ZodString>;
+                externalEmail: import("zod").ZodNullable<import("zod").ZodString>;
                 connectedAt: import("zod").ZodNullable<import("zod").ZodString>;
                 authMode: import("zod").ZodNullable<import("zod").ZodEnum<{
                     oauth: "oauth";
@@ -5375,7 +5377,6 @@ export declare const publicApiContract: {
                     }>;
                 }, import("zod/v4/core").$strip>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
-                includeDescendants: import("zod").ZodBoolean;
                 suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
                 suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
                 components: import("zod").ZodArray<import("zod").ZodObject<{
@@ -5386,6 +5387,11 @@ export declare const publicApiContract: {
                         inactive: "inactive";
                         merged: "merged";
                     }>;
+                }, import("zod/v4/core").$strip>>;
+                teamIds: import("zod").ZodArray<import("zod").ZodString>;
+                teams: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    name: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
@@ -5431,6 +5437,11 @@ export declare const publicApiContract: {
                     merged: "merged";
                 }>;
             }, import("zod/v4/core").$strip>>;
+            teams: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                name: import("zod").ZodString;
+                ownedComponentCount: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>>;
             channelCatalogs: import("zod").ZodOptional<import("zod").ZodObject<{
                 slack: import("zod").ZodNullable<import("zod").ZodObject<{
                     status: import("zod").ZodEnum<{
@@ -5475,7 +5486,7 @@ export declare const publicApiContract: {
             }>>;
             componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -5534,7 +5545,6 @@ export declare const publicApiContract: {
                 }>;
             }, import("zod/v4/core").$strip>>;
             componentId: import("zod").ZodNullable<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodBoolean;
             suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
             suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
@@ -5545,6 +5555,11 @@ export declare const publicApiContract: {
                     inactive: "inactive";
                     merged: "merged";
                 }>;
+            }, import("zod/v4/core").$strip>>;
+            teamIds: import("zod").ZodArray<import("zod").ZodString>;
+            teams: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                name: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -5570,7 +5585,7 @@ export declare const publicApiContract: {
             }>>;
             componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -5630,7 +5645,6 @@ export declare const publicApiContract: {
                 }>;
             }, import("zod/v4/core").$strip>>;
             componentId: import("zod").ZodNullable<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodBoolean;
             suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
             suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
@@ -5641,6 +5655,11 @@ export declare const publicApiContract: {
                     inactive: "inactive";
                     merged: "merged";
                 }>;
+            }, import("zod/v4/core").$strip>>;
+            teamIds: import("zod").ZodArray<import("zod").ZodString>;
+            teams: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                name: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -5675,7 +5694,7 @@ export declare const publicApiContract: {
                         medium: "medium";
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                    includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -5706,7 +5725,7 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -5731,7 +5750,7 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -5756,7 +5775,7 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -5782,7 +5801,7 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -5807,7 +5826,7 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -5844,7 +5863,7 @@ export declare const publicApiContract: {
                         medium: "medium";
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                    includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -6947,10 +6966,16 @@ export declare const publicApiContract: {
                 key: import("zod").ZodString;
                 value: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            skipTest: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             projectId: import("zod").ZodString;
             cliType: import("zod").ZodString;
             envVarKeys: import("zod").ZodArray<import("zod").ZodString>;
+            connectionTest: import("zod").ZodEnum<{
+                inconclusive: "inconclusive";
+                passed: "passed";
+                skipped: "skipped";
+            }>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
     readonly scripts: {
@@ -7435,6 +7460,11 @@ export declare const publicApiContract: {
                         onboarding: "onboarding";
                     }>;
                     skippable: import("zod").ZodBoolean;
+                    scope: import("zod").ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
                 }, import("zod/v4/core").$strip>>;
                 actorRole: import("zod").ZodNullable<import("zod").ZodEnum<{
                     admin: "admin";
@@ -8865,6 +8895,8 @@ export declare const publicApiContract: {
                 locked: import("zod").ZodBoolean;
                 redacted: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>;
+            created: import("zod").ZodBoolean;
+            message: import("zod").ZodString;
             duplicateIssueId: import("zod").ZodOptional<import("zod").ZodString>;
             possibleDuplicateOfIssueId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -9405,7 +9437,7 @@ export declare const publicApiContract: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodArray<import("zod").ZodString>;
-                includeDescendants: import("zod").ZodBoolean;
+                teamIds: import("zod").ZodArray<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -9518,7 +9550,7 @@ export declare const publicApiContract: {
                 medium: "medium";
             }>>>;
             componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-            includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             id: import("zod").ZodString;
             projectId: import("zod").ZodString;
@@ -9530,7 +9562,7 @@ export declare const publicApiContract: {
                 medium: "medium";
             }>>;
             componentIds: import("zod").ZodArray<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodBoolean;
+            teamIds: import("zod").ZodArray<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly unsubscribe: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             webhookId: import("zod").ZodString;
@@ -10250,6 +10282,11 @@ export declare const publicApiContract: {
                     onboarding: "onboarding";
                 }>;
                 skippable: import("zod").ZodBoolean;
+                scope: import("zod").ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly skip: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -10317,6 +10354,14 @@ export declare const publicApiContract: {
             url: import("zod").ZodString;
             state: import("zod").ZodString;
             changed: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
+    readonly featureFlags: {
+        readonly resolve: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            flags: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodLiteral<true>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
     readonly recommendations: {
@@ -10571,7 +10616,6 @@ export declare const publicApiContract: {
                     notificationRuleIds: import("zod").ZodArray<import("zod").ZodString>;
                     dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
                     observationIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
                     externalIncidentIds: import("zod").ZodArray<import("zod").ZodString>;
                     authorizedDeliveryIds: import("zod").ZodArray<import("zod").ZodString>;
@@ -10603,10 +10647,6 @@ export declare const publicApiContract: {
                         rowRevision: import("zod").ZodNumber;
                     }, import("zod/v4/core").$strip>>;
                     automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
-                        rowRevision: import("zod").ZodNumber;
-                    }, import("zod/v4/core").$strip>>;
-                    relationships: import("zod").ZodArray<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         rowRevision: import("zod").ZodNumber;
                     }, import("zod/v4/core").$strip>>;
@@ -10681,7 +10721,6 @@ export declare const publicApiContract: {
                     notificationRuleIds: import("zod").ZodArray<import("zod").ZodString>;
                     automationBindingIds: import("zod").ZodArray<import("zod").ZodString>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -10695,7 +10734,6 @@ export declare const publicApiContract: {
                 notificationRuleIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                 automationBindingIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                 recommendationScopeIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
-                relationshipIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             result: import("zod").ZodObject<{
@@ -10708,7 +10746,6 @@ export declare const publicApiContract: {
                     notificationRuleIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                     automationBindingIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                     recommendationScopeIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
-                    relationshipIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -10732,7 +10769,6 @@ export declare const publicApiContract: {
                     observationIds: import("zod").ZodArray<import("zod").ZodString>;
                     dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
                     nameIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
                 notificationPolicies: import("zod").ZodArray<import("zod").ZodObject<{
@@ -10777,46 +10813,10 @@ export declare const publicApiContract: {
                     beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                     afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
-                notificationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                    kind: import("zod").ZodEnum<{
-                        automation_binding: "automation_binding";
-                        notification_rule: "notification_rule";
-                    }>;
-                    policyId: import("zod").ZodString;
-                    ownerComponentId: import("zod").ZodString;
-                    rowRevision: import("zod").ZodNumber;
-                    beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                }, import("zod/v4/core").$strip>>;
-                automationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                    kind: import("zod").ZodEnum<{
-                        automation_binding: "automation_binding";
-                        notification_rule: "notification_rule";
-                    }>;
-                    policyId: import("zod").ZodString;
-                    ownerComponentId: import("zod").ZodString;
-                    rowRevision: import("zod").ZodNumber;
-                    beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                }, import("zod/v4/core").$strip>>;
-                relationshipChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                    relationshipId: import("zod").ZodString;
-                    action: import("zod").ZodEnum<{
-                        close_duplicate: "close_duplicate";
-                        close_self: "close_self";
-                        rewire: "rewire";
-                    }>;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    beforeSourceComponentId: import("zod").ZodString;
-                    beforeTargetComponentId: import("zod").ZodString;
-                    afterSourceComponentId: import("zod").ZodString;
-                    afterTargetComponentId: import("zod").ZodString;
-                    survivingRelationshipId: import("zod").ZodNullable<import("zod").ZodString>;
-                    beforeRowRevision: import("zod").ZodNumber;
-                    afterRowRevision: import("zod").ZodNullable<import("zod").ZodNumber>;
+                owningTeams: import("zod").ZodArray<import("zod").ZodObject<{
+                    componentId: import("zod").ZodString;
+                    teamId: import("zod").ZodString;
+                    teamName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 recommendationScopeEnabled: import("zod").ZodLiteral<false>;
                 dependentCount: import("zod").ZodNumber;
@@ -10854,25 +10854,6 @@ export declare const publicApiContract: {
                     dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
                     movedAliasIds: import("zod").ZodArray<import("zod").ZodString>;
                     historicalDisplayIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                        relationshipId: import("zod").ZodString;
-                        action: import("zod").ZodEnum<{
-                            close_duplicate: "close_duplicate";
-                            close_self: "close_self";
-                            rewire: "rewire";
-                        }>;
-                        relationshipType: import("zod").ZodEnum<{
-                            depends_on: "depends_on";
-                            part_of: "part_of";
-                        }>;
-                        beforeSourceComponentId: import("zod").ZodString;
-                        beforeTargetComponentId: import("zod").ZodString;
-                        afterSourceComponentId: import("zod").ZodString;
-                        afterTargetComponentId: import("zod").ZodString;
-                        survivingRelationshipId: import("zod").ZodNullable<import("zod").ZodString>;
-                        beforeRowRevision: import("zod").ZodNumber;
-                        afterRowRevision: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    }, import("zod/v4/core").$strip>>;
                     notificationPolicies: import("zod").ZodArray<import("zod").ZodObject<{
                         policyId: import("zod").ZodString;
                         action: import("zod").ZodEnum<{
@@ -10899,216 +10880,10 @@ export declare const publicApiContract: {
                         beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                         afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
-                    notificationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                        kind: import("zod").ZodEnum<{
-                            automation_binding: "automation_binding";
-                            notification_rule: "notification_rule";
-                        }>;
-                        policyId: import("zod").ZodString;
-                        ownerComponentId: import("zod").ZodString;
-                        rowRevision: import("zod").ZodNumber;
-                        beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>>;
-                    automationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                        kind: import("zod").ZodEnum<{
-                            automation_binding: "automation_binding";
-                            notification_rule: "notification_rule";
-                        }>;
-                        policyId: import("zod").ZodString;
-                        ownerComponentId: import("zod").ZodString;
-                        rowRevision: import("zod").ZodNumber;
-                        beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly relationships: {
-            readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                includeHistorical: import("zod").ZodDefault<import("zod").ZodUnion<readonly [import("zod").ZodBoolean, import("zod").ZodCodec<import("zod").ZodString, import("zod").ZodBoolean>]>>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                relationships: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
-                    source: import("zod").ZodObject<{
-                        originalComponentId: import("zod").ZodString;
-                        effectiveComponentId: import("zod").ZodString;
-                        name: import("zod").ZodString;
-                        lifecycle: import("zod").ZodEnum<{
-                            active: "active";
-                            inactive: "inactive";
-                            merged: "merged";
-                        }>;
-                        observationState: import("zod").ZodEnum<{
-                            observed: "observed";
-                            stale: "stale";
-                            unobserved: "unobserved";
-                        }>;
-                    }, import("zod/v4/core").$strip>;
-                    target: import("zod").ZodObject<{
-                        originalComponentId: import("zod").ZodString;
-                        effectiveComponentId: import("zod").ZodString;
-                        name: import("zod").ZodString;
-                        lifecycle: import("zod").ZodEnum<{
-                            active: "active";
-                            inactive: "inactive";
-                            merged: "merged";
-                        }>;
-                        observationState: import("zod").ZodEnum<{
-                            observed: "observed";
-                            stale: "stale";
-                            unobserved: "unobserved";
-                        }>;
-                    }, import("zod/v4/core").$strip>;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    createdAt: import("zod").ZodString;
-                    endedAt: import("zod").ZodNullable<import("zod").ZodString>;
-                    endReason: import("zod").ZodNullable<import("zod").ZodString>;
-                    rowRevision: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strip>>;
-            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-            readonly preview: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                sourceComponentId: import("zod").ZodString;
-                targetComponentId: import("zod").ZodString;
-                relationshipType: import("zod").ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                action: import("zod").ZodEnum<{
-                    add: "add";
-                    remove: "remove";
-                }>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                preview: import("zod").ZodObject<{
-                    sourceComponentId: import("zod").ZodString;
-                    targetComponentId: import("zod").ZodString;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    action: import("zod").ZodEnum<{
-                        add: "add";
-                        remove: "remove";
-                    }>;
-                    organizationId: import("zod").ZodString;
-                    projectId: import("zod").ZodString;
-                    relationshipId: import("zod").ZodNullable<import("zod").ZodString>;
-                    componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-                    policyImpact: import("zod").ZodObject<{
-                        notificationRules: import("zod").ZodArray<import("zod").ZodObject<{
-                            ruleId: import("zod").ZodString;
-                            ruleGroupId: import("zod").ZodNullable<import("zod").ZodString>;
-                            ownerComponentId: import("zod").ZodString;
-                            destinationIds: import("zod").ZodArray<import("zod").ZodString>;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                        automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                            bindingId: import("zod").ZodString;
-                            automationId: import("zod").ZodString;
-                            ownerComponentId: import("zod").ZodString;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                    }, import("zod/v4/core").$strip>;
-                    confirmationRequired: import("zod").ZodBoolean;
-                }, import("zod/v4/core").$strip>;
-            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-            readonly add: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                sourceComponentId: import("zod").ZodString;
-                targetComponentId: import("zod").ZodString;
-                relationshipType: import("zod").ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                requestId: import("zod").ZodString;
-                reason: import("zod").ZodString;
-                componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-                confirmPolicyImpact: import("zod").ZodDefault<import("zod").ZodBoolean>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                result: import("zod").ZodObject<{
-                    action: import("zod").ZodEnum<{
-                        add: "add";
-                        remove: "remove";
-                    }>;
-                    relationshipId: import("zod").ZodString;
-                    sourceComponentId: import("zod").ZodString;
-                    targetComponentId: import("zod").ZodString;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    policyImpact: import("zod").ZodObject<{
-                        notificationRules: import("zod").ZodArray<import("zod").ZodObject<{
-                            ruleId: import("zod").ZodString;
-                            ruleGroupId: import("zod").ZodNullable<import("zod").ZodString>;
-                            ownerComponentId: import("zod").ZodString;
-                            destinationIds: import("zod").ZodArray<import("zod").ZodString>;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                        automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                            bindingId: import("zod").ZodString;
-                            automationId: import("zod").ZodString;
-                            ownerComponentId: import("zod").ZodString;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>;
-            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-            readonly remove: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                sourceComponentId: import("zod").ZodString;
-                targetComponentId: import("zod").ZodString;
-                relationshipType: import("zod").ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                requestId: import("zod").ZodString;
-                reason: import("zod").ZodString;
-                componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-                confirmPolicyImpact: import("zod").ZodDefault<import("zod").ZodBoolean>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                result: import("zod").ZodObject<{
-                    action: import("zod").ZodEnum<{
-                        add: "add";
-                        remove: "remove";
-                    }>;
-                    relationshipId: import("zod").ZodString;
-                    sourceComponentId: import("zod").ZodString;
-                    targetComponentId: import("zod").ZodString;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    policyImpact: import("zod").ZodObject<{
-                        notificationRules: import("zod").ZodArray<import("zod").ZodObject<{
-                            ruleId: import("zod").ZodString;
-                            ruleGroupId: import("zod").ZodNullable<import("zod").ZodString>;
-                            ownerComponentId: import("zod").ZodString;
-                            destinationIds: import("zod").ZodArray<import("zod").ZodString>;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                        automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                            bindingId: import("zod").ZodString;
-                            automationId: import("zod").ZodString;
-                            ownerComponentId: import("zod").ZodString;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>;
-            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        };
         readonly incidents: {
             readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
                 projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -13281,6 +13056,9 @@ export declare const publicApiOperations: {
                             kind: import("zod").ZodLiteral<"logs">;
                         }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -13295,10 +13073,10 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -13313,9 +13091,6 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
@@ -13347,6 +13122,9 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13361,10 +13139,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13379,13 +13157,13 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13400,10 +13178,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13418,9 +13196,6 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -13440,6 +13215,9 @@ export declare const publicApiOperations: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13454,10 +13232,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13472,9 +13250,6 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
@@ -13604,6 +13379,9 @@ export declare const publicApiOperations: {
                             kind: import("zod").ZodLiteral<"logs">;
                         }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -13618,10 +13396,10 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -13636,9 +13414,6 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
@@ -13670,6 +13445,9 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13684,10 +13462,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13702,13 +13480,13 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13723,10 +13501,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13741,9 +13519,6 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -13763,6 +13538,9 @@ export declare const publicApiOperations: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13777,10 +13555,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -13795,9 +13573,6 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
@@ -13928,6 +13703,9 @@ export declare const publicApiOperations: {
                             kind: import("zod").ZodLiteral<"logs">;
                         }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -13942,10 +13720,10 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                            kind: "body_json";
+                            path: string[];
+                        } | {
                             kind: "service";
                         } | {
                             kind: "severity_number";
@@ -13960,9 +13738,6 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
-                        } | {
-                            kind: "body_json";
-                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
@@ -13994,6 +13769,9 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -14008,10 +13786,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -14026,13 +13804,13 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -14047,10 +13825,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -14065,9 +13843,6 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -14087,6 +13862,9 @@ export declare const publicApiOperations: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -14101,10 +13879,10 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                                kind: "body_json";
+                                path: string[];
+                            } | {
                                 kind: "service";
                             } | {
                                 kind: "severity_number";
@@ -14119,9 +13897,6 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
-                            } | {
-                                kind: "body_json";
-                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
@@ -15460,6 +15235,7 @@ export declare const publicApiOperations: {
                 pending: "pending";
             }>;
             conflictPending: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            conflictDeclined: import("zod").ZodOptional<import("zod").ZodBoolean>;
             errorCode: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -15521,6 +15297,7 @@ export declare const publicApiOperations: {
                 provider: import("zod").ZodString;
                 externalName: import("zod").ZodNullable<import("zod").ZodString>;
                 externalLogin: import("zod").ZodNullable<import("zod").ZodString>;
+                externalEmail: import("zod").ZodNullable<import("zod").ZodString>;
                 connectedAt: import("zod").ZodNullable<import("zod").ZodString>;
                 authMode: import("zod").ZodNullable<import("zod").ZodEnum<{
                     oauth: "oauth";
@@ -16541,7 +16318,6 @@ export declare const publicApiOperations: {
                     }>;
                 }, import("zod/v4/core").$strip>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
-                includeDescendants: import("zod").ZodBoolean;
                 suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
                 suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
                 components: import("zod").ZodArray<import("zod").ZodObject<{
@@ -16552,6 +16328,11 @@ export declare const publicApiOperations: {
                         inactive: "inactive";
                         merged: "merged";
                     }>;
+                }, import("zod/v4/core").$strip>>;
+                teamIds: import("zod").ZodArray<import("zod").ZodString>;
+                teams: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    name: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
@@ -16597,6 +16378,11 @@ export declare const publicApiOperations: {
                     merged: "merged";
                 }>;
             }, import("zod/v4/core").$strip>>;
+            teams: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                name: import("zod").ZodString;
+                ownedComponentCount: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>>;
             channelCatalogs: import("zod").ZodOptional<import("zod").ZodObject<{
                 slack: import("zod").ZodNullable<import("zod").ZodObject<{
                     status: import("zod").ZodEnum<{
@@ -16641,7 +16427,7 @@ export declare const publicApiOperations: {
             }>>;
             componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -16700,7 +16486,6 @@ export declare const publicApiOperations: {
                 }>;
             }, import("zod/v4/core").$strip>>;
             componentId: import("zod").ZodNullable<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodBoolean;
             suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
             suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
@@ -16711,6 +16496,11 @@ export declare const publicApiOperations: {
                     inactive: "inactive";
                     merged: "merged";
                 }>;
+            }, import("zod/v4/core").$strip>>;
+            teamIds: import("zod").ZodArray<import("zod").ZodString>;
+            teams: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                name: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -16736,7 +16526,7 @@ export declare const publicApiOperations: {
             }>>;
             componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodDefault<import("zod").ZodBoolean>;
+            teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             condition: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
                     critical: "critical";
@@ -16796,7 +16586,6 @@ export declare const publicApiOperations: {
                 }>;
             }, import("zod/v4/core").$strip>>;
             componentId: import("zod").ZodNullable<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodBoolean;
             suspendedAt: import("zod").ZodNullable<import("zod").ZodString>;
             suspensionReason: import("zod").ZodNullable<import("zod").ZodString>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
@@ -16807,6 +16596,11 @@ export declare const publicApiOperations: {
                     inactive: "inactive";
                     merged: "merged";
                 }>;
+            }, import("zod/v4/core").$strip>>;
+            teamIds: import("zod").ZodArray<import("zod").ZodString>;
+            teams: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                name: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             createdAt: import("zod").ZodString;
             updatedAt: import("zod").ZodString;
@@ -16841,7 +16635,7 @@ export declare const publicApiOperations: {
                         medium: "medium";
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                    includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -16872,7 +16666,7 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -16897,7 +16691,7 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -16922,7 +16716,7 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -16948,7 +16742,7 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -16973,7 +16767,7 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -17010,7 +16804,7 @@ export declare const publicApiOperations: {
                         medium: "medium";
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                    includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -18113,10 +17907,16 @@ export declare const publicApiOperations: {
                 key: import("zod").ZodString;
                 value: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            skipTest: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             projectId: import("zod").ZodString;
             cliType: import("zod").ZodString;
             envVarKeys: import("zod").ZodArray<import("zod").ZodString>;
+            connectionTest: import("zod").ZodEnum<{
+                inconclusive: "inconclusive";
+                passed: "passed";
+                skipped: "skipped";
+            }>;
         }, import("zod/v4/core").$strip>, "api">;
     };
     readonly scripts: {
@@ -18646,6 +18446,11 @@ export declare const publicApiOperations: {
                         onboarding: "onboarding";
                     }>;
                     skippable: import("zod").ZodBoolean;
+                    scope: import("zod").ZodEnum<{
+                        organization: "organization";
+                        project: "project";
+                        user: "user";
+                    }>;
                 }, import("zod/v4/core").$strip>>;
                 actorRole: import("zod").ZodNullable<import("zod").ZodEnum<{
                     admin: "admin";
@@ -19983,6 +19788,8 @@ export declare const publicApiOperations: {
                 locked: import("zod").ZodBoolean;
                 redacted: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>;
+            created: import("zod").ZodBoolean;
+            message: import("zod").ZodString;
             duplicateIssueId: import("zod").ZodOptional<import("zod").ZodString>;
             possibleDuplicateOfIssueId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
@@ -20523,7 +20330,7 @@ export declare const publicApiOperations: {
                     medium: "medium";
                 }>>;
                 componentIds: import("zod").ZodArray<import("zod").ZodString>;
-                includeDescendants: import("zod").ZodBoolean;
+                teamIds: import("zod").ZodArray<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -20636,7 +20443,7 @@ export declare const publicApiOperations: {
                 medium: "medium";
             }>>>;
             componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-            includeDescendants: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             id: import("zod").ZodString;
             projectId: import("zod").ZodString;
@@ -20648,7 +20455,7 @@ export declare const publicApiOperations: {
                 medium: "medium";
             }>>;
             componentIds: import("zod").ZodArray<import("zod").ZodString>;
-            includeDescendants: import("zod").ZodBoolean;
+            teamIds: import("zod").ZodArray<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly unsubscribe: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             webhookId: import("zod").ZodString;
@@ -21416,6 +21223,11 @@ export declare const publicApiOperations: {
                     onboarding: "onboarding";
                 }>;
                 skippable: import("zod").ZodBoolean;
+                scope: import("zod").ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly skip: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -21483,6 +21295,14 @@ export declare const publicApiOperations: {
             url: import("zod").ZodString;
             state: import("zod").ZodString;
             changed: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, "api">;
+    };
+    readonly featureFlags: {
+        readonly resolve: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            flags: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodLiteral<true>>;
         }, import("zod/v4/core").$strip>, "api">;
     };
     readonly recommendations: {
@@ -21737,7 +21557,6 @@ export declare const publicApiOperations: {
                     notificationRuleIds: import("zod").ZodArray<import("zod").ZodString>;
                     dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
                     observationIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
                     externalIncidentIds: import("zod").ZodArray<import("zod").ZodString>;
                     authorizedDeliveryIds: import("zod").ZodArray<import("zod").ZodString>;
@@ -21769,10 +21588,6 @@ export declare const publicApiOperations: {
                         rowRevision: import("zod").ZodNumber;
                     }, import("zod/v4/core").$strip>>;
                     automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
-                        rowRevision: import("zod").ZodNumber;
-                    }, import("zod/v4/core").$strip>>;
-                    relationships: import("zod").ZodArray<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         rowRevision: import("zod").ZodNumber;
                     }, import("zod/v4/core").$strip>>;
@@ -21847,7 +21662,6 @@ export declare const publicApiOperations: {
                     notificationRuleIds: import("zod").ZodArray<import("zod").ZodString>;
                     automationBindingIds: import("zod").ZodArray<import("zod").ZodString>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
@@ -21861,7 +21675,6 @@ export declare const publicApiOperations: {
                 notificationRuleIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                 automationBindingIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                 recommendationScopeIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
-                relationshipIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             result: import("zod").ZodObject<{
@@ -21874,7 +21687,6 @@ export declare const publicApiOperations: {
                     notificationRuleIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                     automationBindingIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                     recommendationScopeIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
-                    relationshipIds: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodString>>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
@@ -21898,7 +21710,6 @@ export declare const publicApiOperations: {
                     observationIds: import("zod").ZodArray<import("zod").ZodString>;
                     dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
                     nameIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipIds: import("zod").ZodArray<import("zod").ZodString>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
                 notificationPolicies: import("zod").ZodArray<import("zod").ZodObject<{
@@ -21943,46 +21754,10 @@ export declare const publicApiOperations: {
                     beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                     afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
-                notificationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                    kind: import("zod").ZodEnum<{
-                        automation_binding: "automation_binding";
-                        notification_rule: "notification_rule";
-                    }>;
-                    policyId: import("zod").ZodString;
-                    ownerComponentId: import("zod").ZodString;
-                    rowRevision: import("zod").ZodNumber;
-                    beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                }, import("zod/v4/core").$strip>>;
-                automationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                    kind: import("zod").ZodEnum<{
-                        automation_binding: "automation_binding";
-                        notification_rule: "notification_rule";
-                    }>;
-                    policyId: import("zod").ZodString;
-                    ownerComponentId: import("zod").ZodString;
-                    rowRevision: import("zod").ZodNumber;
-                    beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                }, import("zod/v4/core").$strip>>;
-                relationshipChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                    relationshipId: import("zod").ZodString;
-                    action: import("zod").ZodEnum<{
-                        close_duplicate: "close_duplicate";
-                        close_self: "close_self";
-                        rewire: "rewire";
-                    }>;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    beforeSourceComponentId: import("zod").ZodString;
-                    beforeTargetComponentId: import("zod").ZodString;
-                    afterSourceComponentId: import("zod").ZodString;
-                    afterTargetComponentId: import("zod").ZodString;
-                    survivingRelationshipId: import("zod").ZodNullable<import("zod").ZodString>;
-                    beforeRowRevision: import("zod").ZodNumber;
-                    afterRowRevision: import("zod").ZodNullable<import("zod").ZodNumber>;
+                owningTeams: import("zod").ZodArray<import("zod").ZodObject<{
+                    componentId: import("zod").ZodString;
+                    teamId: import("zod").ZodString;
+                    teamName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 recommendationScopeEnabled: import("zod").ZodLiteral<false>;
                 dependentCount: import("zod").ZodNumber;
@@ -22020,25 +21795,6 @@ export declare const publicApiOperations: {
                     dataSourceMappingIds: import("zod").ZodArray<import("zod").ZodString>;
                     movedAliasIds: import("zod").ZodArray<import("zod").ZodString>;
                     historicalDisplayIds: import("zod").ZodArray<import("zod").ZodString>;
-                    relationshipChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                        relationshipId: import("zod").ZodString;
-                        action: import("zod").ZodEnum<{
-                            close_duplicate: "close_duplicate";
-                            close_self: "close_self";
-                            rewire: "rewire";
-                        }>;
-                        relationshipType: import("zod").ZodEnum<{
-                            depends_on: "depends_on";
-                            part_of: "part_of";
-                        }>;
-                        beforeSourceComponentId: import("zod").ZodString;
-                        beforeTargetComponentId: import("zod").ZodString;
-                        afterSourceComponentId: import("zod").ZodString;
-                        afterTargetComponentId: import("zod").ZodString;
-                        survivingRelationshipId: import("zod").ZodNullable<import("zod").ZodString>;
-                        beforeRowRevision: import("zod").ZodNumber;
-                        afterRowRevision: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    }, import("zod/v4/core").$strip>>;
                     notificationPolicies: import("zod").ZodArray<import("zod").ZodObject<{
                         policyId: import("zod").ZodString;
                         action: import("zod").ZodEnum<{
@@ -22065,216 +21821,10 @@ export declare const publicApiOperations: {
                         beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                         afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
-                    notificationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                        kind: import("zod").ZodEnum<{
-                            automation_binding: "automation_binding";
-                            notification_rule: "notification_rule";
-                        }>;
-                        policyId: import("zod").ZodString;
-                        ownerComponentId: import("zod").ZodString;
-                        rowRevision: import("zod").ZodNumber;
-                        beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>>;
-                    automationScopeChanges: import("zod").ZodArray<import("zod").ZodObject<{
-                        kind: import("zod").ZodEnum<{
-                            automation_binding: "automation_binding";
-                            notification_rule: "notification_rule";
-                        }>;
-                        policyId: import("zod").ZodString;
-                        ownerComponentId: import("zod").ZodString;
-                        rowRevision: import("zod").ZodNumber;
-                        beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>>;
                     recommendationScopeIds: import("zod").ZodArray<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
-        readonly relationships: {
-            readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                includeHistorical: import("zod").ZodDefault<import("zod").ZodUnion<readonly [import("zod").ZodBoolean, import("zod").ZodCodec<import("zod").ZodString, import("zod").ZodBoolean>]>>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                relationships: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
-                    source: import("zod").ZodObject<{
-                        originalComponentId: import("zod").ZodString;
-                        effectiveComponentId: import("zod").ZodString;
-                        name: import("zod").ZodString;
-                        lifecycle: import("zod").ZodEnum<{
-                            active: "active";
-                            inactive: "inactive";
-                            merged: "merged";
-                        }>;
-                        observationState: import("zod").ZodEnum<{
-                            observed: "observed";
-                            stale: "stale";
-                            unobserved: "unobserved";
-                        }>;
-                    }, import("zod/v4/core").$strip>;
-                    target: import("zod").ZodObject<{
-                        originalComponentId: import("zod").ZodString;
-                        effectiveComponentId: import("zod").ZodString;
-                        name: import("zod").ZodString;
-                        lifecycle: import("zod").ZodEnum<{
-                            active: "active";
-                            inactive: "inactive";
-                            merged: "merged";
-                        }>;
-                        observationState: import("zod").ZodEnum<{
-                            observed: "observed";
-                            stale: "stale";
-                            unobserved: "unobserved";
-                        }>;
-                    }, import("zod/v4/core").$strip>;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    createdAt: import("zod").ZodString;
-                    endedAt: import("zod").ZodNullable<import("zod").ZodString>;
-                    endReason: import("zod").ZodNullable<import("zod").ZodString>;
-                    rowRevision: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strip>>;
-            }, import("zod/v4/core").$strip>, "api">;
-            readonly preview: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                sourceComponentId: import("zod").ZodString;
-                targetComponentId: import("zod").ZodString;
-                relationshipType: import("zod").ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                action: import("zod").ZodEnum<{
-                    add: "add";
-                    remove: "remove";
-                }>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                preview: import("zod").ZodObject<{
-                    sourceComponentId: import("zod").ZodString;
-                    targetComponentId: import("zod").ZodString;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    action: import("zod").ZodEnum<{
-                        add: "add";
-                        remove: "remove";
-                    }>;
-                    organizationId: import("zod").ZodString;
-                    projectId: import("zod").ZodString;
-                    relationshipId: import("zod").ZodNullable<import("zod").ZodString>;
-                    componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-                    policyImpact: import("zod").ZodObject<{
-                        notificationRules: import("zod").ZodArray<import("zod").ZodObject<{
-                            ruleId: import("zod").ZodString;
-                            ruleGroupId: import("zod").ZodNullable<import("zod").ZodString>;
-                            ownerComponentId: import("zod").ZodString;
-                            destinationIds: import("zod").ZodArray<import("zod").ZodString>;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                        automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                            bindingId: import("zod").ZodString;
-                            automationId: import("zod").ZodString;
-                            ownerComponentId: import("zod").ZodString;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                    }, import("zod/v4/core").$strip>;
-                    confirmationRequired: import("zod").ZodBoolean;
-                }, import("zod/v4/core").$strip>;
-            }, import("zod/v4/core").$strip>, "api">;
-            readonly add: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                sourceComponentId: import("zod").ZodString;
-                targetComponentId: import("zod").ZodString;
-                relationshipType: import("zod").ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                requestId: import("zod").ZodString;
-                reason: import("zod").ZodString;
-                componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-                confirmPolicyImpact: import("zod").ZodDefault<import("zod").ZodBoolean>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                result: import("zod").ZodObject<{
-                    action: import("zod").ZodEnum<{
-                        add: "add";
-                        remove: "remove";
-                    }>;
-                    relationshipId: import("zod").ZodString;
-                    sourceComponentId: import("zod").ZodString;
-                    targetComponentId: import("zod").ZodString;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    policyImpact: import("zod").ZodObject<{
-                        notificationRules: import("zod").ZodArray<import("zod").ZodObject<{
-                            ruleId: import("zod").ZodString;
-                            ruleGroupId: import("zod").ZodNullable<import("zod").ZodString>;
-                            ownerComponentId: import("zod").ZodString;
-                            destinationIds: import("zod").ZodArray<import("zod").ZodString>;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                        automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                            bindingId: import("zod").ZodString;
-                            automationId: import("zod").ZodString;
-                            ownerComponentId: import("zod").ZodString;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>;
-            }, import("zod/v4/core").$strip>, "api">;
-            readonly remove: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-                projectId: import("zod").ZodOptional<import("zod").ZodString>;
-                sourceComponentId: import("zod").ZodString;
-                targetComponentId: import("zod").ZodString;
-                relationshipType: import("zod").ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                requestId: import("zod").ZodString;
-                reason: import("zod").ZodString;
-                componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-                confirmPolicyImpact: import("zod").ZodDefault<import("zod").ZodBoolean>;
-            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-                result: import("zod").ZodObject<{
-                    action: import("zod").ZodEnum<{
-                        add: "add";
-                        remove: "remove";
-                    }>;
-                    relationshipId: import("zod").ZodString;
-                    sourceComponentId: import("zod").ZodString;
-                    targetComponentId: import("zod").ZodString;
-                    relationshipType: import("zod").ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    policyImpact: import("zod").ZodObject<{
-                        notificationRules: import("zod").ZodArray<import("zod").ZodObject<{
-                            ruleId: import("zod").ZodString;
-                            ruleGroupId: import("zod").ZodNullable<import("zod").ZodString>;
-                            ownerComponentId: import("zod").ZodString;
-                            destinationIds: import("zod").ZodArray<import("zod").ZodString>;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                        automationBindings: import("zod").ZodArray<import("zod").ZodObject<{
-                            bindingId: import("zod").ZodString;
-                            automationId: import("zod").ZodString;
-                            ownerComponentId: import("zod").ZodString;
-                            beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                            afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-                        }, import("zod/v4/core").$strip>>;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>;
-            }, import("zod/v4/core").$strip>, "api">;
-        };
         readonly incidents: {
             readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
                 projectId: import("zod").ZodOptional<import("zod").ZodString>;

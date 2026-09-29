@@ -1,6 +1,6 @@
-import { type TaskCategory, type TaskList, type TaskStatus } from "../task-checklist/index.js";
+import { type TaskCategory, type TaskList, type TaskScope, type TaskStatus } from "../task-checklist/index.js";
 import { z } from "zod";
-export type { TaskCategory, TaskList, TaskStatus };
+export type { TaskCategory, TaskList, TaskScope, TaskStatus };
 export declare const TaskCategorySchema: z.ZodEnum<{
     onboarding: "onboarding";
     setup: "setup";
@@ -8,6 +8,16 @@ export declare const TaskCategorySchema: z.ZodEnum<{
 export declare const TaskListSchema: z.ZodEnum<{
     "getting-started": "getting-started";
     onboarding: "onboarding";
+}>;
+/**
+ * Who a task's completion belongs to (ENG-8097): `user` for the personal
+ * setup tasks, which report the caller's own progress in every
+ * organization, and `organization` or `project` for the shared ones.
+ */
+export declare const TaskScopeSchema: z.ZodEnum<{
+    organization: "organization";
+    project: "project";
+    user: "user";
 }>;
 /**
  * The server-evaluated task status (ENG-7745). Both task-list routers emit
@@ -45,6 +55,11 @@ export declare const TaskSchema: z.ZodObject<{
         onboarding: "onboarding";
     }>;
     skippable: z.ZodBoolean;
+    scope: z.ZodEnum<{
+        organization: "organization";
+        project: "project";
+        user: "user";
+    }>;
 }, z.core.$strip>;
 export type Task = z.infer<typeof TaskSchema>;
 export declare const ListTasksInputSchema: z.ZodObject<{
@@ -75,6 +90,11 @@ export declare const ListTasksOutputSchema: z.ZodObject<{
             onboarding: "onboarding";
         }>;
         skippable: z.ZodBoolean;
+        scope: z.ZodEnum<{
+            organization: "organization";
+            project: "project";
+            user: "user";
+        }>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListTasksOutput = z.infer<typeof ListTasksOutputSchema>;
@@ -104,6 +124,11 @@ export declare const listTasks: import("../orpc-contracts/index.js").OperationDe
             onboarding: "onboarding";
         }>;
         skippable: z.ZodBoolean;
+        scope: z.ZodEnum<{
+            organization: "organization";
+            project: "project";
+            user: "user";
+        }>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 /**

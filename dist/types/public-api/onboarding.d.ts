@@ -51,6 +51,11 @@ export declare const OnboardingTaskStatusSchema: z.ZodObject<{
         onboarding: "onboarding";
     }>;
     skippable: z.ZodBoolean;
+    scope: z.ZodEnum<{
+        organization: "organization";
+        project: "project";
+        user: "user";
+    }>;
 }, z.core.$strip>;
 export type OnboardingTaskStatus = z.infer<typeof OnboardingTaskStatusSchema>;
 export declare const OnboardingSnapshotSchema: z.ZodObject<{
@@ -113,6 +118,11 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
             onboarding: "onboarding";
         }>;
         skippable: z.ZodBoolean;
+        scope: z.ZodEnum<{
+            organization: "organization";
+            project: "project";
+            user: "user";
+        }>;
     }, z.core.$strip>>;
     actorRole: z.ZodNullable<z.ZodEnum<{
         admin: "admin";
@@ -213,6 +223,11 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
                 onboarding: "onboarding";
             }>;
             skippable: z.ZodBoolean;
+            scope: z.ZodEnum<{
+                organization: "organization";
+                project: "project";
+                user: "user";
+            }>;
         }, z.core.$strip>>;
         actorRole: z.ZodNullable<z.ZodEnum<{
             admin: "admin";
@@ -313,6 +328,11 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
                 onboarding: "onboarding";
             }>;
             skippable: z.ZodBoolean;
+            scope: z.ZodEnum<{
+                organization: "organization";
+                project: "project";
+                user: "user";
+            }>;
         }, z.core.$strip>>;
         actorRole: z.ZodNullable<z.ZodEnum<{
             admin: "admin";
@@ -512,6 +532,11 @@ export declare const onboardingContract: {
                     onboarding: "onboarding";
                 }>;
                 skippable: z.ZodBoolean;
+                scope: z.ZodEnum<{
+                    organization: "organization";
+                    project: "project";
+                    user: "user";
+                }>;
             }, z.core.$strip>>;
             actorRole: z.ZodNullable<z.ZodEnum<{
                 admin: "admin";

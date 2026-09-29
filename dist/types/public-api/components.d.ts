@@ -301,7 +301,6 @@ export declare const ComponentDeregistrationPreviewSchema: z.ZodObject<{
         notificationRuleIds: z.ZodArray<z.ZodString>;
         dataSourceMappingIds: z.ZodArray<z.ZodString>;
         observationIds: z.ZodArray<z.ZodString>;
-        relationshipIds: z.ZodArray<z.ZodString>;
         recommendationScopeIds: z.ZodArray<z.ZodString>;
         externalIncidentIds: z.ZodArray<z.ZodString>;
         authorizedDeliveryIds: z.ZodArray<z.ZodString>;
@@ -343,10 +342,6 @@ export declare const ComponentDeregistrationResultSchema: z.ZodObject<{
             id: z.ZodString;
             rowRevision: z.ZodNumber;
         }, z.core.$strip>>;
-        relationships: z.ZodArray<z.ZodObject<{
-            id: z.ZodString;
-            rowRevision: z.ZodNumber;
-        }, z.core.$strip>>;
     }, z.core.$strip>;
     followups: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strip>;
@@ -377,7 +372,6 @@ export declare const DeregisterComponentOutputSchema: z.ZodDiscriminatedUnion<[z
             notificationRuleIds: z.ZodArray<z.ZodString>;
             dataSourceMappingIds: z.ZodArray<z.ZodString>;
             observationIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
             recommendationScopeIds: z.ZodArray<z.ZodString>;
             externalIncidentIds: z.ZodArray<z.ZodString>;
             authorizedDeliveryIds: z.ZodArray<z.ZodString>;
@@ -409,10 +403,6 @@ export declare const DeregisterComponentOutputSchema: z.ZodDiscriminatedUnion<[z
                 rowRevision: z.ZodNumber;
             }, z.core.$strip>>;
             automationBindings: z.ZodArray<z.ZodObject<{
-                id: z.ZodString;
-                rowRevision: z.ZodNumber;
-            }, z.core.$strip>>;
-            relationships: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
                 rowRevision: z.ZodNumber;
             }, z.core.$strip>>;
@@ -592,7 +582,6 @@ export declare const deregisterComponent: import("../orpc-contracts/index.js").O
             notificationRuleIds: z.ZodArray<z.ZodString>;
             dataSourceMappingIds: z.ZodArray<z.ZodString>;
             observationIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
             recommendationScopeIds: z.ZodArray<z.ZodString>;
             externalIncidentIds: z.ZodArray<z.ZodString>;
             authorizedDeliveryIds: z.ZodArray<z.ZodString>;
@@ -624,10 +613,6 @@ export declare const deregisterComponent: import("../orpc-contracts/index.js").O
                 rowRevision: z.ZodNumber;
             }, z.core.$strip>>;
             automationBindings: z.ZodArray<z.ZodObject<{
-                id: z.ZodString;
-                rowRevision: z.ZodNumber;
-            }, z.core.$strip>>;
-            relationships: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
                 rowRevision: z.ZodNumber;
             }, z.core.$strip>>;
@@ -713,7 +698,6 @@ export declare const ComponentReactivationPreviewSchema: z.ZodObject<{
         notificationRuleIds: z.ZodArray<z.ZodString>;
         automationBindingIds: z.ZodArray<z.ZodString>;
         recommendationScopeIds: z.ZodArray<z.ZodString>;
-        relationshipIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type ComponentReactivationPreview = z.infer<typeof ComponentReactivationPreviewSchema>;
@@ -729,7 +713,6 @@ export declare const PreviewComponentReactivationOutputSchema: z.ZodObject<{
             notificationRuleIds: z.ZodArray<z.ZodString>;
             automationBindingIds: z.ZodArray<z.ZodString>;
             recommendationScopeIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -738,7 +721,6 @@ export declare const ComponentReactivationSelectionsSchema: z.ZodObject<{
     notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
     automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
     recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-    relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>;
 export type ComponentReactivationSelections = z.infer<typeof ComponentReactivationSelectionsSchema>;
 export declare const CommitComponentReactivationInputSchema: z.ZodObject<{
@@ -751,7 +733,6 @@ export declare const CommitComponentReactivationInputSchema: z.ZodObject<{
         notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type CommitComponentReactivationInput = z.infer<typeof CommitComponentReactivationInputSchema>;
@@ -765,7 +746,6 @@ export declare const ComponentReactivationResultSchema: z.ZodObject<{
         notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type ComponentReactivationResult = z.infer<typeof ComponentReactivationResultSchema>;
@@ -780,7 +760,6 @@ export declare const CommitComponentReactivationOutputSchema: z.ZodObject<{
             notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-            relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -800,7 +779,6 @@ export declare const previewComponentReactivation: import("../orpc-contracts/ind
             notificationRuleIds: z.ZodArray<z.ZodString>;
             automationBindingIds: z.ZodArray<z.ZodString>;
             recommendationScopeIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
@@ -814,7 +792,6 @@ export declare const reactivateComponent: import("../orpc-contracts/index.js").O
         notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, z.ZodObject<{
     result: z.ZodObject<{
@@ -827,499 +804,6 @@ export declare const reactivateComponent: import("../orpc-contracts/index.js").O
             notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-            relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-        }, z.core.$strip>;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-export declare const ComponentRelationshipTypeSchema: z.ZodEnum<{
-    depends_on: "depends_on";
-    part_of: "part_of";
-}>;
-export type ComponentRelationshipType = z.infer<typeof ComponentRelationshipTypeSchema>;
-export declare const ComponentObservationStateSchema: z.ZodEnum<{
-    observed: "observed";
-    stale: "stale";
-    unobserved: "unobserved";
-}>;
-export declare const ComponentRelationshipEndpointSchema: z.ZodObject<{
-    originalComponentId: z.ZodString;
-    effectiveComponentId: z.ZodString;
-    name: z.ZodString;
-    lifecycle: z.ZodEnum<{
-        active: "active";
-        inactive: "inactive";
-        merged: "merged";
-    }>;
-    observationState: z.ZodEnum<{
-        observed: "observed";
-        stale: "stale";
-        unobserved: "unobserved";
-    }>;
-}, z.core.$strip>;
-export declare const ComponentRelationshipSchema: z.ZodObject<{
-    id: z.ZodString;
-    source: z.ZodObject<{
-        originalComponentId: z.ZodString;
-        effectiveComponentId: z.ZodString;
-        name: z.ZodString;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            inactive: "inactive";
-            merged: "merged";
-        }>;
-        observationState: z.ZodEnum<{
-            observed: "observed";
-            stale: "stale";
-            unobserved: "unobserved";
-        }>;
-    }, z.core.$strip>;
-    target: z.ZodObject<{
-        originalComponentId: z.ZodString;
-        effectiveComponentId: z.ZodString;
-        name: z.ZodString;
-        lifecycle: z.ZodEnum<{
-            active: "active";
-            inactive: "inactive";
-            merged: "merged";
-        }>;
-        observationState: z.ZodEnum<{
-            observed: "observed";
-            stale: "stale";
-            unobserved: "unobserved";
-        }>;
-    }, z.core.$strip>;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    createdAt: z.ZodString;
-    endedAt: z.ZodNullable<z.ZodString>;
-    endReason: z.ZodNullable<z.ZodString>;
-    rowRevision: z.ZodNumber;
-}, z.core.$strip>;
-export type ComponentRelationship = z.infer<typeof ComponentRelationshipSchema>;
-export declare const ListComponentRelationshipsInputSchema: z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    includeHistorical: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
-}, z.core.$strip>;
-export type ListComponentRelationshipsInput = z.infer<typeof ListComponentRelationshipsInputSchema>;
-export declare const ListComponentRelationshipsOutputSchema: z.ZodObject<{
-    relationships: z.ZodArray<z.ZodObject<{
-        id: z.ZodString;
-        source: z.ZodObject<{
-            originalComponentId: z.ZodString;
-            effectiveComponentId: z.ZodString;
-            name: z.ZodString;
-            lifecycle: z.ZodEnum<{
-                active: "active";
-                inactive: "inactive";
-                merged: "merged";
-            }>;
-            observationState: z.ZodEnum<{
-                observed: "observed";
-                stale: "stale";
-                unobserved: "unobserved";
-            }>;
-        }, z.core.$strip>;
-        target: z.ZodObject<{
-            originalComponentId: z.ZodString;
-            effectiveComponentId: z.ZodString;
-            name: z.ZodString;
-            lifecycle: z.ZodEnum<{
-                active: "active";
-                inactive: "inactive";
-                merged: "merged";
-            }>;
-            observationState: z.ZodEnum<{
-                observed: "observed";
-                stale: "stale";
-                unobserved: "unobserved";
-            }>;
-        }, z.core.$strip>;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        createdAt: z.ZodString;
-        endedAt: z.ZodNullable<z.ZodString>;
-        endReason: z.ZodNullable<z.ZodString>;
-        rowRevision: z.ZodNumber;
-    }, z.core.$strip>>;
-}, z.core.$strip>;
-export type ListComponentRelationshipsOutput = z.infer<typeof ListComponentRelationshipsOutputSchema>;
-export declare const ComponentRelationshipPolicyImpactSchema: z.ZodObject<{
-    notificationRules: z.ZodArray<z.ZodObject<{
-        ruleId: z.ZodString;
-        ruleGroupId: z.ZodNullable<z.ZodString>;
-        ownerComponentId: z.ZodString;
-        destinationIds: z.ZodArray<z.ZodString>;
-        beforeComponentIds: z.ZodArray<z.ZodString>;
-        afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
-    automationBindings: z.ZodArray<z.ZodObject<{
-        bindingId: z.ZodString;
-        automationId: z.ZodString;
-        ownerComponentId: z.ZodString;
-        beforeComponentIds: z.ZodArray<z.ZodString>;
-        afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
-}, z.core.$strip>;
-export declare const ComponentRelationshipPreviewSchema: z.ZodObject<{
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    action: z.ZodEnum<{
-        add: "add";
-        remove: "remove";
-    }>;
-    organizationId: z.ZodString;
-    projectId: z.ZodString;
-    relationshipId: z.ZodNullable<z.ZodString>;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    policyImpact: z.ZodObject<{
-        notificationRules: z.ZodArray<z.ZodObject<{
-            ruleId: z.ZodString;
-            ruleGroupId: z.ZodNullable<z.ZodString>;
-            ownerComponentId: z.ZodString;
-            destinationIds: z.ZodArray<z.ZodString>;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-        automationBindings: z.ZodArray<z.ZodObject<{
-            bindingId: z.ZodString;
-            automationId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-    }, z.core.$strip>;
-    confirmationRequired: z.ZodBoolean;
-}, z.core.$strip>;
-export type ComponentRelationshipPreview = z.infer<typeof ComponentRelationshipPreviewSchema>;
-export declare const PreviewComponentRelationshipInputSchema: z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    action: z.ZodEnum<{
-        add: "add";
-        remove: "remove";
-    }>;
-}, z.core.$strip>;
-export type PreviewComponentRelationshipInput = z.infer<typeof PreviewComponentRelationshipInputSchema>;
-export declare const PreviewComponentRelationshipOutputSchema: z.ZodObject<{
-    preview: z.ZodObject<{
-        sourceComponentId: z.ZodString;
-        targetComponentId: z.ZodString;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        action: z.ZodEnum<{
-            add: "add";
-            remove: "remove";
-        }>;
-        organizationId: z.ZodString;
-        projectId: z.ZodString;
-        relationshipId: z.ZodNullable<z.ZodString>;
-        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        policyImpact: z.ZodObject<{
-            notificationRules: z.ZodArray<z.ZodObject<{
-                ruleId: z.ZodString;
-                ruleGroupId: z.ZodNullable<z.ZodString>;
-                ownerComponentId: z.ZodString;
-                destinationIds: z.ZodArray<z.ZodString>;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationBindings: z.ZodArray<z.ZodObject<{
-                bindingId: z.ZodString;
-                automationId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-        }, z.core.$strip>;
-        confirmationRequired: z.ZodBoolean;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type PreviewComponentRelationshipOutput = z.infer<typeof PreviewComponentRelationshipOutputSchema>;
-export declare const AddComponentRelationshipInputSchema: z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    requestId: z.ZodString;
-    reason: z.ZodString;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
-}, z.core.$strip>;
-export type AddComponentRelationshipInput = z.infer<typeof AddComponentRelationshipInputSchema>;
-export declare const RemoveComponentRelationshipInputSchema: z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    requestId: z.ZodString;
-    reason: z.ZodString;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
-}, z.core.$strip>;
-export type RemoveComponentRelationshipInput = z.infer<typeof RemoveComponentRelationshipInputSchema>;
-export declare const ComponentRelationshipMutationResultSchema: z.ZodObject<{
-    action: z.ZodEnum<{
-        add: "add";
-        remove: "remove";
-    }>;
-    relationshipId: z.ZodString;
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    policyImpact: z.ZodObject<{
-        notificationRules: z.ZodArray<z.ZodObject<{
-            ruleId: z.ZodString;
-            ruleGroupId: z.ZodNullable<z.ZodString>;
-            ownerComponentId: z.ZodString;
-            destinationIds: z.ZodArray<z.ZodString>;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-        automationBindings: z.ZodArray<z.ZodObject<{
-            bindingId: z.ZodString;
-            automationId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export declare const ComponentRelationshipMutationOutputSchema: z.ZodObject<{
-    result: z.ZodObject<{
-        action: z.ZodEnum<{
-            add: "add";
-            remove: "remove";
-        }>;
-        relationshipId: z.ZodString;
-        sourceComponentId: z.ZodString;
-        targetComponentId: z.ZodString;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        policyImpact: z.ZodObject<{
-            notificationRules: z.ZodArray<z.ZodObject<{
-                ruleId: z.ZodString;
-                ruleGroupId: z.ZodNullable<z.ZodString>;
-                ownerComponentId: z.ZodString;
-                destinationIds: z.ZodArray<z.ZodString>;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationBindings: z.ZodArray<z.ZodObject<{
-                bindingId: z.ZodString;
-                automationId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-        }, z.core.$strip>;
-    }, z.core.$strip>;
-}, z.core.$strip>;
-export type ComponentRelationshipMutationOutput = z.infer<typeof ComponentRelationshipMutationOutputSchema>;
-export declare const listComponentRelationships: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    includeHistorical: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
-}, z.core.$strip>, z.ZodObject<{
-    relationships: z.ZodArray<z.ZodObject<{
-        id: z.ZodString;
-        source: z.ZodObject<{
-            originalComponentId: z.ZodString;
-            effectiveComponentId: z.ZodString;
-            name: z.ZodString;
-            lifecycle: z.ZodEnum<{
-                active: "active";
-                inactive: "inactive";
-                merged: "merged";
-            }>;
-            observationState: z.ZodEnum<{
-                observed: "observed";
-                stale: "stale";
-                unobserved: "unobserved";
-            }>;
-        }, z.core.$strip>;
-        target: z.ZodObject<{
-            originalComponentId: z.ZodString;
-            effectiveComponentId: z.ZodString;
-            name: z.ZodString;
-            lifecycle: z.ZodEnum<{
-                active: "active";
-                inactive: "inactive";
-                merged: "merged";
-            }>;
-            observationState: z.ZodEnum<{
-                observed: "observed";
-                stale: "stale";
-                unobserved: "unobserved";
-            }>;
-        }, z.core.$strip>;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        createdAt: z.ZodString;
-        endedAt: z.ZodNullable<z.ZodString>;
-        endReason: z.ZodNullable<z.ZodString>;
-        rowRevision: z.ZodNumber;
-    }, z.core.$strip>>;
-}, z.core.$strip>, "api">;
-export declare const previewComponentRelationship: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    action: z.ZodEnum<{
-        add: "add";
-        remove: "remove";
-    }>;
-}, z.core.$strip>, z.ZodObject<{
-    preview: z.ZodObject<{
-        sourceComponentId: z.ZodString;
-        targetComponentId: z.ZodString;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        action: z.ZodEnum<{
-            add: "add";
-            remove: "remove";
-        }>;
-        organizationId: z.ZodString;
-        projectId: z.ZodString;
-        relationshipId: z.ZodNullable<z.ZodString>;
-        componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        policyImpact: z.ZodObject<{
-            notificationRules: z.ZodArray<z.ZodObject<{
-                ruleId: z.ZodString;
-                ruleGroupId: z.ZodNullable<z.ZodString>;
-                ownerComponentId: z.ZodString;
-                destinationIds: z.ZodArray<z.ZodString>;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationBindings: z.ZodArray<z.ZodObject<{
-                bindingId: z.ZodString;
-                automationId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-        }, z.core.$strip>;
-        confirmationRequired: z.ZodBoolean;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-export declare const addComponentRelationship: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    requestId: z.ZodString;
-    reason: z.ZodString;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
-}, z.core.$strip>, z.ZodObject<{
-    result: z.ZodObject<{
-        action: z.ZodEnum<{
-            add: "add";
-            remove: "remove";
-        }>;
-        relationshipId: z.ZodString;
-        sourceComponentId: z.ZodString;
-        targetComponentId: z.ZodString;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        policyImpact: z.ZodObject<{
-            notificationRules: z.ZodArray<z.ZodObject<{
-                ruleId: z.ZodString;
-                ruleGroupId: z.ZodNullable<z.ZodString>;
-                ownerComponentId: z.ZodString;
-                destinationIds: z.ZodArray<z.ZodString>;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationBindings: z.ZodArray<z.ZodObject<{
-                bindingId: z.ZodString;
-                automationId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-        }, z.core.$strip>;
-    }, z.core.$strip>;
-}, z.core.$strip>, "api">;
-export declare const removeComponentRelationship: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    sourceComponentId: z.ZodString;
-    targetComponentId: z.ZodString;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    requestId: z.ZodString;
-    reason: z.ZodString;
-    componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
-}, z.core.$strip>, z.ZodObject<{
-    result: z.ZodObject<{
-        action: z.ZodEnum<{
-            add: "add";
-            remove: "remove";
-        }>;
-        relationshipId: z.ZodString;
-        sourceComponentId: z.ZodString;
-        targetComponentId: z.ZodString;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        policyImpact: z.ZodObject<{
-            notificationRules: z.ZodArray<z.ZodObject<{
-                ruleId: z.ZodString;
-                ruleGroupId: z.ZodNullable<z.ZodString>;
-                ownerComponentId: z.ZodString;
-                destinationIds: z.ZodArray<z.ZodString>;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationBindings: z.ZodArray<z.ZodObject<{
-                bindingId: z.ZodString;
-                automationId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
         }, z.core.$strip>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
@@ -1359,37 +843,6 @@ export declare const ComponentMergePolicyImpactSchema: z.ZodObject<{
     afterComponentIds: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
 export type ComponentMergePolicyImpact = z.infer<typeof ComponentMergePolicyImpactSchema>;
-export declare const ComponentMergePolicyScopeChangeSchema: z.ZodObject<{
-    kind: z.ZodEnum<{
-        automation_binding: "automation_binding";
-        notification_rule: "notification_rule";
-    }>;
-    policyId: z.ZodString;
-    ownerComponentId: z.ZodString;
-    rowRevision: z.ZodNumber;
-    beforeComponentIds: z.ZodArray<z.ZodString>;
-    afterComponentIds: z.ZodArray<z.ZodString>;
-}, z.core.$strip>;
-export type ComponentMergePolicyScopeChange = z.infer<typeof ComponentMergePolicyScopeChangeSchema>;
-export declare const ComponentMergeRelationshipChangeSchema: z.ZodObject<{
-    relationshipId: z.ZodString;
-    action: z.ZodEnum<{
-        close_duplicate: "close_duplicate";
-        close_self: "close_self";
-        rewire: "rewire";
-    }>;
-    relationshipType: z.ZodEnum<{
-        depends_on: "depends_on";
-        part_of: "part_of";
-    }>;
-    beforeSourceComponentId: z.ZodString;
-    beforeTargetComponentId: z.ZodString;
-    afterSourceComponentId: z.ZodString;
-    afterTargetComponentId: z.ZodString;
-    survivingRelationshipId: z.ZodNullable<z.ZodString>;
-    beforeRowRevision: z.ZodNumber;
-    afterRowRevision: z.ZodNullable<z.ZodNumber>;
-}, z.core.$strip>;
 export declare const PreviewComponentMergeInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     sourceComponentId: z.ZodString;
@@ -1411,7 +864,6 @@ export declare const ComponentMergePreviewSchema: z.ZodObject<{
         observationIds: z.ZodArray<z.ZodString>;
         dataSourceMappingIds: z.ZodArray<z.ZodString>;
         nameIds: z.ZodArray<z.ZodString>;
-        relationshipIds: z.ZodArray<z.ZodString>;
         recommendationScopeIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>;
     notificationPolicies: z.ZodArray<z.ZodObject<{
@@ -1456,46 +908,10 @@ export declare const ComponentMergePreviewSchema: z.ZodObject<{
         beforeComponentIds: z.ZodArray<z.ZodString>;
         afterComponentIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
-    notificationScopeChanges: z.ZodArray<z.ZodObject<{
-        kind: z.ZodEnum<{
-            automation_binding: "automation_binding";
-            notification_rule: "notification_rule";
-        }>;
-        policyId: z.ZodString;
-        ownerComponentId: z.ZodString;
-        rowRevision: z.ZodNumber;
-        beforeComponentIds: z.ZodArray<z.ZodString>;
-        afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
-    automationScopeChanges: z.ZodArray<z.ZodObject<{
-        kind: z.ZodEnum<{
-            automation_binding: "automation_binding";
-            notification_rule: "notification_rule";
-        }>;
-        policyId: z.ZodString;
-        ownerComponentId: z.ZodString;
-        rowRevision: z.ZodNumber;
-        beforeComponentIds: z.ZodArray<z.ZodString>;
-        afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
-    relationshipChanges: z.ZodArray<z.ZodObject<{
-        relationshipId: z.ZodString;
-        action: z.ZodEnum<{
-            close_duplicate: "close_duplicate";
-            close_self: "close_self";
-            rewire: "rewire";
-        }>;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        beforeSourceComponentId: z.ZodString;
-        beforeTargetComponentId: z.ZodString;
-        afterSourceComponentId: z.ZodString;
-        afterTargetComponentId: z.ZodString;
-        survivingRelationshipId: z.ZodNullable<z.ZodString>;
-        beforeRowRevision: z.ZodNumber;
-        afterRowRevision: z.ZodNullable<z.ZodNumber>;
+    owningTeams: z.ZodArray<z.ZodObject<{
+        componentId: z.ZodString;
+        teamId: z.ZodString;
+        teamName: z.ZodString;
     }, z.core.$strip>>;
     recommendationScopeEnabled: z.ZodLiteral<false>;
     dependentCount: z.ZodNumber;
@@ -1520,7 +936,6 @@ export declare const PreviewComponentMergeOutputSchema: z.ZodObject<{
             observationIds: z.ZodArray<z.ZodString>;
             dataSourceMappingIds: z.ZodArray<z.ZodString>;
             nameIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
             recommendationScopeIds: z.ZodArray<z.ZodString>;
         }, z.core.$strip>;
         notificationPolicies: z.ZodArray<z.ZodObject<{
@@ -1565,46 +980,10 @@ export declare const PreviewComponentMergeOutputSchema: z.ZodObject<{
             beforeComponentIds: z.ZodArray<z.ZodString>;
             afterComponentIds: z.ZodArray<z.ZodString>;
         }, z.core.$strip>>;
-        notificationScopeChanges: z.ZodArray<z.ZodObject<{
-            kind: z.ZodEnum<{
-                automation_binding: "automation_binding";
-                notification_rule: "notification_rule";
-            }>;
-            policyId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            rowRevision: z.ZodNumber;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-        automationScopeChanges: z.ZodArray<z.ZodObject<{
-            kind: z.ZodEnum<{
-                automation_binding: "automation_binding";
-                notification_rule: "notification_rule";
-            }>;
-            policyId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            rowRevision: z.ZodNumber;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-        relationshipChanges: z.ZodArray<z.ZodObject<{
-            relationshipId: z.ZodString;
-            action: z.ZodEnum<{
-                close_duplicate: "close_duplicate";
-                close_self: "close_self";
-                rewire: "rewire";
-            }>;
-            relationshipType: z.ZodEnum<{
-                depends_on: "depends_on";
-                part_of: "part_of";
-            }>;
-            beforeSourceComponentId: z.ZodString;
-            beforeTargetComponentId: z.ZodString;
-            afterSourceComponentId: z.ZodString;
-            afterTargetComponentId: z.ZodString;
-            survivingRelationshipId: z.ZodNullable<z.ZodString>;
-            beforeRowRevision: z.ZodNumber;
-            afterRowRevision: z.ZodNullable<z.ZodNumber>;
+        owningTeams: z.ZodArray<z.ZodObject<{
+            componentId: z.ZodString;
+            teamId: z.ZodString;
+            teamName: z.ZodString;
         }, z.core.$strip>>;
         recommendationScopeEnabled: z.ZodLiteral<false>;
         dependentCount: z.ZodNumber;
@@ -1638,25 +1017,6 @@ export declare const ComponentMergeManifestSchema: z.ZodObject<{
     dataSourceMappingIds: z.ZodArray<z.ZodString>;
     movedAliasIds: z.ZodArray<z.ZodString>;
     historicalDisplayIds: z.ZodArray<z.ZodString>;
-    relationshipChanges: z.ZodArray<z.ZodObject<{
-        relationshipId: z.ZodString;
-        action: z.ZodEnum<{
-            close_duplicate: "close_duplicate";
-            close_self: "close_self";
-            rewire: "rewire";
-        }>;
-        relationshipType: z.ZodEnum<{
-            depends_on: "depends_on";
-            part_of: "part_of";
-        }>;
-        beforeSourceComponentId: z.ZodString;
-        beforeTargetComponentId: z.ZodString;
-        afterSourceComponentId: z.ZodString;
-        afterTargetComponentId: z.ZodString;
-        survivingRelationshipId: z.ZodNullable<z.ZodString>;
-        beforeRowRevision: z.ZodNumber;
-        afterRowRevision: z.ZodNullable<z.ZodNumber>;
-    }, z.core.$strip>>;
     notificationPolicies: z.ZodArray<z.ZodObject<{
         policyId: z.ZodString;
         action: z.ZodEnum<{
@@ -1683,28 +1043,6 @@ export declare const ComponentMergeManifestSchema: z.ZodObject<{
         beforeComponentIds: z.ZodArray<z.ZodString>;
         afterComponentIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
-    notificationScopeChanges: z.ZodArray<z.ZodObject<{
-        kind: z.ZodEnum<{
-            automation_binding: "automation_binding";
-            notification_rule: "notification_rule";
-        }>;
-        policyId: z.ZodString;
-        ownerComponentId: z.ZodString;
-        rowRevision: z.ZodNumber;
-        beforeComponentIds: z.ZodArray<z.ZodString>;
-        afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
-    automationScopeChanges: z.ZodArray<z.ZodObject<{
-        kind: z.ZodEnum<{
-            automation_binding: "automation_binding";
-            notification_rule: "notification_rule";
-        }>;
-        policyId: z.ZodString;
-        ownerComponentId: z.ZodString;
-        rowRevision: z.ZodNumber;
-        beforeComponentIds: z.ZodArray<z.ZodString>;
-        afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
     recommendationScopeIds: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
 export declare const ComponentMergeResultSchema: z.ZodObject<{
@@ -1719,25 +1057,6 @@ export declare const ComponentMergeResultSchema: z.ZodObject<{
         dataSourceMappingIds: z.ZodArray<z.ZodString>;
         movedAliasIds: z.ZodArray<z.ZodString>;
         historicalDisplayIds: z.ZodArray<z.ZodString>;
-        relationshipChanges: z.ZodArray<z.ZodObject<{
-            relationshipId: z.ZodString;
-            action: z.ZodEnum<{
-                close_duplicate: "close_duplicate";
-                close_self: "close_self";
-                rewire: "rewire";
-            }>;
-            relationshipType: z.ZodEnum<{
-                depends_on: "depends_on";
-                part_of: "part_of";
-            }>;
-            beforeSourceComponentId: z.ZodString;
-            beforeTargetComponentId: z.ZodString;
-            afterSourceComponentId: z.ZodString;
-            afterTargetComponentId: z.ZodString;
-            survivingRelationshipId: z.ZodNullable<z.ZodString>;
-            beforeRowRevision: z.ZodNumber;
-            afterRowRevision: z.ZodNullable<z.ZodNumber>;
-        }, z.core.$strip>>;
         notificationPolicies: z.ZodArray<z.ZodObject<{
             policyId: z.ZodString;
             action: z.ZodEnum<{
@@ -1764,28 +1083,6 @@ export declare const ComponentMergeResultSchema: z.ZodObject<{
             beforeComponentIds: z.ZodArray<z.ZodString>;
             afterComponentIds: z.ZodArray<z.ZodString>;
         }, z.core.$strip>>;
-        notificationScopeChanges: z.ZodArray<z.ZodObject<{
-            kind: z.ZodEnum<{
-                automation_binding: "automation_binding";
-                notification_rule: "notification_rule";
-            }>;
-            policyId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            rowRevision: z.ZodNumber;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-        automationScopeChanges: z.ZodArray<z.ZodObject<{
-            kind: z.ZodEnum<{
-                automation_binding: "automation_binding";
-                notification_rule: "notification_rule";
-            }>;
-            policyId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            rowRevision: z.ZodNumber;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
         recommendationScopeIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -1803,25 +1100,6 @@ export declare const CommitComponentMergeOutputSchema: z.ZodObject<{
             dataSourceMappingIds: z.ZodArray<z.ZodString>;
             movedAliasIds: z.ZodArray<z.ZodString>;
             historicalDisplayIds: z.ZodArray<z.ZodString>;
-            relationshipChanges: z.ZodArray<z.ZodObject<{
-                relationshipId: z.ZodString;
-                action: z.ZodEnum<{
-                    close_duplicate: "close_duplicate";
-                    close_self: "close_self";
-                    rewire: "rewire";
-                }>;
-                relationshipType: z.ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                beforeSourceComponentId: z.ZodString;
-                beforeTargetComponentId: z.ZodString;
-                afterSourceComponentId: z.ZodString;
-                afterTargetComponentId: z.ZodString;
-                survivingRelationshipId: z.ZodNullable<z.ZodString>;
-                beforeRowRevision: z.ZodNumber;
-                afterRowRevision: z.ZodNullable<z.ZodNumber>;
-            }, z.core.$strip>>;
             notificationPolicies: z.ZodArray<z.ZodObject<{
                 policyId: z.ZodString;
                 action: z.ZodEnum<{
@@ -1845,28 +1123,6 @@ export declare const CommitComponentMergeOutputSchema: z.ZodObject<{
                 equivalentPolicyId: z.ZodNullable<z.ZodString>;
                 beforeRowRevision: z.ZodNumber;
                 afterRowRevision: z.ZodNumber;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            notificationScopeChanges: z.ZodArray<z.ZodObject<{
-                kind: z.ZodEnum<{
-                    automation_binding: "automation_binding";
-                    notification_rule: "notification_rule";
-                }>;
-                policyId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                rowRevision: z.ZodNumber;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationScopeChanges: z.ZodArray<z.ZodObject<{
-                kind: z.ZodEnum<{
-                    automation_binding: "automation_binding";
-                    notification_rule: "notification_rule";
-                }>;
-                policyId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                rowRevision: z.ZodNumber;
                 beforeComponentIds: z.ZodArray<z.ZodString>;
                 afterComponentIds: z.ZodArray<z.ZodString>;
             }, z.core.$strip>>;
@@ -1895,7 +1151,6 @@ export declare const previewComponentMerge: import("../orpc-contracts/index.js")
             observationIds: z.ZodArray<z.ZodString>;
             dataSourceMappingIds: z.ZodArray<z.ZodString>;
             nameIds: z.ZodArray<z.ZodString>;
-            relationshipIds: z.ZodArray<z.ZodString>;
             recommendationScopeIds: z.ZodArray<z.ZodString>;
         }, z.core.$strip>;
         notificationPolicies: z.ZodArray<z.ZodObject<{
@@ -1940,46 +1195,10 @@ export declare const previewComponentMerge: import("../orpc-contracts/index.js")
             beforeComponentIds: z.ZodArray<z.ZodString>;
             afterComponentIds: z.ZodArray<z.ZodString>;
         }, z.core.$strip>>;
-        notificationScopeChanges: z.ZodArray<z.ZodObject<{
-            kind: z.ZodEnum<{
-                automation_binding: "automation_binding";
-                notification_rule: "notification_rule";
-            }>;
-            policyId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            rowRevision: z.ZodNumber;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-        automationScopeChanges: z.ZodArray<z.ZodObject<{
-            kind: z.ZodEnum<{
-                automation_binding: "automation_binding";
-                notification_rule: "notification_rule";
-            }>;
-            policyId: z.ZodString;
-            ownerComponentId: z.ZodString;
-            rowRevision: z.ZodNumber;
-            beforeComponentIds: z.ZodArray<z.ZodString>;
-            afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
-        relationshipChanges: z.ZodArray<z.ZodObject<{
-            relationshipId: z.ZodString;
-            action: z.ZodEnum<{
-                close_duplicate: "close_duplicate";
-                close_self: "close_self";
-                rewire: "rewire";
-            }>;
-            relationshipType: z.ZodEnum<{
-                depends_on: "depends_on";
-                part_of: "part_of";
-            }>;
-            beforeSourceComponentId: z.ZodString;
-            beforeTargetComponentId: z.ZodString;
-            afterSourceComponentId: z.ZodString;
-            afterTargetComponentId: z.ZodString;
-            survivingRelationshipId: z.ZodNullable<z.ZodString>;
-            beforeRowRevision: z.ZodNumber;
-            afterRowRevision: z.ZodNullable<z.ZodNumber>;
+        owningTeams: z.ZodArray<z.ZodObject<{
+            componentId: z.ZodString;
+            teamId: z.ZodString;
+            teamName: z.ZodString;
         }, z.core.$strip>>;
         recommendationScopeEnabled: z.ZodLiteral<false>;
         dependentCount: z.ZodNumber;
@@ -2017,25 +1236,6 @@ export declare const mergeComponent: import("../orpc-contracts/index.js").Operat
             dataSourceMappingIds: z.ZodArray<z.ZodString>;
             movedAliasIds: z.ZodArray<z.ZodString>;
             historicalDisplayIds: z.ZodArray<z.ZodString>;
-            relationshipChanges: z.ZodArray<z.ZodObject<{
-                relationshipId: z.ZodString;
-                action: z.ZodEnum<{
-                    close_duplicate: "close_duplicate";
-                    close_self: "close_self";
-                    rewire: "rewire";
-                }>;
-                relationshipType: z.ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                beforeSourceComponentId: z.ZodString;
-                beforeTargetComponentId: z.ZodString;
-                afterSourceComponentId: z.ZodString;
-                afterTargetComponentId: z.ZodString;
-                survivingRelationshipId: z.ZodNullable<z.ZodString>;
-                beforeRowRevision: z.ZodNumber;
-                afterRowRevision: z.ZodNullable<z.ZodNumber>;
-            }, z.core.$strip>>;
             notificationPolicies: z.ZodArray<z.ZodObject<{
                 policyId: z.ZodString;
                 action: z.ZodEnum<{
@@ -2059,28 +1259,6 @@ export declare const mergeComponent: import("../orpc-contracts/index.js").Operat
                 equivalentPolicyId: z.ZodNullable<z.ZodString>;
                 beforeRowRevision: z.ZodNumber;
                 afterRowRevision: z.ZodNumber;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            notificationScopeChanges: z.ZodArray<z.ZodObject<{
-                kind: z.ZodEnum<{
-                    automation_binding: "automation_binding";
-                    notification_rule: "notification_rule";
-                }>;
-                policyId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                rowRevision: z.ZodNumber;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationScopeChanges: z.ZodArray<z.ZodObject<{
-                kind: z.ZodEnum<{
-                    automation_binding: "automation_binding";
-                    notification_rule: "notification_rule";
-                }>;
-                policyId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                rowRevision: z.ZodNumber;
                 beforeComponentIds: z.ZodArray<z.ZodString>;
                 afterComponentIds: z.ZodArray<z.ZodString>;
             }, z.core.$strip>>;
@@ -2396,7 +1574,6 @@ export declare const componentsContract: {
                 notificationRuleIds: z.ZodArray<z.ZodString>;
                 dataSourceMappingIds: z.ZodArray<z.ZodString>;
                 observationIds: z.ZodArray<z.ZodString>;
-                relationshipIds: z.ZodArray<z.ZodString>;
                 recommendationScopeIds: z.ZodArray<z.ZodString>;
                 externalIncidentIds: z.ZodArray<z.ZodString>;
                 authorizedDeliveryIds: z.ZodArray<z.ZodString>;
@@ -2428,10 +1605,6 @@ export declare const componentsContract: {
                     rowRevision: z.ZodNumber;
                 }, z.core.$strip>>;
                 automationBindings: z.ZodArray<z.ZodObject<{
-                    id: z.ZodString;
-                    rowRevision: z.ZodNumber;
-                }, z.core.$strip>>;
-                relationships: z.ZodArray<z.ZodObject<{
                     id: z.ZodString;
                     rowRevision: z.ZodNumber;
                 }, z.core.$strip>>;
@@ -2506,7 +1679,6 @@ export declare const componentsContract: {
                 notificationRuleIds: z.ZodArray<z.ZodString>;
                 automationBindingIds: z.ZodArray<z.ZodString>;
                 recommendationScopeIds: z.ZodArray<z.ZodString>;
-                relationshipIds: z.ZodArray<z.ZodString>;
             }, z.core.$strip>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -2520,7 +1692,6 @@ export declare const componentsContract: {
             notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-            relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, z.ZodObject<{
         result: z.ZodObject<{
@@ -2533,7 +1704,6 @@ export declare const componentsContract: {
                 notificationRuleIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
                 automationBindingIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
                 recommendationScopeIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
-                relationshipIds: z.ZodDefault<z.ZodArray<z.ZodString>>;
             }, z.core.$strip>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -2557,7 +1727,6 @@ export declare const componentsContract: {
                 observationIds: z.ZodArray<z.ZodString>;
                 dataSourceMappingIds: z.ZodArray<z.ZodString>;
                 nameIds: z.ZodArray<z.ZodString>;
-                relationshipIds: z.ZodArray<z.ZodString>;
                 recommendationScopeIds: z.ZodArray<z.ZodString>;
             }, z.core.$strip>;
             notificationPolicies: z.ZodArray<z.ZodObject<{
@@ -2602,46 +1771,10 @@ export declare const componentsContract: {
                 beforeComponentIds: z.ZodArray<z.ZodString>;
                 afterComponentIds: z.ZodArray<z.ZodString>;
             }, z.core.$strip>>;
-            notificationScopeChanges: z.ZodArray<z.ZodObject<{
-                kind: z.ZodEnum<{
-                    automation_binding: "automation_binding";
-                    notification_rule: "notification_rule";
-                }>;
-                policyId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                rowRevision: z.ZodNumber;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            automationScopeChanges: z.ZodArray<z.ZodObject<{
-                kind: z.ZodEnum<{
-                    automation_binding: "automation_binding";
-                    notification_rule: "notification_rule";
-                }>;
-                policyId: z.ZodString;
-                ownerComponentId: z.ZodString;
-                rowRevision: z.ZodNumber;
-                beforeComponentIds: z.ZodArray<z.ZodString>;
-                afterComponentIds: z.ZodArray<z.ZodString>;
-            }, z.core.$strip>>;
-            relationshipChanges: z.ZodArray<z.ZodObject<{
-                relationshipId: z.ZodString;
-                action: z.ZodEnum<{
-                    close_duplicate: "close_duplicate";
-                    close_self: "close_self";
-                    rewire: "rewire";
-                }>;
-                relationshipType: z.ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                beforeSourceComponentId: z.ZodString;
-                beforeTargetComponentId: z.ZodString;
-                afterSourceComponentId: z.ZodString;
-                afterTargetComponentId: z.ZodString;
-                survivingRelationshipId: z.ZodNullable<z.ZodString>;
-                beforeRowRevision: z.ZodNumber;
-                afterRowRevision: z.ZodNullable<z.ZodNumber>;
+            owningTeams: z.ZodArray<z.ZodObject<{
+                componentId: z.ZodString;
+                teamId: z.ZodString;
+                teamName: z.ZodString;
             }, z.core.$strip>>;
             recommendationScopeEnabled: z.ZodLiteral<false>;
             dependentCount: z.ZodNumber;
@@ -2679,25 +1812,6 @@ export declare const componentsContract: {
                 dataSourceMappingIds: z.ZodArray<z.ZodString>;
                 movedAliasIds: z.ZodArray<z.ZodString>;
                 historicalDisplayIds: z.ZodArray<z.ZodString>;
-                relationshipChanges: z.ZodArray<z.ZodObject<{
-                    relationshipId: z.ZodString;
-                    action: z.ZodEnum<{
-                        close_duplicate: "close_duplicate";
-                        close_self: "close_self";
-                        rewire: "rewire";
-                    }>;
-                    relationshipType: z.ZodEnum<{
-                        depends_on: "depends_on";
-                        part_of: "part_of";
-                    }>;
-                    beforeSourceComponentId: z.ZodString;
-                    beforeTargetComponentId: z.ZodString;
-                    afterSourceComponentId: z.ZodString;
-                    afterTargetComponentId: z.ZodString;
-                    survivingRelationshipId: z.ZodNullable<z.ZodString>;
-                    beforeRowRevision: z.ZodNumber;
-                    afterRowRevision: z.ZodNullable<z.ZodNumber>;
-                }, z.core.$strip>>;
                 notificationPolicies: z.ZodArray<z.ZodObject<{
                     policyId: z.ZodString;
                     action: z.ZodEnum<{
@@ -2724,216 +1838,10 @@ export declare const componentsContract: {
                     beforeComponentIds: z.ZodArray<z.ZodString>;
                     afterComponentIds: z.ZodArray<z.ZodString>;
                 }, z.core.$strip>>;
-                notificationScopeChanges: z.ZodArray<z.ZodObject<{
-                    kind: z.ZodEnum<{
-                        automation_binding: "automation_binding";
-                        notification_rule: "notification_rule";
-                    }>;
-                    policyId: z.ZodString;
-                    ownerComponentId: z.ZodString;
-                    rowRevision: z.ZodNumber;
-                    beforeComponentIds: z.ZodArray<z.ZodString>;
-                    afterComponentIds: z.ZodArray<z.ZodString>;
-                }, z.core.$strip>>;
-                automationScopeChanges: z.ZodArray<z.ZodObject<{
-                    kind: z.ZodEnum<{
-                        automation_binding: "automation_binding";
-                        notification_rule: "notification_rule";
-                    }>;
-                    policyId: z.ZodString;
-                    ownerComponentId: z.ZodString;
-                    rowRevision: z.ZodNumber;
-                    beforeComponentIds: z.ZodArray<z.ZodString>;
-                    afterComponentIds: z.ZodArray<z.ZodString>;
-                }, z.core.$strip>>;
                 recommendationScopeIds: z.ZodArray<z.ZodString>;
             }, z.core.$strip>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    readonly relationships: {
-        readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-            projectId: z.ZodOptional<z.ZodString>;
-            includeHistorical: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
-        }, z.core.$strip>, z.ZodObject<{
-            relationships: z.ZodArray<z.ZodObject<{
-                id: z.ZodString;
-                source: z.ZodObject<{
-                    originalComponentId: z.ZodString;
-                    effectiveComponentId: z.ZodString;
-                    name: z.ZodString;
-                    lifecycle: z.ZodEnum<{
-                        active: "active";
-                        inactive: "inactive";
-                        merged: "merged";
-                    }>;
-                    observationState: z.ZodEnum<{
-                        observed: "observed";
-                        stale: "stale";
-                        unobserved: "unobserved";
-                    }>;
-                }, z.core.$strip>;
-                target: z.ZodObject<{
-                    originalComponentId: z.ZodString;
-                    effectiveComponentId: z.ZodString;
-                    name: z.ZodString;
-                    lifecycle: z.ZodEnum<{
-                        active: "active";
-                        inactive: "inactive";
-                        merged: "merged";
-                    }>;
-                    observationState: z.ZodEnum<{
-                        observed: "observed";
-                        stale: "stale";
-                        unobserved: "unobserved";
-                    }>;
-                }, z.core.$strip>;
-                relationshipType: z.ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                createdAt: z.ZodString;
-                endedAt: z.ZodNullable<z.ZodString>;
-                endReason: z.ZodNullable<z.ZodString>;
-                rowRevision: z.ZodNumber;
-            }, z.core.$strip>>;
-        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly preview: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-            projectId: z.ZodOptional<z.ZodString>;
-            sourceComponentId: z.ZodString;
-            targetComponentId: z.ZodString;
-            relationshipType: z.ZodEnum<{
-                depends_on: "depends_on";
-                part_of: "part_of";
-            }>;
-            action: z.ZodEnum<{
-                add: "add";
-                remove: "remove";
-            }>;
-        }, z.core.$strip>, z.ZodObject<{
-            preview: z.ZodObject<{
-                sourceComponentId: z.ZodString;
-                targetComponentId: z.ZodString;
-                relationshipType: z.ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                action: z.ZodEnum<{
-                    add: "add";
-                    remove: "remove";
-                }>;
-                organizationId: z.ZodString;
-                projectId: z.ZodString;
-                relationshipId: z.ZodNullable<z.ZodString>;
-                componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-                policyImpact: z.ZodObject<{
-                    notificationRules: z.ZodArray<z.ZodObject<{
-                        ruleId: z.ZodString;
-                        ruleGroupId: z.ZodNullable<z.ZodString>;
-                        ownerComponentId: z.ZodString;
-                        destinationIds: z.ZodArray<z.ZodString>;
-                        beforeComponentIds: z.ZodArray<z.ZodString>;
-                        afterComponentIds: z.ZodArray<z.ZodString>;
-                    }, z.core.$strip>>;
-                    automationBindings: z.ZodArray<z.ZodObject<{
-                        bindingId: z.ZodString;
-                        automationId: z.ZodString;
-                        ownerComponentId: z.ZodString;
-                        beforeComponentIds: z.ZodArray<z.ZodString>;
-                        afterComponentIds: z.ZodArray<z.ZodString>;
-                    }, z.core.$strip>>;
-                }, z.core.$strip>;
-                confirmationRequired: z.ZodBoolean;
-            }, z.core.$strip>;
-        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly add: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-            projectId: z.ZodOptional<z.ZodString>;
-            sourceComponentId: z.ZodString;
-            targetComponentId: z.ZodString;
-            relationshipType: z.ZodEnum<{
-                depends_on: "depends_on";
-                part_of: "part_of";
-            }>;
-            requestId: z.ZodString;
-            reason: z.ZodString;
-            componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-            confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
-        }, z.core.$strip>, z.ZodObject<{
-            result: z.ZodObject<{
-                action: z.ZodEnum<{
-                    add: "add";
-                    remove: "remove";
-                }>;
-                relationshipId: z.ZodString;
-                sourceComponentId: z.ZodString;
-                targetComponentId: z.ZodString;
-                relationshipType: z.ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                policyImpact: z.ZodObject<{
-                    notificationRules: z.ZodArray<z.ZodObject<{
-                        ruleId: z.ZodString;
-                        ruleGroupId: z.ZodNullable<z.ZodString>;
-                        ownerComponentId: z.ZodString;
-                        destinationIds: z.ZodArray<z.ZodString>;
-                        beforeComponentIds: z.ZodArray<z.ZodString>;
-                        afterComponentIds: z.ZodArray<z.ZodString>;
-                    }, z.core.$strip>>;
-                    automationBindings: z.ZodArray<z.ZodObject<{
-                        bindingId: z.ZodString;
-                        automationId: z.ZodString;
-                        ownerComponentId: z.ZodString;
-                        beforeComponentIds: z.ZodArray<z.ZodString>;
-                        afterComponentIds: z.ZodArray<z.ZodString>;
-                    }, z.core.$strip>>;
-                }, z.core.$strip>;
-            }, z.core.$strip>;
-        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly remove: import("@orpc/contract").ContractProcedure<z.ZodObject<{
-            projectId: z.ZodOptional<z.ZodString>;
-            sourceComponentId: z.ZodString;
-            targetComponentId: z.ZodString;
-            relationshipType: z.ZodEnum<{
-                depends_on: "depends_on";
-                part_of: "part_of";
-            }>;
-            requestId: z.ZodString;
-            reason: z.ZodString;
-            componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-            confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
-        }, z.core.$strip>, z.ZodObject<{
-            result: z.ZodObject<{
-                action: z.ZodEnum<{
-                    add: "add";
-                    remove: "remove";
-                }>;
-                relationshipId: z.ZodString;
-                sourceComponentId: z.ZodString;
-                targetComponentId: z.ZodString;
-                relationshipType: z.ZodEnum<{
-                    depends_on: "depends_on";
-                    part_of: "part_of";
-                }>;
-                policyImpact: z.ZodObject<{
-                    notificationRules: z.ZodArray<z.ZodObject<{
-                        ruleId: z.ZodString;
-                        ruleGroupId: z.ZodNullable<z.ZodString>;
-                        ownerComponentId: z.ZodString;
-                        destinationIds: z.ZodArray<z.ZodString>;
-                        beforeComponentIds: z.ZodArray<z.ZodString>;
-                        afterComponentIds: z.ZodArray<z.ZodString>;
-                    }, z.core.$strip>>;
-                    automationBindings: z.ZodArray<z.ZodObject<{
-                        bindingId: z.ZodString;
-                        automationId: z.ZodString;
-                        ownerComponentId: z.ZodString;
-                        beforeComponentIds: z.ZodArray<z.ZodString>;
-                        afterComponentIds: z.ZodArray<z.ZodString>;
-                    }, z.core.$strip>>;
-                }, z.core.$strip>;
-            }, z.core.$strip>;
-        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    };
     readonly incidents: {
         readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
             projectId: z.ZodOptional<z.ZodString>;

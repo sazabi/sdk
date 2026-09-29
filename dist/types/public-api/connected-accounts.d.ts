@@ -58,6 +58,7 @@ export declare const GetConnectedAccountConnectAttemptOutputSchema: z.ZodObject<
         pending: "pending";
     }>;
     conflictPending: z.ZodOptional<z.ZodBoolean>;
+    conflictDeclined: z.ZodOptional<z.ZodBoolean>;
     errorCode: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type GetConnectedAccountConnectAttemptInput = z.infer<typeof GetConnectedAccountConnectAttemptInputSchema>;
@@ -73,6 +74,7 @@ export declare const getConnectedAccountConnectAttempt: import("../orpc-contract
         pending: "pending";
     }>;
     conflictPending: z.ZodOptional<z.ZodBoolean>;
+    conflictDeclined: z.ZodOptional<z.ZodBoolean>;
     errorCode: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const ListConnectedAccountsInputSchema: z.ZodObject<{
@@ -134,6 +136,7 @@ export declare const ConnectedAccountSchema: z.ZodObject<{
     provider: z.ZodString;
     externalName: z.ZodNullable<z.ZodString>;
     externalLogin: z.ZodNullable<z.ZodString>;
+    externalEmail: z.ZodNullable<z.ZodString>;
     connectedAt: z.ZodNullable<z.ZodString>;
     authMode: z.ZodNullable<z.ZodEnum<{
         oauth: "oauth";
@@ -198,6 +201,7 @@ export declare const ListConnectedAccountsOutputSchema: z.ZodObject<{
         provider: z.ZodString;
         externalName: z.ZodNullable<z.ZodString>;
         externalLogin: z.ZodNullable<z.ZodString>;
+        externalEmail: z.ZodNullable<z.ZodString>;
         connectedAt: z.ZodNullable<z.ZodString>;
         authMode: z.ZodNullable<z.ZodEnum<{
             oauth: "oauth";
@@ -268,6 +272,7 @@ export declare const listConnectedAccounts: import("../orpc-contracts/index.js")
         provider: z.ZodString;
         externalName: z.ZodNullable<z.ZodString>;
         externalLogin: z.ZodNullable<z.ZodString>;
+        externalEmail: z.ZodNullable<z.ZodString>;
         connectedAt: z.ZodNullable<z.ZodString>;
         authMode: z.ZodNullable<z.ZodEnum<{
             oauth: "oauth";

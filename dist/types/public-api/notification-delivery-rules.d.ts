@@ -44,7 +44,7 @@ export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
         issue_triggered: "issue_triggered";
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
-    includeDescendants: z.ZodDefault<z.ZodBoolean>;
+    teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     condition: z.ZodObject<{
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
             critical: "critical";
@@ -105,7 +105,7 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
-    includeDescendants: z.ZodDefault<z.ZodBoolean>;
+    teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     condition: z.ZodUnion<readonly [z.ZodObject<{
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
             critical: "critical";
@@ -166,6 +166,10 @@ export declare const DeliveryRuleComponentSchema: z.ZodObject<{
         merged: "merged";
     }>;
 }, z.core.$strip>;
+export declare const DeliveryRuleTeamSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+}, z.core.$strip>;
 export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
@@ -207,7 +211,6 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
-    includeDescendants: z.ZodBoolean;
     suspendedAt: z.ZodNullable<z.ZodString>;
     suspensionReason: z.ZodNullable<z.ZodString>;
     components: z.ZodArray<z.ZodObject<{
@@ -218,6 +221,11 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
             inactive: "inactive";
             merged: "merged";
         }>;
+    }, z.core.$strip>>;
+    teamIds: z.ZodArray<z.ZodString>;
+    teams: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -268,7 +276,6 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
-        includeDescendants: z.ZodBoolean;
         suspendedAt: z.ZodNullable<z.ZodString>;
         suspensionReason: z.ZodNullable<z.ZodString>;
         components: z.ZodArray<z.ZodObject<{
@@ -279,6 +286,11 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
                 inactive: "inactive";
                 merged: "merged";
             }>;
+        }, z.core.$strip>>;
+        teamIds: z.ZodArray<z.ZodString>;
+        teams: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -293,6 +305,11 @@ export declare const DeliveryRuleChannelCatalogStateSchema: z.ZodObject<{
     }>;
     lastSucceededAt: z.ZodNullable<z.ZodString>;
     isInitialSyncPending: z.ZodBoolean;
+}, z.core.$strip>;
+export declare const DeliveryRuleTeamOptionSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    ownedComponentCount: z.ZodNumber;
 }, z.core.$strip>;
 export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
@@ -331,6 +348,11 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
             inactive: "inactive";
             merged: "merged";
         }>;
+    }, z.core.$strip>>;
+    teams: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        ownedComponentCount: z.ZodNumber;
     }, z.core.$strip>>;
     channelCatalogs: z.ZodOptional<z.ZodObject<{
         slack: z.ZodNullable<z.ZodObject<{
@@ -377,7 +399,7 @@ export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
-    includeDescendants: z.ZodDefault<z.ZodBoolean>;
+    teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     condition: z.ZodUnion<readonly [z.ZodObject<{
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
             critical: "critical";
@@ -437,7 +459,6 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
-    includeDescendants: z.ZodBoolean;
     suspendedAt: z.ZodNullable<z.ZodString>;
     suspensionReason: z.ZodNullable<z.ZodString>;
     components: z.ZodArray<z.ZodObject<{
@@ -448,6 +469,11 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
             inactive: "inactive";
             merged: "merged";
         }>;
+    }, z.core.$strip>>;
+    teamIds: z.ZodArray<z.ZodString>;
+    teams: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -473,7 +499,7 @@ export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
-    includeDescendants: z.ZodDefault<z.ZodBoolean>;
+    teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     condition: z.ZodUnion<readonly [z.ZodObject<{
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
             critical: "critical";
@@ -534,7 +560,6 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
-    includeDescendants: z.ZodBoolean;
     suspendedAt: z.ZodNullable<z.ZodString>;
     suspensionReason: z.ZodNullable<z.ZodString>;
     components: z.ZodArray<z.ZodObject<{
@@ -545,6 +570,11 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
             inactive: "inactive";
             merged: "merged";
         }>;
+    }, z.core.$strip>>;
+    teamIds: z.ZodArray<z.ZodString>;
+    teams: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -608,7 +638,6 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
-        includeDescendants: z.ZodBoolean;
         suspendedAt: z.ZodNullable<z.ZodString>;
         suspensionReason: z.ZodNullable<z.ZodString>;
         components: z.ZodArray<z.ZodObject<{
@@ -619,6 +648,11 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
                 inactive: "inactive";
                 merged: "merged";
             }>;
+        }, z.core.$strip>>;
+        teamIds: z.ZodArray<z.ZodString>;
+        teams: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -664,6 +698,11 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
             merged: "merged";
         }>;
     }, z.core.$strip>>;
+    teams: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        ownedComponentCount: z.ZodNumber;
+    }, z.core.$strip>>;
     channelCatalogs: z.ZodOptional<z.ZodObject<{
         slack: z.ZodNullable<z.ZodObject<{
             status: z.ZodEnum<{
@@ -708,7 +747,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
-    includeDescendants: z.ZodDefault<z.ZodBoolean>;
+    teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     condition: z.ZodUnion<readonly [z.ZodObject<{
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
             critical: "critical";
@@ -767,7 +806,6 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
-    includeDescendants: z.ZodBoolean;
     suspendedAt: z.ZodNullable<z.ZodString>;
     suspensionReason: z.ZodNullable<z.ZodString>;
     components: z.ZodArray<z.ZodObject<{
@@ -778,6 +816,11 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
             inactive: "inactive";
             merged: "merged";
         }>;
+    }, z.core.$strip>>;
+    teamIds: z.ZodArray<z.ZodString>;
+    teams: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -803,7 +846,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
-    includeDescendants: z.ZodDefault<z.ZodBoolean>;
+    teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     condition: z.ZodUnion<readonly [z.ZodObject<{
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
             critical: "critical";
@@ -863,7 +906,6 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
         }>;
     }, z.core.$strip>>;
     componentId: z.ZodNullable<z.ZodString>;
-    includeDescendants: z.ZodBoolean;
     suspendedAt: z.ZodNullable<z.ZodString>;
     suspensionReason: z.ZodNullable<z.ZodString>;
     components: z.ZodArray<z.ZodObject<{
@@ -874,6 +916,11 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
             inactive: "inactive";
             merged: "merged";
         }>;
+    }, z.core.$strip>>;
+    teamIds: z.ZodArray<z.ZodString>;
+    teams: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
     }, z.core.$strip>>;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -929,7 +976,6 @@ export declare const notificationDeliveryRulesContract: {
                 }>;
             }, z.core.$strip>>;
             componentId: z.ZodNullable<z.ZodString>;
-            includeDescendants: z.ZodBoolean;
             suspendedAt: z.ZodNullable<z.ZodString>;
             suspensionReason: z.ZodNullable<z.ZodString>;
             components: z.ZodArray<z.ZodObject<{
@@ -940,6 +986,11 @@ export declare const notificationDeliveryRulesContract: {
                     inactive: "inactive";
                     merged: "merged";
                 }>;
+            }, z.core.$strip>>;
+            teamIds: z.ZodArray<z.ZodString>;
+            teams: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
             }, z.core.$strip>>;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -985,6 +1036,11 @@ export declare const notificationDeliveryRulesContract: {
                 merged: "merged";
             }>;
         }, z.core.$strip>>;
+        teams: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            ownedComponentCount: z.ZodNumber;
+        }, z.core.$strip>>;
         channelCatalogs: z.ZodOptional<z.ZodObject<{
             slack: z.ZodNullable<z.ZodObject<{
                 status: z.ZodEnum<{
@@ -1029,7 +1085,7 @@ export declare const notificationDeliveryRulesContract: {
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         componentId: z.ZodOptional<z.ZodString>;
-        includeDescendants: z.ZodDefault<z.ZodBoolean>;
+        teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         condition: z.ZodUnion<readonly [z.ZodObject<{
             severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
                 critical: "critical";
@@ -1088,7 +1144,6 @@ export declare const notificationDeliveryRulesContract: {
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
-        includeDescendants: z.ZodBoolean;
         suspendedAt: z.ZodNullable<z.ZodString>;
         suspensionReason: z.ZodNullable<z.ZodString>;
         components: z.ZodArray<z.ZodObject<{
@@ -1099,6 +1154,11 @@ export declare const notificationDeliveryRulesContract: {
                 inactive: "inactive";
                 merged: "merged";
             }>;
+        }, z.core.$strip>>;
+        teamIds: z.ZodArray<z.ZodString>;
+        teams: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -1124,7 +1184,7 @@ export declare const notificationDeliveryRulesContract: {
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         componentId: z.ZodOptional<z.ZodString>;
-        includeDescendants: z.ZodDefault<z.ZodBoolean>;
+        teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         condition: z.ZodUnion<readonly [z.ZodObject<{
             severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
                 critical: "critical";
@@ -1184,7 +1244,6 @@ export declare const notificationDeliveryRulesContract: {
             }>;
         }, z.core.$strip>>;
         componentId: z.ZodNullable<z.ZodString>;
-        includeDescendants: z.ZodBoolean;
         suspendedAt: z.ZodNullable<z.ZodString>;
         suspensionReason: z.ZodNullable<z.ZodString>;
         components: z.ZodArray<z.ZodObject<{
@@ -1195,6 +1254,11 @@ export declare const notificationDeliveryRulesContract: {
                 inactive: "inactive";
                 merged: "merged";
             }>;
+        }, z.core.$strip>>;
+        teamIds: z.ZodArray<z.ZodString>;
+        teams: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
         }, z.core.$strip>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;

@@ -26,7 +26,7 @@ export declare const WebhookSubscriptionSchema: z.ZodObject<{
         medium: "medium";
     }>>;
     componentIds: z.ZodArray<z.ZodString>;
-    includeDescendants: z.ZodBoolean;
+    teamIds: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
 export declare const WebhookDetailSchema: z.ZodObject<{
     id: z.ZodString;
@@ -54,7 +54,7 @@ export declare const WebhookDetailSchema: z.ZodObject<{
             medium: "medium";
         }>>;
         componentIds: z.ZodArray<z.ZodString>;
-        includeDescendants: z.ZodBoolean;
+        teamIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export declare const WebhookDeliverySchema: z.ZodObject<{
@@ -501,7 +501,7 @@ export declare const webhooksGet: import("../orpc-contracts/index.js").Operation
             medium: "medium";
         }>>;
         componentIds: z.ZodArray<z.ZodString>;
-        includeDescendants: z.ZodBoolean;
+        teamIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const webhooksCreate: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -614,7 +614,7 @@ export declare const webhooksSubscribe: import("../orpc-contracts/index.js").Ope
         medium: "medium";
     }>>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
-    includeDescendants: z.ZodOptional<z.ZodBoolean>;
+    teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
@@ -626,7 +626,7 @@ export declare const webhooksSubscribe: import("../orpc-contracts/index.js").Ope
         medium: "medium";
     }>>;
     componentIds: z.ZodArray<z.ZodString>;
-    includeDescendants: z.ZodBoolean;
+    teamIds: z.ZodArray<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const webhooksUnsubscribe: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     webhookId: z.ZodString;

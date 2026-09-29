@@ -187,6 +187,8 @@ export declare const CreateIssueOutputSchema: z.ZodObject<{
         locked: z.ZodBoolean;
         redacted: z.ZodBoolean;
     }, z.core.$strip>;
+    created: z.ZodBoolean;
+    message: z.ZodString;
     duplicateIssueId: z.ZodOptional<z.ZodString>;
     possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -825,6 +827,8 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
         locked: z.ZodBoolean;
         redacted: z.ZodBoolean;
     }, z.core.$strip>;
+    created: z.ZodBoolean;
+    message: z.ZodString;
     duplicateIssueId: z.ZodOptional<z.ZodString>;
     possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, "api">;
@@ -1322,6 +1326,8 @@ export declare const issuesContract: {
             locked: z.ZodBoolean;
             redacted: z.ZodBoolean;
         }, z.core.$strip>;
+        created: z.ZodBoolean;
+        message: z.ZodString;
         duplicateIssueId: z.ZodOptional<z.ZodString>;
         possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;

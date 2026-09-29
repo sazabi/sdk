@@ -31,7 +31,7 @@ export declare const SETUP_TASKS: readonly [{
 }, {
     readonly id: "install_cli";
     readonly label: "Use Sazabi CLI";
-    readonly description: "Install the Sazabi CLI so you and your coding agents can query logs, search project memory, and manage Sazabi from the terminal. The task is complete once any member of your organization signs in with the CLI.";
+    readonly description: "Install the Sazabi CLI so you and your coding agents can query logs, search project memory, and manage Sazabi from the terminal. Complete once you sign in to the Sazabi CLI.";
     readonly instructions: "Run 'npm install -g @sazabi/cli' to install the CLI, then 'sazabi auth sign-in' to sign in. The full command reference lives at https://docs.sazabi.com/reference/cli.";
     readonly category: "setup";
 }, {

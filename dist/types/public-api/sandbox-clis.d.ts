@@ -261,6 +261,7 @@ export declare const UpsertSandboxCliInputSchema: z.ZodObject<{
         key: z.ZodString;
         value: z.ZodString;
     }, z.core.$strip>>;
+    skipTest: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 /**
  * Response intentionally excludes all env var values — only the resulting key
@@ -270,6 +271,11 @@ export declare const UpsertSandboxCliOutputSchema: z.ZodObject<{
     projectId: z.ZodString;
     cliType: z.ZodString;
     envVarKeys: z.ZodArray<z.ZodString>;
+    connectionTest: z.ZodEnum<{
+        inconclusive: "inconclusive";
+        passed: "passed";
+        skipped: "skipped";
+    }>;
 }, z.core.$strip>;
 export type UpsertSandboxCliInput = z.infer<typeof UpsertSandboxCliInputSchema>;
 export type UpsertSandboxCliOutput = z.infer<typeof UpsertSandboxCliOutputSchema>;
@@ -280,10 +286,16 @@ export declare const upsertSandboxCli: import("../orpc-contracts/index.js").Oper
         key: z.ZodString;
         value: z.ZodString;
     }, z.core.$strip>>;
+    skipTest: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     projectId: z.ZodString;
     cliType: z.ZodString;
     envVarKeys: z.ZodArray<z.ZodString>;
+    connectionTest: z.ZodEnum<{
+        inconclusive: "inconclusive";
+        passed: "passed";
+        skipped: "skipped";
+    }>;
 }, z.core.$strip>, "api">;
 export declare const DeleteSandboxCliInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
@@ -449,13 +461,19 @@ export declare const sandboxClisContract: {
             key: z.ZodString;
             value: z.ZodString;
         }, z.core.$strip>>;
+        skipTest: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodObject<{
         projectId: z.ZodString;
         cliType: z.ZodString;
         envVarKeys: z.ZodArray<z.ZodString>;
+        connectionTest: z.ZodEnum<{
+            inconclusive: "inconclusive";
+            passed: "passed";
+            skipped: "skipped";
+        }>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };
-/** Check only the currently stored revision; draft testing remains separate. */
+/** Check only the currently stored revision; saving tests its own draft. */
 export declare const verifySandboxCli: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     cliType: z.ZodString;
