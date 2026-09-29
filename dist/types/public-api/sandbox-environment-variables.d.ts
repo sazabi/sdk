@@ -6,6 +6,16 @@
  * Values are encrypted at rest with AES-256-GCM and never returned by the API.
  */
 import { z } from "zod";
+/**
+ * The shape every environment variable name must have. A lookup accepts any
+ * well-formed name, reserved ones included: a reserved name is not a user
+ * variable, so looking it up answers not found rather than invalid.
+ */
+export declare const SandboxEnvironmentVariableKeyFormatSchema: z.ZodString;
+/**
+ * A name a customer may set or delete: well-formed and not reserved for
+ * Sazabi (`SAZABI_TOKEN` carries the project's system credential).
+ */
 export declare const SandboxEnvironmentVariableKeySchema: z.ZodString;
 export declare const SandboxEnvironmentVariableValueSchema: z.ZodString;
 export declare const SandboxEnvironmentVariableSchema: z.ZodObject<{
