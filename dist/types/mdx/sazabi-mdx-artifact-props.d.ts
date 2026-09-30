@@ -242,16 +242,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -267,10 +264,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -292,10 +289,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -313,10 +310,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -338,10 +335,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -356,16 +353,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -382,16 +406,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -407,10 +428,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -432,10 +453,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -453,10 +474,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -478,10 +499,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -496,16 +517,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -522,16 +570,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -547,10 +592,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -572,10 +617,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -593,10 +638,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -618,10 +663,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -636,16 +681,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -665,16 +737,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -690,10 +759,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -715,10 +784,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -736,10 +805,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -761,10 +830,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -779,16 +848,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1010,16 +1106,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1035,10 +1128,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1060,10 +1153,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1081,10 +1174,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1106,10 +1199,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1124,16 +1217,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1150,16 +1270,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1175,10 +1292,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1200,10 +1317,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1221,10 +1338,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1246,10 +1363,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1264,16 +1381,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1290,16 +1434,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1315,10 +1456,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1340,10 +1481,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1361,10 +1502,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1386,10 +1527,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1404,16 +1545,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1433,16 +1601,13 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1458,10 +1623,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1483,10 +1648,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1504,10 +1669,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1529,10 +1694,10 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1547,16 +1712,43 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1787,16 +1979,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1812,10 +2001,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1837,10 +2026,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1858,10 +2047,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1883,10 +2072,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1901,16 +2090,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1927,16 +2143,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1952,10 +2165,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1977,10 +2190,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1998,10 +2211,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2023,10 +2236,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2041,16 +2254,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2067,16 +2307,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2092,10 +2329,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2117,10 +2354,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2138,10 +2375,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2163,10 +2400,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2181,16 +2418,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2210,16 +2474,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2235,10 +2496,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2260,10 +2521,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2281,10 +2542,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2306,10 +2567,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2324,16 +2585,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2555,16 +2843,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2580,10 +2865,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2605,10 +2890,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2626,10 +2911,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2651,10 +2936,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2669,16 +2954,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2695,16 +3007,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2720,10 +3029,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2745,10 +3054,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2766,10 +3075,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2791,10 +3100,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2809,16 +3118,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2835,16 +3171,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2860,10 +3193,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2885,10 +3218,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2906,10 +3239,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2931,10 +3264,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2949,16 +3282,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2978,16 +3338,13 @@ export declare const metricPropsSchema: z.ZodObject<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3003,10 +3360,10 @@ export declare const metricPropsSchema: z.ZodObject<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3028,10 +3385,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3049,10 +3406,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3074,10 +3431,10 @@ export declare const metricPropsSchema: z.ZodObject<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3092,16 +3449,43 @@ export declare const metricPropsSchema: z.ZodObject<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {

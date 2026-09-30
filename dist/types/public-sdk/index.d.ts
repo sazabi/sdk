@@ -192,7 +192,7 @@ export interface PublicSdkClient {
     logs: {
         /** Answers a natural-language question about stored logs (POST /logs/ask). */
         ask(input: AskLogsInput): Promise<AskLogsOutput>;
-        /** Runs an earlier answer's query again by `queryId`, with no model (POST /logs/queries/{queryId}/execute). */
+        /** Runs a log query by `queryId` or from a `spec`, with no model (POST /logs/queries/execute). */
         executeQuery(input: ExecuteLogQueryInput): Promise<ExecuteLogQueryOutput>;
         tail(input: TailLogsParams): Promise<TailLogStream>;
         forward(input: ForwardLogsParams): Promise<ForwardLogsOutput>;

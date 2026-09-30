@@ -1551,16 +1551,13 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
         execution: z.ZodOptional<z.ZodObject<{
             spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
-                source: z.ZodObject<{
-                    kind: z.ZodLiteral<"logs">;
-                }, z.core.$strict>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1575,10 +1572,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1594,10 +1591,26 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
                     kind: z.ZodLiteral<"service">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"severity_number">;
+                    kind: z.ZodLiteral<"severity">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"column">;
-                    name: z.ZodString;
+                    name: z.ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"attribute">;
                     source: z.ZodEnum<{
@@ -1623,10 +1636,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1641,10 +1654,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1662,10 +1675,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1680,10 +1693,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1716,10 +1729,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1734,10 +1747,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1755,6 +1768,8 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         oldest: "oldest";
                     }>>;
                 }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"request_count">;
+                }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"duration">;
@@ -1766,6 +1781,45 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         p99: "p99";
                         sum: "sum";
                     }>;
+                }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"ratio">;
+                    numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
                 }, z.core.$strict>], "op">;
                 bucket: z.ZodOptional<z.ZodEnum<{
                     "1d": "1d";
@@ -1785,6 +1839,16 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         other: "other";
                     }>;
                 }, z.core.$strict>>;
+                order: z.ZodOptional<z.ZodObject<{
+                    by: z.ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: z.ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, z.core.$strict>>;
                 exactness: z.ZodEnum<{
                     approximate_ok: "approximate_ok";
                     exact: "exact";
@@ -1798,50 +1862,20 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
             meta: z.ZodObject<{
-                representation: z.ZodEnum<{
-                    event_volume: "event_volume";
-                    exact_scan: "exact_scan";
-                    log_volume: "log_volume";
-                    pattern_index: "pattern_index";
-                    pattern_volume: "pattern_volume";
-                    request_metrics: "request_metrics";
-                    sampled_scan: "sampled_scan";
-                    standing: "standing";
-                }>;
                 exactness: z.ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
-                error: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"sampling">;
-                    relativeBound: z.ZodNumber;
+                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    method: z.ZodLiteral<"sampled">;
+                    relativeError: z.ZodNumber;
                     confidence: z.ZodLiteral<0.95>;
                     sampleFraction: z.ZodNumber;
-                    cellRows: z.ZodNumber;
-                    minCellRows: z.ZodNumber;
-                    designEffect: z.ZodNumber;
-                    omissionProbability: z.ZodObject<{
-                        oneIdentity: z.ZodNumber;
-                        boundedCell: z.ZodNumber;
-                        boundedCellIdentities: z.ZodNumber;
-                        maxMultiplicity: z.ZodNullable<z.ZodNumber>;
-                        basis: z.ZodString;
-                    }, z.core.$strict>;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"quantile_sketch">;
-                    algorithm: z.ZodEnum<{
-                        reservoir_sample: "reservoir_sample";
-                        tdigest: "tdigest";
-                    }>;
-                    compression: z.ZodNumber;
+                    method: z.ZodLiteral<"estimated_percentile">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"distinct_sketch">;
-                    algorithm: z.ZodString;
-                }, z.core.$strict>], "kind">>;
-                estimate: z.ZodOptional<z.ZodObject<{
-                    rows: z.ZodNumber;
-                    bytes: z.ZodNumber;
-                }, z.core.$strict>>;
+                    method: z.ZodLiteral<"estimated_distinct">;
+                }, z.core.$strict>], "method">>;
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -1859,7 +1893,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
                     kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
@@ -1874,16 +1907,13 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
         execution: z.ZodObject<{
             spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
-                source: z.ZodObject<{
-                    kind: z.ZodLiteral<"logs">;
-                }, z.core.$strict>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1898,10 +1928,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1917,10 +1947,26 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
                     kind: z.ZodLiteral<"service">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"severity_number">;
+                    kind: z.ZodLiteral<"severity">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"column">;
-                    name: z.ZodString;
+                    name: z.ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"attribute">;
                     source: z.ZodEnum<{
@@ -1946,10 +1992,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1964,10 +2010,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -1985,10 +2031,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2003,10 +2049,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2039,10 +2085,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2057,10 +2103,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2078,6 +2124,8 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         oldest: "oldest";
                     }>>;
                 }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"request_count">;
+                }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"duration">;
@@ -2089,6 +2137,45 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         p99: "p99";
                         sum: "sum";
                     }>;
+                }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"ratio">;
+                    numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
                 }, z.core.$strict>], "op">;
                 bucket: z.ZodOptional<z.ZodEnum<{
                     "1d": "1d";
@@ -2108,6 +2195,16 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         other: "other";
                     }>;
                 }, z.core.$strict>>;
+                order: z.ZodOptional<z.ZodObject<{
+                    by: z.ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: z.ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, z.core.$strict>>;
                 exactness: z.ZodEnum<{
                     approximate_ok: "approximate_ok";
                     exact: "exact";
@@ -2121,50 +2218,20 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
             meta: z.ZodObject<{
-                representation: z.ZodEnum<{
-                    event_volume: "event_volume";
-                    exact_scan: "exact_scan";
-                    log_volume: "log_volume";
-                    pattern_index: "pattern_index";
-                    pattern_volume: "pattern_volume";
-                    request_metrics: "request_metrics";
-                    sampled_scan: "sampled_scan";
-                    standing: "standing";
-                }>;
                 exactness: z.ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
-                error: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"sampling">;
-                    relativeBound: z.ZodNumber;
+                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    method: z.ZodLiteral<"sampled">;
+                    relativeError: z.ZodNumber;
                     confidence: z.ZodLiteral<0.95>;
                     sampleFraction: z.ZodNumber;
-                    cellRows: z.ZodNumber;
-                    minCellRows: z.ZodNumber;
-                    designEffect: z.ZodNumber;
-                    omissionProbability: z.ZodObject<{
-                        oneIdentity: z.ZodNumber;
-                        boundedCell: z.ZodNumber;
-                        boundedCellIdentities: z.ZodNumber;
-                        maxMultiplicity: z.ZodNullable<z.ZodNumber>;
-                        basis: z.ZodString;
-                    }, z.core.$strict>;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"quantile_sketch">;
-                    algorithm: z.ZodEnum<{
-                        reservoir_sample: "reservoir_sample";
-                        tdigest: "tdigest";
-                    }>;
-                    compression: z.ZodNumber;
+                    method: z.ZodLiteral<"estimated_percentile">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"distinct_sketch">;
-                    algorithm: z.ZodString;
-                }, z.core.$strict>], "kind">>;
-                estimate: z.ZodOptional<z.ZodObject<{
-                    rows: z.ZodNumber;
-                    bytes: z.ZodNumber;
-                }, z.core.$strict>>;
+                    method: z.ZodLiteral<"estimated_distinct">;
+                }, z.core.$strict>], "method">>;
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -2182,7 +2249,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
                     kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
@@ -2195,19 +2261,23 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"rejected">;
         rejection: z.ZodObject<{
+            code: z.ZodEnum<{
+                approximation_required: "approximation_required";
+                bucket_too_fine: "bucket_too_fine";
+                time_range_too_wide: "time_range_too_wide";
+                unsupported_query: "unsupported_query";
+            }>;
+            message: z.ZodString;
             status: z.ZodLiteral<"rejected">;
             spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
-                source: z.ZodObject<{
-                    kind: z.ZodLiteral<"logs">;
-                }, z.core.$strict>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2222,10 +2292,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2241,10 +2311,26 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
                     kind: z.ZodLiteral<"service">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"severity_number">;
+                    kind: z.ZodLiteral<"severity">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"column">;
-                    name: z.ZodString;
+                    name: z.ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"attribute">;
                     source: z.ZodEnum<{
@@ -2270,10 +2356,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2288,10 +2374,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2309,10 +2395,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2327,10 +2413,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2363,10 +2449,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2381,10 +2467,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -2402,6 +2488,8 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         oldest: "oldest";
                     }>>;
                 }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"request_count">;
+                }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"duration">;
@@ -2413,6 +2501,45 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         p99: "p99";
                         sum: "sum";
                     }>;
+                }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"ratio">;
+                    numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
                 }, z.core.$strict>], "op">;
                 bucket: z.ZodOptional<z.ZodEnum<{
                     "1d": "1d";
@@ -2432,6 +2559,16 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         other: "other";
                     }>;
                 }, z.core.$strict>>;
+                order: z.ZodOptional<z.ZodObject<{
+                    by: z.ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: z.ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, z.core.$strict>>;
                 exactness: z.ZodEnum<{
                     approximate_ok: "approximate_ok";
                     exact: "exact";
@@ -2444,32 +2581,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            reason: z.ZodString;
-            suggestion: z.ZodOptional<z.ZodEnum<{
-                allow_approximation: "allow_approximation";
-                coarsen_bucket: "coarsen_bucket";
-                narrow_window: "narrow_window";
-                promote_attribute: "promote_attribute";
-            }>>;
-            skipped: z.ZodArray<z.ZodObject<{
-                representation: z.ZodEnum<{
-                    event_volume: "event_volume";
-                    exact_scan: "exact_scan";
-                    log_volume: "log_volume";
-                    pattern_index: "pattern_index";
-                    pattern_volume: "pattern_volume";
-                    request_metrics: "request_metrics";
-                    sampled_scan: "sampled_scan";
-                    standing: "standing";
-                }>;
-                reason: z.ZodString;
-                suggestion: z.ZodOptional<z.ZodEnum<{
-                    allow_approximation: "allow_approximation";
-                    coarsen_bucket: "coarsen_bucket";
-                    narrow_window: "narrow_window";
-                    promote_attribute: "promote_attribute";
-                }>>;
-            }, z.core.$strict>>;
             took: z.ZodNumber;
         }, z.core.$strict>;
     }, z.core.$strict>, z.ZodObject<{
@@ -4059,16 +4170,13 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
         execution: z.ZodOptional<z.ZodObject<{
             spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
-                source: z.ZodObject<{
-                    kind: z.ZodLiteral<"logs">;
-                }, z.core.$strict>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4083,10 +4191,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4102,10 +4210,26 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
                     kind: z.ZodLiteral<"service">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"severity_number">;
+                    kind: z.ZodLiteral<"severity">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"column">;
-                    name: z.ZodString;
+                    name: z.ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"attribute">;
                     source: z.ZodEnum<{
@@ -4131,10 +4255,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4149,10 +4273,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4170,10 +4294,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4188,10 +4312,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4224,10 +4348,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4242,10 +4366,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4263,6 +4387,8 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         oldest: "oldest";
                     }>>;
                 }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"request_count">;
+                }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"duration">;
@@ -4274,6 +4400,45 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         p99: "p99";
                         sum: "sum";
                     }>;
+                }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"ratio">;
+                    numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
                 }, z.core.$strict>], "op">;
                 bucket: z.ZodOptional<z.ZodEnum<{
                     "1d": "1d";
@@ -4293,6 +4458,16 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         other: "other";
                     }>;
                 }, z.core.$strict>>;
+                order: z.ZodOptional<z.ZodObject<{
+                    by: z.ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: z.ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, z.core.$strict>>;
                 exactness: z.ZodEnum<{
                     approximate_ok: "approximate_ok";
                     exact: "exact";
@@ -4306,50 +4481,20 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
             meta: z.ZodObject<{
-                representation: z.ZodEnum<{
-                    event_volume: "event_volume";
-                    exact_scan: "exact_scan";
-                    log_volume: "log_volume";
-                    pattern_index: "pattern_index";
-                    pattern_volume: "pattern_volume";
-                    request_metrics: "request_metrics";
-                    sampled_scan: "sampled_scan";
-                    standing: "standing";
-                }>;
                 exactness: z.ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
-                error: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"sampling">;
-                    relativeBound: z.ZodNumber;
+                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    method: z.ZodLiteral<"sampled">;
+                    relativeError: z.ZodNumber;
                     confidence: z.ZodLiteral<0.95>;
                     sampleFraction: z.ZodNumber;
-                    cellRows: z.ZodNumber;
-                    minCellRows: z.ZodNumber;
-                    designEffect: z.ZodNumber;
-                    omissionProbability: z.ZodObject<{
-                        oneIdentity: z.ZodNumber;
-                        boundedCell: z.ZodNumber;
-                        boundedCellIdentities: z.ZodNumber;
-                        maxMultiplicity: z.ZodNullable<z.ZodNumber>;
-                        basis: z.ZodString;
-                    }, z.core.$strict>;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"quantile_sketch">;
-                    algorithm: z.ZodEnum<{
-                        reservoir_sample: "reservoir_sample";
-                        tdigest: "tdigest";
-                    }>;
-                    compression: z.ZodNumber;
+                    method: z.ZodLiteral<"estimated_percentile">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"distinct_sketch">;
-                    algorithm: z.ZodString;
-                }, z.core.$strict>], "kind">>;
-                estimate: z.ZodOptional<z.ZodObject<{
-                    rows: z.ZodNumber;
-                    bytes: z.ZodNumber;
-                }, z.core.$strict>>;
+                    method: z.ZodLiteral<"estimated_distinct">;
+                }, z.core.$strict>], "method">>;
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -4367,7 +4512,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
                     kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
@@ -4382,16 +4526,13 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
         execution: z.ZodObject<{
             spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
-                source: z.ZodObject<{
-                    kind: z.ZodLiteral<"logs">;
-                }, z.core.$strict>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4406,10 +4547,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4425,10 +4566,26 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
                     kind: z.ZodLiteral<"service">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"severity_number">;
+                    kind: z.ZodLiteral<"severity">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"column">;
-                    name: z.ZodString;
+                    name: z.ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"attribute">;
                     source: z.ZodEnum<{
@@ -4454,10 +4611,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4472,10 +4629,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4493,10 +4650,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4511,10 +4668,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4547,10 +4704,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4565,10 +4722,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4586,6 +4743,8 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         oldest: "oldest";
                     }>>;
                 }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"request_count">;
+                }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"duration">;
@@ -4597,6 +4756,45 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         p99: "p99";
                         sum: "sum";
                     }>;
+                }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"ratio">;
+                    numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
                 }, z.core.$strict>], "op">;
                 bucket: z.ZodOptional<z.ZodEnum<{
                     "1d": "1d";
@@ -4616,6 +4814,16 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         other: "other";
                     }>;
                 }, z.core.$strict>>;
+                order: z.ZodOptional<z.ZodObject<{
+                    by: z.ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: z.ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, z.core.$strict>>;
                 exactness: z.ZodEnum<{
                     approximate_ok: "approximate_ok";
                     exact: "exact";
@@ -4629,50 +4837,20 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
             meta: z.ZodObject<{
-                representation: z.ZodEnum<{
-                    event_volume: "event_volume";
-                    exact_scan: "exact_scan";
-                    log_volume: "log_volume";
-                    pattern_index: "pattern_index";
-                    pattern_volume: "pattern_volume";
-                    request_metrics: "request_metrics";
-                    sampled_scan: "sampled_scan";
-                    standing: "standing";
-                }>;
                 exactness: z.ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
-                error: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    kind: z.ZodLiteral<"sampling">;
-                    relativeBound: z.ZodNumber;
+                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    method: z.ZodLiteral<"sampled">;
+                    relativeError: z.ZodNumber;
                     confidence: z.ZodLiteral<0.95>;
                     sampleFraction: z.ZodNumber;
-                    cellRows: z.ZodNumber;
-                    minCellRows: z.ZodNumber;
-                    designEffect: z.ZodNumber;
-                    omissionProbability: z.ZodObject<{
-                        oneIdentity: z.ZodNumber;
-                        boundedCell: z.ZodNumber;
-                        boundedCellIdentities: z.ZodNumber;
-                        maxMultiplicity: z.ZodNullable<z.ZodNumber>;
-                        basis: z.ZodString;
-                    }, z.core.$strict>;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"quantile_sketch">;
-                    algorithm: z.ZodEnum<{
-                        reservoir_sample: "reservoir_sample";
-                        tdigest: "tdigest";
-                    }>;
-                    compression: z.ZodNumber;
+                    method: z.ZodLiteral<"estimated_percentile">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"distinct_sketch">;
-                    algorithm: z.ZodString;
-                }, z.core.$strict>], "kind">>;
-                estimate: z.ZodOptional<z.ZodObject<{
-                    rows: z.ZodNumber;
-                    bytes: z.ZodNumber;
-                }, z.core.$strict>>;
+                    method: z.ZodLiteral<"estimated_distinct">;
+                }, z.core.$strict>], "method">>;
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -4690,7 +4868,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                catalogRevision: z.ZodOptional<z.ZodString>;
                 population: z.ZodOptional<z.ZodObject<{
                     kind: z.ZodLiteral<"services">;
                     services: z.ZodArray<z.ZodString>;
@@ -4703,19 +4880,23 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"rejected">;
         rejection: z.ZodObject<{
+            code: z.ZodEnum<{
+                approximation_required: "approximation_required";
+                bucket_too_fine: "bucket_too_fine";
+                time_range_too_wide: "time_range_too_wide";
+                unsupported_query: "unsupported_query";
+            }>;
+            message: z.ZodString;
             status: z.ZodLiteral<"rejected">;
             spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
-                source: z.ZodObject<{
-                    kind: z.ZodLiteral<"logs">;
-                }, z.core.$strict>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4730,10 +4911,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4749,10 +4930,26 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
                     kind: z.ZodLiteral<"service">;
                 }, z.core.$strict>, z.ZodObject<{
-                    kind: z.ZodLiteral<"severity_number">;
+                    kind: z.ZodLiteral<"severity">;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"column">;
-                    name: z.ZodString;
+                    name: z.ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
                 }, z.core.$strict>, z.ZodObject<{
                     kind: z.ZodLiteral<"attribute">;
                     source: z.ZodEnum<{
@@ -4778,10 +4975,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4796,10 +4993,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4817,10 +5014,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     field: z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4835,10 +5032,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4871,10 +5068,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4889,10 +5086,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }, unknown, z.core.$ZodTypeInternals<{
                         kind: "service";
                     } | {
-                        kind: "severity_number";
+                        kind: "severity";
                     } | {
                         kind: "column";
-                        name: string;
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4910,6 +5107,8 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         oldest: "oldest";
                     }>>;
                 }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"request_count">;
+                }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"error_count">;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"duration">;
@@ -4921,6 +5120,45 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         p99: "p99";
                         sum: "sum";
                     }>;
+                }, z.core.$strict>, z.ZodObject<{
+                    op: z.ZodLiteral<"ratio">;
+                    numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
                 }, z.core.$strict>], "op">;
                 bucket: z.ZodOptional<z.ZodEnum<{
                     "1d": "1d";
@@ -4940,6 +5178,16 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         other: "other";
                     }>;
                 }, z.core.$strict>>;
+                order: z.ZodOptional<z.ZodObject<{
+                    by: z.ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: z.ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, z.core.$strict>>;
                 exactness: z.ZodEnum<{
                     approximate_ok: "approximate_ok";
                     exact: "exact";
@@ -4952,32 +5200,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            reason: z.ZodString;
-            suggestion: z.ZodOptional<z.ZodEnum<{
-                allow_approximation: "allow_approximation";
-                coarsen_bucket: "coarsen_bucket";
-                narrow_window: "narrow_window";
-                promote_attribute: "promote_attribute";
-            }>>;
-            skipped: z.ZodArray<z.ZodObject<{
-                representation: z.ZodEnum<{
-                    event_volume: "event_volume";
-                    exact_scan: "exact_scan";
-                    log_volume: "log_volume";
-                    pattern_index: "pattern_index";
-                    pattern_volume: "pattern_volume";
-                    request_metrics: "request_metrics";
-                    sampled_scan: "sampled_scan";
-                    standing: "standing";
-                }>;
-                reason: z.ZodString;
-                suggestion: z.ZodOptional<z.ZodEnum<{
-                    allow_approximation: "allow_approximation";
-                    coarsen_bucket: "coarsen_bucket";
-                    narrow_window: "narrow_window";
-                    promote_attribute: "promote_attribute";
-                }>>;
-            }, z.core.$strict>>;
             took: z.ZodNumber;
         }, z.core.$strict>;
     }, z.core.$strict>, z.ZodObject<{

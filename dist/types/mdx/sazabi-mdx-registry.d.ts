@@ -238,16 +238,13 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -263,10 +260,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -288,10 +285,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -309,10 +306,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -334,10 +331,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -352,16 +349,43 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -378,16 +402,13 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -403,10 +424,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -428,10 +449,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -449,10 +470,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -474,10 +495,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -492,16 +513,43 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -518,16 +566,13 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -543,10 +588,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -568,10 +613,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -589,10 +634,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -614,10 +659,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -632,16 +677,43 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -661,16 +733,13 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -686,10 +755,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -711,10 +780,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -732,10 +801,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -757,10 +826,10 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -775,16 +844,43 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1011,16 +1107,13 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1036,10 +1129,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1061,10 +1154,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1082,10 +1175,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1107,10 +1200,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1125,16 +1218,43 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1151,16 +1271,13 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1176,10 +1293,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1201,10 +1318,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1222,10 +1339,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1247,10 +1364,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1265,16 +1382,43 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1291,16 +1435,13 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1316,10 +1457,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1341,10 +1482,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1362,10 +1503,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1387,10 +1528,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1405,16 +1546,43 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1434,16 +1602,13 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1459,10 +1624,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1484,10 +1649,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1505,10 +1670,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1530,10 +1695,10 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1548,16 +1713,43 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1797,16 +1989,13 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1822,10 +2011,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1847,10 +2036,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1868,10 +2057,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1893,10 +2082,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -1911,16 +2100,43 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -1937,16 +2153,13 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1962,10 +2175,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -1987,10 +2200,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2008,10 +2221,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2033,10 +2246,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2051,16 +2264,43 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2077,16 +2317,13 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2102,10 +2339,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2127,10 +2364,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2148,10 +2385,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2173,10 +2410,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2191,16 +2428,43 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2220,16 +2484,13 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2245,10 +2506,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2270,10 +2531,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2291,10 +2552,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2316,10 +2577,10 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2334,16 +2595,43 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2570,16 +2858,13 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2595,10 +2880,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2620,10 +2905,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2641,10 +2926,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2666,10 +2951,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2684,16 +2969,43 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2710,16 +3022,13 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2735,10 +3044,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2760,10 +3069,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2781,10 +3090,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2806,10 +3115,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2824,16 +3133,43 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2850,16 +3186,13 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2875,10 +3208,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -2900,10 +3233,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2921,10 +3254,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2946,10 +3279,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -2964,16 +3297,43 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -2993,16 +3353,13 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3018,10 +3375,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3043,10 +3400,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3064,10 +3421,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3089,10 +3446,10 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3107,16 +3464,43 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -3343,16 +3727,13 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3368,10 +3749,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3393,10 +3774,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3414,10 +3795,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3439,10 +3820,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3457,16 +3838,43 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -3483,16 +3891,13 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3508,10 +3913,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3533,10 +3938,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3554,10 +3959,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3579,10 +3984,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3597,16 +4002,43 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -3623,16 +4055,13 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3648,10 +4077,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3673,10 +4102,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3694,10 +4123,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3719,10 +4148,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3737,16 +4166,43 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -3766,16 +4222,13 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3791,10 +4244,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -3816,10 +4269,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3837,10 +4290,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3862,10 +4315,10 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3880,16 +4333,43 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -4116,16 +4596,13 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4141,10 +4618,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4166,10 +4643,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4187,10 +4664,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4212,10 +4689,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4230,16 +4707,43 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -4256,16 +4760,13 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4281,10 +4782,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4306,10 +4807,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4327,10 +4828,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4352,10 +4853,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4370,16 +4871,43 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -4396,16 +4924,13 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4421,10 +4946,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4446,10 +4971,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4467,10 +4992,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4492,10 +5017,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4510,16 +5035,43 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -4539,16 +5091,13 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4564,10 +5113,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4589,10 +5138,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4610,10 +5159,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4635,10 +5184,10 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4653,16 +5202,43 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -4889,16 +5465,13 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4914,10 +5487,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -4939,10 +5512,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4960,10 +5533,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -4985,10 +5558,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5003,16 +5576,43 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -5029,16 +5629,13 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5054,10 +5651,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5079,10 +5676,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5100,10 +5697,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5125,10 +5722,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5143,16 +5740,43 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -5169,16 +5793,13 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5194,10 +5815,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5219,10 +5840,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5240,10 +5861,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5265,10 +5886,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5283,16 +5904,43 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -5312,16 +5960,13 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5337,10 +5982,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5362,10 +6007,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5383,10 +6028,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5408,10 +6053,10 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5426,16 +6071,43 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -5686,16 +6358,13 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5711,10 +6380,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5736,10 +6405,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5757,10 +6426,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5782,10 +6451,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5800,16 +6469,43 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -5826,16 +6522,13 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5851,10 +6544,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5876,10 +6569,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5897,10 +6590,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5922,10 +6615,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -5940,16 +6633,43 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -5966,16 +6686,13 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -5991,10 +6708,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6016,10 +6733,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6037,10 +6754,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6062,10 +6779,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6080,16 +6797,43 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -6109,16 +6853,13 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6134,10 +6875,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6159,10 +6900,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6180,10 +6921,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6205,10 +6946,10 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6223,16 +6964,43 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -6568,16 +7336,13 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
         type: "area_chart";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6593,10 +7358,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6618,10 +7383,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6639,10 +7404,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6664,10 +7429,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6682,16 +7447,43 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -6708,16 +7500,13 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
         type: "timeseries";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6733,10 +7522,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6758,10 +7547,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6779,10 +7568,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6804,10 +7593,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6822,16 +7611,43 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -6848,16 +7664,13 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
         type: "table";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6873,10 +7686,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -6898,10 +7711,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6919,10 +7732,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6944,10 +7757,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -6962,16 +7775,43 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {
@@ -6991,16 +7831,13 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
         type: "metric";
         query: {
             version: 2;
-            source: {
-                kind: "logs";
-            };
             predicate: import("../log-query/index.js").PredicateTree<{
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -7016,10 +7853,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
             dimensions: ({
                 kind: "service";
             } | {
-                kind: "severity_number";
+                kind: "severity";
             } | {
                 kind: "column";
-                name: string;
+                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
             } | {
                 kind: "attribute";
                 source: "log" | "resource" | "scope";
@@ -7041,10 +7878,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -7062,10 +7899,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 field: {
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -7087,10 +7924,10 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 fields?: ({
                     kind: "service";
                 } | {
-                    kind: "severity_number";
+                    kind: "severity";
                 } | {
                     kind: "column";
-                    name: string;
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -7105,16 +7942,43 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                 })[] | undefined;
                 order?: "newest" | "oldest" | undefined;
             } | {
+                op: "request_count";
+            } | {
                 op: "error_count";
             } | {
                 op: "duration";
                 aggregate: "avg" | "max" | "p50" | "p95" | "p99" | "sum";
+            } | {
+                op: "ratio";
+                numerator: import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>;
             };
             bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
                 overflow: "drop" | "other";
+            } | undefined;
+            order?: {
+                by: "dimension" | "value";
+                direction: "asc" | "desc";
             } | undefined;
             exactness: "approximate_ok" | "exact";
             approximation?: {

@@ -1649,7 +1649,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.ask",
           summary: "Ask about logs",
-          description: "Answer a natural-language question about one project's stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), how exact and complete the numbers are (`meta`), and a `queryId`. An overview (what is broken, recent errors, what changed, what is new, with no specific topic, field or request for lines) is searched: its results are the window's kinds of log lines, with their counts in the window and the window before and example lines; every other question is measured exactly. With `results: true` it also returns the rows, value, table, series or kinds of log lines the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found` and the answer says so, with how the question was read."
+          description: 'Answer a natural-language question about one project\'s stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), how exact and complete the numbers are (`meta`), and a `queryId`. An overview (what is broken, recent errors, what changed, what is new, with no specific topic, field or request for lines) is searched: its results are the window\'s kinds of log lines, with their counts in the window and the window before and example lines; every other question is measured exactly. A question may be asked in any language, and is answered in it. The period it names is read from it, on the clock of `timeZone` ("the last 6 hours", "this afternoon", "since midnight", "between 18:00 and 19:00", "this hour against the previous hour", which reads both hours and compares them); a `window` replaces that period, and the answer says so. A period that cannot be read is said to be, and the last hour is read instead. With `results: true` it also returns the rows, value, table, series or kinds of log lines the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found`: the answer names the window that was read, `interpretedAs` how the question was read, and the `queryId` runs the same query over a wider window. A question that asks nothing about the project\'s logs, or about another project\'s, is refused with nothing searched (`status` `error`, `rejection.code` `not_about_logs` or `other_project`, no `queryId`), and one no query can answer as asked is refused as `unsupported_question`; one that asks to change or delete logs is answered with the lines it names (`writeDeclined`), since logs are read-only.'
         }
       }
     },
@@ -1661,15 +1661,159 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
+          examples: [
+            {
+              name: "count-lines-per-service",
+              input: {
+                projectId: "11111111-1111-4111-8111-111111111111",
+                spec: {
+                  version: 2,
+                  predicate: {
+                    op: "and",
+                    children: []
+                  },
+                  dimensions: [
+                    {
+                      kind: "service"
+                    }
+                  ],
+                  measure: {
+                    op: "count"
+                  },
+                  output: "table",
+                  exactness: "exact"
+                },
+                window: {
+                  kind: "absolute",
+                  from: "2026-09-29T09:00:00.000Z",
+                  to: "2026-09-29T10:00:00.000Z"
+                },
+                limit: 10
+              },
+              output: {
+                queryId: "22222222-2222-4222-8222-222222222222",
+                status: "ok",
+                explanation: "count per service, 2026-09-29 09:00–10:00 UTC",
+                results: {
+                  kind: "table",
+                  columns: ["service"],
+                  measure: "count",
+                  groups: [
+                    {
+                      key: ["api"],
+                      value: 18240
+                    },
+                    {
+                      key: ["worker"],
+                      value: 6112
+                    }
+                  ],
+                  matched: 2,
+                  total: 24352,
+                  truncated: false
+                },
+                window: {
+                  from: "2026-09-29T09:00:00.000Z",
+                  to: "2026-09-29T10:00:00.000Z"
+                },
+                meta: {
+                  exactness: "exact",
+                  coverage: {
+                    from: "2026-09-29T09:00:00.000Z",
+                    to: "2026-09-29T10:00:00.000Z",
+                    status: "complete"
+                  }
+                },
+                attempts: [],
+                timings: {
+                  executeMs: 184,
+                  totalMs: 212
+                }
+              }
+            },
+            {
+              name: "rerun-by-query-id",
+              input: {
+                projectId: "11111111-1111-4111-8111-111111111111",
+                queryId: "22222222-2222-4222-8222-222222222222",
+                window: {
+                  kind: "relative",
+                  lookbackSeconds: 86400
+                },
+                limit: 5
+              },
+              output: {
+                queryId: "33333333-3333-4333-8333-333333333333",
+                parentId: "22222222-2222-4222-8222-222222222222",
+                status: "ok",
+                explanation: "count per service, 2026-09-28 10:00 – 2026-09-29 10:00 UTC",
+                results: {
+                  kind: "table",
+                  columns: ["service"],
+                  measure: "count",
+                  groups: [
+                    {
+                      key: ["api"],
+                      value: 412907
+                    },
+                    {
+                      key: ["worker"],
+                      value: 139550
+                    }
+                  ],
+                  matched: 2,
+                  total: 552457,
+                  truncated: false
+                },
+                window: {
+                  from: "2026-09-28T10:00:00.000Z",
+                  to: "2026-09-29T10:00:00.000Z"
+                },
+                meta: {
+                  exactness: "exact",
+                  coverage: {
+                    from: "2026-09-28T10:00:00.000Z",
+                    to: "2026-09-29T10:00:00.000Z",
+                    status: "complete"
+                  }
+                },
+                attempts: [],
+                timings: {
+                  executeMs: 391,
+                  totalMs: 420
+                }
+              }
+            }
+          ]
+        },
+        route: {
+          method: "POST",
+          path: "/logs/queries/execute",
+          tags: ["Logs"],
+          operationId: "logs.executeQuery",
+          summary: "Run a log query",
+          description: "Run a log query with no model involved, given either the `queryId` of an earlier `logs.ask` answer or `logs.executeQuery` run, or a `spec` written in the log query spec (its JSON Schema is this operation's `spec` input; `sazabi logs query schema` prints it). Runs over `window` (by default the same absolute times a `queryId` read, or the last hour for a `spec`; a relative `window` ends now, which asks the same question again over the latest period), with an optional `limit`, or narrowed to the log lines of one `group` of a table. Returns the same envelope as `logs.ask` without an answer: `results`, what was measured (`explanation`), how exact and complete the numbers are (`meta`), and a new `queryId` naming this run (its query and the times it read). A run by `queryId` names that id as `parentId`. An unknown `queryId` is not found; a `spec` the service cannot run is refused with what to change; asking the question again yields a new id."
+        }
+      }
+    },
+    executeQueryById: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "logs.executeQueryById",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
           examples: []
         },
         route: {
           method: "POST",
           path: "/logs/queries/{queryId}/execute",
           tags: ["Logs"],
-          operationId: "logs.executeQuery",
-          summary: "Run an earlier log query",
-          description: "Run the query behind an earlier `logs.ask` answer again, by its `queryId`, with no model involved: over the window the answer covered or a new one, with a new `limit`, or narrowed to the log lines of one `group` of a table. Returns `results` without an answer, and a new `queryId` whose `parentId` is the one that was run. An unknown id is not found; asking the question again yields a new id."
+          operationId: "logs.executeQueryById",
+          summary: "Run an earlier log query (deprecated)",
+          description: "Deprecated alias for `POST /logs/queries/execute` with a `queryId`; removed on 2027-03-01. Run the query behind an earlier `logs.ask` answer again, by its `queryId`, with no model involved: over the window the answer covered or a new one, with a new `limit`, or narrowed to the log lines of one `group` of a table. Returns `results` without an answer, and a new `queryId` whose `parentId` is the one that was run. An unknown id is not found; asking the question again yields a new id.",
+          deprecated: true
         }
       }
     }

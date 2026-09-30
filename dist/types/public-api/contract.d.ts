@@ -2111,19 +2111,13 @@ export declare const publicApiContract: {
                 execution: import("zod").ZodOptional<import("zod").ZodObject<{
                     spec: import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
-                        source: import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"logs">;
-                        }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2132,16 +2126,16 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2150,14 +2144,33 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"severity_number">;
+                            kind: import("zod").ZodLiteral<"severity">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"column">;
-                            name: import("zod").ZodString;
+                            name: import("zod").ZodEnum<{
+                                "deployment.environment": "deployment.environment";
+                                "event.name": "event.name";
+                                "http.request.body.size": "http.request.body.size";
+                                "http.request.method": "http.request.method";
+                                "http.response.body.size": "http.response.body.size";
+                                "http.response.status_code": "http.response.status_code";
+                                "http.route": "http.route";
+                                "k8s.pod.name": "k8s.pod.name";
+                                "log.record.uid": "log.record.uid";
+                                operation_kind: "operation_kind";
+                                "server.address": "server.address";
+                                severity_text: "severity_text";
+                                span_id: "span_id";
+                                trace_id: "trace_id";
+                                "url.path": "url.path";
+                            }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"attribute">;
                             source: import("zod").ZodEnum<{
@@ -2181,15 +2194,12 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2198,16 +2208,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2216,19 +2226,19 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2237,16 +2247,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2255,6 +2265,9 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -2274,15 +2287,12 @@ export declare const publicApiContract: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2291,16 +2301,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2309,11 +2319,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
                                 oldest: "oldest";
                             }>>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"request_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"error_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -2326,6 +2341,45 @@ export declare const publicApiContract: {
                                 p99: "p99";
                                 sum: "sum";
                             }>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"ratio">;
+                            numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown>>;
                         }, import("zod/v4/core").$strict>], "op">;
                         bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
                             "1d": "1d";
@@ -2345,6 +2399,16 @@ export declare const publicApiContract: {
                                 other: "other";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        order: import("zod").ZodOptional<import("zod").ZodObject<{
+                            by: import("zod").ZodEnum<{
+                                dimension: "dimension";
+                                value: "value";
+                            }>;
+                            direction: import("zod").ZodEnum<{
+                                asc: "asc";
+                                desc: "desc";
+                            }>;
+                        }, import("zod/v4/core").$strict>>;
                         exactness: import("zod").ZodEnum<{
                             approximate_ok: "approximate_ok";
                             exact: "exact";
@@ -2358,50 +2422,20 @@ export declare const publicApiContract: {
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
                     meta: import("zod").ZodObject<{
-                        representation: import("zod").ZodEnum<{
-                            event_volume: "event_volume";
-                            exact_scan: "exact_scan";
-                            log_volume: "log_volume";
-                            pattern_index: "pattern_index";
-                            pattern_volume: "pattern_volume";
-                            request_metrics: "request_metrics";
-                            sampled_scan: "sampled_scan";
-                            standing: "standing";
-                        }>;
                         exactness: import("zod").ZodEnum<{
                             approximate: "approximate";
                             exact: "exact";
                         }>;
-                        error: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"sampling">;
-                            relativeBound: import("zod").ZodNumber;
+                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                            method: import("zod").ZodLiteral<"sampled">;
+                            relativeError: import("zod").ZodNumber;
                             confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
-                            cellRows: import("zod").ZodNumber;
-                            minCellRows: import("zod").ZodNumber;
-                            designEffect: import("zod").ZodNumber;
-                            omissionProbability: import("zod").ZodObject<{
-                                oneIdentity: import("zod").ZodNumber;
-                                boundedCell: import("zod").ZodNumber;
-                                boundedCellIdentities: import("zod").ZodNumber;
-                                maxMultiplicity: import("zod").ZodNullable<import("zod").ZodNumber>;
-                                basis: import("zod").ZodString;
-                            }, import("zod/v4/core").$strict>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"quantile_sketch">;
-                            algorithm: import("zod").ZodEnum<{
-                                reservoir_sample: "reservoir_sample";
-                                tdigest: "tdigest";
-                            }>;
-                            compression: import("zod").ZodNumber;
+                            method: import("zod").ZodLiteral<"estimated_percentile">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"distinct_sketch">;
-                            algorithm: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>], "kind">>;
-                        estimate: import("zod").ZodOptional<import("zod").ZodObject<{
-                            rows: import("zod").ZodNumber;
-                            bytes: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>>;
+                            method: import("zod").ZodLiteral<"estimated_distinct">;
+                        }, import("zod/v4/core").$strict>], "method">>;
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -2419,7 +2453,6 @@ export declare const publicApiContract: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                        catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
@@ -2434,19 +2467,13 @@ export declare const publicApiContract: {
                 execution: import("zod").ZodObject<{
                     spec: import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
-                        source: import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"logs">;
-                        }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2455,16 +2482,16 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2473,14 +2500,33 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"severity_number">;
+                            kind: import("zod").ZodLiteral<"severity">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"column">;
-                            name: import("zod").ZodString;
+                            name: import("zod").ZodEnum<{
+                                "deployment.environment": "deployment.environment";
+                                "event.name": "event.name";
+                                "http.request.body.size": "http.request.body.size";
+                                "http.request.method": "http.request.method";
+                                "http.response.body.size": "http.response.body.size";
+                                "http.response.status_code": "http.response.status_code";
+                                "http.route": "http.route";
+                                "k8s.pod.name": "k8s.pod.name";
+                                "log.record.uid": "log.record.uid";
+                                operation_kind: "operation_kind";
+                                "server.address": "server.address";
+                                severity_text: "severity_text";
+                                span_id: "span_id";
+                                trace_id: "trace_id";
+                                "url.path": "url.path";
+                            }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"attribute">;
                             source: import("zod").ZodEnum<{
@@ -2504,15 +2550,12 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2521,16 +2564,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2539,19 +2582,19 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2560,16 +2603,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2578,6 +2621,9 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -2597,15 +2643,12 @@ export declare const publicApiContract: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2614,16 +2657,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2632,11 +2675,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
                                 oldest: "oldest";
                             }>>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"request_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"error_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -2649,6 +2697,45 @@ export declare const publicApiContract: {
                                 p99: "p99";
                                 sum: "sum";
                             }>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"ratio">;
+                            numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown>>;
                         }, import("zod/v4/core").$strict>], "op">;
                         bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
                             "1d": "1d";
@@ -2668,6 +2755,16 @@ export declare const publicApiContract: {
                                 other: "other";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        order: import("zod").ZodOptional<import("zod").ZodObject<{
+                            by: import("zod").ZodEnum<{
+                                dimension: "dimension";
+                                value: "value";
+                            }>;
+                            direction: import("zod").ZodEnum<{
+                                asc: "asc";
+                                desc: "desc";
+                            }>;
+                        }, import("zod/v4/core").$strict>>;
                         exactness: import("zod").ZodEnum<{
                             approximate_ok: "approximate_ok";
                             exact: "exact";
@@ -2681,50 +2778,20 @@ export declare const publicApiContract: {
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
                     meta: import("zod").ZodObject<{
-                        representation: import("zod").ZodEnum<{
-                            event_volume: "event_volume";
-                            exact_scan: "exact_scan";
-                            log_volume: "log_volume";
-                            pattern_index: "pattern_index";
-                            pattern_volume: "pattern_volume";
-                            request_metrics: "request_metrics";
-                            sampled_scan: "sampled_scan";
-                            standing: "standing";
-                        }>;
                         exactness: import("zod").ZodEnum<{
                             approximate: "approximate";
                             exact: "exact";
                         }>;
-                        error: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"sampling">;
-                            relativeBound: import("zod").ZodNumber;
+                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                            method: import("zod").ZodLiteral<"sampled">;
+                            relativeError: import("zod").ZodNumber;
                             confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
-                            cellRows: import("zod").ZodNumber;
-                            minCellRows: import("zod").ZodNumber;
-                            designEffect: import("zod").ZodNumber;
-                            omissionProbability: import("zod").ZodObject<{
-                                oneIdentity: import("zod").ZodNumber;
-                                boundedCell: import("zod").ZodNumber;
-                                boundedCellIdentities: import("zod").ZodNumber;
-                                maxMultiplicity: import("zod").ZodNullable<import("zod").ZodNumber>;
-                                basis: import("zod").ZodString;
-                            }, import("zod/v4/core").$strict>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"quantile_sketch">;
-                            algorithm: import("zod").ZodEnum<{
-                                reservoir_sample: "reservoir_sample";
-                                tdigest: "tdigest";
-                            }>;
-                            compression: import("zod").ZodNumber;
+                            method: import("zod").ZodLiteral<"estimated_percentile">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"distinct_sketch">;
-                            algorithm: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>], "kind">>;
-                        estimate: import("zod").ZodOptional<import("zod").ZodObject<{
-                            rows: import("zod").ZodNumber;
-                            bytes: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>>;
+                            method: import("zod").ZodLiteral<"estimated_distinct">;
+                        }, import("zod/v4/core").$strict>], "method">>;
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -2742,7 +2809,6 @@ export declare const publicApiContract: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                        catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
@@ -2755,22 +2821,23 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 status: import("zod").ZodLiteral<"rejected">;
                 rejection: import("zod").ZodObject<{
+                    code: import("zod").ZodEnum<{
+                        approximation_required: "approximation_required";
+                        bucket_too_fine: "bucket_too_fine";
+                        time_range_too_wide: "time_range_too_wide";
+                        unsupported_query: "unsupported_query";
+                    }>;
+                    message: import("zod").ZodString;
                     status: import("zod").ZodLiteral<"rejected">;
                     spec: import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
-                        source: import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"logs">;
-                        }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2779,16 +2846,16 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2797,14 +2864,33 @@ export declare const publicApiContract: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"severity_number">;
+                            kind: import("zod").ZodLiteral<"severity">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"column">;
-                            name: import("zod").ZodString;
+                            name: import("zod").ZodEnum<{
+                                "deployment.environment": "deployment.environment";
+                                "event.name": "event.name";
+                                "http.request.body.size": "http.request.body.size";
+                                "http.request.method": "http.request.method";
+                                "http.response.body.size": "http.response.body.size";
+                                "http.response.status_code": "http.response.status_code";
+                                "http.route": "http.route";
+                                "k8s.pod.name": "k8s.pod.name";
+                                "log.record.uid": "log.record.uid";
+                                operation_kind: "operation_kind";
+                                "server.address": "server.address";
+                                severity_text: "severity_text";
+                                span_id: "span_id";
+                                trace_id: "trace_id";
+                                "url.path": "url.path";
+                            }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"attribute">;
                             source: import("zod").ZodEnum<{
@@ -2828,15 +2914,12 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2845,16 +2928,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2863,19 +2946,19 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2884,16 +2967,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2902,6 +2985,9 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -2921,15 +3007,12 @@ export declare const publicApiContract: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2938,16 +3021,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2956,11 +3039,16 @@ export declare const publicApiContract: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
                                 oldest: "oldest";
                             }>>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"request_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"error_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -2973,6 +3061,45 @@ export declare const publicApiContract: {
                                 p99: "p99";
                                 sum: "sum";
                             }>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"ratio">;
+                            numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown>>;
                         }, import("zod/v4/core").$strict>], "op">;
                         bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
                             "1d": "1d";
@@ -2992,6 +3119,16 @@ export declare const publicApiContract: {
                                 other: "other";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        order: import("zod").ZodOptional<import("zod").ZodObject<{
+                            by: import("zod").ZodEnum<{
+                                dimension: "dimension";
+                                value: "value";
+                            }>;
+                            direction: import("zod").ZodEnum<{
+                                asc: "asc";
+                                desc: "desc";
+                            }>;
+                        }, import("zod/v4/core").$strict>>;
                         exactness: import("zod").ZodEnum<{
                             approximate_ok: "approximate_ok";
                             exact: "exact";
@@ -3004,32 +3141,6 @@ export declare const publicApiContract: {
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    reason: import("zod").ZodString;
-                    suggestion: import("zod").ZodOptional<import("zod").ZodEnum<{
-                        allow_approximation: "allow_approximation";
-                        coarsen_bucket: "coarsen_bucket";
-                        narrow_window: "narrow_window";
-                        promote_attribute: "promote_attribute";
-                    }>>;
-                    skipped: import("zod").ZodArray<import("zod").ZodObject<{
-                        representation: import("zod").ZodEnum<{
-                            event_volume: "event_volume";
-                            exact_scan: "exact_scan";
-                            log_volume: "log_volume";
-                            pattern_index: "pattern_index";
-                            pattern_volume: "pattern_volume";
-                            request_metrics: "request_metrics";
-                            sampled_scan: "sampled_scan";
-                            standing: "standing";
-                        }>;
-                        reason: import("zod").ZodString;
-                        suggestion: import("zod").ZodOptional<import("zod").ZodEnum<{
-                            allow_approximation: "allow_approximation";
-                            coarsen_bucket: "coarsen_bucket";
-                            narrow_window: "narrow_window";
-                            promote_attribute: "promote_attribute";
-                        }>>;
-                    }, import("zod/v4/core").$strict>>;
                     took: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -3079,6 +3190,7 @@ export declare const publicApiContract: {
                 kind: import("zod").ZodLiteral<"relative">;
                 lookbackSeconds: import("zod").ZodNumber;
             }, import("zod/v4/core").$strict>], "kind">>;
+            timeZone: import("zod").ZodOptional<import("zod").ZodString>;
             limit: import("zod").ZodOptional<import("zod").ZodNumber>;
             results: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -3147,6 +3259,10 @@ export declare const publicApiContract: {
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                share: import("zod").ZodOptional<import("zod").ZodObject<{
+                    part: import("zod").ZodNumber;
+                    whole: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"distinct">;
@@ -3160,8 +3276,13 @@ export declare const publicApiContract: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"messages">;
@@ -3170,8 +3291,13 @@ export declare const publicApiContract: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"series">;
@@ -3182,19 +3308,153 @@ export declare const publicApiContract: {
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>], "kind">>;
             window: import("zod").ZodNullable<import("zod").ZodObject<{
                 from: import("zod").ZodString;
                 to: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            periods: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                name: import("zod").ZodString;
+                window: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"search">;
+                    kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                        message: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        count: import("zod").ZodNumber;
+                        previousCount: import("zod").ZodNumber;
+                        countBasis: import("zod").ZodEnum<{
+                            exact: "exact";
+                            sampled: "sampled";
+                        }>;
+                        firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                        lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        examples: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            time: import("zod").ZodString;
+                            service: import("zod").ZodString;
+                            severity: import("zod").ZodString;
+                            body: import("zod").ZodString;
+                            attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                            traceId: import("zod").ZodString;
+                            spanId: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    approximate: import("zod").ZodBoolean;
+                    truncated: import("zod").ZodBoolean;
+                    previousWindow: import("zod").ZodObject<{
+                        from: import("zod").ZodString;
+                        to: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"rows">;
+                    rows: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"value">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"distinct">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"table">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"messages">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"series">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    bucket: import("zod").ZodString;
+                    points: import("zod").ZodArray<import("zod").ZodObject<{
+                        bucket: import("zod").ZodString;
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>], "kind">>;
+            }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
                 exactness: import("zod").ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"sampled">;
+                    relativeError: import("zod").ZodNumber;
+                    confidence: import("zod").ZodLiteral<0.95>;
+                    sampleFraction: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_percentile">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_distinct">;
+                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -3209,7 +3469,19 @@ export declare const publicApiContract: {
                     }>>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>>;
-            matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+            rejection: import("zod").ZodOptional<import("zod").ZodObject<{
+                code: import("zod").ZodEnum<{
+                    approximation_required: "approximation_required";
+                    bucket_too_fine: "bucket_too_fine";
+                    not_about_logs: "not_about_logs";
+                    other_project: "other_project";
+                    time_range_too_wide: "time_range_too_wide";
+                    unsupported_query: "unsupported_query";
+                    unsupported_question: "unsupported_question";
+                }>;
+                message: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>>;
+            writeDeclined: import("zod").ZodOptional<import("zod").ZodLiteral<true>>;
             attempts: import("zod").ZodArray<import("zod").ZodObject<{
                 n: import("zod").ZodNumber;
                 action: import("zod").ZodNullable<import("zod").ZodString>;
@@ -3222,6 +3494,627 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly executeQuery: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            queryId: import("zod").ZodOptional<import("zod").ZodString>;
+            spec: import("zod").ZodOptional<import("zod").ZodObject<{
+                version: import("zod").ZodLiteral<2>;
+                predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>, unknown>>;
+                dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"service">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"severity">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"column">;
+                    name: import("zod").ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"attribute">;
+                    source: import("zod").ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: import("zod").ZodString;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"body">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"message">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"body_json">;
+                    path: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strict>], "kind">>;
+                measure: import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"count">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"event_rate">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"distinct">;
+                    field: import("zod").ZodType<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown>>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"numeric">;
+                    field: import("zod").ZodType<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown>>;
+                    parseAs: import("zod").ZodLiteral<"float64">;
+                    aggregate: import("zod").ZodEnum<{
+                        avg: "avg";
+                        max: "max";
+                        min: "min";
+                        p50: "p50";
+                        p95: "p95";
+                        p99: "p99";
+                        sum: "sum";
+                    }>;
+                    invalidValues: import("zod").ZodEnum<{
+                        drop: "drop";
+                        error: "error";
+                    }>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"recent_rows">;
+                    limit: import("zod").ZodNumber;
+                    fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown>>>>;
+                    order: import("zod").ZodOptional<import("zod").ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"request_count">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"error_count">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"duration">;
+                    aggregate: import("zod").ZodEnum<{
+                        avg: "avg";
+                        max: "max";
+                        p50: "p50";
+                        p95: "p95";
+                        p99: "p99";
+                        sum: "sum";
+                    }>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"ratio">;
+                    numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
+                }, import("zod/v4/core").$strict>], "op">;
+                bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    "1d": "1d";
+                    "1h": "1h";
+                    "1m": "1m";
+                    "5m": "5m";
+                }>>;
+                output: import("zod").ZodEnum<{
+                    evidence: "evidence";
+                    series: "series";
+                    table: "table";
+                }>;
+                series: import("zod").ZodOptional<import("zod").ZodObject<{
+                    limit: import("zod").ZodNumber;
+                    overflow: import("zod").ZodEnum<{
+                        drop: "drop";
+                        other: "other";
+                    }>;
+                }, import("zod/v4/core").$strict>>;
+                order: import("zod").ZodOptional<import("zod").ZodObject<{
+                    by: import("zod").ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: import("zod").ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, import("zod/v4/core").$strict>>;
+                exactness: import("zod").ZodEnum<{
+                    approximate_ok: "approximate_ok";
+                    exact: "exact";
+                }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodObject<{
+                    maxRelativeError: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>>;
+            }, import("zod/v4/core").$strict>>;
+            window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"absolute">;
+                from: import("zod").ZodISODateTime;
+                to: import("zod").ZodISODateTime;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"relative">;
+                lookbackSeconds: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strict>], "kind">>;
+            limit: import("zod").ZodOptional<import("zod").ZodNumber>;
+            group: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+            queryId: import("zod").ZodOptional<import("zod").ZodString>;
+            parentId: import("zod").ZodOptional<import("zod").ZodString>;
+            status: import("zod").ZodEnum<{
+                error: "error";
+                not_found: "not_found";
+                ok: "ok";
+                partial: "partial";
+            }>;
+            answer: import("zod").ZodOptional<import("zod").ZodString>;
+            explanation: import("zod").ZodString;
+            interpretedAs: import("zod").ZodOptional<import("zod").ZodString>;
+            results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"search">;
+                kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                    message: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    services: import("zod").ZodArray<import("zod").ZodObject<{
+                        service: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    count: import("zod").ZodNumber;
+                    previousCount: import("zod").ZodNumber;
+                    countBasis: import("zod").ZodEnum<{
+                        exact: "exact";
+                        sampled: "sampled";
+                    }>;
+                    firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    examples: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                approximate: import("zod").ZodBoolean;
+                truncated: import("zod").ZodBoolean;
+                previousWindow: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"rows">;
+                rows: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    time: import("zod").ZodString;
+                    service: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    body: import("zod").ZodString;
+                    attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                    traceId: import("zod").ZodString;
+                    spanId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"value">;
+                measure: import("zod").ZodString;
+                value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                share: import("zod").ZodOptional<import("zod").ZodObject<{
+                    part: import("zod").ZodNumber;
+                    whole: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strip>>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"distinct">;
+                measure: import("zod").ZodString;
+                value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"table">;
+                columns: import("zod").ZodArray<import("zod").ZodString>;
+                measure: import("zod").ZodString;
+                groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    key: import("zod").ZodArray<import("zod").ZodString>;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"messages">;
+                columns: import("zod").ZodArray<import("zod").ZodString>;
+                measure: import("zod").ZodString;
+                groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    key: import("zod").ZodArray<import("zod").ZodString>;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"series">;
+                columns: import("zod").ZodArray<import("zod").ZodString>;
+                measure: import("zod").ZodString;
+                bucket: import("zod").ZodString;
+                points: import("zod").ZodArray<import("zod").ZodObject<{
+                    bucket: import("zod").ZodString;
+                    key: import("zod").ZodArray<import("zod").ZodString>;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>], "kind">>;
+            window: import("zod").ZodNullable<import("zod").ZodObject<{
+                from: import("zod").ZodString;
+                to: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            periods: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                name: import("zod").ZodString;
+                window: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"search">;
+                    kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                        message: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        count: import("zod").ZodNumber;
+                        previousCount: import("zod").ZodNumber;
+                        countBasis: import("zod").ZodEnum<{
+                            exact: "exact";
+                            sampled: "sampled";
+                        }>;
+                        firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                        lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        examples: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            time: import("zod").ZodString;
+                            service: import("zod").ZodString;
+                            severity: import("zod").ZodString;
+                            body: import("zod").ZodString;
+                            attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                            traceId: import("zod").ZodString;
+                            spanId: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    approximate: import("zod").ZodBoolean;
+                    truncated: import("zod").ZodBoolean;
+                    previousWindow: import("zod").ZodObject<{
+                        from: import("zod").ZodString;
+                        to: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"rows">;
+                    rows: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"value">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"distinct">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"table">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"messages">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"series">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    bucket: import("zod").ZodString;
+                    points: import("zod").ZodArray<import("zod").ZodObject<{
+                        bucket: import("zod").ZodString;
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>], "kind">>;
+            }, import("zod/v4/core").$strip>>>;
+            meta: import("zod").ZodNullable<import("zod").ZodObject<{
+                exactness: import("zod").ZodEnum<{
+                    approximate: "approximate";
+                    exact: "exact";
+                }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"sampled">;
+                    relativeError: import("zod").ZodNumber;
+                    confidence: import("zod").ZodLiteral<0.95>;
+                    sampleFraction: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_percentile">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_distinct">;
+                }, import("zod/v4/core").$strict>], "method">>;
+                coverage: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        complete: "complete";
+                        partial: "partial";
+                    }>;
+                    reason: import("zod").ZodOptional<import("zod").ZodEnum<{
+                        read_limit: "read_limit";
+                        request_columns: "request_columns";
+                        stored_range: "stored_range";
+                    }>>;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>>;
+            rejection: import("zod").ZodOptional<import("zod").ZodObject<{
+                code: import("zod").ZodEnum<{
+                    approximation_required: "approximation_required";
+                    bucket_too_fine: "bucket_too_fine";
+                    not_about_logs: "not_about_logs";
+                    other_project: "other_project";
+                    time_range_too_wide: "time_range_too_wide";
+                    unsupported_query: "unsupported_query";
+                    unsupported_question: "unsupported_question";
+                }>;
+                message: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>>;
+            writeDeclined: import("zod").ZodOptional<import("zod").ZodLiteral<true>>;
+            attempts: import("zod").ZodArray<import("zod").ZodObject<{
+                n: import("zod").ZodNumber;
+                action: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>;
+            timings: import("zod").ZodObject<{
+                planMs: import("zod").ZodOptional<import("zod").ZodNumber>;
+                executeMs: import("zod").ZodNumber;
+                answerMs: import("zod").ZodOptional<import("zod").ZodNumber>;
+                totalMs: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly executeQueryById: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             queryId: import("zod").ZodString;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -3300,6 +4193,10 @@ export declare const publicApiContract: {
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                share: import("zod").ZodOptional<import("zod").ZodObject<{
+                    part: import("zod").ZodNumber;
+                    whole: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"distinct">;
@@ -3313,8 +4210,13 @@ export declare const publicApiContract: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"messages">;
@@ -3323,8 +4225,13 @@ export declare const publicApiContract: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"series">;
@@ -3335,19 +4242,153 @@ export declare const publicApiContract: {
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>], "kind">>;
             window: import("zod").ZodNullable<import("zod").ZodObject<{
                 from: import("zod").ZodString;
                 to: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            periods: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                name: import("zod").ZodString;
+                window: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"search">;
+                    kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                        message: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        count: import("zod").ZodNumber;
+                        previousCount: import("zod").ZodNumber;
+                        countBasis: import("zod").ZodEnum<{
+                            exact: "exact";
+                            sampled: "sampled";
+                        }>;
+                        firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                        lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        examples: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            time: import("zod").ZodString;
+                            service: import("zod").ZodString;
+                            severity: import("zod").ZodString;
+                            body: import("zod").ZodString;
+                            attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                            traceId: import("zod").ZodString;
+                            spanId: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    approximate: import("zod").ZodBoolean;
+                    truncated: import("zod").ZodBoolean;
+                    previousWindow: import("zod").ZodObject<{
+                        from: import("zod").ZodString;
+                        to: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"rows">;
+                    rows: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"value">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"distinct">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"table">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"messages">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"series">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    bucket: import("zod").ZodString;
+                    points: import("zod").ZodArray<import("zod").ZodObject<{
+                        bucket: import("zod").ZodString;
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>], "kind">>;
+            }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
                 exactness: import("zod").ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"sampled">;
+                    relativeError: import("zod").ZodNumber;
+                    confidence: import("zod").ZodLiteral<0.95>;
+                    sampleFraction: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_percentile">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_distinct">;
+                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -3362,7 +4403,19 @@ export declare const publicApiContract: {
                     }>>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>>;
-            matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+            rejection: import("zod").ZodOptional<import("zod").ZodObject<{
+                code: import("zod").ZodEnum<{
+                    approximation_required: "approximation_required";
+                    bucket_too_fine: "bucket_too_fine";
+                    not_about_logs: "not_about_logs";
+                    other_project: "other_project";
+                    time_range_too_wide: "time_range_too_wide";
+                    unsupported_query: "unsupported_query";
+                    unsupported_question: "unsupported_question";
+                }>;
+                message: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>>;
+            writeDeclined: import("zod").ZodOptional<import("zod").ZodLiteral<true>>;
             attempts: import("zod").ZodArray<import("zod").ZodObject<{
                 n: import("zod").ZodNumber;
                 action: import("zod").ZodNullable<import("zod").ZodString>;
@@ -13058,19 +14111,13 @@ export declare const publicApiOperations: {
                 execution: import("zod").ZodOptional<import("zod").ZodObject<{
                     spec: import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
-                        source: import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"logs">;
-                        }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -13079,16 +14126,16 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -13097,14 +14144,33 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"severity_number">;
+                            kind: import("zod").ZodLiteral<"severity">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"column">;
-                            name: import("zod").ZodString;
+                            name: import("zod").ZodEnum<{
+                                "deployment.environment": "deployment.environment";
+                                "event.name": "event.name";
+                                "http.request.body.size": "http.request.body.size";
+                                "http.request.method": "http.request.method";
+                                "http.response.body.size": "http.response.body.size";
+                                "http.response.status_code": "http.response.status_code";
+                                "http.route": "http.route";
+                                "k8s.pod.name": "k8s.pod.name";
+                                "log.record.uid": "log.record.uid";
+                                operation_kind: "operation_kind";
+                                "server.address": "server.address";
+                                severity_text: "severity_text";
+                                span_id: "span_id";
+                                trace_id: "trace_id";
+                                "url.path": "url.path";
+                            }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"attribute">;
                             source: import("zod").ZodEnum<{
@@ -13128,15 +14194,12 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13145,16 +14208,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13163,19 +14226,19 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13184,16 +14247,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13202,6 +14265,9 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -13221,15 +14287,12 @@ export declare const publicApiOperations: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13238,16 +14301,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13256,11 +14319,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
                                 oldest: "oldest";
                             }>>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"request_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"error_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -13273,6 +14341,45 @@ export declare const publicApiOperations: {
                                 p99: "p99";
                                 sum: "sum";
                             }>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"ratio">;
+                            numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown>>;
                         }, import("zod/v4/core").$strict>], "op">;
                         bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
                             "1d": "1d";
@@ -13292,6 +14399,16 @@ export declare const publicApiOperations: {
                                 other: "other";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        order: import("zod").ZodOptional<import("zod").ZodObject<{
+                            by: import("zod").ZodEnum<{
+                                dimension: "dimension";
+                                value: "value";
+                            }>;
+                            direction: import("zod").ZodEnum<{
+                                asc: "asc";
+                                desc: "desc";
+                            }>;
+                        }, import("zod/v4/core").$strict>>;
                         exactness: import("zod").ZodEnum<{
                             approximate_ok: "approximate_ok";
                             exact: "exact";
@@ -13305,50 +14422,20 @@ export declare const publicApiOperations: {
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
                     meta: import("zod").ZodObject<{
-                        representation: import("zod").ZodEnum<{
-                            event_volume: "event_volume";
-                            exact_scan: "exact_scan";
-                            log_volume: "log_volume";
-                            pattern_index: "pattern_index";
-                            pattern_volume: "pattern_volume";
-                            request_metrics: "request_metrics";
-                            sampled_scan: "sampled_scan";
-                            standing: "standing";
-                        }>;
                         exactness: import("zod").ZodEnum<{
                             approximate: "approximate";
                             exact: "exact";
                         }>;
-                        error: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"sampling">;
-                            relativeBound: import("zod").ZodNumber;
+                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                            method: import("zod").ZodLiteral<"sampled">;
+                            relativeError: import("zod").ZodNumber;
                             confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
-                            cellRows: import("zod").ZodNumber;
-                            minCellRows: import("zod").ZodNumber;
-                            designEffect: import("zod").ZodNumber;
-                            omissionProbability: import("zod").ZodObject<{
-                                oneIdentity: import("zod").ZodNumber;
-                                boundedCell: import("zod").ZodNumber;
-                                boundedCellIdentities: import("zod").ZodNumber;
-                                maxMultiplicity: import("zod").ZodNullable<import("zod").ZodNumber>;
-                                basis: import("zod").ZodString;
-                            }, import("zod/v4/core").$strict>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"quantile_sketch">;
-                            algorithm: import("zod").ZodEnum<{
-                                reservoir_sample: "reservoir_sample";
-                                tdigest: "tdigest";
-                            }>;
-                            compression: import("zod").ZodNumber;
+                            method: import("zod").ZodLiteral<"estimated_percentile">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"distinct_sketch">;
-                            algorithm: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>], "kind">>;
-                        estimate: import("zod").ZodOptional<import("zod").ZodObject<{
-                            rows: import("zod").ZodNumber;
-                            bytes: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>>;
+                            method: import("zod").ZodLiteral<"estimated_distinct">;
+                        }, import("zod/v4/core").$strict>], "method">>;
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -13366,7 +14453,6 @@ export declare const publicApiOperations: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                        catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
@@ -13381,19 +14467,13 @@ export declare const publicApiOperations: {
                 execution: import("zod").ZodObject<{
                     spec: import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
-                        source: import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"logs">;
-                        }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -13402,16 +14482,16 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -13420,14 +14500,33 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"severity_number">;
+                            kind: import("zod").ZodLiteral<"severity">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"column">;
-                            name: import("zod").ZodString;
+                            name: import("zod").ZodEnum<{
+                                "deployment.environment": "deployment.environment";
+                                "event.name": "event.name";
+                                "http.request.body.size": "http.request.body.size";
+                                "http.request.method": "http.request.method";
+                                "http.response.body.size": "http.response.body.size";
+                                "http.response.status_code": "http.response.status_code";
+                                "http.route": "http.route";
+                                "k8s.pod.name": "k8s.pod.name";
+                                "log.record.uid": "log.record.uid";
+                                operation_kind: "operation_kind";
+                                "server.address": "server.address";
+                                severity_text: "severity_text";
+                                span_id: "span_id";
+                                trace_id: "trace_id";
+                                "url.path": "url.path";
+                            }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"attribute">;
                             source: import("zod").ZodEnum<{
@@ -13451,15 +14550,12 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13468,16 +14564,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13486,19 +14582,19 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13507,16 +14603,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13525,6 +14621,9 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -13544,15 +14643,12 @@ export declare const publicApiOperations: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13561,16 +14657,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13579,11 +14675,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
                                 oldest: "oldest";
                             }>>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"request_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"error_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -13596,6 +14697,45 @@ export declare const publicApiOperations: {
                                 p99: "p99";
                                 sum: "sum";
                             }>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"ratio">;
+                            numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown>>;
                         }, import("zod/v4/core").$strict>], "op">;
                         bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
                             "1d": "1d";
@@ -13615,6 +14755,16 @@ export declare const publicApiOperations: {
                                 other: "other";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        order: import("zod").ZodOptional<import("zod").ZodObject<{
+                            by: import("zod").ZodEnum<{
+                                dimension: "dimension";
+                                value: "value";
+                            }>;
+                            direction: import("zod").ZodEnum<{
+                                asc: "asc";
+                                desc: "desc";
+                            }>;
+                        }, import("zod/v4/core").$strict>>;
                         exactness: import("zod").ZodEnum<{
                             approximate_ok: "approximate_ok";
                             exact: "exact";
@@ -13628,50 +14778,20 @@ export declare const publicApiOperations: {
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
                     meta: import("zod").ZodObject<{
-                        representation: import("zod").ZodEnum<{
-                            event_volume: "event_volume";
-                            exact_scan: "exact_scan";
-                            log_volume: "log_volume";
-                            pattern_index: "pattern_index";
-                            pattern_volume: "pattern_volume";
-                            request_metrics: "request_metrics";
-                            sampled_scan: "sampled_scan";
-                            standing: "standing";
-                        }>;
                         exactness: import("zod").ZodEnum<{
                             approximate: "approximate";
                             exact: "exact";
                         }>;
-                        error: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"sampling">;
-                            relativeBound: import("zod").ZodNumber;
+                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                            method: import("zod").ZodLiteral<"sampled">;
+                            relativeError: import("zod").ZodNumber;
                             confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
-                            cellRows: import("zod").ZodNumber;
-                            minCellRows: import("zod").ZodNumber;
-                            designEffect: import("zod").ZodNumber;
-                            omissionProbability: import("zod").ZodObject<{
-                                oneIdentity: import("zod").ZodNumber;
-                                boundedCell: import("zod").ZodNumber;
-                                boundedCellIdentities: import("zod").ZodNumber;
-                                maxMultiplicity: import("zod").ZodNullable<import("zod").ZodNumber>;
-                                basis: import("zod").ZodString;
-                            }, import("zod/v4/core").$strict>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"quantile_sketch">;
-                            algorithm: import("zod").ZodEnum<{
-                                reservoir_sample: "reservoir_sample";
-                                tdigest: "tdigest";
-                            }>;
-                            compression: import("zod").ZodNumber;
+                            method: import("zod").ZodLiteral<"estimated_percentile">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"distinct_sketch">;
-                            algorithm: import("zod").ZodString;
-                        }, import("zod/v4/core").$strict>], "kind">>;
-                        estimate: import("zod").ZodOptional<import("zod").ZodObject<{
-                            rows: import("zod").ZodNumber;
-                            bytes: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>>;
+                            method: import("zod").ZodLiteral<"estimated_distinct">;
+                        }, import("zod/v4/core").$strict>], "method">>;
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -13689,7 +14809,6 @@ export declare const publicApiOperations: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                        catalogRevision: import("zod").ZodOptional<import("zod").ZodString>;
                         population: import("zod").ZodOptional<import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"services">;
                             services: import("zod").ZodArray<import("zod").ZodString>;
@@ -13702,22 +14821,23 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 status: import("zod").ZodLiteral<"rejected">;
                 rejection: import("zod").ZodObject<{
+                    code: import("zod").ZodEnum<{
+                        approximation_required: "approximation_required";
+                        bucket_too_fine: "bucket_too_fine";
+                        time_range_too_wide: "time_range_too_wide";
+                        unsupported_query: "unsupported_query";
+                    }>;
+                    message: import("zod").ZodString;
                     status: import("zod").ZodLiteral<"rejected">;
                     spec: import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
-                        source: import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"logs">;
-                        }, import("zod/v4/core").$strict>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -13726,16 +14846,16 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
-                            kind: "body_json";
-                            path: string[];
-                        } | {
                             kind: "service";
                         } | {
-                            kind: "severity_number";
+                            kind: "severity";
                         } | {
                             kind: "column";
-                            name: string;
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -13744,14 +14864,33 @@ export declare const publicApiOperations: {
                             kind: "body";
                         } | {
                             kind: "message";
+                        } | {
+                            kind: "body_json";
+                            path: string[];
                         }>, unknown>>;
                         dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"service">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            kind: import("zod").ZodLiteral<"severity_number">;
+                            kind: import("zod").ZodLiteral<"severity">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"column">;
-                            name: import("zod").ZodString;
+                            name: import("zod").ZodEnum<{
+                                "deployment.environment": "deployment.environment";
+                                "event.name": "event.name";
+                                "http.request.body.size": "http.request.body.size";
+                                "http.request.method": "http.request.method";
+                                "http.response.body.size": "http.response.body.size";
+                                "http.response.status_code": "http.response.status_code";
+                                "http.route": "http.route";
+                                "k8s.pod.name": "k8s.pod.name";
+                                "log.record.uid": "log.record.uid";
+                                operation_kind: "operation_kind";
+                                "server.address": "server.address";
+                                severity_text: "severity_text";
+                                span_id: "span_id";
+                                trace_id: "trace_id";
+                                "url.path": "url.path";
+                            }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             kind: import("zod").ZodLiteral<"attribute">;
                             source: import("zod").ZodEnum<{
@@ -13775,15 +14914,12 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"distinct">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13792,16 +14928,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13810,19 +14946,19 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"numeric">;
                             field: import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13831,16 +14967,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13849,6 +14985,9 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>;
                             parseAs: import("zod").ZodLiteral<"float64">;
                             aggregate: import("zod").ZodEnum<{
@@ -13868,15 +15007,12 @@ export declare const publicApiOperations: {
                             op: import("zod").ZodLiteral<"recent_rows">;
                             limit: import("zod").ZodNumber;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13885,16 +15021,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown, import("zod/v4/core").$ZodTypeInternals<{
-                                kind: "body_json";
-                                path: string[];
-                            } | {
                                 kind: "service";
                             } | {
-                                kind: "severity_number";
+                                kind: "severity";
                             } | {
                                 kind: "column";
-                                name: string;
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -13903,11 +15039,16 @@ export declare const publicApiOperations: {
                                 kind: "body";
                             } | {
                                 kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
                             }, unknown>>>>;
                             order: import("zod").ZodOptional<import("zod").ZodEnum<{
                                 newest: "newest";
                                 oldest: "oldest";
                             }>>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"request_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"error_count">;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -13920,6 +15061,45 @@ export declare const publicApiOperations: {
                                 p99: "p99";
                                 sum: "sum";
                             }>;
+                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                            op: import("zod").ZodLiteral<"ratio">;
+                            numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                                kind: "service";
+                            } | {
+                                kind: "severity";
+                            } | {
+                                kind: "column";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            } | {
+                                kind: "attribute";
+                                source: "log" | "resource" | "scope";
+                                key: string;
+                            } | {
+                                kind: "body";
+                            } | {
+                                kind: "message";
+                            } | {
+                                kind: "body_json";
+                                path: string[];
+                            }>, unknown>>;
                         }, import("zod/v4/core").$strict>], "op">;
                         bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
                             "1d": "1d";
@@ -13939,6 +15119,16 @@ export declare const publicApiOperations: {
                                 other: "other";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        order: import("zod").ZodOptional<import("zod").ZodObject<{
+                            by: import("zod").ZodEnum<{
+                                dimension: "dimension";
+                                value: "value";
+                            }>;
+                            direction: import("zod").ZodEnum<{
+                                asc: "asc";
+                                desc: "desc";
+                            }>;
+                        }, import("zod/v4/core").$strict>>;
                         exactness: import("zod").ZodEnum<{
                             approximate_ok: "approximate_ok";
                             exact: "exact";
@@ -13951,32 +15141,6 @@ export declare const publicApiOperations: {
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    reason: import("zod").ZodString;
-                    suggestion: import("zod").ZodOptional<import("zod").ZodEnum<{
-                        allow_approximation: "allow_approximation";
-                        coarsen_bucket: "coarsen_bucket";
-                        narrow_window: "narrow_window";
-                        promote_attribute: "promote_attribute";
-                    }>>;
-                    skipped: import("zod").ZodArray<import("zod").ZodObject<{
-                        representation: import("zod").ZodEnum<{
-                            event_volume: "event_volume";
-                            exact_scan: "exact_scan";
-                            log_volume: "log_volume";
-                            pattern_index: "pattern_index";
-                            pattern_volume: "pattern_volume";
-                            request_metrics: "request_metrics";
-                            sampled_scan: "sampled_scan";
-                            standing: "standing";
-                        }>;
-                        reason: import("zod").ZodString;
-                        suggestion: import("zod").ZodOptional<import("zod").ZodEnum<{
-                            allow_approximation: "allow_approximation";
-                            coarsen_bucket: "coarsen_bucket";
-                            narrow_window: "narrow_window";
-                            promote_attribute: "promote_attribute";
-                        }>>;
-                    }, import("zod/v4/core").$strict>>;
                     took: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -14026,6 +15190,7 @@ export declare const publicApiOperations: {
                 kind: import("zod").ZodLiteral<"relative">;
                 lookbackSeconds: import("zod").ZodNumber;
             }, import("zod/v4/core").$strict>], "kind">>;
+            timeZone: import("zod").ZodOptional<import("zod").ZodString>;
             limit: import("zod").ZodOptional<import("zod").ZodNumber>;
             results: import("zod").ZodOptional<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
@@ -14094,6 +15259,10 @@ export declare const publicApiOperations: {
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                share: import("zod").ZodOptional<import("zod").ZodObject<{
+                    part: import("zod").ZodNumber;
+                    whole: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"distinct">;
@@ -14107,8 +15276,13 @@ export declare const publicApiOperations: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"messages">;
@@ -14117,8 +15291,13 @@ export declare const publicApiOperations: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"series">;
@@ -14129,19 +15308,153 @@ export declare const publicApiOperations: {
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>], "kind">>;
             window: import("zod").ZodNullable<import("zod").ZodObject<{
                 from: import("zod").ZodString;
                 to: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            periods: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                name: import("zod").ZodString;
+                window: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"search">;
+                    kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                        message: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        count: import("zod").ZodNumber;
+                        previousCount: import("zod").ZodNumber;
+                        countBasis: import("zod").ZodEnum<{
+                            exact: "exact";
+                            sampled: "sampled";
+                        }>;
+                        firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                        lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        examples: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            time: import("zod").ZodString;
+                            service: import("zod").ZodString;
+                            severity: import("zod").ZodString;
+                            body: import("zod").ZodString;
+                            attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                            traceId: import("zod").ZodString;
+                            spanId: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    approximate: import("zod").ZodBoolean;
+                    truncated: import("zod").ZodBoolean;
+                    previousWindow: import("zod").ZodObject<{
+                        from: import("zod").ZodString;
+                        to: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"rows">;
+                    rows: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"value">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"distinct">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"table">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"messages">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"series">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    bucket: import("zod").ZodString;
+                    points: import("zod").ZodArray<import("zod").ZodObject<{
+                        bucket: import("zod").ZodString;
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>], "kind">>;
+            }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
                 exactness: import("zod").ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"sampled">;
+                    relativeError: import("zod").ZodNumber;
+                    confidence: import("zod").ZodLiteral<0.95>;
+                    sampleFraction: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_percentile">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_distinct">;
+                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -14156,7 +15469,19 @@ export declare const publicApiOperations: {
                     }>>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>>;
-            matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+            rejection: import("zod").ZodOptional<import("zod").ZodObject<{
+                code: import("zod").ZodEnum<{
+                    approximation_required: "approximation_required";
+                    bucket_too_fine: "bucket_too_fine";
+                    not_about_logs: "not_about_logs";
+                    other_project: "other_project";
+                    time_range_too_wide: "time_range_too_wide";
+                    unsupported_query: "unsupported_query";
+                    unsupported_question: "unsupported_question";
+                }>;
+                message: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>>;
+            writeDeclined: import("zod").ZodOptional<import("zod").ZodLiteral<true>>;
             attempts: import("zod").ZodArray<import("zod").ZodObject<{
                 n: import("zod").ZodNumber;
                 action: import("zod").ZodNullable<import("zod").ZodString>;
@@ -14169,6 +15494,627 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly executeQuery: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            queryId: import("zod").ZodOptional<import("zod").ZodString>;
+            spec: import("zod").ZodOptional<import("zod").ZodObject<{
+                version: import("zod").ZodLiteral<2>;
+                predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                    kind: "service";
+                } | {
+                    kind: "severity";
+                } | {
+                    kind: "column";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                } | {
+                    kind: "attribute";
+                    source: "log" | "resource" | "scope";
+                    key: string;
+                } | {
+                    kind: "body";
+                } | {
+                    kind: "message";
+                } | {
+                    kind: "body_json";
+                    path: string[];
+                }>, unknown>>;
+                dimensions: import("zod").ZodArray<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"service">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"severity">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"column">;
+                    name: import("zod").ZodEnum<{
+                        "deployment.environment": "deployment.environment";
+                        "event.name": "event.name";
+                        "http.request.body.size": "http.request.body.size";
+                        "http.request.method": "http.request.method";
+                        "http.response.body.size": "http.response.body.size";
+                        "http.response.status_code": "http.response.status_code";
+                        "http.route": "http.route";
+                        "k8s.pod.name": "k8s.pod.name";
+                        "log.record.uid": "log.record.uid";
+                        operation_kind: "operation_kind";
+                        "server.address": "server.address";
+                        severity_text: "severity_text";
+                        span_id: "span_id";
+                        trace_id: "trace_id";
+                        "url.path": "url.path";
+                    }>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"attribute">;
+                    source: import("zod").ZodEnum<{
+                        log: "log";
+                        resource: "resource";
+                        scope: "scope";
+                    }>;
+                    key: import("zod").ZodString;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"body">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"message">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"body_json">;
+                    path: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strict>], "kind">>;
+                measure: import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"count">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"event_rate">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"distinct">;
+                    field: import("zod").ZodType<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown>>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"numeric">;
+                    field: import("zod").ZodType<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown>>;
+                    parseAs: import("zod").ZodLiteral<"float64">;
+                    aggregate: import("zod").ZodEnum<{
+                        avg: "avg";
+                        max: "max";
+                        min: "min";
+                        p50: "p50";
+                        p95: "p95";
+                        p99: "p99";
+                        sum: "sum";
+                    }>;
+                    invalidValues: import("zod").ZodEnum<{
+                        drop: "drop";
+                        error: "error";
+                    }>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"recent_rows">;
+                    limit: import("zod").ZodNumber;
+                    fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown, import("zod/v4/core").$ZodTypeInternals<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }, unknown>>>>;
+                    order: import("zod").ZodOptional<import("zod").ZodEnum<{
+                        newest: "newest";
+                        oldest: "oldest";
+                    }>>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"request_count">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"error_count">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"duration">;
+                    aggregate: import("zod").ZodEnum<{
+                        avg: "avg";
+                        max: "max";
+                        p50: "p50";
+                        p95: "p95";
+                        p99: "p99";
+                        sum: "sum";
+                    }>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    op: import("zod").ZodLiteral<"ratio">;
+                    numerator: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown, import("zod/v4/core").$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                        kind: "service";
+                    } | {
+                        kind: "severity";
+                    } | {
+                        kind: "column";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    } | {
+                        kind: "attribute";
+                        source: "log" | "resource" | "scope";
+                        key: string;
+                    } | {
+                        kind: "body";
+                    } | {
+                        kind: "message";
+                    } | {
+                        kind: "body_json";
+                        path: string[];
+                    }>, unknown>>;
+                }, import("zod/v4/core").$strict>], "op">;
+                bucket: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    "1d": "1d";
+                    "1h": "1h";
+                    "1m": "1m";
+                    "5m": "5m";
+                }>>;
+                output: import("zod").ZodEnum<{
+                    evidence: "evidence";
+                    series: "series";
+                    table: "table";
+                }>;
+                series: import("zod").ZodOptional<import("zod").ZodObject<{
+                    limit: import("zod").ZodNumber;
+                    overflow: import("zod").ZodEnum<{
+                        drop: "drop";
+                        other: "other";
+                    }>;
+                }, import("zod/v4/core").$strict>>;
+                order: import("zod").ZodOptional<import("zod").ZodObject<{
+                    by: import("zod").ZodEnum<{
+                        dimension: "dimension";
+                        value: "value";
+                    }>;
+                    direction: import("zod").ZodEnum<{
+                        asc: "asc";
+                        desc: "desc";
+                    }>;
+                }, import("zod/v4/core").$strict>>;
+                exactness: import("zod").ZodEnum<{
+                    approximate_ok: "approximate_ok";
+                    exact: "exact";
+                }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodObject<{
+                    maxRelativeError: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>>;
+            }, import("zod/v4/core").$strict>>;
+            window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"absolute">;
+                from: import("zod").ZodISODateTime;
+                to: import("zod").ZodISODateTime;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"relative">;
+                lookbackSeconds: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strict>], "kind">>;
+            limit: import("zod").ZodOptional<import("zod").ZodNumber>;
+            group: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+            queryId: import("zod").ZodOptional<import("zod").ZodString>;
+            parentId: import("zod").ZodOptional<import("zod").ZodString>;
+            status: import("zod").ZodEnum<{
+                error: "error";
+                not_found: "not_found";
+                ok: "ok";
+                partial: "partial";
+            }>;
+            answer: import("zod").ZodOptional<import("zod").ZodString>;
+            explanation: import("zod").ZodString;
+            interpretedAs: import("zod").ZodOptional<import("zod").ZodString>;
+            results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"search">;
+                kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                    message: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    services: import("zod").ZodArray<import("zod").ZodObject<{
+                        service: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    count: import("zod").ZodNumber;
+                    previousCount: import("zod").ZodNumber;
+                    countBasis: import("zod").ZodEnum<{
+                        exact: "exact";
+                        sampled: "sampled";
+                    }>;
+                    firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                    lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                    examples: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                approximate: import("zod").ZodBoolean;
+                truncated: import("zod").ZodBoolean;
+                previousWindow: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"rows">;
+                rows: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    time: import("zod").ZodString;
+                    service: import("zod").ZodString;
+                    severity: import("zod").ZodString;
+                    body: import("zod").ZodString;
+                    attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                    traceId: import("zod").ZodString;
+                    spanId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"value">;
+                measure: import("zod").ZodString;
+                value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                share: import("zod").ZodOptional<import("zod").ZodObject<{
+                    part: import("zod").ZodNumber;
+                    whole: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strip>>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"distinct">;
+                measure: import("zod").ZodString;
+                value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"table">;
+                columns: import("zod").ZodArray<import("zod").ZodString>;
+                measure: import("zod").ZodString;
+                groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    key: import("zod").ZodArray<import("zod").ZodString>;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"messages">;
+                columns: import("zod").ZodArray<import("zod").ZodString>;
+                measure: import("zod").ZodString;
+                groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    key: import("zod").ZodArray<import("zod").ZodString>;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                kind: import("zod").ZodLiteral<"series">;
+                columns: import("zod").ZodArray<import("zod").ZodString>;
+                measure: import("zod").ZodString;
+                bucket: import("zod").ZodString;
+                points: import("zod").ZodArray<import("zod").ZodObject<{
+                    bucket: import("zod").ZodString;
+                    key: import("zod").ZodArray<import("zod").ZodString>;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                truncated: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>], "kind">>;
+            window: import("zod").ZodNullable<import("zod").ZodObject<{
+                from: import("zod").ZodString;
+                to: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            periods: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                name: import("zod").ZodString;
+                window: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"search">;
+                    kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                        message: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        count: import("zod").ZodNumber;
+                        previousCount: import("zod").ZodNumber;
+                        countBasis: import("zod").ZodEnum<{
+                            exact: "exact";
+                            sampled: "sampled";
+                        }>;
+                        firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                        lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        examples: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            time: import("zod").ZodString;
+                            service: import("zod").ZodString;
+                            severity: import("zod").ZodString;
+                            body: import("zod").ZodString;
+                            attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                            traceId: import("zod").ZodString;
+                            spanId: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    approximate: import("zod").ZodBoolean;
+                    truncated: import("zod").ZodBoolean;
+                    previousWindow: import("zod").ZodObject<{
+                        from: import("zod").ZodString;
+                        to: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"rows">;
+                    rows: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"value">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"distinct">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"table">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"messages">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"series">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    bucket: import("zod").ZodString;
+                    points: import("zod").ZodArray<import("zod").ZodObject<{
+                        bucket: import("zod").ZodString;
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>], "kind">>;
+            }, import("zod/v4/core").$strip>>>;
+            meta: import("zod").ZodNullable<import("zod").ZodObject<{
+                exactness: import("zod").ZodEnum<{
+                    approximate: "approximate";
+                    exact: "exact";
+                }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"sampled">;
+                    relativeError: import("zod").ZodNumber;
+                    confidence: import("zod").ZodLiteral<0.95>;
+                    sampleFraction: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_percentile">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_distinct">;
+                }, import("zod/v4/core").$strict>], "method">>;
+                coverage: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        complete: "complete";
+                        partial: "partial";
+                    }>;
+                    reason: import("zod").ZodOptional<import("zod").ZodEnum<{
+                        read_limit: "read_limit";
+                        request_columns: "request_columns";
+                        stored_range: "stored_range";
+                    }>>;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>>;
+            rejection: import("zod").ZodOptional<import("zod").ZodObject<{
+                code: import("zod").ZodEnum<{
+                    approximation_required: "approximation_required";
+                    bucket_too_fine: "bucket_too_fine";
+                    not_about_logs: "not_about_logs";
+                    other_project: "other_project";
+                    time_range_too_wide: "time_range_too_wide";
+                    unsupported_query: "unsupported_query";
+                    unsupported_question: "unsupported_question";
+                }>;
+                message: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>>;
+            writeDeclined: import("zod").ZodOptional<import("zod").ZodLiteral<true>>;
+            attempts: import("zod").ZodArray<import("zod").ZodObject<{
+                n: import("zod").ZodNumber;
+                action: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>;
+            timings: import("zod").ZodObject<{
+                planMs: import("zod").ZodOptional<import("zod").ZodNumber>;
+                executeMs: import("zod").ZodNumber;
+                answerMs: import("zod").ZodOptional<import("zod").ZodNumber>;
+                totalMs: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly executeQueryById: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             queryId: import("zod").ZodString;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -14247,6 +16193,10 @@ export declare const publicApiOperations: {
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                share: import("zod").ZodOptional<import("zod").ZodObject<{
+                    part: import("zod").ZodNumber;
+                    whole: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"distinct">;
@@ -14260,8 +16210,13 @@ export declare const publicApiOperations: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"messages">;
@@ -14270,8 +16225,13 @@ export declare const publicApiOperations: {
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"series">;
@@ -14282,19 +16242,153 @@ export declare const publicApiOperations: {
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                total: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>], "kind">>;
             window: import("zod").ZodNullable<import("zod").ZodObject<{
                 from: import("zod").ZodString;
                 to: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            periods: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                name: import("zod").ZodString;
+                window: import("zod").ZodObject<{
+                    from: import("zod").ZodString;
+                    to: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                results: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"search">;
+                    kinds: import("zod").ZodArray<import("zod").ZodObject<{
+                        message: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        count: import("zod").ZodNumber;
+                        previousCount: import("zod").ZodNumber;
+                        countBasis: import("zod").ZodEnum<{
+                            exact: "exact";
+                            sampled: "sampled";
+                        }>;
+                        firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                        lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
+                        examples: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            time: import("zod").ZodString;
+                            service: import("zod").ZodString;
+                            severity: import("zod").ZodString;
+                            body: import("zod").ZodString;
+                            attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                            traceId: import("zod").ZodString;
+                            spanId: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    approximate: import("zod").ZodBoolean;
+                    truncated: import("zod").ZodBoolean;
+                    previousWindow: import("zod").ZodObject<{
+                        from: import("zod").ZodString;
+                        to: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"rows">;
+                    rows: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        time: import("zod").ZodString;
+                        service: import("zod").ZodString;
+                        severity: import("zod").ZodString;
+                        body: import("zod").ZodString;
+                        attributes: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodString>;
+                        traceId: import("zod").ZodString;
+                        spanId: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"value">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    share: import("zod").ZodOptional<import("zod").ZodObject<{
+                        part: import("zod").ZodNumber;
+                        whole: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"distinct">;
+                    measure: import("zod").ZodString;
+                    value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"table">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"messages">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    kind: import("zod").ZodLiteral<"series">;
+                    columns: import("zod").ZodArray<import("zod").ZodString>;
+                    measure: import("zod").ZodString;
+                    bucket: import("zod").ZodString;
+                    points: import("zod").ZodArray<import("zod").ZodObject<{
+                        bucket: import("zod").ZodString;
+                        key: import("zod").ZodArray<import("zod").ZodString>;
+                        value: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        share: import("zod").ZodOptional<import("zod").ZodObject<{
+                            part: import("zod").ZodNumber;
+                            whole: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    total: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    truncated: import("zod").ZodBoolean;
+                }, import("zod/v4/core").$strip>], "kind">>;
+            }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
                 exactness: import("zod").ZodEnum<{
                     approximate: "approximate";
                     exact: "exact";
                 }>;
+                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"sampled">;
+                    relativeError: import("zod").ZodNumber;
+                    confidence: import("zod").ZodLiteral<0.95>;
+                    sampleFraction: import("zod").ZodNumber;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_percentile">;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    method: import("zod").ZodLiteral<"estimated_distinct">;
+                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -14309,7 +16403,19 @@ export declare const publicApiOperations: {
                     }>>;
                 }, import("zod/v4/core").$strip>;
             }, import("zod/v4/core").$strip>>;
-            matched: import("zod").ZodNullable<import("zod").ZodNumber>;
+            rejection: import("zod").ZodOptional<import("zod").ZodObject<{
+                code: import("zod").ZodEnum<{
+                    approximation_required: "approximation_required";
+                    bucket_too_fine: "bucket_too_fine";
+                    not_about_logs: "not_about_logs";
+                    other_project: "other_project";
+                    time_range_too_wide: "time_range_too_wide";
+                    unsupported_query: "unsupported_query";
+                    unsupported_question: "unsupported_question";
+                }>;
+                message: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>>;
+            writeDeclined: import("zod").ZodOptional<import("zod").ZodLiteral<true>>;
             attempts: import("zod").ZodArray<import("zod").ZodObject<{
                 n: import("zod").ZodNumber;
                 action: import("zod").ZodNullable<import("zod").ZodString>;
