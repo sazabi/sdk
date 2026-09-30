@@ -13,6 +13,8 @@
  *   whether a card participates at all.
  * - {@link isTaskSkippedInLedger} — the per-card `organizations` column-pair
  *   mapping the ledger booleans are read through.
+ * - {@link CARDS_WITHOUT_BACK} / {@link COMMITMENT_FLOW_ENTRIES} — where a
+ *   backward walk is refused or must stop.
  *
  * Tables are `Partial` on purpose: the common case is "no rule", and the
  * accessors ({@link dependenciesFor}, {@link applicabilityFor},
@@ -86,6 +88,20 @@ export declare const applicabilityFor: (id: TaskKey) => TaskApplicabilityRule | 
 export declare const CARDS_WITHOUT_BACK: ReadonlySet<TaskKey>;
 /** Whether a walk may offer Back from this card. */
 export declare const offersBack: (id: TaskKey) => boolean;
+/**
+ * The commitment steps: flow entries whose completion cannot be undone.
+ * Billing chooses the plan, and the project gate provisions the project and
+ * its regional resources and fixes the region. Onboarding Back never lands
+ * on one or on any entry before it (`bylaws/design.yaml` §4.f.ii, ENG-8077),
+ * so the project gate offers no Back and the first card after it cannot
+ * back into it. Both walks read this through `adjacentFlowEntry` (the web
+ * through its screen adapter), so neither renders a Back the other would
+ * not. Unconditional: every entry after a commitment step is reachable only
+ * once that step is complete.
+ */
+export declare const COMMITMENT_FLOW_ENTRIES: ReadonlySet<TaskKey | "create-project">;
+/** Whether a backward walk must stop before this flow entry. */
+export declare const isCommitmentFlowEntry: (id: TaskKey | "create-project") => boolean;
 /**
  * The org-wide skip ledger as booleans, one per `organizations` skip column
  * pair. Surfaces derive it from whatever shape carries the columns — the

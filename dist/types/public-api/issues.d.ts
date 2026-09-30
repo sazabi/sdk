@@ -365,8 +365,9 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
 export type GetIssueOutput = z.infer<typeof GetIssueOutputSchema>;
 export declare const IssueRejectionReasonSchema: z.ZodEnum<{
     duplicate: "duplicate";
-    incorrect: "incorrect";
-    not_relevant: "not_relevant";
+    incorrect_details: "incorrect_details";
+    not_real: "not_real";
+    something_else: "something_else";
 }>;
 export type IssueRejectionReason = z.infer<typeof IssueRejectionReasonSchema>;
 export declare const IssueRejectionAdjustmentSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -390,8 +391,9 @@ export declare const IssueRejectionReceiptSchema: z.ZodObject<{
     actorUserId: z.ZodString;
     reason: z.ZodEnum<{
         duplicate: "duplicate";
-        incorrect: "incorrect";
-        not_relevant: "not_relevant";
+        incorrect_details: "incorrect_details";
+        not_real: "not_real";
+        something_else: "something_else";
     }>;
     acceptedAt: z.ZodString;
     deadlineAt: z.ZodString;
@@ -415,8 +417,9 @@ export declare const IssueRejectionContextSchema: z.ZodObject<{
     issueId: z.ZodString;
     reasonChoices: z.ZodArray<z.ZodEnum<{
         duplicate: "duplicate";
-        incorrect: "incorrect";
-        not_relevant: "not_relevant";
+        incorrect_details: "incorrect_details";
+        not_real: "not_real";
+        something_else: "something_else";
     }>>;
     cycleLabel: z.ZodOptional<z.ZodString>;
     eligible: z.ZodBoolean;
@@ -449,8 +452,9 @@ export declare const IssueRejectionContextSchema: z.ZodObject<{
         actorUserId: z.ZodString;
         reason: z.ZodEnum<{
             duplicate: "duplicate";
-            incorrect: "incorrect";
-            not_relevant: "not_relevant";
+            incorrect_details: "incorrect_details";
+            not_real: "not_real";
+            something_else: "something_else";
         }>;
         acceptedAt: z.ZodString;
         deadlineAt: z.ZodString;
@@ -480,8 +484,9 @@ export declare const GetIssueRejectionContextOutputSchema: z.ZodObject<{
         issueId: z.ZodString;
         reasonChoices: z.ZodArray<z.ZodEnum<{
             duplicate: "duplicate";
-            incorrect: "incorrect";
-            not_relevant: "not_relevant";
+            incorrect_details: "incorrect_details";
+            not_real: "not_real";
+            something_else: "something_else";
         }>>;
         cycleLabel: z.ZodOptional<z.ZodString>;
         eligible: z.ZodBoolean;
@@ -514,8 +519,9 @@ export declare const GetIssueRejectionContextOutputSchema: z.ZodObject<{
             actorUserId: z.ZodString;
             reason: z.ZodEnum<{
                 duplicate: "duplicate";
-                incorrect: "incorrect";
-                not_relevant: "not_relevant";
+                incorrect_details: "incorrect_details";
+                not_real: "not_real";
+                something_else: "something_else";
             }>;
             acceptedAt: z.ZodString;
             deadlineAt: z.ZodString;
@@ -541,8 +547,9 @@ export declare const RejectIssueInputSchema: z.ZodObject<{
     issueId: z.ZodString;
     reason: z.ZodEnum<{
         duplicate: "duplicate";
-        incorrect: "incorrect";
-        not_relevant: "not_relevant";
+        incorrect_details: "incorrect_details";
+        not_real: "not_real";
+        something_else: "something_else";
     }>;
 }, z.core.$strip>;
 export type RejectIssueInput = z.infer<typeof RejectIssueInputSchema>;
@@ -555,8 +562,9 @@ export declare const RejectIssueOutputSchema: z.ZodObject<{
         actorUserId: z.ZodString;
         reason: z.ZodEnum<{
             duplicate: "duplicate";
-            incorrect: "incorrect";
-            not_relevant: "not_relevant";
+            incorrect_details: "incorrect_details";
+            not_real: "not_real";
+            something_else: "something_else";
         }>;
         acceptedAt: z.ZodString;
         deadlineAt: z.ZodString;
@@ -1031,8 +1039,9 @@ export declare const getIssueRejectionContext: import("../orpc-contracts/index.j
         issueId: z.ZodString;
         reasonChoices: z.ZodArray<z.ZodEnum<{
             duplicate: "duplicate";
-            incorrect: "incorrect";
-            not_relevant: "not_relevant";
+            incorrect_details: "incorrect_details";
+            not_real: "not_real";
+            something_else: "something_else";
         }>>;
         cycleLabel: z.ZodOptional<z.ZodString>;
         eligible: z.ZodBoolean;
@@ -1065,8 +1074,9 @@ export declare const getIssueRejectionContext: import("../orpc-contracts/index.j
             actorUserId: z.ZodString;
             reason: z.ZodEnum<{
                 duplicate: "duplicate";
-                incorrect: "incorrect";
-                not_relevant: "not_relevant";
+                incorrect_details: "incorrect_details";
+                not_real: "not_real";
+                something_else: "something_else";
             }>;
             acceptedAt: z.ZodString;
             deadlineAt: z.ZodString;
@@ -1091,8 +1101,9 @@ export declare const rejectIssue: import("../orpc-contracts/index.js").Operation
     issueId: z.ZodString;
     reason: z.ZodEnum<{
         duplicate: "duplicate";
-        incorrect: "incorrect";
-        not_relevant: "not_relevant";
+        incorrect_details: "incorrect_details";
+        not_real: "not_real";
+        something_else: "something_else";
     }>;
 }, z.core.$strip>, z.ZodObject<{
     replay: z.ZodBoolean;
@@ -1103,8 +1114,9 @@ export declare const rejectIssue: import("../orpc-contracts/index.js").Operation
         actorUserId: z.ZodString;
         reason: z.ZodEnum<{
             duplicate: "duplicate";
-            incorrect: "incorrect";
-            not_relevant: "not_relevant";
+            incorrect_details: "incorrect_details";
+            not_real: "not_real";
+            something_else: "something_else";
         }>;
         acceptedAt: z.ZodString;
         deadlineAt: z.ZodString;
@@ -1499,8 +1511,9 @@ export declare const issuesContract: {
             issueId: z.ZodString;
             reasonChoices: z.ZodArray<z.ZodEnum<{
                 duplicate: "duplicate";
-                incorrect: "incorrect";
-                not_relevant: "not_relevant";
+                incorrect_details: "incorrect_details";
+                not_real: "not_real";
+                something_else: "something_else";
             }>>;
             cycleLabel: z.ZodOptional<z.ZodString>;
             eligible: z.ZodBoolean;
@@ -1533,8 +1546,9 @@ export declare const issuesContract: {
                 actorUserId: z.ZodString;
                 reason: z.ZodEnum<{
                     duplicate: "duplicate";
-                    incorrect: "incorrect";
-                    not_relevant: "not_relevant";
+                    incorrect_details: "incorrect_details";
+                    not_real: "not_real";
+                    something_else: "something_else";
                 }>;
                 acceptedAt: z.ZodString;
                 deadlineAt: z.ZodString;
@@ -1559,8 +1573,9 @@ export declare const issuesContract: {
         issueId: z.ZodString;
         reason: z.ZodEnum<{
             duplicate: "duplicate";
-            incorrect: "incorrect";
-            not_relevant: "not_relevant";
+            incorrect_details: "incorrect_details";
+            not_real: "not_real";
+            something_else: "something_else";
         }>;
     }, z.core.$strip>, z.ZodObject<{
         replay: z.ZodBoolean;
@@ -1571,8 +1586,9 @@ export declare const issuesContract: {
             actorUserId: z.ZodString;
             reason: z.ZodEnum<{
                 duplicate: "duplicate";
-                incorrect: "incorrect";
-                not_relevant: "not_relevant";
+                incorrect_details: "incorrect_details";
+                not_real: "not_real";
+                something_else: "something_else";
             }>;
             acceptedAt: z.ZodString;
             deadlineAt: z.ZodString;

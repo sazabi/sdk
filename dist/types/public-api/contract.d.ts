@@ -7403,7 +7403,6 @@ export declare const publicApiContract: {
             onboarding: import("zod").ZodObject<{
                 gate: import("zod").ZodEnum<{
                     "access-denied": "access-denied";
-                    blocked: "blocked";
                     "needs-onboarding": "needs-onboarding";
                     ready: "ready";
                 }>;
@@ -9068,8 +9067,9 @@ export declare const publicApiContract: {
                 issueId: import("zod").ZodString;
                 reasonChoices: import("zod").ZodArray<import("zod").ZodEnum<{
                     duplicate: "duplicate";
-                    incorrect: "incorrect";
-                    not_relevant: "not_relevant";
+                    incorrect_details: "incorrect_details";
+                    not_real: "not_real";
+                    something_else: "something_else";
                 }>>;
                 cycleLabel: import("zod").ZodOptional<import("zod").ZodString>;
                 eligible: import("zod").ZodBoolean;
@@ -9102,8 +9102,9 @@ export declare const publicApiContract: {
                     actorUserId: import("zod").ZodString;
                     reason: import("zod").ZodEnum<{
                         duplicate: "duplicate";
-                        incorrect: "incorrect";
-                        not_relevant: "not_relevant";
+                        incorrect_details: "incorrect_details";
+                        not_real: "not_real";
+                        something_else: "something_else";
                     }>;
                     acceptedAt: import("zod").ZodString;
                     deadlineAt: import("zod").ZodString;
@@ -9128,8 +9129,9 @@ export declare const publicApiContract: {
             issueId: import("zod").ZodString;
             reason: import("zod").ZodEnum<{
                 duplicate: "duplicate";
-                incorrect: "incorrect";
-                not_relevant: "not_relevant";
+                incorrect_details: "incorrect_details";
+                not_real: "not_real";
+                something_else: "something_else";
             }>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             replay: import("zod").ZodBoolean;
@@ -9140,8 +9142,9 @@ export declare const publicApiContract: {
                 actorUserId: import("zod").ZodString;
                 reason: import("zod").ZodEnum<{
                     duplicate: "duplicate";
-                    incorrect: "incorrect";
-                    not_relevant: "not_relevant";
+                    incorrect_details: "incorrect_details";
+                    not_real: "not_real";
+                    something_else: "something_else";
                 }>;
                 acceptedAt: import("zod").ZodString;
                 deadlineAt: import("zod").ZodString;
@@ -10361,6 +10364,9 @@ export declare const publicApiContract: {
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            flags: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodLiteral<true>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly resolvePublic: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{}, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             flags: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodLiteral<true>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
@@ -18389,7 +18395,6 @@ export declare const publicApiOperations: {
             onboarding: import("zod").ZodObject<{
                 gate: import("zod").ZodEnum<{
                     "access-denied": "access-denied";
-                    blocked: "blocked";
                     "needs-onboarding": "needs-onboarding";
                     ready: "ready";
                 }>;
@@ -19961,8 +19966,9 @@ export declare const publicApiOperations: {
                 issueId: import("zod").ZodString;
                 reasonChoices: import("zod").ZodArray<import("zod").ZodEnum<{
                     duplicate: "duplicate";
-                    incorrect: "incorrect";
-                    not_relevant: "not_relevant";
+                    incorrect_details: "incorrect_details";
+                    not_real: "not_real";
+                    something_else: "something_else";
                 }>>;
                 cycleLabel: import("zod").ZodOptional<import("zod").ZodString>;
                 eligible: import("zod").ZodBoolean;
@@ -19995,8 +20001,9 @@ export declare const publicApiOperations: {
                     actorUserId: import("zod").ZodString;
                     reason: import("zod").ZodEnum<{
                         duplicate: "duplicate";
-                        incorrect: "incorrect";
-                        not_relevant: "not_relevant";
+                        incorrect_details: "incorrect_details";
+                        not_real: "not_real";
+                        something_else: "something_else";
                     }>;
                     acceptedAt: import("zod").ZodString;
                     deadlineAt: import("zod").ZodString;
@@ -20021,8 +20028,9 @@ export declare const publicApiOperations: {
             issueId: import("zod").ZodString;
             reason: import("zod").ZodEnum<{
                 duplicate: "duplicate";
-                incorrect: "incorrect";
-                not_relevant: "not_relevant";
+                incorrect_details: "incorrect_details";
+                not_real: "not_real";
+                something_else: "something_else";
             }>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             replay: import("zod").ZodBoolean;
@@ -20033,8 +20041,9 @@ export declare const publicApiOperations: {
                 actorUserId: import("zod").ZodString;
                 reason: import("zod").ZodEnum<{
                     duplicate: "duplicate";
-                    incorrect: "incorrect";
-                    not_relevant: "not_relevant";
+                    incorrect_details: "incorrect_details";
+                    not_real: "not_real";
+                    something_else: "something_else";
                 }>;
                 acceptedAt: import("zod").ZodString;
                 deadlineAt: import("zod").ZodString;
@@ -21302,6 +21311,9 @@ export declare const publicApiOperations: {
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            flags: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodLiteral<true>>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly resolvePublic: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{}, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             flags: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodLiteral<true>>;
         }, import("zod/v4/core").$strip>, "api">;
     };

@@ -3824,7 +3824,8 @@ var public_api_client_contract_gen_default = {
           tags: ["Onboarding"],
           operationId: "onboarding.skipSampleIssue",
           summary: "Skip the test issue",
-          description: "Skip the optional test issue during onboarding."
+          description: "Deprecated: the test issue step no longer offers Skip, and a recorded skip reads the step complete in onboarding state and on the task checklist. Skip the optional test issue during onboarding.",
+          deprecated: true
         }
       }
     },
@@ -6561,6 +6562,26 @@ var public_api_client_contract_gen_default = {
           description: "Return the Sazabi feature flags that are on for the calling user and the requested organization and project; flags that are off are omitted. Used by Sazabi's own clients to gate features during staged rollouts."
         }
       }
+    },
+    resolvePublic: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "featureFlags.resolvePublic",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/feature-flags/public",
+          tags: ["FeatureFlags"],
+          operationId: "featureFlags.resolvePublic",
+          summary: "Resolve public feature flags",
+          description: "Return the public-audience Sazabi feature flags that are on, without authentication; flags that are off are omitted. Serves anonymous Sazabi surfaces such as www.sazabi.com. Public flags resolve app-wide only."
+        }
+      }
     }
   },
   recommendations: {
@@ -6705,7 +6726,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Components"],
           operationId: "components.register",
           summary: "Register a component",
-          description: "Register a status page component in a project, or refresh an existing active component with the same name."
+          description: "Register a status page component in a project, or refresh an existing active component with the same name. A person with settings write access, where component deregistration is enabled, who registers an inactive component's name reactivates it and reattaches nothing it detached; a secret key registering an inactive name is refused as component_inactive."
         }
       }
     },

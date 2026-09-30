@@ -47,8 +47,9 @@
  * returned. That distinction is the whole bug: the CLI's adjacency was
  * already right and its control flow swept past the answer. It is
  * `false` only for the two terminal positions — `"finish"` (forward motion
- * ran off the end of the tour) and `null` (backward motion is already at the
- * first entry, so nothing moves). Every other row is `true`, including the
+ * ran off the end of the tour) and `null` (backward motion is refused: the
+ * walk is at the first entry, on a one-way card, or would re-enter a
+ * commitment step, so nothing moves). Every other row is `true`, including the
  * rows whose landing is already done or skipped: those are precisely the
  * assertions the CLI failed before this table existed.
  */

@@ -40,14 +40,14 @@ export { ONBOARDING_CARD_BY_ID, ONBOARDING_FLOW, ONBOARDING_TASKS, type Onboardi
 export { SAMPLE_ISSUE, SAMPLE_ISSUE_AGE_MS, SAMPLE_ISSUE_CARD_ID, SAMPLE_ISSUE_DESCRIPTION_LABEL, SAMPLE_ISSUE_INTRO, SAMPLE_ISSUE_LABEL, SAMPLE_ISSUE_STATUS_LABEL, sampleIssueAgeLabel, sampleIssueOccurredAt, type SampleIssueStatus, } from "./sample-issue.js";
 export { NAVIGATION_SCENARIOS, type NavigationAction, type NavigationLedger, type NavigationPosition, type NavigationScenario, } from "./navigation-scenarios.js";
 export { SETUP_TASKS, type SetupTaskKey } from "./setup-tasks.js";
-export { applicabilityFor, CARDS_WITHOUT_BACK, dependenciesFor, isSkippable, isTaskSkippedInLedger, offersBack, type OrgTaskSkipLedger, SKIPPABLE_TASKS, TASK_APPLICABILITY, TASK_APPLICABILITY_RULES, TASK_DEPENDENCIES, type TaskApplicabilityRule, TASKS_WITH_SKIP_LEDGER, type TaskWithSkipLedger, } from "./rules.js";
+export { applicabilityFor, CARDS_WITHOUT_BACK, COMMITMENT_FLOW_ENTRIES, dependenciesFor, isCommitmentFlowEntry, isSkippable, isTaskSkippedInLedger, offersBack, type OrgTaskSkipLedger, SKIPPABLE_TASKS, TASK_APPLICABILITY, TASK_APPLICABILITY_RULES, TASK_DEPENDENCIES, type TaskApplicabilityRule, TASKS_WITH_SKIP_LEDGER, type TaskWithSkipLedger, } from "./rules.js";
 export declare const TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "configure_code_search", "install_slack_app", "configure_slack_alerts", "trigger_sample_issue", "invite_team", "connect_log_sources", "add_mcp_connectors", "install_cli", "customize_sandbox", "send_message", "explore_integrations", "visit_status_page", "configure_auto_top_up"];
 export type TaskKey = (typeof TASK_KEYS)[number];
 /** Task keys written to org_task_completions. */
-export declare const ORG_TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "install_slack_app", "configure_slack_alerts", "invite_team", "add_mcp_connectors", "install_cli", "configure_auto_top_up"];
+export declare const ORG_TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "install_slack_app", "configure_slack_alerts", "invite_team", "add_mcp_connectors", "configure_auto_top_up"];
 export type OrgTaskKey = (typeof ORG_TASK_KEYS)[number];
 /** Task keys written to project_task_completions. */
-export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "trigger_sample_issue", "connect_log_sources", "customize_sandbox", "send_message", "explore_integrations", "visit_status_page"];
+export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "trigger_sample_issue", "connect_log_sources", "customize_sandbox"];
 export type ProjectTaskKey = (typeof PROJECT_TASK_KEYS)[number];
 /**
  * Task keys written to user_task_completions: the personal setup tasks (the
@@ -55,11 +55,7 @@ export type ProjectTaskKey = (typeof PROJECT_TASK_KEYS)[number];
  * so a person does it once and it stays done in every organization they
  * belong to, like a connected account. Their status is the viewer's own row
  * alone, with no live check, and a key-based caller (no person) gets no row.
- *
- * Until the contract migration drops them, the four keys also stay in
- * `ORG_TASK_KEYS` / `PROJECT_TASK_KEYS`: every personal writer keeps writing
- * the old organization or project row too (the design's "old writes
- * continue" rollout), so reverting the readers loses nothing.
+ * The three scope lists are disjoint.
  */
 export declare const USER_TASK_KEYS: readonly ["install_cli", "send_message", "explore_integrations", "visit_status_page"];
 export type UserTaskKey = (typeof USER_TASK_KEYS)[number];
@@ -70,10 +66,7 @@ export type UserTaskKey = (typeof USER_TASK_KEYS)[number];
  */
 export declare const TASK_SCOPES: readonly ["user", "organization", "project"];
 export type TaskScope = (typeof TASK_SCOPES)[number];
-/**
- * A task's scope. A personal key wins over its legacy organization or
- * project membership, which only the old writes still use.
- */
+/** A task's scope, from the scope list that holds its key. */
 export declare const taskScopeFor: (id: TaskKey) => TaskScope;
 export declare const TASK_CATEGORIES: readonly ["onboarding", "setup"];
 export type TaskCategory = (typeof TASK_CATEGORIES)[number];
@@ -236,13 +229,11 @@ export type OnboardingFlowEntryId = OnboardingFlowEntry["id"];
  *
  * The walk covers `ONBOARDING_FLOW` — cards AND the create-project gate —
  * because the web's ordered-screens walk includes the gate screen: backing up
- * from the first project-scoped card lands on configure-project, not on
- * billing. The gate is always admitted: it cannot be skipped, has no
- * dependencies or applicability rule, and its web eligibility (an
- * organization exists) holds whenever the walk runs; a gate whose project
- * already exists is a satisfied entry, admitted like any other. The gate
- * offering no Back of its own in the flow's render is a ruling about its
- * outgoing option, not about being a back target.
+ * from the first project-scoped card would otherwise land on
+ * configure-project, not on billing. Going forward the gate is always
+ * admitted: it cannot be skipped, has no dependencies or applicability rule,
+ * and its web eligibility (an organization exists) holds whenever the walk
+ * runs. Going back it is a commitment step and stops the walk (below).
  *
  * Unlike `nextCard`, satisfied (done or skipped) entries are admitted: a
  * back/forward target renders its completed or actionable state rather than
@@ -254,6 +245,12 @@ export type OnboardingFlowEntryId = OnboardingFlowEntry["id"];
  * A card in `CARDS_WITHOUT_BACK` refuses the backward move outright: the
  * rule is about the card the user is on, not about what lies behind it, so
  * it is checked before the walk looks at any neighbour.
+ *
+ * A backward walk never lands on a commitment step
+ * ({@link COMMITMENT_FLOW_ENTRIES}: billing and the project gate) or on any
+ * entry before one (`bylaws/design.yaml` §4.f.ii, ENG-8077): Back from the
+ * first card after the gate, and from the gate itself, is refused. Forward
+ * moves still land on the gate.
  *
  * Navigation only: choosing an adjacent entry must never write anything —
  * entry status stays server-derived, and only explicit user actions
@@ -292,10 +289,8 @@ export type TaskChecklistStatus = {
         connectLogSources: boolean;
         addMcpConnectors: boolean;
         /**
-         * Whether someone in the organization authenticated the Sazabi CLI: an
-         * org `install_cli` completion row (stamped by the public API on
-         * CLI-sourced requests) or a live device-grant session bound to the
-         * organization (`hasCliAuthenticatedSession`).
+         * Whether the viewer authenticated the Sazabi CLI: their personal
+         * `install_cli` row, stamped by the public API on CLI-sourced requests.
          */
         installCli: boolean;
         customizeSandbox: boolean;

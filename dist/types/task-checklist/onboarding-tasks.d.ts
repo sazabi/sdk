@@ -20,8 +20,8 @@ import type { Task, TaskKey } from "./index.js";
 declare const ONBOARDING_CARDS: readonly [{
     readonly id: "set_up_billing";
     readonly label: "Choose a plan";
-    readonly description: "Choose to continue with Free without a credit card or select a paid plan.";
-    readonly instructions: "Choose Continue with Free to keep your existing plan, or select a paid plan and complete checkout.";
+    readonly description: "Choose the plan your organization starts on.";
+    readonly instructions: "Select one of the plans shown. Paid plans complete checkout before you continue.";
     readonly category: "onboarding";
 }, {
     readonly id: "connect_github_account";
