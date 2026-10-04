@@ -330,7 +330,6 @@ export declare const CreateThreadInputSchema: z.ZodObject<{
     kind: z.ZodOptional<z.ZodEnum<{
         support: "support";
     }>>;
-    ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
 }, z.core.$strip>;
 /**
  * Output schema for deferred thread creation responses.
@@ -338,7 +337,11 @@ export declare const CreateThreadInputSchema: z.ZodObject<{
 export declare const CreateThreadOutputSchema: z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -348,6 +351,8 @@ export declare const CreateThreadOutputSchema: z.ZodObject<{
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";
@@ -666,11 +671,14 @@ export declare const createThread: import("../orpc-contracts/index.js").Operatio
     kind: z.ZodOptional<z.ZodEnum<{
         support: "support";
     }>>;
-    ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
 }, z.core.$strip>, z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -680,6 +688,8 @@ export declare const createThread: import("../orpc-contracts/index.js").Operatio
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";
@@ -1202,11 +1212,14 @@ export declare const threadsContract: {
         kind: z.ZodOptional<z.ZodEnum<{
             support: "support";
         }>>;
-        ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
     }, z.core.$strip>, z.ZodObject<{
         failureClass: z.ZodNullable<z.ZodEnum<{
             ambient_denied: "ambient_denied";
+            billing_account_missing: "billing_account_missing";
+            billing_admission_unavailable: "billing_admission_unavailable";
             cancelled: "cancelled";
+            credit_balance_depleted: "credit_balance_depleted";
+            credit_balance_missing: "credit_balance_missing";
             grpc_message_too_large: "grpc_message_too_large";
             permission: "permission";
             policy: "policy";
@@ -1216,6 +1229,8 @@ export declare const threadsContract: {
             sandbox_concurrency: "sandbox_concurrency";
             sandbox_failed: "sandbox_failed";
             sandbox_missing: "sandbox_missing";
+            subscription_blocked: "subscription_blocked";
+            subscription_missing: "subscription_missing";
             timeout: "timeout";
             tool_failed: "tool_failed";
             unknown: "unknown";

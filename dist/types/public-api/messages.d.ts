@@ -125,7 +125,6 @@ export declare const AppendMessageInputSchema: z.ZodObject<{
     wait: z.ZodDefault<z.ZodBoolean>;
     timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     automationId: z.ZodOptional<z.ZodString>;
-    ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
 }, z.core.$strip>;
 /**
  * Output schema for deferred message append responses.
@@ -133,7 +132,11 @@ export declare const AppendMessageInputSchema: z.ZodObject<{
 export declare const AppendMessageOutputSchema: z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -143,6 +146,8 @@ export declare const AppendMessageOutputSchema: z.ZodObject<{
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";
@@ -288,11 +293,14 @@ export declare const appendMessage: import("../orpc-contracts/index.js").Operati
     wait: z.ZodDefault<z.ZodBoolean>;
     timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
     automationId: z.ZodOptional<z.ZodString>;
-    ambientServiceRun: z.ZodOptional<z.ZodLiteral<true>>;
 }, z.core.$strip>, z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -302,6 +310,8 @@ export declare const appendMessage: import("../orpc-contracts/index.js").Operati
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";

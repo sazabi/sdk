@@ -15,7 +15,11 @@ import { z } from "zod";
  */
 export declare const RunFailureClassSchema: z.ZodEnum<{
     ambient_denied: "ambient_denied";
+    billing_account_missing: "billing_account_missing";
+    billing_admission_unavailable: "billing_admission_unavailable";
     cancelled: "cancelled";
+    credit_balance_depleted: "credit_balance_depleted";
+    credit_balance_missing: "credit_balance_missing";
     grpc_message_too_large: "grpc_message_too_large";
     permission: "permission";
     policy: "policy";
@@ -25,6 +29,8 @@ export declare const RunFailureClassSchema: z.ZodEnum<{
     sandbox_concurrency: "sandbox_concurrency";
     sandbox_failed: "sandbox_failed";
     sandbox_missing: "sandbox_missing";
+    subscription_blocked: "subscription_blocked";
+    subscription_missing: "subscription_missing";
     timeout: "timeout";
     tool_failed: "tool_failed";
     unknown: "unknown";
@@ -44,9 +50,9 @@ export type RunFailureClass = z.infer<typeof RunFailureClassSchema>;
  */
 export declare const toRunFailureClass: (value: string | null | undefined) => RunFailureClass | null;
 export declare const runFailureRetryabilitySets: {
-    readonly retryable: Set<"ambient_denied" | "cancelled" | "grpc_message_too_large" | "permission" | "policy" | "provider" | "provider_rejected" | "rate_limit" | "sandbox_concurrency" | "sandbox_failed" | "sandbox_missing" | "timeout" | "tool_failed" | "unknown" | "workflow_died" | "workflow_start_failed">;
-    readonly nonRetryable: Set<"ambient_denied" | "cancelled" | "grpc_message_too_large" | "permission" | "policy" | "provider" | "provider_rejected" | "rate_limit" | "sandbox_concurrency" | "sandbox_failed" | "sandbox_missing" | "timeout" | "tool_failed" | "unknown" | "workflow_died" | "workflow_start_failed">;
-    readonly undecided: Set<"ambient_denied" | "cancelled" | "grpc_message_too_large" | "permission" | "policy" | "provider" | "provider_rejected" | "rate_limit" | "sandbox_concurrency" | "sandbox_failed" | "sandbox_missing" | "timeout" | "tool_failed" | "unknown" | "workflow_died" | "workflow_start_failed">;
+    readonly retryable: Set<"ambient_denied" | "billing_account_missing" | "billing_admission_unavailable" | "cancelled" | "credit_balance_depleted" | "credit_balance_missing" | "grpc_message_too_large" | "permission" | "policy" | "provider" | "provider_rejected" | "rate_limit" | "sandbox_concurrency" | "sandbox_failed" | "sandbox_missing" | "subscription_blocked" | "subscription_missing" | "timeout" | "tool_failed" | "unknown" | "workflow_died" | "workflow_start_failed">;
+    readonly nonRetryable: Set<"ambient_denied" | "billing_account_missing" | "billing_admission_unavailable" | "cancelled" | "credit_balance_depleted" | "credit_balance_missing" | "grpc_message_too_large" | "permission" | "policy" | "provider" | "provider_rejected" | "rate_limit" | "sandbox_concurrency" | "sandbox_failed" | "sandbox_missing" | "subscription_blocked" | "subscription_missing" | "timeout" | "tool_failed" | "unknown" | "workflow_died" | "workflow_start_failed">;
+    readonly undecided: Set<"ambient_denied" | "billing_account_missing" | "billing_admission_unavailable" | "cancelled" | "credit_balance_depleted" | "credit_balance_missing" | "grpc_message_too_large" | "permission" | "policy" | "provider" | "provider_rejected" | "rate_limit" | "sandbox_concurrency" | "sandbox_failed" | "sandbox_missing" | "subscription_blocked" | "subscription_missing" | "timeout" | "tool_failed" | "unknown" | "workflow_died" | "workflow_start_failed">;
 };
 /**
  * Whether an identical re-run is worth attempting for this failure class.
@@ -78,7 +84,11 @@ export declare const toRunFailureFields: (run: {
 export declare const RunSchema: z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -88,6 +98,8 @@ export declare const RunSchema: z.ZodObject<{
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";
@@ -134,7 +146,11 @@ export declare const ListRunsOutputSchema: z.ZodObject<{
     runs: z.ZodArray<z.ZodObject<{
         failureClass: z.ZodNullable<z.ZodEnum<{
             ambient_denied: "ambient_denied";
+            billing_account_missing: "billing_account_missing";
+            billing_admission_unavailable: "billing_admission_unavailable";
             cancelled: "cancelled";
+            credit_balance_depleted: "credit_balance_depleted";
+            credit_balance_missing: "credit_balance_missing";
             grpc_message_too_large: "grpc_message_too_large";
             permission: "permission";
             policy: "policy";
@@ -144,6 +160,8 @@ export declare const ListRunsOutputSchema: z.ZodObject<{
             sandbox_concurrency: "sandbox_concurrency";
             sandbox_failed: "sandbox_failed";
             sandbox_missing: "sandbox_missing";
+            subscription_blocked: "subscription_blocked";
+            subscription_missing: "subscription_missing";
             timeout: "timeout";
             tool_failed: "tool_failed";
             unknown: "unknown";
@@ -192,7 +210,11 @@ export declare const ListThreadRunsOutputSchema: z.ZodObject<{
     runs: z.ZodArray<z.ZodObject<{
         failureClass: z.ZodNullable<z.ZodEnum<{
             ambient_denied: "ambient_denied";
+            billing_account_missing: "billing_account_missing";
+            billing_admission_unavailable: "billing_admission_unavailable";
             cancelled: "cancelled";
+            credit_balance_depleted: "credit_balance_depleted";
+            credit_balance_missing: "credit_balance_missing";
             grpc_message_too_large: "grpc_message_too_large";
             permission: "permission";
             policy: "policy";
@@ -202,6 +224,8 @@ export declare const ListThreadRunsOutputSchema: z.ZodObject<{
             sandbox_concurrency: "sandbox_concurrency";
             sandbox_failed: "sandbox_failed";
             sandbox_missing: "sandbox_missing";
+            subscription_blocked: "subscription_blocked";
+            subscription_missing: "subscription_missing";
             timeout: "timeout";
             tool_failed: "tool_failed";
             unknown: "unknown";
@@ -251,7 +275,11 @@ export declare const GetRunInputSchema: z.ZodObject<{
 export declare const RunResultSchema: z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -261,6 +289,8 @@ export declare const RunResultSchema: z.ZodObject<{
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";
@@ -283,7 +313,11 @@ export declare const RunResultSchema: z.ZodObject<{
 export declare const GetRunOutputSchema: z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -293,6 +327,8 @@ export declare const GetRunOutputSchema: z.ZodObject<{
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";
@@ -349,7 +385,11 @@ export declare const listRuns: import("../orpc-contracts/index.js").OperationDef
     runs: z.ZodArray<z.ZodObject<{
         failureClass: z.ZodNullable<z.ZodEnum<{
             ambient_denied: "ambient_denied";
+            billing_account_missing: "billing_account_missing";
+            billing_admission_unavailable: "billing_admission_unavailable";
             cancelled: "cancelled";
+            credit_balance_depleted: "credit_balance_depleted";
+            credit_balance_missing: "credit_balance_missing";
             grpc_message_too_large: "grpc_message_too_large";
             permission: "permission";
             policy: "policy";
@@ -359,6 +399,8 @@ export declare const listRuns: import("../orpc-contracts/index.js").OperationDef
             sandbox_concurrency: "sandbox_concurrency";
             sandbox_failed: "sandbox_failed";
             sandbox_missing: "sandbox_missing";
+            subscription_blocked: "subscription_blocked";
+            subscription_missing: "subscription_missing";
             timeout: "timeout";
             tool_failed: "tool_failed";
             unknown: "unknown";
@@ -409,7 +451,11 @@ export declare const listThreadRuns: import("../orpc-contracts/index.js").Operat
     runs: z.ZodArray<z.ZodObject<{
         failureClass: z.ZodNullable<z.ZodEnum<{
             ambient_denied: "ambient_denied";
+            billing_account_missing: "billing_account_missing";
+            billing_admission_unavailable: "billing_admission_unavailable";
             cancelled: "cancelled";
+            credit_balance_depleted: "credit_balance_depleted";
+            credit_balance_missing: "credit_balance_missing";
             grpc_message_too_large: "grpc_message_too_large";
             permission: "permission";
             policy: "policy";
@@ -419,6 +465,8 @@ export declare const listThreadRuns: import("../orpc-contracts/index.js").Operat
             sandbox_concurrency: "sandbox_concurrency";
             sandbox_failed: "sandbox_failed";
             sandbox_missing: "sandbox_missing";
+            subscription_blocked: "subscription_blocked";
+            subscription_missing: "subscription_missing";
             timeout: "timeout";
             tool_failed: "tool_failed";
             unknown: "unknown";
@@ -466,7 +514,11 @@ export declare const getRun: import("../orpc-contracts/index.js").OperationDefin
 }, z.core.$strip>, z.ZodObject<{
     failureClass: z.ZodNullable<z.ZodEnum<{
         ambient_denied: "ambient_denied";
+        billing_account_missing: "billing_account_missing";
+        billing_admission_unavailable: "billing_admission_unavailable";
         cancelled: "cancelled";
+        credit_balance_depleted: "credit_balance_depleted";
+        credit_balance_missing: "credit_balance_missing";
         grpc_message_too_large: "grpc_message_too_large";
         permission: "permission";
         policy: "policy";
@@ -476,6 +528,8 @@ export declare const getRun: import("../orpc-contracts/index.js").OperationDefin
         sandbox_concurrency: "sandbox_concurrency";
         sandbox_failed: "sandbox_failed";
         sandbox_missing: "sandbox_missing";
+        subscription_blocked: "subscription_blocked";
+        subscription_missing: "subscription_missing";
         timeout: "timeout";
         tool_failed: "tool_failed";
         unknown: "unknown";
@@ -515,7 +569,11 @@ export declare const runsContract: {
         runs: z.ZodArray<z.ZodObject<{
             failureClass: z.ZodNullable<z.ZodEnum<{
                 ambient_denied: "ambient_denied";
+                billing_account_missing: "billing_account_missing";
+                billing_admission_unavailable: "billing_admission_unavailable";
                 cancelled: "cancelled";
+                credit_balance_depleted: "credit_balance_depleted";
+                credit_balance_missing: "credit_balance_missing";
                 grpc_message_too_large: "grpc_message_too_large";
                 permission: "permission";
                 policy: "policy";
@@ -525,6 +583,8 @@ export declare const runsContract: {
                 sandbox_concurrency: "sandbox_concurrency";
                 sandbox_failed: "sandbox_failed";
                 sandbox_missing: "sandbox_missing";
+                subscription_blocked: "subscription_blocked";
+                subscription_missing: "subscription_missing";
                 timeout: "timeout";
                 tool_failed: "tool_failed";
                 unknown: "unknown";
@@ -572,7 +632,11 @@ export declare const runsContract: {
         runs: z.ZodArray<z.ZodObject<{
             failureClass: z.ZodNullable<z.ZodEnum<{
                 ambient_denied: "ambient_denied";
+                billing_account_missing: "billing_account_missing";
+                billing_admission_unavailable: "billing_admission_unavailable";
                 cancelled: "cancelled";
+                credit_balance_depleted: "credit_balance_depleted";
+                credit_balance_missing: "credit_balance_missing";
                 grpc_message_too_large: "grpc_message_too_large";
                 permission: "permission";
                 policy: "policy";
@@ -582,6 +646,8 @@ export declare const runsContract: {
                 sandbox_concurrency: "sandbox_concurrency";
                 sandbox_failed: "sandbox_failed";
                 sandbox_missing: "sandbox_missing";
+                subscription_blocked: "subscription_blocked";
+                subscription_missing: "subscription_missing";
                 timeout: "timeout";
                 tool_failed: "tool_failed";
                 unknown: "unknown";
@@ -626,7 +692,11 @@ export declare const runsContract: {
     }, z.core.$strip>, z.ZodObject<{
         failureClass: z.ZodNullable<z.ZodEnum<{
             ambient_denied: "ambient_denied";
+            billing_account_missing: "billing_account_missing";
+            billing_admission_unavailable: "billing_admission_unavailable";
             cancelled: "cancelled";
+            credit_balance_depleted: "credit_balance_depleted";
+            credit_balance_missing: "credit_balance_missing";
             grpc_message_too_large: "grpc_message_too_large";
             permission: "permission";
             policy: "policy";
@@ -636,6 +706,8 @@ export declare const runsContract: {
             sandbox_concurrency: "sandbox_concurrency";
             sandbox_failed: "sandbox_failed";
             sandbox_missing: "sandbox_missing";
+            subscription_blocked: "subscription_blocked";
+            subscription_missing: "subscription_missing";
             timeout: "timeout";
             tool_failed: "tool_failed";
             unknown: "unknown";

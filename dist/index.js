@@ -3849,6 +3849,46 @@ var public_api_client_contract_gen_default = {
           description: "Report whether this environment can file support tickets: the support desk is configured and reachable."
         }
       }
+    },
+    list: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "supportTickets.list",
+          backend: "api",
+          pagination: "cursor",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/support-tickets",
+          tags: ["Support Tickets"],
+          operationId: "supportTickets.list",
+          summary: "List your support tickets",
+          description: "List the support tickets the authenticated person filed, optionally filtered by state or feature request."
+        }
+      }
+    },
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "supportTickets.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/support-tickets/{ticketId}",
+          tags: ["Support Tickets"],
+          operationId: "supportTickets.get",
+          summary: "Get one of your support tickets",
+          description: "Get a support ticket the authenticated person filed, by ticket number or id. A ticket someone else filed is reported as not found."
+        }
+      }
     }
   },
   onboarding: {
@@ -5748,6 +5788,66 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    getAgentPrompt: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.getAgentPrompt",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/issues/{issueId}/agent-prompt",
+          tags: ["Issues"],
+          operationId: "issues.getAgentPrompt",
+          summary: "Get an issue's agent prompt",
+          description: "Get the prompt that hands an issue to your own coding agent: it tells the agent to set up the Sazabi CLI, load the analysis, verify it against live logs, fix the code, and open a pull request linked to the issue."
+        }
+      }
+    },
+    linkPullRequest: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.linkPullRequest",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/issues/{issueId}/pull-requests",
+          tags: ["Issues"],
+          operationId: "issues.linkPullRequest",
+          summary: "Link a pull request to an issue",
+          description: "Link a GitHub or Bitbucket pull request to an issue as a fix or suspected cause. Linking is idempotent and never bills."
+        }
+      }
+    },
+    unlinkPullRequest: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.unlinkPullRequest",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "DELETE",
+          path: "/issues/{issueId}/pull-requests",
+          tags: ["Issues"],
+          operationId: "issues.unlinkPullRequest",
+          summary: "Unlink a pull request from an issue",
+          description: "Remove one exact fixing or suspected-cause relationship. Unlinking is idempotent and never removes a Sazabi Fix PR derived from a Fix request."
+        }
+      }
+    },
     getRejectionContext: {
       "~orpc": {
         errorMap: {},
@@ -6559,6 +6659,86 @@ var public_api_client_contract_gen_default = {
           operationId: "billing.getPaymentMethod",
           summary: "Get the payment method",
           description: "Get a summary of the organization's saved payment method (brand and last 4 digits)."
+        }
+      }
+    },
+    listUsageBudgets: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "billing.listUsageBudgets",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/billing/budgets",
+          tags: ["Billing"],
+          operationId: "billing.listUsageBudgets",
+          summary: "List usage budgets",
+          description: "List the organization's hard per-cycle usage budgets with current-cycle used, reserved, and remaining amounts plus per-scope eligibility."
+        }
+      }
+    },
+    createUsageBudget: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "billing.createUsageBudget",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/billing/budgets",
+          tags: ["Billing"],
+          operationId: "billing.createUsageBudget",
+          summary: "Create a usage budget",
+          description: "Create a hard per-cycle USD budget for one supported fixed-unit product, or across all budgetable operations. Covered work reserves its exact charge before starting."
+        }
+      }
+    },
+    updateUsageBudget: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "billing.updateUsageBudget",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/billing/budgets/{budgetId}",
+          tags: ["Billing"],
+          operationId: "billing.updateUsageBudget",
+          summary: "Update a usage budget",
+          description: "Change a usage budget's limit or enabled state. The next covered admission observes the committed change."
+        }
+      }
+    },
+    deleteUsageBudget: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "billing.deleteUsageBudget",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "DELETE",
+          path: "/billing/budgets/{budgetId}",
+          tags: ["Billing"],
+          operationId: "billing.deleteUsageBudget",
+          summary: "Delete a usage budget",
+          description: "Delete a usage budget. The next covered admission observes the deletion."
         }
       }
     }
@@ -7408,7 +7588,12 @@ var createClient = (options) => {
     },
     supportTickets: {
       create: async (input) => raw.supportTickets.create(await resolveProjectScopedInput(options.credentialProvider, await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "supportTickets.create"))),
-      availability: async () => raw.supportTickets.availability({})
+      availability: async () => raw.supportTickets.availability({}),
+      list: async (input = {}) => raw.supportTickets.list(await resolveOrganizationScopedInput(options.credentialProvider, {
+        limit: 50,
+        ...input
+      })),
+      get: async (input) => raw.supportTickets.get(await resolveOrganizationScopedInput(options.credentialProvider, input))
     },
     signalDefinitions: {
       list: async (input = {}) => raw.signalDefinitions.list(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -7430,6 +7615,9 @@ var createClient = (options) => {
       list: async (input = {}) => raw.issues.list(await resolveProjectScopedInput(options.credentialProvider, input)),
       search: async (input = {}) => raw.issues.search(await resolveProjectScopedInput(options.credentialProvider, input)),
       get: async (input) => raw.issues.get(input),
+      getAgentPrompt: async (input) => raw.issues.getAgentPrompt(input),
+      linkPullRequest: async (input) => raw.issues.linkPullRequest({ relation: "fixes", ...input }),
+      unlinkPullRequest: async (input) => raw.issues.unlinkPullRequest(input),
       getRejectionContext: async (input) => raw.issues.getRejectionContext(input),
       reject: async (input) => raw.issues.reject(input),
       resolve: async (input) => raw.issues.resolve(input),

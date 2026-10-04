@@ -377,7 +377,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -541,7 +541,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -705,7 +705,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -872,7 +872,7 @@ export declare const timeseriesComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1246,7 +1246,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1410,7 +1410,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1574,7 +1574,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1741,7 +1741,7 @@ export declare const tableComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2128,7 +2128,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2292,7 +2292,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2456,7 +2456,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2623,7 +2623,7 @@ export declare const flameChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2997,7 +2997,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -3161,7 +3161,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -3325,7 +3325,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -3492,7 +3492,7 @@ export declare const waterfallChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -3866,7 +3866,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -4030,7 +4030,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -4194,7 +4194,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -4361,7 +4361,7 @@ export declare const areaChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -4735,7 +4735,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -4899,7 +4899,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -5063,7 +5063,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -5230,7 +5230,7 @@ export declare const treemapChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -5604,7 +5604,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -5768,7 +5768,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -5932,7 +5932,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -6099,7 +6099,7 @@ export declare const graphChartComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -6497,7 +6497,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -6661,7 +6661,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -6825,7 +6825,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -6992,7 +6992,7 @@ export declare const metricComponent: SazabiMdxComponentDefinition<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -7475,7 +7475,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -7639,7 +7639,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -7803,7 +7803,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -7970,7 +7970,7 @@ export declare const sazabiMdxComponentDefinitions: (SazabiMdxComponentDefinitio
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;

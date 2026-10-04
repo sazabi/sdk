@@ -298,10 +298,15 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -2025,10 +2030,15 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -3298,10 +3308,15 @@ export declare const logsContract: {
                 }>, unknown>>;
             }, z.core.$strict>], "op">;
             bucket: z.ZodOptional<z.ZodEnum<{
+                "10m": "10m";
+                "12h": "12h";
+                "15m": "15m";
                 "1d": "1d";
                 "1h": "1h";
                 "1m": "1m";
+                "30m": "30m";
                 "5m": "5m";
+                "6h": "6h";
             }>>;
             output: z.ZodEnum<{
                 evidence: "evidence";

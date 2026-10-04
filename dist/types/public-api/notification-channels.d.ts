@@ -75,6 +75,8 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         automation_run_failed: "automation_run_failed";
         billing_auto_top_up_failed: "billing_auto_top_up_failed";
         billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+        billing_budget_reached: "billing_budget_reached";
+        billing_budget_threshold_reached: "billing_budget_threshold_reached";
         billing_credit_balance_depleted: "billing_credit_balance_depleted";
         billing_credit_balance_low: "billing_credit_balance_low";
         billing_invoice_paid: "billing_invoice_paid";
@@ -141,6 +143,8 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         automation_run_failed: "automation_run_failed";
         billing_auto_top_up_failed: "billing_auto_top_up_failed";
         billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+        billing_budget_reached: "billing_budget_reached";
+        billing_budget_threshold_reached: "billing_budget_threshold_reached";
         billing_credit_balance_depleted: "billing_credit_balance_depleted";
         billing_credit_balance_low: "billing_credit_balance_low";
         billing_invoice_paid: "billing_invoice_paid";
@@ -246,6 +250,8 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             automation_run_failed: "automation_run_failed";
             billing_auto_top_up_failed: "billing_auto_top_up_failed";
             billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+            billing_budget_reached: "billing_budget_reached";
+            billing_budget_threshold_reached: "billing_budget_threshold_reached";
             billing_credit_balance_depleted: "billing_credit_balance_depleted";
             billing_credit_balance_low: "billing_credit_balance_low";
             billing_invoice_paid: "billing_invoice_paid";
@@ -312,6 +318,8 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             automation_run_failed: "automation_run_failed";
             billing_auto_top_up_failed: "billing_auto_top_up_failed";
             billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+            billing_budget_reached: "billing_budget_reached";
+            billing_budget_threshold_reached: "billing_budget_threshold_reached";
             billing_credit_balance_depleted: "billing_credit_balance_depleted";
             billing_credit_balance_low: "billing_credit_balance_low";
             billing_invoice_paid: "billing_invoice_paid";
@@ -426,6 +434,8 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             automation_run_failed: "automation_run_failed";
             billing_auto_top_up_failed: "billing_auto_top_up_failed";
             billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+            billing_budget_reached: "billing_budget_reached";
+            billing_budget_threshold_reached: "billing_budget_threshold_reached";
             billing_credit_balance_depleted: "billing_credit_balance_depleted";
             billing_credit_balance_low: "billing_credit_balance_low";
             billing_invoice_paid: "billing_invoice_paid";
@@ -492,6 +502,8 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             automation_run_failed: "automation_run_failed";
             billing_auto_top_up_failed: "billing_auto_top_up_failed";
             billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+            billing_budget_reached: "billing_budget_reached";
+            billing_budget_threshold_reached: "billing_budget_threshold_reached";
             billing_credit_balance_depleted: "billing_credit_balance_depleted";
             billing_credit_balance_low: "billing_credit_balance_low";
             billing_invoice_paid: "billing_invoice_paid";
@@ -604,6 +616,8 @@ export declare const notificationChannelsContract: {
                 automation_run_failed: "automation_run_failed";
                 billing_auto_top_up_failed: "billing_auto_top_up_failed";
                 billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+                billing_budget_reached: "billing_budget_reached";
+                billing_budget_threshold_reached: "billing_budget_threshold_reached";
                 billing_credit_balance_depleted: "billing_credit_balance_depleted";
                 billing_credit_balance_low: "billing_credit_balance_low";
                 billing_invoice_paid: "billing_invoice_paid";
@@ -670,6 +684,8 @@ export declare const notificationChannelsContract: {
                 automation_run_failed: "automation_run_failed";
                 billing_auto_top_up_failed: "billing_auto_top_up_failed";
                 billing_auto_top_up_settings_changed: "billing_auto_top_up_settings_changed";
+                billing_budget_reached: "billing_budget_reached";
+                billing_budget_threshold_reached: "billing_budget_threshold_reached";
                 billing_credit_balance_depleted: "billing_credit_balance_depleted";
                 billing_credit_balance_low: "billing_credit_balance_low";
                 billing_invoice_paid: "billing_invoice_paid";

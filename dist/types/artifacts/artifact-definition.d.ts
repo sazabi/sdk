@@ -691,10 +691,15 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -1007,10 +1012,15 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -1327,10 +1337,15 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -1646,10 +1661,15 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -2764,10 +2784,15 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -3080,10 +3105,15 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -3400,10 +3430,15 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";
@@ -3719,10 +3754,15 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
+            "10m": "10m";
+            "12h": "12h";
+            "15m": "15m";
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "30m": "30m";
             "5m": "5m";
+            "6h": "6h";
         }>>;
         output: z.ZodEnum<{
             evidence: "evidence";

@@ -66,9 +66,9 @@ export declare const SETUP_TASKS: readonly [{
     readonly category: "setup";
 }, {
     readonly id: "visit_status_page";
-    readonly label: "Visit status page";
-    readonly description: "Visit your project's status page to see how Sazabi monitors and displays the health of your services.";
-    readonly instructions: "Click 'Status Page' in the project navigation sidebar to open your project's public status page.";
+    readonly label: "Visit components page";
+    readonly description: "Visit your project's Components page to see the health of each component Sazabi tracks and the issues affecting it.";
+    readonly instructions: "Click Components in the project navigation sidebar to open the page.";
     readonly category: "setup";
 }];
 /** The setup card ids, as a literal union for per-surface maps. */

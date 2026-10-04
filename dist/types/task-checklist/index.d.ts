@@ -296,7 +296,12 @@ export type TaskChecklistStatus = {
         customizeSandbox: boolean;
         sendMessage: boolean;
         exploreIntegrations: boolean;
-        visitStatusPage: boolean;
+        /**
+         * Whether the viewer visited the Components page, or `null` when the
+         * `components-page` flag hides that page and they never visited it, which
+         * hides the task from the checklist.
+         */
+        visitStatusPage: boolean | null;
         /**
          * Whether auto top-up (automatic reload) is enabled, or `null` when the
          * task is not applicable to this organization (no active credit-balance

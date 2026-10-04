@@ -351,8 +351,16 @@ export type LogMeasureV2 = Measure<LogFieldRef> | {
     op: "ratio";
     numerator: LogPredicateTree;
 };
-export declare const LOG_QUERY_BUCKETS: readonly ["1m", "5m", "1h", "1d"];
+/**
+ * The time buckets a series can take, finest first: the sizes people ask for
+ * ("per 10 minutes", "every 15 minutes", "every 6 hours"). Every bucket is
+ * epoch-aligned, a whole number of minutes, and divides or is a multiple of an
+ * hour, so the minute and hour rollups can merge into it.
+ */
+export declare const LOG_QUERY_BUCKETS: readonly ["1m", "5m", "10m", "15m", "30m", "1h", "6h", "12h", "1d"];
 export type LogQueryBucket = (typeof LOG_QUERY_BUCKETS)[number];
+/** Each bucket's length in seconds. */
+export declare const LOG_QUERY_BUCKET_SECONDS: Record<LogQueryBucket, number>;
 /** What a grouped result is ranked by: its value (the measure), or its groups' own values. */
 export declare const LOG_QUERY_ORDER_BYS: readonly ["value", "dimension"];
 export declare const LOG_QUERY_ORDER_DIRECTIONS: readonly ["asc", "desc"];
@@ -657,10 +665,15 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         }>, unknown>>;
     }, z.core.$strict>], "op">;
     bucket: z.ZodOptional<z.ZodEnum<{
+        "10m": "10m";
+        "12h": "12h";
+        "15m": "15m";
         "1d": "1d";
         "1h": "1h";
         "1m": "1m";
+        "30m": "30m";
         "5m": "5m";
+        "6h": "6h";
     }>>;
     output: z.ZodEnum<{
         evidence: "evidence";

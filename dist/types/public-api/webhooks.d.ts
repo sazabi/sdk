@@ -174,6 +174,7 @@ export declare const WebhookIssueSchema: z.ZodObject<{
     }, z.core.$strip>>;
     rootCause: z.ZodNullable<z.ZodString>;
     summary: z.ZodNullable<z.ZodString>;
+    agentPrompt: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export declare const WebhookEnvelopeBaseSchema: z.ZodObject<{
     id: z.ZodString;
@@ -287,6 +288,7 @@ export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
         }, z.core.$strip>>;
         rootCause: z.ZodNullable<z.ZodString>;
         summary: z.ZodNullable<z.ZodString>;
+        agentPrompt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const NonIssueWebhookEnvelopeSchema: z.ZodObject<{
@@ -415,6 +417,7 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
         }, z.core.$strip>>;
         rootCause: z.ZodNullable<z.ZodString>;
         summary: z.ZodNullable<z.ZodString>;
+        agentPrompt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
 }, z.core.$strip>, z.ZodObject<{
     id: z.ZodString;

@@ -381,7 +381,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -545,7 +545,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -709,7 +709,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -876,7 +876,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1245,7 +1245,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1409,7 +1409,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1573,7 +1573,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -1740,7 +1740,7 @@ export declare const artifactBindingPropsSchema: (type: SupportedArtifactType) =
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2118,7 +2118,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2282,7 +2282,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2446,7 +2446,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2613,7 +2613,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -2982,7 +2982,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -3146,7 +3146,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -3310,7 +3310,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;
@@ -3477,7 +3477,7 @@ export declare const metricPropsSchema: z.ZodObject<{
                     path: string[];
                 }>;
             };
-            bucket?: "1d" | "1h" | "1m" | "5m" | undefined;
+            bucket?: "10m" | "12h" | "15m" | "1d" | "1h" | "1m" | "30m" | "5m" | "6h" | undefined;
             output: "evidence" | "series" | "table";
             series?: {
                 limit: number;

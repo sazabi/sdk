@@ -4,6 +4,8 @@ export declare const BillingUsageDimensionSchema: z.ZodEnum<{
     automation_runs_completed: "automation_runs_completed";
     input_tokens: "input_tokens";
     issues_created: "issues_created";
+    log_queries_executed: "log_queries_executed";
+    log_questions_answered: "log_questions_answered";
     logs_accepted_bytes: "logs_accepted_bytes";
     logs_ingested_bytes: "logs_ingested_bytes";
     logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -80,6 +82,8 @@ export declare const BillingResolvedEntitlementSchema: z.ZodUnion<readonly [z.Zo
         automation_runs_completed: "automation_runs_completed";
         input_tokens: "input_tokens";
         issues_created: "issues_created";
+        log_queries_executed: "log_queries_executed";
+        log_questions_answered: "log_questions_answered";
         logs_accepted_bytes: "logs_accepted_bytes";
         logs_ingested_bytes: "logs_ingested_bytes";
         logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -189,6 +193,8 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -275,6 +281,8 @@ export declare const GetBillingSummaryOutputSchema: z.ZodObject<{
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -324,6 +332,8 @@ export declare const BillingUsageRowSchema: z.ZodObject<{
         automation_runs_completed: "automation_runs_completed";
         input_tokens: "input_tokens";
         issues_created: "issues_created";
+        log_queries_executed: "log_queries_executed";
+        log_questions_answered: "log_questions_answered";
         logs_accepted_bytes: "logs_accepted_bytes";
         logs_ingested_bytes: "logs_ingested_bytes";
         logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -364,6 +374,8 @@ export declare const GetBillingUsageOutputSchema: z.ZodObject<{
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -552,6 +564,8 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -638,6 +652,8 @@ export declare const getBillingSummary: import("../orpc-contracts/index.js").Ope
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -690,6 +706,8 @@ export declare const getBillingUsage: import("../orpc-contracts/index.js").Opera
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -852,6 +870,8 @@ export declare const BillingPlanSchema: z.ZodObject<{
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -920,6 +940,8 @@ export declare const ListPlansOutputSchema: z.ZodObject<{
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1258,6 +1280,8 @@ export declare const listPlans: import("../orpc-contracts/index.js").OperationDe
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1466,6 +1490,8 @@ export declare const BillingUsageInvoiceLineItemSchema: z.ZodObject<{
         automation_runs_completed: "automation_runs_completed";
         input_tokens: "input_tokens";
         issues_created: "issues_created";
+        log_queries_executed: "log_queries_executed";
+        log_questions_answered: "log_questions_answered";
         logs_accepted_bytes: "logs_accepted_bytes";
         logs_ingested_bytes: "logs_ingested_bytes";
         logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1495,6 +1521,8 @@ export declare const BillingUsageInvoiceSchema: z.ZodObject<{
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1537,6 +1565,8 @@ export declare const ListUsageInvoicesOutputSchema: z.ZodObject<{
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1574,6 +1604,8 @@ export declare const listUsageInvoices: import("../orpc-contracts/index.js").Ope
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1608,6 +1640,8 @@ export declare const GetAccruedUsageChargesOutputSchema: z.ZodObject<{
         automation_runs_completed: "automation_runs_completed";
         input_tokens: "input_tokens";
         issues_created: "issues_created";
+        log_queries_executed: "log_queries_executed";
+        log_questions_answered: "log_questions_answered";
         logs_accepted_bytes: "logs_accepted_bytes";
         logs_ingested_bytes: "logs_ingested_bytes";
         logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1621,6 +1655,8 @@ export declare const GetAccruedUsageChargesOutputSchema: z.ZodObject<{
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1651,6 +1687,8 @@ export declare const getAccruedUsageCharges: import("../orpc-contracts/index.js"
         automation_runs_completed: "automation_runs_completed";
         input_tokens: "input_tokens";
         issues_created: "issues_created";
+        log_queries_executed: "log_queries_executed";
+        log_questions_answered: "log_questions_answered";
         logs_accepted_bytes: "logs_accepted_bytes";
         logs_ingested_bytes: "logs_ingested_bytes";
         logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1664,6 +1702,8 @@ export declare const getAccruedUsageCharges: import("../orpc-contracts/index.js"
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1679,6 +1719,238 @@ export declare const getAccruedUsageCharges: import("../orpc-contracts/index.js"
         amount: z.ZodString;
     }, z.core.$strip>>;
     totalAmount: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const UsageBudgetScopeSchema: z.ZodString;
+export declare const UsageBudgetSchema: z.ZodObject<{
+    id: z.ZodString;
+    scope: z.ZodString;
+    limitAmount: z.ZodString;
+    enabled: z.ZodBoolean;
+    enforcedAt: z.ZodNullable<z.ZodString>;
+    eligible: z.ZodBoolean;
+    ineligibleReason: z.ZodNullable<z.ZodLiteral<"not_cents_priced">>;
+    createdAt: z.ZodString;
+    updatedAt: z.ZodString;
+    currentCycle: z.ZodNullable<z.ZodObject<{
+        billingCycleId: z.ZodString;
+        usedAmount: z.ZodString;
+        reservedAmount: z.ZodString;
+        remainingAmount: z.ZodString;
+        limitAmount: z.ZodString;
+        lastBlockedProductKey: z.ZodNullable<z.ZodString>;
+        endsAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const UsageBudgetLimitAmountSchema: z.ZodString;
+export declare const UsageBudgetImmediateBlockAcknowledgementSchema: z.ZodObject<{
+    scope: z.ZodEnum<{
+        all_usage: "all_usage";
+        automation_runs_completed: "automation_runs_completed";
+        issues_created: "issues_created";
+        pull_request_reviews_completed: "pull_request_reviews_completed";
+        pull_requests_created: "pull_requests_created";
+    }>;
+    billingCycleId: z.ZodString;
+    usedAmount: z.ZodString;
+    reservedAmount: z.ZodString;
+    limitAmount: z.ZodString;
+    endsAt: z.ZodString;
+}, z.core.$strip>;
+export type UsageBudgetImmediateBlockAcknowledgement = z.infer<typeof UsageBudgetImmediateBlockAcknowledgementSchema>;
+export declare const UsageBudgetEligibilitySchema: z.ZodObject<{
+    eligibleProductKeys: z.ZodArray<z.ZodString>;
+    allUsageEligible: z.ZodBoolean;
+    currentCycle: z.ZodNullable<z.ZodObject<{
+        billingCycleId: z.ZodString;
+        startsAt: z.ZodString;
+        endsAt: z.ZodString;
+        currency: z.ZodString;
+        eligibleProductKeys: z.ZodArray<z.ZodString>;
+        allUsageEligible: z.ZodBoolean;
+        scopes: z.ZodArray<z.ZodObject<{
+            scope: z.ZodString;
+            usedAmount: z.ZodString;
+            reservedAmount: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const ListUsageBudgetsInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const ListUsageBudgetsOutputSchema: z.ZodObject<{
+    budgets: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        scope: z.ZodString;
+        limitAmount: z.ZodString;
+        enabled: z.ZodBoolean;
+        enforcedAt: z.ZodNullable<z.ZodString>;
+        eligible: z.ZodBoolean;
+        ineligibleReason: z.ZodNullable<z.ZodLiteral<"not_cents_priced">>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        currentCycle: z.ZodNullable<z.ZodObject<{
+            billingCycleId: z.ZodString;
+            usedAmount: z.ZodString;
+            reservedAmount: z.ZodString;
+            remainingAmount: z.ZodString;
+            limitAmount: z.ZodString;
+            lastBlockedProductKey: z.ZodNullable<z.ZodString>;
+            endsAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
+    eligibility: z.ZodObject<{
+        eligibleProductKeys: z.ZodArray<z.ZodString>;
+        allUsageEligible: z.ZodBoolean;
+        currentCycle: z.ZodNullable<z.ZodObject<{
+            billingCycleId: z.ZodString;
+            startsAt: z.ZodString;
+            endsAt: z.ZodString;
+            currency: z.ZodString;
+            eligibleProductKeys: z.ZodArray<z.ZodString>;
+            allUsageEligible: z.ZodBoolean;
+            scopes: z.ZodArray<z.ZodObject<{
+                scope: z.ZodString;
+                usedAmount: z.ZodString;
+                reservedAmount: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export declare const CreateUsageBudgetInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    scope: z.ZodString;
+    limitAmount: z.ZodString;
+    immediateBlockAcknowledgement: z.ZodOptional<z.ZodObject<{
+        scope: z.ZodEnum<{
+            all_usage: "all_usage";
+            automation_runs_completed: "automation_runs_completed";
+            issues_created: "issues_created";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>;
+        billingCycleId: z.ZodString;
+        usedAmount: z.ZodString;
+        reservedAmount: z.ZodString;
+        limitAmount: z.ZodString;
+        endsAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const UsageBudgetWriteOutputSchema: z.ZodObject<{
+    budgetId: z.ZodString;
+}, z.core.$strip>;
+export declare const UpdateUsageBudgetInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    budgetId: z.ZodString;
+    limitAmount: z.ZodOptional<z.ZodString>;
+    enabled: z.ZodOptional<z.ZodBoolean>;
+    immediateBlockAcknowledgement: z.ZodOptional<z.ZodObject<{
+        scope: z.ZodEnum<{
+            all_usage: "all_usage";
+            automation_runs_completed: "automation_runs_completed";
+            issues_created: "issues_created";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>;
+        billingCycleId: z.ZodString;
+        usedAmount: z.ZodString;
+        reservedAmount: z.ZodString;
+        limitAmount: z.ZodString;
+        endsAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const DeleteUsageBudgetInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    budgetId: z.ZodString;
+}, z.core.$strip>;
+export declare const listUsageBudgets: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    budgets: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        scope: z.ZodString;
+        limitAmount: z.ZodString;
+        enabled: z.ZodBoolean;
+        enforcedAt: z.ZodNullable<z.ZodString>;
+        eligible: z.ZodBoolean;
+        ineligibleReason: z.ZodNullable<z.ZodLiteral<"not_cents_priced">>;
+        createdAt: z.ZodString;
+        updatedAt: z.ZodString;
+        currentCycle: z.ZodNullable<z.ZodObject<{
+            billingCycleId: z.ZodString;
+            usedAmount: z.ZodString;
+            reservedAmount: z.ZodString;
+            remainingAmount: z.ZodString;
+            limitAmount: z.ZodString;
+            lastBlockedProductKey: z.ZodNullable<z.ZodString>;
+            endsAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
+    eligibility: z.ZodObject<{
+        eligibleProductKeys: z.ZodArray<z.ZodString>;
+        allUsageEligible: z.ZodBoolean;
+        currentCycle: z.ZodNullable<z.ZodObject<{
+            billingCycleId: z.ZodString;
+            startsAt: z.ZodString;
+            endsAt: z.ZodString;
+            currency: z.ZodString;
+            eligibleProductKeys: z.ZodArray<z.ZodString>;
+            allUsageEligible: z.ZodBoolean;
+            scopes: z.ZodArray<z.ZodObject<{
+                scope: z.ZodString;
+                usedAmount: z.ZodString;
+                reservedAmount: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const createUsageBudget: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    scope: z.ZodString;
+    limitAmount: z.ZodString;
+    immediateBlockAcknowledgement: z.ZodOptional<z.ZodObject<{
+        scope: z.ZodEnum<{
+            all_usage: "all_usage";
+            automation_runs_completed: "automation_runs_completed";
+            issues_created: "issues_created";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>;
+        billingCycleId: z.ZodString;
+        usedAmount: z.ZodString;
+        reservedAmount: z.ZodString;
+        limitAmount: z.ZodString;
+        endsAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, z.ZodObject<{
+    budgetId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const updateUsageBudget: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    budgetId: z.ZodString;
+    limitAmount: z.ZodOptional<z.ZodString>;
+    enabled: z.ZodOptional<z.ZodBoolean>;
+    immediateBlockAcknowledgement: z.ZodOptional<z.ZodObject<{
+        scope: z.ZodEnum<{
+            all_usage: "all_usage";
+            automation_runs_completed: "automation_runs_completed";
+            issues_created: "issues_created";
+            pull_request_reviews_completed: "pull_request_reviews_completed";
+            pull_requests_created: "pull_requests_created";
+        }>;
+        billingCycleId: z.ZodString;
+        usedAmount: z.ZodString;
+        reservedAmount: z.ZodString;
+        limitAmount: z.ZodString;
+        endsAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, z.ZodObject<{
+    budgetId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const deleteUsageBudget: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    budgetId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    budgetId: z.ZodString;
 }, z.core.$strip>, "api">;
 export declare const billingContract: {
     readonly getSummary: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -1756,6 +2028,8 @@ export declare const billingContract: {
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1842,6 +2116,8 @@ export declare const billingContract: {
                     automation_runs_completed: "automation_runs_completed";
                     input_tokens: "input_tokens";
                     issues_created: "issues_created";
+                    log_queries_executed: "log_queries_executed";
+                    log_questions_answered: "log_questions_answered";
                     logs_accepted_bytes: "logs_accepted_bytes";
                     logs_ingested_bytes: "logs_ingested_bytes";
                     logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1894,6 +2170,8 @@ export declare const billingContract: {
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1936,6 +2214,8 @@ export declare const billingContract: {
             automation_runs_completed: "automation_runs_completed";
             input_tokens: "input_tokens";
             issues_created: "issues_created";
+            log_queries_executed: "log_queries_executed";
+            log_questions_answered: "log_questions_answered";
             logs_accepted_bytes: "logs_accepted_bytes";
             logs_ingested_bytes: "logs_ingested_bytes";
             logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1949,6 +2229,8 @@ export declare const billingContract: {
                 automation_runs_completed: "automation_runs_completed";
                 input_tokens: "input_tokens";
                 issues_created: "issues_created";
+                log_queries_executed: "log_queries_executed";
+                log_questions_answered: "log_questions_answered";
                 logs_accepted_bytes: "logs_accepted_bytes";
                 logs_ingested_bytes: "logs_ingested_bytes";
                 logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -1983,6 +2265,8 @@ export declare const billingContract: {
                     automation_runs_completed: "automation_runs_completed";
                     input_tokens: "input_tokens";
                     issues_created: "issues_created";
+                    log_queries_executed: "log_queries_executed";
+                    log_questions_answered: "log_questions_answered";
                     logs_accepted_bytes: "logs_accepted_bytes";
                     logs_ingested_bytes: "logs_ingested_bytes";
                     logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -2140,6 +2424,8 @@ export declare const billingContract: {
                     automation_runs_completed: "automation_runs_completed";
                     input_tokens: "input_tokens";
                     issues_created: "issues_created";
+                    log_queries_executed: "log_queries_executed";
+                    log_questions_answered: "log_questions_answered";
                     logs_accepted_bytes: "logs_accepted_bytes";
                     logs_ingested_bytes: "logs_ingested_bytes";
                     logs_query_bytes_scanned: "logs_query_bytes_scanned";
@@ -2341,5 +2627,95 @@ export declare const billingContract: {
     }, z.core.$strip>, z.ZodObject<{
         billingSubscriptionId: z.ZodString;
         resumed: z.ZodLiteral<true>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly listUsageBudgets: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        budgets: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            scope: z.ZodString;
+            limitAmount: z.ZodString;
+            enabled: z.ZodBoolean;
+            enforcedAt: z.ZodNullable<z.ZodString>;
+            eligible: z.ZodBoolean;
+            ineligibleReason: z.ZodNullable<z.ZodLiteral<"not_cents_priced">>;
+            createdAt: z.ZodString;
+            updatedAt: z.ZodString;
+            currentCycle: z.ZodNullable<z.ZodObject<{
+                billingCycleId: z.ZodString;
+                usedAmount: z.ZodString;
+                reservedAmount: z.ZodString;
+                remainingAmount: z.ZodString;
+                limitAmount: z.ZodString;
+                lastBlockedProductKey: z.ZodNullable<z.ZodString>;
+                endsAt: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        eligibility: z.ZodObject<{
+            eligibleProductKeys: z.ZodArray<z.ZodString>;
+            allUsageEligible: z.ZodBoolean;
+            currentCycle: z.ZodNullable<z.ZodObject<{
+                billingCycleId: z.ZodString;
+                startsAt: z.ZodString;
+                endsAt: z.ZodString;
+                currency: z.ZodString;
+                eligibleProductKeys: z.ZodArray<z.ZodString>;
+                allUsageEligible: z.ZodBoolean;
+                scopes: z.ZodArray<z.ZodObject<{
+                    scope: z.ZodString;
+                    usedAmount: z.ZodString;
+                    reservedAmount: z.ZodString;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly createUsageBudget: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        scope: z.ZodString;
+        limitAmount: z.ZodString;
+        immediateBlockAcknowledgement: z.ZodOptional<z.ZodObject<{
+            scope: z.ZodEnum<{
+                all_usage: "all_usage";
+                automation_runs_completed: "automation_runs_completed";
+                issues_created: "issues_created";
+                pull_request_reviews_completed: "pull_request_reviews_completed";
+                pull_requests_created: "pull_requests_created";
+            }>;
+            billingCycleId: z.ZodString;
+            usedAmount: z.ZodString;
+            reservedAmount: z.ZodString;
+            limitAmount: z.ZodString;
+            endsAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, z.ZodObject<{
+        budgetId: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly updateUsageBudget: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        budgetId: z.ZodString;
+        limitAmount: z.ZodOptional<z.ZodString>;
+        enabled: z.ZodOptional<z.ZodBoolean>;
+        immediateBlockAcknowledgement: z.ZodOptional<z.ZodObject<{
+            scope: z.ZodEnum<{
+                all_usage: "all_usage";
+                automation_runs_completed: "automation_runs_completed";
+                issues_created: "issues_created";
+                pull_request_reviews_completed: "pull_request_reviews_completed";
+                pull_requests_created: "pull_requests_created";
+            }>;
+            billingCycleId: z.ZodString;
+            usedAmount: z.ZodString;
+            reservedAmount: z.ZodString;
+            limitAmount: z.ZodString;
+            endsAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, z.ZodObject<{
+        budgetId: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly deleteUsageBudget: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        budgetId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        budgetId: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
 };
