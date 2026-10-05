@@ -79,6 +79,61 @@ export declare const ListProjectsOutputSchema: z.ZodObject<{
 export declare const GetProjectInputSchema: z.ZodObject<{
     projectId: z.ZodString;
 }, z.core.$strip>;
+export declare const IssueDetectionSettingsSchema: z.ZodObject<{
+    enabled: z.ZodBoolean;
+    revision: z.ZodNumber;
+    updatedAt: z.ZodNullable<z.ZodString>;
+    updatedBy: z.ZodNullable<z.ZodObject<{
+        actor: z.ZodEnum<{
+            organization: "organization";
+            partner: "partner";
+            system: "system";
+            user: "user";
+        }>;
+        userId: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const UpdateIssueDetectionSettingsInputSchema: z.ZodObject<{
+    projectId: z.ZodString;
+    enabled: z.ZodBoolean;
+    expectedRevision: z.ZodNumber;
+}, z.core.$strip>;
+export type ProjectIssueDetectionSettings = z.infer<typeof IssueDetectionSettingsSchema>;
+export type UpdateProjectIssueDetectionSettingsInput = z.infer<typeof UpdateIssueDetectionSettingsInputSchema>;
+export declare const getProjectIssueDetectionSettings: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    enabled: z.ZodBoolean;
+    revision: z.ZodNumber;
+    updatedAt: z.ZodNullable<z.ZodString>;
+    updatedBy: z.ZodNullable<z.ZodObject<{
+        actor: z.ZodEnum<{
+            organization: "organization";
+            partner: "partner";
+            system: "system";
+            user: "user";
+        }>;
+        userId: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const updateProjectIssueDetectionSettings: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodString;
+    enabled: z.ZodBoolean;
+    expectedRevision: z.ZodNumber;
+}, z.core.$strip>, z.ZodObject<{
+    enabled: z.ZodBoolean;
+    revision: z.ZodNumber;
+    updatedAt: z.ZodNullable<z.ZodString>;
+    updatedBy: z.ZodNullable<z.ZodObject<{
+        actor: z.ZodEnum<{
+            organization: "organization";
+            partner: "partner";
+            system: "system";
+            user: "user";
+        }>;
+        userId: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
 /**
  * Input schema for creating one project.
  */
@@ -326,6 +381,40 @@ export declare const deleteProject: import("../orpc-contracts/index.js").Operati
  * Projects contract tree.
  */
 export declare const projectsContract: {
+    readonly getIssueDetectionSettings: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        revision: z.ZodNumber;
+        updatedAt: z.ZodNullable<z.ZodString>;
+        updatedBy: z.ZodNullable<z.ZodObject<{
+            actor: z.ZodEnum<{
+                organization: "organization";
+                partner: "partner";
+                system: "system";
+                user: "user";
+            }>;
+            userId: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly updateIssueDetectionSettings: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        projectId: z.ZodString;
+        enabled: z.ZodBoolean;
+        expectedRevision: z.ZodNumber;
+    }, z.core.$strip>, z.ZodObject<{
+        enabled: z.ZodBoolean;
+        revision: z.ZodNumber;
+        updatedAt: z.ZodNullable<z.ZodString>;
+        updatedBy: z.ZodNullable<z.ZodObject<{
+            actor: z.ZodEnum<{
+                organization: "organization";
+                partner: "partner";
+                system: "system";
+                user: "user";
+            }>;
+            userId: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{

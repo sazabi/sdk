@@ -4886,6 +4886,46 @@ var public_api_client_contract_gen_default = {
     }
   },
   projects: {
+    getIssueDetectionSettings: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "projects.getIssueDetectionSettings",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/projects/{projectId}/issue-detection",
+          tags: ["Projects"],
+          operationId: "projects.getIssueDetectionSettings",
+          summary: "Get issue detection settings",
+          description: "Read the project's built-in issue detection toggle. User credentials require settings:write permission."
+        }
+      }
+    },
+    updateIssueDetectionSettings: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "projects.updateIssueDetectionSettings",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/projects/{projectId}/issue-detection",
+          tags: ["Projects"],
+          operationId: "projects.updateIssueDetectionSettings",
+          summary: "Update issue detection settings",
+          description: "Enable or disable built-in issue detection without changing customer automations. User credentials require settings:write permission. Pass the latest settings revision to prevent overwriting a concurrent edit."
+        }
+      }
+    },
     list: {
       "~orpc": {
         errorMap: {},
@@ -7461,6 +7501,8 @@ var createClient = (options) => {
       messages: async (input) => raw.search.messages(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     projects: {
+      getIssueDetectionSettings: async (input) => raw.projects.getIssueDetectionSettings(input),
+      updateIssueDetectionSettings: async (input) => raw.projects.updateIssueDetectionSettings(input),
       list: async (input = {}) => raw.projects.list(await resolveListProjectsInput(options.credentialProvider, input)),
       get: async (input) => raw.projects.get(input),
       create: async (input) => raw.projects.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "projects.create")),
