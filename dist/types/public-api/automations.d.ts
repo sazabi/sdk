@@ -83,6 +83,12 @@ export declare const AutomationSignalTypeSchema: z.ZodEnum<{
 export type AutomationSignalType = z.infer<typeof AutomationSignalTypeSchema>;
 export declare const AutomationSchema: z.ZodObject<{
     id: z.ZodString;
+    configurationRevision: z.ZodNumber;
+    templateProvenance: z.ZodNullable<z.ZodObject<{
+        templateId: z.ZodString;
+        templateVersion: z.ZodNumber;
+        resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+    }, z.core.$strip>>;
     projectId: z.ZodString;
     name: z.ZodString;
     description: z.ZodNullable<z.ZodString>;
@@ -127,6 +133,12 @@ export declare const AutomationSchema: z.ZodObject<{
 export type Automation = z.infer<typeof AutomationSchema>;
 export declare const AutomationDetailSchema: z.ZodObject<{
     id: z.ZodString;
+    configurationRevision: z.ZodNumber;
+    templateProvenance: z.ZodNullable<z.ZodObject<{
+        templateId: z.ZodString;
+        templateVersion: z.ZodNumber;
+        resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+    }, z.core.$strip>>;
     projectId: z.ZodString;
     name: z.ZodString;
     description: z.ZodNullable<z.ZodString>;
@@ -199,6 +211,12 @@ export type ListAutomationsInput = z.infer<typeof ListAutomationsInputSchema>;
 export declare const ListAutomationsOutputSchema: z.ZodObject<{
     automations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -251,6 +269,12 @@ export type GetAutomationInput = z.infer<typeof GetAutomationInputSchema>;
 export declare const GetAutomationOutputSchema: z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -315,6 +339,12 @@ export type CreateAutomationInput = z.infer<typeof CreateAutomationInputSchema>;
 export declare const CreateAutomationOutputSchema: z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -365,6 +395,7 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
 export type CreateAutomationOutput = z.infer<typeof CreateAutomationOutputSchema>;
 export declare const UpdateAutomationInputSchema: z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -376,6 +407,12 @@ export type UpdateAutomationInput = z.infer<typeof UpdateAutomationInputSchema>;
 export declare const UpdateAutomationOutputSchema: z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -426,12 +463,19 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
 export type UpdateAutomationOutput = z.infer<typeof UpdateAutomationOutputSchema>;
 export declare const EnableAutomationInputSchema: z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type EnableAutomationInput = z.infer<typeof EnableAutomationInputSchema>;
 export declare const EnableAutomationOutputSchema: z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -482,12 +526,19 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
 export type EnableAutomationOutput = z.infer<typeof EnableAutomationOutputSchema>;
 export declare const DisableAutomationInputSchema: z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type DisableAutomationInput = z.infer<typeof DisableAutomationInputSchema>;
 export declare const DisableAutomationOutputSchema: z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -538,6 +589,7 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
 export type DisableAutomationOutput = z.infer<typeof DisableAutomationOutputSchema>;
 export declare const DeleteAutomationInputSchema: z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type DeleteAutomationInput = z.infer<typeof DeleteAutomationInputSchema>;
@@ -566,6 +618,12 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
 }, z.core.$strip>, z.ZodObject<{
     automations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -615,6 +673,12 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
 }, z.core.$strip>, z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -676,6 +740,12 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
 }, z.core.$strip>, z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -725,6 +795,7 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
 }, z.core.$strip>, "api">;
 export declare const updateAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -734,6 +805,12 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
 }, z.core.$strip>, z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -783,10 +860,17 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
 }, z.core.$strip>, "api">;
 export declare const enableAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -836,10 +920,17 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
 }, z.core.$strip>, "api">;
 export declare const disableAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     automation: z.ZodObject<{
         id: z.ZodString;
+        configurationRevision: z.ZodNumber;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateId: z.ZodString;
+            templateVersion: z.ZodNumber;
+            resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+        }, z.core.$strip>>;
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
@@ -889,6 +980,7 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
 }, z.core.$strip>, "api">;
 export declare const deleteAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     automationId: z.ZodString;
+    expectedRevision: z.ZodCoercedNumber<unknown>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodVoid, "api">;
 export declare const ListAutomationRunsInputSchema: z.ZodObject<{
@@ -1110,7 +1202,28 @@ export declare const getAutomationRunLogs: import("../orpc-contracts/index.js").
         durationMs: z.ZodNullable<z.ZodNumber>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
+export declare const RunAutomationInputSchema: z.ZodObject<{
+    automationId: z.ZodUUID;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type RunAutomationInput = z.infer<typeof RunAutomationInputSchema>;
+export declare const RunAutomationOutputSchema: z.ZodObject<{
+    workflowId: z.ZodString;
+}, z.core.$strip>;
+export type RunAutomationOutput = z.infer<typeof RunAutomationOutputSchema>;
+export declare const runAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    automationId: z.ZodUUID;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    workflowId: z.ZodString;
+}, z.core.$strip>, "api">;
 export declare const automationsContract: {
+    readonly run: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        automationId: z.ZodUUID;
+        projectId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, z.ZodObject<{
+        workflowId: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         search: z.ZodOptional<z.ZodString>;
@@ -1134,6 +1247,12 @@ export declare const automationsContract: {
     }, z.core.$strip>, z.ZodObject<{
         automations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
+            configurationRevision: z.ZodNumber;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateId: z.ZodString;
+                templateVersion: z.ZodNumber;
+                resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+            }, z.core.$strip>>;
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
@@ -1183,6 +1302,12 @@ export declare const automationsContract: {
     }, z.core.$strip>, z.ZodObject<{
         automation: z.ZodObject<{
             id: z.ZodString;
+            configurationRevision: z.ZodNumber;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateId: z.ZodString;
+                templateVersion: z.ZodNumber;
+                resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+            }, z.core.$strip>>;
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
@@ -1244,6 +1369,12 @@ export declare const automationsContract: {
     }, z.core.$strip>, z.ZodObject<{
         automation: z.ZodObject<{
             id: z.ZodString;
+            configurationRevision: z.ZodNumber;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateId: z.ZodString;
+                templateVersion: z.ZodNumber;
+                resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+            }, z.core.$strip>>;
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
@@ -1293,6 +1424,7 @@ export declare const automationsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         automationId: z.ZodString;
+        expectedRevision: z.ZodCoercedNumber<unknown>;
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
         description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -1302,6 +1434,12 @@ export declare const automationsContract: {
     }, z.core.$strip>, z.ZodObject<{
         automation: z.ZodObject<{
             id: z.ZodString;
+            configurationRevision: z.ZodNumber;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateId: z.ZodString;
+                templateVersion: z.ZodNumber;
+                resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+            }, z.core.$strip>>;
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
@@ -1351,10 +1489,17 @@ export declare const automationsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly enable: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         automationId: z.ZodString;
+        expectedRevision: z.ZodCoercedNumber<unknown>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         automation: z.ZodObject<{
             id: z.ZodString;
+            configurationRevision: z.ZodNumber;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateId: z.ZodString;
+                templateVersion: z.ZodNumber;
+                resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+            }, z.core.$strip>>;
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
@@ -1404,10 +1549,17 @@ export declare const automationsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly disable: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         automationId: z.ZodString;
+        expectedRevision: z.ZodCoercedNumber<unknown>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         automation: z.ZodObject<{
             id: z.ZodString;
+            configurationRevision: z.ZodNumber;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateId: z.ZodString;
+                templateVersion: z.ZodNumber;
+                resolvedInputs: z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
+            }, z.core.$strip>>;
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
@@ -1457,6 +1609,7 @@ export declare const automationsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly delete: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         automationId: z.ZodString;
+        expectedRevision: z.ZodCoercedNumber<unknown>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly runs: {

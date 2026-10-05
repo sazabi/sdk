@@ -1261,6 +1261,26 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    run: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "automations.run",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/automations/{automationId}/run",
+          tags: ["Automations"],
+          operationId: "automations.run",
+          summary: "Run an automation",
+          description: "Start a manual run of a customer automation using its current saved configuration. Requires an organization administrator with project settings permission; ordinary secret keys cannot start manual runs."
+        }
+      }
+    },
     disable: {
       "~orpc": {
         errorMap: {},
@@ -1487,9 +1507,70 @@ var public_api_client_contract_gen_default = {
           description: "List the published Sazabi automation template catalog. Metadata only; template content (script bodies and prompts) is not exposed."
         }
       }
+    },
+    install: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "automationTemplates.install",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/automation-templates/{templateId}/install",
+          tags: ["Automations"],
+          operationId: "automationTemplates.install",
+          summary: "Install an automation template",
+          description: "Create an independent customer-owned automation from the selected published template version. Later catalog updates and retirement do not change the copy. Required project dependencies must be connected first.",
+          successStatus: 201
+        }
+      }
+    },
+    readiness: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "automationTemplates.readiness",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/automation-templates/{templateId}/readiness",
+          tags: ["Automations"],
+          operationId: "automationTemplates.readiness",
+          summary: "Check automation template prerequisites",
+          description: "Check required dependencies in the destination project for the selected template version. Requires installation permission. Advisory only: installation rechecks readiness and ordinary creation policy."
+        }
+      }
     }
   },
   dashboards: {
+    updateViewSettings: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "dashboards.updateViewSettings",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/dashboards/{id}/view-settings",
+          tags: ["Dashboards"],
+          operationId: "dashboards.updateViewSettings",
+          summary: "Update dashboard view settings",
+          description: "Save the project's default time range without changing dashboard content. Read viewSettings.revision through dashboards.get and send it as expectedRevision. Null restores the definition's default. A stale revision returns CONFLICT."
+        }
+      }
+    },
     list: {
       "~orpc": {
         errorMap: {},
@@ -1506,7 +1587,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Dashboards"],
           operationId: "dashboards.list",
           summary: "List dashboards",
-          description: "List the project's dashboards by most recent update: title, description, revision, timestamps, and your capabilities. Metadata only; never runs queries."
+          description: "List the project's available dashboards: title, description, revision, timestamps, and your capabilities. Metadata only; never runs queries."
         }
       }
     },
@@ -3597,7 +3678,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Signal definitions"],
           operationId: "signalDefinitions.create",
           summary: "Create a signal definition",
-          description: "Create a CEL signal definition for a project.",
+          description: "Create an independent customer signal definition from exactly one of an authored CEL expression or a published template key/version. Template creation saves resolved provenance and creates no automation.",
           successStatus: 201
         }
       }
@@ -4902,7 +4983,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Projects"],
           operationId: "projects.getIssueDetectionSettings",
           summary: "Get issue detection settings",
-          description: "Read the project's built-in issue detection toggle. User credentials require settings:write permission."
+          description: "Read the project's issue detection toggle. User credentials require settings:write permission."
         }
       }
     },
@@ -4922,7 +5003,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Projects"],
           operationId: "projects.updateIssueDetectionSettings",
           summary: "Update issue detection settings",
-          description: "Enable or disable built-in issue detection without changing customer automations. User credentials require settings:write permission. Pass the latest settings revision to prevent overwriting a concurrent edit."
+          description: "Enable or disable issue detection without changing customer automations. User credentials require settings:write permission. Pass the latest settings revision to prevent overwriting a concurrent edit."
         }
       }
     },
@@ -7360,6 +7441,7 @@ var createClient = (options) => {
       delete: async (input) => raw.artifacts.delete(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     automations: {
+      run: async (input) => raw.automations.run(await resolveProjectScopedInput(options.credentialProvider, input)),
       list: async (input = {}) => raw.automations.list(await resolveProjectScopedInput(options.credentialProvider, input)),
       get: async (input) => raw.automations.get(await resolveProjectScopedInput(options.credentialProvider, input)),
       create: async (input) => raw.automations.create(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -7374,9 +7456,12 @@ var createClient = (options) => {
       }
     },
     automationTemplates: {
-      list: () => raw.automationTemplates.list({})
+      list: () => raw.automationTemplates.list({}),
+      readiness: async (input) => raw.automationTemplates.readiness(await resolveProjectScopedInput(options.credentialProvider, input)),
+      install: async (input) => raw.automationTemplates.install(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     dashboards: {
+      updateViewSettings: async (input) => raw.dashboards.updateViewSettings(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.updateViewSettings")),
       list: async (input = {}) => raw.dashboards.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.list")),
       get: async (input) => raw.dashboards.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.get")),
       validate: async (input) => raw.dashboards.validate(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.validate")),

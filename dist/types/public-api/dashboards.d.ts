@@ -7,6 +7,30 @@ export declare const ListDashboardsInputSchema: z.ZodObject<{
 }, z.core.$strict>;
 export type ListDashboardsInput = z.infer<typeof ListDashboardsInputSchema>;
 export declare const ListDashboardsOutputSchema: z.ZodObject<{
+    canCreate: z.ZodOptional<z.ZodBoolean>;
+    templates: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        version: z.ZodNumber;
+        resourceKind: z.ZodLiteral<"dashboard">;
+        title: z.ZodString;
+        description: z.ZodString;
+        source: z.ZodString;
+        inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        defaults: z.ZodObject<{
+            title: z.ZodString;
+            timeRange: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"absolute">;
+                from: z.ZodISODateTime;
+                to: z.ZodISODateTime;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"relative">;
+                lookbackSeconds: z.ZodNumber;
+            }, z.core.$strict>], "kind">;
+        }, z.core.$strict>;
+        requiredPermissions: z.ZodArray<z.ZodEnum<{
+            "dashboards:write": "dashboards:write";
+        }>>;
+    }, z.core.$strict>>>;
     dashboards: z.ZodArray<z.ZodObject<{
         id: z.ZodUUID;
         slug: z.ZodString;
@@ -30,6 +54,40 @@ export declare const GetDashboardInputSchema: z.ZodObject<{
 }, z.core.$strict>;
 export type GetDashboardInput = z.infer<typeof GetDashboardInputSchema>;
 export declare const GetDashboardOutputSchema: z.ZodObject<{
+    viewSettings: z.ZodOptional<z.ZodObject<{
+        revision: z.ZodNumber;
+        timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"absolute">;
+            from: z.ZodISODateTime;
+            to: z.ZodISODateTime;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"relative">;
+            lookbackSeconds: z.ZodNumber;
+        }, z.core.$strict>], "kind">>;
+    }, z.core.$strict>>;
+    canUpdateViewSettings: z.ZodOptional<z.ZodBoolean>;
+    origin: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"dashboard">;
+        dashboardId: z.ZodUUID;
+        revision: z.ZodNumber;
+        definitionHash: z.ZodString;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"template">;
+        key: z.ZodString;
+        version: z.ZodNumber;
+        definitionHash: z.ZodString;
+        resolvedInputs: z.ZodObject<{
+            title: z.ZodString;
+            timeRange: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"absolute">;
+                from: z.ZodISODateTime;
+                to: z.ZodISODateTime;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"relative">;
+                lookbackSeconds: z.ZodNumber;
+            }, z.core.$strict>], "kind">;
+        }, z.core.$strict>;
+    }, z.core.$strict>], "kind">>;
     id: z.ZodUUID;
     revision: z.ZodNumber;
     definitionHash: z.ZodString;
@@ -686,7 +744,7 @@ export declare const ValidateDashboardOutputSchema: z.ZodObject<{
 export type ValidateDashboardOutput = z.infer<typeof ValidateDashboardOutputSchema>;
 export declare const CreateDashboardInputSchema: z.ZodObject<{
     id: z.ZodUUID;
-    input: z.ZodObject<{
+    input: z.ZodUnion<readonly [z.ZodObject<{
         source: z.ZodString;
         files: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodDiscriminatedUnion<[z.ZodObject<{
             version: z.ZodLiteral<1>;
@@ -991,7 +1049,28 @@ export declare const CreateDashboardInputSchema: z.ZodObject<{
                 title: z.ZodOptional<z.ZodString>;
             }, z.core.$strict>>;
         }, z.core.$strict>], "type">]>>>;
-    }, z.core.$strict>;
+    }, z.core.$strict>, z.ZodObject<{
+        template: z.ZodObject<{
+            key: z.ZodString;
+            version: z.ZodNumber;
+            inputs: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                timeRange: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    kind: z.ZodLiteral<"absolute">;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"relative">;
+                    lookbackSeconds: z.ZodNumber;
+                }, z.core.$strict>], "kind">>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>;
+    }, z.core.$strict>, z.ZodObject<{
+        dashboard: z.ZodObject<{
+            id: z.ZodUUID;
+            revision: z.ZodNumber;
+        }, z.core.$strict>;
+    }, z.core.$strict>]>;
     projectId: z.ZodOptional<z.ZodUUID>;
 }, z.core.$strict>;
 export type CreateDashboardInput = z.infer<typeof CreateDashboardInputSchema>;
@@ -2642,6 +2721,30 @@ export declare const listDashboards: import("../orpc-contracts/index.js").Operat
     projectId: z.ZodOptional<z.ZodUUID>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
 }, z.core.$strict>, z.ZodObject<{
+    canCreate: z.ZodOptional<z.ZodBoolean>;
+    templates: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        version: z.ZodNumber;
+        resourceKind: z.ZodLiteral<"dashboard">;
+        title: z.ZodString;
+        description: z.ZodString;
+        source: z.ZodString;
+        inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        defaults: z.ZodObject<{
+            title: z.ZodString;
+            timeRange: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"absolute">;
+                from: z.ZodISODateTime;
+                to: z.ZodISODateTime;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"relative">;
+                lookbackSeconds: z.ZodNumber;
+            }, z.core.$strict>], "kind">;
+        }, z.core.$strict>;
+        requiredPermissions: z.ZodArray<z.ZodEnum<{
+            "dashboards:write": "dashboards:write";
+        }>>;
+    }, z.core.$strict>>>;
     dashboards: z.ZodArray<z.ZodObject<{
         id: z.ZodUUID;
         slug: z.ZodString;
@@ -2662,6 +2765,40 @@ export declare const getDashboard: import("../orpc-contracts/index.js").Operatio
     includeFiles: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     projectId: z.ZodOptional<z.ZodUUID>;
 }, z.core.$strict>, z.ZodObject<{
+    viewSettings: z.ZodOptional<z.ZodObject<{
+        revision: z.ZodNumber;
+        timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+            kind: z.ZodLiteral<"absolute">;
+            from: z.ZodISODateTime;
+            to: z.ZodISODateTime;
+        }, z.core.$strict>, z.ZodObject<{
+            kind: z.ZodLiteral<"relative">;
+            lookbackSeconds: z.ZodNumber;
+        }, z.core.$strict>], "kind">>;
+    }, z.core.$strict>>;
+    canUpdateViewSettings: z.ZodOptional<z.ZodBoolean>;
+    origin: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"dashboard">;
+        dashboardId: z.ZodUUID;
+        revision: z.ZodNumber;
+        definitionHash: z.ZodString;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"template">;
+        key: z.ZodString;
+        version: z.ZodNumber;
+        definitionHash: z.ZodString;
+        resolvedInputs: z.ZodObject<{
+            title: z.ZodString;
+            timeRange: z.ZodDiscriminatedUnion<[z.ZodObject<{
+                kind: z.ZodLiteral<"absolute">;
+                from: z.ZodISODateTime;
+                to: z.ZodISODateTime;
+            }, z.core.$strict>, z.ZodObject<{
+                kind: z.ZodLiteral<"relative">;
+                lookbackSeconds: z.ZodNumber;
+            }, z.core.$strict>], "kind">;
+        }, z.core.$strict>;
+    }, z.core.$strict>], "kind">>;
     id: z.ZodUUID;
     revision: z.ZodNumber;
     definitionHash: z.ZodString;
@@ -3314,7 +3451,7 @@ export declare const validateDashboard: import("../orpc-contracts/index.js").Ope
 }, z.core.$strict>, "api">;
 export declare const createDashboard: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     id: z.ZodUUID;
-    input: z.ZodObject<{
+    input: z.ZodUnion<readonly [z.ZodObject<{
         source: z.ZodString;
         files: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnion<readonly [z.ZodDiscriminatedUnion<[z.ZodObject<{
             version: z.ZodLiteral<1>;
@@ -3619,7 +3756,28 @@ export declare const createDashboard: import("../orpc-contracts/index.js").Opera
                 title: z.ZodOptional<z.ZodString>;
             }, z.core.$strict>>;
         }, z.core.$strict>], "type">]>>>;
-    }, z.core.$strict>;
+    }, z.core.$strict>, z.ZodObject<{
+        template: z.ZodObject<{
+            key: z.ZodString;
+            version: z.ZodNumber;
+            inputs: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                timeRange: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
+                    kind: z.ZodLiteral<"absolute">;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>, z.ZodObject<{
+                    kind: z.ZodLiteral<"relative">;
+                    lookbackSeconds: z.ZodNumber;
+                }, z.core.$strict>], "kind">>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>;
+    }, z.core.$strict>, z.ZodObject<{
+        dashboard: z.ZodObject<{
+            id: z.ZodUUID;
+            revision: z.ZodNumber;
+        }, z.core.$strict>;
+    }, z.core.$strict>]>;
     projectId: z.ZodOptional<z.ZodUUID>;
 }, z.core.$strict>, z.ZodObject<{
     id: z.ZodUUID;
@@ -5265,4 +5423,53 @@ export declare const deleteDashboard: import("../orpc-contracts/index.js").Opera
     id: z.ZodUUID;
     revision: z.ZodNumber;
     deletedAt: z.ZodISODateTime;
+}, z.core.$strict>, "api">;
+export declare const UpdateDashboardViewSettingsInputSchema: z.ZodObject<{
+    id: z.ZodUUID;
+    expectedRevision: z.ZodNumber;
+    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"absolute">;
+        from: z.ZodISODateTime;
+        to: z.ZodISODateTime;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"relative">;
+        lookbackSeconds: z.ZodNumber;
+    }, z.core.$strict>], "kind">>;
+    projectId: z.ZodOptional<z.ZodUUID>;
+}, z.core.$strict>;
+export type UpdateDashboardViewSettingsInput = z.infer<typeof UpdateDashboardViewSettingsInputSchema>;
+export declare const DashboardViewSettingsOutputSchema: z.ZodObject<{
+    revision: z.ZodNumber;
+    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"absolute">;
+        from: z.ZodISODateTime;
+        to: z.ZodISODateTime;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"relative">;
+        lookbackSeconds: z.ZodNumber;
+    }, z.core.$strict>], "kind">>;
+}, z.core.$strict>;
+export type DashboardViewSettingsOutput = z.infer<typeof DashboardViewSettingsOutputSchema>;
+export declare const updateDashboardViewSettings: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    id: z.ZodUUID;
+    expectedRevision: z.ZodNumber;
+    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"absolute">;
+        from: z.ZodISODateTime;
+        to: z.ZodISODateTime;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"relative">;
+        lookbackSeconds: z.ZodNumber;
+    }, z.core.$strict>], "kind">>;
+    projectId: z.ZodOptional<z.ZodUUID>;
+}, z.core.$strict>, z.ZodObject<{
+    revision: z.ZodNumber;
+    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        kind: z.ZodLiteral<"absolute">;
+        from: z.ZodISODateTime;
+        to: z.ZodISODateTime;
+    }, z.core.$strict>, z.ZodObject<{
+        kind: z.ZodLiteral<"relative">;
+        lookbackSeconds: z.ZodNumber;
+    }, z.core.$strict>], "kind">>;
 }, z.core.$strict>, "api">;

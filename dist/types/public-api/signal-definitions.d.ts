@@ -2,13 +2,61 @@ import { z } from "zod";
 export declare const SignalDefinitionIdSchema: z.ZodString;
 export declare const SignalDefinitionNameSchema: z.ZodString;
 export declare const SignalDefinitionCelExpressionSchema: z.ZodString;
+export declare const SignalDefinitionTemplateInputsSchema: z.ZodObject<{
+    severity: z.ZodOptional<z.ZodEnum<{
+        DEBUG: "DEBUG";
+        ERROR: "ERROR";
+        FATAL: "FATAL";
+        INFO: "INFO";
+        TRACE: "TRACE";
+        WARN: "WARN";
+    }>>;
+    service: z.ZodOptional<z.ZodString>;
+}, z.core.$strict>;
+export declare const SignalDefinitionTemplateSchema: z.ZodObject<{
+    key: z.ZodString;
+    version: z.ZodNumber;
+    resourceKind: z.ZodLiteral<"signal-definition">;
+    title: z.ZodString;
+    description: z.ZodString;
+    expression: z.ZodString;
+    defaults: z.ZodObject<{
+        severity: z.ZodString;
+        service: z.ZodNullable<z.ZodString>;
+        enabled: z.ZodBoolean;
+    }, z.core.$strip>;
+    inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+    requiredPermissions: z.ZodArray<z.ZodString>;
+}, z.core.$strip>;
+export type SignalDefinitionTemplate = z.infer<typeof SignalDefinitionTemplateSchema>;
+export declare const SignalDefinitionTemplateProvenanceSchema: z.ZodObject<{
+    templateKey: z.ZodString;
+    templateVersion: z.ZodNumber;
+    contentHash: z.ZodString;
+    resolvedInputs: z.ZodObject<{
+        severity: z.ZodString;
+        service: z.ZodNullable<z.ZodString>;
+        enabled: z.ZodBoolean;
+    }, z.core.$strip>;
+}, z.core.$strip>;
 export declare const SignalDefinitionSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
     name: z.ZodString;
     expression: z.ZodString;
+    templateProvenance: z.ZodNullable<z.ZodObject<{
+        templateKey: z.ZodString;
+        templateVersion: z.ZodNumber;
+        contentHash: z.ZodString;
+        resolvedInputs: z.ZodObject<{
+            severity: z.ZodString;
+            service: z.ZodNullable<z.ZodString>;
+            enabled: z.ZodBoolean;
+        }, z.core.$strip>;
+    }, z.core.$strip>>;
     enabled: z.ZodBoolean;
     compiledVersion: z.ZodNumber;
+    configurationRevision: z.ZodNumber;
     linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -24,11 +72,37 @@ export declare const ListSignalDefinitionsOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
+    }, z.core.$strip>>;
+    templates: z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        version: z.ZodNumber;
+        resourceKind: z.ZodLiteral<"signal-definition">;
+        title: z.ZodString;
+        description: z.ZodString;
+        expression: z.ZodString;
+        defaults: z.ZodObject<{
+            severity: z.ZodString;
+            service: z.ZodNullable<z.ZodString>;
+            enabled: z.ZodBoolean;
+        }, z.core.$strip>;
+        inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        requiredPermissions: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListSignalDefinitionsOutput = z.infer<typeof ListSignalDefinitionsOutputSchema>;
@@ -43,8 +117,19 @@ export declare const GetSignalDefinitionOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -54,7 +139,22 @@ export type GetSignalDefinitionOutput = z.infer<typeof GetSignalDefinitionOutput
 export declare const CreateSignalDefinitionInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
-    expression: z.ZodString;
+    expression: z.ZodOptional<z.ZodString>;
+    template: z.ZodOptional<z.ZodObject<{
+        key: z.ZodString;
+        version: z.ZodNumber;
+        inputs: z.ZodOptional<z.ZodObject<{
+            severity: z.ZodOptional<z.ZodEnum<{
+                DEBUG: "DEBUG";
+                ERROR: "ERROR";
+                FATAL: "FATAL";
+                INFO: "INFO";
+                TRACE: "TRACE";
+                WARN: "WARN";
+            }>>;
+            service: z.ZodOptional<z.ZodString>;
+        }, z.core.$strict>>;
+    }, z.core.$strip>>;
     enabled: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 export type CreateSignalDefinitionInput = z.infer<typeof CreateSignalDefinitionInputSchema>;
@@ -64,8 +164,19 @@ export declare const CreateSignalDefinitionOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -74,6 +185,7 @@ export declare const CreateSignalDefinitionOutputSchema: z.ZodObject<{
 export type CreateSignalDefinitionOutput = z.infer<typeof CreateSignalDefinitionOutputSchema>;
 export declare const UpdateSignalDefinitionInputSchema: z.ZodObject<{
     signalDefinitionId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     expression: z.ZodOptional<z.ZodString>;
@@ -86,8 +198,19 @@ export declare const UpdateSignalDefinitionOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -96,6 +219,7 @@ export declare const UpdateSignalDefinitionOutputSchema: z.ZodObject<{
 export type UpdateSignalDefinitionOutput = z.infer<typeof UpdateSignalDefinitionOutputSchema>;
 export declare const DisableSignalDefinitionInputSchema: z.ZodObject<{
     signalDefinitionId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type DisableSignalDefinitionInput = z.infer<typeof DisableSignalDefinitionInputSchema>;
@@ -105,8 +229,19 @@ export declare const DisableSignalDefinitionOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -121,11 +256,37 @@ export declare const listSignalDefinitions: import("../orpc-contracts/index.js")
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
+    }, z.core.$strip>>;
+    templates: z.ZodArray<z.ZodObject<{
+        key: z.ZodString;
+        version: z.ZodNumber;
+        resourceKind: z.ZodLiteral<"signal-definition">;
+        title: z.ZodString;
+        description: z.ZodString;
+        expression: z.ZodString;
+        defaults: z.ZodObject<{
+            severity: z.ZodString;
+            service: z.ZodNullable<z.ZodString>;
+            enabled: z.ZodBoolean;
+        }, z.core.$strip>;
+        inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+        requiredPermissions: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const getSignalDefinition: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -137,8 +298,19 @@ export declare const getSignalDefinition: import("../orpc-contracts/index.js").O
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -147,7 +319,22 @@ export declare const getSignalDefinition: import("../orpc-contracts/index.js").O
 export declare const createSignalDefinition: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodString;
-    expression: z.ZodString;
+    expression: z.ZodOptional<z.ZodString>;
+    template: z.ZodOptional<z.ZodObject<{
+        key: z.ZodString;
+        version: z.ZodNumber;
+        inputs: z.ZodOptional<z.ZodObject<{
+            severity: z.ZodOptional<z.ZodEnum<{
+                DEBUG: "DEBUG";
+                ERROR: "ERROR";
+                FATAL: "FATAL";
+                INFO: "INFO";
+                TRACE: "TRACE";
+                WARN: "WARN";
+            }>>;
+            service: z.ZodOptional<z.ZodString>;
+        }, z.core.$strict>>;
+    }, z.core.$strip>>;
     enabled: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     signalDefinition: z.ZodObject<{
@@ -155,8 +342,19 @@ export declare const createSignalDefinition: import("../orpc-contracts/index.js"
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -164,6 +362,7 @@ export declare const createSignalDefinition: import("../orpc-contracts/index.js"
 }, z.core.$strip>, "api">;
 export declare const updateSignalDefinition: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     signalDefinitionId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     expression: z.ZodOptional<z.ZodString>;
@@ -174,8 +373,19 @@ export declare const updateSignalDefinition: import("../orpc-contracts/index.js"
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -183,6 +393,7 @@ export declare const updateSignalDefinition: import("../orpc-contracts/index.js"
 }, z.core.$strip>, "api">;
 export declare const disableSignalDefinition: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     signalDefinitionId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     signalDefinition: z.ZodObject<{
@@ -190,14 +401,26 @@ export declare const disableSignalDefinition: import("../orpc-contracts/index.js
         projectId: z.ZodString;
         name: z.ZodString;
         expression: z.ZodString;
+        templateProvenance: z.ZodNullable<z.ZodObject<{
+            templateKey: z.ZodString;
+            templateVersion: z.ZodNumber;
+            contentHash: z.ZodString;
+            resolvedInputs: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
         enabled: z.ZodBoolean;
         compiledVersion: z.ZodNumber;
+        configurationRevision: z.ZodNumber;
         linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const DeleteSignalDefinitionInputSchema: z.ZodObject<{
+    expectedRevision: z.ZodNumber;
     signalDefinitionId: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -205,6 +428,7 @@ export type DeleteSignalDefinitionInput = z.infer<typeof DeleteSignalDefinitionI
 export declare const DeleteSignalDefinitionOutputSchema: z.ZodVoid;
 export type DeleteSignalDefinitionOutput = z.infer<typeof DeleteSignalDefinitionOutputSchema>;
 export declare const deleteSignalDefinition: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    expectedRevision: z.ZodNumber;
     signalDefinitionId: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodVoid, "api">;
@@ -217,11 +441,37 @@ export declare const signalDefinitionsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             expression: z.ZodString;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateKey: z.ZodString;
+                templateVersion: z.ZodNumber;
+                contentHash: z.ZodString;
+                resolvedInputs: z.ZodObject<{
+                    severity: z.ZodString;
+                    service: z.ZodNullable<z.ZodString>;
+                    enabled: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
             enabled: z.ZodBoolean;
             compiledVersion: z.ZodNumber;
+            configurationRevision: z.ZodNumber;
             linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
+        }, z.core.$strip>>;
+        templates: z.ZodArray<z.ZodObject<{
+            key: z.ZodString;
+            version: z.ZodNumber;
+            resourceKind: z.ZodLiteral<"signal-definition">;
+            title: z.ZodString;
+            description: z.ZodString;
+            expression: z.ZodString;
+            defaults: z.ZodObject<{
+                severity: z.ZodString;
+                service: z.ZodNullable<z.ZodString>;
+                enabled: z.ZodBoolean;
+            }, z.core.$strip>;
+            inputSchema: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+            requiredPermissions: z.ZodArray<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly get: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -233,8 +483,19 @@ export declare const signalDefinitionsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             expression: z.ZodString;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateKey: z.ZodString;
+                templateVersion: z.ZodNumber;
+                contentHash: z.ZodString;
+                resolvedInputs: z.ZodObject<{
+                    severity: z.ZodString;
+                    service: z.ZodNullable<z.ZodString>;
+                    enabled: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
             enabled: z.ZodBoolean;
             compiledVersion: z.ZodNumber;
+            configurationRevision: z.ZodNumber;
             linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -243,7 +504,22 @@ export declare const signalDefinitionsContract: {
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodString;
-        expression: z.ZodString;
+        expression: z.ZodOptional<z.ZodString>;
+        template: z.ZodOptional<z.ZodObject<{
+            key: z.ZodString;
+            version: z.ZodNumber;
+            inputs: z.ZodOptional<z.ZodObject<{
+                severity: z.ZodOptional<z.ZodEnum<{
+                    DEBUG: "DEBUG";
+                    ERROR: "ERROR";
+                    FATAL: "FATAL";
+                    INFO: "INFO";
+                    TRACE: "TRACE";
+                    WARN: "WARN";
+                }>>;
+                service: z.ZodOptional<z.ZodString>;
+            }, z.core.$strict>>;
+        }, z.core.$strip>>;
         enabled: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodObject<{
         signalDefinition: z.ZodObject<{
@@ -251,8 +527,19 @@ export declare const signalDefinitionsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             expression: z.ZodString;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateKey: z.ZodString;
+                templateVersion: z.ZodNumber;
+                contentHash: z.ZodString;
+                resolvedInputs: z.ZodObject<{
+                    severity: z.ZodString;
+                    service: z.ZodNullable<z.ZodString>;
+                    enabled: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
             enabled: z.ZodBoolean;
             compiledVersion: z.ZodNumber;
+            configurationRevision: z.ZodNumber;
             linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -260,6 +547,7 @@ export declare const signalDefinitionsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         signalDefinitionId: z.ZodString;
+        expectedRevision: z.ZodNumber;
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
         expression: z.ZodOptional<z.ZodString>;
@@ -270,8 +558,19 @@ export declare const signalDefinitionsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             expression: z.ZodString;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateKey: z.ZodString;
+                templateVersion: z.ZodNumber;
+                contentHash: z.ZodString;
+                resolvedInputs: z.ZodObject<{
+                    severity: z.ZodString;
+                    service: z.ZodNullable<z.ZodString>;
+                    enabled: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
             enabled: z.ZodBoolean;
             compiledVersion: z.ZodNumber;
+            configurationRevision: z.ZodNumber;
             linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -279,6 +578,7 @@ export declare const signalDefinitionsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly disable: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         signalDefinitionId: z.ZodString;
+        expectedRevision: z.ZodNumber;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         signalDefinition: z.ZodObject<{
@@ -286,14 +586,26 @@ export declare const signalDefinitionsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             expression: z.ZodString;
+            templateProvenance: z.ZodNullable<z.ZodObject<{
+                templateKey: z.ZodString;
+                templateVersion: z.ZodNumber;
+                contentHash: z.ZodString;
+                resolvedInputs: z.ZodObject<{
+                    severity: z.ZodString;
+                    service: z.ZodNullable<z.ZodString>;
+                    enabled: z.ZodBoolean;
+                }, z.core.$strip>;
+            }, z.core.$strip>>;
             enabled: z.ZodBoolean;
             compiledVersion: z.ZodNumber;
+            configurationRevision: z.ZodNumber;
             linkedAutomationIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly delete: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        expectedRevision: z.ZodNumber;
         signalDefinitionId: z.ZodString;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;

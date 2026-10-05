@@ -8,6 +8,7 @@ export declare const ProjectScriptSchema: z.ZodObject<{
     projectId: z.ZodString;
     name: z.ZodString;
     description: z.ZodNullable<z.ZodString>;
+    configurationRevision: z.ZodNumber;
     contentHash: z.ZodString;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -18,6 +19,7 @@ export declare const ProjectScriptDetailSchema: z.ZodObject<{
     projectId: z.ZodString;
     name: z.ZodString;
     description: z.ZodNullable<z.ZodString>;
+    configurationRevision: z.ZodNumber;
     contentHash: z.ZodString;
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
@@ -37,6 +39,7 @@ export declare const ListProjectScriptsOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -55,6 +58,7 @@ export declare const GetProjectScriptOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -75,6 +79,7 @@ export declare const CreateProjectScriptOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -83,6 +88,8 @@ export declare const CreateProjectScriptOutputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type CreateProjectScriptOutput = z.infer<typeof CreateProjectScriptOutputSchema>;
 export declare const UpdateProjectScriptInputSchema: z.ZodObject<{
+    expectedScriptId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     name: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
     content: z.ZodOptional<z.ZodString>;
@@ -95,6 +102,7 @@ export declare const UpdateProjectScriptOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -103,6 +111,8 @@ export declare const UpdateProjectScriptOutputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type UpdateProjectScriptOutput = z.infer<typeof UpdateProjectScriptOutputSchema>;
 export declare const DeleteProjectScriptInputSchema: z.ZodObject<{
+    expectedScriptId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     name: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -120,6 +130,7 @@ export declare const listProjectScripts: import("../orpc-contracts/index.js").Op
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -135,6 +146,7 @@ export declare const getProjectScript: import("../orpc-contracts/index.js").Oper
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -152,6 +164,7 @@ export declare const createProjectScript: import("../orpc-contracts/index.js").O
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -159,6 +172,8 @@ export declare const createProjectScript: import("../orpc-contracts/index.js").O
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const updateProjectScript: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    expectedScriptId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     name: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
     content: z.ZodOptional<z.ZodString>;
@@ -169,6 +184,7 @@ export declare const updateProjectScript: import("../orpc-contracts/index.js").O
         projectId: z.ZodString;
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
+        configurationRevision: z.ZodNumber;
         contentHash: z.ZodString;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
@@ -176,6 +192,8 @@ export declare const updateProjectScript: import("../orpc-contracts/index.js").O
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const deleteProjectScript: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    expectedScriptId: z.ZodString;
+    expectedRevision: z.ZodNumber;
     name: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodVoid, "api">;
@@ -191,6 +209,7 @@ export declare const scriptsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
+            configurationRevision: z.ZodNumber;
             contentHash: z.ZodString;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -206,6 +225,7 @@ export declare const scriptsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
+            configurationRevision: z.ZodNumber;
             contentHash: z.ZodString;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -223,6 +243,7 @@ export declare const scriptsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
+            configurationRevision: z.ZodNumber;
             contentHash: z.ZodString;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -230,6 +251,8 @@ export declare const scriptsContract: {
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        expectedScriptId: z.ZodString;
+        expectedRevision: z.ZodNumber;
         name: z.ZodString;
         projectId: z.ZodOptional<z.ZodString>;
         content: z.ZodOptional<z.ZodString>;
@@ -240,6 +263,7 @@ export declare const scriptsContract: {
             projectId: z.ZodString;
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
+            configurationRevision: z.ZodNumber;
             contentHash: z.ZodString;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
@@ -247,6 +271,8 @@ export declare const scriptsContract: {
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly delete: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        expectedScriptId: z.ZodString;
+        expectedRevision: z.ZodNumber;
         name: z.ZodString;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
