@@ -1000,14 +1000,14 @@ export declare const CommitComponentMergeInputSchema: z.ZodObject<{
     requestId: z.ZodString;
     reason: z.ZodString;
     componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    policyDispositions: z.ZodRecord<z.ZodString, z.ZodObject<{
+    policyDispositions: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
         disposition: z.ZodEnum<{
             move: "move";
             suspend: "suspend";
         }>;
         beforeComponentIds: z.ZodArray<z.ZodString>;
         afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
+    }, z.core.$strip>>>;
     confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>;
 export type CommitComponentMergeInput = z.infer<typeof CommitComponentMergeInputSchema>;
@@ -1214,14 +1214,14 @@ export declare const mergeComponent: import("../orpc-contracts/index.js").Operat
     requestId: z.ZodString;
     reason: z.ZodString;
     componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-    policyDispositions: z.ZodRecord<z.ZodString, z.ZodObject<{
+    policyDispositions: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
         disposition: z.ZodEnum<{
             move: "move";
             suspend: "suspend";
         }>;
         beforeComponentIds: z.ZodArray<z.ZodString>;
         afterComponentIds: z.ZodArray<z.ZodString>;
-    }, z.core.$strip>>;
+    }, z.core.$strip>>>;
     confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     result: z.ZodObject<{
@@ -1790,14 +1790,14 @@ export declare const componentsContract: {
         requestId: z.ZodString;
         reason: z.ZodString;
         componentRevisions: z.ZodRecord<z.ZodString, z.ZodNumber>;
-        policyDispositions: z.ZodRecord<z.ZodString, z.ZodObject<{
+        policyDispositions: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodObject<{
             disposition: z.ZodEnum<{
                 move: "move";
                 suspend: "suspend";
             }>;
             beforeComponentIds: z.ZodArray<z.ZodString>;
             afterComponentIds: z.ZodArray<z.ZodString>;
-        }, z.core.$strip>>;
+        }, z.core.$strip>>>;
         confirmPolicyImpact: z.ZodDefault<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodObject<{
         result: z.ZodObject<{

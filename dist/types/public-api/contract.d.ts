@@ -12554,14 +12554,14 @@ export declare const publicApiContract: {
             requestId: import("zod").ZodString;
             reason: import("zod").ZodString;
             componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-            policyDispositions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodObject<{
+            policyDispositions: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodObject<{
                 disposition: import("zod").ZodEnum<{
                     move: "move";
                     suspend: "suspend";
                 }>;
                 beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                 afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-            }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>>>;
             confirmPolicyImpact: import("zod").ZodDefault<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             result: import("zod").ZodObject<{
@@ -25217,14 +25217,14 @@ export declare const publicApiOperations: {
             requestId: import("zod").ZodString;
             reason: import("zod").ZodString;
             componentRevisions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodNumber>;
-            policyDispositions: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodObject<{
+            policyDispositions: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodObject<{
                 disposition: import("zod").ZodEnum<{
                     move: "move";
                     suspend: "suspend";
                 }>;
                 beforeComponentIds: import("zod").ZodArray<import("zod").ZodString>;
                 afterComponentIds: import("zod").ZodArray<import("zod").ZodString>;
-            }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>>>;
             confirmPolicyImpact: import("zod").ZodDefault<import("zod").ZodBoolean>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             result: import("zod").ZodObject<{
