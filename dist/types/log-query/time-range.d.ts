@@ -28,12 +28,21 @@ export declare const resolvedTimeRangeSchema: z.ZodObject<{
 export type ResolvedTimeRange = z.infer<typeof resolvedTimeRangeSchema>;
 /**
  * A relative lookback resolved against `now` for a caller that does not name
- * the edges, widened outward so the log rollups can answer it. Rollups hold
- * whole minutes for two weeks and whole hours beyond, and answer only
- * windows on their edges (the router never snaps one): a lookback of a day
- * or more aligns to the hour, so every rollup can read hour states however
- * far back it reaches; a shorter one aligns to the minute. The widening is at
- * most one grain at each edge.
+ * the edges. Rollups hold whole minutes for two weeks and whole hours
+ * beyond, and answer only windows on their edges (the router never snaps
+ * one): both edges floor to that grain, so `to` never reads past `now` into
+ * the future, and the window is exactly `lookbackSeconds` wide whenever
+ * that is a whole number of grain units, which every caller asks in
+ * practice (the dashboard's presets and the CLI's `--last` are minutes or
+ * more). A lookback that is not a whole number of grain units still reads
+ * at least that far back, never less: flooring `from` to the grain the same
+ * way `to` is floored can only push `from` earlier, so the window comes out
+ * wider than asked, by less than one grain unit (a 90s lookback at the
+ * minute grain resolves to 120s; a 7d lookback plus 1s resolves to 7d plus
+ * 1h, past the grain's own switch to hourly). Matches `@sazabi/log-ask`'s
+ * `resolveWindow` (`logs.ask` / `logs.executeQuery`'s window) bit for bit,
+ * aligned lookback or not: an identical relative spec reads the identical
+ * instants through either caller.
  */
 export declare const alignedRelativeWindow: ({ lookbackSeconds, now, }: {
     lookbackSeconds: number;

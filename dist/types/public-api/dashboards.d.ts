@@ -738,6 +738,7 @@ export declare const ValidateDashboardOutputSchema: z.ZodObject<{
         componentId: z.ZodOptional<z.ZodString>;
         filePath: z.ZodOptional<z.ZodString>;
         artifactPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        propPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
         repairHint: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>;
 }, z.core.$strict>;
@@ -1804,7 +1805,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"recent_rows">;
-                    limit: z.ZodNumber;
+                    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
@@ -1938,7 +1939,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     exact: "exact";
                 }>;
                 approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodNumber;
+                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
@@ -2165,7 +2166,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"recent_rows">;
-                    limit: z.ZodNumber;
+                    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
@@ -2299,7 +2300,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     exact: "exact";
                 }>;
                 approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodNumber;
+                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
@@ -2534,7 +2535,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     }>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"recent_rows">;
-                    limit: z.ZodNumber;
+                    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
@@ -2668,7 +2669,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     exact: "exact";
                 }>;
                 approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodNumber;
+                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
@@ -3446,6 +3447,7 @@ export declare const validateDashboard: import("../orpc-contracts/index.js").Ope
         componentId: z.ZodOptional<z.ZodString>;
         filePath: z.ZodOptional<z.ZodString>;
         artifactPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        propPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
         repairHint: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>;
 }, z.core.$strict>, "api">;
@@ -4517,7 +4519,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"recent_rows">;
-                    limit: z.ZodNumber;
+                    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
@@ -4651,7 +4653,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     exact: "exact";
                 }>;
                 approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodNumber;
+                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
@@ -4878,7 +4880,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"recent_rows">;
-                    limit: z.ZodNumber;
+                    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
@@ -5012,7 +5014,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     exact: "exact";
                 }>;
                 approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodNumber;
+                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
@@ -5247,7 +5249,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     }>;
                 }, z.core.$strict>, z.ZodObject<{
                     op: z.ZodLiteral<"recent_rows">;
-                    limit: z.ZodNumber;
+                    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                         kind: "service";
                     } | {
@@ -5381,7 +5383,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     exact: "exact";
                 }>;
                 approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodNumber;
+                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 }, z.core.$strict>>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{

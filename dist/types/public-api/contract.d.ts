@@ -1414,6 +1414,7 @@ export declare const publicApiContract: {
                 componentId: import("zod").ZodOptional<import("zod").ZodString>;
                 filePath: import("zod").ZodOptional<import("zod").ZodString>;
                 artifactPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                propPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
                 repairHint: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strict>>;
         }, import("zod/v4/core").$strict>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -2485,7 +2486,7 @@ export declare const publicApiContract: {
                             }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"recent_rows">;
-                            limit: import("zod").ZodNumber;
+                            limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                                 kind: "service";
                             } | {
@@ -2619,7 +2620,7 @@ export declare const publicApiContract: {
                             exact: "exact";
                         }>;
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodNumber;
+                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
@@ -2846,7 +2847,7 @@ export declare const publicApiContract: {
                             }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"recent_rows">;
-                            limit: import("zod").ZodNumber;
+                            limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                                 kind: "service";
                             } | {
@@ -2980,7 +2981,7 @@ export declare const publicApiContract: {
                             exact: "exact";
                         }>;
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodNumber;
+                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
@@ -3215,7 +3216,7 @@ export declare const publicApiContract: {
                             }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"recent_rows">;
-                            limit: import("zod").ZodNumber;
+                            limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                                 kind: "service";
                             } | {
@@ -3349,7 +3350,7 @@ export declare const publicApiContract: {
                             exact: "exact";
                         }>;
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodNumber;
+                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
@@ -3887,7 +3888,7 @@ export declare const publicApiContract: {
                     }>;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     op: import("zod").ZodLiteral<"recent_rows">;
-                    limit: import("zod").ZodNumber;
+                    limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                     fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                         kind: "service";
                     } | {
@@ -4021,7 +4022,7 @@ export declare const publicApiContract: {
                     exact: "exact";
                 }>;
                 approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                    maxRelativeError: import("zod").ZodNumber;
+                    maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                 }, import("zod/v4/core").$strict>>;
             }, import("zod/v4/core").$strict>>;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -10358,7 +10359,7 @@ export declare const publicApiContract: {
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodOptional<import("zod").ZodString>;
             contentMdx: import("zod").ZodOptional<import("zod").ZodString>;
-            severity: import("zod").ZodDefault<import("zod").ZodEnum<{
+            severity: import("zod").ZodOptional<import("zod").ZodEnum<{
                 critical: "critical";
                 high: "high";
                 low: "low";
@@ -10611,6 +10612,44 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            issueId: import("zod").ZodString;
+            severity: import("zod").ZodEnum<{
+                critical: "critical";
+                high: "high";
+                low: "low";
+                medium: "medium";
+            }>;
+            note: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            issue: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                description: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodEnum<{
+                    ignored: "ignored";
+                    open: "open";
+                    resolved: "resolved";
+                }>;
+                severity: import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>;
+                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+                resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                mutedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                muteHitCount: import("zod").ZodNumber;
+                lastActivityAt: import("zod").ZodNullable<import("zod").ZodString>;
+                lastDeliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                locked: import("zod").ZodBoolean;
+                redacted: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>;
+            changed: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly getAgentPrompt: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
@@ -11501,6 +11540,8 @@ export declare const publicApiContract: {
                 amount: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             totalAmount: import("zod").ZodString;
+            issueRejectionCount: import("zod").ZodNumber;
+            issueRejectionAmountReduction: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly listUsageInvoices: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -11700,6 +11741,10 @@ export declare const publicApiContract: {
                 includedUsage: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 featuresHeading: import("zod").ZodOptional<import("zod").ZodString>;
                 features: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                featureSections: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    heading: import("zod").ZodString;
+                    items: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly previewPlanChange: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -14077,6 +14122,7 @@ export declare const publicApiOperations: {
                 componentId: import("zod").ZodOptional<import("zod").ZodString>;
                 filePath: import("zod").ZodOptional<import("zod").ZodString>;
                 artifactPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                propPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
                 repairHint: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strict>>;
         }, import("zod/v4/core").$strict>, "api">;
@@ -15148,7 +15194,7 @@ export declare const publicApiOperations: {
                             }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"recent_rows">;
-                            limit: import("zod").ZodNumber;
+                            limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                                 kind: "service";
                             } | {
@@ -15282,7 +15328,7 @@ export declare const publicApiOperations: {
                             exact: "exact";
                         }>;
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodNumber;
+                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
@@ -15509,7 +15555,7 @@ export declare const publicApiOperations: {
                             }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"recent_rows">;
-                            limit: import("zod").ZodNumber;
+                            limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                                 kind: "service";
                             } | {
@@ -15643,7 +15689,7 @@ export declare const publicApiOperations: {
                             exact: "exact";
                         }>;
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodNumber;
+                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
@@ -15878,7 +15924,7 @@ export declare const publicApiOperations: {
                             }>;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             op: import("zod").ZodLiteral<"recent_rows">;
-                            limit: import("zod").ZodNumber;
+                            limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                             fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                                 kind: "service";
                             } | {
@@ -16012,7 +16058,7 @@ export declare const publicApiOperations: {
                             exact: "exact";
                         }>;
                         approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodNumber;
+                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                         }, import("zod/v4/core").$strict>>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
@@ -16550,7 +16596,7 @@ export declare const publicApiOperations: {
                     }>;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     op: import("zod").ZodLiteral<"recent_rows">;
-                    limit: import("zod").ZodNumber;
+                    limit: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                     fields: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodType<{
                         kind: "service";
                     } | {
@@ -16684,7 +16730,7 @@ export declare const publicApiOperations: {
                     exact: "exact";
                 }>;
                 approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                    maxRelativeError: import("zod").ZodNumber;
+                    maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
                 }, import("zod/v4/core").$strict>>;
             }, import("zod/v4/core").$strict>>;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
@@ -22973,7 +23019,7 @@ export declare const publicApiOperations: {
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodOptional<import("zod").ZodString>;
             contentMdx: import("zod").ZodOptional<import("zod").ZodString>;
-            severity: import("zod").ZodDefault<import("zod").ZodEnum<{
+            severity: import("zod").ZodOptional<import("zod").ZodEnum<{
                 critical: "critical";
                 high: "high";
                 low: "low";
@@ -23226,6 +23272,44 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            issueId: import("zod").ZodString;
+            severity: import("zod").ZodEnum<{
+                critical: "critical";
+                high: "high";
+                low: "low";
+                medium: "medium";
+            }>;
+            note: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            issue: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                name: import("zod").ZodString;
+                description: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodEnum<{
+                    ignored: "ignored";
+                    open: "open";
+                    resolved: "resolved";
+                }>;
+                severity: import("zod").ZodEnum<{
+                    critical: "critical";
+                    high: "high";
+                    low: "low";
+                    medium: "medium";
+                }>;
+                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+                resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                mutedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                muteHitCount: import("zod").ZodNumber;
+                lastActivityAt: import("zod").ZodNullable<import("zod").ZodString>;
+                lastDeliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                locked: import("zod").ZodBoolean;
+                redacted: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>;
+            changed: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, "api">;
         readonly getAgentPrompt: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
@@ -24164,6 +24248,8 @@ export declare const publicApiOperations: {
                 amount: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             totalAmount: import("zod").ZodString;
+            issueRejectionCount: import("zod").ZodNumber;
+            issueRejectionAmountReduction: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, "api">;
         readonly listUsageInvoices: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -24363,6 +24449,10 @@ export declare const publicApiOperations: {
                 includedUsage: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 featuresHeading: import("zod").ZodOptional<import("zod").ZodString>;
                 features: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                featureSections: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    heading: import("zod").ZodString;
+                    items: import("zod").ZodArray<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly previewPlanChange: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{

@@ -891,6 +891,10 @@ export declare const BillingPlanSchema: z.ZodObject<{
     includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
     featuresHeading: z.ZodOptional<z.ZodString>;
     features: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    featureSections: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        heading: z.ZodString;
+        items: z.ZodArray<z.ZodString>;
+    }, z.core.$strip>>>;
 }, z.core.$strip>;
 export type BillingPlan = z.infer<typeof BillingPlanSchema>;
 export declare const ListPlansOutputSchema: z.ZodObject<{
@@ -961,6 +965,10 @@ export declare const ListPlansOutputSchema: z.ZodObject<{
         includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
         featuresHeading: z.ZodOptional<z.ZodString>;
         features: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        featureSections: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            heading: z.ZodString;
+            items: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListPlansOutput = z.infer<typeof ListPlansOutputSchema>;
@@ -1301,6 +1309,10 @@ export declare const listPlans: import("../orpc-contracts/index.js").OperationDe
         includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
         featuresHeading: z.ZodOptional<z.ZodString>;
         features: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        featureSections: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            heading: z.ZodString;
+            items: z.ZodArray<z.ZodString>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const previewPlanChange: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -1672,6 +1684,8 @@ export declare const GetAccruedUsageChargesOutputSchema: z.ZodObject<{
         amount: z.ZodString;
     }, z.core.$strip>>;
     totalAmount: z.ZodString;
+    issueRejectionCount: z.ZodNumber;
+    issueRejectionAmountReduction: z.ZodString;
 }, z.core.$strip>;
 export declare const getAccruedUsageCharges: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
@@ -1719,6 +1733,8 @@ export declare const getAccruedUsageCharges: import("../orpc-contracts/index.js"
         amount: z.ZodString;
     }, z.core.$strip>>;
     totalAmount: z.ZodString;
+    issueRejectionCount: z.ZodNumber;
+    issueRejectionAmountReduction: z.ZodString;
 }, z.core.$strip>, "api">;
 export declare const UsageBudgetScopeSchema: z.ZodString;
 export declare const UsageBudgetSchema: z.ZodObject<{
@@ -2246,6 +2262,8 @@ export declare const billingContract: {
             amount: z.ZodString;
         }, z.core.$strip>>;
         totalAmount: z.ZodString;
+        issueRejectionCount: z.ZodNumber;
+        issueRejectionAmountReduction: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly listUsageInvoices: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
@@ -2445,6 +2463,10 @@ export declare const billingContract: {
             includedUsage: z.ZodOptional<z.ZodArray<z.ZodString>>;
             featuresHeading: z.ZodOptional<z.ZodString>;
             features: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            featureSections: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                heading: z.ZodString;
+                items: z.ZodArray<z.ZodString>;
+            }, z.core.$strip>>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly previewPlanChange: import("@orpc/contract").ContractProcedure<z.ZodObject<{

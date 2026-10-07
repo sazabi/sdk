@@ -60,7 +60,7 @@ export declare const createMeasureSchema: <F extends FieldRef>(fieldRef: z.ZodTy
     }>;
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"recent_rows">;
-    limit: z.ZodNumber;
+    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
     fields: z.ZodOptional<z.ZodArray<z.ZodType<F, unknown, z.core.$ZodTypeInternals<F, unknown>>>>;
     order: z.ZodOptional<z.ZodEnum<{
         newest: "newest";

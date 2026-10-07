@@ -415,7 +415,16 @@ export declare const staticArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObjec
 export type StaticArtifactV2 = {
     [T in SupportedArtifactType]: StaticArtifact<T>;
 }[SupportedArtifactType];
-export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+/**
+ * A live query artifact's `type` must be one with a query adapter
+ * (`SUPPORTED_QUERY_ARTIFACT_TYPES`). A value naming a real artifact type
+ * outside that set (a flame, waterfall, treemap, or graph chart) is not a
+ * mistaken `type` — that type exists, it just has no query adapter — so the
+ * mistake is naming `query` at all; the discriminated union's own "no
+ * matching discriminator" issue lands on `type` and says only "Invalid
+ * input", which would send someone fixing the wrong field.
+ */
+export declare const queryArtifactV2Schema: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodDiscriminatedUnion<[z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"area_chart">;
     query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
@@ -594,7 +603,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -728,7 +737,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
@@ -915,7 +924,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -1049,7 +1058,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
@@ -1240,7 +1249,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -1374,7 +1383,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
@@ -1564,7 +1573,7 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -1698,13 +1707,13 @@ export declare const queryArtifactV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         unit: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>;
-}, z.core.$strict>], "type">;
+}, z.core.$strict>], "type">>;
 export type QueryArtifactV2 = {
     [T in SupportedQueryArtifactType]: QueryArtifact<T>;
 }[SupportedQueryArtifactType];
@@ -2508,7 +2517,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
     view: z.ZodOptional<z.ZodObject<{
         title: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>;
-}, z.core.$strict>], "type">, z.ZodDiscriminatedUnion<[z.ZodObject<{
+}, z.core.$strict>], "type">, z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodDiscriminatedUnion<[z.ZodObject<{
     version: z.ZodLiteral<2>;
     type: z.ZodLiteral<"area_chart">;
     query: z.ZodPipe<z.ZodTransform<unknown, unknown>, z.ZodObject<{
@@ -2687,7 +2696,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -2821,7 +2830,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
@@ -3008,7 +3017,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -3142,7 +3151,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
@@ -3333,7 +3342,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -3467,7 +3476,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
@@ -3657,7 +3666,7 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "body_json";
                 path: string[];
@@ -3791,11 +3800,22 @@ export declare const artifactDefinitionSchema: z.ZodUnion<readonly [z.ZodDiscrim
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     view: z.ZodOptional<z.ZodObject<{
         unit: z.ZodOptional<z.ZodString>;
     }, z.core.$strict>>;
-}, z.core.$strict>], "type">]>;
+}, z.core.$strict>], "type">>]>;
 export type ArtifactDefinition = z.infer<typeof artifactDefinitionSchema>;
+/**
+ * The precise error for an invalid artifact definition: reparsed against the
+ * one union member the input's own shape claims (a query artifact whenever
+ * it has `query`, the v1 chart envelope for `version: 1`, a v2 static
+ * artifact otherwise), whose issues name the field that is wrong (`Field
+ * kind "pattern" is not supported` at `query.predicate...`). `unionError` is
+ * `artifactDefinitionSchema`'s own result when the input matches no shape at
+ * all (for example neither `data` nor `query`): one "Invalid input" issue
+ * for the whole artifact, which is all there is to say.
+ */
+export declare const describeInvalidArtifactDefinition: (artifact: unknown, unionError: z.ZodError) => z.ZodError;

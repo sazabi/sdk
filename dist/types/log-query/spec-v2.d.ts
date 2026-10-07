@@ -244,7 +244,7 @@ export declare const logMeasureV2Schema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     }>;
 }, z.core.$strict>, z.ZodObject<{
     op: z.ZodLiteral<"recent_rows">;
-    limit: z.ZodNumber;
+    limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
     fields: z.ZodOptional<z.ZodArray<z.ZodType<{
         kind: "body_json";
         path: string[];
@@ -568,7 +568,7 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         }>;
     }, z.core.$strict>, z.ZodObject<{
         op: z.ZodLiteral<"recent_rows">;
-        limit: z.ZodNumber;
+        limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         fields: z.ZodOptional<z.ZodArray<z.ZodType<{
             kind: "body_json";
             path: string[];
@@ -702,7 +702,7 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         exact: "exact";
     }>;
     approximation: z.ZodOptional<z.ZodObject<{
-        maxRelativeError: z.ZodNumber;
+        maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
     }, z.core.$strict>>;
 }, z.core.$strict>;
 export type LogQuerySpecV2 = z.infer<typeof logQuerySpecV2Schema>;

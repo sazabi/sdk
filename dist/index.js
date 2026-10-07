@@ -1579,7 +1579,33 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "cursor",
           async: "sync",
-          examples: []
+          examples: [
+            {
+              name: "list-project-dashboards",
+              input: {
+                projectId: "11111111-1111-4111-8111-111111111111",
+                limit: 20
+              },
+              output: {
+                dashboards: [
+                  {
+                    id: "33333333-3333-4333-8333-333333333333",
+                    slug: "service-health",
+                    title: "Service health",
+                    description: "Errors across services",
+                    revision: 1,
+                    createdAt: "2026-09-29T09:00:00.000Z",
+                    updatedAt: "2026-09-29T09:00:00.000Z",
+                    capabilities: {
+                      update: true,
+                      delete: true
+                    }
+                  }
+                ],
+                nextCursor: null
+              }
+            }
+          ]
         },
         route: {
           method: "GET",
@@ -1599,7 +1625,75 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: []
+          examples: [
+            {
+              name: "get-dashboard",
+              input: {
+                id: "33333333-3333-4333-8333-333333333333",
+                projectId: "11111111-1111-4111-8111-111111111111"
+              },
+              output: {
+                id: "33333333-3333-4333-8333-333333333333",
+                revision: 1,
+                definitionHash: "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                title: "Service health",
+                description: "Errors across services",
+                source: `<DashboardMeta
+  version={1}
+  title="Service health"
+  description="Errors across services"
+  defaultTimeRange={{ kind: "relative", lookbackSeconds: 21600 }}
+  editBase={{ organizationId: "22222222-2222-4222-8222-222222222222", projectId: "11111111-1111-4111-8111-111111111111", dashboardId: "33333333-3333-4333-8333-333333333333", revision: 1 }}
+/>
+
+## Errors by service
+
+<Grid columns={12}>
+  <GridItem id="total-errors-panel" span={4} height="compact">
+    <Metric
+      id="total-errors"
+      label="Errors in window"
+      artifact={{
+        version: 2,
+        type: "metric",
+        view: { unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [],
+          measure: { op: "count" },
+          output: "table",
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+  <GridItem id="errors-panel" span={8} height="medium">
+    <AreaChart
+      id="errors"
+      artifact={{
+        version: 2,
+        type: "area_chart",
+        view: { title: "Errors by service", unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [{ kind: "service" }],
+          measure: { op: "count" },
+          bucket: "5m",
+          output: "series",
+          series: { limit: 6, overflow: "other" },
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+</Grid>
+`,
+                fileDescriptors: []
+              }
+            }
+          ]
         },
         route: {
           method: "GET",
@@ -1619,7 +1713,71 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: []
+          examples: [
+            {
+              name: "validate-dashboard-source",
+              input: {
+                projectId: "11111111-1111-4111-8111-111111111111",
+                input: {
+                  source: `<DashboardMeta
+  version={1}
+  title="Service health"
+  description="Errors across services"
+  defaultTimeRange={{ kind: "relative", lookbackSeconds: 21600 }}
+/>
+
+## Errors by service
+
+<Grid columns={12}>
+  <GridItem id="total-errors-panel" span={4} height="compact">
+    <Metric
+      id="total-errors"
+      label="Errors in window"
+      artifact={{
+        version: 2,
+        type: "metric",
+        view: { unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [],
+          measure: { op: "count" },
+          output: "table",
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+  <GridItem id="errors-panel" span={8} height="medium">
+    <AreaChart
+      id="errors"
+      artifact={{
+        version: 2,
+        type: "area_chart",
+        view: { title: "Errors by service", unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [{ kind: "service" }],
+          measure: { op: "count" },
+          bucket: "5m",
+          output: "series",
+          series: { limit: 6, overflow: "other" },
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+</Grid>
+`
+                }
+              },
+              output: {
+                valid: true,
+                diagnostics: []
+              }
+            }
+          ]
         },
         route: {
           method: "POST",
@@ -1639,7 +1797,81 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: []
+          examples: [
+            {
+              name: "create-dashboard",
+              input: {
+                id: "33333333-3333-4333-8333-333333333333",
+                projectId: "11111111-1111-4111-8111-111111111111",
+                input: {
+                  source: `<DashboardMeta
+  version={1}
+  title="Service health"
+  description="Errors across services"
+  defaultTimeRange={{ kind: "relative", lookbackSeconds: 21600 }}
+/>
+
+## Errors by service
+
+<Grid columns={12}>
+  <GridItem id="total-errors-panel" span={4} height="compact">
+    <Metric
+      id="total-errors"
+      label="Errors in window"
+      artifact={{
+        version: 2,
+        type: "metric",
+        view: { unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [],
+          measure: { op: "count" },
+          output: "table",
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+  <GridItem id="errors-panel" span={8} height="medium">
+    <AreaChart
+      id="errors"
+      artifact={{
+        version: 2,
+        type: "area_chart",
+        view: { title: "Errors by service", unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [{ kind: "service" }],
+          measure: { op: "count" },
+          bucket: "5m",
+          output: "series",
+          series: { limit: 6, overflow: "other" },
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+</Grid>
+`
+                }
+              },
+              output: {
+                id: "33333333-3333-4333-8333-333333333333",
+                revision: 1,
+                definitionHash: "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                createdAt: "2026-09-29T09:00:00.000Z",
+                updatedAt: "2026-09-29T09:00:00.000Z",
+                editBase: {
+                  organizationId: "22222222-2222-4222-8222-222222222222",
+                  projectId: "11111111-1111-4111-8111-111111111111",
+                  dashboardId: "33333333-3333-4333-8333-333333333333",
+                  revision: 1
+                }
+              }
+            }
+          ]
         },
         route: {
           method: "POST",
@@ -1660,7 +1892,82 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: []
+          examples: [
+            {
+              name: "update-dashboard",
+              input: {
+                id: "33333333-3333-4333-8333-333333333333",
+                projectId: "11111111-1111-4111-8111-111111111111",
+                input: {
+                  source: `<DashboardMeta
+  version={1}
+  title="Service health"
+  description="Errors across services"
+  defaultTimeRange={{ kind: "relative", lookbackSeconds: 21600 }}
+  editBase={{ organizationId: "22222222-2222-4222-8222-222222222222", projectId: "11111111-1111-4111-8111-111111111111", dashboardId: "33333333-3333-4333-8333-333333333333", revision: 1 }}
+/>
+
+## Errors by service
+
+<Grid columns={12}>
+  <GridItem id="total-errors-panel" span={4} height="compact">
+    <Metric
+      id="total-errors"
+      label="Errors in window"
+      artifact={{
+        version: 2,
+        type: "metric",
+        view: { unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [],
+          measure: { op: "count" },
+          output: "table",
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+  <GridItem id="errors-panel" span={8} height="medium">
+    <AreaChart
+      id="errors"
+      artifact={{
+        version: 2,
+        type: "area_chart",
+        view: { title: "Errors by service", unit: "errors" },
+        query: {
+          version: 2,
+          predicate: { op: "compare", field: { kind: "severity" }, comparator: "gte", value: "ERROR" },
+          dimensions: [{ kind: "service" }],
+          measure: { op: "count" },
+          bucket: "5m",
+          output: "series",
+          series: { limit: 6, overflow: "other" },
+          exactness: "exact",
+        },
+      }}
+    />
+  </GridItem>
+</Grid>
+`
+                }
+              },
+              output: {
+                id: "33333333-3333-4333-8333-333333333333",
+                revision: 2,
+                definitionHash: "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                createdAt: "2026-09-29T09:00:00.000Z",
+                updatedAt: "2026-10-01T12:00:00.000Z",
+                editBase: {
+                  organizationId: "22222222-2222-4222-8222-222222222222",
+                  projectId: "11111111-1111-4111-8111-111111111111",
+                  dashboardId: "33333333-3333-4333-8333-333333333333",
+                  revision: 2
+                }
+              }
+            }
+          ]
         },
         route: {
           method: "PATCH",
@@ -5909,6 +6216,26 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    update: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.update",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/issues/{issueId}",
+          tags: ["Issues"],
+          operationId: "issues.update",
+          summary: "Update an issue",
+          description: "Change an issue's severity, with a note recorded in its history. A change notifies no one."
+        }
+      }
+    },
     getAgentPrompt: {
       "~orpc": {
         errorMap: {},
@@ -7752,6 +8079,7 @@ var createClient = (options) => {
       reopen: async (input) => raw.issues.reopen(input),
       mute: async (input) => raw.issues.mute(input),
       unmute: async (input) => raw.issues.unmute(input),
+      update: async (input) => raw.issues.update(input),
       reassignAndReopen: async (input) => raw.issues.reassignAndReopen(input)
     },
     workItems: {

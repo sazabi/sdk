@@ -9,4 +9,6 @@ export type { GenerateOpenApiSpecOptions } from "./generate-openapi-spec.js";
 export { generateOpenApiSpec, stripContentFrom204Responses, } from "./generate-openapi-spec.js";
 export type { AnyOperationDefinition } from "./operation-collections.js";
 export { getOperationRouteKey, isOperationDefinition, listExportedOperations, listOperations, } from "./operation-collections.js";
-export type { OperationAsyncMode, OperationContractMetadata, OperationDefinition, OperationExample, OperationPagination, OperationRouteDefinition, } from "./types.js";
+export type { Refusal, RefusalKind, ValidationIssue } from "./refusal.js";
+export { readRefusal, REFUSAL_PUBLIC_API_ERRORS, REFUSAL_TRPC_CODES, refusalSchema, } from "./refusal.js";
+export type { OperationAccess, OperationAsyncMode, OperationContractMetadata, OperationDefinition, OperationExample, OperationPagination, OperationRouteDefinition, } from "./types.js";

@@ -201,7 +201,7 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "service";
             } | {
@@ -335,7 +335,7 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -1933,7 +1933,7 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             }>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
-            limit: z.ZodNumber;
+            limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                 kind: "service";
             } | {
@@ -2067,7 +2067,7 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             exact: "exact";
         }>;
         approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodNumber;
+            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
         }, z.core.$strict>>;
     }, z.core.$strict>>;
     window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
@@ -3211,7 +3211,7 @@ export declare const logsContract: {
                 }>;
             }, z.core.$strict>, z.ZodObject<{
                 op: z.ZodLiteral<"recent_rows">;
-                limit: z.ZodNumber;
+                limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 fields: z.ZodOptional<z.ZodArray<z.ZodType<{
                     kind: "service";
                 } | {
@@ -3345,7 +3345,7 @@ export declare const logsContract: {
                 exact: "exact";
             }>;
             approximation: z.ZodOptional<z.ZodObject<{
-                maxRelativeError: z.ZodNumber;
+                maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             }, z.core.$strict>>;
         }, z.core.$strict>>;
         window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
