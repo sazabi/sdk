@@ -34,6 +34,13 @@ var ProgressStreamEventSchema = z.object({
   text: z.string().trim().min(1).max(180),
   source: z.enum(["template", "summary"])
 });
+var AgentCommentaryStreamEventSchema = z.object({
+  type: z.literal("agent-commentary"),
+  runId: z.string().min(1),
+  assistantMessageId: z.string().min(1),
+  step: z.number().int().positive(),
+  text: z.string().trim().min(1).max(3000)
+});
 var ReasoningCompleteStreamEventSchema = z.object({
   type: z.literal("reasoning_complete"),
   messageId: z.string().describe("Assistant message that completed.")
@@ -81,6 +88,7 @@ var PublicAgentStreamEventSchema = z.discriminatedUnion("type", [
   TextCompleteStreamEventSchema,
   ReasoningProgressStreamEventSchema,
   ProgressStreamEventSchema,
+  AgentCommentaryStreamEventSchema,
   ReasoningCompleteStreamEventSchema,
   ToolCallPendingStreamEventSchema,
   ToolCallStartStreamEventSchema,
@@ -97,6 +105,7 @@ var PublicAgentStreamEventTypeSchema = z.enum([
   "text_complete",
   "reasoning_progress",
   "progress",
+  "agent-commentary",
   "reasoning_complete",
   "tool_call_pending",
   "tool_call_start",
@@ -2226,7 +2235,7 @@ var public_api_client_contract_gen_default = {
             tags: ["Logs"],
             operationId: "logs.queries.get",
             summary: "Get a log query",
-            description: "Get one stored log query by its `queryId`: the question it answered (or the spec's plain-words reading), how it was read, the times it read, the status and kind of results it returned, and its log query spec. Any `queryId` a `logs.ask` answer or `logs.executeQuery` run returned can be read, runs included. Run it again with `logs.executeQuery`. An unknown id, or one from another project, is not found."
+            description: "Get one stored log query by its `queryId`: the question it answered (or the spec's plain-words reading), how it was read, the times it read, the kind of results it returned, and its log query spec. Any `queryId` a `logs.ask` answer or `logs.executeQuery` run returned can be read, runs included. Run it again with `logs.executeQuery`. An unknown id, or one from another project, is not found."
           }
         }
       },
@@ -7715,7 +7724,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Repos"],
           operationId: "repos.add",
           summary: "Link repositories to a project",
-          description: "Link repositories to a project by access source id, optionally unlinking removeIds in the same transaction. Plan admission uses the final organization-wide distinct count; a refusal preserves every mapping. Select only one access source per repository; re-linking an already-linked repository refreshes its selected access source."
+          description: "Link repositories to a project by access source id, optionally unlinking removeIds in the same transaction. Plan admission uses the final organization-wide distinct count; a refusal preserves every mapping. Select only one access source per repository; re-linking an already-linked repository refreshes its selected access source. A batch that mixes available and unavailable access sources links the available ones and reports every requested link in results; a batch where no access source resolves is refused as not found. Retrying the same batch is safe and re-ensures each link's follow-up work."
         }
       }
     },

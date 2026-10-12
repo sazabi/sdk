@@ -58,6 +58,21 @@ export declare const AddReposInputSchema: z.ZodObject<{
     removeIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>;
 export type AddReposInput = z.infer<typeof AddReposInputSchema>;
+export declare const AddReposResultSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
+    accessSourceId: z.ZodString;
+    status: z.ZodLiteral<"linked">;
+    repoId: z.ZodString;
+    mappingId: z.ZodString;
+    freshlyLinked: z.ZodBoolean;
+}, z.core.$strip>, z.ZodObject<{
+    accessSourceId: z.ZodString;
+    status: z.ZodLiteral<"failed">;
+    error: z.ZodObject<{
+        code: z.ZodLiteral<"not_found">;
+        message: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>], "status">;
+export type AddReposResult = z.infer<typeof AddReposResultSchema>;
 export declare const AddReposOutputSchema: z.ZodObject<{
     repos: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -79,6 +94,20 @@ export declare const AddReposOutputSchema: z.ZodObject<{
         isPrivate: z.ZodBoolean;
         linked: z.ZodBoolean;
     }, z.core.$strip>>;
+    results: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        accessSourceId: z.ZodString;
+        status: z.ZodLiteral<"linked">;
+        repoId: z.ZodString;
+        mappingId: z.ZodString;
+        freshlyLinked: z.ZodBoolean;
+    }, z.core.$strip>, z.ZodObject<{
+        accessSourceId: z.ZodString;
+        status: z.ZodLiteral<"failed">;
+        error: z.ZodObject<{
+            code: z.ZodLiteral<"not_found">;
+            message: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>], "status">>;
 }, z.core.$strip>;
 export type AddReposOutput = z.infer<typeof AddReposOutputSchema>;
 export declare const RemoveRepoInputSchema: z.ZodObject<{
@@ -137,6 +166,20 @@ export declare const addRepos: import("../orpc-contracts/index.js").OperationDef
         isPrivate: z.ZodBoolean;
         linked: z.ZodBoolean;
     }, z.core.$strip>>;
+    results: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
+        accessSourceId: z.ZodString;
+        status: z.ZodLiteral<"linked">;
+        repoId: z.ZodString;
+        mappingId: z.ZodString;
+        freshlyLinked: z.ZodBoolean;
+    }, z.core.$strip>, z.ZodObject<{
+        accessSourceId: z.ZodString;
+        status: z.ZodLiteral<"failed">;
+        error: z.ZodObject<{
+            code: z.ZodLiteral<"not_found">;
+            message: z.ZodString;
+        }, z.core.$strip>;
+    }, z.core.$strip>], "status">>;
 }, z.core.$strip>, "api">;
 export declare const removeRepo: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     id: z.ZodString;

@@ -29,9 +29,8 @@ export declare const logQueryApproximationSchema: z.ZodDiscriminatedUnion<[z.Zod
 export type LogQueryApproximation = z.infer<typeof logQueryApproximationSchema>;
 /**
  * What a caller sees about how a query ran: how exact its numbers are, the
- * part of the window they cover, how fresh they are, and, for a query that
- * named its services, how many of their lines lie outside the answer. How
- * the platform read the logs stays on the server.
+ * part of the window they cover, and how fresh they are. How the platform
+ * read the logs stays on the server.
  */
 export declare const logQueryExecutionMetaSchema: z.ZodObject<{
     exactness: z.ZodEnum<{
@@ -65,14 +64,8 @@ export declare const logQueryExecutionMetaSchema: z.ZodObject<{
         watermark: z.ZodISODateTime;
         openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
     }, z.core.$strict>;
-    population: z.ZodOptional<z.ZodObject<{
-        kind: z.ZodLiteral<"services">;
-        services: z.ZodArray<z.ZodString>;
-        unmatchedRows: z.ZodNullable<z.ZodNumber>;
-    }, z.core.$strict>>;
 }, z.core.$strict>;
 export type LogQueryExecutionMeta = z.infer<typeof logQueryExecutionMetaSchema>;
-export type LogQueryResultPopulation = NonNullable<LogQueryExecutionMeta["population"]>;
 /**
  * Stable codes for a query that cannot run as written, each with the change
  * that admits it:

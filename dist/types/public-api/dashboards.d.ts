@@ -1966,11 +1966,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"services">;
-                    services: z.ZodArray<z.ZodString>;
-                    unmatchedRows: z.ZodNullable<z.ZodNumber>;
-                }, z.core.$strict>>;
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
@@ -2327,11 +2322,6 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"services">;
-                    services: z.ZodArray<z.ZodString>;
-                    unmatchedRows: z.ZodNullable<z.ZodNumber>;
-                }, z.core.$strict>>;
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
@@ -2668,7 +2658,15 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
         }, z.core.$strict>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"error">;
-        code: z.ZodString;
+        code: z.ZodEnum<{
+            invalid_query: "invalid_query";
+            invalid_result: "invalid_result";
+            read_limit: "read_limit";
+            store_error: "store_error";
+            timeout: "timeout";
+            too_large: "too_large";
+            unavailable: "unavailable";
+        }>;
         message: z.ZodString;
         retryable: z.ZodBoolean;
     }, z.core.$strict>], "status">>;
@@ -4668,11 +4666,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"services">;
-                    services: z.ZodArray<z.ZodString>;
-                    unmatchedRows: z.ZodNullable<z.ZodNumber>;
-                }, z.core.$strict>>;
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
@@ -5029,11 +5022,6 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-                population: z.ZodOptional<z.ZodObject<{
-                    kind: z.ZodLiteral<"services">;
-                    services: z.ZodArray<z.ZodString>;
-                    unmatchedRows: z.ZodNullable<z.ZodNumber>;
-                }, z.core.$strict>>;
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
@@ -5370,7 +5358,15 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
         }, z.core.$strict>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"error">;
-        code: z.ZodString;
+        code: z.ZodEnum<{
+            invalid_query: "invalid_query";
+            invalid_result: "invalid_result";
+            read_limit: "read_limit";
+            store_error: "store_error";
+            timeout: "timeout";
+            too_large: "too_large";
+            unavailable: "unavailable";
+        }>;
         message: z.ZodString;
         retryable: z.ZodBoolean;
     }, z.core.$strict>], "status">>;

@@ -2730,10 +2730,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
 /** A stored log query as `logs.queries.list` lists it: what it asked, without its spec. */
 export declare const LogQuerySummarySchema: z.ZodObject<{
     queryId: z.ZodString;
-    source: z.ZodEnum<{
-        question: "question";
-        spec: "spec";
-    }>;
     question: z.ZodString;
     interpretedAs: z.ZodNullable<z.ZodString>;
     window: z.ZodObject<{
@@ -2741,12 +2737,6 @@ export declare const LogQuerySummarySchema: z.ZodObject<{
         to: z.ZodString;
     }, z.core.$strip>;
     parentId: z.ZodNullable<z.ZodString>;
-    status: z.ZodNullable<z.ZodEnum<{
-        error: "error";
-        not_found: "not_found";
-        ok: "ok";
-        partial: "partial";
-    }>>;
     resultsKind: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
 }, z.core.$strip>;
@@ -2754,10 +2744,6 @@ export type LogQuerySummary = z.infer<typeof LogQuerySummarySchema>;
 /** A stored log query as `logs.queries.get` returns it: the summary and its spec. */
 export declare const LogQuerySchema: z.ZodObject<{
     queryId: z.ZodString;
-    source: z.ZodEnum<{
-        question: "question";
-        spec: "spec";
-    }>;
     question: z.ZodString;
     interpretedAs: z.ZodNullable<z.ZodString>;
     window: z.ZodObject<{
@@ -2765,12 +2751,6 @@ export declare const LogQuerySchema: z.ZodObject<{
         to: z.ZodString;
     }, z.core.$strip>;
     parentId: z.ZodNullable<z.ZodString>;
-    status: z.ZodNullable<z.ZodEnum<{
-        error: "error";
-        not_found: "not_found";
-        ok: "ok";
-        partial: "partial";
-    }>>;
     resultsKind: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     spec: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -2784,10 +2764,6 @@ export declare const GetLogQueryInputSchema: z.ZodObject<{
 export type GetLogQueryInput = z.infer<typeof GetLogQueryInputSchema>;
 export declare const GetLogQueryOutputSchema: z.ZodObject<{
     queryId: z.ZodString;
-    source: z.ZodEnum<{
-        question: "question";
-        spec: "spec";
-    }>;
     question: z.ZodString;
     interpretedAs: z.ZodNullable<z.ZodString>;
     window: z.ZodObject<{
@@ -2795,12 +2771,6 @@ export declare const GetLogQueryOutputSchema: z.ZodObject<{
         to: z.ZodString;
     }, z.core.$strip>;
     parentId: z.ZodNullable<z.ZodString>;
-    status: z.ZodNullable<z.ZodEnum<{
-        error: "error";
-        not_found: "not_found";
-        ok: "ok";
-        partial: "partial";
-    }>>;
     resultsKind: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     spec: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -2816,10 +2786,6 @@ export type ListLogQueriesInput = z.infer<typeof ListLogQueriesInputSchema>;
 export declare const ListLogQueriesOutputSchema: z.ZodObject<{
     queries: z.ZodArray<z.ZodObject<{
         queryId: z.ZodString;
-        source: z.ZodEnum<{
-            question: "question";
-            spec: "spec";
-        }>;
         question: z.ZodString;
         interpretedAs: z.ZodNullable<z.ZodString>;
         window: z.ZodObject<{
@@ -2827,12 +2793,6 @@ export declare const ListLogQueriesOutputSchema: z.ZodObject<{
             to: z.ZodString;
         }, z.core.$strip>;
         parentId: z.ZodNullable<z.ZodString>;
-        status: z.ZodNullable<z.ZodEnum<{
-            error: "error";
-            not_found: "not_found";
-            ok: "ok";
-            partial: "partial";
-        }>>;
         resultsKind: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
     }, z.core.$strip>>;
@@ -2844,10 +2804,6 @@ export declare const getLogQuery: import("../orpc-contracts/index.js").Operation
     queryId: z.ZodString;
 }, z.core.$strict>, z.ZodObject<{
     queryId: z.ZodString;
-    source: z.ZodEnum<{
-        question: "question";
-        spec: "spec";
-    }>;
     question: z.ZodString;
     interpretedAs: z.ZodNullable<z.ZodString>;
     window: z.ZodObject<{
@@ -2855,12 +2811,6 @@ export declare const getLogQuery: import("../orpc-contracts/index.js").Operation
         to: z.ZodString;
     }, z.core.$strip>;
     parentId: z.ZodNullable<z.ZodString>;
-    status: z.ZodNullable<z.ZodEnum<{
-        error: "error";
-        not_found: "not_found";
-        ok: "ok";
-        partial: "partial";
-    }>>;
     resultsKind: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     spec: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -2872,10 +2822,6 @@ export declare const listLogQueries: import("../orpc-contracts/index.js").Operat
 }, z.core.$strict>, z.ZodObject<{
     queries: z.ZodArray<z.ZodObject<{
         queryId: z.ZodString;
-        source: z.ZodEnum<{
-            question: "question";
-            spec: "spec";
-        }>;
         question: z.ZodString;
         interpretedAs: z.ZodNullable<z.ZodString>;
         window: z.ZodObject<{
@@ -2883,12 +2829,6 @@ export declare const listLogQueries: import("../orpc-contracts/index.js").Operat
             to: z.ZodString;
         }, z.core.$strip>;
         parentId: z.ZodNullable<z.ZodString>;
-        status: z.ZodNullable<z.ZodEnum<{
-            error: "error";
-            not_found: "not_found";
-            ok: "ok";
-            partial: "partial";
-        }>>;
         resultsKind: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
     }, z.core.$strip>>;
@@ -3844,10 +3784,6 @@ export declare const logsContract: {
             queryId: z.ZodString;
         }, z.core.$strict>, z.ZodObject<{
             queryId: z.ZodString;
-            source: z.ZodEnum<{
-                question: "question";
-                spec: "spec";
-            }>;
             question: z.ZodString;
             interpretedAs: z.ZodNullable<z.ZodString>;
             window: z.ZodObject<{
@@ -3855,12 +3791,6 @@ export declare const logsContract: {
                 to: z.ZodString;
             }, z.core.$strip>;
             parentId: z.ZodNullable<z.ZodString>;
-            status: z.ZodNullable<z.ZodEnum<{
-                error: "error";
-                not_found: "not_found";
-                ok: "ok";
-                partial: "partial";
-            }>>;
             resultsKind: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             spec: z.ZodRecord<z.ZodString, z.ZodUnknown>;
@@ -3872,10 +3802,6 @@ export declare const logsContract: {
         }, z.core.$strict>, z.ZodObject<{
             queries: z.ZodArray<z.ZodObject<{
                 queryId: z.ZodString;
-                source: z.ZodEnum<{
-                    question: "question";
-                    spec: "spec";
-                }>;
                 question: z.ZodString;
                 interpretedAs: z.ZodNullable<z.ZodString>;
                 window: z.ZodObject<{
@@ -3883,12 +3809,6 @@ export declare const logsContract: {
                     to: z.ZodString;
                 }, z.core.$strip>;
                 parentId: z.ZodNullable<z.ZodString>;
-                status: z.ZodNullable<z.ZodEnum<{
-                    error: "error";
-                    not_found: "not_found";
-                    ok: "ok";
-                    partial: "partial";
-                }>>;
                 resultsKind: z.ZodNullable<z.ZodString>;
                 createdAt: z.ZodString;
             }, z.core.$strip>>;

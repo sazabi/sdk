@@ -81,6 +81,17 @@ export declare const ProgressStreamEventSchema: z.ZodObject<{
     }>;
 }, z.core.$strip>;
 /**
+ * The agent's public prose before a tool call, published once per committed
+ * tool turn; never reasoning or the final answer.
+ */
+export declare const AgentCommentaryStreamEventSchema: z.ZodObject<{
+    type: z.ZodLiteral<"agent-commentary">;
+    runId: z.ZodString;
+    assistantMessageId: z.ZodString;
+    step: z.ZodNumber;
+    text: z.ZodString;
+}, z.core.$strip>;
+/**
  * Complete reasoning marker for a message. Reasoning text is never exposed.
  */
 export declare const ReasoningCompleteStreamEventSchema: z.ZodObject<{
@@ -192,6 +203,12 @@ export declare const PublicAgentStreamEventSchema: z.ZodDiscriminatedUnion<[z.Zo
         template: "template";
     }>;
 }, z.core.$strip>, z.ZodObject<{
+    type: z.ZodLiteral<"agent-commentary">;
+    runId: z.ZodString;
+    assistantMessageId: z.ZodString;
+    step: z.ZodNumber;
+    text: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"reasoning_complete">;
     messageId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
@@ -234,6 +251,7 @@ export type PublicAgentStreamEvent = z.infer<typeof PublicAgentStreamEventSchema
  * filtering and exhaustiveness checks.
  */
 export declare const PublicAgentStreamEventTypeSchema: z.ZodEnum<{
+    "agent-commentary": "agent-commentary";
     artifact: "artifact";
     disconnected: "disconnected";
     error: "error";
@@ -341,6 +359,12 @@ export declare const runStreamEndpoint: {
             template: "template";
         }>;
     }, z.core.$strip>, z.ZodObject<{
+        type: z.ZodLiteral<"agent-commentary">;
+        runId: z.ZodString;
+        assistantMessageId: z.ZodString;
+        step: z.ZodNumber;
+        text: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"reasoning_complete">;
         messageId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
@@ -418,6 +442,12 @@ export declare const threadStreamEndpoint: {
             summary: "summary";
             template: "template";
         }>;
+    }, z.core.$strip>, z.ZodObject<{
+        type: z.ZodLiteral<"agent-commentary">;
+        runId: z.ZodString;
+        assistantMessageId: z.ZodString;
+        step: z.ZodNumber;
+        text: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"reasoning_complete">;
         messageId: z.ZodString;
