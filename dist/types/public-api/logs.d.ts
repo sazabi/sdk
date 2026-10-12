@@ -332,13 +332,6 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 desc: "desc";
             }>;
         }, z.core.$strict>>;
-        exactness: z.ZodEnum<{
-            approximate_ok: "approximate_ok";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-        }, z.core.$strict>>;
     }, z.core.$strict>>;
     window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"absolute">;
@@ -369,10 +362,9 @@ export type LogAskStatus = z.infer<typeof LogAskStatusSchema>;
  * over the logs can answer it as asked (a sum over a number inside the log
  * text, say). Asking it again unchanged gets the same refusal.
  */
-export declare const LOG_ASK_REJECTION_CODES: readonly [...("approximation_required" | "bucket_too_fine" | "time_range_too_wide" | "unsupported_query")[], "not_about_logs", "other_project", "unsupported_question"];
+export declare const LOG_ASK_REJECTION_CODES: readonly [...("bucket_too_fine" | "time_range_too_wide" | "unsupported_query")[], "not_about_logs", "other_project", "unsupported_question"];
 export declare const LogAskRejectionSchema: z.ZodObject<{
     code: z.ZodEnum<{
-        approximation_required: "approximation_required";
         bucket_too_fine: "bucket_too_fine";
         not_about_logs: "not_about_logs";
         other_project: "other_project";
@@ -395,10 +387,6 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         }, z.core.$strip>>;
         count: z.ZodNumber;
         previousCount: z.ZodNumber;
-        countBasis: z.ZodEnum<{
-            exact: "exact";
-            sampled: "sampled";
-        }>;
         firstSeen: z.ZodNullable<z.ZodString>;
         firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
         lastSeen: z.ZodNullable<z.ZodString>;
@@ -414,7 +402,6 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
         }, z.core.$strip>>;
     }, z.core.$strip>>;
     matched: z.ZodNullable<z.ZodNumber>;
-    approximate: z.ZodBoolean;
     truncated: z.ZodBoolean;
     previousWindow: z.ZodObject<{
         from: z.ZodString;
@@ -498,19 +485,6 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
 }, z.core.$strip>], "kind">;
 export type LogAskResults = z.infer<typeof LogAskResultsSchema>;
 export declare const LogAskMetaSchema: z.ZodObject<{
-    exactness: z.ZodEnum<{
-        approximate: "approximate";
-        exact: "exact";
-    }>;
-    approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        method: z.ZodLiteral<"sampled">;
-        relativeError: z.ZodNumber;
-        sampleFraction: z.ZodNumber;
-    }, z.core.$strict>, z.ZodObject<{
-        method: z.ZodLiteral<"estimated_percentile">;
-    }, z.core.$strict>, z.ZodObject<{
-        method: z.ZodLiteral<"estimated_distinct">;
-    }, z.core.$strict>], "method">>;
     coverage: z.ZodObject<{
         from: z.ZodString;
         to: z.ZodString;
@@ -560,10 +534,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             }, z.core.$strip>>;
             count: z.ZodNumber;
             previousCount: z.ZodNumber;
-            countBasis: z.ZodEnum<{
-                exact: "exact";
-                sampled: "sampled";
-            }>;
             firstSeen: z.ZodNullable<z.ZodString>;
             firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
             lastSeen: z.ZodNullable<z.ZodString>;
@@ -579,7 +549,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             }, z.core.$strip>>;
         }, z.core.$strip>>;
         matched: z.ZodNullable<z.ZodNumber>;
-        approximate: z.ZodBoolean;
         truncated: z.ZodBoolean;
         previousWindow: z.ZodObject<{
             from: z.ZodString;
@@ -682,10 +651,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -701,7 +666,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -785,19 +749,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
         }, z.core.$strip>], "kind">>;
     }, z.core.$strip>>>;
     meta: z.ZodNullable<z.ZodObject<{
-        exactness: z.ZodEnum<{
-            approximate: "approximate";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            method: z.ZodLiteral<"sampled">;
-            relativeError: z.ZodNumber;
-            sampleFraction: z.ZodNumber;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_percentile">;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_distinct">;
-        }, z.core.$strict>], "method">>;
         coverage: z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
@@ -814,7 +765,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
     }, z.core.$strip>>;
     rejection: z.ZodOptional<z.ZodObject<{
         code: z.ZodEnum<{
-            approximation_required: "approximation_required";
             bucket_too_fine: "bucket_too_fine";
             not_about_logs: "not_about_logs";
             other_project: "other_project";
@@ -862,10 +812,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             }, z.core.$strip>>;
             count: z.ZodNumber;
             previousCount: z.ZodNumber;
-            countBasis: z.ZodEnum<{
-                exact: "exact";
-                sampled: "sampled";
-            }>;
             firstSeen: z.ZodNullable<z.ZodString>;
             firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
             lastSeen: z.ZodNullable<z.ZodString>;
@@ -881,7 +827,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             }, z.core.$strip>>;
         }, z.core.$strip>>;
         matched: z.ZodNullable<z.ZodNumber>;
-        approximate: z.ZodBoolean;
         truncated: z.ZodBoolean;
         previousWindow: z.ZodObject<{
             from: z.ZodString;
@@ -984,10 +929,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -1003,7 +944,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -1087,19 +1027,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
         }, z.core.$strip>], "kind">>;
     }, z.core.$strip>>>;
     meta: z.ZodNullable<z.ZodObject<{
-        exactness: z.ZodEnum<{
-            approximate: "approximate";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            method: z.ZodLiteral<"sampled">;
-            relativeError: z.ZodNumber;
-            sampleFraction: z.ZodNumber;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_percentile">;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_distinct">;
-        }, z.core.$strict>], "method">>;
         coverage: z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
@@ -1116,7 +1043,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     rejection: z.ZodOptional<z.ZodObject<{
         code: z.ZodEnum<{
-            approximation_required: "approximation_required";
             bucket_too_fine: "bucket_too_fine";
             not_about_logs: "not_about_logs";
             other_project: "other_project";
@@ -1164,10 +1090,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             }, z.core.$strip>>;
             count: z.ZodNumber;
             previousCount: z.ZodNumber;
-            countBasis: z.ZodEnum<{
-                exact: "exact";
-                sampled: "sampled";
-            }>;
             firstSeen: z.ZodNullable<z.ZodString>;
             firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
             lastSeen: z.ZodNullable<z.ZodString>;
@@ -1183,7 +1105,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             }, z.core.$strip>>;
         }, z.core.$strip>>;
         matched: z.ZodNullable<z.ZodNumber>;
-        approximate: z.ZodBoolean;
         truncated: z.ZodBoolean;
         previousWindow: z.ZodObject<{
             from: z.ZodString;
@@ -1286,10 +1207,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -1305,7 +1222,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -1389,19 +1305,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
         }, z.core.$strip>], "kind">>;
     }, z.core.$strip>>>;
     meta: z.ZodNullable<z.ZodObject<{
-        exactness: z.ZodEnum<{
-            approximate: "approximate";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            method: z.ZodLiteral<"sampled">;
-            relativeError: z.ZodNumber;
-            sampleFraction: z.ZodNumber;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_percentile">;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_distinct">;
-        }, z.core.$strict>], "method">>;
         coverage: z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
@@ -1418,7 +1321,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     rejection: z.ZodOptional<z.ZodObject<{
         code: z.ZodEnum<{
-            approximation_required: "approximation_required";
             bucket_too_fine: "bucket_too_fine";
             not_about_logs: "not_about_logs";
             other_project: "other_project";
@@ -1479,10 +1381,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             }, z.core.$strip>>;
             count: z.ZodNumber;
             previousCount: z.ZodNumber;
-            countBasis: z.ZodEnum<{
-                exact: "exact";
-                sampled: "sampled";
-            }>;
             firstSeen: z.ZodNullable<z.ZodString>;
             firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
             lastSeen: z.ZodNullable<z.ZodString>;
@@ -1498,7 +1396,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             }, z.core.$strip>>;
         }, z.core.$strip>>;
         matched: z.ZodNullable<z.ZodNumber>;
-        approximate: z.ZodBoolean;
         truncated: z.ZodBoolean;
         previousWindow: z.ZodObject<{
             from: z.ZodString;
@@ -1601,10 +1498,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -1620,7 +1513,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -1704,19 +1596,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
         }, z.core.$strip>], "kind">>;
     }, z.core.$strip>>>;
     meta: z.ZodNullable<z.ZodObject<{
-        exactness: z.ZodEnum<{
-            approximate: "approximate";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            method: z.ZodLiteral<"sampled">;
-            relativeError: z.ZodNumber;
-            sampleFraction: z.ZodNumber;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_percentile">;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_distinct">;
-        }, z.core.$strict>], "method">>;
         coverage: z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
@@ -1733,7 +1612,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
     }, z.core.$strip>>;
     rejection: z.ZodOptional<z.ZodObject<{
         code: z.ZodEnum<{
-            approximation_required: "approximation_required";
             bucket_too_fine: "bucket_too_fine";
             not_about_logs: "not_about_logs";
             other_project: "other_project";
@@ -2064,13 +1942,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 desc: "desc";
             }>;
         }, z.core.$strict>>;
-        exactness: z.ZodEnum<{
-            approximate_ok: "approximate_ok";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodObject<{
-            maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-        }, z.core.$strict>>;
     }, z.core.$strict>>;
     window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"absolute">;
@@ -2106,10 +1977,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             }, z.core.$strip>>;
             count: z.ZodNumber;
             previousCount: z.ZodNumber;
-            countBasis: z.ZodEnum<{
-                exact: "exact";
-                sampled: "sampled";
-            }>;
             firstSeen: z.ZodNullable<z.ZodString>;
             firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
             lastSeen: z.ZodNullable<z.ZodString>;
@@ -2125,7 +1992,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             }, z.core.$strip>>;
         }, z.core.$strip>>;
         matched: z.ZodNullable<z.ZodNumber>;
-        approximate: z.ZodBoolean;
         truncated: z.ZodBoolean;
         previousWindow: z.ZodObject<{
             from: z.ZodString;
@@ -2228,10 +2094,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -2247,7 +2109,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -2331,19 +2192,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         }, z.core.$strip>], "kind">>;
     }, z.core.$strip>>>;
     meta: z.ZodNullable<z.ZodObject<{
-        exactness: z.ZodEnum<{
-            approximate: "approximate";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            method: z.ZodLiteral<"sampled">;
-            relativeError: z.ZodNumber;
-            sampleFraction: z.ZodNumber;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_percentile">;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_distinct">;
-        }, z.core.$strict>], "method">>;
         coverage: z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
@@ -2360,7 +2208,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
     }, z.core.$strip>>;
     rejection: z.ZodOptional<z.ZodObject<{
         code: z.ZodEnum<{
-            approximation_required: "approximation_required";
             bucket_too_fine: "bucket_too_fine";
             not_about_logs: "not_about_logs";
             other_project: "other_project";
@@ -2443,10 +2290,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             }, z.core.$strip>>;
             count: z.ZodNumber;
             previousCount: z.ZodNumber;
-            countBasis: z.ZodEnum<{
-                exact: "exact";
-                sampled: "sampled";
-            }>;
             firstSeen: z.ZodNullable<z.ZodString>;
             firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
             lastSeen: z.ZodNullable<z.ZodString>;
@@ -2462,7 +2305,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             }, z.core.$strip>>;
         }, z.core.$strip>>;
         matched: z.ZodNullable<z.ZodNumber>;
-        approximate: z.ZodBoolean;
         truncated: z.ZodBoolean;
         previousWindow: z.ZodObject<{
             from: z.ZodString;
@@ -2565,10 +2407,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -2584,7 +2422,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -2668,19 +2505,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
         }, z.core.$strip>], "kind">>;
     }, z.core.$strip>>>;
     meta: z.ZodNullable<z.ZodObject<{
-        exactness: z.ZodEnum<{
-            approximate: "approximate";
-            exact: "exact";
-        }>;
-        approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            method: z.ZodLiteral<"sampled">;
-            relativeError: z.ZodNumber;
-            sampleFraction: z.ZodNumber;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_percentile">;
-        }, z.core.$strict>, z.ZodObject<{
-            method: z.ZodLiteral<"estimated_distinct">;
-        }, z.core.$strict>], "method">>;
         coverage: z.ZodObject<{
             from: z.ZodString;
             to: z.ZodString;
@@ -2697,7 +2521,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
     }, z.core.$strip>>;
     rejection: z.ZodOptional<z.ZodObject<{
         code: z.ZodEnum<{
-            approximation_required: "approximation_required";
             bucket_too_fine: "bucket_too_fine";
             not_about_logs: "not_about_logs";
             other_project: "other_project";
@@ -2865,10 +2688,6 @@ export declare const logsContract: {
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -2884,7 +2703,6 @@ export declare const logsContract: {
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -2987,10 +2805,6 @@ export declare const logsContract: {
                     }, z.core.$strip>>;
                     count: z.ZodNumber;
                     previousCount: z.ZodNumber;
-                    countBasis: z.ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: z.ZodNullable<z.ZodString>;
                     firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                     lastSeen: z.ZodNullable<z.ZodString>;
@@ -3006,7 +2820,6 @@ export declare const logsContract: {
                     }, z.core.$strip>>;
                 }, z.core.$strip>>;
                 matched: z.ZodNullable<z.ZodNumber>;
-                approximate: z.ZodBoolean;
                 truncated: z.ZodBoolean;
                 previousWindow: z.ZodObject<{
                     from: z.ZodString;
@@ -3090,19 +2903,6 @@ export declare const logsContract: {
             }, z.core.$strip>], "kind">>;
         }, z.core.$strip>>>;
         meta: z.ZodNullable<z.ZodObject<{
-            exactness: z.ZodEnum<{
-                approximate: "approximate";
-                exact: "exact";
-            }>;
-            approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                method: z.ZodLiteral<"sampled">;
-                relativeError: z.ZodNumber;
-                sampleFraction: z.ZodNumber;
-            }, z.core.$strict>, z.ZodObject<{
-                method: z.ZodLiteral<"estimated_percentile">;
-            }, z.core.$strict>, z.ZodObject<{
-                method: z.ZodLiteral<"estimated_distinct">;
-            }, z.core.$strict>], "method">>;
             coverage: z.ZodObject<{
                 from: z.ZodString;
                 to: z.ZodString;
@@ -3119,7 +2919,6 @@ export declare const logsContract: {
         }, z.core.$strip>>;
         rejection: z.ZodOptional<z.ZodObject<{
             code: z.ZodEnum<{
-                approximation_required: "approximation_required";
                 bucket_too_fine: "bucket_too_fine";
                 not_about_logs: "not_about_logs";
                 other_project: "other_project";
@@ -3450,13 +3249,6 @@ export declare const logsContract: {
                     desc: "desc";
                 }>;
             }, z.core.$strict>>;
-            exactness: z.ZodEnum<{
-                approximate_ok: "approximate_ok";
-                exact: "exact";
-            }>;
-            approximation: z.ZodOptional<z.ZodObject<{
-                maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-            }, z.core.$strict>>;
         }, z.core.$strict>>;
         window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"absolute">;
@@ -3492,10 +3284,6 @@ export declare const logsContract: {
                 }, z.core.$strip>>;
                 count: z.ZodNumber;
                 previousCount: z.ZodNumber;
-                countBasis: z.ZodEnum<{
-                    exact: "exact";
-                    sampled: "sampled";
-                }>;
                 firstSeen: z.ZodNullable<z.ZodString>;
                 firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                 lastSeen: z.ZodNullable<z.ZodString>;
@@ -3511,7 +3299,6 @@ export declare const logsContract: {
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
             matched: z.ZodNullable<z.ZodNumber>;
-            approximate: z.ZodBoolean;
             truncated: z.ZodBoolean;
             previousWindow: z.ZodObject<{
                 from: z.ZodString;
@@ -3614,10 +3401,6 @@ export declare const logsContract: {
                     }, z.core.$strip>>;
                     count: z.ZodNumber;
                     previousCount: z.ZodNumber;
-                    countBasis: z.ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: z.ZodNullable<z.ZodString>;
                     firstSeenInWindow: z.ZodOptional<z.ZodBoolean>;
                     lastSeen: z.ZodNullable<z.ZodString>;
@@ -3633,7 +3416,6 @@ export declare const logsContract: {
                     }, z.core.$strip>>;
                 }, z.core.$strip>>;
                 matched: z.ZodNullable<z.ZodNumber>;
-                approximate: z.ZodBoolean;
                 truncated: z.ZodBoolean;
                 previousWindow: z.ZodObject<{
                     from: z.ZodString;
@@ -3717,19 +3499,6 @@ export declare const logsContract: {
             }, z.core.$strip>], "kind">>;
         }, z.core.$strip>>>;
         meta: z.ZodNullable<z.ZodObject<{
-            exactness: z.ZodEnum<{
-                approximate: "approximate";
-                exact: "exact";
-            }>;
-            approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                method: z.ZodLiteral<"sampled">;
-                relativeError: z.ZodNumber;
-                sampleFraction: z.ZodNumber;
-            }, z.core.$strict>, z.ZodObject<{
-                method: z.ZodLiteral<"estimated_percentile">;
-            }, z.core.$strict>, z.ZodObject<{
-                method: z.ZodLiteral<"estimated_distinct">;
-            }, z.core.$strict>], "method">>;
             coverage: z.ZodObject<{
                 from: z.ZodString;
                 to: z.ZodString;
@@ -3746,7 +3515,6 @@ export declare const logsContract: {
         }, z.core.$strip>>;
         rejection: z.ZodOptional<z.ZodObject<{
             code: z.ZodEnum<{
-                approximation_required: "approximation_required";
                 bucket_too_fine: "bucket_too_fine";
                 not_about_logs: "not_about_logs";
                 other_project: "other_project";

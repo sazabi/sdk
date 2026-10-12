@@ -1676,7 +1676,6 @@ var public_api_client_contract_gen_default = {
           dimensions: [],
           measure: { op: "count" },
           output: "table",
-          exactness: "exact",
         },
       }}
     />
@@ -1696,7 +1695,6 @@ var public_api_client_contract_gen_default = {
           bucket: "5m",
           output: "series",
           series: { limit: 6, overflow: "other" },
-          exactness: "exact",
         },
       }}
     />
@@ -1756,7 +1754,6 @@ var public_api_client_contract_gen_default = {
           dimensions: [],
           measure: { op: "count" },
           output: "table",
-          exactness: "exact",
         },
       }}
     />
@@ -1776,7 +1773,6 @@ var public_api_client_contract_gen_default = {
           bucket: "5m",
           output: "series",
           series: { limit: 6, overflow: "other" },
-          exactness: "exact",
         },
       }}
     />
@@ -1841,7 +1837,6 @@ var public_api_client_contract_gen_default = {
           dimensions: [],
           measure: { op: "count" },
           output: "table",
-          exactness: "exact",
         },
       }}
     />
@@ -1861,7 +1856,6 @@ var public_api_client_contract_gen_default = {
           bucket: "5m",
           output: "series",
           series: { limit: 6, overflow: "other" },
-          exactness: "exact",
         },
       }}
     />
@@ -1937,7 +1931,6 @@ var public_api_client_contract_gen_default = {
           dimensions: [],
           measure: { op: "count" },
           output: "table",
-          exactness: "exact",
         },
       }}
     />
@@ -1957,7 +1950,6 @@ var public_api_client_contract_gen_default = {
           bucket: "5m",
           output: "series",
           series: { limit: 6, overflow: "other" },
-          exactness: "exact",
         },
       }}
     />
@@ -2050,7 +2042,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.ask",
           summary: "Ask about logs",
-          description: 'Answer a natural-language question about one project\'s stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), how exact and complete the numbers are (`meta`), and a `queryId`. An overview (what is broken, recent errors, what changed, what is new, with no specific topic, field or request for lines) is searched: its results are the window\'s kinds of log lines, with their counts in the window and the window before and example lines; every other question is measured exactly. A question may be asked in any language, and is answered in it. The period it names is read from it, on the clock of `timeZone` ("the last 6 hours", "this afternoon", "since midnight", "between 18:00 and 19:00", "this hour against the previous hour", which reads both hours and compares them); a `window` replaces that period, and the answer says so. A period that cannot be read is said to be, and the last hour is read instead. With `results: true` it also returns the rows, value, table, series or kinds of log lines the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found`: the answer names the window that was read, `interpretedAs` how the question was read, and the `queryId` runs the same query over a wider window. A question that asks nothing about the project\'s logs, or about another project\'s, is refused with nothing searched (`status` `error`, `rejection.code` `not_about_logs` or `other_project`, no `queryId`), and one no query can answer as asked is refused as `unsupported_question`; one that asks to change or delete logs is answered with the lines it names (`writeDeclined`), since logs are read-only.'
+          description: 'Answer a natural-language question about one project\'s stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), the part of the window the numbers cover (`meta`), and a `queryId`. An overview (what is broken, recent errors, what changed, what is new, with no specific topic, field or request for lines) is searched: its results are the window\'s kinds of log lines, with their counts in the window and the window before and example lines; every other question is measured exactly. A question may be asked in any language, and is answered in it. The period it names is read from it, on the clock of `timeZone` ("the last 6 hours", "this afternoon", "since midnight", "between 18:00 and 19:00", "this hour against the previous hour", which reads both hours and compares them); a `window` replaces that period, and the answer says so. A period that cannot be read is said to be, and the last hour is read instead. With `results: true` it also returns the rows, value, table, series or kinds of log lines the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found`: the answer names the window that was read, `interpretedAs` how the question was read, and the `queryId` runs the same query over a wider window. A question that asks nothing about the project\'s logs, or about another project\'s, is refused with nothing searched (`status` `error`, `rejection.code` `not_about_logs` or `other_project`, no `queryId`), and one no query can answer as asked is refused as `unsupported_question`; one that asks to change or delete logs is answered with the lines it names (`writeDeclined`), since logs are read-only.'
         }
       }
     },
@@ -2081,8 +2073,7 @@ var public_api_client_contract_gen_default = {
                   measure: {
                     op: "count"
                   },
-                  output: "table",
-                  exactness: "exact"
+                  output: "table"
                 },
                 window: {
                   kind: "absolute",
@@ -2118,7 +2109,6 @@ var public_api_client_contract_gen_default = {
                   to: "2026-09-29T10:00:00.000Z"
                 },
                 meta: {
-                  exactness: "exact",
                   coverage: {
                     from: "2026-09-29T09:00:00.000Z",
                     to: "2026-09-29T10:00:00.000Z",
@@ -2171,7 +2161,6 @@ var public_api_client_contract_gen_default = {
                   to: "2026-09-29T10:00:00.000Z"
                 },
                 meta: {
-                  exactness: "exact",
                   coverage: {
                     from: "2026-09-28T10:00:00.000Z",
                     to: "2026-09-29T10:00:00.000Z",
@@ -2193,7 +2182,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.executeQuery",
           summary: "Run a log query",
-          description: "Run a log query with no model involved, given either the `queryId` of an earlier `logs.ask` answer or `logs.executeQuery` run, or a `spec` written in the log query spec (its JSON Schema is this operation's `spec` input; `sazabi logs query schema` prints it). Runs over `window` (by default the same absolute times a `queryId` read, or the last hour for a `spec`; a relative `window` ends now, which asks the same question again over the latest period), with an optional `limit`, or narrowed to the log lines of one `group` of a table. Returns the same envelope as `logs.ask` without an answer: `results`, what was measured (`explanation`), how exact and complete the numbers are (`meta`), and a new `queryId` naming this run (its query and the times it read). A run by `queryId` names that id as `parentId`. `rows` results page: when more lines matched than `limit` holds the envelope carries a `nextCursor`, and passing it as `cursor` with the same query reads the next `limit` lines over the same times; a table, series, value or kinds result returns at most `limit` groups and never pages. An unknown `queryId` is not found; a `spec` the service cannot run is refused with what to change; asking the question again yields a new id."
+          description: "Run a log query with no model involved, given either the `queryId` of an earlier `logs.ask` answer or `logs.executeQuery` run, or a `spec` written in the log query spec (its JSON Schema is this operation's `spec` input; `sazabi logs query schema` prints it). Runs over `window` (by default the same absolute times a `queryId` read, or the last hour for a `spec`; a relative `window` ends now, which asks the same question again over the latest period), with an optional `limit`, or narrowed to the log lines of one `group` of a table. Returns the same envelope as `logs.ask` without an answer: `results`, what was measured (`explanation`), the part of the window the numbers cover (`meta`), and a new `queryId` naming this run (its query and the times it read). A run by `queryId` names that id as `parentId`. `rows` results page: when more lines matched than `limit` holds the envelope carries a `nextCursor`, and passing it as `cursor` with the same query reads the next `limit` lines over the same times; a table, series, value or kinds result returns at most `limit` groups and never pages. An unknown `queryId` is not found; a `spec` the service cannot run is refused with what to change; asking the question again yields a new id."
         }
       }
     },

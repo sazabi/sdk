@@ -1617,7 +1617,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
             }, z.core.$strict>>;
         }, z.core.$strict>], "type">;
         execution: z.ZodOptional<z.ZodObject<{
-            spec: z.ZodObject<{
+            spec: z.ZodPreprocess<z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -1922,32 +1922,12 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-                exactness: z.ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-                }, z.core.$strict>>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodObject<{
-                exactness: z.ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    method: z.ZodLiteral<"sampled">;
-                    relativeError: z.ZodNumber;
-                    sampleFraction: z.ZodNumber;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_percentile">;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_distinct">;
-                }, z.core.$strict>], "method">>;
+            meta: z.ZodPreprocess<z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -1965,14 +1945,14 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"empty">;
         execution: z.ZodObject<{
-            spec: z.ZodObject<{
+            spec: z.ZodPreprocess<z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -2277,32 +2257,12 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-                exactness: z.ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-                }, z.core.$strict>>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodObject<{
-                exactness: z.ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    method: z.ZodLiteral<"sampled">;
-                    relativeError: z.ZodNumber;
-                    sampleFraction: z.ZodNumber;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_percentile">;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_distinct">;
-                }, z.core.$strict>], "method">>;
+            meta: z.ZodPreprocess<z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -2320,7 +2280,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>;
@@ -2328,14 +2288,13 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
         status: z.ZodLiteral<"rejected">;
         rejection: z.ZodObject<{
             code: z.ZodEnum<{
-                approximation_required: "approximation_required";
                 bucket_too_fine: "bucket_too_fine";
                 time_range_too_wide: "time_range_too_wide";
                 unsupported_query: "unsupported_query";
             }>;
             message: z.ZodString;
             status: z.ZodLiteral<"rejected">;
-            spec: z.ZodObject<{
+            spec: z.ZodPreprocess<z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -2640,14 +2599,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-                exactness: z.ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-                }, z.core.$strict>>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
@@ -4315,7 +4267,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
             }, z.core.$strict>>;
         }, z.core.$strict>], "type">;
         execution: z.ZodOptional<z.ZodObject<{
-            spec: z.ZodObject<{
+            spec: z.ZodPreprocess<z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -4620,32 +4572,12 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-                exactness: z.ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-                }, z.core.$strict>>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodObject<{
-                exactness: z.ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    method: z.ZodLiteral<"sampled">;
-                    relativeError: z.ZodNumber;
-                    sampleFraction: z.ZodNumber;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_percentile">;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_distinct">;
-                }, z.core.$strict>], "method">>;
+            meta: z.ZodPreprocess<z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -4663,14 +4595,14 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"empty">;
         execution: z.ZodObject<{
-            spec: z.ZodObject<{
+            spec: z.ZodPreprocess<z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -4975,32 +4907,12 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-                exactness: z.ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-                }, z.core.$strict>>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodObject<{
-                exactness: z.ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-                    method: z.ZodLiteral<"sampled">;
-                    relativeError: z.ZodNumber;
-                    sampleFraction: z.ZodNumber;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_percentile">;
-                }, z.core.$strict>, z.ZodObject<{
-                    method: z.ZodLiteral<"estimated_distinct">;
-                }, z.core.$strict>], "method">>;
+            meta: z.ZodPreprocess<z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -5018,7 +4930,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>;
@@ -5026,14 +4938,13 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
         status: z.ZodLiteral<"rejected">;
         rejection: z.ZodObject<{
             code: z.ZodEnum<{
-                approximation_required: "approximation_required";
                 bucket_too_fine: "bucket_too_fine";
                 time_range_too_wide: "time_range_too_wide";
                 unsupported_query: "unsupported_query";
             }>;
             message: z.ZodString;
             status: z.ZodLiteral<"rejected">;
-            spec: z.ZodObject<{
+            spec: z.ZodPreprocess<z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -5338,14 +5249,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-                exactness: z.ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: z.ZodOptional<z.ZodObject<{
-                    maxRelativeError: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
-                }, z.core.$strict>>;
-            }, z.core.$strict>;
+            }, z.core.$strict>, unknown>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;

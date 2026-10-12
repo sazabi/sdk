@@ -2275,7 +2275,7 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strict>>;
                 }, import("zod/v4/core").$strict>], "type">;
                 execution: import("zod").ZodOptional<import("zod").ZodObject<{
-                    spec: import("zod").ZodObject<{
+                    spec: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
                             kind: "body_json";
@@ -2580,32 +2580,12 @@ export declare const publicApiContract: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
-                        exactness: import("zod").ZodEnum<{
-                            approximate_ok: "approximate_ok";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                        }, import("zod/v4/core").$strict>>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    meta: import("zod").ZodObject<{
-                        exactness: import("zod").ZodEnum<{
-                            approximate: "approximate";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"sampled">;
-                            relativeError: import("zod").ZodNumber;
-                            sampleFraction: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_percentile">;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_distinct">;
-                        }, import("zod/v4/core").$strict>], "method">>;
+                    meta: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -2623,14 +2603,14 @@ export declare const publicApiContract: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     took: import("zod").ZodNumber;
                     executionMs: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 status: import("zod").ZodLiteral<"empty">;
                 execution: import("zod").ZodObject<{
-                    spec: import("zod").ZodObject<{
+                    spec: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
                             kind: "body_json";
@@ -2935,32 +2915,12 @@ export declare const publicApiContract: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
-                        exactness: import("zod").ZodEnum<{
-                            approximate_ok: "approximate_ok";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                        }, import("zod/v4/core").$strict>>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    meta: import("zod").ZodObject<{
-                        exactness: import("zod").ZodEnum<{
-                            approximate: "approximate";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"sampled">;
-                            relativeError: import("zod").ZodNumber;
-                            sampleFraction: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_percentile">;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_distinct">;
-                        }, import("zod/v4/core").$strict>], "method">>;
+                    meta: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -2978,7 +2938,7 @@ export declare const publicApiContract: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     took: import("zod").ZodNumber;
                     executionMs: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>;
@@ -2986,14 +2946,13 @@ export declare const publicApiContract: {
                 status: import("zod").ZodLiteral<"rejected">;
                 rejection: import("zod").ZodObject<{
                     code: import("zod").ZodEnum<{
-                        approximation_required: "approximation_required";
                         bucket_too_fine: "bucket_too_fine";
                         time_range_too_wide: "time_range_too_wide";
                         unsupported_query: "unsupported_query";
                     }>;
                     message: import("zod").ZodString;
                     status: import("zod").ZodLiteral<"rejected">;
-                    spec: import("zod").ZodObject<{
+                    spec: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
                             kind: "body_json";
@@ -3298,14 +3257,7 @@ export declare const publicApiContract: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
-                        exactness: import("zod").ZodEnum<{
-                            approximate_ok: "approximate_ok";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                        }, import("zod/v4/core").$strict>>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
@@ -3393,10 +3345,6 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                     count: import("zod").ZodNumber;
                     previousCount: import("zod").ZodNumber;
-                    countBasis: import("zod").ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -3412,7 +3360,6 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                approximate: import("zod").ZodBoolean;
                 truncated: import("zod").ZodBoolean;
                 previousWindow: import("zod").ZodObject<{
                     from: import("zod").ZodString;
@@ -3515,10 +3462,6 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strip>>;
                         count: import("zod").ZodNumber;
                         previousCount: import("zod").ZodNumber;
-                        countBasis: import("zod").ZodEnum<{
-                            exact: "exact";
-                            sampled: "sampled";
-                        }>;
                         firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -3534,7 +3477,6 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strip>>;
                     }, import("zod/v4/core").$strip>>;
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    approximate: import("zod").ZodBoolean;
                     truncated: import("zod").ZodBoolean;
                     previousWindow: import("zod").ZodObject<{
                         from: import("zod").ZodString;
@@ -3618,19 +3560,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>], "kind">>;
             }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
-                exactness: import("zod").ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"sampled">;
-                    relativeError: import("zod").ZodNumber;
-                    sampleFraction: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_percentile">;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_distinct">;
-                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -3647,7 +3576,6 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
             rejection: import("zod").ZodOptional<import("zod").ZodObject<{
                 code: import("zod").ZodEnum<{
-                    approximation_required: "approximation_required";
                     bucket_too_fine: "bucket_too_fine";
                     not_about_logs: "not_about_logs";
                     other_project: "other_project";
@@ -3978,13 +3906,6 @@ export declare const publicApiContract: {
                         desc: "desc";
                     }>;
                 }, import("zod/v4/core").$strict>>;
-                exactness: import("zod").ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                    maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                }, import("zod/v4/core").$strict>>;
             }, import("zod/v4/core").$strict>>;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"absolute">;
@@ -4020,10 +3941,6 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                     count: import("zod").ZodNumber;
                     previousCount: import("zod").ZodNumber;
-                    countBasis: import("zod").ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -4039,7 +3956,6 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                approximate: import("zod").ZodBoolean;
                 truncated: import("zod").ZodBoolean;
                 previousWindow: import("zod").ZodObject<{
                     from: import("zod").ZodString;
@@ -4142,10 +4058,6 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strip>>;
                         count: import("zod").ZodNumber;
                         previousCount: import("zod").ZodNumber;
-                        countBasis: import("zod").ZodEnum<{
-                            exact: "exact";
-                            sampled: "sampled";
-                        }>;
                         firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -4161,7 +4073,6 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strip>>;
                     }, import("zod/v4/core").$strip>>;
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    approximate: import("zod").ZodBoolean;
                     truncated: import("zod").ZodBoolean;
                     previousWindow: import("zod").ZodObject<{
                         from: import("zod").ZodString;
@@ -4245,19 +4156,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>], "kind">>;
             }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
-                exactness: import("zod").ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"sampled">;
-                    relativeError: import("zod").ZodNumber;
-                    sampleFraction: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_percentile">;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_distinct">;
-                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -4274,7 +4172,6 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
             rejection: import("zod").ZodOptional<import("zod").ZodObject<{
                 code: import("zod").ZodEnum<{
-                    approximation_required: "approximation_required";
                     bucket_too_fine: "bucket_too_fine";
                     not_about_logs: "not_about_logs";
                     other_project: "other_project";
@@ -4333,10 +4230,6 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                     count: import("zod").ZodNumber;
                     previousCount: import("zod").ZodNumber;
-                    countBasis: import("zod").ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -4352,7 +4245,6 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                approximate: import("zod").ZodBoolean;
                 truncated: import("zod").ZodBoolean;
                 previousWindow: import("zod").ZodObject<{
                     from: import("zod").ZodString;
@@ -4455,10 +4347,6 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strip>>;
                         count: import("zod").ZodNumber;
                         previousCount: import("zod").ZodNumber;
-                        countBasis: import("zod").ZodEnum<{
-                            exact: "exact";
-                            sampled: "sampled";
-                        }>;
                         firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -4474,7 +4362,6 @@ export declare const publicApiContract: {
                         }, import("zod/v4/core").$strip>>;
                     }, import("zod/v4/core").$strip>>;
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    approximate: import("zod").ZodBoolean;
                     truncated: import("zod").ZodBoolean;
                     previousWindow: import("zod").ZodObject<{
                         from: import("zod").ZodString;
@@ -4558,19 +4445,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>], "kind">>;
             }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
-                exactness: import("zod").ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"sampled">;
-                    relativeError: import("zod").ZodNumber;
-                    sampleFraction: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_percentile">;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_distinct">;
-                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -4587,7 +4461,6 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
             rejection: import("zod").ZodOptional<import("zod").ZodObject<{
                 code: import("zod").ZodEnum<{
-                    approximation_required: "approximation_required";
                     bucket_too_fine: "bucket_too_fine";
                     not_about_logs: "not_about_logs";
                     other_project: "other_project";
@@ -15335,7 +15208,7 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strict>>;
                 }, import("zod/v4/core").$strict>], "type">;
                 execution: import("zod").ZodOptional<import("zod").ZodObject<{
-                    spec: import("zod").ZodObject<{
+                    spec: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
                             kind: "body_json";
@@ -15640,32 +15513,12 @@ export declare const publicApiOperations: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
-                        exactness: import("zod").ZodEnum<{
-                            approximate_ok: "approximate_ok";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                        }, import("zod/v4/core").$strict>>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    meta: import("zod").ZodObject<{
-                        exactness: import("zod").ZodEnum<{
-                            approximate: "approximate";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"sampled">;
-                            relativeError: import("zod").ZodNumber;
-                            sampleFraction: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_percentile">;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_distinct">;
-                        }, import("zod/v4/core").$strict>], "method">>;
+                    meta: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -15683,14 +15536,14 @@ export declare const publicApiOperations: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     took: import("zod").ZodNumber;
                     executionMs: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 status: import("zod").ZodLiteral<"empty">;
                 execution: import("zod").ZodObject<{
-                    spec: import("zod").ZodObject<{
+                    spec: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
                             kind: "body_json";
@@ -15995,32 +15848,12 @@ export declare const publicApiOperations: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
-                        exactness: import("zod").ZodEnum<{
-                            approximate_ok: "approximate_ok";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                        }, import("zod/v4/core").$strict>>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
                     }, import("zod/v4/core").$strict>;
-                    meta: import("zod").ZodObject<{
-                        exactness: import("zod").ZodEnum<{
-                            approximate: "approximate";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"sampled">;
-                            relativeError: import("zod").ZodNumber;
-                            sampleFraction: import("zod").ZodNumber;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_percentile">;
-                        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                            method: import("zod").ZodLiteral<"estimated_distinct">;
-                        }, import("zod/v4/core").$strict>], "method">>;
+                    meta: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         coverage: import("zod").ZodObject<{
                             from: import("zod").ZodISODateTime;
                             to: import("zod").ZodISODateTime;
@@ -16038,7 +15871,7 @@ export declare const publicApiOperations: {
                             watermark: import("zod").ZodISODateTime;
                             openBucketFrom: import("zod").ZodOptional<import("zod").ZodISODateTime>;
                         }, import("zod/v4/core").$strict>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     took: import("zod").ZodNumber;
                     executionMs: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>;
@@ -16046,14 +15879,13 @@ export declare const publicApiOperations: {
                 status: import("zod").ZodLiteral<"rejected">;
                 rejection: import("zod").ZodObject<{
                     code: import("zod").ZodEnum<{
-                        approximation_required: "approximation_required";
                         bucket_too_fine: "bucket_too_fine";
                         time_range_too_wide: "time_range_too_wide";
                         unsupported_query: "unsupported_query";
                     }>;
                     message: import("zod").ZodString;
                     status: import("zod").ZodLiteral<"rejected">;
-                    spec: import("zod").ZodObject<{
+                    spec: import("zod").ZodPreprocess<import("zod").ZodObject<{
                         version: import("zod").ZodLiteral<2>;
                         predicate: import("zod").ZodType<import("../log-query/index.js").PredicateTree<{
                             kind: "body_json";
@@ -16358,14 +16190,7 @@ export declare const publicApiOperations: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
-                        exactness: import("zod").ZodEnum<{
-                            approximate_ok: "approximate_ok";
-                            exact: "exact";
-                        }>;
-                        approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                            maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                        }, import("zod/v4/core").$strict>>;
-                    }, import("zod/v4/core").$strict>;
+                    }, import("zod/v4/core").$strict>, unknown>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
                         to: import("zod").ZodISODateTime;
@@ -16453,10 +16278,6 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                     count: import("zod").ZodNumber;
                     previousCount: import("zod").ZodNumber;
-                    countBasis: import("zod").ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -16472,7 +16293,6 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                approximate: import("zod").ZodBoolean;
                 truncated: import("zod").ZodBoolean;
                 previousWindow: import("zod").ZodObject<{
                     from: import("zod").ZodString;
@@ -16575,10 +16395,6 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strip>>;
                         count: import("zod").ZodNumber;
                         previousCount: import("zod").ZodNumber;
-                        countBasis: import("zod").ZodEnum<{
-                            exact: "exact";
-                            sampled: "sampled";
-                        }>;
                         firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -16594,7 +16410,6 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strip>>;
                     }, import("zod/v4/core").$strip>>;
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    approximate: import("zod").ZodBoolean;
                     truncated: import("zod").ZodBoolean;
                     previousWindow: import("zod").ZodObject<{
                         from: import("zod").ZodString;
@@ -16678,19 +16493,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>], "kind">>;
             }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
-                exactness: import("zod").ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"sampled">;
-                    relativeError: import("zod").ZodNumber;
-                    sampleFraction: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_percentile">;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_distinct">;
-                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -16707,7 +16509,6 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
             rejection: import("zod").ZodOptional<import("zod").ZodObject<{
                 code: import("zod").ZodEnum<{
-                    approximation_required: "approximation_required";
                     bucket_too_fine: "bucket_too_fine";
                     not_about_logs: "not_about_logs";
                     other_project: "other_project";
@@ -17038,13 +16839,6 @@ export declare const publicApiOperations: {
                         desc: "desc";
                     }>;
                 }, import("zod/v4/core").$strict>>;
-                exactness: import("zod").ZodEnum<{
-                    approximate_ok: "approximate_ok";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodObject<{
-                    maxRelativeError: import("zod").ZodType<number, unknown, import("zod/v4/core").$ZodTypeInternals<number, unknown>>;
-                }, import("zod/v4/core").$strict>>;
             }, import("zod/v4/core").$strict>>;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"absolute">;
@@ -17080,10 +16874,6 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                     count: import("zod").ZodNumber;
                     previousCount: import("zod").ZodNumber;
-                    countBasis: import("zod").ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -17099,7 +16889,6 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                approximate: import("zod").ZodBoolean;
                 truncated: import("zod").ZodBoolean;
                 previousWindow: import("zod").ZodObject<{
                     from: import("zod").ZodString;
@@ -17202,10 +16991,6 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strip>>;
                         count: import("zod").ZodNumber;
                         previousCount: import("zod").ZodNumber;
-                        countBasis: import("zod").ZodEnum<{
-                            exact: "exact";
-                            sampled: "sampled";
-                        }>;
                         firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -17221,7 +17006,6 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strip>>;
                     }, import("zod/v4/core").$strip>>;
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    approximate: import("zod").ZodBoolean;
                     truncated: import("zod").ZodBoolean;
                     previousWindow: import("zod").ZodObject<{
                         from: import("zod").ZodString;
@@ -17305,19 +17089,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>], "kind">>;
             }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
-                exactness: import("zod").ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"sampled">;
-                    relativeError: import("zod").ZodNumber;
-                    sampleFraction: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_percentile">;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_distinct">;
-                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -17334,7 +17105,6 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
             rejection: import("zod").ZodOptional<import("zod").ZodObject<{
                 code: import("zod").ZodEnum<{
-                    approximation_required: "approximation_required";
                     bucket_too_fine: "bucket_too_fine";
                     not_about_logs: "not_about_logs";
                     other_project: "other_project";
@@ -17393,10 +17163,6 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                     count: import("zod").ZodNumber;
                     previousCount: import("zod").ZodNumber;
-                    countBasis: import("zod").ZodEnum<{
-                        exact: "exact";
-                        sampled: "sampled";
-                    }>;
                     firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -17412,7 +17178,6 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                approximate: import("zod").ZodBoolean;
                 truncated: import("zod").ZodBoolean;
                 previousWindow: import("zod").ZodObject<{
                     from: import("zod").ZodString;
@@ -17515,10 +17280,6 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strip>>;
                         count: import("zod").ZodNumber;
                         previousCount: import("zod").ZodNumber;
-                        countBasis: import("zod").ZodEnum<{
-                            exact: "exact";
-                            sampled: "sampled";
-                        }>;
                         firstSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
@@ -17534,7 +17295,6 @@ export declare const publicApiOperations: {
                         }, import("zod/v4/core").$strip>>;
                     }, import("zod/v4/core").$strip>>;
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
-                    approximate: import("zod").ZodBoolean;
                     truncated: import("zod").ZodBoolean;
                     previousWindow: import("zod").ZodObject<{
                         from: import("zod").ZodString;
@@ -17618,19 +17378,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>], "kind">>;
             }, import("zod/v4/core").$strip>>>;
             meta: import("zod").ZodNullable<import("zod").ZodObject<{
-                exactness: import("zod").ZodEnum<{
-                    approximate: "approximate";
-                    exact: "exact";
-                }>;
-                approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"sampled">;
-                    relativeError: import("zod").ZodNumber;
-                    sampleFraction: import("zod").ZodNumber;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_percentile">;
-                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
-                    method: import("zod").ZodLiteral<"estimated_distinct">;
-                }, import("zod/v4/core").$strict>], "method">>;
                 coverage: import("zod").ZodObject<{
                     from: import("zod").ZodString;
                     to: import("zod").ZodString;
@@ -17647,7 +17394,6 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
             rejection: import("zod").ZodOptional<import("zod").ZodObject<{
                 code: import("zod").ZodEnum<{
-                    approximation_required: "approximation_required";
                     bucket_too_fine: "bucket_too_fine";
                     not_about_logs: "not_about_logs";
                     other_project: "other_project";

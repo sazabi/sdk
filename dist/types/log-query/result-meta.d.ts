@@ -1,6 +1,4 @@
 import { z } from "zod";
-export declare const LOG_QUERY_EXACTNESS: readonly ["exact", "approximate"];
-export type LogQueryExactness = (typeof LOG_QUERY_EXACTNESS)[number];
 /**
  * Why a result covers only part of its window: stored logs do not reach all
  * of it (`stored_range`), request fields are recorded only from a later
@@ -10,39 +8,11 @@ export type LogQueryExactness = (typeof LOG_QUERY_EXACTNESS)[number];
 export declare const LOG_QUERY_COVERAGE_REASONS: readonly ["stored_range", "request_columns", "read_limit"];
 export type LogQueryCoverageReason = (typeof LOG_QUERY_COVERAGE_REASONS)[number];
 /**
- * How an approximate result was estimated: from a sample of the matching
- * lines (with its relative error), or as a percentile or a distinct count
- * estimated from a compact summary of the values.
- */
-export declare const logQueryApproximationSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
-    method: z.ZodLiteral<"sampled">;
-    relativeError: z.ZodNumber;
-    sampleFraction: z.ZodNumber;
-}, z.core.$strict>, z.ZodObject<{
-    method: z.ZodLiteral<"estimated_percentile">;
-}, z.core.$strict>, z.ZodObject<{
-    method: z.ZodLiteral<"estimated_distinct">;
-}, z.core.$strict>], "method">;
-export type LogQueryApproximation = z.infer<typeof logQueryApproximationSchema>;
-/**
- * What a caller sees about how a query ran: how exact its numbers are, the
- * part of the window they cover, and how fresh they are. How the platform
- * read the logs stays on the server.
+ * What a caller sees about how a query ran: the part of the window its
+ * results cover and how fresh they are. How the platform read the logs stays
+ * on the server.
  */
 export declare const logQueryExecutionMetaSchema: z.ZodObject<{
-    exactness: z.ZodEnum<{
-        approximate: "approximate";
-        exact: "exact";
-    }>;
-    approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        method: z.ZodLiteral<"sampled">;
-        relativeError: z.ZodNumber;
-        sampleFraction: z.ZodNumber;
-    }, z.core.$strict>, z.ZodObject<{
-        method: z.ZodLiteral<"estimated_percentile">;
-    }, z.core.$strict>, z.ZodObject<{
-        method: z.ZodLiteral<"estimated_distinct">;
-    }, z.core.$strict>], "method">>;
     coverage: z.ZodObject<{
         from: z.ZodISODateTime;
         to: z.ZodISODateTime;
@@ -73,12 +43,10 @@ export type LogQueryExecutionMeta = z.infer<typeof logQueryExecutionMetaSchema>;
  * - `time_range_too_wide`: the time range reaches further back than this
  *   query can be answered, or holds more than one result can; use a shorter
  *   or more recent time range, or narrow the query.
- * - `approximation_required`: only an estimate is available; allow one with
- *   `exactness: "approximate_ok"` and `approximation.maxRelativeError`.
  * - `unsupported_query`: this combination of fields and measure cannot be
  *   answered over this time range; simplify the query.
  */
-export declare const LOG_QUERY_ERROR_CODES: readonly ["invalid_query", "bucket_too_fine", "time_range_too_wide", "approximation_required", "unsupported_query"];
+export declare const LOG_QUERY_ERROR_CODES: readonly ["invalid_query", "bucket_too_fine", "time_range_too_wide", "unsupported_query"];
 export type LogQueryErrorCode = (typeof LOG_QUERY_ERROR_CODES)[number];
 /** The codes a valid query that still cannot run is rejected with. */
 export type LogQueryRejectionCode = Exclude<LogQueryErrorCode, "invalid_query">;
@@ -87,7 +55,6 @@ export declare const LOG_QUERY_ERROR_MESSAGES: Record<LogQueryErrorCode, string>
 /** Why a valid query was not run: a stable code and its caller-facing message. */
 export declare const logQueryRejectionSchema: z.ZodObject<{
     code: z.ZodEnum<{
-        approximation_required: "approximation_required";
         bucket_too_fine: "bucket_too_fine";
         time_range_too_wide: "time_range_too_wide";
         unsupported_query: "unsupported_query";
