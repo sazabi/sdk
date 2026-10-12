@@ -505,7 +505,6 @@ export declare const LogAskMetaSchema: z.ZodObject<{
     approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         method: z.ZodLiteral<"sampled">;
         relativeError: z.ZodNumber;
-        confidence: z.ZodLiteral<0.95>;
         sampleFraction: z.ZodNumber;
     }, z.core.$strict>, z.ZodObject<{
         method: z.ZodLiteral<"estimated_percentile">;
@@ -793,7 +792,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
         approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             method: z.ZodLiteral<"sampled">;
             relativeError: z.ZodNumber;
-            confidence: z.ZodLiteral<0.95>;
             sampleFraction: z.ZodNumber;
         }, z.core.$strict>, z.ZodObject<{
             method: z.ZodLiteral<"estimated_percentile">;
@@ -1096,7 +1094,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
         approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             method: z.ZodLiteral<"sampled">;
             relativeError: z.ZodNumber;
-            confidence: z.ZodLiteral<0.95>;
             sampleFraction: z.ZodNumber;
         }, z.core.$strict>, z.ZodObject<{
             method: z.ZodLiteral<"estimated_percentile">;
@@ -1399,7 +1396,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
         approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             method: z.ZodLiteral<"sampled">;
             relativeError: z.ZodNumber;
-            confidence: z.ZodLiteral<0.95>;
             sampleFraction: z.ZodNumber;
         }, z.core.$strict>, z.ZodObject<{
             method: z.ZodLiteral<"estimated_percentile">;
@@ -1715,7 +1711,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
         approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             method: z.ZodLiteral<"sampled">;
             relativeError: z.ZodNumber;
-            confidence: z.ZodLiteral<0.95>;
             sampleFraction: z.ZodNumber;
         }, z.core.$strict>, z.ZodObject<{
             method: z.ZodLiteral<"estimated_percentile">;
@@ -2343,7 +2338,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             method: z.ZodLiteral<"sampled">;
             relativeError: z.ZodNumber;
-            confidence: z.ZodLiteral<0.95>;
             sampleFraction: z.ZodNumber;
         }, z.core.$strict>, z.ZodObject<{
             method: z.ZodLiteral<"estimated_percentile">;
@@ -2681,7 +2675,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
         approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             method: z.ZodLiteral<"sampled">;
             relativeError: z.ZodNumber;
-            confidence: z.ZodLiteral<0.95>;
             sampleFraction: z.ZodNumber;
         }, z.core.$strict>, z.ZodObject<{
             method: z.ZodLiteral<"estimated_percentile">;
@@ -3104,7 +3097,6 @@ export declare const logsContract: {
             approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
                 method: z.ZodLiteral<"sampled">;
                 relativeError: z.ZodNumber;
-                confidence: z.ZodLiteral<0.95>;
                 sampleFraction: z.ZodNumber;
             }, z.core.$strict>, z.ZodObject<{
                 method: z.ZodLiteral<"estimated_percentile">;
@@ -3732,7 +3724,6 @@ export declare const logsContract: {
             approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
                 method: z.ZodLiteral<"sampled">;
                 relativeError: z.ZodNumber;
-                confidence: z.ZodLiteral<0.95>;
                 sampleFraction: z.ZodNumber;
             }, z.core.$strict>, z.ZodObject<{
                 method: z.ZodLiteral<"estimated_percentile">;

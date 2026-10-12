@@ -1,8 +1,6 @@
 import { z } from "zod";
 export declare const LOG_QUERY_EXACTNESS: readonly ["exact", "approximate"];
 export type LogQueryExactness = (typeof LOG_QUERY_EXACTNESS)[number];
-/** Sampling bounds are stated at this confidence. */
-export declare const SAMPLING_CONFIDENCE = 0.95;
 /**
  * Why a result covers only part of its window: stored logs do not reach all
  * of it (`stored_range`), request fields are recorded only from a later
@@ -13,13 +11,12 @@ export declare const LOG_QUERY_COVERAGE_REASONS: readonly ["stored_range", "requ
 export type LogQueryCoverageReason = (typeof LOG_QUERY_COVERAGE_REASONS)[number];
 /**
  * How an approximate result was estimated: from a sample of the matching
- * lines (with its relative error at `confidence`), or as a percentile or a
- * distinct count estimated from a compact summary of the values.
+ * lines (with its relative error), or as a percentile or a distinct count
+ * estimated from a compact summary of the values.
  */
 export declare const logQueryApproximationSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     method: z.ZodLiteral<"sampled">;
     relativeError: z.ZodNumber;
-    confidence: z.ZodLiteral<0.95>;
     sampleFraction: z.ZodNumber;
 }, z.core.$strict>, z.ZodObject<{
     method: z.ZodLiteral<"estimated_percentile">;
@@ -40,7 +37,6 @@ export declare const logQueryExecutionMetaSchema: z.ZodObject<{
     approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         method: z.ZodLiteral<"sampled">;
         relativeError: z.ZodNumber;
-        confidence: z.ZodLiteral<0.95>;
         sampleFraction: z.ZodNumber;
     }, z.core.$strict>, z.ZodObject<{
         method: z.ZodLiteral<"estimated_percentile">;

@@ -2600,7 +2600,6 @@ export declare const publicApiContract: {
                         approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"sampled">;
                             relativeError: import("zod").ZodNumber;
-                            confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -2956,7 +2955,6 @@ export declare const publicApiContract: {
                         approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"sampled">;
                             relativeError: import("zod").ZodNumber;
-                            confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -3627,7 +3625,6 @@ export declare const publicApiContract: {
                 approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"sampled">;
                     relativeError: import("zod").ZodNumber;
-                    confidence: import("zod").ZodLiteral<0.95>;
                     sampleFraction: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -4255,7 +4252,6 @@ export declare const publicApiContract: {
                 approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"sampled">;
                     relativeError: import("zod").ZodNumber;
-                    confidence: import("zod").ZodLiteral<0.95>;
                     sampleFraction: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -4569,7 +4565,6 @@ export declare const publicApiContract: {
                 approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"sampled">;
                     relativeError: import("zod").ZodNumber;
-                    confidence: import("zod").ZodLiteral<0.95>;
                     sampleFraction: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -15665,7 +15660,6 @@ export declare const publicApiOperations: {
                         approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"sampled">;
                             relativeError: import("zod").ZodNumber;
-                            confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -16021,7 +16015,6 @@ export declare const publicApiOperations: {
                         approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"sampled">;
                             relativeError: import("zod").ZodNumber;
-                            confidence: import("zod").ZodLiteral<0.95>;
                             sampleFraction: import("zod").ZodNumber;
                         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                             method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -16692,7 +16685,6 @@ export declare const publicApiOperations: {
                 approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"sampled">;
                     relativeError: import("zod").ZodNumber;
-                    confidence: import("zod").ZodLiteral<0.95>;
                     sampleFraction: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -17320,7 +17312,6 @@ export declare const publicApiOperations: {
                 approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"sampled">;
                     relativeError: import("zod").ZodNumber;
-                    confidence: import("zod").ZodLiteral<0.95>;
                     sampleFraction: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"estimated_percentile">;
@@ -17634,7 +17625,6 @@ export declare const publicApiOperations: {
                 approximation: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"sampled">;
                     relativeError: import("zod").ZodNumber;
-                    confidence: import("zod").ZodLiteral<0.95>;
                     sampleFraction: import("zod").ZodNumber;
                 }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                     method: import("zod").ZodLiteral<"estimated_percentile">;
