@@ -125,6 +125,7 @@ export declare const WebhookIssueSchema: z.ZodObject<{
         medium: "medium";
     }>;
     componentId: z.ZodNullable<z.ZodString>;
+    componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     resolvedAt: z.ZodNullable<z.ZodString>;
     mutedAt: z.ZodNullable<z.ZodString>;
@@ -239,6 +240,7 @@ export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -368,6 +370,7 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;

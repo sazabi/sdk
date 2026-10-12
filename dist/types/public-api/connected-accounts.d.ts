@@ -133,6 +133,7 @@ export declare const ConnectedAccountSchema: z.ZodObject<{
             }, z.core.$strip>;
         }, z.core.$strip>>;
     }, z.core.$strip>>;
+    id: z.ZodString;
     provider: z.ZodString;
     externalName: z.ZodNullable<z.ZodString>;
     externalLogin: z.ZodNullable<z.ZodString>;
@@ -198,6 +199,7 @@ export declare const ListConnectedAccountsOutputSchema: z.ZodObject<{
                 }, z.core.$strip>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        id: z.ZodString;
         provider: z.ZodString;
         externalName: z.ZodNullable<z.ZodString>;
         externalLogin: z.ZodNullable<z.ZodString>;
@@ -269,6 +271,7 @@ export declare const listConnectedAccounts: import("../orpc-contracts/index.js")
                 }, z.core.$strip>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        id: z.ZodString;
         provider: z.ZodString;
         externalName: z.ZodNullable<z.ZodString>;
         externalLogin: z.ZodNullable<z.ZodString>;

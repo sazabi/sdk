@@ -27,6 +27,13 @@ var ReasoningProgressStreamEventSchema = z.object({
   messageId: z.string().describe("Assistant message the progress belongs to."),
   estimatedTokens: z.number().int().nonnegative().describe("Cumulative estimate for the current thinking block.")
 });
+var ProgressStreamEventSchema = z.object({
+  type: z.literal("progress"),
+  runId: z.string().min(1),
+  assistantMessageId: z.string().min(1),
+  text: z.string().trim().min(1).max(180),
+  source: z.enum(["template", "summary"])
+});
 var ReasoningCompleteStreamEventSchema = z.object({
   type: z.literal("reasoning_complete"),
   messageId: z.string().describe("Assistant message that completed.")
@@ -40,7 +47,7 @@ var ToolCallStartStreamEventSchema = z.object({
   type: z.literal("tool_call_start"),
   toolCallId: z.string().describe("Stable identifier for the tool call."),
   name: z.string().describe("Name of the tool being called."),
-  params: z.unknown().describe("Resolved tool input params.")
+  params: z.unknown().optional().describe("Resolved tool input params.")
 });
 var ToolCallCompleteStreamEventSchema = z.object({
   type: z.literal("tool_call_complete"),
@@ -52,7 +59,7 @@ var ToolCallCompleteStreamEventSchema = z.object({
 var ArtifactStreamEventSchema = z.object({
   type: z.literal("artifact"),
   name: z.string().describe("Artifact kind (for example table, timeseries)."),
-  data: z.unknown().describe("Artifact payload; shape depends on name."),
+  data: z.unknown().optional().describe("Artifact payload; shape depends on name."),
   toolCallId: z.string().describe("Tool call that produced the artifact.")
 });
 var ErrorStreamEventSchema = z.object({
@@ -73,6 +80,7 @@ var PublicAgentStreamEventSchema = z.discriminatedUnion("type", [
   TextChunkStreamEventSchema,
   TextCompleteStreamEventSchema,
   ReasoningProgressStreamEventSchema,
+  ProgressStreamEventSchema,
   ReasoningCompleteStreamEventSchema,
   ToolCallPendingStreamEventSchema,
   ToolCallStartStreamEventSchema,
@@ -88,6 +96,7 @@ var PublicAgentStreamEventTypeSchema = z.enum([
   "text_chunk",
   "text_complete",
   "reasoning_progress",
+  "progress",
   "reasoning_complete",
   "tool_call_pending",
   "tool_call_start",
@@ -542,6 +551,17 @@ var forwardLogsExamples = [
     }
   }
 ];
+
+class TailStreamOpenError extends Error {
+  host;
+  cause;
+  constructor(host, cause) {
+    super(cause instanceof Error ? cause.message : String(cause), { cause });
+    this.name = "TailStreamOpenError";
+    this.host = host;
+    this.cause = cause;
+  }
+}
 var createLogTransports = (options) => {
   const regionCache = new Map;
   return {
@@ -809,6 +829,7 @@ var createSseTailStream = async (options) => {
       lastEventId = event.id;
     }
   };
+  const tailHost = new URL(options.url).host;
   const connectAndRead = async (markReady) => {
     let openedOnce = false;
     while (!finished && !explicitClose) {
@@ -839,7 +860,10 @@ var createSseTailStream = async (options) => {
           break;
         }
         const tailError = toTailError(error);
-        if (!openedOnce || isFatalTailError(tailError)) {
+        if (!openedOnce) {
+          throw new TailStreamOpenError(tailHost, tailError);
+        }
+        if (isFatalTailError(tailError)) {
           throw tailError;
         }
         shouldReconnect = true;
@@ -1551,26 +1575,6 @@ var public_api_client_contract_gen_default = {
     }
   },
   dashboards: {
-    updateViewSettings: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "dashboards.updateViewSettings",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "PATCH",
-          path: "/dashboards/{id}/view-settings",
-          tags: ["Dashboards"],
-          operationId: "dashboards.updateViewSettings",
-          summary: "Update dashboard view settings",
-          description: "Save the project's default time range without changing dashboard content. Read viewSettings.revision through dashboards.get and send it as expectedRevision. Null restores the definition's default. A stale revision returns CONFLICT."
-        }
-      }
-    },
     list: {
       "~orpc": {
         errorMap: {},
@@ -2180,7 +2184,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.executeQuery",
           summary: "Run a log query",
-          description: "Run a log query with no model involved, given either the `queryId` of an earlier `logs.ask` answer or `logs.executeQuery` run, or a `spec` written in the log query spec (its JSON Schema is this operation's `spec` input; `sazabi logs query schema` prints it). Runs over `window` (by default the same absolute times a `queryId` read, or the last hour for a `spec`; a relative `window` ends now, which asks the same question again over the latest period), with an optional `limit`, or narrowed to the log lines of one `group` of a table. Returns the same envelope as `logs.ask` without an answer: `results`, what was measured (`explanation`), how exact and complete the numbers are (`meta`), and a new `queryId` naming this run (its query and the times it read). A run by `queryId` names that id as `parentId`. An unknown `queryId` is not found; a `spec` the service cannot run is refused with what to change; asking the question again yields a new id."
+          description: "Run a log query with no model involved, given either the `queryId` of an earlier `logs.ask` answer or `logs.executeQuery` run, or a `spec` written in the log query spec (its JSON Schema is this operation's `spec` input; `sazabi logs query schema` prints it). Runs over `window` (by default the same absolute times a `queryId` read, or the last hour for a `spec`; a relative `window` ends now, which asks the same question again over the latest period), with an optional `limit`, or narrowed to the log lines of one `group` of a table. Returns the same envelope as `logs.ask` without an answer: `results`, what was measured (`explanation`), how exact and complete the numbers are (`meta`), and a new `queryId` naming this run (its query and the times it read). A run by `queryId` names that id as `parentId`. `rows` results page: when more lines matched than `limit` holds the envelope carries a `nextCursor`, and passing it as `cursor` with the same query reads the next `limit` lines over the same times; a table, series, value or kinds result returns at most `limit` groups and never pages. An unknown `queryId` is not found; a `spec` the service cannot run is refused with what to change; asking the question again yields a new id."
         }
       }
     },
@@ -2202,6 +2206,48 @@ var public_api_client_contract_gen_default = {
           summary: "Run an earlier log query (deprecated)",
           description: "Deprecated alias for `POST /logs/queries/execute` with a `queryId`; removed on 2027-03-01. Run the query behind an earlier `logs.ask` answer again, by its `queryId`, with no model involved: over the window the answer covered or a new one, with a new `limit`, or narrowed to the log lines of one `group` of a table. Returns `results` without an answer, and a new `queryId` whose `parentId` is the one that was run. An unknown id is not found; asking the question again yields a new id.",
           deprecated: true
+        }
+      }
+    },
+    queries: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "logs.queries.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/logs/queries/{queryId}",
+            tags: ["Logs"],
+            operationId: "logs.queries.get",
+            summary: "Get a log query",
+            description: "Get one stored log query by its `queryId`: the question it answered (or the spec's plain-words reading), how it was read, the times it read, the status and kind of results it returned, and its log query spec. Any `queryId` a `logs.ask` answer or `logs.executeQuery` run returned can be read, runs included. Run it again with `logs.executeQuery`. An unknown id, or one from another project, is not found."
+          }
+        }
+      },
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "logs.queries.list",
+            backend: "api",
+            pagination: "cursor",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/logs/queries",
+            tags: ["Logs"],
+            operationId: "logs.queries.list",
+            summary: "List log queries",
+            description: "List the project's stored log queries, newest first: every `logs.ask` question that ran a query and every spec run with `logs.executeQuery`. Runs of an earlier query by its `queryId` are not listed; each names the query it ran as `parentId` and is read with `logs.queries.get`. Items carry no spec; read one with `logs.queries.get`."
+          }
         }
       }
     }
@@ -2263,7 +2309,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Sources"],
           operationId: "logSources.create",
           summary: "Create a log source",
-          description: "Create a log source. Managed mode takes vendor credentials in `metadata`, validates them, and provisions delivery behind the log source. Connectionless mode mints the log source plus a keyed log stream and returns the intake key and endpoint card(s) to point the sender at.",
+          description: "Create a log source. Native mode takes vendor credentials in `metadata`, validates them, and provisions delivery behind the log source. Manual mode mints the log source plus a keyed log stream and returns the intake key and endpoint card(s) to point the sender at.",
           successStatus: 201
         }
       }
@@ -2304,7 +2350,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Sources"],
           operationId: "logSources.verify",
           summary: "Check saved log source credentials",
-          description: "Verify the saved managed credentials without provisioning or changing vendor resources. Unknown and transient outcomes preserve previous evidence."
+          description: "Verify the saved native credentials without provisioning or changing vendor resources. Unknown and transient outcomes preserve previous evidence."
         }
       }
     },
@@ -2344,7 +2390,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Sources"],
           operationId: "logSources.delete",
           summary: "Delete a log source",
-          description: "Delete a log source. Tombstones the log source and its log streams, deactivates their intake keys (already-ingested data is preserved with its attribution), and runs vendor-side cleanup for managed log sources when the provider supports it.",
+          description: "Delete a log source. Tombstones the log source and its log streams, deactivates their intake keys (already-ingested data is preserved with its attribution), and runs vendor-side cleanup for native log sources when the provider supports it.",
           successStatus: 200
         }
       }
@@ -2387,7 +2433,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Streams"],
           operationId: "logStreams.create",
           summary: "Create a log stream",
-          description: "Create a new log stream under a managed log source. Triggers async provisioning; poll the log stream to track it. Connectionless log sources are single-stream — create another log source instead.",
+          description: "Create a new log stream under a native log source. Triggers async provisioning; poll the log stream to track it. Manual log sources are single-stream — create another log source instead.",
           successStatus: 201
         }
       }
@@ -2408,7 +2454,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Streams"],
           operationId: "logStreams.createBatch",
           summary: "Batch-create log streams",
-          description: "Create multiple log streams under a managed log source in one call. Every accepted stream gets a durable row immediately; provisioning happens asynchronously — poll each log stream to track it. API-created streams are always nameless, so there is no per-item rejection: every request item is either accepted (a row was created) or the whole call fails with a request-level error.",
+          description: "Create multiple log streams under a native log source in one call. Every accepted stream gets a durable row immediately; provisioning happens asynchronously — poll each log stream to track it. API-created streams are always nameless, so there is no per-item rejection: every request item is either accepted (a row was created) or the whole call fails with a request-level error.",
           successStatus: 201
         }
       }
@@ -2488,7 +2534,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Streams"],
           operationId: "logStreams.delete",
           summary: "Delete a log stream",
-          description: "Delete a log stream. Tombstones the log stream and deactivates its intake key. Deleting a connectionless log source's only log stream tombstones the log source too.",
+          description: "Delete a log stream. Tombstones the log stream and deactivates its intake key. Deleting a manual log source's only log stream tombstones the log source too.",
           successStatus: 200
         }
       }
@@ -2509,7 +2555,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Streams"],
           operationId: "logStreams.reassign",
           summary: "Reassign a log stream",
-          description: "Move a log stream to a different connectionless log source in the same project. Preserves the stream's ID, intake key credential, and ingested data; rebinds the key's intake adapter to the target log source's provider so future data is processed as that provider's format.",
+          description: "Move a log stream to a different manual log source in the same project. Preserves the stream's ID, intake key credential, and ingested data; rebinds the key's intake adapter to the target log source's provider so future data is processed as that provider's format.",
           successStatus: 200
         }
       }
@@ -3041,6 +3087,66 @@ var public_api_client_contract_gen_default = {
           description: "Delete a channel-to-project mapping."
         }
       }
+    },
+    listMicrosoftTeamsChannelProjectMappings: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "integrations.listMicrosoftTeamsChannelProjectMappings",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/integrations/connections/{connectionId}/microsoft-teams-channel-project-mappings",
+          tags: ["Integrations"],
+          operationId: "integrations.listMicrosoftTeamsChannelProjectMappings",
+          summary: "List Microsoft Teams channel-to-project mappings",
+          description: "List the channel-to-project mention routes of a Microsoft Teams connection. A mention of the bot in a mapped channel runs in the mapped project; other mentions use the connection's default project."
+        }
+      }
+    },
+    setMicrosoftTeamsChannelProjectMapping: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "integrations.setMicrosoftTeamsChannelProjectMapping",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PUT",
+          path: "/integrations/connections/{connectionId}/microsoft-teams-channel-project-mappings/{microsoftTeamsChannelId}",
+          tags: ["Integrations"],
+          operationId: "integrations.setMicrosoftTeamsChannelProjectMapping",
+          summary: "Set a Microsoft Teams channel-to-project mapping",
+          description: "Create or update the mention route of one Teams channel. The channel name and team are resolved from the connection's channel catalog. Idempotent on (connection, channel)."
+        }
+      }
+    },
+    deleteMicrosoftTeamsChannelProjectMapping: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "integrations.deleteMicrosoftTeamsChannelProjectMapping",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "DELETE",
+          path: "/integrations/connections/{connectionId}/microsoft-teams-channel-project-mappings/{microsoftTeamsChannelId}",
+          tags: ["Integrations"],
+          operationId: "integrations.deleteMicrosoftTeamsChannelProjectMapping",
+          summary: "Delete a Microsoft Teams channel-to-project mapping",
+          description: "Delete a Teams channel's mention route; deleting one that does not exist succeeds."
+        }
+      }
     }
   },
   notificationChannels: {
@@ -3307,7 +3413,7 @@ var public_api_client_contract_gen_default = {
           tags: ["MCP Connectors"],
           operationId: "mcpConnectors.listProviders",
           summary: "List MCP connector providers",
-          description: "List all supported MCP connector providers with their auth mode and setup skill."
+          description: "List all supported MCP connector providers with their auth mode, setup skill, and about page."
         }
       }
     },
@@ -3447,7 +3553,7 @@ var public_api_client_contract_gen_default = {
           tags: ["MCP Connectors"],
           operationId: "mcpConnectors.create",
           summary: "Create an MCP connector",
-          description: "Create a preset MCP connector with header-based or AWS SigV4 authentication. The server URL must match the selected provider's supported endpoints. Connects immediately and returns the connector with its discovered tool snapshot.",
+          description: "Create a preset MCP connector with header-based, AWS SigV4, or no authentication. The server URL and transport default to the preset's; a server URL given must match the selected provider's supported endpoints. Connects immediately and returns the connector with its discovered tool snapshot.",
           successStatus: 201
         }
       }
@@ -3758,7 +3864,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Sandbox CLIs"],
           operationId: "sandboxClis.listTypes",
           summary: "List CLI types",
-          description: "List all supported sandbox CLI types with their environment variable requirements and setup skills."
+          description: "List all supported sandbox CLI types with their environment variable requirements, setup skills, and about pages."
         }
       }
     },
@@ -4052,6 +4158,28 @@ var public_api_client_contract_gen_default = {
       }
     }
   },
+  signals: {
+    list: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "signals.list",
+          backend: "api",
+          pagination: "cursor",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/signals",
+          tags: ["Signals"],
+          operationId: "signals.list",
+          summary: "List signals",
+          description: "List the signals a signal definition fired, newest first. A signal is one admitted match of the signal definition, listed once however many automations received it; each delivery names one automation, its dispatch state, and the automation run it recorded. A match dropped before admission, for example with no enabled automation bound, is not listed."
+        }
+      }
+    }
+  },
   memory: {
     put: {
       "~orpc": {
@@ -4296,7 +4424,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Onboarding"],
           operationId: "onboarding.continueWithFree",
           summary: "Continue onboarding with Free",
-          description: "Confirm the organization's existing active Free plan. Requires billing management permission; does not create a subscription or request payment."
+          description: "Confirm the organization's existing active Free plan and authorize its first cycle credit grant. Retries cannot duplicate the grant. Requires billing management permission; does not create a subscription or request payment."
         }
       }
     },
@@ -4783,6 +4911,51 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "teams.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: [
+            {
+              name: "team-with-members",
+              input: {
+                organizationId: "organization-123",
+                teamId: "5c0f9866-31ab-4237-94cc-a1d0ba2f6de2"
+              },
+              output: {
+                team: {
+                  id: "5c0f9866-31ab-4237-94cc-a1d0ba2f6de2",
+                  name: "Payments",
+                  description: "Owns checkout and billing components.",
+                  createdAt: "2026-01-01T00:00:00.000Z",
+                  memberCount: 1
+                },
+                members: [
+                  {
+                    userId: "user_123",
+                    name: "Ada Lovelace",
+                    email: "ada@example.com",
+                    addedAt: "2026-01-02T00:00:00.000Z"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        route: {
+          method: "GET",
+          path: "/teams/{teamId}",
+          tags: ["Teams"],
+          operationId: "teams.get",
+          summary: "Get a team",
+          description: "Get one team with its active members. The team is read in the organization the credential acts in."
+        }
+      }
+    },
     create: {
       "~orpc": {
         errorMap: {},
@@ -4860,8 +5033,8 @@ var public_api_client_contract_gen_default = {
           path: "/teams/{teamId}/members",
           tags: ["Teams"],
           operationId: "teams.addMember",
-          summary: "Add a team member",
-          description: "Add an active organization member to a team.",
+          summary: "Add team members",
+          description: "Add up to 100 active organization members to a team atomically. Existing memberships are unchanged and previously removed memberships are restored.",
           successStatus: 201
         }
       }
@@ -5290,7 +5463,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Projects"],
           operationId: "projects.getIssueDetectionSettings",
           summary: "Get issue detection settings",
-          description: "Read the project's issue detection toggle. User credentials require settings:write permission."
+          description: "Read the project's issue detection toggle. Requires access to the project; changing the toggle requires settings:write permission."
         }
       }
     },
@@ -6232,7 +6405,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Issues"],
           operationId: "issues.update",
           summary: "Update an issue",
-          description: "Change an issue's severity, with a note recorded in its history. A change notifies no one."
+          description: "Change an issue's severity, with an optional note recorded in its history. A change notifies no one."
         }
       }
     },
@@ -6252,7 +6425,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Issues"],
           operationId: "issues.getAgentPrompt",
           summary: "Get an issue's agent prompt",
-          description: "Get the prompt that hands an issue to your own coding agent: it tells the agent to set up the Sazabi CLI, load the analysis, verify it against live logs, fix the code, and open a pull request linked to the issue."
+          description: "Get the prompt that hands an open, resolved, or ignored issue to your own coding agent, including its current status: it tells the agent to set up the Sazabi CLI, load the analysis, verify it against live logs, fix the code, and open a pull request linked to the issue."
         }
       }
     },
@@ -6453,6 +6626,91 @@ var public_api_client_contract_gen_default = {
           operationId: "issues.unmute",
           summary: "Unmute an issue",
           description: "Unmute an issue, preserving its current status."
+        }
+      }
+    },
+    read: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.read",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/issues/{issueId}/read",
+          tags: ["Issues"],
+          operationId: "issues.read",
+          summary: "Mark an issue read",
+          description: "Mark an issue read for the calling user, up to its latest activity, as opening the issue page does. Only a person has read state; a key is refused. Answers the user's read cursor."
+        }
+      }
+    },
+    unread: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.unread",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/issues/{issueId}/unread",
+          tags: ["Issues"],
+          operationId: "issues.unread",
+          summary: "Mark an issue unread",
+          description: "Mark an issue unread for the calling user, whatever its activity, as the issue page's Mark unread action does. Only a person has read state; a key is refused. Answers the user's read cursor."
+        }
+      }
+    },
+    history: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "issues.history.list",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/issues/{issueId}/history",
+            tags: ["Issues"],
+            operationId: "issues.history.list",
+            summary: "List an issue's history",
+            description: "List an issue's activity oldest first, as the issue page shows it: who did what and when, with the note and the document each entry carries. The `created` entry carries the issue's report."
+          }
+        }
+      }
+    },
+    fixes: {
+      create: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "issues.fixes.create",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/issues/{issueId}/fix",
+            tags: ["Issues"],
+            operationId: "issues.fixes.create",
+            summary: "Request a fix for an issue",
+            description: "Ask Sazabi's agent to fix an open issue in its issue thread, as the issue page's Fix button does. Only a person may request a fix; the issue must be open and have a thread. The fix is queued and answers with the thread it runs in.",
+            successStatus: 202
+          }
         }
       }
     }
@@ -6810,6 +7068,28 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    ratedUsage: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "billing.ratedUsage.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/billing/usage/rated",
+            tags: ["Billing"],
+            operationId: "billing.ratedUsage.get",
+            summary: "Get rated usage",
+            description: "Estimate gross USD consumption value and net usage cost for eight non-AI products from corrected observed ledger quantities. Every period uses the current effective commercial plan prices and recurring allowances on the current billing schedule. Omit dates for its current cycle; without a current plan the UTC month is native-only. This read-only simulation excludes promotional first-cycle bonuses, subscription fees, taxes, AI tokens, and operational activity; it never recalculates or represents historical invoices and never converts credit prices to USD."
+          }
+        }
+      }
+    },
     listUsageInvoices: {
       "~orpc": {
         errorMap: {},
@@ -7146,7 +7426,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Billing"],
           operationId: "billing.createUsageBudget",
           summary: "Create a usage budget",
-          description: "Create a hard per-cycle USD budget for one supported fixed-unit product, or across all budgetable operations. Covered work reserves its exact charge before starting."
+          description: "Create a hard per-cycle USD budget for one supported fixed-unit product, or across all budgetable operations. Covered work reserves its exact charge before starting. Requires a user with billing:manage or an organization-wide secret key (for example Terraform)."
         }
       }
     },
@@ -7166,7 +7446,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Billing"],
           operationId: "billing.updateUsageBudget",
           summary: "Update a usage budget",
-          description: "Change a usage budget's limit or enabled state. The next covered admission observes the committed change."
+          description: "Change a usage budget's limit or enabled state. The next covered admission observes the committed change. Requires a user with billing:manage or an organization-wide secret key."
         }
       }
     },
@@ -7186,7 +7466,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Billing"],
           operationId: "billing.deleteUsageBudget",
           summary: "Delete a usage budget",
-          description: "Delete a usage budget. The next covered admission observes the deletion."
+          description: "Delete a usage budget. The next covered admission observes the deletion. Requires a user with billing:manage or an organization-wide secret key."
         }
       }
     }
@@ -7351,7 +7631,7 @@ var public_api_client_contract_gen_default = {
           tags: ["FeatureFlags"],
           operationId: "featureFlags.resolvePublic",
           summary: "Resolve public feature flags",
-          description: "Return the public-audience Sazabi feature flags that are on, without authentication; flags that are off are omitted. Serves anonymous Sazabi surfaces such as www.sazabi.com. Public flags resolve app-wide only."
+          description: "Return the Sazabi feature flags approved for anonymous reading that are on, without authentication; flags that are off are omitted. Serves anonymous Sazabi surfaces such as www.sazabi.com. This map resolves app-wide only."
         }
       }
     }
@@ -7379,6 +7659,26 @@ var public_api_client_contract_gen_default = {
     }
   },
   repos: {
+    getUsage: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "repos.getUsage",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/repos/capacity",
+          tags: ["Repos"],
+          operationId: "repos.getUsage",
+          summary: "Get repository capacity usage",
+          description: "Organization-wide distinct repository usage and repositories only mapped to this project. Requires settings write permission; removing an exclusive mapping releases one slot."
+        }
+      }
+    },
     list: {
       "~orpc": {
         errorMap: {},
@@ -7415,7 +7715,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Repos"],
           operationId: "repos.add",
           summary: "Link repositories to a project",
-          description: "Link repositories to a project by access source id. Select only one access source per repository; re-linking an already-linked repository refreshes its selected access source."
+          description: "Link repositories to a project by access source id, optionally unlinking removeIds in the same transaction. Plan admission uses the final organization-wide distinct count; a refusal preserves every mapping. Select only one access source per repository; re-linking an already-linked repository refreshes its selected access source."
         }
       }
     },
@@ -7539,6 +7839,26 @@ var public_api_client_contract_gen_default = {
           operationId: "components.rename",
           summary: "Rename a component",
           description: "Rename an active component while reserving its previous exact name as an alias."
+        }
+      }
+    },
+    update: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "components.update",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/components/{componentId}",
+          tags: ["Components"],
+          operationId: "components.update",
+          summary: "Update a component",
+          description: "Set or clear a component's description. Unlike registration, which never lets a key overwrite a description, this is an explicit edit by a person with settings write access or by a secret key (for example Terraform). A merged component's description is read-only."
         }
       }
     },
@@ -7726,6 +8046,10 @@ var createClient = (options) => {
           operationId: apiError.operationId,
           missingContext: apiError.missingContext,
           ...apiError.reason !== undefined ? { reason: apiError.reason } : {},
+          ...apiError.product !== undefined ? { product: apiError.product } : {},
+          ...apiError.used !== undefined ? { used: apiError.used } : {},
+          ...apiError.included !== undefined ? { included: apiError.included } : {},
+          ...apiError.resetAt !== undefined ? { resetAt: apiError.resetAt } : {},
           ...apiError.entitlementId !== undefined ? { entitlementId: apiError.entitlementId } : {},
           ...apiError.planSlug !== undefined ? { planSlug: apiError.planSlug } : {},
           ...apiError.limit !== undefined ? { limit: apiError.limit } : {},
@@ -7788,7 +8112,6 @@ var createClient = (options) => {
       install: async (input) => raw.automationTemplates.install(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     dashboards: {
-      updateViewSettings: async (input) => raw.dashboards.updateViewSettings(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.updateViewSettings")),
       list: async (input = {}) => raw.dashboards.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.list")),
       get: async (input) => raw.dashboards.get(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.get")),
       validate: async (input) => raw.dashboards.validate(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.validate")),
@@ -7800,7 +8123,11 @@ var createClient = (options) => {
     logs: {
       ...logs,
       ask: async (input) => raw.logs.ask(await resolveProjectScopedInput(options.credentialProvider, input)),
-      executeQuery: async (input) => raw.logs.executeQuery(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logs.executeQuery"))
+      executeQuery: async (input) => raw.logs.executeQuery(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "logs.executeQuery")),
+      queries: {
+        get: async (input) => raw.logs.queries.get(await resolveProjectScopedInput(options.credentialProvider, input)),
+        list: async (input = {}) => raw.logs.queries.list(await resolveProjectScopedInput(options.credentialProvider, input))
+      }
     },
     onboarding: {
       getState: async (input = {}) => raw.onboarding.getState(await resolveOrganizationScopedInput(options.credentialProvider, await resolveProjectScopedInput(options.credentialProvider, input))),
@@ -7848,6 +8175,7 @@ var createClient = (options) => {
     },
     teams: {
       list: async (input = {}) => raw.teams.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.list")),
+      get: async (input) => raw.teams.get(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.get")),
       create: async (input) => raw.teams.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.create")),
       update: async (input) => raw.teams.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "teams.update")),
       delete: async (input) => {
@@ -7993,7 +8321,10 @@ var createClient = (options) => {
       updateSlackConfiguration: async (input) => raw.integrations.updateSlackConfiguration(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.updateSlackConfiguration")),
       listSlackChannelProjectMappings: async (input) => raw.integrations.listSlackChannelProjectMappings(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.listSlackChannelProjectMappings")),
       setSlackChannelProjectMapping: async (input) => raw.integrations.setSlackChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.setSlackChannelProjectMapping")),
-      deleteSlackChannelProjectMapping: async (input) => raw.integrations.deleteSlackChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.deleteSlackChannelProjectMapping"))
+      deleteSlackChannelProjectMapping: async (input) => raw.integrations.deleteSlackChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.deleteSlackChannelProjectMapping")),
+      listMicrosoftTeamsChannelProjectMappings: async (input) => raw.integrations.listMicrosoftTeamsChannelProjectMappings(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.listMicrosoftTeamsChannelProjectMappings")),
+      setMicrosoftTeamsChannelProjectMapping: async (input) => raw.integrations.setMicrosoftTeamsChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.setMicrosoftTeamsChannelProjectMapping")),
+      deleteMicrosoftTeamsChannelProjectMapping: async (input) => raw.integrations.deleteMicrosoftTeamsChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.deleteMicrosoftTeamsChannelProjectMapping"))
     },
     mcpConnectors: {
       list: async (input = {}) => raw.mcpConnectors.list(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -8057,6 +8388,9 @@ var createClient = (options) => {
       disable: async (input) => raw.signalDefinitions.disable(await resolveProjectScopedInput(options.credentialProvider, input)),
       delete: async (input) => raw.signalDefinitions.delete(await resolveProjectScopedInput(options.credentialProvider, input))
     },
+    signals: {
+      list: async (input) => raw.signals.list(await resolveProjectScopedInput(options.credentialProvider, input))
+    },
     scripts: {
       list: async (input = {}) => raw.scripts.list(await resolveProjectScopedInput(options.credentialProvider, input)),
       get: async (input) => raw.scripts.get(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -8070,6 +8404,14 @@ var createClient = (options) => {
       search: async (input = {}) => raw.issues.search(await resolveProjectScopedInput(options.credentialProvider, input)),
       get: async (input) => raw.issues.get(input),
       getAgentPrompt: async (input) => raw.issues.getAgentPrompt(input),
+      history: {
+        list: async (input) => raw.issues.history.list(input)
+      },
+      fixes: {
+        create: async (input) => raw.issues.fixes.create(input)
+      },
+      read: async (input) => raw.issues.read(input),
+      unread: async (input) => raw.issues.unread(input),
       linkPullRequest: async (input) => raw.issues.linkPullRequest({ relation: "fixes", ...input }),
       unlinkPullRequest: async (input) => raw.issues.unlinkPullRequest(input),
       getRejectionContext: async (input) => raw.issues.getRejectionContext(input),
@@ -8096,6 +8438,7 @@ var createClient = (options) => {
       register: async (input) => raw.components.register(await resolveProjectScopedInput(options.credentialProvider, input)),
       deregister: async (input) => raw.components.deregister(input),
       rename: async (input) => raw.components.rename(input),
+      update: async (input) => raw.components.update(input),
       assignTeam: async (input) => raw.components.assignTeam(input),
       reactivationPreview: async (input) => raw.components.reactivationPreview(input),
       reactivate: async (input) => raw.components.reactivate(input),
@@ -8107,6 +8450,9 @@ var createClient = (options) => {
       timeline: async (input) => raw.components.timeline(input)
     },
     billing: {
+      ratedUsage: {
+        get: async (input) => raw.billing.ratedUsage.get(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.ratedUsage.get"))
+      },
       getSummary: async (input = {}) => raw.billing.getSummary(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getSummary")),
       getUsage: async (input = {}) => raw.billing.getUsage(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getUsage")),
       getAccruedUsageCharges: async (input = {}) => raw.billing.getAccruedUsageCharges(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getAccruedUsageCharges")),
@@ -8141,6 +8487,7 @@ var createClient = (options) => {
       list: async (input = {}) => raw.recommendations.list(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     repos: {
+      getUsage: async (input = {}) => raw.repos.getUsage(await resolveProjectScopedInput(options.credentialProvider, input)),
       list: async (input = {}) => raw.repos.list(await resolveProjectScopedInput(options.credentialProvider, input)),
       add: async (input) => raw.repos.add(await resolveProjectScopedInput(options.credentialProvider, input)),
       remove: async (input) => raw.repos.remove(await resolveProjectScopedInput(options.credentialProvider, input))
@@ -8338,6 +8685,10 @@ var toApiErrorPayload = (value) => {
     operationId: record.operationId,
     missingContext: Array.isArray(record.missingContext) ? record.missingContext.filter((missingContext) => typeof missingContext === "string") : [],
     ...typeof record.reason === "string" ? { reason: record.reason } : {},
+    ...typeof record.product === "string" ? { product: record.product } : {},
+    ...typeof record.used === "string" ? { used: record.used } : {},
+    ...typeof record.included === "string" ? { included: record.included } : {},
+    ...typeof record.resetAt === "string" ? { resetAt: record.resetAt } : {},
     ...typeof record.entitlementId === "string" ? { entitlementId: record.entitlementId } : {},
     ...typeof record.planSlug === "string" || record.planSlug === null ? { planSlug: record.planSlug } : {},
     ...typeof record.limit === "boolean" || typeof record.limit === "string" || typeof record.limit === "number" || record.limit === null ? { limit: record.limit } : {},
@@ -8429,12 +8780,14 @@ export {
   AgentStreamControlFrameSchema,
   ForwardLogsInputSchema,
   ForwardLogsOutputSchema,
+  ProgressStreamEventSchema,
   PublicAgentStreamEventSchema,
   PublicAgentStreamEventTypeSchema,
   WebSocketLogEntrySchema as TailLogEntrySchema,
   LogFiltersSchema as TailLogFiltersSchema,
   WebSocketLogResourceSchema as TailLogResourceSchema,
   TailLogsInputSchema,
+  TailStreamOpenError,
   createClient,
   forwardLogsExamples,
   pollDeviceAuthorization,

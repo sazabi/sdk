@@ -1,4 +1,5 @@
 import type { AnySchema, ContractProcedure, InferSchemaInput, InferSchemaOutput, Route } from "@orpc/contract";
+import type { VendorLookupKind } from "./vendor-lookup.js";
 export type OperationPagination = "none" | "cursor" | "page";
 export type OperationAsyncMode = "sync" | "deferred" | "returns-redirect-url" | "websocket";
 export interface OperationRouteDefinition {
@@ -17,18 +18,105 @@ export interface OperationExample<InputValue, OutputValue> {
 }
 /**
  * The access rule of a domain owner's operation, as data
- * (docs/design/infrastructure/domain-owning-services): the owner resolves the
- * record named by `id` and runs `decideAccess` with `action` before the
- * handler. Contracts may import only contracts, so `action` is `"read"` or a
- * `@sazabi/auth` permission name as a string; the owner rejects an unknown
- * one when it binds the operation.
+ * (docs/design/infrastructure/domain-owning-services): a record the
+ * operation acts on; for an operation that reads no tenant data, any
+ * authenticated caller; for a user's own data, that user; for what the
+ * caller's own identity names, the caller; or, for a Sazabi operator's
+ * cross-tenant or global operation, the operator.
  */
-export interface OperationAccess {
+export type OperationAccess = RecordAccess | AuthenticatedAccess | SelfAccess | OwnScopeAccess | OperatorAccess | VendorLookupAccess;
+/**
+ * The owner resolves the record named by `id` and runs `decideAccess` with
+ * `action` before the handler. Contracts may import only contracts, so
+ * `action` is `"read"` or a `@sazabi/auth` permission name as a string; the
+ * owner rejects an unknown one when it binds the operation.
+ */
+export interface RecordAccess {
     /** The kind of record the operation acts on, such as `"project"`. */
     record: string;
     /** The input field that holds the record's id. */
     id: string;
     action: string;
+    /**
+     * The operation also serves a caller whose input names no record: the
+     * owner runs its handler with no scope instead of answering not found.
+     * Refused by default; the owner binds such an operation with its own
+     * binder, and only a record kind registered to admit a missing id
+     * accepts it (onboarding's state, which a person reads before they belong
+     * to any organization).
+     */
+    admitsMissing?: true;
+}
+/**
+ * Any forwarded caller, with no record and no `decideAccess`: only for an
+ * operation over code-owned data that belongs to no tenant, such as a
+ * catalog compiled into the service. services/core's
+ * `check:core-module-boundaries` fails a handler bound this way that can
+ * reach `@sazabi/database`.
+ */
+export interface AuthenticatedAccess {
+    authenticated: true;
+}
+/**
+ * The calling user, acting on their own user-owned data (personal
+ * preferences, their own phone number): a signed-in user principal reaches
+ * the handler, which receives that user's id and no organization or project
+ * scope. Every other principal is refused. The operation can never be
+ * pointed at another user: the handler acts on the forwarded user's id, and
+ * when `id` names an input field that carries a user id, any value other
+ * than the caller's own is refused as not found.
+ */
+export interface SelfAccess {
+    self: true;
+    /** An input field that holds a user id, which must be the caller's own. */
+    id?: string;
+    /**
+     * Also lets a background job (a `system` principal on the system or agent
+     * surface) reach the operation for the person it names as the forwarded
+     * actor, when the owner admits that person (ENG-9565: core requires a live
+     * member of the job's organization). The handler then acts on that
+     * person's id, as for their own session. Omitted, only the person's own
+     * session reaches it.
+     */
+    actingFor?: true;
+}
+/**
+ * The caller acting within its own identity, with no target named in input:
+ * a signed-in user acts as that user (the organizations they belong to), and
+ * a key acts within the organization and project it was issued for. The
+ * handler receives only that identity and decides from it alone; every other
+ * principal is refused. A key's organization and project are the bounds the
+ * front door forwarded, not a decision against its grants, so an operation
+ * that must confirm a key still reaches a record declares that record instead.
+ */
+export interface OwnScopeAccess {
+    ownScope: true;
+}
+/**
+ * A Sazabi operator acting through sudo on data no single target
+ * organization names: a list across every tenant, or a global row only
+ * operators write (an app-scope tool gate, the template catalog). Only a
+ * forwarded `admin` principal reaches the handler, with no organization or
+ * project scope; every other principal is refused. An operator with role
+ * `viewer` reaches it only when `action` is `"read"` and the owner lists
+ * the operation as a viewer read. Contracts may import only contracts, so
+ * `action` is `"read"` or a `@sazabi/auth` permission name as a string; the
+ * owner rejects an unknown one when it binds the operation. No front door
+ * but the admin API serves one.
+ */
+export interface OperatorAccess {
+    operator: true;
+    action: string;
+}
+/**
+ * A background job resolving a vendor id to its tenant before it knows the
+ * organization (ENG-9566): only a forwarded `vendor_lookup` principal on the
+ * `system` surface reaches the handler, with no scope; every other principal
+ * is refused, and that principal reaches nothing else. The output may carry
+ * only the keys `VENDOR_LOOKUP_OUTPUT_KEYS` lists for `vendorLookup`.
+ */
+export interface VendorLookupAccess {
+    vendorLookup: VendorLookupKind;
 }
 export interface OperationContractMetadata<TBackend extends string = string> {
     operationId: string;

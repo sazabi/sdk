@@ -7,6 +7,15 @@
  * Create, update, disconnect, setReadOnly, and OAuth endpoints mutate connectors.
  */
 import { z } from "zod";
+/**
+ * Self-asserted request-purpose header. The MCP gateway sets it on its own
+ * handshake-time connector inventory reads so public-api can label them
+ * `gateway_inventory` instead of `absent` (ENG-9573). It never authorizes,
+ * bills, or limits anything.
+ */
+export declare const REQUEST_PURPOSE_HEADER = "x-sazabi-request-purpose";
+/** The `REQUEST_PURPOSE_HEADER` value for the MCP gateway's inventory reads. */
+export declare const GATEWAY_INVENTORY_REQUEST_PURPOSE = "gateway-inventory";
 /** Install status values mirroring the MCP connection lifecycle. */
 export declare const MCP_CONNECTOR_INSTALL_STATUS_VALUES: readonly ["configured", "authorizing", "connected", "error"];
 /** Connection source: a built-in preset provider or a custom server. */
@@ -823,6 +832,12 @@ export declare const McpProviderInfoSchema: z.ZodObject<{
         enabled: "enabled";
     }>;
     setupSkill: z.ZodNullable<z.ZodString>;
+    about: z.ZodNullable<z.ZodString>;
+    credentialHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        name: z.ZodString;
+        placeholder: z.ZodString;
+    }, z.core.$strip>>>;
+    serverUrlRequired: z.ZodBoolean;
 }, z.core.$strip>;
 export type McpProviderInfo = z.infer<typeof McpProviderInfoSchema>;
 export declare const ListMcpProvidersInputSchema: z.ZodObject<{}, z.core.$strip>;
@@ -842,6 +857,12 @@ export declare const ListMcpProvidersOutputSchema: z.ZodObject<{
             enabled: "enabled";
         }>;
         setupSkill: z.ZodNullable<z.ZodString>;
+        about: z.ZodNullable<z.ZodString>;
+        credentialHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            name: z.ZodString;
+            placeholder: z.ZodString;
+        }, z.core.$strip>>>;
+        serverUrlRequired: z.ZodBoolean;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListMcpProvidersOutput = z.infer<typeof ListMcpProvidersOutputSchema>;
@@ -861,6 +882,12 @@ export declare const listMcpProviders: import("../orpc-contracts/index.js").Oper
             enabled: "enabled";
         }>;
         setupSkill: z.ZodNullable<z.ZodString>;
+        about: z.ZodNullable<z.ZodString>;
+        credentialHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            name: z.ZodString;
+            placeholder: z.ZodString;
+        }, z.core.$strip>>>;
+        serverUrlRequired: z.ZodBoolean;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const McpConnectorIndexEntrySchema: z.ZodObject<{
@@ -985,7 +1012,7 @@ export declare const CallMcpConnectorToolOutputSchema: z.ZodDiscriminatedUnion<[
     ok: z.ZodLiteral<true>;
     connectionKey: z.ZodString;
     toolName: z.ZodString;
-    result: z.ZodUnknown;
+    result: z.ZodOptional<z.ZodUnknown>;
     structuredContent: z.ZodOptional<z.ZodUnknown>;
     content: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     text: z.ZodNullable<z.ZodString>;
@@ -1009,7 +1036,7 @@ export declare const callMcpConnectorTool: import("../orpc-contracts/index.js").
     ok: z.ZodLiteral<true>;
     connectionKey: z.ZodString;
     toolName: z.ZodString;
-    result: z.ZodUnknown;
+    result: z.ZodOptional<z.ZodUnknown>;
     structuredContent: z.ZodOptional<z.ZodUnknown>;
     content: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     text: z.ZodNullable<z.ZodString>;
@@ -1037,11 +1064,11 @@ export declare const McpConnectorAwsSigV4Schema: z.ZodObject<{
 export type McpConnectorAwsSigV4 = z.infer<typeof McpConnectorAwsSigV4Schema>;
 export declare const CreateMcpConnectorInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    serverUrl: z.ZodString;
-    transport: z.ZodEnum<{
+    serverUrl: z.ZodOptional<z.ZodString>;
+    transport: z.ZodOptional<z.ZodEnum<{
         sse: "sse";
         "streamable-http": "streamable-http";
-    }>;
+    }>>;
     headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -1165,11 +1192,11 @@ export type CreateMcpConnectorInput = z.infer<typeof CreateMcpConnectorInputSche
 export type CreateMcpConnectorOutput = z.infer<typeof CreateMcpConnectorOutputSchema>;
 export declare const createMcpConnector: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
-    serverUrl: z.ZodString;
-    transport: z.ZodEnum<{
+    serverUrl: z.ZodOptional<z.ZodString>;
+    transport: z.ZodOptional<z.ZodEnum<{
         sse: "sse";
         "streamable-http": "streamable-http";
-    }>;
+    }>>;
     headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -2382,6 +2409,12 @@ export declare const mcpConnectorsContract: {
                 enabled: "enabled";
             }>;
             setupSkill: z.ZodNullable<z.ZodString>;
+            about: z.ZodNullable<z.ZodString>;
+            credentialHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                name: z.ZodString;
+                placeholder: z.ZodString;
+            }, z.core.$strip>>>;
+            serverUrlRequired: z.ZodBoolean;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly search: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -2437,7 +2470,7 @@ export declare const mcpConnectorsContract: {
         ok: z.ZodLiteral<true>;
         connectionKey: z.ZodString;
         toolName: z.ZodString;
-        result: z.ZodUnknown;
+        result: z.ZodOptional<z.ZodUnknown>;
         structuredContent: z.ZodOptional<z.ZodUnknown>;
         content: z.ZodArray<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
         text: z.ZodNullable<z.ZodString>;
@@ -2452,11 +2485,11 @@ export declare const mcpConnectorsContract: {
     }, z.core.$strip>], "ok">, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
-        serverUrl: z.ZodString;
-        transport: z.ZodEnum<{
+        serverUrl: z.ZodOptional<z.ZodString>;
+        transport: z.ZodOptional<z.ZodEnum<{
             sse: "sse";
             "streamable-http": "streamable-http";
-        }>;
+        }>>;
         headers: z.ZodOptional<z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             name: z.ZodString;

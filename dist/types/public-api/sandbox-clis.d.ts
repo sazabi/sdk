@@ -8,6 +8,7 @@ export declare const SandboxCliTypeInfoSchema: z.ZodObject<{
     executableNames: z.ZodArray<z.ZodString>;
     envVarKeys: z.ZodArray<z.ZodString>;
     setupSkill: z.ZodNullable<z.ZodString>;
+    about: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type SandboxCliTypeInfo = z.infer<typeof SandboxCliTypeInfoSchema>;
 export declare const ListSandboxCliTypesInputSchema: z.ZodObject<{}, z.core.$strip>;
@@ -18,6 +19,7 @@ export declare const ListSandboxCliTypesOutputSchema: z.ZodObject<{
         executableNames: z.ZodArray<z.ZodString>;
         envVarKeys: z.ZodArray<z.ZodString>;
         setupSkill: z.ZodNullable<z.ZodString>;
+        about: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListSandboxCliTypesOutput = z.infer<typeof ListSandboxCliTypesOutputSchema>;
@@ -28,6 +30,7 @@ export declare const listSandboxCliTypes: import("../orpc-contracts/index.js").O
         executableNames: z.ZodArray<z.ZodString>;
         envVarKeys: z.ZodArray<z.ZodString>;
         setupSkill: z.ZodNullable<z.ZodString>;
+        about: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const SandboxCliCredentialSourceSchema: z.ZodEnum<{
@@ -90,6 +93,7 @@ export declare const SandboxCliConnectionSchema: z.ZodObject<{
             }, z.core.$strip>;
         }, z.core.$strip>>;
     }, z.core.$strip>>;
+    id: z.ZodString;
     cliType: z.ZodString;
     credentialSource: z.ZodEnum<{
         bitbucket_integration: "bitbucket_integration";
@@ -160,6 +164,7 @@ export declare const ListSandboxCliConnectionsOutputSchema: z.ZodObject<{
                 }, z.core.$strip>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        id: z.ZodString;
         cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
@@ -231,6 +236,7 @@ export declare const listSandboxCliConnections: import("../orpc-contracts/index.
                 }, z.core.$strip>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        id: z.ZodString;
         cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
@@ -269,6 +275,7 @@ export declare const UpsertSandboxCliInputSchema: z.ZodObject<{
  */
 export declare const UpsertSandboxCliOutputSchema: z.ZodObject<{
     projectId: z.ZodString;
+    id: z.ZodString;
     cliType: z.ZodString;
     envVarKeys: z.ZodArray<z.ZodString>;
     connectionTest: z.ZodEnum<{
@@ -289,6 +296,7 @@ export declare const upsertSandboxCli: import("../orpc-contracts/index.js").Oper
     skipTest: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     projectId: z.ZodString;
+    id: z.ZodString;
     cliType: z.ZodString;
     envVarKeys: z.ZodArray<z.ZodString>;
     connectionTest: z.ZodEnum<{
@@ -416,6 +424,7 @@ export declare const sandboxClisContract: {
                     }, z.core.$strip>;
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
+            id: z.ZodString;
             cliType: z.ZodString;
             credentialSource: z.ZodEnum<{
                 bitbucket_integration: "bitbucket_integration";
@@ -436,6 +445,7 @@ export declare const sandboxClisContract: {
             executableNames: z.ZodArray<z.ZodString>;
             envVarKeys: z.ZodArray<z.ZodString>;
             setupSkill: z.ZodNullable<z.ZodString>;
+            about: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly testCli: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -464,6 +474,7 @@ export declare const sandboxClisContract: {
         skipTest: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodObject<{
         projectId: z.ZodString;
+        id: z.ZodString;
         cliType: z.ZodString;
         envVarKeys: z.ZodArray<z.ZodString>;
         connectionTest: z.ZodEnum<{

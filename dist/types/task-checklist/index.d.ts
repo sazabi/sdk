@@ -37,7 +37,7 @@
 import { type OnboardingFlowEntry } from "./onboarding-tasks.js";
 import { type TaskApplicabilityRule } from "./rules.js";
 export { ONBOARDING_CARD_BY_ID, ONBOARDING_FLOW, ONBOARDING_TASKS, type OnboardingFlowEntry, type OnboardingTaskKey, } from "./onboarding-tasks.js";
-export { SAMPLE_ISSUE, SAMPLE_ISSUE_AGE_MS, SAMPLE_ISSUE_CARD_ID, SAMPLE_ISSUE_DESCRIPTION_LABEL, SAMPLE_ISSUE_INTRO, SAMPLE_ISSUE_LABEL, SAMPLE_ISSUE_STATUS_LABEL, sampleIssueAgeLabel, sampleIssueOccurredAt, type SampleIssueStatus, } from "./sample-issue.js";
+export { SAMPLE_ISSUE, SAMPLE_ISSUE_AGE_MS, SAMPLE_ISSUE_CARD_ID, SAMPLE_ISSUE_DESCRIPTION_LABEL, SAMPLE_ISSUE_DISABLED_ACTION_REASON, SAMPLE_ISSUE_INTRO, SAMPLE_ISSUE_LABEL, SAMPLE_ISSUE_STATUS_LABEL, sampleIssueAgeLabel, sampleIssueOccurredAt, type SampleIssueStatus, } from "./sample-issue.js";
 export { NAVIGATION_SCENARIOS, type NavigationAction, type NavigationLedger, type NavigationPosition, type NavigationScenario, } from "./navigation-scenarios.js";
 export { SETUP_TASKS, type SetupTaskKey } from "./setup-tasks.js";
 export { applicabilityFor, CARDS_WITHOUT_BACK, COMMITMENT_FLOW_ENTRIES, dependenciesFor, isCommitmentFlowEntry, isSkippable, isTaskSkippedInLedger, offersBack, type OrgTaskSkipLedger, SKIPPABLE_TASKS, TASK_APPLICABILITY, TASK_APPLICABILITY_RULES, TASK_DEPENDENCIES, type TaskApplicabilityRule, TASKS_WITH_SKIP_LEDGER, type TaskWithSkipLedger, } from "./rules.js";

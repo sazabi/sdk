@@ -18,10 +18,8 @@ export type LogQueryCoverageReason = (typeof LOG_QUERY_COVERAGE_REASONS)[number]
  */
 export declare const logQueryApproximationSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     method: z.ZodLiteral<"sampled">;
-    /** Half-width of the confidence interval, relative to the value. */
     relativeError: z.ZodNumber;
     confidence: z.ZodLiteral<0.95>;
-    /** The share of matching lines read. */
     sampleFraction: z.ZodNumber;
 }, z.core.$strict>, z.ZodObject<{
     method: z.ZodLiteral<"estimated_percentile">;
@@ -42,10 +40,8 @@ export declare const logQueryExecutionMetaSchema: z.ZodObject<{
     }>;
     approximation: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         method: z.ZodLiteral<"sampled">;
-        /** Half-width of the confidence interval, relative to the value. */
         relativeError: z.ZodNumber;
         confidence: z.ZodLiteral<0.95>;
-        /** The share of matching lines read. */
         sampleFraction: z.ZodNumber;
     }, z.core.$strict>, z.ZodObject<{
         method: z.ZodLiteral<"estimated_percentile">;

@@ -54,18 +54,6 @@ export declare const GetDashboardInputSchema: z.ZodObject<{
 }, z.core.$strict>;
 export type GetDashboardInput = z.infer<typeof GetDashboardInputSchema>;
 export declare const GetDashboardOutputSchema: z.ZodObject<{
-    viewSettings: z.ZodOptional<z.ZodObject<{
-        revision: z.ZodNumber;
-        timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"absolute">;
-            from: z.ZodISODateTime;
-            to: z.ZodISODateTime;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"relative">;
-            lookbackSeconds: z.ZodNumber;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>>;
-    canUpdateViewSettings: z.ZodOptional<z.ZodBoolean>;
     origin: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"dashboard">;
         dashboardId: z.ZodUUID;
@@ -1428,7 +1416,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
     }, z.core.$strict>;
     document: z.ZodObject<{
         version: z.ZodLiteral<1>;
-        root: z.ZodType<import("../mdx/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx/index.js").SazabiMdxRootNode, unknown>>;
+        root: z.ZodType<import("../mdx-document/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx-document/index.js").SazabiMdxRootNode, unknown>>;
         componentNames: z.ZodArray<z.ZodString>;
         limits: z.ZodObject<{
             maxSourceLength: z.ZodNumber;
@@ -2766,18 +2754,6 @@ export declare const getDashboard: import("../orpc-contracts/index.js").Operatio
     includeFiles: z.ZodDefault<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     projectId: z.ZodOptional<z.ZodUUID>;
 }, z.core.$strict>, z.ZodObject<{
-    viewSettings: z.ZodOptional<z.ZodObject<{
-        revision: z.ZodNumber;
-        timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-            kind: z.ZodLiteral<"absolute">;
-            from: z.ZodISODateTime;
-            to: z.ZodISODateTime;
-        }, z.core.$strict>, z.ZodObject<{
-            kind: z.ZodLiteral<"relative">;
-            lookbackSeconds: z.ZodNumber;
-        }, z.core.$strict>], "kind">>;
-    }, z.core.$strict>>;
-    canUpdateViewSettings: z.ZodOptional<z.ZodBoolean>;
     origin: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"dashboard">;
         dashboardId: z.ZodUUID;
@@ -4142,7 +4118,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
     }, z.core.$strict>;
     document: z.ZodObject<{
         version: z.ZodLiteral<1>;
-        root: z.ZodType<import("../mdx/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx/index.js").SazabiMdxRootNode, unknown>>;
+        root: z.ZodType<import("../mdx-document/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx-document/index.js").SazabiMdxRootNode, unknown>>;
         componentNames: z.ZodArray<z.ZodString>;
         limits: z.ZodObject<{
             maxSourceLength: z.ZodNumber;
@@ -5425,53 +5401,4 @@ export declare const deleteDashboard: import("../orpc-contracts/index.js").Opera
     id: z.ZodUUID;
     revision: z.ZodNumber;
     deletedAt: z.ZodISODateTime;
-}, z.core.$strict>, "api">;
-export declare const UpdateDashboardViewSettingsInputSchema: z.ZodObject<{
-    id: z.ZodUUID;
-    expectedRevision: z.ZodNumber;
-    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        kind: z.ZodLiteral<"absolute">;
-        from: z.ZodISODateTime;
-        to: z.ZodISODateTime;
-    }, z.core.$strict>, z.ZodObject<{
-        kind: z.ZodLiteral<"relative">;
-        lookbackSeconds: z.ZodNumber;
-    }, z.core.$strict>], "kind">>;
-    projectId: z.ZodOptional<z.ZodUUID>;
-}, z.core.$strict>;
-export type UpdateDashboardViewSettingsInput = z.infer<typeof UpdateDashboardViewSettingsInputSchema>;
-export declare const DashboardViewSettingsOutputSchema: z.ZodObject<{
-    revision: z.ZodNumber;
-    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        kind: z.ZodLiteral<"absolute">;
-        from: z.ZodISODateTime;
-        to: z.ZodISODateTime;
-    }, z.core.$strict>, z.ZodObject<{
-        kind: z.ZodLiteral<"relative">;
-        lookbackSeconds: z.ZodNumber;
-    }, z.core.$strict>], "kind">>;
-}, z.core.$strict>;
-export type DashboardViewSettingsOutput = z.infer<typeof DashboardViewSettingsOutputSchema>;
-export declare const updateDashboardViewSettings: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    id: z.ZodUUID;
-    expectedRevision: z.ZodNumber;
-    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        kind: z.ZodLiteral<"absolute">;
-        from: z.ZodISODateTime;
-        to: z.ZodISODateTime;
-    }, z.core.$strict>, z.ZodObject<{
-        kind: z.ZodLiteral<"relative">;
-        lookbackSeconds: z.ZodNumber;
-    }, z.core.$strict>], "kind">>;
-    projectId: z.ZodOptional<z.ZodUUID>;
-}, z.core.$strict>, z.ZodObject<{
-    revision: z.ZodNumber;
-    timeRange: z.ZodNullable<z.ZodDiscriminatedUnion<[z.ZodObject<{
-        kind: z.ZodLiteral<"absolute">;
-        from: z.ZodISODateTime;
-        to: z.ZodISODateTime;
-    }, z.core.$strict>, z.ZodObject<{
-        kind: z.ZodLiteral<"relative">;
-        lookbackSeconds: z.ZodNumber;
-    }, z.core.$strict>], "kind">>;
 }, z.core.$strict>, "api">;

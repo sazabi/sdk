@@ -23,7 +23,6 @@ export declare const RecommendationSchema: z.ZodObject<{
         connected: "connected";
         recommended: "recommended";
     }>;
-    roiScore: z.ZodNumber;
     priority: z.ZodNumber;
     components: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -48,7 +47,6 @@ export declare const ListRecommendationsOutputSchema: z.ZodObject<{
             connected: "connected";
             recommended: "recommended";
         }>;
-        roiScore: z.ZodNumber;
         priority: z.ZodNumber;
         components: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -72,7 +70,6 @@ export declare const listRecommendations: import("../orpc-contracts/index.js").O
             connected: "connected";
             recommended: "recommended";
         }>;
-        roiScore: z.ZodNumber;
         priority: z.ZodNumber;
         components: z.ZodArray<z.ZodObject<{
             id: z.ZodString;

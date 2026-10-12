@@ -69,6 +69,17 @@ export declare const ReasoningProgressStreamEventSchema: z.ZodObject<{
     messageId: z.ZodString;
     estimatedTokens: z.ZodNumber;
 }, z.core.$strip>;
+/** Latest public activity summary for an active run. */
+export declare const ProgressStreamEventSchema: z.ZodObject<{
+    type: z.ZodLiteral<"progress">;
+    runId: z.ZodString;
+    assistantMessageId: z.ZodString;
+    text: z.ZodString;
+    source: z.ZodEnum<{
+        summary: "summary";
+        template: "template";
+    }>;
+}, z.core.$strip>;
 /**
  * Complete reasoning marker for a message. Reasoning text is never exposed.
  */
@@ -92,7 +103,7 @@ export declare const ToolCallStartStreamEventSchema: z.ZodObject<{
     type: z.ZodLiteral<"tool_call_start">;
     toolCallId: z.ZodString;
     name: z.ZodString;
-    params: z.ZodUnknown;
+    params: z.ZodOptional<z.ZodUnknown>;
 }, z.core.$strip>;
 /**
  * Tool call finished (success or failure).
@@ -118,7 +129,7 @@ export declare const ToolCallCompleteStreamEventSchema: z.ZodObject<{
 export declare const ArtifactStreamEventSchema: z.ZodObject<{
     type: z.ZodLiteral<"artifact">;
     name: z.ZodString;
-    data: z.ZodUnknown;
+    data: z.ZodOptional<z.ZodUnknown>;
     toolCallId: z.ZodString;
 }, z.core.$strip>;
 /**
@@ -172,6 +183,15 @@ export declare const PublicAgentStreamEventSchema: z.ZodDiscriminatedUnion<[z.Zo
     messageId: z.ZodString;
     estimatedTokens: z.ZodNumber;
 }, z.core.$strip>, z.ZodObject<{
+    type: z.ZodLiteral<"progress">;
+    runId: z.ZodString;
+    assistantMessageId: z.ZodString;
+    text: z.ZodString;
+    source: z.ZodEnum<{
+        summary: "summary";
+        template: "template";
+    }>;
+}, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"reasoning_complete">;
     messageId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
@@ -182,7 +202,7 @@ export declare const PublicAgentStreamEventSchema: z.ZodDiscriminatedUnion<[z.Zo
     type: z.ZodLiteral<"tool_call_start">;
     toolCallId: z.ZodString;
     name: z.ZodString;
-    params: z.ZodUnknown;
+    params: z.ZodOptional<z.ZodUnknown>;
 }, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"tool_call_complete">;
     toolCallId: z.ZodString;
@@ -196,7 +216,7 @@ export declare const PublicAgentStreamEventSchema: z.ZodDiscriminatedUnion<[z.Zo
 }, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"artifact">;
     name: z.ZodString;
-    data: z.ZodUnknown;
+    data: z.ZodOptional<z.ZodUnknown>;
     toolCallId: z.ZodString;
 }, z.core.$strip>, z.ZodObject<{
     type: z.ZodLiteral<"error">;
@@ -218,6 +238,7 @@ export declare const PublicAgentStreamEventTypeSchema: z.ZodEnum<{
     disconnected: "disconnected";
     error: "error";
     message_started: "message_started";
+    progress: "progress";
     reasoning_complete: "reasoning_complete";
     reasoning_progress: "reasoning_progress";
     run_started: "run_started";
@@ -311,6 +332,15 @@ export declare const runStreamEndpoint: {
         messageId: z.ZodString;
         estimatedTokens: z.ZodNumber;
     }, z.core.$strip>, z.ZodObject<{
+        type: z.ZodLiteral<"progress">;
+        runId: z.ZodString;
+        assistantMessageId: z.ZodString;
+        text: z.ZodString;
+        source: z.ZodEnum<{
+            summary: "summary";
+            template: "template";
+        }>;
+    }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"reasoning_complete">;
         messageId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
@@ -321,7 +351,7 @@ export declare const runStreamEndpoint: {
         type: z.ZodLiteral<"tool_call_start">;
         toolCallId: z.ZodString;
         name: z.ZodString;
-        params: z.ZodUnknown;
+        params: z.ZodOptional<z.ZodUnknown>;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"tool_call_complete">;
         toolCallId: z.ZodString;
@@ -335,7 +365,7 @@ export declare const runStreamEndpoint: {
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"artifact">;
         name: z.ZodString;
-        data: z.ZodUnknown;
+        data: z.ZodOptional<z.ZodUnknown>;
         toolCallId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"error">;
@@ -380,6 +410,15 @@ export declare const threadStreamEndpoint: {
         messageId: z.ZodString;
         estimatedTokens: z.ZodNumber;
     }, z.core.$strip>, z.ZodObject<{
+        type: z.ZodLiteral<"progress">;
+        runId: z.ZodString;
+        assistantMessageId: z.ZodString;
+        text: z.ZodString;
+        source: z.ZodEnum<{
+            summary: "summary";
+            template: "template";
+        }>;
+    }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"reasoning_complete">;
         messageId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
@@ -390,7 +429,7 @@ export declare const threadStreamEndpoint: {
         type: z.ZodLiteral<"tool_call_start">;
         toolCallId: z.ZodString;
         name: z.ZodString;
-        params: z.ZodUnknown;
+        params: z.ZodOptional<z.ZodUnknown>;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"tool_call_complete">;
         toolCallId: z.ZodString;
@@ -404,7 +443,7 @@ export declare const threadStreamEndpoint: {
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"artifact">;
         name: z.ZodString;
-        data: z.ZodUnknown;
+        data: z.ZodOptional<z.ZodUnknown>;
         toolCallId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"error">;

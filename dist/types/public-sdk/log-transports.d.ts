@@ -103,6 +103,20 @@ export interface ForwardLogsParams extends ForwardLogsInput {
  */
 export type TailLogStream = AsyncIterableIterator<TailLogEntry>;
 /**
+ * The tail stream could not be opened: the first request to the tail host got
+ * no usable response. `host` is the host (with its port when not the default)
+ * the request went to, and `cause` is the failure as it happened — Node's
+ * `TypeError("fetch failed")` whose own `cause` carries the system error code
+ * (`ENOTFOUND`, `ECONNREFUSED`, `ERR_TLS_CERT_ALTNAME_INVALID`, …), or the
+ * refusal built from the response status. The message stays the cause's own,
+ * so a caller that only reads `message` sees what it saw before.
+ */
+export declare class TailStreamOpenError extends Error {
+    readonly host: string;
+    readonly cause: unknown;
+    constructor(host: string, cause: unknown);
+}
+/**
  * Runtime dependencies for custom log transports.
  */
 export interface LogTransportOptions {

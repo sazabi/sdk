@@ -34,8 +34,7 @@
 export declare const SAMPLE_ISSUE_CARD_ID: "trigger_sample_issue";
 /**
  * The two states the exhibit renders. There is no ignored or muted state:
- * the sample is a static exhibit, and a control that does nothing is worse
- * than no control (ENG-7652).
+ * the sample is a static exhibit, so actions other than Resolve stay disabled.
  */
 export type SampleIssueStatus = "open" | "resolved";
 /**
@@ -53,6 +52,8 @@ export declare const SAMPLE_ISSUE: {
 };
 /** The section label above the description, on both surfaces. */
 export declare const SAMPLE_ISSUE_DESCRIPTION_LABEL = "Description";
+/** Why the exhibit's other issue actions are disabled, on both surfaces. */
+export declare const SAMPLE_ISSUE_DISABLED_ACTION_REASON = "Disabled for the example issue.";
 /**
  * The sentence above the card on both screens. It says what an issue is for,
  * then names the action that completes the step, because resolving is what

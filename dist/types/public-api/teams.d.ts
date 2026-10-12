@@ -82,11 +82,11 @@ export type DeleteTeamOutput = z.infer<typeof DeleteTeamOutputSchema>;
 export declare const AddTeamMemberInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     teamId: z.ZodString;
-    userId: z.ZodString;
+    userIds: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
 export type AddTeamMemberInput = z.infer<typeof AddTeamMemberInputSchema>;
 export declare const AddTeamMemberOutputSchema: z.ZodObject<{
-    id: z.ZodString;
+    ids: z.ZodArray<z.ZodString>;
 }, z.core.$strip>;
 export type AddTeamMemberOutput = z.infer<typeof AddTeamMemberOutputSchema>;
 export declare const RemoveTeamMemberInputSchema: z.ZodPipe<z.ZodObject<{
@@ -129,6 +129,27 @@ export declare const ListTeamMembersOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListTeamMembersOutput = z.infer<typeof ListTeamMembersOutputSchema>;
+export declare const GetTeamInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    teamId: z.ZodString;
+}, z.core.$strip>;
+export type GetTeamInput = z.infer<typeof GetTeamInputSchema>;
+export declare const GetTeamOutputSchema: z.ZodObject<{
+    team: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        memberCount: z.ZodNumber;
+    }, z.core.$strip>;
+    members: z.ZodArray<z.ZodObject<{
+        userId: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+        email: z.ZodString;
+        addedAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type GetTeamOutput = z.infer<typeof GetTeamOutputSchema>;
 export declare const listTeams: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -138,6 +159,24 @@ export declare const listTeams: import("../orpc-contracts/index.js").OperationDe
         description: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         memberCount: z.ZodNumber;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const getTeam: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    teamId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    team: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        description: z.ZodNullable<z.ZodString>;
+        createdAt: z.ZodString;
+        memberCount: z.ZodNumber;
+    }, z.core.$strip>;
+    members: z.ZodArray<z.ZodObject<{
+        userId: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+        email: z.ZodString;
+        addedAt: z.ZodString;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const createTeam: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -178,9 +217,9 @@ export declare const deleteTeam: import("../orpc-contracts/index.js").OperationD
 export declare const addTeamMember: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     teamId: z.ZodString;
-    userId: z.ZodString;
+    userIds: z.ZodArray<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
-    id: z.ZodString;
+    ids: z.ZodArray<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const removeTeamMember: import("../orpc-contracts/index.js").OperationDefinition<z.ZodPipe<z.ZodObject<{
     params: z.ZodObject<{
@@ -231,6 +270,24 @@ export declare const teamsContract: {
             memberCount: z.ZodNumber;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly get: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        organizationId: z.ZodOptional<z.ZodString>;
+        teamId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        team: z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            description: z.ZodNullable<z.ZodString>;
+            createdAt: z.ZodString;
+            memberCount: z.ZodNumber;
+        }, z.core.$strip>;
+        members: z.ZodArray<z.ZodObject<{
+            userId: z.ZodString;
+            name: z.ZodNullable<z.ZodString>;
+            email: z.ZodString;
+            addedAt: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         name: z.ZodString;
@@ -269,9 +326,9 @@ export declare const teamsContract: {
     readonly addMember: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         teamId: z.ZodString;
-        userId: z.ZodString;
+        userIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
-        id: z.ZodString;
+        ids: z.ZodArray<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly removeMember: import("@orpc/contract").ContractProcedure<z.ZodPipe<z.ZodObject<{
         params: z.ZodObject<{

@@ -55,6 +55,7 @@ export type ListReposOutput = z.infer<typeof ListReposOutputSchema>;
 export declare const AddReposInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     accessSourceIds: z.ZodArray<z.ZodString>;
+    removeIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>;
 export type AddReposInput = z.infer<typeof AddReposInputSchema>;
 export declare const AddReposOutputSchema: z.ZodObject<{
@@ -114,6 +115,7 @@ export declare const listRepos: import("../orpc-contracts/index.js").OperationDe
 export declare const addRepos: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     accessSourceIds: z.ZodArray<z.ZodString>;
+    removeIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
     repos: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -140,3 +142,20 @@ export declare const removeRepo: import("../orpc-contracts/index.js").OperationD
     id: z.ZodString;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodVoid, "api">;
+export declare const GetRepoCapacityInputSchema: z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const GetRepoCapacityOutputSchema: z.ZodObject<{
+    current: z.ZodNumber;
+    countedRepoIds: z.ZodArray<z.ZodString>;
+    exclusivelyMappedRepoIds: z.ZodArray<z.ZodString>;
+}, z.core.$strip>;
+export type GetRepoCapacityInput = z.infer<typeof GetRepoCapacityInputSchema>;
+export type GetRepoCapacityOutput = z.infer<typeof GetRepoCapacityOutputSchema>;
+export declare const getRepoCapacity: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    current: z.ZodNumber;
+    countedRepoIds: z.ZodArray<z.ZodString>;
+    exclusivelyMappedRepoIds: z.ZodArray<z.ZodString>;
+}, z.core.$strip>, "api">;

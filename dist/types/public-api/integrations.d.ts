@@ -1726,6 +1726,78 @@ export declare const deleteSlackChannelProjectMapping: import("../orpc-contracts
 }, z.core.$strip>, z.ZodObject<{
     success: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const MicrosoftTeamsChannelProjectMappingSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    microsoftTeamsChannelId: z.ZodString;
+    microsoftTeamsChannelName: z.ZodString;
+    microsoftTeamsTeamId: z.ZodNullable<z.ZodString>;
+    projectId: z.ZodString;
+}, z.core.$strip>;
+export type MicrosoftTeamsChannelProjectMapping = z.infer<typeof MicrosoftTeamsChannelProjectMappingSchema>;
+export declare const ListMicrosoftTeamsChannelProjectMappingsInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export declare const ListMicrosoftTeamsChannelProjectMappingsOutputSchema: z.ZodObject<{
+    mappings: z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        microsoftTeamsChannelId: z.ZodString;
+        microsoftTeamsChannelName: z.ZodString;
+        microsoftTeamsTeamId: z.ZodNullable<z.ZodString>;
+        projectId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type ListMicrosoftTeamsChannelProjectMappingsInput = z.infer<typeof ListMicrosoftTeamsChannelProjectMappingsInputSchema>;
+export type ListMicrosoftTeamsChannelProjectMappingsOutput = z.infer<typeof ListMicrosoftTeamsChannelProjectMappingsOutputSchema>;
+export declare const listMicrosoftTeamsChannelProjectMappings: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    mappings: z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        microsoftTeamsChannelId: z.ZodString;
+        microsoftTeamsChannelName: z.ZodString;
+        microsoftTeamsTeamId: z.ZodNullable<z.ZodString>;
+        projectId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const SetMicrosoftTeamsChannelProjectMappingInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    microsoftTeamsChannelId: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>;
+export type SetMicrosoftTeamsChannelProjectMappingInput = z.infer<typeof SetMicrosoftTeamsChannelProjectMappingInputSchema>;
+export type SetMicrosoftTeamsChannelProjectMappingOutput = MicrosoftTeamsChannelProjectMapping;
+export declare const setMicrosoftTeamsChannelProjectMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    microsoftTeamsChannelId: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    microsoftTeamsChannelId: z.ZodString;
+    microsoftTeamsChannelName: z.ZodString;
+    microsoftTeamsTeamId: z.ZodNullable<z.ZodString>;
+    projectId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const DeleteMicrosoftTeamsChannelProjectMappingInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    microsoftTeamsChannelId: z.ZodString;
+}, z.core.$strip>;
+export declare const DeleteMicrosoftTeamsChannelProjectMappingOutputSchema: z.ZodObject<{
+    success: z.ZodBoolean;
+}, z.core.$strip>;
+export type DeleteMicrosoftTeamsChannelProjectMappingInput = z.infer<typeof DeleteMicrosoftTeamsChannelProjectMappingInputSchema>;
+export type DeleteMicrosoftTeamsChannelProjectMappingOutput = z.infer<typeof DeleteMicrosoftTeamsChannelProjectMappingOutputSchema>;
+export declare const deleteMicrosoftTeamsChannelProjectMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    microsoftTeamsChannelId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    success: z.ZodBoolean;
+}, z.core.$strip>, "api">;
 export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{

@@ -5,6 +5,7 @@ import { z } from "zod";
 export declare const ThreadSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
+    sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     title: z.ZodNullable<z.ZodString>;
     status: z.ZodEnum<{
         archived: "archived";
@@ -71,7 +72,7 @@ export declare const MessageSchema: z.ZodObject<{
             table: "table";
             timeseries: "timeseries";
         }>;
-        data: z.ZodAny;
+        data: z.ZodOptional<z.ZodAny>;
         toolCallId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         type: z.ZodLiteral<"fork">;
@@ -153,6 +154,7 @@ export declare const ListThreadsOutputSchema: z.ZodObject<{
     threads: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -191,6 +193,7 @@ export declare const GetThreadOutputSchema: z.ZodObject<{
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -262,7 +265,7 @@ export declare const GetThreadOutputSchema: z.ZodObject<{
                 table: "table";
                 timeseries: "timeseries";
             }>;
-            data: z.ZodAny;
+            data: z.ZodOptional<z.ZodAny>;
             toolCallId: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"fork">;
@@ -331,6 +334,8 @@ export declare const GetThreadOutputSchema: z.ZodObject<{
  */
 export declare const CreateThreadInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
+    requestId: z.ZodOptional<z.ZodString>;
+    sourceIssueId: z.ZodOptional<z.ZodString>;
     message: z.ZodString;
     wait: z.ZodDefault<z.ZodBoolean>;
     timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
@@ -443,6 +448,7 @@ export declare const UpdateThreadOutputSchema: z.ZodObject<{
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -484,6 +490,7 @@ export declare const listThreads: import("../orpc-contracts/index.js").Operation
     threads: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -518,6 +525,7 @@ export declare const getThread: import("../orpc-contracts/index.js").OperationDe
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -589,7 +597,7 @@ export declare const getThread: import("../orpc-contracts/index.js").OperationDe
                 table: "table";
                 timeseries: "timeseries";
             }>;
-            data: z.ZodAny;
+            data: z.ZodOptional<z.ZodAny>;
             toolCallId: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"fork">;
@@ -680,6 +688,8 @@ export declare const stopThread: import("../orpc-contracts/index.js").OperationD
  */
 export declare const createThread: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
+    requestId: z.ZodOptional<z.ZodString>;
+    sourceIssueId: z.ZodOptional<z.ZodString>;
     message: z.ZodString;
     wait: z.ZodDefault<z.ZodBoolean>;
     timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
@@ -738,6 +748,7 @@ export declare const updateThread: import("../orpc-contracts/index.js").Operatio
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -784,6 +795,7 @@ export declare const ForkThreadOutputSchema: z.ZodObject<{
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -827,6 +839,7 @@ export declare const SetThreadVisibilityOutputSchema: z.ZodObject<{
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -931,6 +944,7 @@ export declare const forkThread: import("../orpc-contracts/index.js").OperationD
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -968,6 +982,7 @@ export declare const setThreadVisibility: import("../orpc-contracts/index.js").O
     thread: z.ZodObject<{
         id: z.ZodString;
         projectId: z.ZodString;
+        sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         title: z.ZodNullable<z.ZodString>;
         status: z.ZodEnum<{
             archived: "archived";
@@ -1045,6 +1060,7 @@ export declare const threadsContract: {
         threads: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
+            sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             title: z.ZodNullable<z.ZodString>;
             status: z.ZodEnum<{
                 archived: "archived";
@@ -1076,6 +1092,7 @@ export declare const threadsContract: {
         thread: z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
+            sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             title: z.ZodNullable<z.ZodString>;
             status: z.ZodEnum<{
                 archived: "archived";
@@ -1147,7 +1164,7 @@ export declare const threadsContract: {
                     table: "table";
                     timeseries: "timeseries";
                 }>;
-                data: z.ZodAny;
+                data: z.ZodOptional<z.ZodAny>;
                 toolCallId: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>, z.ZodObject<{
                 type: z.ZodLiteral<"fork">;
@@ -1229,6 +1246,8 @@ export declare const threadsContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
+        requestId: z.ZodOptional<z.ZodString>;
+        sourceIssueId: z.ZodOptional<z.ZodString>;
         message: z.ZodString;
         wait: z.ZodDefault<z.ZodBoolean>;
         timeoutSeconds: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
@@ -1284,6 +1303,7 @@ export declare const threadsContract: {
         thread: z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
+            sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             title: z.ZodNullable<z.ZodString>;
             status: z.ZodEnum<{
                 archived: "archived";
@@ -1315,6 +1335,7 @@ export declare const threadsContract: {
         thread: z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
+            sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             title: z.ZodNullable<z.ZodString>;
             status: z.ZodEnum<{
                 archived: "archived";
@@ -1349,6 +1370,7 @@ export declare const threadsContract: {
         thread: z.ZodObject<{
             id: z.ZodString;
             projectId: z.ZodString;
+            sourceIssueId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             title: z.ZodNullable<z.ZodString>;
             status: z.ZodEnum<{
                 archived: "archived";

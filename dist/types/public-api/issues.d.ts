@@ -16,6 +16,7 @@ export declare const IssueSchema: z.ZodObject<{
         medium: "medium";
     }>;
     componentId: z.ZodNullable<z.ZodString>;
+    componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     resolvedAt: z.ZodNullable<z.ZodString>;
     mutedAt: z.ZodNullable<z.ZodString>;
@@ -34,6 +35,31 @@ export declare const IssueSlackChannelSchema: z.ZodObject<{
     workspaceName: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type IssueSlackChannel = z.infer<typeof IssueSlackChannelSchema>;
+/**
+ * The other apps an issue was delivered to, one list per app beside
+ * `slackChannels`. Each entry names what was opened there and links to it;
+ * a list is empty when the issue was not delivered to that app.
+ */
+export declare const IssueMicrosoftTeamsChannelSchema: z.ZodObject<{
+    channelName: z.ZodNullable<z.ZodString>;
+    permalink: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type IssueMicrosoftTeamsChannel = z.infer<typeof IssueMicrosoftTeamsChannelSchema>;
+export declare const IssueRootlyAlertSchema: z.ZodObject<{
+    shortId: z.ZodNullable<z.ZodString>;
+    url: z.ZodString;
+}, z.core.$strip>;
+export type IssueRootlyAlert = z.infer<typeof IssueRootlyAlertSchema>;
+export declare const IssueIncidentIoAlertSchema: z.ZodObject<{
+    alertId: z.ZodNullable<z.ZodString>;
+    url: z.ZodString;
+}, z.core.$strip>;
+export type IssueIncidentIoAlert = z.infer<typeof IssueIncidentIoAlertSchema>;
+export declare const IssuePagerDutyIncidentSchema: z.ZodObject<{
+    incidentNumber: z.ZodNullable<z.ZodString>;
+    url: z.ZodString;
+}, z.core.$strip>;
+export type IssuePagerDutyIncident = z.infer<typeof IssuePagerDutyIncidentSchema>;
 export declare const IssueTaskLinkSchema: z.ZodObject<{
     provider: z.ZodEnum<{
         github: "github";
@@ -84,6 +110,7 @@ export declare const IssueFixSchema: z.ZodObject<{
     }, z.core.$strip>;
     source: z.ZodEnum<{
         dashboard: "dashboard";
+        "public-api": "public-api";
         slack: "slack";
     }>;
     status: z.ZodEnum<{
@@ -126,6 +153,7 @@ export declare const IssueDetailSchema: z.ZodObject<{
         medium: "medium";
     }>;
     componentId: z.ZodNullable<z.ZodString>;
+    componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     resolvedAt: z.ZodNullable<z.ZodString>;
     mutedAt: z.ZodNullable<z.ZodString>;
@@ -134,13 +162,32 @@ export declare const IssueDetailSchema: z.ZodObject<{
     lastDeliveredAt: z.ZodNullable<z.ZodString>;
     locked: z.ZodBoolean;
     redacted: z.ZodBoolean;
+    issueThreadId: z.ZodNullable<z.ZodString>;
     threadId: z.ZodNullable<z.ZodString>;
+    report: z.ZodNullable<z.ZodString>;
+    latestUpdate: z.ZodNullable<z.ZodString>;
     slackChannels: z.ZodArray<z.ZodObject<{
         channelId: z.ZodNullable<z.ZodString>;
         channelName: z.ZodNullable<z.ZodString>;
         threadTs: z.ZodNullable<z.ZodString>;
         permalink: z.ZodNullable<z.ZodString>;
         workspaceName: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    microsoftTeamsChannels: z.ZodArray<z.ZodObject<{
+        channelName: z.ZodNullable<z.ZodString>;
+        permalink: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    rootlyAlerts: z.ZodArray<z.ZodObject<{
+        shortId: z.ZodNullable<z.ZodString>;
+        url: z.ZodString;
+    }, z.core.$strip>>;
+    incidentIoAlerts: z.ZodArray<z.ZodObject<{
+        alertId: z.ZodNullable<z.ZodString>;
+        url: z.ZodString;
+    }, z.core.$strip>>;
+    pagerDutyIncidents: z.ZodArray<z.ZodObject<{
+        incidentNumber: z.ZodNullable<z.ZodString>;
+        url: z.ZodString;
     }, z.core.$strip>>;
     taskLinks: z.ZodArray<z.ZodObject<{
         provider: z.ZodEnum<{
@@ -190,6 +237,7 @@ export declare const IssueDetailSchema: z.ZodObject<{
         }, z.core.$strip>;
         source: z.ZodEnum<{
             dashboard: "dashboard";
+            "public-api": "public-api";
             slack: "slack";
         }>;
         status: z.ZodEnum<{
@@ -214,8 +262,124 @@ export declare const IssueDetailSchema: z.ZodObject<{
             }>>;
         }, z.core.$strip>>;
     }, z.core.$strip>>;
+    hasUnread: z.ZodNullable<z.ZodBoolean>;
 }, z.core.$strip>;
 export type IssueDetail = z.infer<typeof IssueDetailSchema>;
+/**
+ * One entry of an issue's activity, oldest first: who did what and when,
+ * with the note and the document the entry carries. The `created` entry's
+ * document is the issue's report.
+ */
+export declare const IssueEventSchema: z.ZodObject<{
+    id: z.ZodString;
+    eventType: z.ZodEnum<{
+        created: "created";
+        fix_requested: "fix_requested";
+        ignored: "ignored";
+        muted: "muted";
+        rejected: "rejected";
+        resolved: "resolved";
+        unmuted: "unmuted";
+        updated: "updated";
+    }>;
+    actorType: z.ZodEnum<{
+        agent: "agent";
+        system: "system";
+        user: "user";
+    }>;
+    actorName: z.ZodNullable<z.ZodString>;
+    note: z.ZodNullable<z.ZodString>;
+    metadata: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    mdxSource: z.ZodNullable<z.ZodString>;
+    mdxDocument: z.ZodNullable<z.ZodObject<{
+        version: z.ZodLiteral<1>;
+        root: z.ZodType<import("../mdx-document/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx-document/index.js").SazabiMdxRootNode, unknown>>;
+        componentNames: z.ZodArray<z.ZodString>;
+        limits: z.ZodObject<{
+            maxSourceLength: z.ZodNumber;
+            maxNodeCount: z.ZodNumber;
+            maxComponentCount: z.ZodNumber;
+            maxTableRows: z.ZodNumber;
+            maxChartPoints: z.ZodNumber;
+            maxPropPayloadSize: z.ZodNumber;
+            maxComponentDepth: z.ZodNumber;
+            maxCodeBlockLength: z.ZodNumber;
+            maxTextLength: z.ZodNumber;
+        }, z.core.$strip>;
+    }, z.core.$strip>>;
+    createdAt: z.ZodString;
+}, z.core.$strip>;
+export type IssueEvent = z.infer<typeof IssueEventSchema>;
+export declare const ListIssueHistoryInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>;
+export type ListIssueHistoryInput = z.infer<typeof ListIssueHistoryInputSchema>;
+export declare const ListIssueHistoryOutputSchema: z.ZodObject<{
+    events: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        eventType: z.ZodEnum<{
+            created: "created";
+            fix_requested: "fix_requested";
+            ignored: "ignored";
+            muted: "muted";
+            rejected: "rejected";
+            resolved: "resolved";
+            unmuted: "unmuted";
+            updated: "updated";
+        }>;
+        actorType: z.ZodEnum<{
+            agent: "agent";
+            system: "system";
+            user: "user";
+        }>;
+        actorName: z.ZodNullable<z.ZodString>;
+        note: z.ZodNullable<z.ZodString>;
+        metadata: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+        mdxSource: z.ZodNullable<z.ZodString>;
+        mdxDocument: z.ZodNullable<z.ZodObject<{
+            version: z.ZodLiteral<1>;
+            root: z.ZodType<import("../mdx-document/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx-document/index.js").SazabiMdxRootNode, unknown>>;
+            componentNames: z.ZodArray<z.ZodString>;
+            limits: z.ZodObject<{
+                maxSourceLength: z.ZodNumber;
+                maxNodeCount: z.ZodNumber;
+                maxComponentCount: z.ZodNumber;
+                maxTableRows: z.ZodNumber;
+                maxChartPoints: z.ZodNumber;
+                maxPropPayloadSize: z.ZodNumber;
+                maxComponentDepth: z.ZodNumber;
+                maxCodeBlockLength: z.ZodNumber;
+                maxTextLength: z.ZodNumber;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
+        createdAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type ListIssueHistoryOutput = z.infer<typeof ListIssueHistoryOutputSchema>;
+export declare const RequestIssueFixInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>;
+export type RequestIssueFixInput = z.infer<typeof RequestIssueFixInputSchema>;
+export declare const RequestIssueFixOutputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+    projectId: z.ZodString;
+    issueThreadId: z.ZodString;
+}, z.core.$strip>;
+export type RequestIssueFixOutput = z.infer<typeof RequestIssueFixOutputSchema>;
+export declare const MarkIssueReadInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>;
+export type MarkIssueReadInput = z.infer<typeof MarkIssueReadInputSchema>;
+export declare const MarkIssueUnreadInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>;
+export type MarkIssueUnreadInput = z.infer<typeof MarkIssueUnreadInputSchema>;
+/** The calling user's read cursor on the issue after the change. */
+export declare const IssueReadStateOutputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+    lastReadAt: z.ZodString;
+}, z.core.$strip>;
+export type IssueReadStateOutput = z.infer<typeof IssueReadStateOutputSchema>;
 export declare const IssueSearchItemSchema: z.ZodObject<{
     id: z.ZodString;
     projectId: z.ZodString;
@@ -233,6 +397,7 @@ export declare const IssueSearchItemSchema: z.ZodObject<{
         medium: "medium";
     }>;
     componentId: z.ZodNullable<z.ZodString>;
+    componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
     resolvedAt: z.ZodNullable<z.ZodString>;
     mutedAt: z.ZodNullable<z.ZodString>;
@@ -262,6 +427,7 @@ export declare const CreateIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -314,6 +480,7 @@ export declare const ListIssuesOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -365,6 +532,7 @@ export declare const SearchIssuesOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -400,6 +568,7 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -408,13 +577,32 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
         lastDeliveredAt: z.ZodNullable<z.ZodString>;
         locked: z.ZodBoolean;
         redacted: z.ZodBoolean;
+        issueThreadId: z.ZodNullable<z.ZodString>;
         threadId: z.ZodNullable<z.ZodString>;
+        report: z.ZodNullable<z.ZodString>;
+        latestUpdate: z.ZodNullable<z.ZodString>;
         slackChannels: z.ZodArray<z.ZodObject<{
             channelId: z.ZodNullable<z.ZodString>;
             channelName: z.ZodNullable<z.ZodString>;
             threadTs: z.ZodNullable<z.ZodString>;
             permalink: z.ZodNullable<z.ZodString>;
             workspaceName: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        microsoftTeamsChannels: z.ZodArray<z.ZodObject<{
+            channelName: z.ZodNullable<z.ZodString>;
+            permalink: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        rootlyAlerts: z.ZodArray<z.ZodObject<{
+            shortId: z.ZodNullable<z.ZodString>;
+            url: z.ZodString;
+        }, z.core.$strip>>;
+        incidentIoAlerts: z.ZodArray<z.ZodObject<{
+            alertId: z.ZodNullable<z.ZodString>;
+            url: z.ZodString;
+        }, z.core.$strip>>;
+        pagerDutyIncidents: z.ZodArray<z.ZodObject<{
+            incidentNumber: z.ZodNullable<z.ZodString>;
+            url: z.ZodString;
         }, z.core.$strip>>;
         taskLinks: z.ZodArray<z.ZodObject<{
             provider: z.ZodEnum<{
@@ -464,6 +652,7 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
             }, z.core.$strip>;
             source: z.ZodEnum<{
                 dashboard: "dashboard";
+                "public-api": "public-api";
                 slack: "slack";
             }>;
             status: z.ZodEnum<{
@@ -488,6 +677,7 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
                 }>>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        hasUnread: z.ZodNullable<z.ZodBoolean>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetIssueOutput = z.infer<typeof GetIssueOutputSchema>;
@@ -809,6 +999,7 @@ export declare const ResolveIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -842,6 +1033,7 @@ export declare const IgnoreIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -875,6 +1067,7 @@ export declare const ReopenIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -909,6 +1102,7 @@ export declare const ReassignAndReopenIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -930,7 +1124,7 @@ export declare const UpdateIssueInputSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
-    note: z.ZodString;
+    note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type UpdateIssueInput = z.infer<typeof UpdateIssueInputSchema>;
 export declare const UpdateIssueOutputSchema: z.ZodObject<{
@@ -951,6 +1145,7 @@ export declare const UpdateIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -985,6 +1180,7 @@ export declare const MuteIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1018,6 +1214,7 @@ export declare const UnmuteIssueOutputSchema: z.ZodObject<{
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1030,6 +1227,7 @@ export declare const UnmuteIssueOutputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type UnmuteIssueOutput = z.infer<typeof UnmuteIssueOutputSchema>;
 export declare const createIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    sourceThreadId: z.ZodOptional<z.ZodString>;
     clientRequestId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
@@ -1069,6 +1267,7 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1118,6 +1317,7 @@ export declare const listIssues: import("../orpc-contracts/index.js").OperationD
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1166,6 +1366,7 @@ export declare const searchIssues: import("../orpc-contracts/index.js").Operatio
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1198,6 +1399,7 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1206,13 +1408,32 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
         lastDeliveredAt: z.ZodNullable<z.ZodString>;
         locked: z.ZodBoolean;
         redacted: z.ZodBoolean;
+        issueThreadId: z.ZodNullable<z.ZodString>;
         threadId: z.ZodNullable<z.ZodString>;
+        report: z.ZodNullable<z.ZodString>;
+        latestUpdate: z.ZodNullable<z.ZodString>;
         slackChannels: z.ZodArray<z.ZodObject<{
             channelId: z.ZodNullable<z.ZodString>;
             channelName: z.ZodNullable<z.ZodString>;
             threadTs: z.ZodNullable<z.ZodString>;
             permalink: z.ZodNullable<z.ZodString>;
             workspaceName: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        microsoftTeamsChannels: z.ZodArray<z.ZodObject<{
+            channelName: z.ZodNullable<z.ZodString>;
+            permalink: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        rootlyAlerts: z.ZodArray<z.ZodObject<{
+            shortId: z.ZodNullable<z.ZodString>;
+            url: z.ZodString;
+        }, z.core.$strip>>;
+        incidentIoAlerts: z.ZodArray<z.ZodObject<{
+            alertId: z.ZodNullable<z.ZodString>;
+            url: z.ZodString;
+        }, z.core.$strip>>;
+        pagerDutyIncidents: z.ZodArray<z.ZodObject<{
+            incidentNumber: z.ZodNullable<z.ZodString>;
+            url: z.ZodString;
         }, z.core.$strip>>;
         taskLinks: z.ZodArray<z.ZodObject<{
             provider: z.ZodEnum<{
@@ -1262,6 +1483,7 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
             }, z.core.$strip>;
             source: z.ZodEnum<{
                 dashboard: "dashboard";
+                "public-api": "public-api";
                 slack: "slack";
             }>;
             status: z.ZodEnum<{
@@ -1286,7 +1508,70 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
                 }>>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        hasUnread: z.ZodNullable<z.ZodBoolean>;
     }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const listIssueHistory: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    events: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        eventType: z.ZodEnum<{
+            created: "created";
+            fix_requested: "fix_requested";
+            ignored: "ignored";
+            muted: "muted";
+            rejected: "rejected";
+            resolved: "resolved";
+            unmuted: "unmuted";
+            updated: "updated";
+        }>;
+        actorType: z.ZodEnum<{
+            agent: "agent";
+            system: "system";
+            user: "user";
+        }>;
+        actorName: z.ZodNullable<z.ZodString>;
+        note: z.ZodNullable<z.ZodString>;
+        metadata: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+        mdxSource: z.ZodNullable<z.ZodString>;
+        mdxDocument: z.ZodNullable<z.ZodObject<{
+            version: z.ZodLiteral<1>;
+            root: z.ZodType<import("../mdx-document/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx-document/index.js").SazabiMdxRootNode, unknown>>;
+            componentNames: z.ZodArray<z.ZodString>;
+            limits: z.ZodObject<{
+                maxSourceLength: z.ZodNumber;
+                maxNodeCount: z.ZodNumber;
+                maxComponentCount: z.ZodNumber;
+                maxTableRows: z.ZodNumber;
+                maxChartPoints: z.ZodNumber;
+                maxPropPayloadSize: z.ZodNumber;
+                maxComponentDepth: z.ZodNumber;
+                maxCodeBlockLength: z.ZodNumber;
+                maxTextLength: z.ZodNumber;
+            }, z.core.$strip>;
+        }, z.core.$strip>>;
+        createdAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const requestIssueFix: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    issueId: z.ZodString;
+    projectId: z.ZodString;
+    issueThreadId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const markIssueRead: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    issueId: z.ZodString;
+    lastReadAt: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const markIssueUnread: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    issueId: z.ZodString;
+    lastReadAt: z.ZodString;
 }, z.core.$strip>, "api">;
 export declare const resolveIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
@@ -1309,6 +1594,7 @@ export declare const resolveIssue: import("../orpc-contracts/index.js").Operatio
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1327,7 +1613,7 @@ export declare const updateIssue: import("../orpc-contracts/index.js").Operation
         low: "low";
         medium: "medium";
     }>;
-    note: z.ZodString;
+    note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     issue: z.ZodObject<{
         id: z.ZodString;
@@ -1346,6 +1632,7 @@ export declare const updateIssue: import("../orpc-contracts/index.js").Operation
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1541,6 +1828,7 @@ export declare const ignoreIssue: import("../orpc-contracts/index.js").Operation
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1571,6 +1859,7 @@ export declare const reopenIssue: import("../orpc-contracts/index.js").Operation
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1602,6 +1891,7 @@ export declare const reassignAndReopenIssue: import("../orpc-contracts/index.js"
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1634,6 +1924,7 @@ export declare const muteIssue: import("../orpc-contracts/index.js").OperationDe
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1664,6 +1955,7 @@ export declare const unmuteIssue: import("../orpc-contracts/index.js").Operation
             medium: "medium";
         }>;
         componentId: z.ZodNullable<z.ZodString>;
+        componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         resolvedAt: z.ZodNullable<z.ZodString>;
         mutedAt: z.ZodNullable<z.ZodString>;
@@ -1676,6 +1968,7 @@ export declare const unmuteIssue: import("../orpc-contracts/index.js").Operation
 }, z.core.$strip>, "api">;
 export declare const issuesContract: {
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        sourceThreadId: z.ZodOptional<z.ZodString>;
         clientRequestId: z.ZodOptional<z.ZodString>;
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
@@ -1715,6 +2008,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1764,6 +2058,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1812,6 +2107,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1844,6 +2140,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -1852,13 +2149,32 @@ export declare const issuesContract: {
             lastDeliveredAt: z.ZodNullable<z.ZodString>;
             locked: z.ZodBoolean;
             redacted: z.ZodBoolean;
+            issueThreadId: z.ZodNullable<z.ZodString>;
             threadId: z.ZodNullable<z.ZodString>;
+            report: z.ZodNullable<z.ZodString>;
+            latestUpdate: z.ZodNullable<z.ZodString>;
             slackChannels: z.ZodArray<z.ZodObject<{
                 channelId: z.ZodNullable<z.ZodString>;
                 channelName: z.ZodNullable<z.ZodString>;
                 threadTs: z.ZodNullable<z.ZodString>;
                 permalink: z.ZodNullable<z.ZodString>;
                 workspaceName: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            microsoftTeamsChannels: z.ZodArray<z.ZodObject<{
+                channelName: z.ZodNullable<z.ZodString>;
+                permalink: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            rootlyAlerts: z.ZodArray<z.ZodObject<{
+                shortId: z.ZodNullable<z.ZodString>;
+                url: z.ZodString;
+            }, z.core.$strip>>;
+            incidentIoAlerts: z.ZodArray<z.ZodObject<{
+                alertId: z.ZodNullable<z.ZodString>;
+                url: z.ZodString;
+            }, z.core.$strip>>;
+            pagerDutyIncidents: z.ZodArray<z.ZodObject<{
+                incidentNumber: z.ZodNullable<z.ZodString>;
+                url: z.ZodString;
             }, z.core.$strip>>;
             taskLinks: z.ZodArray<z.ZodObject<{
                 provider: z.ZodEnum<{
@@ -1908,6 +2224,7 @@ export declare const issuesContract: {
                 }, z.core.$strip>;
                 source: z.ZodEnum<{
                     dashboard: "dashboard";
+                    "public-api": "public-api";
                     slack: "slack";
                 }>;
                 status: z.ZodEnum<{
@@ -1932,6 +2249,7 @@ export declare const issuesContract: {
                     }>>;
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
+            hasUnread: z.ZodNullable<z.ZodBoolean>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -1942,7 +2260,7 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>;
-        note: z.ZodString;
+        note: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         issue: z.ZodObject<{
             id: z.ZodString;
@@ -1961,6 +2279,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -2157,6 +2476,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -2187,6 +2507,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -2217,6 +2538,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -2248,6 +2570,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -2280,6 +2603,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -2310,6 +2634,7 @@ export declare const issuesContract: {
                 medium: "medium";
             }>;
             componentId: z.ZodNullable<z.ZodString>;
+            componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
             resolvedAt: z.ZodNullable<z.ZodString>;
             mutedAt: z.ZodNullable<z.ZodString>;
@@ -2320,4 +2645,70 @@ export declare const issuesContract: {
             redacted: z.ZodBoolean;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly read: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        issueId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        issueId: z.ZodString;
+        lastReadAt: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly unread: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        issueId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        issueId: z.ZodString;
+        lastReadAt: z.ZodString;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly history: {
+        readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+            issueId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            events: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                eventType: z.ZodEnum<{
+                    created: "created";
+                    fix_requested: "fix_requested";
+                    ignored: "ignored";
+                    muted: "muted";
+                    rejected: "rejected";
+                    resolved: "resolved";
+                    unmuted: "unmuted";
+                    updated: "updated";
+                }>;
+                actorType: z.ZodEnum<{
+                    agent: "agent";
+                    system: "system";
+                    user: "user";
+                }>;
+                actorName: z.ZodNullable<z.ZodString>;
+                note: z.ZodNullable<z.ZodString>;
+                metadata: z.ZodNullable<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+                mdxSource: z.ZodNullable<z.ZodString>;
+                mdxDocument: z.ZodNullable<z.ZodObject<{
+                    version: z.ZodLiteral<1>;
+                    root: z.ZodType<import("../mdx-document/index.js").SazabiMdxRootNode, unknown, z.core.$ZodTypeInternals<import("../mdx-document/index.js").SazabiMdxRootNode, unknown>>;
+                    componentNames: z.ZodArray<z.ZodString>;
+                    limits: z.ZodObject<{
+                        maxSourceLength: z.ZodNumber;
+                        maxNodeCount: z.ZodNumber;
+                        maxComponentCount: z.ZodNumber;
+                        maxTableRows: z.ZodNumber;
+                        maxChartPoints: z.ZodNumber;
+                        maxPropPayloadSize: z.ZodNumber;
+                        maxComponentDepth: z.ZodNumber;
+                        maxCodeBlockLength: z.ZodNumber;
+                        maxTextLength: z.ZodNumber;
+                    }, z.core.$strip>;
+                }, z.core.$strip>>;
+                createdAt: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
+    readonly fixes: {
+        readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+            issueId: z.ZodString;
+        }, z.core.$strip>, z.ZodObject<{
+            issueId: z.ZodString;
+            projectId: z.ZodString;
+            issueThreadId: z.ZodString;
+        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
 };

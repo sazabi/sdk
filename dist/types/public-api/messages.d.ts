@@ -51,7 +51,7 @@ export declare const ListMessagesOutputSchema: z.ZodObject<{
                 table: "table";
                 timeseries: "timeseries";
             }>;
-            data: z.ZodAny;
+            data: z.ZodOptional<z.ZodAny>;
             toolCallId: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"fork">;
@@ -219,7 +219,7 @@ export declare const listMessages: import("../orpc-contracts/index.js").Operatio
                 table: "table";
                 timeseries: "timeseries";
             }>;
-            data: z.ZodAny;
+            data: z.ZodOptional<z.ZodAny>;
             toolCallId: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>, z.ZodObject<{
             type: z.ZodLiteral<"fork">;

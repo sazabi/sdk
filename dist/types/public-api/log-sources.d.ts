@@ -4,13 +4,13 @@ import { z } from "zod";
  */
 export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey"];
 /**
- * Log source setup modes. `managed` log sources hold vendor credentials that
- * Sazabi uses to provision delivery; `connectionless` log sources mint a keyed
+ * Log source setup modes. `native` log sources hold vendor credentials that
+ * Sazabi uses to provision delivery; `manual` log sources mint a keyed
  * intake endpoint and the sender pushes to it directly.
  */
 export declare const LogSourceModeEnum: z.ZodEnum<{
-    connectionless: "connectionless";
-    managed: "managed";
+    manual: "manual";
+    native: "native";
 }>;
 /**
  * A log source's persisted, ongoing auto-provisioning selection scope
@@ -44,8 +44,8 @@ export declare const LogSourceProviderInfoSchema: z.ZodObject<{
     id: z.ZodString;
     name: z.ZodString;
     modes: z.ZodArray<z.ZodEnum<{
-        connectionless: "connectionless";
-        managed: "managed";
+        manual: "manual";
+        native: "native";
     }>>;
     metadataFields: z.ZodArray<z.ZodObject<{
         name: z.ZodString;
@@ -134,8 +134,8 @@ export declare const LogStreamSchema: z.ZodObject<{
 }, z.core.$strip>;
 /**
  * A log source record — the root resource of the log-source anatomy. `mode`
- * is `managed` (Sazabi holds vendor credentials and provisions delivery) or
- * `connectionless` (the sender pushes to a keyed Sazabi intake endpoint).
+ * is `native` (Sazabi holds vendor credentials and provisions delivery) or
+ * `manual` (the sender pushes to a keyed Sazabi intake endpoint).
  */
 export declare const LogSourceSchema: z.ZodObject<{
     connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
@@ -237,8 +237,8 @@ export declare const LogSourceSchema: z.ZodObject<{
         webhook_events: "webhook_events";
     }>;
     mode: z.ZodEnum<{
-        connectionless: "connectionless";
-        managed: "managed";
+        manual: "manual";
+        native: "native";
     }>;
     name: z.ZodString;
     streamCount: z.ZodNumber;
@@ -352,8 +352,8 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         webhook_events: "webhook_events";
     }>;
     mode: z.ZodEnum<{
-        connectionless: "connectionless";
-        managed: "managed";
+        manual: "manual";
+        native: "native";
     }>;
     name: z.ZodString;
     streamCount: z.ZodNumber;
@@ -411,8 +411,8 @@ export declare const ListLogSourceProvidersOutputSchema: z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
         modes: z.ZodArray<z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>>;
         metadataFields: z.ZodArray<z.ZodObject<{
             name: z.ZodString;
@@ -430,8 +430,8 @@ export declare const listLogSourceProviders: import("../orpc-contracts/index.js"
         id: z.ZodString;
         name: z.ZodString;
         modes: z.ZodArray<z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>>;
         metadataFields: z.ZodArray<z.ZodObject<{
             name: z.ZodString;
@@ -592,8 +592,8 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -754,8 +754,8 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -814,8 +814,8 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         webhook_events: "webhook_events";
     }>;
     mode: z.ZodOptional<z.ZodEnum<{
-        connectionless: "connectionless";
-        managed: "managed";
+        manual: "manual";
+        native: "native";
     }>>;
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strict>;
@@ -920,8 +920,8 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -1007,8 +1007,8 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         webhook_events: "webhook_events";
     }>;
     mode: z.ZodOptional<z.ZodEnum<{
-        connectionless: "connectionless";
-        managed: "managed";
+        manual: "manual";
+        native: "native";
     }>>;
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
 }, z.core.$strict>, z.ZodObject<{
@@ -1112,8 +1112,8 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -1253,8 +1253,8 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -1412,8 +1412,8 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -1576,8 +1576,8 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -1699,8 +1699,8 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>;
         name: z.ZodString;
         streamCount: z.ZodNumber;
@@ -1732,8 +1732,8 @@ export declare const logSourcesContract: {
             id: z.ZodString;
             name: z.ZodString;
             modes: z.ZodArray<z.ZodEnum<{
-                connectionless: "connectionless";
-                managed: "managed";
+                manual: "manual";
+                native: "native";
             }>>;
             metadataFields: z.ZodArray<z.ZodObject<{
                 name: z.ZodString;
@@ -1893,8 +1893,8 @@ export declare const logSourcesContract: {
                 webhook_events: "webhook_events";
             }>;
             mode: z.ZodEnum<{
-                connectionless: "connectionless";
-                managed: "managed";
+                manual: "manual";
+                native: "native";
             }>;
             name: z.ZodString;
             streamCount: z.ZodNumber;
@@ -1953,8 +1953,8 @@ export declare const logSourcesContract: {
             webhook_events: "webhook_events";
         }>;
         mode: z.ZodOptional<z.ZodEnum<{
-            connectionless: "connectionless";
-            managed: "managed";
+            manual: "manual";
+            native: "native";
         }>>;
         metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
     }, z.core.$strict>, z.ZodObject<{
@@ -2058,8 +2058,8 @@ export declare const logSourcesContract: {
                 webhook_events: "webhook_events";
             }>;
             mode: z.ZodEnum<{
-                connectionless: "connectionless";
-                managed: "managed";
+                manual: "manual";
+                native: "native";
             }>;
             name: z.ZodString;
             streamCount: z.ZodNumber;
@@ -2198,8 +2198,8 @@ export declare const logSourcesContract: {
                 webhook_events: "webhook_events";
             }>;
             mode: z.ZodEnum<{
-                connectionless: "connectionless";
-                managed: "managed";
+                manual: "manual";
+                native: "native";
             }>;
             name: z.ZodString;
             streamCount: z.ZodNumber;
@@ -2361,8 +2361,8 @@ export declare const logSourcesContract: {
                 webhook_events: "webhook_events";
             }>;
             mode: z.ZodEnum<{
-                connectionless: "connectionless";
-                managed: "managed";
+                manual: "manual";
+                native: "native";
             }>;
             name: z.ZodString;
             streamCount: z.ZodNumber;

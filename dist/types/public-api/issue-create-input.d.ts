@@ -1,5 +1,6 @@
 import { z } from "zod";
 export declare const CreateIssueInputObjectSchema: z.ZodObject<{
+    sourceThreadId: z.ZodOptional<z.ZodString>;
     clientRequestId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
@@ -23,6 +24,7 @@ export declare const CreateIssueInputObjectSchema: z.ZodObject<{
     sample: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 export declare const CreateIssueInputSchema: z.ZodObject<{
+    sourceThreadId: z.ZodOptional<z.ZodString>;
     clientRequestId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;

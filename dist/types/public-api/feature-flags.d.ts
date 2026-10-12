@@ -22,9 +22,9 @@ export declare const ResolvePublicFeatureFlagsOutputSchema: z.ZodObject<{
 export type ResolvePublicFeatureFlagsOutput = z.infer<typeof ResolvePublicFeatureFlagsOutputSchema>;
 /**
  * The anonymous flag channel: no credential, so it serves only flags the
- * catalog marks public-audience (anonymous Sazabi surfaces such as
- * www.sazabi.com) and never names a product flag. Responses are cacheable
- * (~60s), matching the flag freshness contract.
+ * catalog approves for anonymous reading, including explicit app-level
+ * projections of product flags shared with www.sazabi.com. Tenant targeting
+ * never enters this channel. Responses are cacheable (~60s).
  */
 export declare const resolvePublicFeatureFlags: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{}, z.core.$strip>, z.ZodObject<{
     flags: z.ZodRecord<z.ZodString, z.ZodLiteral<true>>;
