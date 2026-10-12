@@ -1617,7 +1617,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
             }, z.core.$strict>>;
         }, z.core.$strict>], "type">;
         execution: z.ZodOptional<z.ZodObject<{
-            spec: z.ZodPreprocess<z.ZodObject<{
+            spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -1922,12 +1922,12 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodPreprocess<z.ZodObject<{
+            meta: z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -1945,14 +1945,14 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"empty">;
         execution: z.ZodObject<{
-            spec: z.ZodPreprocess<z.ZodObject<{
+            spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -2257,12 +2257,12 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodPreprocess<z.ZodObject<{
+            meta: z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -2280,7 +2280,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>;
@@ -2294,7 +2294,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
             }>;
             message: z.ZodString;
             status: z.ZodLiteral<"rejected">;
-            spec: z.ZodPreprocess<z.ZodObject<{
+            spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -2599,7 +2599,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
@@ -4267,7 +4267,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
             }, z.core.$strict>>;
         }, z.core.$strict>], "type">;
         execution: z.ZodOptional<z.ZodObject<{
-            spec: z.ZodPreprocess<z.ZodObject<{
+            spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -4572,12 +4572,12 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodPreprocess<z.ZodObject<{
+            meta: z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -4595,14 +4595,14 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"empty">;
         execution: z.ZodObject<{
-            spec: z.ZodPreprocess<z.ZodObject<{
+            spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -4907,12 +4907,12 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;
             }, z.core.$strict>;
-            meta: z.ZodPreprocess<z.ZodObject<{
+            meta: z.ZodObject<{
                 coverage: z.ZodObject<{
                     from: z.ZodISODateTime;
                     to: z.ZodISODateTime;
@@ -4930,7 +4930,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     watermark: z.ZodISODateTime;
                     openBucketFrom: z.ZodOptional<z.ZodISODateTime>;
                 }, z.core.$strict>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
         }, z.core.$strict>;
@@ -4944,7 +4944,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
             }>;
             message: z.ZodString;
             status: z.ZodLiteral<"rejected">;
-            spec: z.ZodPreprocess<z.ZodObject<{
+            spec: z.ZodObject<{
                 version: z.ZodLiteral<2>;
                 predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
                     kind: "service";
@@ -5249,7 +5249,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
-            }, z.core.$strict>, unknown>;
+            }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
                 to: z.ZodISODateTime;

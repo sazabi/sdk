@@ -358,11 +358,11 @@ export type LogAskStatus = z.infer<typeof LogAskStatusSchema>;
  * of the log query's stable codes (`logQueryRejectionSchema`: the query
  * cannot run as written); `not_about_logs` the question asks nothing about
  * the project's logs, and `other_project` it asks about another project's or
- * organization's, so nothing was searched; or `unsupported_question` no query
- * over the logs can answer it as asked (a sum over a number inside the log
- * text, say). Asking it again unchanged gets the same refusal.
+ * organization's, so nothing was searched. Asking it again unchanged gets the
+ * same refusal. A question no query answered is not refused: nothing was
+ * found (`status` `not_found`).
  */
-export declare const LOG_ASK_REJECTION_CODES: readonly [...("bucket_too_fine" | "time_range_too_wide" | "unsupported_query")[], "not_about_logs", "other_project", "unsupported_question"];
+export declare const LOG_ASK_REJECTION_CODES: readonly [...("bucket_too_fine" | "time_range_too_wide" | "unsupported_query")[], "not_about_logs", "other_project"];
 export declare const LogAskRejectionSchema: z.ZodObject<{
     code: z.ZodEnum<{
         bucket_too_fine: "bucket_too_fine";
@@ -370,7 +370,6 @@ export declare const LogAskRejectionSchema: z.ZodObject<{
         other_project: "other_project";
         time_range_too_wide: "time_range_too_wide";
         unsupported_query: "unsupported_query";
-        unsupported_question: "unsupported_question";
     }>;
     message: z.ZodString;
 }, z.core.$strict>;
@@ -770,7 +769,6 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             other_project: "other_project";
             time_range_too_wide: "time_range_too_wide";
             unsupported_query: "unsupported_query";
-            unsupported_question: "unsupported_question";
         }>;
         message: z.ZodString;
     }, z.core.$strict>>;
@@ -1048,7 +1046,6 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             other_project: "other_project";
             time_range_too_wide: "time_range_too_wide";
             unsupported_query: "unsupported_query";
-            unsupported_question: "unsupported_question";
         }>;
         message: z.ZodString;
     }, z.core.$strict>>;
@@ -1326,7 +1323,6 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             other_project: "other_project";
             time_range_too_wide: "time_range_too_wide";
             unsupported_query: "unsupported_query";
-            unsupported_question: "unsupported_question";
         }>;
         message: z.ZodString;
     }, z.core.$strict>>;
@@ -1617,7 +1613,6 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             other_project: "other_project";
             time_range_too_wide: "time_range_too_wide";
             unsupported_query: "unsupported_query";
-            unsupported_question: "unsupported_question";
         }>;
         message: z.ZodString;
     }, z.core.$strict>>;
@@ -2213,7 +2208,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             other_project: "other_project";
             time_range_too_wide: "time_range_too_wide";
             unsupported_query: "unsupported_query";
-            unsupported_question: "unsupported_question";
         }>;
         message: z.ZodString;
     }, z.core.$strict>>;
@@ -2526,7 +2520,6 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             other_project: "other_project";
             time_range_too_wide: "time_range_too_wide";
             unsupported_query: "unsupported_query";
-            unsupported_question: "unsupported_question";
         }>;
         message: z.ZodString;
     }, z.core.$strict>>;
@@ -2924,7 +2917,6 @@ export declare const logsContract: {
                 other_project: "other_project";
                 time_range_too_wide: "time_range_too_wide";
                 unsupported_query: "unsupported_query";
-                unsupported_question: "unsupported_question";
             }>;
             message: z.ZodString;
         }, z.core.$strict>>;
@@ -3520,7 +3512,6 @@ export declare const logsContract: {
                 other_project: "other_project";
                 time_range_too_wide: "time_range_too_wide";
                 unsupported_query: "unsupported_query";
-                unsupported_question: "unsupported_question";
             }>;
             message: z.ZodString;
         }, z.core.$strict>>;

@@ -2042,7 +2042,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Logs"],
           operationId: "logs.ask",
           summary: "Ask about logs",
-          description: 'Answer a natural-language question about one project\'s stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), the part of the window the numbers cover (`meta`), and a `queryId`. An overview (what is broken, recent errors, what changed, what is new, with no specific topic, field or request for lines) is searched: its results are the window\'s kinds of log lines, with their counts in the window and the window before and example lines; every other question is measured exactly. A question may be asked in any language, and is answered in it. The period it names is read from it, on the clock of `timeZone` ("the last 6 hours", "this afternoon", "since midnight", "between 18:00 and 19:00", "this hour against the previous hour", which reads both hours and compares them); a `window` replaces that period, and the answer says so. A period that cannot be read is said to be, and the last hour is read instead. With `results: true` it also returns the rows, value, table, series or kinds of log lines the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found`: the answer names the window that was read, `interpretedAs` how the question was read, and the `queryId` runs the same query over a wider window. A question that asks nothing about the project\'s logs, or about another project\'s, is refused with nothing searched (`status` `error`, `rejection.code` `not_about_logs` or `other_project`, no `queryId`), and one no query can answer as asked is refused as `unsupported_question`; one that asks to change or delete logs is answered with the lines it names (`writeDeclined`), since logs are read-only.'
+          description: 'Answer a natural-language question about one project\'s stored logs. Returns a plain-language `answer`, what was measured over which window (`explanation`, `window`), the part of the window the numbers cover (`meta`), and a `queryId`. An overview (what is broken, recent errors, what changed, what is new, with no specific topic, field or request for lines) is searched: its results are the window\'s kinds of log lines, with their counts in the window and the window before and example lines; every other question is measured exactly. A question may be asked in any language, and is answered in it. The period it names is read from it, on the clock of `timeZone` ("the last 6 hours", "this afternoon", "since midnight", "between 18:00 and 19:00", "this hour against the previous hour", which reads both hours and compares them); a `window` replaces that period, and the answer says so. A period that cannot be read is said to be, and the last hour is read instead. With `results: true` it also returns the rows, value, table, series or kinds of log lines the answer was written from. Pass the `queryId` to `logs.executeQuery` to run the same query again over any window with no model involved. When nothing matches, `status` is `not_found`: the answer names the window that was read, `interpretedAs` how the question was read, and the `queryId` runs the same query over a wider window. A question that asks nothing about the project\'s logs, or about another project\'s, is refused with nothing searched (`status` `error`, `rejection.code` `not_about_logs` or `other_project`, no `queryId`), and one no query answered is `not_found` with no `queryId`; one that asks to change or delete logs is answered with the lines it names (`writeDeclined`), since logs are read-only.'
         }
       }
     },
@@ -6918,7 +6918,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Webhooks"],
           operationId: "webhooks.enable",
           summary: "Enable a webhook endpoint",
-          description: "Re-enable an endpoint disabled after delivery failures"
+          description: "Re-enable an endpoint disabled after delivery failures. Enabling an endpoint that is already active succeeds."
         }
       }
     },
@@ -6938,7 +6938,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Webhooks"],
           operationId: "webhooks.test",
           summary: "Send a test webhook delivery",
-          description: "Send a signed test envelope to an endpoint"
+          description: "Send a signed test envelope to an endpoint in any status, including a disabled one, without re-enabling it. Requires permission to change organization settings."
         }
       }
     },
