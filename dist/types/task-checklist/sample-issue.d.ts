@@ -1,5 +1,6 @@
 /**
- * The onboarding test issue — one exhibit, both surfaces (ENG-7652).
+ * The onboarding test issue — one payload, both surfaces (ENG-7652,
+ * ENG-9697).
  *
  * The `trigger_sample_issue` card shows the user an issue before their own
  * telemetry has produced one, and resolving it is how the card is completed.
@@ -9,6 +10,14 @@
  * hardcoded a four-section walkthrough (`buildSampleIssueExhibit`), and this
  * package described the card in copy that matched neither. This module is the
  * canonical one; neither surface keeps a copy.
+ *
+ * Since ENG-9697 a **real issue row** is seeded from the same payload when
+ * an organization's first project is created: `SAMPLE_ISSUE.name`,
+ * `contentMdx`, `description`, and `severity` are what services/core's
+ * `seedOnboardingTestIssue` writes, and the step finds the row by `name`,
+ * so the row in the inbox and the card on both onboarding surfaces are one
+ * string and the name is load-bearing. The seed passes no component:
+ * `component` here is display only.
  *
  * Packaging contract, in step with the registry's:
  *
@@ -38,22 +47,31 @@ export declare const SAMPLE_ISSUE_CARD_ID: "trigger_sample_issue";
  */
 export type SampleIssueStatus = "open" | "resolved";
 /**
- * The exhibit itself. One title line's worth of identity plus one
- * description paragraph — deliberately the shape of a real issue card, not a
- * bespoke walkthrough. The CLI used to split this into Issue details / What
- * happened / Why it happened / How to fix it, which no real issue card ever
- * renders; the four sections are folded into the paragraph below.
+ * The test issue itself: the single seed payload (ENG-9697) and the card's
+ * copy. One title line's worth of identity plus one description paragraph —
+ * deliberately the shape of a real issue card, not a bespoke walkthrough. The
+ * CLI used to split this into Issue details / What happened / Why it happened
+ * / How to fix it, which no real issue card ever renders; the four sections
+ * are folded into the paragraph below.
+ *
+ * `name` says "test issue" (bylaws/copy.yaml: never "sample issue") and is
+ * how the onboarding step finds the seeded row, so changing it orphans every
+ * seed already in a project. `description` is the card paragraph;
+ * `contentMdx` is the issue body the seeded row stores — the same paragraph
+ * plus one line saying why the issue exists, so a reader who finds it in the
+ * inbox is not misled.
  */
 export declare const SAMPLE_ISSUE: {
-    readonly name: "Checkout error spike";
+    readonly name: "Test issue: Checkout error spike";
     readonly component: "checkout-api";
     readonly severity: "high";
     readonly description: "Checkout errors jumped from 0.2% to 4.8% right after a deploy, and the failures cluster on payment-provider timeouts at confirmation. That deploy changed the retry policy, so retries now stack on slow responses and exhaust the provider's rate limit. Roll it back to restore normal error rates, then reintroduce it with capped retries and a call-time budget.";
+    readonly contentMdx: string;
 };
 /** The section label above the description, on both surfaces. */
 export declare const SAMPLE_ISSUE_DESCRIPTION_LABEL = "Description";
 /** Why the exhibit's other issue actions are disabled, on both surfaces. */
-export declare const SAMPLE_ISSUE_DISABLED_ACTION_REASON = "Disabled for the example issue.";
+export declare const SAMPLE_ISSUE_DISABLED_ACTION_REASON = "Disabled for the test issue.";
 /**
  * The sentence above the card on both screens. It says what an issue is for,
  * then names the action that completes the step, because resolving is what

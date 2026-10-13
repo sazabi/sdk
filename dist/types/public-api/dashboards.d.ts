@@ -1922,6 +1922,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
+                times: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
@@ -2257,6 +2258,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
+                times: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
@@ -2599,6 +2601,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
+                times: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
@@ -4572,6 +4575,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
+                times: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
@@ -4907,6 +4911,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
+                times: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;
@@ -5249,6 +5254,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                         desc: "desc";
                     }>;
                 }, z.core.$strict>>;
+                times: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strict>;
             resolvedTimeRange: z.ZodObject<{
                 from: z.ZodISODateTime;

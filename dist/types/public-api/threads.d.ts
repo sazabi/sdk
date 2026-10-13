@@ -382,6 +382,7 @@ export declare const CreateThreadOutputSchema: z.ZodObject<{
         completed: "completed";
         error: "error";
         processing: "processing";
+        queued: "queued";
     }>;
     response: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
@@ -732,6 +733,7 @@ export declare const createThread: import("../orpc-contracts/index.js").Operatio
         completed: "completed";
         error: "error";
         processing: "processing";
+        queued: "queued";
     }>;
     response: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
@@ -1290,6 +1292,7 @@ export declare const threadsContract: {
             completed: "completed";
             error: "error";
             processing: "processing";
+            queued: "queued";
         }>;
         response: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;

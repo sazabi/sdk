@@ -57,7 +57,7 @@ declare const ONBOARDING_CARDS: readonly [{
     readonly id: "trigger_sample_issue";
     readonly label: "Resolve your first issue";
     readonly description: "Resolve a test issue to see how Sazabi presents an incident: what happened, why it happened, and how to fix it. This shows you the shape of a real issue before your own telemetry produces one.";
-    readonly instructions: "Open the 'Resolve your first issue' step during onboarding and resolve the test issue. From the CLI, run 'sazabi onboarding steps complete trigger_sample_issue'.";
+    readonly instructions: "Open the 'Resolve your first issue' step during onboarding and resolve the test issue Sazabi created with your first project. From the CLI, 'sazabi onboarding' shows that test issue; run 'sazabi onboarding steps complete trigger_sample_issue' to resolve it.";
     readonly category: "onboarding";
 }];
 /** The onboarding card ids, as a literal union for per-surface maps. */

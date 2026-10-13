@@ -5766,6 +5766,25 @@ var public_api_client_contract_gen_default = {
                 failureClass: null,
                 failureRetryable: null
               }
+            },
+            {
+              name: "append-queued",
+              input: {
+                threadId: "22222222-2222-4222-8222-222222222222",
+                message: "Also check the checkout service.",
+                wait: false,
+                timeoutSeconds: 20
+              },
+              output: {
+                completed: false,
+                threadId: "22222222-2222-4222-8222-222222222222",
+                runId: "55555555-5555-4555-8555-555555555555",
+                messageId: "55555555-5555-4555-8555-555555555555",
+                status: "queued",
+                response: null,
+                failureClass: null,
+                failureRetryable: null
+              }
             }
           ]
         },
@@ -5775,7 +5794,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Messages"],
           operationId: "messages.append",
           summary: "Append a message to a thread",
-          description: "Append a user message to an existing thread and trigger a deferred run.",
+          description: "Append a user message to an existing thread and trigger a deferred run. When the thread already has a run in flight the message is queued, not refused: the response reports `queued` with the run ID the message's own run will start under after the earlier run ends. Queued messages run one at a time in the order they were appended. With wait, the server waits for the message's own run and never returns the earlier run's result.",
           successStatus: 201
         }
       }
@@ -6248,7 +6267,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Runs"],
           operationId: "runs.get",
           summary: "Get a run",
-          description: "Get the current result for a deferred run by run ID."
+          description: "Get the current result for a deferred run by run ID. A run ID handed out for a queued follow-up reports `queued` until its run starts."
         }
       }
     },
@@ -6278,7 +6297,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Runs"],
           operationId: "runs.cancel",
           summary: "Cancel a run",
-          description: "Request cancellation of an in-flight run. Idempotent and best-effort: returns success even when the run has already reached a terminal status."
+          description: "Request cancellation of an in-flight run. Idempotent and best-effort: returns success even when the run has already reached a terminal status. A queued follow-up is withdrawn from the thread's queue and never runs; the run in flight ahead of it is not touched. Cancelling a run that has ended never stops a later run on the same thread."
         }
       }
     }

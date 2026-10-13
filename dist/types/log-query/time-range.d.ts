@@ -39,10 +39,11 @@ export type ResolvedTimeRange = z.infer<typeof resolvedTimeRangeSchema>;
  * way `to` is floored can only push `from` earlier, so the window comes out
  * wider than asked, by less than one grain unit (a 90s lookback at the
  * minute grain resolves to 120s; a 7d lookback plus 1s resolves to 7d plus
- * 1h, past the grain's own switch to hourly). Matches `@sazabi/log-ask`'s
- * `resolveWindow` (`logs.ask` / `logs.executeQuery`'s window) bit for bit,
- * aligned lookback or not: an identical relative spec reads the identical
- * instants through either caller.
+ * 1h, past the grain's own switch to hourly). Dashboards resolve their
+ * ranges this way, so a panel's buckets sit on the chart's edges;
+ * `@sazabi/log-ask`'s `resolveWindow` (`logs.ask` / `logs.executeQuery`)
+ * ends a lookback at `now` itself instead, so a question reads the lines of
+ * the seconds before it (the rollups read its partial minutes from `logs`).
  */
 export declare const alignedRelativeWindow: ({ lookbackSeconds, now, }: {
     lookbackSeconds: number;

@@ -332,6 +332,7 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 desc: "desc";
             }>;
         }, z.core.$strict>>;
+        times: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strict>>;
     window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"absolute">;
@@ -421,6 +422,8 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     matched: z.ZodNullable<z.ZodNumber>;
     truncated: z.ZodBoolean;
 }, z.core.$strip>, z.ZodObject<{
+    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     kind: z.ZodLiteral<"value">;
     measure: z.ZodString;
     value: z.ZodNullable<z.ZodNumber>;
@@ -430,6 +433,8 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     }, z.core.$strip>>;
     truncated: z.ZodBoolean;
 }, z.core.$strip>, z.ZodObject<{
+    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     kind: z.ZodLiteral<"distinct">;
     measure: z.ZodString;
     value: z.ZodNullable<z.ZodNumber>;
@@ -439,6 +444,8 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     columns: z.ZodArray<z.ZodString>;
     measure: z.ZodString;
     groups: z.ZodArray<z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         key: z.ZodArray<z.ZodString>;
         value: z.ZodNullable<z.ZodNumber>;
         share: z.ZodOptional<z.ZodObject<{
@@ -454,6 +461,8 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     columns: z.ZodArray<z.ZodString>;
     measure: z.ZodString;
     groups: z.ZodArray<z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         key: z.ZodArray<z.ZodString>;
         value: z.ZodNullable<z.ZodNumber>;
         share: z.ZodOptional<z.ZodObject<{
@@ -470,6 +479,8 @@ export declare const LogAskResultsSchema: z.ZodDiscriminatedUnion<[z.ZodObject<{
     measure: z.ZodString;
     bucket: z.ZodString;
     points: z.ZodArray<z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         bucket: z.ZodString;
         key: z.ZodArray<z.ZodString>;
         value: z.ZodNullable<z.ZodNumber>;
@@ -568,6 +579,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
         matched: z.ZodNullable<z.ZodNumber>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"value">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -577,6 +590,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
         }, z.core.$strip>>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"distinct">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -586,6 +601,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -601,6 +618,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -617,6 +636,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
         measure: z.ZodString;
         bucket: z.ZodString;
         points: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             bucket: z.ZodString;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
@@ -685,6 +706,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -694,6 +717,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -703,6 +728,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -718,6 +745,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -734,6 +763,8 @@ export declare const LogAskEnvelopeSchema: z.ZodObject<{
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -845,6 +876,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
         matched: z.ZodNullable<z.ZodNumber>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"value">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -854,6 +887,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"distinct">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -863,6 +898,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -878,6 +915,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -894,6 +933,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
         measure: z.ZodString;
         bucket: z.ZodString;
         points: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             bucket: z.ZodString;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
@@ -962,6 +1003,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -971,6 +1014,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -980,6 +1025,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -995,6 +1042,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -1011,6 +1060,8 @@ export declare const AskLogsOutputSchema: z.ZodObject<{
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -1122,6 +1173,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
         matched: z.ZodNullable<z.ZodNumber>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"value">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -1131,6 +1184,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"distinct">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -1140,6 +1195,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -1155,6 +1212,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -1171,6 +1230,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
         measure: z.ZodString;
         bucket: z.ZodString;
         points: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             bucket: z.ZodString;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
@@ -1239,6 +1300,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -1248,6 +1311,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -1257,6 +1322,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -1272,6 +1339,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -1288,6 +1357,8 @@ export declare const ExecuteLogQueryOutputSchema: z.ZodObject<{
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -1412,6 +1483,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
         matched: z.ZodNullable<z.ZodNumber>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"value">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -1421,6 +1494,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
         }, z.core.$strip>>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"distinct">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -1430,6 +1505,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -1445,6 +1522,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -1461,6 +1540,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
         measure: z.ZodString;
         bucket: z.ZodString;
         points: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             bucket: z.ZodString;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
@@ -1529,6 +1610,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -1538,6 +1621,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -1547,6 +1632,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -1562,6 +1649,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -1578,6 +1667,8 @@ export declare const askLogs: import("../orpc-contracts/index.js").OperationDefi
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -1937,6 +2028,7 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 desc: "desc";
             }>;
         }, z.core.$strict>>;
+        times: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strict>>;
     window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
         kind: z.ZodLiteral<"absolute">;
@@ -2007,6 +2099,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         matched: z.ZodNullable<z.ZodNumber>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"value">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -2016,6 +2110,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         }, z.core.$strip>>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"distinct">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -2025,6 +2121,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -2040,6 +2138,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -2056,6 +2156,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         measure: z.ZodString;
         bucket: z.ZodString;
         points: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             bucket: z.ZodString;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2124,6 +2226,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2133,6 +2237,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2142,6 +2248,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -2157,6 +2265,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -2173,6 +2283,8 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -2319,6 +2431,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
         matched: z.ZodNullable<z.ZodNumber>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"value">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -2328,6 +2442,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
         }, z.core.$strip>>;
         truncated: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
+        firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+        lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         kind: z.ZodLiteral<"distinct">;
         measure: z.ZodString;
         value: z.ZodNullable<z.ZodNumber>;
@@ -2337,6 +2453,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -2352,6 +2470,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
         columns: z.ZodArray<z.ZodString>;
         measure: z.ZodString;
         groups: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
             share: z.ZodOptional<z.ZodObject<{
@@ -2368,6 +2488,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
         measure: z.ZodString;
         bucket: z.ZodString;
         points: z.ZodArray<z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             bucket: z.ZodString;
             key: z.ZodArray<z.ZodString>;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2436,6 +2558,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2445,6 +2569,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2454,6 +2580,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -2469,6 +2597,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -2485,6 +2615,8 @@ export declare const executeLogQueryById: import("../orpc-contracts/index.js").O
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -2716,6 +2848,8 @@ export declare const logsContract: {
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2725,6 +2859,8 @@ export declare const logsContract: {
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -2734,6 +2870,8 @@ export declare const logsContract: {
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -2749,6 +2887,8 @@ export declare const logsContract: {
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -2765,6 +2905,8 @@ export declare const logsContract: {
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -2833,6 +2975,8 @@ export declare const logsContract: {
                 matched: z.ZodNullable<z.ZodNumber>;
                 truncated: z.ZodBoolean;
             }, z.core.$strip>, z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 kind: z.ZodLiteral<"value">;
                 measure: z.ZodString;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -2842,6 +2986,8 @@ export declare const logsContract: {
                 }, z.core.$strip>>;
                 truncated: z.ZodBoolean;
             }, z.core.$strip>, z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 kind: z.ZodLiteral<"distinct">;
                 measure: z.ZodString;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -2851,6 +2997,8 @@ export declare const logsContract: {
                 columns: z.ZodArray<z.ZodString>;
                 measure: z.ZodString;
                 groups: z.ZodArray<z.ZodObject<{
+                    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                     key: z.ZodArray<z.ZodString>;
                     value: z.ZodNullable<z.ZodNumber>;
                     share: z.ZodOptional<z.ZodObject<{
@@ -2866,6 +3014,8 @@ export declare const logsContract: {
                 columns: z.ZodArray<z.ZodString>;
                 measure: z.ZodString;
                 groups: z.ZodArray<z.ZodObject<{
+                    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                     key: z.ZodArray<z.ZodString>;
                     value: z.ZodNullable<z.ZodNumber>;
                     share: z.ZodOptional<z.ZodObject<{
@@ -2882,6 +3032,8 @@ export declare const logsContract: {
                 measure: z.ZodString;
                 bucket: z.ZodString;
                 points: z.ZodArray<z.ZodObject<{
+                    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                     bucket: z.ZodString;
                     key: z.ZodArray<z.ZodString>;
                     value: z.ZodNullable<z.ZodNumber>;
@@ -3241,6 +3393,7 @@ export declare const logsContract: {
                     desc: "desc";
                 }>;
             }, z.core.$strict>>;
+            times: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strict>>;
         window: z.ZodOptional<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"absolute">;
@@ -3311,6 +3464,8 @@ export declare const logsContract: {
             matched: z.ZodNullable<z.ZodNumber>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"value">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -3320,6 +3475,8 @@ export declare const logsContract: {
             }, z.core.$strip>>;
             truncated: z.ZodBoolean;
         }, z.core.$strip>, z.ZodObject<{
+            firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+            lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             kind: z.ZodLiteral<"distinct">;
             measure: z.ZodString;
             value: z.ZodNullable<z.ZodNumber>;
@@ -3329,6 +3486,8 @@ export declare const logsContract: {
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -3344,6 +3503,8 @@ export declare const logsContract: {
             columns: z.ZodArray<z.ZodString>;
             measure: z.ZodString;
             groups: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
                 share: z.ZodOptional<z.ZodObject<{
@@ -3360,6 +3521,8 @@ export declare const logsContract: {
             measure: z.ZodString;
             bucket: z.ZodString;
             points: z.ZodArray<z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 bucket: z.ZodString;
                 key: z.ZodArray<z.ZodString>;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -3428,6 +3591,8 @@ export declare const logsContract: {
                 matched: z.ZodNullable<z.ZodNumber>;
                 truncated: z.ZodBoolean;
             }, z.core.$strip>, z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 kind: z.ZodLiteral<"value">;
                 measure: z.ZodString;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -3437,6 +3602,8 @@ export declare const logsContract: {
                 }, z.core.$strip>>;
                 truncated: z.ZodBoolean;
             }, z.core.$strip>, z.ZodObject<{
+                firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                 kind: z.ZodLiteral<"distinct">;
                 measure: z.ZodString;
                 value: z.ZodNullable<z.ZodNumber>;
@@ -3446,6 +3613,8 @@ export declare const logsContract: {
                 columns: z.ZodArray<z.ZodString>;
                 measure: z.ZodString;
                 groups: z.ZodArray<z.ZodObject<{
+                    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                     key: z.ZodArray<z.ZodString>;
                     value: z.ZodNullable<z.ZodNumber>;
                     share: z.ZodOptional<z.ZodObject<{
@@ -3461,6 +3630,8 @@ export declare const logsContract: {
                 columns: z.ZodArray<z.ZodString>;
                 measure: z.ZodString;
                 groups: z.ZodArray<z.ZodObject<{
+                    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                     key: z.ZodArray<z.ZodString>;
                     value: z.ZodNullable<z.ZodNumber>;
                     share: z.ZodOptional<z.ZodObject<{
@@ -3477,6 +3648,8 @@ export declare const logsContract: {
                 measure: z.ZodString;
                 bucket: z.ZodString;
                 points: z.ZodArray<z.ZodObject<{
+                    firstSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                    lastSeen: z.ZodOptional<z.ZodNullable<z.ZodString>>;
                     bucket: z.ZodString;
                     key: z.ZodArray<z.ZodString>;
                     value: z.ZodNullable<z.ZodNumber>;

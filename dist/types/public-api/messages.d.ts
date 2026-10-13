@@ -164,6 +164,7 @@ export declare const AppendMessageOutputSchema: z.ZodObject<{
         completed: "completed";
         error: "error";
         processing: "processing";
+        queued: "queued";
     }>;
     response: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
@@ -328,6 +329,7 @@ export declare const appendMessage: import("../orpc-contracts/index.js").Operati
         completed: "completed";
         error: "error";
         processing: "processing";
+        queued: "queued";
     }>;
     response: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;

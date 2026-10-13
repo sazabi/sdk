@@ -697,6 +697,7 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
             desc: "desc";
         }>;
     }, z.core.$strict>>;
+    times: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strict>;
 export type LogQuerySpecV2 = z.infer<typeof logQuerySpecV2Schema>;
 /** A spec validated, or the JSON path and message of every problem with it. */

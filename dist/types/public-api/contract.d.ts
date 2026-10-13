@@ -2580,6 +2580,7 @@ export declare const publicApiContract: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        times: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
@@ -2915,6 +2916,7 @@ export declare const publicApiContract: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        times: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
@@ -3257,6 +3259,7 @@ export declare const publicApiContract: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        times: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
@@ -3380,6 +3383,8 @@ export declare const publicApiContract: {
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3389,6 +3394,8 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"distinct">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3398,6 +3405,8 @@ export declare const publicApiContract: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -3413,6 +3422,8 @@ export declare const publicApiContract: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -3429,6 +3440,8 @@ export declare const publicApiContract: {
                 measure: import("zod").ZodString;
                 bucket: import("zod").ZodString;
                 points: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3497,6 +3510,8 @@ export declare const publicApiContract: {
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"value">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3506,6 +3521,8 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"distinct">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3515,6 +3532,8 @@ export declare const publicApiContract: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -3530,6 +3549,8 @@ export declare const publicApiContract: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -3546,6 +3567,8 @@ export declare const publicApiContract: {
                     measure: import("zod").ZodString;
                     bucket: import("zod").ZodString;
                     points: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         bucket: import("zod").ZodString;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3905,6 +3928,7 @@ export declare const publicApiContract: {
                         desc: "desc";
                     }>;
                 }, import("zod/v4/core").$strict>>;
+                times: import("zod").ZodOptional<import("zod").ZodBoolean>;
             }, import("zod/v4/core").$strict>>;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"absolute">;
@@ -3975,6 +3999,8 @@ export declare const publicApiContract: {
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3984,6 +4010,8 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"distinct">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -3993,6 +4021,8 @@ export declare const publicApiContract: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4008,6 +4038,8 @@ export declare const publicApiContract: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4024,6 +4056,8 @@ export declare const publicApiContract: {
                 measure: import("zod").ZodString;
                 bucket: import("zod").ZodString;
                 points: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4092,6 +4126,8 @@ export declare const publicApiContract: {
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"value">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4101,6 +4137,8 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"distinct">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4110,6 +4148,8 @@ export declare const publicApiContract: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4125,6 +4165,8 @@ export declare const publicApiContract: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4141,6 +4183,8 @@ export declare const publicApiContract: {
                     measure: import("zod").ZodString;
                     bucket: import("zod").ZodString;
                     points: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         bucket: import("zod").ZodString;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4263,6 +4307,8 @@ export declare const publicApiContract: {
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4272,6 +4318,8 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"distinct">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4281,6 +4329,8 @@ export declare const publicApiContract: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4296,6 +4346,8 @@ export declare const publicApiContract: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4312,6 +4364,8 @@ export declare const publicApiContract: {
                 measure: import("zod").ZodString;
                 bucket: import("zod").ZodString;
                 points: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4380,6 +4434,8 @@ export declare const publicApiContract: {
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"value">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4389,6 +4445,8 @@ export declare const publicApiContract: {
                     }, import("zod/v4/core").$strip>>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"distinct">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -4398,6 +4456,8 @@ export declare const publicApiContract: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4413,6 +4473,8 @@ export declare const publicApiContract: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -4429,6 +4491,8 @@ export declare const publicApiContract: {
                     measure: import("zod").ZodString;
                     bucket: import("zod").ZodString;
                     points: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         bucket: import("zod").ZodString;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -9721,6 +9785,7 @@ export declare const publicApiContract: {
                 completed: "completed";
                 error: "error";
                 processing: "processing";
+                queued: "queued";
             }>;
             response: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -9968,6 +10033,7 @@ export declare const publicApiContract: {
                 completed: "completed";
                 error: "error";
                 processing: "processing";
+                queued: "queued";
             }>;
             response: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -10266,6 +10332,7 @@ export declare const publicApiContract: {
                 completed: "completed";
                 error: "error";
                 processing: "processing";
+                queued: "queued";
             }>;
             response: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -15510,6 +15577,7 @@ export declare const publicApiOperations: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        times: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
@@ -15845,6 +15913,7 @@ export declare const publicApiOperations: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        times: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
@@ -16187,6 +16256,7 @@ export declare const publicApiOperations: {
                                 desc: "desc";
                             }>;
                         }, import("zod/v4/core").$strict>>;
+                        times: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strict>;
                     resolvedTimeRange: import("zod").ZodObject<{
                         from: import("zod").ZodISODateTime;
@@ -16310,6 +16380,8 @@ export declare const publicApiOperations: {
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16319,6 +16391,8 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"distinct">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16328,6 +16402,8 @@ export declare const publicApiOperations: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -16343,6 +16419,8 @@ export declare const publicApiOperations: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -16359,6 +16437,8 @@ export declare const publicApiOperations: {
                 measure: import("zod").ZodString;
                 bucket: import("zod").ZodString;
                 points: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16427,6 +16507,8 @@ export declare const publicApiOperations: {
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"value">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16436,6 +16518,8 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"distinct">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16445,6 +16529,8 @@ export declare const publicApiOperations: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -16460,6 +16546,8 @@ export declare const publicApiOperations: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -16476,6 +16564,8 @@ export declare const publicApiOperations: {
                     measure: import("zod").ZodString;
                     bucket: import("zod").ZodString;
                     points: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         bucket: import("zod").ZodString;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16835,6 +16925,7 @@ export declare const publicApiOperations: {
                         desc: "desc";
                     }>;
                 }, import("zod/v4/core").$strict>>;
+                times: import("zod").ZodOptional<import("zod").ZodBoolean>;
             }, import("zod/v4/core").$strict>>;
             window: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"absolute">;
@@ -16905,6 +16996,8 @@ export declare const publicApiOperations: {
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16914,6 +17007,8 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"distinct">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -16923,6 +17018,8 @@ export declare const publicApiOperations: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -16938,6 +17035,8 @@ export declare const publicApiOperations: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -16954,6 +17053,8 @@ export declare const publicApiOperations: {
                 measure: import("zod").ZodString;
                 bucket: import("zod").ZodString;
                 points: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17022,6 +17123,8 @@ export declare const publicApiOperations: {
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"value">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17031,6 +17134,8 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"distinct">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17040,6 +17145,8 @@ export declare const publicApiOperations: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -17055,6 +17162,8 @@ export declare const publicApiOperations: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -17071,6 +17180,8 @@ export declare const publicApiOperations: {
                     measure: import("zod").ZodString;
                     bucket: import("zod").ZodString;
                     points: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         bucket: import("zod").ZodString;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17193,6 +17304,8 @@ export declare const publicApiOperations: {
                 matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"value">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17202,6 +17315,8 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 truncated: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 kind: import("zod").ZodLiteral<"distinct">;
                 measure: import("zod").ZodString;
                 value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17211,6 +17326,8 @@ export declare const publicApiOperations: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -17226,6 +17343,8 @@ export declare const publicApiOperations: {
                 columns: import("zod").ZodArray<import("zod").ZodString>;
                 measure: import("zod").ZodString;
                 groups: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
                     share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -17242,6 +17361,8 @@ export declare const publicApiOperations: {
                 measure: import("zod").ZodString;
                 bucket: import("zod").ZodString;
                 points: import("zod").ZodArray<import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     bucket: import("zod").ZodString;
                     key: import("zod").ZodArray<import("zod").ZodString>;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17310,6 +17431,8 @@ export declare const publicApiOperations: {
                     matched: import("zod").ZodNullable<import("zod").ZodNumber>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"value">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17319,6 +17442,8 @@ export declare const publicApiOperations: {
                     }, import("zod/v4/core").$strip>>;
                     truncated: import("zod").ZodBoolean;
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                    lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     kind: import("zod").ZodLiteral<"distinct">;
                     measure: import("zod").ZodString;
                     value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -17328,6 +17453,8 @@ export declare const publicApiOperations: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -17343,6 +17470,8 @@ export declare const publicApiOperations: {
                     columns: import("zod").ZodArray<import("zod").ZodString>;
                     measure: import("zod").ZodString;
                     groups: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
                         share: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -17359,6 +17488,8 @@ export declare const publicApiOperations: {
                     measure: import("zod").ZodString;
                     bucket: import("zod").ZodString;
                     points: import("zod").ZodArray<import("zod").ZodObject<{
+                        firstSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                        lastSeen: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                         bucket: import("zod").ZodString;
                         key: import("zod").ZodArray<import("zod").ZodString>;
                         value: import("zod").ZodNullable<import("zod").ZodNumber>;
@@ -22651,6 +22782,7 @@ export declare const publicApiOperations: {
                 completed: "completed";
                 error: "error";
                 processing: "processing";
+                queued: "queued";
             }>;
             response: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
@@ -22898,6 +23030,7 @@ export declare const publicApiOperations: {
                 completed: "completed";
                 error: "error";
                 processing: "processing";
+                queued: "queued";
             }>;
             response: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
@@ -23196,6 +23329,7 @@ export declare const publicApiOperations: {
                 completed: "completed";
                 error: "error";
                 processing: "processing";
+                queued: "queued";
             }>;
             response: import("zod").ZodNullable<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;

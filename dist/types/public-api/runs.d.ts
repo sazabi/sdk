@@ -307,6 +307,7 @@ export declare const RunResultSchema: z.ZodObject<{
         completed: "completed";
         error: "error";
         processing: "processing";
+        queued: "queued";
     }>;
     response: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
@@ -345,6 +346,7 @@ export declare const GetRunOutputSchema: z.ZodObject<{
         completed: "completed";
         error: "error";
         processing: "processing";
+        queued: "queued";
     }>;
     response: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
@@ -546,6 +548,7 @@ export declare const getRun: import("../orpc-contracts/index.js").OperationDefin
         completed: "completed";
         error: "error";
         processing: "processing";
+        queued: "queued";
     }>;
     response: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
@@ -724,6 +727,7 @@ export declare const runsContract: {
             completed: "completed";
             error: "error";
             processing: "processing";
+            queued: "queued";
         }>;
         response: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
