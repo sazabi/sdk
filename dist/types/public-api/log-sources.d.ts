@@ -2,7 +2,7 @@ import { z } from "zod";
 /**
  * Supported log source provider values derived from canonical catalog specs.
  */
-export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey"];
+export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog"];
 /**
  * Log source setup modes. `native` log sources hold vendor credentials that
  * Sazabi uses to provision delivery; `manual` log sources mint a keyed
@@ -203,6 +203,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
+        evlog: "evlog";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
@@ -318,6 +319,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
+        evlog: "evlog";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
@@ -457,6 +459,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
+        evlog: "evlog";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
@@ -558,6 +561,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -620,6 +624,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
+        evlog: "evlog";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
@@ -720,6 +725,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -780,6 +786,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
+        evlog: "evlog";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
@@ -886,6 +893,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -973,6 +981,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
+        evlog: "evlog";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
@@ -1078,6 +1087,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -1219,6 +1229,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -1378,6 +1389,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -1542,6 +1554,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -1665,6 +1678,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -1759,6 +1773,7 @@ export declare const logSourcesContract: {
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -1859,6 +1874,7 @@ export declare const logSourcesContract: {
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
+                evlog: "evlog";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
@@ -1919,6 +1935,7 @@ export declare const logSourcesContract: {
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
+            evlog: "evlog";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
@@ -2024,6 +2041,7 @@ export declare const logSourcesContract: {
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
+                evlog: "evlog";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
@@ -2164,6 +2182,7 @@ export declare const logSourcesContract: {
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
+                evlog: "evlog";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
@@ -2327,6 +2346,7 @@ export declare const logSourcesContract: {
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
+                evlog: "evlog";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";

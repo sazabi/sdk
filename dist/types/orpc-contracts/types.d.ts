@@ -1,4 +1,7 @@
 import type { AnySchema, ContractProcedure, InferSchemaInput, InferSchemaOutput, Route } from "@orpc/contract";
+import type { FleetJobKind } from "./fleet-job.js";
+import type { PublicReadKind } from "./public-read.js";
+import type { SignedOAuthStateKind } from "./signed-oauth-state.js";
 import type { VendorLookupKind } from "./vendor-lookup.js";
 export type OperationPagination = "none" | "cursor" | "page";
 export type OperationAsyncMode = "sync" | "deferred" | "returns-redirect-url" | "websocket";
@@ -21,10 +24,12 @@ export interface OperationExample<InputValue, OutputValue> {
  * (docs/design/infrastructure/domain-owning-services): a record the
  * operation acts on; for an operation that reads no tenant data, any
  * authenticated caller; for a user's own data, that user; for what the
- * caller's own identity names, the caller; or, for a Sazabi operator's
- * cross-tenant or global operation, the operator.
+ * caller's own identity names, the caller; for a Sazabi operator's
+ * cross-tenant or global operation, the operator; for an unauthenticated
+ * OAuth callback's write, the signed state it carries; or, for a public read
+ * of registry-global data, nobody.
  */
-export type OperationAccess = RecordAccess | AuthenticatedAccess | SelfAccess | OwnScopeAccess | OperatorAccess | VendorLookupAccess;
+export type OperationAccess = RecordAccess | AuthenticatedAccess | SelfAccess | OwnScopeAccess | OperatorAccess | VendorLookupAccess | FleetJobAccess | SignedOAuthStateAccess | PublicReadAccess;
 /**
  * The owner resolves the record named by `id` and runs `decideAccess` with
  * `action` before the handler. Contracts may import only contracts, so
@@ -117,6 +122,45 @@ export interface OperatorAccess {
  */
 export interface VendorLookupAccess {
     vendorLookup: VendorLookupKind;
+}
+/**
+ * A background job's maintenance write across every tenant at once (ENG-9717,
+ * Ed's D4 ruling): only a forwarded `fleet_job` principal on the `system`
+ * surface reaches the handler, with no scope; every other principal is
+ * refused, and that principal reaches nothing else. The output may carry only
+ * the keys `FLEET_JOB_OUTPUT_KEYS` lists for `fleetJob`.
+ */
+export interface FleetJobAccess {
+    fleetJob: FleetJobKind;
+}
+/**
+ * An unauthenticated OAuth callback's write, authorized by the signed state
+ * the callback carries and nothing else (ENG-9086, Ed's ruling 2026-10-14):
+ * only a forwarded `oauth_callback` principal on the `dashboard` surface
+ * reaches the handler. The owner verifies the input's `state` (signature and
+ * age, with the key and limit the callback route uses), refuses one that
+ * names another callback surface than the kind's or another provider than the
+ * input's `provider`, and hands the handler only the organization and user the
+ * verified state names. Every other principal is refused, and that principal
+ * reaches nothing else. The input may carry only the keys
+ * `SIGNED_OAUTH_STATE_KINDS` lists for `signedOAuthState`, and never a
+ * tenant; the output only its output keys.
+ */
+export interface SignedOAuthStateAccess {
+    signedOAuthState: SignedOAuthStateKind;
+}
+/**
+ * A read anyone may make, of data that belongs to no tenant (Ed's ruling
+ * 2026-10-15, "FRONT-DOOR PLACEMENT BATCH" (1)): only a forwarded `anonymous`
+ * principal on the kind's surface reaches the handler, with no scope, and
+ * that principal reaches nothing else. The input may carry only the keys
+ * `PUBLIC_READ_KINDS` lists for `publicRead`, and never a tenant; the output
+ * only its lists, whose rows carry only the listed keys. The code the handler
+ * reaches reads only tables the ownership registry marks global, as a
+ * tenant-free operation's does (services/core's boundary check).
+ */
+export interface PublicReadAccess {
+    publicRead: PublicReadKind;
 }
 export interface OperationContractMetadata<TBackend extends string = string> {
     operationId: string;

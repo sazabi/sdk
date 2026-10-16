@@ -16,6 +16,7 @@ export declare const CreateIssueInputObjectSchema: z.ZodObject<{
     suspectedPullRequest: z.ZodOptional<z.ZodObject<{
         provider: z.ZodDefault<z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
         }>>;
         repositoryFullName: z.ZodString;
@@ -40,6 +41,7 @@ export declare const CreateIssueInputSchema: z.ZodObject<{
     suspectedPullRequest: z.ZodOptional<z.ZodObject<{
         provider: z.ZodDefault<z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
         }>>;
         repositoryFullName: z.ZodString;

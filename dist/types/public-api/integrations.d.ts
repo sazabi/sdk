@@ -5,9 +5,10 @@ import { z } from "zod";
  * isomorphic contract package does not pull in the server-only integrations
  * package (which imports Node crypto and database access).
  */
-export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "incident_io", "webhook", "teams", "bitbucket", "jira"];
+export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "incident_io", "webhook", "teams", "bitbucket", "jira", "gitcafe"];
 export declare const IntegrationProviderEnum: z.ZodEnum<{
     bitbucket: "bitbucket";
+    gitcafe: "gitcafe";
     github: "github";
     incident_io: "incident_io";
     jira: "jira";
@@ -65,6 +66,7 @@ export declare const IntegrationCredentialFieldSchema: z.ZodObject<{
 export declare const IntegrationProviderSchema: z.ZodObject<{
     id: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -160,6 +162,7 @@ export declare const IntegrationConnectionSchema: z.ZodObject<{
     id: z.ZodString;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -206,6 +209,7 @@ export declare const ListIntegrationProvidersOutputSchema: z.ZodObject<{
     providers: z.ZodArray<z.ZodObject<{
         id: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -249,6 +253,7 @@ export declare const listIntegrationProviders: import("../orpc-contracts/index.j
     providers: z.ZodArray<z.ZodObject<{
         id: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -289,6 +294,7 @@ export declare const ListIntegrationConnectionsInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodOptional<z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -358,6 +364,7 @@ export declare const ListIntegrationConnectionsOutputSchema: z.ZodObject<{
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -398,6 +405,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodOptional<z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -466,6 +474,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -561,6 +570,7 @@ export declare const GetIntegrationConnectionOutputSchema: z.ZodObject<{
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -657,6 +667,7 @@ export declare const getIntegrationConnection: import("../orpc-contracts/index.j
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -695,6 +706,7 @@ export declare const CreateIntegrationConnectionInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -766,6 +778,7 @@ export declare const CreateIntegrationConnectionOutputSchema: z.ZodObject<{
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -806,6 +819,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -876,6 +890,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -914,6 +929,7 @@ export declare const BeginIntegrationConnectInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -939,6 +955,7 @@ export declare const beginIntegrationConnect: import("../orpc-contracts/index.js
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -1034,6 +1051,7 @@ export declare const GetIntegrationConnectAttemptOutputSchema: z.ZodObject<{
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -1139,6 +1157,7 @@ export declare const getIntegrationConnectAttempt: import("../orpc-contracts/ind
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -1250,6 +1269,7 @@ export declare const UpdateIntegrationConnectionCredentialsOutputSchema: z.ZodOb
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -1347,6 +1367,7 @@ export declare const updateIntegrationConnectionCredentials: import("../orpc-con
         id: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
             incident_io: "incident_io";
             jira: "jira";
@@ -1802,6 +1823,7 @@ export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";
@@ -1824,6 +1846,7 @@ export declare const getActiveCLIAttempt: import("../orpc-contracts/index.js").O
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         incident_io: "incident_io";
         jira: "jira";

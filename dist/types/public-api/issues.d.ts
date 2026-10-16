@@ -1243,6 +1243,7 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
     suspectedPullRequest: z.ZodOptional<z.ZodObject<{
         provider: z.ZodDefault<z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
         }>>;
         repositoryFullName: z.ZodString;
@@ -1984,6 +1985,7 @@ export declare const issuesContract: {
         suspectedPullRequest: z.ZodOptional<z.ZodObject<{
             provider: z.ZodDefault<z.ZodEnum<{
                 bitbucket: "bitbucket";
+                gitcafe: "gitcafe";
                 github: "github";
             }>>;
             repositoryFullName: z.ZodString;

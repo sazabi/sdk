@@ -1042,9 +1042,54 @@ export declare const ListPlansOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListPlansOutput = z.infer<typeof ListPlansOutputSchema>;
+/** The discount an upgrade preview or change applied, as the dashboard shows it. */
+export declare const PlanChangeDiscountSchema: z.ZodObject<{
+    source: z.ZodEnum<{
+        code: "code";
+        subscription: "subscription";
+    }>;
+    code: z.ZodNullable<z.ZodString>;
+    couponId: z.ZodString;
+    name: z.ZodNullable<z.ZodString>;
+    percentOff: z.ZodNullable<z.ZodString>;
+    amountOff: z.ZodNullable<z.ZodString>;
+    duration: z.ZodEnum<{
+        forever: "forever";
+        once: "once";
+        repeating: "repeating";
+    }>;
+    durationInMonths: z.ZodNullable<z.ZodNumber>;
+    endsAt: z.ZodNullable<z.ZodString>;
+    amount: z.ZodString;
+    totalAmount: z.ZodString;
+    appliesToRenewals: z.ZodBoolean;
+    stackedWith: z.ZodArray<z.ZodObject<{
+        couponId: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+        percentOff: z.ZodNullable<z.ZodString>;
+        amountOff: z.ZodNullable<z.ZodString>;
+        duration: z.ZodEnum<{
+            forever: "forever";
+            once: "once";
+            repeating: "repeating";
+        }>;
+        durationInMonths: z.ZodNullable<z.ZodNumber>;
+        endsAt: z.ZodNullable<z.ZodString>;
+        amount: z.ZodString;
+        appliesToRenewals: z.ZodBoolean;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type PlanChangeDiscount = z.infer<typeof PlanChangeDiscountSchema>;
+/** The payment method an upgrade will charge, by the settlement's own precedence. */
+export declare const PlanChangePaymentMethodSchema: z.ZodObject<{
+    brand: z.ZodNullable<z.ZodString>;
+    last4: z.ZodNullable<z.ZodString>;
+    display: z.ZodString;
+}, z.core.$strip>;
 export declare const PreviewPlanChangeInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     planSlug: z.ZodString;
+    discountCode: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type PreviewPlanChangeInput = z.infer<typeof PreviewPlanChangeInputSchema>;
 export declare const PreviewPlanChangeOutputSchema: z.ZodObject<{
@@ -1072,12 +1117,55 @@ export declare const PreviewPlanChangeOutputSchema: z.ZodObject<{
     subscriptionChargeAmount: z.ZodString;
     proratedCreditGrantAmount: z.ZodString;
     remainingCycleFraction: z.ZodString;
+    nextCycleStartsAt: z.ZodString;
     nextCycleChargeAmount: z.ZodString;
+    discount: z.ZodNullable<z.ZodObject<{
+        source: z.ZodEnum<{
+            code: "code";
+            subscription: "subscription";
+        }>;
+        code: z.ZodNullable<z.ZodString>;
+        couponId: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+        percentOff: z.ZodNullable<z.ZodString>;
+        amountOff: z.ZodNullable<z.ZodString>;
+        duration: z.ZodEnum<{
+            forever: "forever";
+            once: "once";
+            repeating: "repeating";
+        }>;
+        durationInMonths: z.ZodNullable<z.ZodNumber>;
+        endsAt: z.ZodNullable<z.ZodString>;
+        amount: z.ZodString;
+        totalAmount: z.ZodString;
+        appliesToRenewals: z.ZodBoolean;
+        stackedWith: z.ZodArray<z.ZodObject<{
+            couponId: z.ZodString;
+            name: z.ZodNullable<z.ZodString>;
+            percentOff: z.ZodNullable<z.ZodString>;
+            amountOff: z.ZodNullable<z.ZodString>;
+            duration: z.ZodEnum<{
+                forever: "forever";
+                once: "once";
+                repeating: "repeating";
+            }>;
+            durationInMonths: z.ZodNullable<z.ZodNumber>;
+            endsAt: z.ZodNullable<z.ZodString>;
+            amount: z.ZodString;
+            appliesToRenewals: z.ZodBoolean;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
+    paymentMethod: z.ZodNullable<z.ZodObject<{
+        brand: z.ZodNullable<z.ZodString>;
+        last4: z.ZodNullable<z.ZodString>;
+        display: z.ZodString;
+    }, z.core.$strip>>;
 }, z.core.$strip>;
 export type PreviewPlanChangeOutput = z.infer<typeof PreviewPlanChangeOutputSchema>;
 export declare const ChangePlanInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     planSlug: z.ZodString;
+    discountCode: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type ChangePlanInput = z.infer<typeof ChangePlanInputSchema>;
 export declare const ChangePlanOutputSchema: z.ZodObject<{
@@ -1093,6 +1181,7 @@ export declare const ChangePlanOutputSchema: z.ZodObject<{
     immediateChargeAmount: z.ZodOptional<z.ZodString>;
     subscriptionChargeAmount: z.ZodOptional<z.ZodString>;
     proratedCreditGrantAmount: z.ZodOptional<z.ZodString>;
+    discountAmount: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type ChangePlanOutput = z.infer<typeof ChangePlanOutputSchema>;
 export declare const CreateCheckoutSessionInputSchema: z.ZodObject<{
@@ -1392,6 +1481,7 @@ export declare const listPlans: import("../orpc-contracts/index.js").OperationDe
 export declare const previewPlanChange: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     planSlug: z.ZodString;
+    discountCode: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     calculatedAt: z.ZodString;
     type: z.ZodEnum<{
@@ -1417,11 +1507,54 @@ export declare const previewPlanChange: import("../orpc-contracts/index.js").Ope
     subscriptionChargeAmount: z.ZodString;
     proratedCreditGrantAmount: z.ZodString;
     remainingCycleFraction: z.ZodString;
+    nextCycleStartsAt: z.ZodString;
     nextCycleChargeAmount: z.ZodString;
+    discount: z.ZodNullable<z.ZodObject<{
+        source: z.ZodEnum<{
+            code: "code";
+            subscription: "subscription";
+        }>;
+        code: z.ZodNullable<z.ZodString>;
+        couponId: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+        percentOff: z.ZodNullable<z.ZodString>;
+        amountOff: z.ZodNullable<z.ZodString>;
+        duration: z.ZodEnum<{
+            forever: "forever";
+            once: "once";
+            repeating: "repeating";
+        }>;
+        durationInMonths: z.ZodNullable<z.ZodNumber>;
+        endsAt: z.ZodNullable<z.ZodString>;
+        amount: z.ZodString;
+        totalAmount: z.ZodString;
+        appliesToRenewals: z.ZodBoolean;
+        stackedWith: z.ZodArray<z.ZodObject<{
+            couponId: z.ZodString;
+            name: z.ZodNullable<z.ZodString>;
+            percentOff: z.ZodNullable<z.ZodString>;
+            amountOff: z.ZodNullable<z.ZodString>;
+            duration: z.ZodEnum<{
+                forever: "forever";
+                once: "once";
+                repeating: "repeating";
+            }>;
+            durationInMonths: z.ZodNullable<z.ZodNumber>;
+            endsAt: z.ZodNullable<z.ZodString>;
+            amount: z.ZodString;
+            appliesToRenewals: z.ZodBoolean;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>;
+    paymentMethod: z.ZodNullable<z.ZodObject<{
+        brand: z.ZodNullable<z.ZodString>;
+        last4: z.ZodNullable<z.ZodString>;
+        display: z.ZodString;
+    }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const changePlan: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     planSlug: z.ZodString;
+    discountCode: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     billingSubscriptionChangeId: z.ZodString;
     billingSubscriptionId: z.ZodString;
@@ -1435,6 +1568,7 @@ export declare const changePlan: import("../orpc-contracts/index.js").OperationD
     immediateChargeAmount: z.ZodOptional<z.ZodString>;
     subscriptionChargeAmount: z.ZodOptional<z.ZodString>;
     proratedCreditGrantAmount: z.ZodOptional<z.ZodString>;
+    discountAmount: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const createCheckoutSession: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
@@ -2778,6 +2912,7 @@ export declare const billingContract: {
     readonly previewPlanChange: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         planSlug: z.ZodString;
+        discountCode: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         calculatedAt: z.ZodString;
         type: z.ZodEnum<{
@@ -2803,11 +2938,54 @@ export declare const billingContract: {
         subscriptionChargeAmount: z.ZodString;
         proratedCreditGrantAmount: z.ZodString;
         remainingCycleFraction: z.ZodString;
+        nextCycleStartsAt: z.ZodString;
         nextCycleChargeAmount: z.ZodString;
+        discount: z.ZodNullable<z.ZodObject<{
+            source: z.ZodEnum<{
+                code: "code";
+                subscription: "subscription";
+            }>;
+            code: z.ZodNullable<z.ZodString>;
+            couponId: z.ZodString;
+            name: z.ZodNullable<z.ZodString>;
+            percentOff: z.ZodNullable<z.ZodString>;
+            amountOff: z.ZodNullable<z.ZodString>;
+            duration: z.ZodEnum<{
+                forever: "forever";
+                once: "once";
+                repeating: "repeating";
+            }>;
+            durationInMonths: z.ZodNullable<z.ZodNumber>;
+            endsAt: z.ZodNullable<z.ZodString>;
+            amount: z.ZodString;
+            totalAmount: z.ZodString;
+            appliesToRenewals: z.ZodBoolean;
+            stackedWith: z.ZodArray<z.ZodObject<{
+                couponId: z.ZodString;
+                name: z.ZodNullable<z.ZodString>;
+                percentOff: z.ZodNullable<z.ZodString>;
+                amountOff: z.ZodNullable<z.ZodString>;
+                duration: z.ZodEnum<{
+                    forever: "forever";
+                    once: "once";
+                    repeating: "repeating";
+                }>;
+                durationInMonths: z.ZodNullable<z.ZodNumber>;
+                endsAt: z.ZodNullable<z.ZodString>;
+                amount: z.ZodString;
+                appliesToRenewals: z.ZodBoolean;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>;
+        paymentMethod: z.ZodNullable<z.ZodObject<{
+            brand: z.ZodNullable<z.ZodString>;
+            last4: z.ZodNullable<z.ZodString>;
+            display: z.ZodString;
+        }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly changePlan: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         planSlug: z.ZodString;
+        discountCode: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         billingSubscriptionChangeId: z.ZodString;
         billingSubscriptionId: z.ZodString;
@@ -2821,6 +2999,7 @@ export declare const billingContract: {
         immediateChargeAmount: z.ZodOptional<z.ZodString>;
         subscriptionChargeAmount: z.ZodOptional<z.ZodString>;
         proratedCreditGrantAmount: z.ZodOptional<z.ZodString>;
+        discountAmount: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly createCheckoutSession: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;

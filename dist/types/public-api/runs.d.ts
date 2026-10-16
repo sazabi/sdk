@@ -41,6 +41,9 @@ export type RunFailureClass = z.infer<typeof RunFailureClassSchema>;
 /**
  * Coerces a persisted `runs.failure_class` into the published vocabulary.
  *
+ * The internal `model_refusal` class is published as `provider_rejected`, with
+ * that class's retryability (an identical request would be refused again).
+ *
  * Anything unrecognized — including a class a newer durable-agent deploy
  * writes before this contract ships it — becomes `"unknown"` rather than
  * escaping as-is. Without this the strict enum above would make output

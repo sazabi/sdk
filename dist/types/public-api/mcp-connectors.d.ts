@@ -25,10 +25,16 @@ export declare const MCP_CONNECTOR_TRANSPORT_VALUES: readonly ["streamable-http"
 /** Auth mode values supported by MCP connections. */
 export declare const MCP_CONNECTOR_AUTH_MODE_VALUES: readonly ["none", "headers", "oauth", "aws-sigv4"];
 /**
- * One configured MCP connector. Secret material (headers, tokens, granted
- * scopes) is intentionally omitted from this shape.
+ * One configured MCP connector. Individual reads may include masked header
+ * names and granted scopes for writers; secret values and tokens are never returned.
  */
 export declare const McpConnectorSchema: z.ZodObject<{
+    maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        maskedValue: z.ZodString;
+    }, z.core.$strip>>>;
+    grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
     connectionStatus: z.ZodOptional<z.ZodObject<{
         state: z.ZodEnum<{
             connected: "connected";
@@ -149,6 +155,12 @@ export declare const ListMcpConnectorsInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const ListMcpConnectorsOutputSchema: z.ZodObject<{
     connectors: z.ZodArray<z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -259,6 +271,12 @@ export declare const listMcpConnectors: import("../orpc-contracts/index.js").Ope
     connectedOnly: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
 }, z.core.$strip>, z.ZodObject<{
     connectors: z.ZodArray<z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -368,6 +386,12 @@ export declare const GetMcpConnectorInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const GetMcpConnectorOutputSchema: z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -478,6 +502,12 @@ export declare const getMcpConnector: import("../orpc-contracts/index.js").Opera
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -587,6 +617,12 @@ export declare const GetMcpConnectorDetailsInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const GetMcpConnectorDetailsOutputSchema: z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -704,6 +740,12 @@ export declare const getMcpConnectorDetails: import("../orpc-contracts/index.js"
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1085,6 +1127,12 @@ export declare const CreateMcpConnectorInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const CreateMcpConnectorOutputSchema: z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1212,6 +1260,12 @@ export declare const createMcpConnector: import("../orpc-contracts/index.js").Op
     readOnly: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1338,6 +1392,12 @@ export declare const UpdateMcpConnectorInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const UpdateMcpConnectorOutputSchema: z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1465,6 +1525,12 @@ export declare const updateMcpConnector: import("../orpc-contracts/index.js").Op
     }, z.core.$strip>>;
 }, z.core.$strip>, z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1585,6 +1651,12 @@ export declare const SetMcpConnectorReadOnlyInputSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const SetMcpConnectorReadOnlyOutputSchema: z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1696,6 +1768,12 @@ export declare const setMcpConnectorReadOnly: import("../orpc-contracts/index.js
     readOnly: z.ZodBoolean;
 }, z.core.$strip>, z.ZodObject<{
     connector: z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1842,6 +1920,12 @@ export declare const GetMcpOAuthInstallAttemptOutputSchema: z.ZodObject<{
         error: "error";
     }>;
     connector: z.ZodOptional<z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -1958,6 +2042,12 @@ export declare const getMcpOAuthInstallAttempt: import("../orpc-contracts/index.
         error: "error";
     }>;
     connector: z.ZodOptional<z.ZodObject<{
+        maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            maskedValue: z.ZodString;
+        }, z.core.$strip>>>;
+        grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
         connectionStatus: z.ZodOptional<z.ZodObject<{
             state: z.ZodEnum<{
                 connected: "connected";
@@ -2067,6 +2157,12 @@ export declare const mcpConnectorsContract: {
         connectedOnly: z.ZodOptional<z.ZodUnion<readonly [z.ZodBoolean, z.ZodCodec<z.ZodString, z.ZodBoolean>]>>;
     }, z.core.$strip>, z.ZodObject<{
         connectors: z.ZodArray<z.ZodObject<{
+            maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                maskedValue: z.ZodString;
+            }, z.core.$strip>>>;
+            grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
             connectionStatus: z.ZodOptional<z.ZodObject<{
                 state: z.ZodEnum<{
                     connected: "connected";
@@ -2175,6 +2271,12 @@ export declare const mcpConnectorsContract: {
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         connector: z.ZodObject<{
+            maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                maskedValue: z.ZodString;
+            }, z.core.$strip>>>;
+            grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
             connectionStatus: z.ZodOptional<z.ZodObject<{
                 state: z.ZodEnum<{
                     connected: "connected";
@@ -2283,6 +2385,12 @@ export declare const mcpConnectorsContract: {
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         connector: z.ZodObject<{
+            maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                maskedValue: z.ZodString;
+            }, z.core.$strip>>>;
+            grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
             connectionStatus: z.ZodOptional<z.ZodObject<{
                 state: z.ZodEnum<{
                     connected: "connected";
@@ -2505,6 +2613,12 @@ export declare const mcpConnectorsContract: {
         readOnly: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>, z.ZodObject<{
         connector: z.ZodObject<{
+            maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                maskedValue: z.ZodString;
+            }, z.core.$strip>>>;
+            grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
             connectionStatus: z.ZodOptional<z.ZodObject<{
                 state: z.ZodEnum<{
                     connected: "connected";
@@ -2630,6 +2744,12 @@ export declare const mcpConnectorsContract: {
         }, z.core.$strip>>;
     }, z.core.$strip>, z.ZodObject<{
         connector: z.ZodObject<{
+            maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                maskedValue: z.ZodString;
+            }, z.core.$strip>>>;
+            grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
             connectionStatus: z.ZodOptional<z.ZodObject<{
                 state: z.ZodEnum<{
                     connected: "connected";
@@ -2743,6 +2863,12 @@ export declare const mcpConnectorsContract: {
         readOnly: z.ZodBoolean;
     }, z.core.$strip>, z.ZodObject<{
         connector: z.ZodObject<{
+            maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                maskedValue: z.ZodString;
+            }, z.core.$strip>>>;
+            grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
             connectionStatus: z.ZodOptional<z.ZodObject<{
                 state: z.ZodEnum<{
                     connected: "connected";
@@ -2871,6 +2997,12 @@ export declare const mcpConnectorsContract: {
             error: "error";
         }>;
         connector: z.ZodOptional<z.ZodObject<{
+            maskedHeaders: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                maskedValue: z.ZodString;
+            }, z.core.$strip>>>;
+            grantedScopes: z.ZodOptional<z.ZodArray<z.ZodString>>;
             connectionStatus: z.ZodOptional<z.ZodObject<{
                 state: z.ZodEnum<{
                     connected: "connected";

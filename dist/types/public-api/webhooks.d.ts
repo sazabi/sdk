@@ -185,6 +185,7 @@ export declare const WebhookEnvelopeBaseSchema: z.ZodObject<{
         issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        issue_updated: "issue_updated";
         test: "test";
     }>;
     apiVersion: z.ZodLiteral<"2026-09-01">;
@@ -217,6 +218,7 @@ export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
         issue_ignored: "issue_ignored";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        issue_updated: "issue_updated";
     }>;
     test: z.ZodLiteral<false>;
     project: z.ZodObject<{
@@ -347,6 +349,7 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
         issue_ignored: "issue_ignored";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        issue_updated: "issue_updated";
     }>;
     test: z.ZodLiteral<false>;
     project: z.ZodObject<{
@@ -612,6 +615,7 @@ export declare const webhooksSubscribe: import("../orpc-contracts/index.js").Ope
         issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        issue_updated: "issue_updated";
     }>>;
     severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
         critical: "critical";

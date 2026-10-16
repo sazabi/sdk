@@ -1,6 +1,20 @@
 import { z } from "zod";
+/**
+ * The forge provider ids on the wire, shared by every service contract.
+ * Contracts may import only other contracts, so this mirrors
+ * `FORGE_PROVIDER_IDS` in `@sazabi/forge-provider` instead of importing it;
+ * `integration-tests/src/connections/forge-provider-contract.test.ts` fails
+ * the build when the two lists drift.
+ */
+export declare const ForgeProviderSchema: z.ZodEnum<{
+    bitbucket: "bitbucket";
+    gitcafe: "gitcafe";
+    github: "github";
+}>;
+export type ForgeProvider = z.infer<typeof ForgeProviderSchema>;
 export declare const RepoProviderSchema: z.ZodEnum<{
     bitbucket: "bitbucket";
+    gitcafe: "gitcafe";
     github: "github";
 }>;
 export type RepoProvider = z.infer<typeof RepoProviderSchema>;
@@ -15,6 +29,7 @@ export declare const RepoSchema: z.ZodObject<{
     sourceLabel: z.ZodString;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
     }>;
     owner: z.ZodString;
@@ -41,6 +56,7 @@ export declare const ListReposOutputSchema: z.ZodObject<{
         sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
         }>;
         owner: z.ZodString;
@@ -85,6 +101,7 @@ export declare const AddReposOutputSchema: z.ZodObject<{
         sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
         }>;
         owner: z.ZodString;
@@ -131,6 +148,7 @@ export declare const listRepos: import("../orpc-contracts/index.js").OperationDe
         sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
         }>;
         owner: z.ZodString;
@@ -157,6 +175,7 @@ export declare const addRepos: import("../orpc-contracts/index.js").OperationDef
         sourceLabel: z.ZodString;
         provider: z.ZodEnum<{
             bitbucket: "bitbucket";
+            gitcafe: "gitcafe";
             github: "github";
         }>;
         owner: z.ZodString;

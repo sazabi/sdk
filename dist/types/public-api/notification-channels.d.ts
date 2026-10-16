@@ -101,6 +101,7 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        issue_updated: "issue_updated";
         log_source_connected: "log_source_connected";
         log_source_disconnected: "log_source_disconnected";
         mcp_connector_added: "mcp_connector_added";
@@ -169,6 +170,7 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         issue_rejected: "issue_rejected";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
+        issue_updated: "issue_updated";
         log_source_connected: "log_source_connected";
         log_source_disconnected: "log_source_disconnected";
         mcp_connector_added: "mcp_connector_added";
@@ -276,6 +278,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            issue_updated: "issue_updated";
             log_source_connected: "log_source_connected";
             log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
@@ -344,6 +347,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            issue_updated: "issue_updated";
             log_source_connected: "log_source_connected";
             log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
@@ -460,6 +464,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            issue_updated: "issue_updated";
             log_source_connected: "log_source_connected";
             log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
@@ -528,6 +533,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             issue_rejected: "issue_rejected";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
+            issue_updated: "issue_updated";
             log_source_connected: "log_source_connected";
             log_source_disconnected: "log_source_disconnected";
             mcp_connector_added: "mcp_connector_added";
@@ -642,6 +648,7 @@ export declare const notificationChannelsContract: {
                 issue_rejected: "issue_rejected";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
+                issue_updated: "issue_updated";
                 log_source_connected: "log_source_connected";
                 log_source_disconnected: "log_source_disconnected";
                 mcp_connector_added: "mcp_connector_added";
@@ -710,6 +717,7 @@ export declare const notificationChannelsContract: {
                 issue_rejected: "issue_rejected";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
+                issue_updated: "issue_updated";
                 log_source_connected: "log_source_connected";
                 log_source_disconnected: "log_source_disconnected";
                 mcp_connector_added: "mcp_connector_added";

@@ -1,2 +1,3 @@
+export declare const AUTOMATION_NAME_MAX_CHARACTERS = 200;
 export declare const AUTOMATION_DESCRIPTION_MAX_CHARACTERS = 2000;
 export declare const AUTOMATION_DESCRIPTION_LIMIT_MESSAGE: string;
