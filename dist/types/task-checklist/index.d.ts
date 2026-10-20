@@ -41,10 +41,10 @@ export { SAMPLE_ISSUE, SAMPLE_ISSUE_AGE_MS, SAMPLE_ISSUE_CARD_ID, SAMPLE_ISSUE_D
 export { NAVIGATION_SCENARIOS, type NavigationAction, type NavigationLedger, type NavigationPosition, type NavigationScenario, } from "./navigation-scenarios.js";
 export { SETUP_TASKS, type SetupTaskKey } from "./setup-tasks.js";
 export { applicabilityFor, CARDS_WITHOUT_BACK, COMMITMENT_FLOW_ENTRIES, dependenciesFor, isCommitmentFlowEntry, isSkippable, isTaskSkippedInLedger, offersBack, type OrgTaskSkipLedger, SKIPPABLE_TASKS, TASK_APPLICABILITY, TASK_APPLICABILITY_RULES, TASK_DEPENDENCIES, type TaskApplicabilityRule, TASKS_WITH_SKIP_LEDGER, type TaskWithSkipLedger, } from "./rules.js";
-export declare const TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "configure_code_search", "install_slack_app", "configure_slack_alerts", "trigger_sample_issue", "invite_team", "connect_log_sources", "add_mcp_connectors", "install_cli", "customize_sandbox", "send_message", "explore_integrations", "visit_status_page", "configure_auto_top_up"];
+export declare const TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "configure_code_search", "install_slack_app", "configure_slack_alerts", "join_slack_connect_channel", "trigger_sample_issue", "invite_team", "connect_log_sources", "add_mcp_connectors", "install_cli", "customize_sandbox", "send_message", "explore_integrations", "visit_status_page", "configure_auto_top_up"];
 export type TaskKey = (typeof TASK_KEYS)[number];
 /** Task keys written to org_task_completions. */
-export declare const ORG_TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "install_slack_app", "configure_slack_alerts", "invite_team", "add_mcp_connectors", "configure_auto_top_up"];
+export declare const ORG_TASK_KEYS: readonly ["set_up_billing", "connect_github_account", "install_github_app", "install_slack_app", "configure_slack_alerts", "join_slack_connect_channel", "invite_team", "add_mcp_connectors", "configure_auto_top_up"];
 export type OrgTaskKey = (typeof ORG_TASK_KEYS)[number];
 /** Task keys written to project_task_completions. */
 export declare const PROJECT_TASK_KEYS: readonly ["configure_code_search", "trigger_sample_issue", "connect_log_sources", "customize_sandbox"];
@@ -283,6 +283,13 @@ export type TaskChecklistStatus = {
         configureCodeSearch: boolean;
         installSlackApp: boolean;
         configureSlackAlerts: boolean;
+        /**
+         * Whether someone continued past the Slack Connect notice, or `null`
+         * when the card does not apply (no channel with a recorded invitee) —
+         * hidden from the checklist rather than stranded incomplete, like
+         * {@link setUpBilling} (ENG-9842).
+         */
+        joinSlackConnectChannel: boolean | null;
     };
     other: {
         inviteTeam: boolean;

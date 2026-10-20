@@ -1310,7 +1310,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Automations"],
           operationId: "automations.run",
           summary: "Run an automation",
-          description: "Start a manual run of a customer automation using its current saved configuration. Requires an organization administrator with project settings permission; ordinary secret keys cannot start manual runs."
+          description: "Start a manual run of a customer automation using its current saved configuration, optionally carrying a JSON payload to its script. Requires an organization administrator with project settings permission; ordinary secret keys cannot start manual runs."
         }
       }
     },
@@ -1351,6 +1351,28 @@ var public_api_client_contract_gen_default = {
           operationId: "automations.delete",
           description: "Soft-delete a custom automation.",
           successStatus: 204
+        }
+      }
+    },
+    webhook: {
+      rotateSecret: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "automations.webhook.rotateSecret",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/automations/{automationId}/webhook/rotate-secret",
+            tags: ["Automations"],
+            operationId: "automations.webhook.rotateSecret",
+            summary: "Rotate an automation's webhook secret",
+            description: "Issue a new signing secret for a webhook automation's hook. The hook URL does not change, and the previous secret keeps verifying deliveries for 24 hours."
+          }
         }
       }
     },
@@ -3394,6 +3416,68 @@ var public_api_client_contract_gen_default = {
       }
     }
   },
+  taskStatusMapping: {
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "taskStatusMapping.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/task-status-mapping",
+          tags: ["Task status mapping"],
+          operationId: "taskStatusMapping.get",
+          summary: "Get the status mapping",
+          description: "The toggle, the team whose states the rows name, and the three rows (Open, Resolved, Ignored), each a tracker state or empty."
+        }
+      }
+    },
+    options: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "taskStatusMapping.options",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/task-status-mapping/options",
+          tags: ["Task status mapping"],
+          operationId: "taskStatusMapping.options",
+          summary: "List the tracker states a mapping row may take",
+          description: "The connection's default team (Linear) or project (Jira), its workflow states, and the tracker's resolutions where it has them, read live from the tracker."
+        }
+      }
+    },
+    update: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "taskStatusMapping.update",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/task-status-mapping",
+          tags: ["Task status mapping"],
+          operationId: "taskStatusMapping.update",
+          summary: "Change the status mapping",
+          description: "Turn the mapping on or off, set or empty any of the three rows, and on Jira pick the resolution an Ignored move closes with. Requires settings:write on the organization."
+        }
+      }
+    }
+  },
   mcpConnectors: {
     listProviders: {
       "~orpc": {
@@ -4544,6 +4628,28 @@ var public_api_client_contract_gen_default = {
           operationId: "onboarding.completeSampleIssue",
           summary: "Complete the test issue step",
           description: "Mark the sample-issue onboarding step complete after viewing the test issue."
+        }
+      }
+    },
+    slackConnect: {
+      finish: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "onboarding.slackConnect.finish",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/onboarding/slack-connect/finish",
+            tags: ["Onboarding"],
+            operationId: "onboarding.slackConnect.finish",
+            summary: "Finish the Slack Connect step",
+            description: "Mark the Connect with us on Slack onboarding step complete after reading where the invitation went."
+          }
         }
       }
     },
@@ -8117,6 +8223,9 @@ var createClient = (options) => {
       enable: async (input) => raw.automations.enable(await resolveProjectScopedInput(options.credentialProvider, input)),
       disable: async (input) => raw.automations.disable(await resolveProjectScopedInput(options.credentialProvider, input)),
       delete: async (input) => raw.automations.delete(await resolveProjectScopedInput(options.credentialProvider, input)),
+      webhook: {
+        rotateSecret: async (input) => raw.automations.webhook.rotateSecret(await resolveProjectScopedInput(options.credentialProvider, input))
+      },
       runs: {
         list: async (input) => raw.automations.runs.list(await resolveProjectScopedInput(options.credentialProvider, input)),
         get: async (input) => raw.automations.runs.get(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -8154,6 +8263,9 @@ var createClient = (options) => {
       continueWithFree: async (input) => raw.onboarding.continueWithFree(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       ensureDefaultProject: async (input) => raw.onboarding.ensureDefaultProject(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       completeSampleIssue: async (input) => raw.onboarding.completeSampleIssue(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
+      slackConnect: {
+        finish: async (input) => raw.onboarding.slackConnect.finish(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {}))
+      },
       finish: async (input) => raw.onboarding.finish(input)
     },
     organizations: {
@@ -8523,6 +8635,11 @@ var createClient = (options) => {
       update: async (input) => raw.taskCreationRules.update(await resolveProjectScopedInput(options.credentialProvider, input)),
       delete: async (input) => raw.taskCreationRules.delete(await resolveProjectScopedInput(options.credentialProvider, input)),
       reorder: async (input) => raw.taskCreationRules.reorder(await resolveProjectScopedInput(options.credentialProvider, input))
+    },
+    taskStatusMapping: {
+      get: async (input) => raw.taskStatusMapping.get(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      options: async (input) => raw.taskStatusMapping.options(await resolveOrganizationScopedInput(options.credentialProvider, input)),
+      update: async (input) => raw.taskStatusMapping.update(await resolveOrganizationScopedInput(options.credentialProvider, input))
     },
     notificationChannels: {
       getProject: async (input = {}) => raw.notificationChannels.getProject(await resolveProjectScopedInput(options.credentialProvider, input))

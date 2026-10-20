@@ -20,6 +20,8 @@ export declare const VENDOR_LOOKUP_OUTPUT_KEYS: {
     readonly webhook_verification: readonly ["organizationId", "projectId", "webhookId"];
     /** A vendor identity to the Sazabi user it belongs to, and organization. */
     readonly external_identity: readonly ["organizationId", "userId"];
+    /** A tracker task to the Sazabi issue it was filed for, and its tenant. */
+    readonly task_item: readonly ["organizationId", "projectId", "issueId"];
 };
 export type VendorLookupKind = keyof typeof VENDOR_LOOKUP_OUTPUT_KEYS;
 export declare const isVendorLookupKind: (value: string) => value is VendorLookupKind;

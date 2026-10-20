@@ -33,6 +33,16 @@ export declare const OnboardingInvitationSchema: z.ZodObject<{
     inviterName: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 /**
+ * The organization's Slack Connect channel for the "Connect with us on
+ * Slack" onboarding card (ENG-9842), or `null` when the card does not apply
+ * (no channel, no recorded invitee, not `channel_created`/`invited`, or
+ * unlinked). The CLI prints the same notice the dashboard card shows.
+ */
+export declare const OnboardingSlackConnectSchema: z.ZodNullable<z.ZodObject<{
+    channelName: z.ZodString;
+    invitedEmail: z.ZodString;
+}, z.core.$strip>>;
+/**
  * One task's server-evaluated status on the onboarding snapshot (ENG-7745):
  * the row every current surface renders card state from. Keyed by the task
  * list's own ids and covering setup tasks; copy comes from the registry.
@@ -103,6 +113,10 @@ export declare const OnboardingSnapshotSchema: z.ZodObject<{
     githubAppSkipped: z.ZodBoolean;
     slackSkipped: z.ZodBoolean;
     sampleIssueId: z.ZodNullable<z.ZodString>;
+    slackConnect: z.ZodNullable<z.ZodObject<{
+        channelName: z.ZodString;
+        invitedEmail: z.ZodString;
+    }, z.core.$strip>>;
     tasks: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         status: z.ZodEnum<{
@@ -207,6 +221,10 @@ export declare const GetOnboardingStateOutputSchema: z.ZodObject<{
         githubAppSkipped: z.ZodBoolean;
         slackSkipped: z.ZodBoolean;
         sampleIssueId: z.ZodNullable<z.ZodString>;
+        slackConnect: z.ZodNullable<z.ZodObject<{
+            channelName: z.ZodString;
+            invitedEmail: z.ZodString;
+        }, z.core.$strip>>;
         tasks: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             status: z.ZodEnum<{
@@ -311,6 +329,10 @@ export declare const getOnboardingState: import("../orpc-contracts/index.js").Op
         githubAppSkipped: z.ZodBoolean;
         slackSkipped: z.ZodBoolean;
         sampleIssueId: z.ZodNullable<z.ZodString>;
+        slackConnect: z.ZodNullable<z.ZodObject<{
+            channelName: z.ZodString;
+            invitedEmail: z.ZodString;
+        }, z.core.$strip>>;
         tasks: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             status: z.ZodEnum<{
@@ -446,6 +468,23 @@ export declare const completeOnboardingSampleIssue: import("../orpc-contracts/in
 }, z.core.$strip>, z.ZodObject<{
     completed: z.ZodLiteral<true>;
 }, z.core.$strip>, "api">;
+export declare const FinishOnboardingSlackConnectInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export declare const FinishOnboardingSlackConnectOutputSchema: z.ZodObject<{
+    completed: z.ZodLiteral<true>;
+}, z.core.$strip>;
+/**
+ * Completes the "Connect with us on Slack" onboarding step (ENG-9842): the
+ * card is a notice, so this stamp is its only completion path. Mirrors the
+ * dashboard tRPC `onboarding.completeSlackConnect` mutation (self-use §4.c
+ * parity).
+ */
+export declare const finishOnboardingSlackConnect: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    completed: z.ZodLiteral<true>;
+}, z.core.$strip>, "api">;
 export declare const FinishOnboardingInputSchema: z.ZodObject<{
     projectId: z.ZodString;
 }, z.core.$strip>;
@@ -514,6 +553,10 @@ export declare const onboardingContract: {
             githubAppSkipped: z.ZodBoolean;
             slackSkipped: z.ZodBoolean;
             sampleIssueId: z.ZodNullable<z.ZodString>;
+            slackConnect: z.ZodNullable<z.ZodObject<{
+                channelName: z.ZodString;
+                invitedEmail: z.ZodString;
+            }, z.core.$strip>>;
             tasks: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
                 status: z.ZodEnum<{
@@ -596,6 +639,13 @@ export declare const onboardingContract: {
     }, z.core.$strip>, z.ZodObject<{
         completed: z.ZodLiteral<true>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly slackConnect: {
+        readonly finish: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+            organizationId: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            completed: z.ZodLiteral<true>;
+        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
     readonly finish: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodString;
     }, z.core.$strip>, z.ZodObject<{
@@ -617,6 +667,8 @@ export type SkipOnboardingSampleIssueInput = z.infer<typeof SkipOnboardingSample
 export type SkipOnboardingSampleIssueOutput = z.infer<typeof SkipOnboardingSampleIssueOutputSchema>;
 export type CompleteOnboardingSampleIssueInput = z.infer<typeof CompleteOnboardingSampleIssueInputSchema>;
 export type CompleteOnboardingSampleIssueOutput = z.infer<typeof CompleteOnboardingSampleIssueOutputSchema>;
+export type FinishOnboardingSlackConnectInput = z.infer<typeof FinishOnboardingSlackConnectInputSchema>;
+export type FinishOnboardingSlackConnectOutput = z.infer<typeof FinishOnboardingSlackConnectOutputSchema>;
 export type FinishOnboardingInput = z.infer<typeof FinishOnboardingInputSchema>;
 export type FinishOnboardingOutput = z.infer<typeof FinishOnboardingOutputSchema>;
 export declare const EnsureOnboardingDefaultProjectInputSchema: z.ZodObject<{

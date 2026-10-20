@@ -127,6 +127,7 @@ export declare const RunSchema: z.ZodObject<{
         app: "app";
         bitbucket: "bitbucket";
         cli: "cli";
+        gitcafe: "gitcafe";
         github: "github";
         linear: "linear";
         mcp: "mcp";
@@ -189,6 +190,7 @@ export declare const ListRunsOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
             mcp: "mcp";
@@ -253,6 +255,7 @@ export declare const ListThreadRunsOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
             mcp: "mcp";
@@ -430,6 +433,7 @@ export declare const listRuns: import("../orpc-contracts/index.js").OperationDef
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
             mcp: "mcp";
@@ -496,6 +500,7 @@ export declare const listThreadRuns: import("../orpc-contracts/index.js").Operat
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
             mcp: "mcp";
@@ -615,6 +620,7 @@ export declare const runsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
                 mcp: "mcp";
@@ -678,6 +684,7 @@ export declare const runsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
                 mcp: "mcp";

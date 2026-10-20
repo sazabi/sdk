@@ -84,6 +84,15 @@ export interface SelfAccess {
      * session reaches it.
      */
     actingFor?: true;
+    /**
+     * The handler decides an organization from the caller's own records (a
+     * parked connect ticket, the organizations mapping a repository) and acts
+     * or reads there, rather than acting in no organization. An identity token
+     * caller must then name an organization, but the token's organization
+     * does not bound the handler, which decides as for today's caller, in the
+     * organization the records name (ENG-9874, Ed's Q1 ruling).
+     */
+    decidesOrganization?: true;
 }
 /**
  * The caller acting within its own identity, with no target named in input:

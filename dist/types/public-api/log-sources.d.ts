@@ -2,7 +2,7 @@ import { z } from "zod";
 /**
  * Supported log source provider values derived from canonical catalog specs.
  */
-export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog"];
+export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog", "otel_traces"];
 /**
  * Log source setup modes. `native` log sources hold vendor credentials that
  * Sazabi uses to provision delivery; `manual` log sources mint a keyed
@@ -218,6 +218,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         otel: "otel";
         otel_collector: "otel_collector";
         otel_metrics: "otel_metrics";
+        otel_traces: "otel_traces";
         plain: "plain";
         porter: "porter";
         posthog: "posthog";
@@ -334,6 +335,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         otel: "otel";
         otel_collector: "otel_collector";
         otel_metrics: "otel_metrics";
+        otel_traces: "otel_traces";
         plain: "plain";
         porter: "porter";
         posthog: "posthog";
@@ -474,6 +476,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         otel: "otel";
         otel_collector: "otel_collector";
         otel_metrics: "otel_metrics";
+        otel_traces: "otel_traces";
         plain: "plain";
         porter: "porter";
         posthog: "posthog";
@@ -576,6 +579,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -639,6 +643,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         otel: "otel";
         otel_collector: "otel_collector";
         otel_metrics: "otel_metrics";
+        otel_traces: "otel_traces";
         plain: "plain";
         porter: "porter";
         posthog: "posthog";
@@ -740,6 +745,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -801,6 +807,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         otel: "otel";
         otel_collector: "otel_collector";
         otel_metrics: "otel_metrics";
+        otel_traces: "otel_traces";
         plain: "plain";
         porter: "porter";
         posthog: "posthog";
@@ -908,6 +915,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -996,6 +1004,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         otel: "otel";
         otel_collector: "otel_collector";
         otel_metrics: "otel_metrics";
+        otel_traces: "otel_traces";
         plain: "plain";
         porter: "porter";
         posthog: "posthog";
@@ -1102,6 +1111,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -1244,6 +1254,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -1404,6 +1415,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -1569,6 +1581,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -1693,6 +1706,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -1788,6 +1802,7 @@ export declare const logSourcesContract: {
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -1889,6 +1904,7 @@ export declare const logSourcesContract: {
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
+                otel_traces: "otel_traces";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";
@@ -1950,6 +1966,7 @@ export declare const logSourcesContract: {
             otel: "otel";
             otel_collector: "otel_collector";
             otel_metrics: "otel_metrics";
+            otel_traces: "otel_traces";
             plain: "plain";
             porter: "porter";
             posthog: "posthog";
@@ -2056,6 +2073,7 @@ export declare const logSourcesContract: {
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
+                otel_traces: "otel_traces";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";
@@ -2197,6 +2215,7 @@ export declare const logSourcesContract: {
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
+                otel_traces: "otel_traces";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";
@@ -2361,6 +2380,7 @@ export declare const logSourcesContract: {
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
+                otel_traces: "otel_traces";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";

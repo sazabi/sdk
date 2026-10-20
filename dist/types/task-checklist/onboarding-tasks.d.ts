@@ -54,6 +54,12 @@ declare const ONBOARDING_CARDS: readonly [{
     readonly instructions: "Go to Settings > Project Notifications and select a Slack channel for issue alerts. Sazabi will post issue alerts and agent summaries to that channel.";
     readonly category: "onboarding";
 }, {
+    readonly id: "join_slack_connect_channel";
+    readonly label: "Connect with us on Slack";
+    readonly description: "We sent an invitation to a shared Slack channel for your team and ours. Accept it from that email, or from Slack Connect in your Slack, whenever you're ready.";
+    readonly instructions: "Accept the Slack Connect invitation from the email Sazabi sent, or from Slack Connect in your Slack, then continue past the 'Connect with us on Slack' onboarding step.";
+    readonly category: "onboarding";
+}, {
     readonly id: "trigger_sample_issue";
     readonly label: "Resolve your first issue";
     readonly description: "Resolve a test issue to see how Sazabi presents an incident: what happened, why it happened, and how to fix it. This shows you the shape of a real issue before your own telemetry produces one.";

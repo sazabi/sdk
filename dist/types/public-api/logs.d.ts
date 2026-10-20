@@ -30,6 +30,9 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
     spec: z.ZodOptional<z.ZodObject<{
         version: z.ZodLiteral<2>;
         predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity";
@@ -44,10 +47,10 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
             kind: "body";
         } | {
             kind: "message";
-        } | {
-            kind: "body_json";
-            path: string[];
         }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity";
@@ -62,9 +65,6 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
             kind: "body";
         } | {
             kind: "message";
-        } | {
-            kind: "body_json";
-            path: string[];
         }>, unknown>>;
         dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"service">;
@@ -112,6 +112,9 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"distinct">;
             field: z.ZodType<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -126,10 +129,10 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown, z.core.$ZodTypeInternals<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -144,13 +147,13 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"numeric">;
             field: z.ZodType<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -165,10 +168,10 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown, z.core.$ZodTypeInternals<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -183,9 +186,6 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown>>;
             parseAs: z.ZodLiteral<"float64">;
             aggregate: z.ZodEnum<{
@@ -205,6 +205,9 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
             op: z.ZodLiteral<"recent_rows">;
             limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -219,10 +222,10 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown, z.core.$ZodTypeInternals<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -237,9 +240,6 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown>>>>;
             order: z.ZodOptional<z.ZodEnum<{
                 newest: "newest";
@@ -262,6 +262,9 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"ratio">;
             numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -276,10 +279,10 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -294,9 +297,6 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
@@ -1726,6 +1726,9 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
     spec: z.ZodOptional<z.ZodObject<{
         version: z.ZodLiteral<2>;
         predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity";
@@ -1740,10 +1743,10 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             kind: "body";
         } | {
             kind: "message";
-        } | {
-            kind: "body_json";
-            path: string[];
         }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+            kind: "body_json";
+            path: string[];
+        } | {
             kind: "service";
         } | {
             kind: "severity";
@@ -1758,9 +1761,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             kind: "body";
         } | {
             kind: "message";
-        } | {
-            kind: "body_json";
-            path: string[];
         }>, unknown>>;
         dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
             kind: z.ZodLiteral<"service">;
@@ -1808,6 +1808,9 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"distinct">;
             field: z.ZodType<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1822,10 +1825,10 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown, z.core.$ZodTypeInternals<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1840,13 +1843,13 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown>>;
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"numeric">;
             field: z.ZodType<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1861,10 +1864,10 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown, z.core.$ZodTypeInternals<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1879,9 +1882,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown>>;
             parseAs: z.ZodLiteral<"float64">;
             aggregate: z.ZodEnum<{
@@ -1901,6 +1901,9 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             op: z.ZodLiteral<"recent_rows">;
             limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
             fields: z.ZodOptional<z.ZodArray<z.ZodType<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1915,10 +1918,10 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown, z.core.$ZodTypeInternals<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1933,9 +1936,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }, unknown>>>>;
             order: z.ZodOptional<z.ZodEnum<{
                 newest: "newest";
@@ -1958,6 +1958,9 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
         }, z.core.$strict>, z.ZodObject<{
             op: z.ZodLiteral<"ratio">;
             numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1972,10 +1975,10 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -1990,9 +1993,6 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }>, unknown>>;
         }, z.core.$strict>], "op">;
         bucket: z.ZodOptional<z.ZodEnum<{
@@ -3091,6 +3091,9 @@ export declare const logsContract: {
         spec: z.ZodOptional<z.ZodObject<{
             version: z.ZodLiteral<2>;
             predicate: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -3105,10 +3108,10 @@ export declare const logsContract: {
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                kind: "body_json";
+                path: string[];
+            } | {
                 kind: "service";
             } | {
                 kind: "severity";
@@ -3123,9 +3126,6 @@ export declare const logsContract: {
                 kind: "body";
             } | {
                 kind: "message";
-            } | {
-                kind: "body_json";
-                path: string[];
             }>, unknown>>;
             dimensions: z.ZodArray<z.ZodDiscriminatedUnion<[z.ZodObject<{
                 kind: z.ZodLiteral<"service">;
@@ -3173,6 +3173,9 @@ export declare const logsContract: {
             }, z.core.$strict>, z.ZodObject<{
                 op: z.ZodLiteral<"distinct">;
                 field: z.ZodType<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3187,10 +3190,10 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }, unknown, z.core.$ZodTypeInternals<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3205,13 +3208,13 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }, unknown>>;
             }, z.core.$strict>, z.ZodObject<{
                 op: z.ZodLiteral<"numeric">;
                 field: z.ZodType<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3226,10 +3229,10 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }, unknown, z.core.$ZodTypeInternals<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3244,9 +3247,6 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }, unknown>>;
                 parseAs: z.ZodLiteral<"float64">;
                 aggregate: z.ZodEnum<{
@@ -3266,6 +3266,9 @@ export declare const logsContract: {
                 op: z.ZodLiteral<"recent_rows">;
                 limit: z.ZodType<number, unknown, z.core.$ZodTypeInternals<number, unknown>>;
                 fields: z.ZodOptional<z.ZodArray<z.ZodType<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3280,10 +3283,10 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }, unknown, z.core.$ZodTypeInternals<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3298,9 +3301,6 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }, unknown>>>>;
                 order: z.ZodOptional<z.ZodEnum<{
                     newest: "newest";
@@ -3323,6 +3323,9 @@ export declare const logsContract: {
             }, z.core.$strict>, z.ZodObject<{
                 op: z.ZodLiteral<"ratio">;
                 numerator: z.ZodType<import("../log-query/index.js").PredicateTree<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3337,10 +3340,10 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }>, unknown, z.core.$ZodTypeInternals<import("../log-query/index.js").PredicateTree<{
+                    kind: "body_json";
+                    path: string[];
+                } | {
                     kind: "service";
                 } | {
                     kind: "severity";
@@ -3355,9 +3358,6 @@ export declare const logsContract: {
                     kind: "body";
                 } | {
                     kind: "message";
-                } | {
-                    kind: "body_json";
-                    path: string[];
                 }>, unknown>>;
             }, z.core.$strict>], "op">;
             bucket: z.ZodOptional<z.ZodEnum<{

@@ -68,12 +68,15 @@ export declare const isSkippable: (id: TaskKey) => boolean;
  * lives in the surfaces, so the table carries a serializable rule *name* and
  * the interpreter's state supplies the evaluation (see `OnboardingCardState`).
  */
-export declare const TASK_APPLICABILITY_RULES: readonly ["billing-step-enabled"];
+export declare const TASK_APPLICABILITY_RULES: readonly ["billing-step-enabled", "slack-connect-channel-available"];
 export type TaskApplicabilityRule = (typeof TASK_APPLICABILITY_RULES)[number];
 /**
- * Which cards a surface must ask about before walking them. Billing is the
- * only one: the server decides whether the billing step participates for an
- * organization at all, and a card with no entry always applies.
+ * Which cards a surface must ask about before walking them. Billing asks
+ * whether the step is enabled for the organization; the Slack Connect card
+ * (ENG-9842) asks whether the organization has a linked channel with a
+ * recorded invitee in `channel_created` or `invited` (the onboarding
+ * snapshot's `slackConnect` is non-null) — a card with no entry always
+ * applies.
  */
 export declare const TASK_APPLICABILITY: Partial<Record<TaskKey, TaskApplicabilityRule>>;
 /** A card's applicability rule, `null` when it always applies. */

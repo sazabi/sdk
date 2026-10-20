@@ -1,6 +1,7 @@
 import { z } from "zod";
 export declare const ConnectedAccountProviderEnum: z.ZodEnum<{
     bitbucket: "bitbucket";
+    gitcafe: "gitcafe";
     github: "github";
     google: "google";
     linear: "linear";
@@ -11,6 +12,7 @@ export declare const BeginConnectedAccountConnectInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         google: "google";
         linear: "linear";
@@ -29,6 +31,7 @@ export declare const beginConnectedAccountConnect: import("../orpc-contracts/ind
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         google: "google";
         linear: "linear";
@@ -288,6 +291,7 @@ export declare const DisconnectConnectedAccountInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         google: "google";
         linear: "linear";
@@ -304,6 +308,7 @@ export declare const disconnectConnectedAccount: import("../orpc-contracts/index
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
         bitbucket: "bitbucket";
+        gitcafe: "gitcafe";
         github: "github";
         google: "google";
         linear: "linear";

@@ -103,6 +103,7 @@ export declare const ListMessagesOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
             mcp: "mcp";
@@ -272,6 +273,7 @@ export declare const listMessages: import("../orpc-contracts/index.js").Operatio
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
             mcp: "mcp";

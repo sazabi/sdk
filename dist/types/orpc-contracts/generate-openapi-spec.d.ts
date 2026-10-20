@@ -1,13 +1,17 @@
-import type { AnyContractRouter } from "@orpc/contract";
+import type { AnyContractRouter, OpenAPI } from "@orpc/contract";
 export interface GenerateOpenApiSpecOptions {
     title: string;
     description: string;
-    servers: {
+    /**
+     * Without servers, a reader such as Scalar sends requests to the origin
+     * that served the document.
+     */
+    servers?: {
         url: string;
         description: string;
     }[];
 }
-export declare const generateOpenApiSpec: (contract: AnyContractRouter, options: GenerateOpenApiSpecOptions) => Promise<import("openapi-types").OpenAPIV3_1.Document<{}>>;
+export declare const generateOpenApiSpec: (contract: AnyContractRouter, options: GenerateOpenApiSpecOptions) => Promise<OpenAPI.Document>;
 type OpenApiSpecWithPaths = {
     paths?: Record<string, Record<string, {
         responses?: Record<string, {

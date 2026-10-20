@@ -68,6 +68,16 @@ export type NavigationLedger = {
      * applicability rule), exactly as a skipped dependency prunes a dependent.
      */
     readonly billingStepEnabled: boolean;
+    /**
+     * Whether the organization has a Slack Connect channel with a recorded
+     * invitee (ENG-9842, the `slack-connect-channel-available` applicability
+     * rule).
+     * `false` prunes `join_slack_connect_channel` from the walk entirely,
+     * exactly as a skipped dependency prunes a dependent. Defaults to `false`
+     * (no channel) so every scenario written before this card existed keeps
+     * its original landing without edits.
+     */
+    readonly slackConnectChannelAvailable: boolean;
 };
 export type NavigationScenario = {
     readonly name: string;

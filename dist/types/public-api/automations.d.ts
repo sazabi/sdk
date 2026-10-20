@@ -81,6 +81,35 @@ export declare const AutomationSignalTypeSchema: z.ZodEnum<{
     expression_matched: "expression_matched";
 }>;
 export type AutomationSignalType = z.infer<typeof AutomationSignalTypeSchema>;
+/**
+ * What starts an automation's runs: its cron schedule, a signal, or a
+ * delivery to its webhook.
+ */
+export declare const AutomationTriggerSchema: z.ZodEnum<{
+    schedule: "schedule";
+    signal: "signal";
+    webhook: "webhook";
+}>;
+export type AutomationTrigger = z.infer<typeof AutomationTriggerSchema>;
+/** The hook a webhook automation receives deliveries at. */
+export declare const AutomationWebhookSchema: z.ZodObject<{
+    hookId: z.ZodString;
+    url: z.ZodNullable<z.ZodString>;
+    lastDeliveryAt: z.ZodNullable<z.ZodString>;
+    secretRotatedAt: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type AutomationWebhook = z.infer<typeof AutomationWebhookSchema>;
+/**
+ * A JSON value a run carries to its script
+ * (`SAZABI_AUTOMATION_TRIGGER_PAYLOAD_FILE`), at most
+ * {@link MAX_AUTOMATION_TRIGGER_PAYLOAD_BYTES} bytes serialized.
+ */
+export declare const AutomationTriggerPayloadSchema: z.ZodUnknown;
+/**
+ * A caller's key for one run. Retrying with the same key returns the run
+ * the first call started instead of starting another.
+ */
+export declare const AutomationRunIdempotencyKeySchema: z.ZodString;
 export declare const AutomationSchema: z.ZodObject<{
     id: z.ZodString;
     configurationRevision: z.ZodNumber;
@@ -96,6 +125,17 @@ export declare const AutomationSchema: z.ZodObject<{
         log_match: "log_match";
         script: "script";
     }>;
+    trigger: z.ZodEnum<{
+        schedule: "schedule";
+        signal: "signal";
+        webhook: "webhook";
+    }>;
+    webhook: z.ZodNullable<z.ZodObject<{
+        hookId: z.ZodString;
+        url: z.ZodNullable<z.ZodString>;
+        lastDeliveryAt: z.ZodNullable<z.ZodString>;
+        secretRotatedAt: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
     signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -146,6 +186,17 @@ export declare const AutomationDetailSchema: z.ZodObject<{
         log_match: "log_match";
         script: "script";
     }>;
+    trigger: z.ZodEnum<{
+        schedule: "schedule";
+        signal: "signal";
+        webhook: "webhook";
+    }>;
+    webhook: z.ZodNullable<z.ZodObject<{
+        hookId: z.ZodString;
+        url: z.ZodNullable<z.ZodString>;
+        lastDeliveryAt: z.ZodNullable<z.ZodString>;
+        secretRotatedAt: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
     signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -224,6 +275,17 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -282,6 +344,17 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -330,6 +403,10 @@ export declare const CreateAutomationInputSchema: z.ZodObject<{
     scriptId: z.ZodOptional<z.ZodString>;
     script: z.ZodOptional<z.ZodString>;
     expressionId: z.ZodOptional<z.ZodString>;
+    trigger: z.ZodOptional<z.ZodEnum<{
+        schedule: "schedule";
+        webhook: "webhook";
+    }>>;
     cronExpression: z.ZodOptional<z.ZodString>;
     timezone: z.ZodOptional<z.ZodString>;
     timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
@@ -352,6 +429,17 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -391,6 +479,7 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
         scriptIdentifier: z.ZodNullable<z.ZodString>;
         canToggle: z.ZodBoolean;
     }, z.core.$strip>;
+    webhookSecret: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type CreateAutomationOutput = z.infer<typeof CreateAutomationOutputSchema>;
 export declare const UpdateAutomationInputSchema: z.ZodObject<{
@@ -420,6 +509,17 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -483,6 +583,17 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -546,6 +657,17 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -631,6 +753,17 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -686,6 +819,17 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -733,6 +877,10 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
     scriptId: z.ZodOptional<z.ZodString>;
     script: z.ZodOptional<z.ZodString>;
     expressionId: z.ZodOptional<z.ZodString>;
+    trigger: z.ZodOptional<z.ZodEnum<{
+        schedule: "schedule";
+        webhook: "webhook";
+    }>>;
     cronExpression: z.ZodOptional<z.ZodString>;
     timezone: z.ZodOptional<z.ZodString>;
     timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
@@ -753,6 +901,17 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -792,6 +951,7 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
         scriptIdentifier: z.ZodNullable<z.ZodString>;
         canToggle: z.ZodBoolean;
     }, z.core.$strip>;
+    webhookSecret: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const updateAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     automationId: z.ZodString;
@@ -818,6 +978,17 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -878,6 +1049,17 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -938,6 +1120,17 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
             log_match: "log_match";
             script: "script";
         }>;
+        trigger: z.ZodEnum<{
+            schedule: "schedule";
+            signal: "signal";
+            webhook: "webhook";
+        }>;
+        webhook: z.ZodNullable<z.ZodObject<{
+            hookId: z.ZodString;
+            url: z.ZodNullable<z.ZodString>;
+            lastDeliveryAt: z.ZodNullable<z.ZodString>;
+            secretRotatedAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
         signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -1205,24 +1398,60 @@ export declare const getAutomationRunLogs: import("../orpc-contracts/index.js").
 export declare const RunAutomationInputSchema: z.ZodObject<{
     automationId: z.ZodUUID;
     projectId: z.ZodOptional<z.ZodString>;
+    payload: z.ZodOptional<z.ZodUnknown>;
+    idempotencyKey: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type RunAutomationInput = z.infer<typeof RunAutomationInputSchema>;
 export declare const RunAutomationOutputSchema: z.ZodObject<{
     workflowId: z.ZodString;
+    automationRunId: z.ZodString;
 }, z.core.$strip>;
 export type RunAutomationOutput = z.infer<typeof RunAutomationOutputSchema>;
 export declare const runAutomation: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     automationId: z.ZodUUID;
     projectId: z.ZodOptional<z.ZodString>;
+    payload: z.ZodOptional<z.ZodUnknown>;
+    idempotencyKey: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     workflowId: z.ZodString;
+    automationRunId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const RotateAutomationWebhookSecretInputSchema: z.ZodObject<{
+    automationId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type RotateAutomationWebhookSecretInput = z.infer<typeof RotateAutomationWebhookSecretInputSchema>;
+export declare const RotateAutomationWebhookSecretOutputSchema: z.ZodObject<{
+    webhook: z.ZodObject<{
+        hookId: z.ZodString;
+        url: z.ZodNullable<z.ZodString>;
+        lastDeliveryAt: z.ZodNullable<z.ZodString>;
+        secretRotatedAt: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+    secret: z.ZodString;
+}, z.core.$strip>;
+export type RotateAutomationWebhookSecretOutput = z.infer<typeof RotateAutomationWebhookSecretOutputSchema>;
+export declare const rotateAutomationWebhookSecret: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    automationId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    webhook: z.ZodObject<{
+        hookId: z.ZodString;
+        url: z.ZodNullable<z.ZodString>;
+        lastDeliveryAt: z.ZodNullable<z.ZodString>;
+        secretRotatedAt: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+    secret: z.ZodString;
 }, z.core.$strip>, "api">;
 export declare const automationsContract: {
     readonly run: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         automationId: z.ZodUUID;
         projectId: z.ZodOptional<z.ZodString>;
+        payload: z.ZodOptional<z.ZodUnknown>;
+        idempotencyKey: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         workflowId: z.ZodString;
+        automationRunId: z.ZodString;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
@@ -1260,6 +1489,17 @@ export declare const automationsContract: {
                 log_match: "log_match";
                 script: "script";
             }>;
+            trigger: z.ZodEnum<{
+                schedule: "schedule";
+                signal: "signal";
+                webhook: "webhook";
+            }>;
+            webhook: z.ZodNullable<z.ZodObject<{
+                hookId: z.ZodString;
+                url: z.ZodNullable<z.ZodString>;
+                lastDeliveryAt: z.ZodNullable<z.ZodString>;
+                secretRotatedAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -1315,6 +1555,17 @@ export declare const automationsContract: {
                 log_match: "log_match";
                 script: "script";
             }>;
+            trigger: z.ZodEnum<{
+                schedule: "schedule";
+                signal: "signal";
+                webhook: "webhook";
+            }>;
+            webhook: z.ZodNullable<z.ZodObject<{
+                hookId: z.ZodString;
+                url: z.ZodNullable<z.ZodString>;
+                lastDeliveryAt: z.ZodNullable<z.ZodString>;
+                secretRotatedAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -1362,6 +1613,10 @@ export declare const automationsContract: {
         scriptId: z.ZodOptional<z.ZodString>;
         script: z.ZodOptional<z.ZodString>;
         expressionId: z.ZodOptional<z.ZodString>;
+        trigger: z.ZodOptional<z.ZodEnum<{
+            schedule: "schedule";
+            webhook: "webhook";
+        }>>;
         cronExpression: z.ZodOptional<z.ZodString>;
         timezone: z.ZodOptional<z.ZodString>;
         timeoutSeconds: z.ZodOptional<z.ZodCoercedNumber<unknown>>;
@@ -1382,6 +1637,17 @@ export declare const automationsContract: {
                 log_match: "log_match";
                 script: "script";
             }>;
+            trigger: z.ZodEnum<{
+                schedule: "schedule";
+                signal: "signal";
+                webhook: "webhook";
+            }>;
+            webhook: z.ZodNullable<z.ZodObject<{
+                hookId: z.ZodString;
+                url: z.ZodNullable<z.ZodString>;
+                lastDeliveryAt: z.ZodNullable<z.ZodString>;
+                secretRotatedAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -1421,6 +1687,7 @@ export declare const automationsContract: {
             scriptIdentifier: z.ZodNullable<z.ZodString>;
             canToggle: z.ZodBoolean;
         }, z.core.$strip>;
+        webhookSecret: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         automationId: z.ZodString;
@@ -1447,6 +1714,17 @@ export declare const automationsContract: {
                 log_match: "log_match";
                 script: "script";
             }>;
+            trigger: z.ZodEnum<{
+                schedule: "schedule";
+                signal: "signal";
+                webhook: "webhook";
+            }>;
+            webhook: z.ZodNullable<z.ZodObject<{
+                hookId: z.ZodString;
+                url: z.ZodNullable<z.ZodString>;
+                lastDeliveryAt: z.ZodNullable<z.ZodString>;
+                secretRotatedAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -1507,6 +1785,17 @@ export declare const automationsContract: {
                 log_match: "log_match";
                 script: "script";
             }>;
+            trigger: z.ZodEnum<{
+                schedule: "schedule";
+                signal: "signal";
+                webhook: "webhook";
+            }>;
+            webhook: z.ZodNullable<z.ZodObject<{
+                hookId: z.ZodString;
+                url: z.ZodNullable<z.ZodString>;
+                lastDeliveryAt: z.ZodNullable<z.ZodString>;
+                secretRotatedAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -1567,6 +1856,17 @@ export declare const automationsContract: {
                 log_match: "log_match";
                 script: "script";
             }>;
+            trigger: z.ZodEnum<{
+                schedule: "schedule";
+                signal: "signal";
+                webhook: "webhook";
+            }>;
+            webhook: z.ZodNullable<z.ZodObject<{
+                hookId: z.ZodString;
+                url: z.ZodNullable<z.ZodString>;
+                lastDeliveryAt: z.ZodNullable<z.ZodString>;
+                secretRotatedAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
             signalDefinitionId: z.ZodNullable<z.ZodString>;
@@ -1612,6 +1912,20 @@ export declare const automationsContract: {
         expectedRevision: z.ZodCoercedNumber<unknown>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly webhook: {
+        readonly rotateSecret: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+            automationId: z.ZodString;
+            projectId: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            webhook: z.ZodObject<{
+                hookId: z.ZodString;
+                url: z.ZodNullable<z.ZodString>;
+                lastDeliveryAt: z.ZodNullable<z.ZodString>;
+                secretRotatedAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>;
+            secret: z.ZodString;
+        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
     readonly runs: {
         readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
             automationId: z.ZodString;
