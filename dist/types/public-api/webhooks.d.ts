@@ -513,6 +513,14 @@ export declare const webhooksGet: import("../orpc-contracts/index.js").Operation
         teamIds: z.ZodArray<z.ZodString>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
+/**
+ * The field limits every webhook endpoint write shares: this API's, the
+ * dashboard's, and core's (ENG-9276). Core's contract imports them, so the two
+ * front doors and the module that stores the endpoint refuse the same input.
+ */
+export declare const WebhookNameSchema: z.ZodString;
+export declare const WebhookHeaderValueSchema: z.ZodString;
+export declare const WebhookHeaderNameSchema: z.ZodString;
 export declare const webhooksCreate: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     name: z.ZodString;
     url: z.ZodString;

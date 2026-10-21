@@ -1,6 +1,7 @@
 import { z } from "zod";
-export declare const TASK_STATUS_MAPPING_PROVIDERS: readonly ["linear", "jira"];
+export declare const TASK_STATUS_MAPPING_PROVIDERS: readonly ["linear", "jira", "github"];
 export declare const TaskStatusMappingProviderSchema: z.ZodEnum<{
+    github: "github";
     jira: "jira";
     linear: "linear";
 }>;
@@ -28,6 +29,7 @@ export declare const TaskStatusMappingResolutionSchema: z.ZodObject<{
 export type TaskStatusMappingResolution = z.infer<typeof TaskStatusMappingResolutionSchema>;
 export declare const TaskStatusMappingSchema: z.ZodObject<{
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
@@ -56,13 +58,16 @@ export type TaskStatusMapping = z.infer<typeof TaskStatusMappingSchema>;
 export declare const GetTaskStatusMappingInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
+    connectionId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type GetTaskStatusMappingInput = z.infer<typeof GetTaskStatusMappingInputSchema>;
 export declare const GetTaskStatusMappingOutputSchema: z.ZodObject<{
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
@@ -91,11 +96,14 @@ export type GetTaskStatusMappingOutput = z.infer<typeof GetTaskStatusMappingOutp
 export declare const getTaskStatusMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
+    connectionId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
@@ -123,13 +131,16 @@ export declare const getTaskStatusMapping: import("../orpc-contracts/index.js").
 export declare const TaskStatusMappingOptionsInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
+    connectionId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type TaskStatusMappingOptionsInput = z.infer<typeof TaskStatusMappingOptionsInputSchema>;
 export declare const TaskStatusMappingOptionsOutputSchema: z.ZodObject<{
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
@@ -154,11 +165,14 @@ export type TaskStatusMappingOptionsOutput = z.infer<typeof TaskStatusMappingOpt
 export declare const getTaskStatusMappingOptions: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
+    connectionId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
@@ -182,9 +196,11 @@ export declare const getTaskStatusMappingOptions: import("../orpc-contracts/inde
 export declare const UpdateTaskStatusMappingInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
+    connectionId: z.ZodOptional<z.ZodString>;
     enabled: z.ZodOptional<z.ZodBoolean>;
     mapping: z.ZodOptional<z.ZodObject<{
         open: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -196,6 +212,7 @@ export declare const UpdateTaskStatusMappingInputSchema: z.ZodObject<{
 export type UpdateTaskStatusMappingInput = z.infer<typeof UpdateTaskStatusMappingInputSchema>;
 export declare const UpdateTaskStatusMappingOutputSchema: z.ZodObject<{
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
@@ -224,9 +241,11 @@ export type UpdateTaskStatusMappingOutput = z.infer<typeof UpdateTaskStatusMappi
 export declare const updateTaskStatusMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
+    connectionId: z.ZodOptional<z.ZodString>;
     enabled: z.ZodOptional<z.ZodBoolean>;
     mapping: z.ZodOptional<z.ZodObject<{
         open: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -236,6 +255,7 @@ export declare const updateTaskStatusMapping: import("../orpc-contracts/index.js
     ignoredResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
     provider: z.ZodEnum<{
+        github: "github";
         jira: "jira";
         linear: "linear";
     }>;
@@ -264,11 +284,14 @@ export declare const taskStatusMappingContract: {
     readonly get: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         provider: z.ZodEnum<{
+            github: "github";
             jira: "jira";
             linear: "linear";
         }>;
+        connectionId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         provider: z.ZodEnum<{
+            github: "github";
             jira: "jira";
             linear: "linear";
         }>;
@@ -296,11 +319,14 @@ export declare const taskStatusMappingContract: {
     readonly options: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         provider: z.ZodEnum<{
+            github: "github";
             jira: "jira";
             linear: "linear";
         }>;
+        connectionId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         provider: z.ZodEnum<{
+            github: "github";
             jira: "jira";
             linear: "linear";
         }>;
@@ -324,9 +350,11 @@ export declare const taskStatusMappingContract: {
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
         provider: z.ZodEnum<{
+            github: "github";
             jira: "jira";
             linear: "linear";
         }>;
+        connectionId: z.ZodOptional<z.ZodString>;
         enabled: z.ZodOptional<z.ZodBoolean>;
         mapping: z.ZodOptional<z.ZodObject<{
             open: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -336,6 +364,7 @@ export declare const taskStatusMappingContract: {
         ignoredResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>, z.ZodObject<{
         provider: z.ZodEnum<{
+            github: "github";
             jira: "jira";
             linear: "linear";
         }>;

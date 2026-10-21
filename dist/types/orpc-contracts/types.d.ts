@@ -26,10 +26,11 @@ export interface OperationExample<InputValue, OutputValue> {
  * authenticated caller; for a user's own data, that user; for what the
  * caller's own identity names, the caller; for a Sazabi operator's
  * cross-tenant or global operation, the operator; for an unauthenticated
- * OAuth callback's write, the signed state it carries; or, for a public read
- * of registry-global data, nobody.
+ * OAuth callback's write, the signed state it carries; for a public read
+ * of registry-global data, nobody; or, for a partner's organization or
+ * project, the superorganization that owns it.
  */
-export type OperationAccess = RecordAccess | AuthenticatedAccess | SelfAccess | OwnScopeAccess | OperatorAccess | VendorLookupAccess | FleetJobAccess | SignedOAuthStateAccess | PublicReadAccess;
+export type OperationAccess = RecordAccess | AuthenticatedAccess | SelfAccess | OwnScopeAccess | OperatorAccess | VendorLookupAccess | FleetJobAccess | SignedOAuthStateAccess | PublicReadAccess | PartnerAccess;
 /**
  * The owner resolves the record named by `id` and runs `decideAccess` with
  * `action` before the handler. Contracts may import only contracts, so
@@ -171,6 +172,23 @@ export interface SignedOAuthStateAccess {
 export interface PublicReadAccess {
     publicRead: PublicReadKind;
 }
+/**
+ * A partner key's caller acting on an organization or project that belongs
+ * to its superorganization (ENG-9358; bylaws/identity-and-auth.yaml §6.a,
+ * §6.b, §7.c): only a forwarded `partner` principal on the `public_api`
+ * surface reaches the handler, and every other principal is refused. `partner`
+ * names what the request path targets: an `organization`, or a `project`
+ * inside one. The input must name `organizationId`, and `projectId` too for a
+ * project. The owner proves that target belongs to the principal's
+ * superorganization before the handler runs, answering a target it cannot
+ * prove exactly like a missing one, and hands the handler the proven
+ * superorganization, organization and project. The partner principal is never
+ * elevated to `system`, `credential` or `admin`, and no identity token
+ * reaches it.
+ */
+export interface PartnerAccess {
+    partner: "organization" | "project";
+}
 export interface OperationContractMetadata<TBackend extends string = string> {
     operationId: string;
     backend: TBackend;
@@ -178,6 +196,8 @@ export interface OperationContractMetadata<TBackend extends string = string> {
     async: OperationAsyncMode;
     examples: readonly OperationExample<unknown, unknown>[];
     access?: OperationAccess;
+    /** See {@link OperationDefinition.published}. */
+    published?: false;
 }
 export interface OperationDefinition<InputSchema extends AnySchema, OutputSchema extends AnySchema, TBackend extends string = string> {
     operationId: string;
@@ -196,6 +216,14 @@ export interface OperationDefinition<InputSchema extends AnySchema, OutputSchema
     async: OperationAsyncMode;
     /** Required on a domain owner's operations; see {@link OperationAccess}. */
     access?: OperationAccess;
+    /**
+     * `false` for an operation the API serves but does not publish: it stays
+     * out of the OpenAPI document (`generateOpenApiSpec`) and the MCP operation
+     * catalog, and the SDK's typed client leaves it out. For a capability whose
+     * rollout is off by default; the route keeps serving, and its owner decides
+     * who may call it.
+     */
+    published?: false;
     examples?: readonly OperationExample<InferSchemaInput<InputSchema>, InferSchemaOutput<OutputSchema>>[];
     contract: ContractProcedure<InputSchema, OutputSchema, Record<never, never>, OperationContractMetadata<TBackend>>;
 }

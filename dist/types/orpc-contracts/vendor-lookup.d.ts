@@ -22,6 +22,8 @@ export declare const VENDOR_LOOKUP_OUTPUT_KEYS: {
     readonly external_identity: readonly ["organizationId", "userId"];
     /** A tracker task to the Sazabi issue it was filed for, and its tenant. */
     readonly task_item: readonly ["organizationId", "projectId", "issueId"];
+    /** A forge push to the code index lane it signals: its tenant and repository. */
+    readonly code_index_push_target: readonly ["organizationId", "projectId", "repositoryId", "externalRepoId"];
 };
 export type VendorLookupKind = keyof typeof VENDOR_LOOKUP_OUTPUT_KEYS;
 export declare const isVendorLookupKind: (value: string) => value is VendorLookupKind;

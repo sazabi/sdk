@@ -17,6 +17,13 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
      * cycle at a time. Answers only its counts.
      */
     readonly issue_rejection_adjustments: readonly ["cycles", "applied", "pending", "failed"];
+    /**
+     * The stale MCP authorizing expiry (ENG-9493): every MCP connection stuck
+     * in `authorizing` for over an hour soft-deleted, and every expired,
+     * never-consumed MCP OAuth request hard-deleted, in one transaction.
+     * Answers only its two counts.
+     */
+    readonly mcp_authorizing_expiry: readonly ["expiredConnections", "deletedOauthRequests"];
 };
 export type FleetJobKind = keyof typeof FLEET_JOB_OUTPUT_KEYS;
 export declare const isFleetJobKind: (value: string) => value is FleetJobKind;

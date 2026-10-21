@@ -12,7 +12,7 @@ export { getOperationRouteKey, isOperationDefinition, listExportedOperations, li
 export type { AdminRefusalAnswer, DashboardRefusalAnswer, PublicApiRefusalAnswer, Refusal, RefusalAnswers, RefusalKind, TrpcErrorCode, ValidationIssue, } from "./refusal.js";
 export { readRefusal, REFUSAL_ADMIN_API_ERRORS, REFUSAL_PUBLIC_API_ERRORS, REFUSAL_TRPC_CODES, refusalSchema, TRPC_ERROR_CODES, } from "./refusal.js";
 export { FLEET_JOB_OUTPUT_KEYS, type FleetJobKind, isFleetJobKind, } from "./fleet-job.js";
-export type { AuthenticatedAccess, FleetJobAccess, OperationAccess, OperationAsyncMode, OperationContractMetadata, OperationDefinition, OperationExample, OperationPagination, OperationRouteDefinition, OperatorAccess, OwnScopeAccess, PublicReadAccess, RecordAccess, SelfAccess, SignedOAuthStateAccess, VendorLookupAccess, } from "./types.js";
+export type { AuthenticatedAccess, FleetJobAccess, OperationAccess, OperationAsyncMode, OperationContractMetadata, OperationDefinition, OperationExample, OperationPagination, OperationRouteDefinition, OperatorAccess, OwnScopeAccess, PartnerAccess, PublicReadAccess, RecordAccess, SelfAccess, SignedOAuthStateAccess, VendorLookupAccess, } from "./types.js";
 export { isPublicReadKind, PUBLIC_READ_KINDS, type PublicReadKind, } from "./public-read.js";
 export { isSignedOAuthStateKind, SIGNED_OAUTH_STATE_KINDS, type SignedOAuthStateKind, } from "./signed-oauth-state.js";
 export { isVendorLookupKind, VENDOR_LOOKUP_OUTPUT_KEYS, type VendorLookupKind, } from "./vendor-lookup.js";

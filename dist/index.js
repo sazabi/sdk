@@ -3453,7 +3453,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Task status mapping"],
           operationId: "taskStatusMapping.options",
           summary: "List the tracker states a mapping row may take",
-          description: "The connection's default team (Linear) or project (Jira), its workflow states, and the tracker's resolutions where it has them, read live from the tracker."
+          description: "The connection's default team (Linear), project (Jira) or repository (GitHub), its workflow states, and the tracker's resolutions where it has them, read live from the tracker."
         }
       }
     },
@@ -4498,7 +4498,8 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: []
+          examples: [],
+          published: false
         },
         route: {
           method: "POST",
@@ -8260,7 +8261,6 @@ var createClient = (options) => {
       skipSampleIssue: async (input) => raw.onboarding.skipSampleIssue(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       skipIntegration: async (input) => raw.onboarding.skipIntegration(await resolveOnboardingSkipInput(options.credentialProvider, input)),
       skipGithubAppInstallation: async (input) => raw.onboarding.skipGithubAppInstallation(await resolveOnboardingSkipInput(options.credentialProvider, input ?? {})),
-      continueWithFree: async (input) => raw.onboarding.continueWithFree(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       ensureDefaultProject: async (input) => raw.onboarding.ensureDefaultProject(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       completeSampleIssue: async (input) => raw.onboarding.completeSampleIssue(await resolveOrganizationScopedInput(options.credentialProvider, input ?? {})),
       slackConnect: {

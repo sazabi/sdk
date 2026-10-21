@@ -394,6 +394,12 @@ export declare const ContinueOnboardingWithFreeInputSchema: z.ZodObject<{
 export declare const ContinueOnboardingWithFreeOutputSchema: z.ZodObject<{
     completed: z.ZodLiteral<true>;
 }, z.core.$strip>;
+/**
+ * Unpublished while Free isn't offered as a plan to choose (ENG-10018): the
+ * route keeps serving, and the core decides who may continue with Free. The
+ * `feature-flags-in-public-contracts` check publishes it once that rollout
+ * is on by default.
+ */
 export declare const continueOnboardingWithFree: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     projectId: z.ZodOptional<z.ZodString>;
