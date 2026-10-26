@@ -182,7 +182,9 @@ export declare const WebhookEnvelopeBaseSchema: z.ZodObject<{
     type: z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -203,6 +205,19 @@ export declare const WebhookEnvelopeBaseSchema: z.ZodObject<{
         message: z.ZodString;
     }, z.core.$strip>;
 }, z.core.$strip>;
+export declare const WebhookIssueOngoingSchema: z.ZodObject<{
+    step: z.ZodNumber;
+    openedAt: z.ZodString;
+    openFor: z.ZodString;
+}, z.core.$strip>;
+export declare const WebhookIssueReopenedSchema: z.ZodObject<{
+    from: z.ZodEnum<{
+        ignored: "ignored";
+        resolved: "resolved";
+    }>;
+    resolvedAt: z.ZodNullable<z.ZodString>;
+    previousSlackPermalink: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
 export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
     id: z.ZodString;
     apiVersion: z.ZodLiteral<"2026-09-01">;
@@ -216,6 +231,8 @@ export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
     }, z.core.$strip>;
     type: z.ZodEnum<{
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -294,6 +311,19 @@ export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
         summary: z.ZodNullable<z.ZodString>;
         agentPrompt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
+    ongoing: z.ZodOptional<z.ZodObject<{
+        step: z.ZodNumber;
+        openedAt: z.ZodString;
+        openFor: z.ZodString;
+    }, z.core.$strip>>;
+    reopened: z.ZodOptional<z.ZodObject<{
+        from: z.ZodEnum<{
+            ignored: "ignored";
+            resolved: "resolved";
+        }>;
+        resolvedAt: z.ZodNullable<z.ZodString>;
+        previousSlackPermalink: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
 }, z.core.$strip>;
 export declare const NonIssueWebhookEnvelopeSchema: z.ZodObject<{
     id: z.ZodString;
@@ -347,6 +377,8 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
     }, z.core.$strip>;
     type: z.ZodEnum<{
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -425,6 +457,19 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
         summary: z.ZodNullable<z.ZodString>;
         agentPrompt: z.ZodNullable<z.ZodString>;
     }, z.core.$strip>;
+    ongoing: z.ZodOptional<z.ZodObject<{
+        step: z.ZodNumber;
+        openedAt: z.ZodString;
+        openFor: z.ZodString;
+    }, z.core.$strip>>;
+    reopened: z.ZodOptional<z.ZodObject<{
+        from: z.ZodEnum<{
+            ignored: "ignored";
+            resolved: "resolved";
+        }>;
+        resolvedAt: z.ZodNullable<z.ZodString>;
+        previousSlackPermalink: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
 }, z.core.$strip>, z.ZodObject<{
     id: z.ZodString;
     apiVersion: z.ZodLiteral<"2026-09-01">;
@@ -620,7 +665,9 @@ export declare const webhooksSubscribe: import("../orpc-contracts/index.js").Ope
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";

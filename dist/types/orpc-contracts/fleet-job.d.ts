@@ -18,6 +18,17 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
      */
     readonly issue_rejection_adjustments: readonly ["cycles", "applied", "pending", "failed"];
     /**
+     * The no-new-issues monitor's health read (ENG-10062): when the newest
+     * live issue was created, if after the caller's cutoff. Read-only.
+     */
+    readonly latest_issue_activity: readonly ["mostRecentAt"];
+    /**
+     * The no-new-threads monitor's health read (ENG-10062): when the newest
+     * regular, visible thread was created, if after the caller's cutoff.
+     * Read-only.
+     */
+    readonly latest_thread_activity: readonly ["mostRecentAt"];
+    /**
      * The stale MCP authorizing expiry (ENG-9493): every MCP connection stuck
      * in `authorizing` for over an hour soft-deleted, and every expired,
      * never-consumed MCP OAuth request hard-deleted, in one transaction.

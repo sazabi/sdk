@@ -39,7 +39,9 @@ export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -71,7 +73,9 @@ export declare const LegacyDeliveryRuleDefinitionSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -101,7 +105,9 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -179,7 +185,9 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -245,7 +253,9 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -335,7 +345,9 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
         notificationType: z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -345,6 +357,14 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
             component: "component";
             severity: "severity";
         }>>;
+        channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+            incident_io: "incident_io";
+            pagerduty: "pagerduty";
+            rootly: "rootly";
+            slack_channel: "slack_channel";
+            teams_channel: "teams_channel";
+            webhook: "webhook";
+        }>>>;
     }, z.core.$strip>>;
     components: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -399,7 +419,9 @@ export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -431,7 +453,9 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -501,7 +525,9 @@ export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -534,7 +560,9 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -613,7 +641,9 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -690,7 +720,9 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
         notificationType: z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -700,6 +732,14 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
             component: "component";
             severity: "severity";
         }>>;
+        channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+            incident_io: "incident_io";
+            pagerduty: "pagerduty";
+            rootly: "rootly";
+            slack_channel: "slack_channel";
+            teams_channel: "teams_channel";
+            webhook: "webhook";
+        }>>>;
     }, z.core.$strip>>;
     components: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -753,7 +793,9 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -784,7 +826,9 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -854,7 +898,9 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -886,7 +932,9 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -957,7 +1005,9 @@ export declare const notificationDeliveryRulesContract: {
             notificationTypes: z.ZodArray<z.ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -1034,7 +1084,9 @@ export declare const notificationDeliveryRulesContract: {
             notificationType: z.ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -1044,6 +1096,14 @@ export declare const notificationDeliveryRulesContract: {
                 component: "component";
                 severity: "severity";
             }>>;
+            channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+                incident_io: "incident_io";
+                pagerduty: "pagerduty";
+                rootly: "rootly";
+                slack_channel: "slack_channel";
+                teams_channel: "teams_channel";
+                webhook: "webhook";
+            }>>>;
         }, z.core.$strip>>;
         components: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -1097,7 +1157,9 @@ export declare const notificationDeliveryRulesContract: {
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -1128,7 +1190,9 @@ export declare const notificationDeliveryRulesContract: {
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -1198,7 +1262,9 @@ export declare const notificationDeliveryRulesContract: {
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -1230,7 +1296,9 @@ export declare const notificationDeliveryRulesContract: {
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";

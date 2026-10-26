@@ -72,12 +72,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -88,10 +86,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -138,12 +132,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -154,10 +146,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -198,7 +186,6 @@ export declare const publicApiContract: {
             description: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             scriptId: import("zod").ZodOptional<import("zod").ZodString>;
             script: import("zod").ZodOptional<import("zod").ZodString>;
-            expressionId: import("zod").ZodOptional<import("zod").ZodString>;
             trigger: import("zod").ZodOptional<import("zod").ZodEnum<{
                 schedule: "schedule";
                 webhook: "webhook";
@@ -220,12 +207,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -236,10 +221,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -297,12 +278,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -313,10 +292,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -368,12 +343,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -384,10 +357,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -448,12 +417,10 @@ export declare const publicApiContract: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -464,10 +431,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -684,7 +647,6 @@ export declare const publicApiContract: {
                 templateGroup: import("zod").ZodString;
                 kind: import("zod").ZodEnum<{
                     script: "script";
-                    signal: "signal";
                 }>;
                 name: import("zod").ZodString;
                 description: import("zod").ZodString;
@@ -710,7 +672,6 @@ export declare const publicApiContract: {
                     default: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber, import("zod").ZodBoolean]>>;
                 }, import("zod/v4/core").$strip>>;
                 defaultCron: import("zod").ZodNullable<import("zod").ZodString>;
-                expression: import("zod").ZodNullable<import("zod").ZodString>;
                 version: import("zod").ZodNumber;
                 publishedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
@@ -6503,6 +6464,23 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             success: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly microsoftTeamsConfiguration: {
+            readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
     };
     readonly notificationChannels: {
         readonly getProject: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -6589,8 +6567,10 @@ export declare const publicApiContract: {
                     integration_connected: "integration_connected";
                     integration_disconnected: "integration_disconnected";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_open_digest: "issue_open_digest";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -6658,8 +6638,10 @@ export declare const publicApiContract: {
                     integration_connected: "integration_connected";
                     integration_disconnected: "integration_disconnected";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_open_digest: "issue_open_digest";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -6699,7 +6681,9 @@ export declare const publicApiContract: {
                 notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -6776,7 +6760,9 @@ export declare const publicApiContract: {
                 notificationType: import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -6786,6 +6772,14 @@ export declare const publicApiContract: {
                     component: "component";
                     severity: "severity";
                 }>>;
+                channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>>>;
             }, import("zod/v4/core").$strip>>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -6839,7 +6833,9 @@ export declare const publicApiContract: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -6870,7 +6866,9 @@ export declare const publicApiContract: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -6940,7 +6938,9 @@ export declare const publicApiContract: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -6972,7 +6972,9 @@ export declare const publicApiContract: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -7267,6 +7269,10 @@ export declare const publicApiContract: {
                     name: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
+            resolvedResolution: import("zod").ZodNullable<import("zod").ZodObject<{
+                ref: import("zod").ZodString;
+                name: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
             ignoredResolution: import("zod").ZodNullable<import("zod").ZodObject<{
                 ref: import("zod").ZodString;
                 name: import("zod").ZodString;
@@ -7302,6 +7308,16 @@ export declare const publicApiContract: {
                 ref: import("zod").ZodString;
                 name: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            automaticResolutions: import("zod").ZodObject<{
+                resolved: import("zod").ZodNullable<import("zod").ZodObject<{
+                    ref: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                ignored: import("zod").ZodNullable<import("zod").ZodObject<{
+                    ref: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -7317,6 +7333,7 @@ export declare const publicApiContract: {
                 resolved: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 ignored: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>>;
+            resolvedResolution: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             ignoredResolution: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             provider: import("zod").ZodEnum<{
@@ -7340,6 +7357,10 @@ export declare const publicApiContract: {
                     name: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
+            resolvedResolution: import("zod").ZodNullable<import("zod").ZodObject<{
+                ref: import("zod").ZodString;
+                name: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
             ignoredResolution: import("zod").ZodNullable<import("zod").ZodObject<{
                 ref: import("zod").ZodString;
                 name: import("zod").ZodString;
@@ -8581,219 +8602,6 @@ export declare const publicApiContract: {
             name: import("zod").ZodString;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    };
-    readonly signalDefinitions: {
-        readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinitions: import("zod").ZodArray<import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>>;
-            templates: import("zod").ZodArray<import("zod").ZodObject<{
-                key: import("zod").ZodString;
-                version: import("zod").ZodNumber;
-                resourceKind: import("zod").ZodLiteral<"signal-definition">;
-                title: import("zod").ZodString;
-                description: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                defaults: import("zod").ZodObject<{
-                    severity: import("zod").ZodString;
-                    service: import("zod").ZodNullable<import("zod").ZodString>;
-                    enabled: import("zod").ZodBoolean;
-                }, import("zod/v4/core").$strip>;
-                inputSchema: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-                requiredPermissions: import("zod").ZodArray<import("zod").ZodString>;
-            }, import("zod/v4/core").$strip>>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            name: import("zod").ZodString;
-            expression: import("zod").ZodOptional<import("zod").ZodString>;
-            template: import("zod").ZodOptional<import("zod").ZodObject<{
-                key: import("zod").ZodString;
-                version: import("zod").ZodNumber;
-                inputs: import("zod").ZodOptional<import("zod").ZodObject<{
-                    severity: import("zod").ZodOptional<import("zod").ZodEnum<{
-                        DEBUG: "DEBUG";
-                        ERROR: "ERROR";
-                        FATAL: "FATAL";
-                        INFO: "INFO";
-                        TRACE: "TRACE";
-                        WARN: "WARN";
-                    }>>;
-                    service: import("zod").ZodOptional<import("zod").ZodString>;
-                }, import("zod/v4/core").$strict>>;
-            }, import("zod/v4/core").$strip>>;
-            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            expectedRevision: import("zod").ZodNumber;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            name: import("zod").ZodOptional<import("zod").ZodString>;
-            expression: import("zod").ZodOptional<import("zod").ZodString>;
-            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly disable: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            expectedRevision: import("zod").ZodNumber;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-        readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            expectedRevision: import("zod").ZodNumber;
-            signalDefinitionId: import("zod").ZodString;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-    };
-    readonly signals: {
-        readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            cursor: import("zod").ZodOptional<import("zod").ZodString>;
-            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signals: import("zod").ZodArray<import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                signalDefinitionId: import("zod").ZodString;
-                definitionRevision: import("zod").ZodNullable<import("zod").ZodNumber>;
-                expression: import("zod").ZodNullable<import("zod").ZodString>;
-                serviceName: import("zod").ZodNullable<import("zod").ZodString>;
-                severityText: import("zod").ZodNullable<import("zod").ZodString>;
-                firstSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
-                lastSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
-                sampleLogs: import("zod").ZodArray<import("zod").ZodObject<{
-                    timestamp: import("zod").ZodNullable<import("zod").ZodString>;
-                    body: import("zod").ZodString;
-                }, import("zod/v4/core").$strip>>;
-                createdAt: import("zod").ZodString;
-                deliveries: import("zod").ZodArray<import("zod").ZodObject<{
-                    automationId: import("zod").ZodString;
-                    dispatchStatus: import("zod").ZodEnum<{
-                        dispatched: "dispatched";
-                        dispatching: "dispatching";
-                        failed: "failed";
-                        pending: "pending";
-                    }>;
-                    automationRunId: import("zod").ZodNullable<import("zod").ZodString>;
-                }, import("zod/v4/core").$strip>>;
-            }, import("zod/v4/core").$strip>>;
-            nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
     readonly memory: {
         readonly put: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -10144,14 +9952,6 @@ export declare const publicApiContract: {
                 }>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
-                billable: import("zod").ZodBoolean;
-                upstreamSignalId: import("zod").ZodNullable<import("zod").ZodString>;
-                issueDetection: import("zod").ZodNullable<import("zod").ZodObject<{
-                    admissionKey: import("zod").ZodString;
-                    implementationVersion: import("zod").ZodString;
-                    settingsRevision: import("zod").ZodNumber;
-                    event: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
             messages: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -11237,6 +11037,7 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly reopen: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
+            note: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             issue: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -11269,6 +11070,7 @@ export declare const publicApiContract: {
         readonly reassignAndReopen: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
             targetComponentId: import("zod").ZodString;
+            note: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             issue: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -11622,7 +11424,9 @@ export declare const publicApiContract: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -13410,12 +13214,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -13426,10 +13228,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -13476,12 +13274,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -13492,10 +13288,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -13536,7 +13328,6 @@ export declare const publicApiOperations: {
             description: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             scriptId: import("zod").ZodOptional<import("zod").ZodString>;
             script: import("zod").ZodOptional<import("zod").ZodString>;
-            expressionId: import("zod").ZodOptional<import("zod").ZodString>;
             trigger: import("zod").ZodOptional<import("zod").ZodEnum<{
                 schedule: "schedule";
                 webhook: "webhook";
@@ -13558,12 +13349,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -13574,10 +13363,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -13635,12 +13420,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -13651,10 +13434,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -13706,12 +13485,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -13722,10 +13499,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -13786,12 +13559,10 @@ export declare const publicApiOperations: {
                 name: import("zod").ZodString;
                 description: import("zod").ZodNullable<import("zod").ZodString>;
                 kind: import("zod").ZodEnum<{
-                    log_match: "log_match";
                     script: "script";
                 }>;
                 trigger: import("zod").ZodEnum<{
                     schedule: "schedule";
-                    signal: "signal";
                     webhook: "webhook";
                 }>;
                 webhook: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -13802,10 +13573,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 scriptId: import("zod").ZodNullable<import("zod").ZodString>;
                 scriptName: import("zod").ZodNullable<import("zod").ZodString>;
-                signalDefinitionId: import("zod").ZodNullable<import("zod").ZodString>;
-                signalType: import("zod").ZodNullable<import("zod").ZodEnum<{
-                    expression_matched: "expression_matched";
-                }>>;
                 enabled: import("zod").ZodBoolean;
                 cronExpression: import("zod").ZodNullable<import("zod").ZodString>;
                 timezone: import("zod").ZodString;
@@ -14022,7 +13789,6 @@ export declare const publicApiOperations: {
                 templateGroup: import("zod").ZodString;
                 kind: import("zod").ZodEnum<{
                     script: "script";
-                    signal: "signal";
                 }>;
                 name: import("zod").ZodString;
                 description: import("zod").ZodString;
@@ -14048,7 +13814,6 @@ export declare const publicApiOperations: {
                     default: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber, import("zod").ZodBoolean]>>;
                 }, import("zod/v4/core").$strip>>;
                 defaultCron: import("zod").ZodNullable<import("zod").ZodString>;
-                expression: import("zod").ZodNullable<import("zod").ZodString>;
                 version: import("zod").ZodNumber;
                 publishedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
@@ -19841,6 +19606,23 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             success: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, "api">;
+        readonly microsoftTeamsConfiguration: {
+            readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
     };
     readonly notificationChannels: {
         readonly getProject: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -19927,8 +19709,10 @@ export declare const publicApiOperations: {
                     integration_connected: "integration_connected";
                     integration_disconnected: "integration_disconnected";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_open_digest: "issue_open_digest";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -19996,8 +19780,10 @@ export declare const publicApiOperations: {
                     integration_connected: "integration_connected";
                     integration_disconnected: "integration_disconnected";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_open_digest: "issue_open_digest";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -20037,7 +19823,9 @@ export declare const publicApiOperations: {
                 notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -20114,7 +19902,9 @@ export declare const publicApiOperations: {
                 notificationType: import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
                     issue_ignored: "issue_ignored";
+                    issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
+                    issue_reopened: "issue_reopened";
                     issue_resolved: "issue_resolved";
                     issue_triggered: "issue_triggered";
                     issue_updated: "issue_updated";
@@ -20124,6 +19914,14 @@ export declare const publicApiOperations: {
                     component: "component";
                     severity: "severity";
                 }>>;
+                channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
+                    incident_io: "incident_io";
+                    pagerduty: "pagerduty";
+                    rootly: "rootly";
+                    slack_channel: "slack_channel";
+                    teams_channel: "teams_channel";
+                    webhook: "webhook";
+                }>>>;
             }, import("zod/v4/core").$strip>>;
             components: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -20177,7 +19975,9 @@ export declare const publicApiOperations: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -20208,7 +20008,9 @@ export declare const publicApiOperations: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -20278,7 +20080,9 @@ export declare const publicApiOperations: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -20310,7 +20114,9 @@ export declare const publicApiOperations: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -20605,6 +20411,10 @@ export declare const publicApiOperations: {
                     name: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
+            resolvedResolution: import("zod").ZodNullable<import("zod").ZodObject<{
+                ref: import("zod").ZodString;
+                name: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
             ignoredResolution: import("zod").ZodNullable<import("zod").ZodObject<{
                 ref: import("zod").ZodString;
                 name: import("zod").ZodString;
@@ -20640,6 +20450,16 @@ export declare const publicApiOperations: {
                 ref: import("zod").ZodString;
                 name: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
+            automaticResolutions: import("zod").ZodObject<{
+                resolved: import("zod").ZodNullable<import("zod").ZodObject<{
+                    ref: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                ignored: import("zod").ZodNullable<import("zod").ZodObject<{
+                    ref: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -20655,6 +20475,7 @@ export declare const publicApiOperations: {
                 resolved: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 ignored: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             }, import("zod/v4/core").$strip>>;
+            resolvedResolution: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
             ignoredResolution: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             provider: import("zod").ZodEnum<{
@@ -20678,6 +20499,10 @@ export declare const publicApiOperations: {
                     name: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
+            resolvedResolution: import("zod").ZodNullable<import("zod").ZodObject<{
+                ref: import("zod").ZodString;
+                name: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
             ignoredResolution: import("zod").ZodNullable<import("zod").ZodObject<{
                 ref: import("zod").ZodString;
                 name: import("zod").ZodString;
@@ -21919,219 +21744,6 @@ export declare const publicApiOperations: {
             name: import("zod").ZodString;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodVoid, "api">;
-    };
-    readonly signalDefinitions: {
-        readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinitions: import("zod").ZodArray<import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>>;
-            templates: import("zod").ZodArray<import("zod").ZodObject<{
-                key: import("zod").ZodString;
-                version: import("zod").ZodNumber;
-                resourceKind: import("zod").ZodLiteral<"signal-definition">;
-                title: import("zod").ZodString;
-                description: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                defaults: import("zod").ZodObject<{
-                    severity: import("zod").ZodString;
-                    service: import("zod").ZodNullable<import("zod").ZodString>;
-                    enabled: import("zod").ZodBoolean;
-                }, import("zod/v4/core").$strip>;
-                inputSchema: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-                requiredPermissions: import("zod").ZodArray<import("zod").ZodString>;
-            }, import("zod/v4/core").$strip>>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            name: import("zod").ZodString;
-            expression: import("zod").ZodOptional<import("zod").ZodString>;
-            template: import("zod").ZodOptional<import("zod").ZodObject<{
-                key: import("zod").ZodString;
-                version: import("zod").ZodNumber;
-                inputs: import("zod").ZodOptional<import("zod").ZodObject<{
-                    severity: import("zod").ZodOptional<import("zod").ZodEnum<{
-                        DEBUG: "DEBUG";
-                        ERROR: "ERROR";
-                        FATAL: "FATAL";
-                        INFO: "INFO";
-                        TRACE: "TRACE";
-                        WARN: "WARN";
-                    }>>;
-                    service: import("zod").ZodOptional<import("zod").ZodString>;
-                }, import("zod/v4/core").$strict>>;
-            }, import("zod/v4/core").$strip>>;
-            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            expectedRevision: import("zod").ZodNumber;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            name: import("zod").ZodOptional<import("zod").ZodString>;
-            expression: import("zod").ZodOptional<import("zod").ZodString>;
-            enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly disable: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            expectedRevision: import("zod").ZodNumber;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signalDefinition: import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                name: import("zod").ZodString;
-                expression: import("zod").ZodString;
-                templateProvenance: import("zod").ZodNullable<import("zod").ZodObject<{
-                    templateKey: import("zod").ZodString;
-                    templateVersion: import("zod").ZodNumber;
-                    contentHash: import("zod").ZodString;
-                    resolvedInputs: import("zod").ZodObject<{
-                        severity: import("zod").ZodString;
-                        service: import("zod").ZodNullable<import("zod").ZodString>;
-                        enabled: import("zod").ZodBoolean;
-                    }, import("zod/v4/core").$strip>;
-                }, import("zod/v4/core").$strip>>;
-                enabled: import("zod").ZodBoolean;
-                compiledVersion: import("zod").ZodNumber;
-                configurationRevision: import("zod").ZodNumber;
-                linkedAutomationIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
-                createdAt: import("zod").ZodString;
-                updatedAt: import("zod").ZodString;
-            }, import("zod/v4/core").$strip>;
-        }, import("zod/v4/core").$strip>, "api">;
-        readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            expectedRevision: import("zod").ZodNumber;
-            signalDefinitionId: import("zod").ZodString;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodVoid, "api">;
-    };
-    readonly signals: {
-        readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-            signalDefinitionId: import("zod").ZodString;
-            projectId: import("zod").ZodOptional<import("zod").ZodString>;
-            cursor: import("zod").ZodOptional<import("zod").ZodString>;
-            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
-        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
-            signals: import("zod").ZodArray<import("zod").ZodObject<{
-                id: import("zod").ZodString;
-                signalDefinitionId: import("zod").ZodString;
-                definitionRevision: import("zod").ZodNullable<import("zod").ZodNumber>;
-                expression: import("zod").ZodNullable<import("zod").ZodString>;
-                serviceName: import("zod").ZodNullable<import("zod").ZodString>;
-                severityText: import("zod").ZodNullable<import("zod").ZodString>;
-                firstSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
-                lastSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
-                sampleLogs: import("zod").ZodArray<import("zod").ZodObject<{
-                    timestamp: import("zod").ZodNullable<import("zod").ZodString>;
-                    body: import("zod").ZodString;
-                }, import("zod/v4/core").$strip>>;
-                createdAt: import("zod").ZodString;
-                deliveries: import("zod").ZodArray<import("zod").ZodObject<{
-                    automationId: import("zod").ZodString;
-                    dispatchStatus: import("zod").ZodEnum<{
-                        dispatched: "dispatched";
-                        dispatching: "dispatching";
-                        failed: "failed";
-                        pending: "pending";
-                    }>;
-                    automationRunId: import("zod").ZodNullable<import("zod").ZodString>;
-                }, import("zod/v4/core").$strip>>;
-            }, import("zod/v4/core").$strip>>;
-            nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
-        }, import("zod/v4/core").$strip>, "api">;
     };
     readonly memory: {
         readonly put: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -23482,14 +23094,6 @@ export declare const publicApiOperations: {
                 }>>;
                 createdAt: import("zod").ZodString;
                 updatedAt: import("zod").ZodString;
-                billable: import("zod").ZodBoolean;
-                upstreamSignalId: import("zod").ZodNullable<import("zod").ZodString>;
-                issueDetection: import("zod").ZodNullable<import("zod").ZodObject<{
-                    admissionKey: import("zod").ZodString;
-                    implementationVersion: import("zod").ZodString;
-                    settingsRevision: import("zod").ZodNumber;
-                    event: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
-                }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
             messages: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -24527,6 +24131,7 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly reopen: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
+            note: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             issue: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -24559,6 +24164,7 @@ export declare const publicApiOperations: {
         readonly reassignAndReopen: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
             targetComponentId: import("zod").ZodString;
+            note: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             issue: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -24912,7 +24518,9 @@ export declare const publicApiOperations: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";

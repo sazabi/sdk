@@ -220,14 +220,6 @@ export declare const GetThreadOutputSchema: z.ZodObject<{
         }>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
-        billable: z.ZodBoolean;
-        upstreamSignalId: z.ZodNullable<z.ZodString>;
-        issueDetection: z.ZodNullable<z.ZodObject<{
-            admissionKey: z.ZodString;
-            implementationVersion: z.ZodString;
-            settingsRevision: z.ZodNumber;
-            event: z.ZodRecord<z.ZodString, z.ZodUnknown>;
-        }, z.core.$strip>>;
     }, z.core.$strip>;
     messages: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -557,14 +549,6 @@ export declare const getThread: import("../orpc-contracts/index.js").OperationDe
         }>>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
-        billable: z.ZodBoolean;
-        upstreamSignalId: z.ZodNullable<z.ZodString>;
-        issueDetection: z.ZodNullable<z.ZodObject<{
-            admissionKey: z.ZodString;
-            implementationVersion: z.ZodString;
-            settingsRevision: z.ZodNumber;
-            event: z.ZodRecord<z.ZodString, z.ZodUnknown>;
-        }, z.core.$strip>>;
     }, z.core.$strip>;
     messages: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -1133,14 +1117,6 @@ export declare const threadsContract: {
             }>>;
             createdAt: z.ZodString;
             updatedAt: z.ZodString;
-            billable: z.ZodBoolean;
-            upstreamSignalId: z.ZodNullable<z.ZodString>;
-            issueDetection: z.ZodNullable<z.ZodObject<{
-                admissionKey: z.ZodString;
-                implementationVersion: z.ZodString;
-                settingsRevision: z.ZodNumber;
-                event: z.ZodRecord<z.ZodString, z.ZodUnknown>;
-            }, z.core.$strip>>;
         }, z.core.$strip>;
         messages: z.ZodArray<z.ZodObject<{
             id: z.ZodString;

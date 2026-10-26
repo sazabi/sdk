@@ -182,12 +182,19 @@ export interface PublicReadAccess {
  * project. The owner proves that target belongs to the principal's
  * superorganization before the handler runs, answering a target it cannot
  * prove exactly like a missing one, and hands the handler the proven
- * superorganization, organization and project. The partner principal is never
- * elevated to `system`, `credential` or `admin`, and no identity token
- * reaches it.
+ * superorganization, organization and project.
+ *
+ * `superorganization` is for an operation that names no organization: the
+ * partner's own list of its organizations and the creation of one in it
+ * (ENG-9371). Its target is the principal's own superorganization, so there
+ * is nothing to prove and no organization is faked; the handler is handed
+ * only that superorganization, and the owner binds it with its own binder.
+ *
+ * The partner principal is never elevated to `system`, `credential` or
+ * `admin`, and no identity token reaches it.
  */
 export interface PartnerAccess {
-    partner: "organization" | "project";
+    partner: "organization" | "project" | "superorganization";
 }
 export interface OperationContractMetadata<TBackend extends string = string> {
     operationId: string;

@@ -1047,6 +1047,7 @@ export declare const IgnoreIssueOutputSchema: z.ZodObject<{
 export type IgnoreIssueOutput = z.infer<typeof IgnoreIssueOutputSchema>;
 export declare const ReopenIssueInputSchema: z.ZodObject<{
     issueId: z.ZodString;
+    note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type ReopenIssueInput = z.infer<typeof ReopenIssueInputSchema>;
 export declare const ReopenIssueOutputSchema: z.ZodObject<{
@@ -1082,6 +1083,7 @@ export type ReopenIssueOutput = z.infer<typeof ReopenIssueOutputSchema>;
 export declare const ReassignAndReopenIssueInputSchema: z.ZodObject<{
     issueId: z.ZodString;
     targetComponentId: z.ZodString;
+    note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type ReassignAndReopenIssueInput = z.infer<typeof ReassignAndReopenIssueInputSchema>;
 export declare const ReassignAndReopenIssueOutputSchema: z.ZodObject<{
@@ -1842,6 +1844,7 @@ export declare const ignoreIssue: import("../orpc-contracts/index.js").Operation
 }, z.core.$strip>, "api">;
 export declare const reopenIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
+    note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     issue: z.ZodObject<{
         id: z.ZodString;
@@ -1874,6 +1877,7 @@ export declare const reopenIssue: import("../orpc-contracts/index.js").Operation
 export declare const reassignAndReopenIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
     targetComponentId: z.ZodString;
+    note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     issue: z.ZodObject<{
         id: z.ZodString;
@@ -2522,6 +2526,7 @@ export declare const issuesContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly reopen: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         issueId: z.ZodString;
+        note: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         issue: z.ZodObject<{
             id: z.ZodString;
@@ -2554,6 +2559,7 @@ export declare const issuesContract: {
     readonly reassignAndReopen: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         issueId: z.ZodString;
         targetComponentId: z.ZodString;
+        note: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         issue: z.ZodObject<{
             id: z.ZodString;

@@ -73,21 +73,15 @@ export declare const AutomationRunDetailSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type AutomationRunDetail = z.infer<typeof AutomationRunDetailSchema>;
 export declare const AutomationKindSchema: z.ZodEnum<{
-    log_match: "log_match";
     script: "script";
 }>;
 export type AutomationKind = z.infer<typeof AutomationKindSchema>;
-export declare const AutomationSignalTypeSchema: z.ZodEnum<{
-    expression_matched: "expression_matched";
-}>;
-export type AutomationSignalType = z.infer<typeof AutomationSignalTypeSchema>;
 /**
- * What starts an automation's runs: its cron schedule, a signal, or a
- * delivery to its webhook.
+ * What starts an automation's runs: its cron schedule or a delivery to its
+ * webhook.
  */
 export declare const AutomationTriggerSchema: z.ZodEnum<{
     schedule: "schedule";
-    signal: "signal";
     webhook: "webhook";
 }>;
 export type AutomationTrigger = z.infer<typeof AutomationTriggerSchema>;
@@ -122,12 +116,10 @@ export declare const AutomationSchema: z.ZodObject<{
     name: z.ZodString;
     description: z.ZodNullable<z.ZodString>;
     kind: z.ZodEnum<{
-        log_match: "log_match";
         script: "script";
     }>;
     trigger: z.ZodEnum<{
         schedule: "schedule";
-        signal: "signal";
         webhook: "webhook";
     }>;
     webhook: z.ZodNullable<z.ZodObject<{
@@ -138,10 +130,6 @@ export declare const AutomationSchema: z.ZodObject<{
     }, z.core.$strip>>;
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
-    signalDefinitionId: z.ZodNullable<z.ZodString>;
-    signalType: z.ZodNullable<z.ZodEnum<{
-        expression_matched: "expression_matched";
-    }>>;
     enabled: z.ZodBoolean;
     cronExpression: z.ZodNullable<z.ZodString>;
     timezone: z.ZodString;
@@ -183,12 +171,10 @@ export declare const AutomationDetailSchema: z.ZodObject<{
     name: z.ZodString;
     description: z.ZodNullable<z.ZodString>;
     kind: z.ZodEnum<{
-        log_match: "log_match";
         script: "script";
     }>;
     trigger: z.ZodEnum<{
         schedule: "schedule";
-        signal: "signal";
         webhook: "webhook";
     }>;
     webhook: z.ZodNullable<z.ZodObject<{
@@ -199,10 +185,6 @@ export declare const AutomationDetailSchema: z.ZodObject<{
     }, z.core.$strip>>;
     scriptId: z.ZodNullable<z.ZodString>;
     scriptName: z.ZodNullable<z.ZodString>;
-    signalDefinitionId: z.ZodNullable<z.ZodString>;
-    signalType: z.ZodNullable<z.ZodEnum<{
-        expression_matched: "expression_matched";
-    }>>;
     enabled: z.ZodBoolean;
     cronExpression: z.ZodNullable<z.ZodString>;
     timezone: z.ZodString;
@@ -272,12 +254,10 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -288,10 +268,6 @@ export declare const ListAutomationsOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -341,12 +317,10 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -357,10 +331,6 @@ export declare const GetAutomationOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -402,7 +372,6 @@ export declare const CreateAutomationInputSchema: z.ZodObject<{
     description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     scriptId: z.ZodOptional<z.ZodString>;
     script: z.ZodOptional<z.ZodString>;
-    expressionId: z.ZodOptional<z.ZodString>;
     trigger: z.ZodOptional<z.ZodEnum<{
         schedule: "schedule";
         webhook: "webhook";
@@ -426,12 +395,10 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -442,10 +409,6 @@ export declare const CreateAutomationOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -506,12 +469,10 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -522,10 +483,6 @@ export declare const UpdateAutomationOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -580,12 +537,10 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -596,10 +551,6 @@ export declare const EnableAutomationOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -654,12 +605,10 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -670,10 +619,6 @@ export declare const DisableAutomationOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -750,12 +695,10 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -766,10 +709,6 @@ export declare const listAutomations: import("../orpc-contracts/index.js").Opera
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -816,12 +755,10 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -832,10 +769,6 @@ export declare const getAutomation: import("../orpc-contracts/index.js").Operati
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -876,7 +809,6 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
     description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     scriptId: z.ZodOptional<z.ZodString>;
     script: z.ZodOptional<z.ZodString>;
-    expressionId: z.ZodOptional<z.ZodString>;
     trigger: z.ZodOptional<z.ZodEnum<{
         schedule: "schedule";
         webhook: "webhook";
@@ -898,12 +830,10 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -914,10 +844,6 @@ export declare const createAutomation: import("../orpc-contracts/index.js").Oper
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -975,12 +901,10 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -991,10 +915,6 @@ export declare const updateAutomation: import("../orpc-contracts/index.js").Oper
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -1046,12 +966,10 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -1062,10 +980,6 @@ export declare const enableAutomation: import("../orpc-contracts/index.js").Oper
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -1117,12 +1031,10 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         name: z.ZodString;
         description: z.ZodNullable<z.ZodString>;
         kind: z.ZodEnum<{
-            log_match: "log_match";
             script: "script";
         }>;
         trigger: z.ZodEnum<{
             schedule: "schedule";
-            signal: "signal";
             webhook: "webhook";
         }>;
         webhook: z.ZodNullable<z.ZodObject<{
@@ -1133,10 +1045,6 @@ export declare const disableAutomation: import("../orpc-contracts/index.js").Ope
         }, z.core.$strip>>;
         scriptId: z.ZodNullable<z.ZodString>;
         scriptName: z.ZodNullable<z.ZodString>;
-        signalDefinitionId: z.ZodNullable<z.ZodString>;
-        signalType: z.ZodNullable<z.ZodEnum<{
-            expression_matched: "expression_matched";
-        }>>;
         enabled: z.ZodBoolean;
         cronExpression: z.ZodNullable<z.ZodString>;
         timezone: z.ZodString;
@@ -1486,12 +1394,10 @@ export declare const automationsContract: {
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
-                log_match: "log_match";
                 script: "script";
             }>;
             trigger: z.ZodEnum<{
                 schedule: "schedule";
-                signal: "signal";
                 webhook: "webhook";
             }>;
             webhook: z.ZodNullable<z.ZodObject<{
@@ -1502,10 +1408,6 @@ export declare const automationsContract: {
             }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
-            signalDefinitionId: z.ZodNullable<z.ZodString>;
-            signalType: z.ZodNullable<z.ZodEnum<{
-                expression_matched: "expression_matched";
-            }>>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1552,12 +1454,10 @@ export declare const automationsContract: {
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
-                log_match: "log_match";
                 script: "script";
             }>;
             trigger: z.ZodEnum<{
                 schedule: "schedule";
-                signal: "signal";
                 webhook: "webhook";
             }>;
             webhook: z.ZodNullable<z.ZodObject<{
@@ -1568,10 +1468,6 @@ export declare const automationsContract: {
             }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
-            signalDefinitionId: z.ZodNullable<z.ZodString>;
-            signalType: z.ZodNullable<z.ZodEnum<{
-                expression_matched: "expression_matched";
-            }>>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1612,7 +1508,6 @@ export declare const automationsContract: {
         description: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         scriptId: z.ZodOptional<z.ZodString>;
         script: z.ZodOptional<z.ZodString>;
-        expressionId: z.ZodOptional<z.ZodString>;
         trigger: z.ZodOptional<z.ZodEnum<{
             schedule: "schedule";
             webhook: "webhook";
@@ -1634,12 +1529,10 @@ export declare const automationsContract: {
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
-                log_match: "log_match";
                 script: "script";
             }>;
             trigger: z.ZodEnum<{
                 schedule: "schedule";
-                signal: "signal";
                 webhook: "webhook";
             }>;
             webhook: z.ZodNullable<z.ZodObject<{
@@ -1650,10 +1543,6 @@ export declare const automationsContract: {
             }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
-            signalDefinitionId: z.ZodNullable<z.ZodString>;
-            signalType: z.ZodNullable<z.ZodEnum<{
-                expression_matched: "expression_matched";
-            }>>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1711,12 +1600,10 @@ export declare const automationsContract: {
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
-                log_match: "log_match";
                 script: "script";
             }>;
             trigger: z.ZodEnum<{
                 schedule: "schedule";
-                signal: "signal";
                 webhook: "webhook";
             }>;
             webhook: z.ZodNullable<z.ZodObject<{
@@ -1727,10 +1614,6 @@ export declare const automationsContract: {
             }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
-            signalDefinitionId: z.ZodNullable<z.ZodString>;
-            signalType: z.ZodNullable<z.ZodEnum<{
-                expression_matched: "expression_matched";
-            }>>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1782,12 +1665,10 @@ export declare const automationsContract: {
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
-                log_match: "log_match";
                 script: "script";
             }>;
             trigger: z.ZodEnum<{
                 schedule: "schedule";
-                signal: "signal";
                 webhook: "webhook";
             }>;
             webhook: z.ZodNullable<z.ZodObject<{
@@ -1798,10 +1679,6 @@ export declare const automationsContract: {
             }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
-            signalDefinitionId: z.ZodNullable<z.ZodString>;
-            signalType: z.ZodNullable<z.ZodEnum<{
-                expression_matched: "expression_matched";
-            }>>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;
@@ -1853,12 +1730,10 @@ export declare const automationsContract: {
             name: z.ZodString;
             description: z.ZodNullable<z.ZodString>;
             kind: z.ZodEnum<{
-                log_match: "log_match";
                 script: "script";
             }>;
             trigger: z.ZodEnum<{
                 schedule: "schedule";
-                signal: "signal";
                 webhook: "webhook";
             }>;
             webhook: z.ZodNullable<z.ZodObject<{
@@ -1869,10 +1744,6 @@ export declare const automationsContract: {
             }, z.core.$strip>>;
             scriptId: z.ZodNullable<z.ZodString>;
             scriptName: z.ZodNullable<z.ZodString>;
-            signalDefinitionId: z.ZodNullable<z.ZodString>;
-            signalType: z.ZodNullable<z.ZodEnum<{
-                expression_matched: "expression_matched";
-            }>>;
             enabled: z.ZodBoolean;
             cronExpression: z.ZodNullable<z.ZodString>;
             timezone: z.ZodString;

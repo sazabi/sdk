@@ -1,25 +1,7 @@
 import type { ContractRouterClient } from "@orpc/contract";
 import type { OtlpLogsRequest } from "../otlp-contracts/index.js";
 import type { ProjectRegion, PublicApiContract } from "../public-api/index.js";
-import { type WebSocketLogEntry as TailLogEntry, WebSocketLogEntrySchema as TailLogEntrySchema, type LogFilters as TailLogFilters, LogFiltersSchema as TailLogFiltersSchema, type WebSocketLogResource as TailLogResource, WebSocketLogResourceSchema as TailLogResourceSchema } from "../tail-ws-contracts/index.js";
 import { z } from "zod";
-export type { TailLogEntry, TailLogFilters, TailLogResource };
-export { TailLogEntrySchema, TailLogFiltersSchema, TailLogResourceSchema };
-/**
- * Input accepted by the tail SSE helper.
- */
-export declare const TailLogsInputSchema: z.ZodObject<{
-    projectId: z.ZodOptional<z.ZodString>;
-    filters: z.ZodOptional<z.ZodObject<{
-        severities: z.ZodOptional<z.ZodArray<z.ZodString>>;
-        services: z.ZodOptional<z.ZodArray<z.ZodString>>;
-        environments: z.ZodOptional<z.ZodArray<z.ZodString>>;
-        searchTerm: z.ZodOptional<z.ZodString>;
-        traceId: z.ZodOptional<z.ZodString>;
-        attributes: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
-    }, z.core.$strip>>;
-}, z.core.$strip>;
-export type TailLogsInput = z.infer<typeof TailLogsInputSchema>;
 /**
  * Input accepted by the OTLP log forwarding helper.
  */
@@ -81,13 +63,6 @@ export interface LogCredentialProvider {
     getProjectId?(): string | undefined | Promise<string | undefined>;
 }
 /**
- * Caller-facing params for tail transport.
- */
-export interface TailLogsParams extends TailLogsInput {
-    region?: ProjectRegion;
-    signal?: AbortSignal;
-}
-/**
  * Caller-facing params for intake transport.
  */
 export interface ForwardLogsParams extends ForwardLogsInput {
@@ -99,39 +74,17 @@ export interface ForwardLogsParams extends ForwardLogsInput {
     };
 }
 /**
- * Async iterator returned by the tail transport.
- */
-export type TailLogStream = AsyncIterableIterator<TailLogEntry>;
-/**
- * The tail stream could not be opened: the first request to the tail host got
- * no usable response. `host` is the host (with its port when not the default)
- * the request went to, and `cause` is the failure as it happened — Node's
- * `TypeError("fetch failed")` whose own `cause` carries the system error code
- * (`ENOTFOUND`, `ECONNREFUSED`, `ERR_TLS_CERT_ALTNAME_INVALID`, …), or the
- * refusal built from the response status. The message stays the cause's own,
- * so a caller that only reads `message` sees what it saw before.
- */
-export declare class TailStreamOpenError extends Error {
-    readonly host: string;
-    readonly cause: unknown;
-    constructor(host: string, cause: unknown);
-}
-/**
  * Runtime dependencies for custom log transports.
  */
 export interface LogTransportOptions {
     raw: ContractRouterClient<PublicApiContract>;
     credentialProvider: LogCredentialProvider;
     fetch?: typeof globalThis.fetch;
-    /** Used to infer non-production SSE defaults when `tailBaseUrl` is omitted. */
-    apiBaseUrl?: string;
     intakeBaseUrl?: string;
-    tailBaseUrl?: string;
 }
 /**
- * Creates the custom tail and intake transport surface.
+ * Creates the custom intake transport surface.
  */
 export declare const createLogTransports: (options: LogTransportOptions) => {
-    tail: (input: TailLogsParams) => Promise<TailLogStream>;
     forward: (input: ForwardLogsParams) => Promise<ForwardLogsOutput>;
 };

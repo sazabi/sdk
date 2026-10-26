@@ -3,7 +3,6 @@ export declare const AutomationTemplateGroupSchema: z.ZodString;
 export type AutomationTemplateGroup = z.infer<typeof AutomationTemplateGroupSchema>;
 export declare const AutomationTemplateKindSchema: z.ZodEnum<{
     script: "script";
-    signal: "signal";
 }>;
 export type AutomationTemplateKind = z.infer<typeof AutomationTemplateKindSchema>;
 export declare const AutomationTemplateSchema: z.ZodObject<{
@@ -11,7 +10,6 @@ export declare const AutomationTemplateSchema: z.ZodObject<{
     templateGroup: z.ZodString;
     kind: z.ZodEnum<{
         script: "script";
-        signal: "signal";
     }>;
     name: z.ZodString;
     description: z.ZodString;
@@ -37,7 +35,6 @@ export declare const AutomationTemplateSchema: z.ZodObject<{
         default: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
     }, z.core.$strip>>;
     defaultCron: z.ZodNullable<z.ZodString>;
-    expression: z.ZodNullable<z.ZodString>;
     version: z.ZodNumber;
     publishedAt: z.ZodString;
 }, z.core.$strip>;
@@ -50,7 +47,6 @@ export declare const ListAutomationTemplatesOutputSchema: z.ZodObject<{
         templateGroup: z.ZodString;
         kind: z.ZodEnum<{
             script: "script";
-            signal: "signal";
         }>;
         name: z.ZodString;
         description: z.ZodString;
@@ -76,7 +72,6 @@ export declare const ListAutomationTemplatesOutputSchema: z.ZodObject<{
             default: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
         }, z.core.$strip>>;
         defaultCron: z.ZodNullable<z.ZodString>;
-        expression: z.ZodNullable<z.ZodString>;
         version: z.ZodNumber;
         publishedAt: z.ZodString;
     }, z.core.$strip>>;
@@ -88,7 +83,6 @@ export declare const listAutomationTemplates: import("../orpc-contracts/index.js
         templateGroup: z.ZodString;
         kind: z.ZodEnum<{
             script: "script";
-            signal: "signal";
         }>;
         name: z.ZodString;
         description: z.ZodString;
@@ -114,7 +108,6 @@ export declare const listAutomationTemplates: import("../orpc-contracts/index.js
             default: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
         }, z.core.$strip>>;
         defaultCron: z.ZodNullable<z.ZodString>;
-        expression: z.ZodNullable<z.ZodString>;
         version: z.ZodNumber;
         publishedAt: z.ZodString;
     }, z.core.$strip>>;
@@ -194,7 +187,6 @@ export declare const automationTemplatesContract: {
             templateGroup: z.ZodString;
             kind: z.ZodEnum<{
                 script: "script";
-                signal: "signal";
             }>;
             name: z.ZodString;
             description: z.ZodString;
@@ -220,7 +212,6 @@ export declare const automationTemplatesContract: {
                 default: z.ZodOptional<z.ZodUnion<readonly [z.ZodString, z.ZodNumber, z.ZodBoolean]>>;
             }, z.core.$strip>>;
             defaultCron: z.ZodNullable<z.ZodString>;
-            expression: z.ZodNullable<z.ZodString>;
             version: z.ZodNumber;
             publishedAt: z.ZodString;
         }, z.core.$strip>>;

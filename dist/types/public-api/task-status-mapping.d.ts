@@ -49,6 +49,10 @@ export declare const TaskStatusMappingSchema: z.ZodObject<{
             name: z.ZodString;
         }, z.core.$strip>>;
     }, z.core.$strip>;
+    resolvedResolution: z.ZodNullable<z.ZodObject<{
+        ref: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>>;
     ignoredResolution: z.ZodNullable<z.ZodObject<{
         ref: z.ZodString;
         name: z.ZodString;
@@ -87,6 +91,10 @@ export declare const GetTaskStatusMappingOutputSchema: z.ZodObject<{
             name: z.ZodString;
         }, z.core.$strip>>;
     }, z.core.$strip>;
+    resolvedResolution: z.ZodNullable<z.ZodObject<{
+        ref: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>>;
     ignoredResolution: z.ZodNullable<z.ZodObject<{
         ref: z.ZodString;
         name: z.ZodString;
@@ -123,6 +131,10 @@ export declare const getTaskStatusMapping: import("../orpc-contracts/index.js").
             name: z.ZodString;
         }, z.core.$strip>>;
     }, z.core.$strip>;
+    resolvedResolution: z.ZodNullable<z.ZodObject<{
+        ref: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>>;
     ignoredResolution: z.ZodNullable<z.ZodObject<{
         ref: z.ZodString;
         name: z.ZodString;
@@ -160,6 +172,16 @@ export declare const TaskStatusMappingOptionsOutputSchema: z.ZodObject<{
         ref: z.ZodString;
         name: z.ZodString;
     }, z.core.$strip>>;
+    automaticResolutions: z.ZodObject<{
+        resolved: z.ZodNullable<z.ZodObject<{
+            ref: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
+        ignored: z.ZodNullable<z.ZodObject<{
+            ref: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
 }, z.core.$strip>;
 export type TaskStatusMappingOptionsOutput = z.infer<typeof TaskStatusMappingOptionsOutputSchema>;
 export declare const getTaskStatusMappingOptions: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -192,6 +214,16 @@ export declare const getTaskStatusMappingOptions: import("../orpc-contracts/inde
         ref: z.ZodString;
         name: z.ZodString;
     }, z.core.$strip>>;
+    automaticResolutions: z.ZodObject<{
+        resolved: z.ZodNullable<z.ZodObject<{
+            ref: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
+        ignored: z.ZodNullable<z.ZodObject<{
+            ref: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
+    }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const UpdateTaskStatusMappingInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
@@ -207,6 +239,7 @@ export declare const UpdateTaskStatusMappingInputSchema: z.ZodObject<{
         resolved: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         ignored: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>>;
+    resolvedResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     ignoredResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>;
 export type UpdateTaskStatusMappingInput = z.infer<typeof UpdateTaskStatusMappingInputSchema>;
@@ -232,6 +265,10 @@ export declare const UpdateTaskStatusMappingOutputSchema: z.ZodObject<{
             name: z.ZodString;
         }, z.core.$strip>>;
     }, z.core.$strip>;
+    resolvedResolution: z.ZodNullable<z.ZodObject<{
+        ref: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>>;
     ignoredResolution: z.ZodNullable<z.ZodObject<{
         ref: z.ZodString;
         name: z.ZodString;
@@ -252,6 +289,7 @@ export declare const updateTaskStatusMapping: import("../orpc-contracts/index.js
         resolved: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         ignored: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>>;
+    resolvedResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     ignoredResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
 }, z.core.$strip>, z.ZodObject<{
     provider: z.ZodEnum<{
@@ -275,6 +313,10 @@ export declare const updateTaskStatusMapping: import("../orpc-contracts/index.js
             name: z.ZodString;
         }, z.core.$strip>>;
     }, z.core.$strip>;
+    resolvedResolution: z.ZodNullable<z.ZodObject<{
+        ref: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>>;
     ignoredResolution: z.ZodNullable<z.ZodObject<{
         ref: z.ZodString;
         name: z.ZodString;
@@ -311,6 +353,10 @@ export declare const taskStatusMappingContract: {
                 name: z.ZodString;
             }, z.core.$strip>>;
         }, z.core.$strip>;
+        resolvedResolution: z.ZodNullable<z.ZodObject<{
+            ref: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
         ignoredResolution: z.ZodNullable<z.ZodObject<{
             ref: z.ZodString;
             name: z.ZodString;
@@ -346,6 +392,16 @@ export declare const taskStatusMappingContract: {
             ref: z.ZodString;
             name: z.ZodString;
         }, z.core.$strip>>;
+        automaticResolutions: z.ZodObject<{
+            resolved: z.ZodNullable<z.ZodObject<{
+                ref: z.ZodString;
+                name: z.ZodString;
+            }, z.core.$strip>>;
+            ignored: z.ZodNullable<z.ZodObject<{
+                ref: z.ZodString;
+                name: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         organizationId: z.ZodOptional<z.ZodString>;
@@ -361,6 +417,7 @@ export declare const taskStatusMappingContract: {
             resolved: z.ZodOptional<z.ZodNullable<z.ZodString>>;
             ignored: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         }, z.core.$strip>>;
+        resolvedResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         ignoredResolution: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     }, z.core.$strip>, z.ZodObject<{
         provider: z.ZodEnum<{
@@ -384,6 +441,10 @@ export declare const taskStatusMappingContract: {
                 name: z.ZodString;
             }, z.core.$strip>>;
         }, z.core.$strip>;
+        resolvedResolution: z.ZodNullable<z.ZodObject<{
+            ref: z.ZodString;
+            name: z.ZodString;
+        }, z.core.$strip>>;
         ignoredResolution: z.ZodNullable<z.ZodObject<{
             ref: z.ZodString;
             name: z.ZodString;

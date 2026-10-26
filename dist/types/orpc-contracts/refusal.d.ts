@@ -87,6 +87,12 @@ export type Refusal = ({
 } | {
     kind: "unavailable";
     dependency: string;
+    /**
+     * How long the caller should wait before trying again, when the owner
+     * knows (ENG-9422: an outage answers with a 5-second delay). Optional
+     * and additive: a reader that predates it ignores it.
+     */
+    retryAfterSeconds?: number;
 }) & {
     answers?: RefusalAnswers;
 };

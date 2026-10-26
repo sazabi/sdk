@@ -23,6 +23,23 @@ export declare const PUBLIC_READ_KINDS: {
             readonly regions: readonly ["regionCode", "shortCode", "status", "displayLabel"];
         };
     };
+    /**
+     * The feature flags that are on for an anonymous caller, as the public
+     * API's unauthenticated `resolvePublic` answers them today (Ed 2026-10-20,
+     * "oh. do it for now."): the catalog's public flags, as a list of rows that
+     * each carry the flag's key; a flag that is off is omitted. The input names
+     * nothing. Forwarded from services/public-api only. This amends the
+     * 2026-10-15 ruling that no-login reads belong to services/api for this one
+     * read, and it is revisitable; it does not open no-login reads on the
+     * public API in general.
+     */
+    readonly public_feature_flags: {
+        readonly surface: "public_api";
+        readonly inputKeys: readonly [];
+        readonly outputKeys: {
+            readonly flags: readonly ["key"];
+        };
+    };
 };
 export type PublicReadKind = keyof typeof PUBLIC_READ_KINDS;
 export declare const isPublicReadKind: (value: string) => value is PublicReadKind;

@@ -448,48 +448,9 @@ var toStreamError = (error) => {
 
 // src/log-transports.ts
 import { ORPCError } from "@orpc/client";
-
-// ../../protocols/tail-ws-contracts/src/index.ts
 import { z as z2 } from "zod";
-var LogFiltersSchema = z2.object({
-  severities: z2.array(z2.string()).optional().describe("Limit results to the listed severities."),
-  services: z2.array(z2.string()).optional().describe("Limit results to the listed service names."),
-  environments: z2.array(z2.string()).optional().describe("Limit results to the listed deployment environments."),
-  searchTerm: z2.string().optional().describe("Case-insensitive substring match against the log body."),
-  traceId: z2.string().optional().describe("Limit results to one trace ID."),
-  attributes: z2.record(z2.string(), z2.string()).optional().describe("Limit results to logs whose attributes contain every listed key with an exactly equal value.")
-});
-var WebSocketLogResourceSchema = z2.object({
-  service: z2.string(),
-  namespace: z2.string(),
-  environment: z2.string(),
-  host: z2.string(),
-  container: z2.string(),
-  pod: z2.string()
-});
-var WebSocketLogEntrySchema = z2.object({
-  id: z2.string(),
-  timestamp: z2.string().datetime(),
-  severity: z2.string(),
-  body: z2.string(),
-  service: z2.string(),
-  traceId: z2.string(),
-  spanId: z2.string(),
-  attributes: z2.record(z2.string(), z2.string()),
-  resource: WebSocketLogResourceSchema
-});
-var WebSocketLogMessageSchema = z2.object({
-  type: z2.literal("logs"),
-  timestamp: z2.string().datetime(),
-  data: z2.array(WebSocketLogEntrySchema)
-});
-
-// src/log-transports.ts
-import { z as z3 } from "zod";
 var DEFAULT_INTAKE_BASE_URL = "https://{region}.intake.sazabi.com";
-var DEFAULT_TAIL_BASE_URL = "https://{region}.tail.sazabi.com";
-var TAIL_RECONNECT_BASE_DELAY_MS = 500;
-var TAIL_RECONNECT_MAX_DELAY_MS = 5000;
+var FORWARD_RETRY_BASE_DELAY_MS = 500;
 var PUBLIC_KEY_ATTRIBUTE_NAME = "sazabi.public_key";
 var SAZABI_INTERNAL_LOG_FORWARDING_SECRET_HEADER = "x-sazabi-internal-log-forwarding-secret";
 var SAZABI_INTERNAL_LOG_FORWARDING_SOURCE_HEADER = "x-sazabi-internal-log-forwarding-source";
@@ -500,17 +461,13 @@ var isLoopbackHostname = (hostname) => {
   const normalizedHostname = normalizeLoopbackHostname(hostname);
   return normalizedHostname === "localhost" || normalizedHostname === "127.0.0.1" || normalizedHostname === "::1";
 };
-var TailLogsInputSchema = z3.object({
-  projectId: z3.string().uuid().optional().describe("Project to tail logs for. Auto-filled from CLI and SDK context when omitted."),
-  filters: LogFiltersSchema.optional().describe("Optional filters applied by the tail SSE service.")
+var ForwardLogsInputSchema = z2.object({
+  publicKey: z2.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
+  logs: z2.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
 });
-var ForwardLogsInputSchema = z3.object({
-  publicKey: z3.string().min(1).describe("Public key for intake auth. Create or list one via the public key endpoints."),
-  logs: z3.custom((value) => typeof value === "object" && value !== null).describe("OTLP logs export request payload to send to the intake service.")
-});
-var ForwardLogsOutputSchema = z3.object({
-  forwardedCount: z3.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
-  failedCount: z3.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
+var ForwardLogsOutputSchema = z2.object({
+  forwardedCount: z2.number().int().nonnegative().describe("Number of log records accepted by the intake request."),
+  failedCount: z2.number().int().nonnegative().describe("Number of log records rejected by the intake request.")
 });
 var forwardLogsExamples = [
   {
@@ -560,45 +517,16 @@ var forwardLogsExamples = [
     }
   }
 ];
-
-class TailStreamOpenError extends Error {
-  host;
-  cause;
-  constructor(host, cause) {
-    super(cause instanceof Error ? cause.message : String(cause), { cause });
-    this.name = "TailStreamOpenError";
-    this.host = host;
-    this.cause = cause;
-  }
-}
 var createLogTransports = (options) => {
   const regionCache = new Map;
   return {
-    tail: async (input) => {
-      const projectId = await resolveProjectId(options.credentialProvider, input.projectId, "logs.tail");
-      const region = await resolveTailRegion(options, regionCache, projectId, input.region, "logs.tail");
-      const url = buildTailUrl({
-        projectId,
-        region,
-        filters: input.filters,
-        apiBaseUrl: options.apiBaseUrl,
-        tailBaseUrl: options.tailBaseUrl
-      });
-      const token = await options.credentialProvider.getToken();
-      const fetchImpl = options.fetch ?? globalThis.fetch;
-      if (!fetchImpl) {
-        throw new Error("Fetch transport is not available in this runtime.");
-      }
-      return createSseTailStream({
-        token,
-        url,
-        signal: input.signal,
-        fetch: fetchImpl
-      });
-    },
     forward: async (input) => {
       const region = await resolveIntakeRegion(options, regionCache, input.projectId ?? await options.credentialProvider.getProjectId?.(), input.region, "logs.forward");
-      const url = buildIntakeUrl(region, options.intakeBaseUrl);
+      const url = buildIntakeUrl({
+        region,
+        intakeBaseUrl: options.intakeBaseUrl,
+        publicKey: input.publicKey
+      });
       const fetchImpl = options.fetch ?? globalThis.fetch;
       const payload = withPublicKeyAttribute(input.logs, input.publicKey);
       const forwardedCount = countLogRecords(payload);
@@ -610,76 +538,11 @@ var createLogTransports = (options) => {
     }
   };
 };
-var LOCAL_LIVE_TAIL_PORT = "3010";
-var LEGACY_LOCAL_TAIL_PORTS = new Set(["15006", "3010"]);
-var buildTailUrl = (options) => {
-  const baseUrl = (options.tailBaseUrl ?? resolveDefaultTailBaseUrl({
-    region: options.region,
-    apiBaseUrl: options.apiBaseUrl
-  })).replace("{region}", options.region);
-  const url = buildTailEndpointUrl(baseUrl);
-  url.searchParams.set("projectId", options.projectId);
-  const filters = toTailFiltersQuery(options.filters);
-  if (filters) {
-    url.searchParams.set("filters", filters);
-  }
-  return url.toString();
-};
-var resolveDefaultTailBaseUrl = (options) => {
-  if (options.apiBaseUrl) {
-    try {
-      const apiHost = new URL(options.apiBaseUrl).hostname;
-      if (apiHost.endsWith(".sazabi.dev")) {
-        const domain = apiHost.includes(".staging.") ? "staging.sazabi.dev" : "development.sazabi.dev";
-        return `https://${options.region}.tail.${domain}`;
-      }
-    } catch {}
-  }
-  return DEFAULT_TAIL_BASE_URL.replace("{region}", options.region);
-};
-var buildTailEndpointUrl = (tailBaseUrl) => {
-  const parsedUrl = (() => {
-    try {
-      return new URL(tailBaseUrl);
-    } catch {
-      return null;
-    }
-  })();
-  if (!parsedUrl) {
-    throw new Error(`Invalid tail base URL: ${tailBaseUrl}`);
-  }
-  if (isLoopbackHostname(parsedUrl.hostname)) {
-    parsedUrl.protocol = "http:";
-    if (!parsedUrl.port || LEGACY_LOCAL_TAIL_PORTS.has(parsedUrl.port)) {
-      parsedUrl.port = LOCAL_LIVE_TAIL_PORT;
-    }
-    parsedUrl.pathname = "/v1/tail";
-    parsedUrl.search = "";
-    parsedUrl.hash = "";
-    return parsedUrl;
-  }
-  if (parsedUrl.protocol === "ws:" || parsedUrl.protocol === "wss:") {
-    parsedUrl.protocol = parsedUrl.protocol === "wss:" ? "https:" : "http:";
-  }
-  if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
-    throw new Error(`Invalid tail base URL protocol: ${parsedUrl.protocol}. Expected http:, https:, ws:, or wss:.`);
-  }
-  parsedUrl.pathname = "/v1/tail";
-  parsedUrl.search = "";
-  parsedUrl.hash = "";
-  return parsedUrl;
-};
-var toTailFiltersQuery = (filters) => {
-  if (!filters) {
-    return;
-  }
-  const filteredEntries = Object.entries(filters).filter(([, value]) => value !== undefined && (!Array.isArray(value) || value.length > 0) && (typeof value !== "object" || Array.isArray(value) || value === null || Object.keys(value).length > 0) && value !== "");
-  if (filteredEntries.length === 0) {
-    return;
-  }
-  return JSON.stringify(Object.fromEntries(filteredEntries));
-};
-var buildIntakeUrl = (region, intakeBaseUrl) => {
+var buildIntakeUrl = ({
+  region,
+  intakeBaseUrl,
+  publicKey
+}) => {
   const baseUrl = (intakeBaseUrl ?? DEFAULT_INTAKE_BASE_URL).replace("{region}", region);
   const normalizedBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
   const localIntakeUrl = buildLocalIntakeUrl(normalizedBaseUrl);
@@ -687,7 +550,8 @@ var buildIntakeUrl = (region, intakeBaseUrl) => {
     return localIntakeUrl;
   }
   const baseDomainMatch = normalizedBaseUrl.match(/^https:\/\/([a-z0-9-]+)\.intake\.([a-z0-9.]+)$/);
-  const resolvedBaseUrl = baseDomainMatch ? `https://otlp.${baseDomainMatch[1]}.intake.${baseDomainMatch[2]}` : normalizedBaseUrl;
+  const keyHex = publicKey.match(/^sazabi_public_([a-f0-9]{32})$/)?.[1];
+  const resolvedBaseUrl = baseDomainMatch ? `https://${keyHex ? `${keyHex}.` : "otlp."}${baseDomainMatch[1]}.intake.${baseDomainMatch[2]}` : normalizedBaseUrl;
   return `${resolvedBaseUrl}/v1/logs`;
 };
 var buildLocalIntakeUrl = (intakeBaseUrl) => {
@@ -752,19 +616,6 @@ var buildInternalForwardingHeaders = (forwarding) => {
     ...forwarding.source ? { [SAZABI_INTERNAL_LOG_FORWARDING_SOURCE_HEADER]: forwarding.source } : {}
   };
 };
-var resolveProjectId = async (credentialProvider, inputProjectId, operationId) => {
-  const projectId = inputProjectId ?? await credentialProvider.getProjectId?.();
-  if (projectId) {
-    return projectId;
-  }
-  throw createMissingContextError(operationId, "Project ID is required", [
-    "projectId"
-  ]);
-};
-var resolveTailRegion = async (options, regionCache, projectId, explicitRegion, _operationId) => {
-  const region = explicitRegion ?? await resolveProjectRegion(options, regionCache, projectId);
-  return region;
-};
 var resolveIntakeRegion = async (options, regionCache, projectId, explicitRegion, operationId) => {
   if (explicitRegion) {
     return explicitRegion;
@@ -789,321 +640,6 @@ var resolveProjectRegion = async (options, regionCache, projectId) => {
     regionCache.delete(projectId);
     throw error;
   }
-};
-var createSseTailStream = async (options) => {
-  const pendingEvents = [];
-  const pendingResolvers = [];
-  let finished = false;
-  let explicitClose = false;
-  let pendingError;
-  let reconnectAttempt = 0;
-  let lastEventId;
-  let activeController;
-  const finish = (error) => {
-    if (finished) {
-      return;
-    }
-    finished = true;
-    pendingError = error;
-    while (pendingResolvers.length > 0) {
-      const resolve = pendingResolvers.shift();
-      if (resolve) {
-        resolve({ value: undefined, done: true });
-      }
-    }
-  };
-  const pushEvent = (event) => {
-    const nextResolver = pendingResolvers.shift();
-    if (nextResolver) {
-      nextResolver({ value: event, done: false });
-      return;
-    }
-    pendingEvents.push(event);
-  };
-  const closeActiveRequest = () => {
-    activeController?.abort();
-  };
-  const handleSseEvent = (event) => {
-    if (event.event !== "log") {
-      if (event.id) {
-        lastEventId = event.id;
-      }
-      return;
-    }
-    const messages = parseTailLogEvent(event.data);
-    for (const message of messages) {
-      pushEvent(message);
-    }
-    if (event.id) {
-      lastEventId = event.id;
-    }
-  };
-  const tailHost = new URL(options.url).host;
-  const connectAndRead = async (markReady) => {
-    let openedOnce = false;
-    while (!finished && !explicitClose) {
-      const controller = new AbortController;
-      const abortActiveController = () => controller.abort();
-      activeController = controller;
-      let shouldReconnect = false;
-      options.signal?.addEventListener("abort", abortActiveController, {
-        once: true
-      });
-      try {
-        const response = await options.fetch(withTailCursor(options.url, lastEventId), {
-          method: "GET",
-          headers: {
-            accept: "text/event-stream",
-            authorization: `Bearer ${options.token}`
-          },
-          signal: controller.signal
-        });
-        await assertTailResponse(response);
-        reconnectAttempt = 0;
-        openedOnce = true;
-        markReady();
-        await readTailSseEvents(response, handleSseEvent);
-        shouldReconnect = true;
-      } catch (error) {
-        if (isExpectedAbortError2(error) || options.signal?.aborted) {
-          break;
-        }
-        const tailError = toTailError(error);
-        if (!openedOnce) {
-          throw new TailStreamOpenError(tailHost, tailError);
-        }
-        if (isFatalTailError(tailError)) {
-          throw tailError;
-        }
-        shouldReconnect = true;
-      } finally {
-        options.signal?.removeEventListener("abort", abortActiveController);
-        if (activeController === controller) {
-          activeController = undefined;
-        }
-      }
-      if (finished || explicitClose || options.signal?.aborted) {
-        break;
-      }
-      if (!shouldReconnect) {
-        continue;
-      }
-      reconnectAttempt += 1;
-      await delay(Math.min(TAIL_RECONNECT_BASE_DELAY_MS * 2 ** (reconnectAttempt - 1), TAIL_RECONNECT_MAX_DELAY_MS), options.signal);
-    }
-  };
-  options.signal?.addEventListener("abort", () => {
-    explicitClose = true;
-    closeActiveRequest();
-    finish();
-  }, { once: true });
-  if (options.signal?.aborted) {
-    explicitClose = true;
-    closeActiveRequest();
-    finish();
-  }
-  const ready = new Promise((resolve, reject) => {
-    let settled = false;
-    const markReady = () => {
-      if (!settled) {
-        settled = true;
-        resolve();
-      }
-    };
-    connectAndRead(markReady).catch((error) => {
-      const tailError = toTailError(error);
-      if (!settled) {
-        settled = true;
-        reject(tailError);
-        return;
-      }
-      if (!isExpectedAbortError2(error)) {
-        finish(tailError);
-      }
-    });
-  });
-  await ready;
-  const stream = {
-    [Symbol.asyncIterator]() {
-      return stream;
-    },
-    next: async () => {
-      if (pendingEvents.length > 0) {
-        const value = pendingEvents.shift();
-        return {
-          value,
-          done: false
-        };
-      }
-      if (finished) {
-        if (pendingError) {
-          throw pendingError;
-        }
-        return {
-          value: undefined,
-          done: true
-        };
-      }
-      return new Promise((resolve) => {
-        pendingResolvers.push(resolve);
-      }).then((result) => {
-        if (result.done && pendingError) {
-          throw pendingError;
-        }
-        return result;
-      });
-    },
-    return: async () => {
-      explicitClose = true;
-      closeActiveRequest();
-      finish();
-      return {
-        value: undefined,
-        done: true
-      };
-    },
-    throw: async (error) => {
-      explicitClose = true;
-      closeActiveRequest();
-      finish(error instanceof Error ? error : new Error(String(error)));
-      throw error;
-    }
-  };
-  return stream;
-};
-var withTailCursor = (url, cursor) => {
-  if (!cursor) {
-    return url;
-  }
-  const nextUrl = new URL(url);
-  nextUrl.searchParams.set("cursor", cursor);
-  return nextUrl.toString();
-};
-var assertTailResponse = async (response) => {
-  if (response.ok && response.body) {
-    return;
-  }
-  const errorText = await response.text();
-  if (response.status === 401) {
-    throw new Error("Authentication failed. Check your credential.");
-  }
-  if (response.status === 403) {
-    if (/not served by this region/i.test(errorText)) {
-      throw new Error(`Wrong region (403): ${errorText || "Project is not served by this region"}`);
-    }
-    throw new Error(`Forbidden (403): ${errorText || "Credential may not have access to this project"}`);
-  }
-  if (response.status >= 400 && response.status < 500 && response.status !== 429) {
-    throw new Error(`Client error (${response.status}): ${errorText}`);
-  }
-  if (!response.body) {
-    throw new Error("Tail stream response did not include a body.");
-  }
-  throw new Error(response.status === 429 ? `Rate limited (429): ${errorText}` : `Server error (${response.status}): ${errorText}`);
-};
-var readTailSseEvents = async (response, onEvent) => {
-  const reader = response.body?.getReader();
-  if (!reader) {
-    throw new Error("Tail stream response did not include a body.");
-  }
-  const decoder = new TextDecoder;
-  let buffer = "";
-  const parser = createSseParser(onEvent);
-  try {
-    while (true) {
-      const result = await reader.read();
-      if (result.done) {
-        break;
-      }
-      buffer += decoder.decode(result.value, { stream: true });
-      const lines = buffer.split(/\r\n|\r|\n/);
-      buffer = lines.pop() ?? "";
-      for (const line of lines) {
-        parser.line(line);
-      }
-    }
-    buffer += decoder.decode();
-    if (buffer) {
-      const lines = buffer.split(/\r\n|\r|\n/);
-      for (const line of lines) {
-        parser.line(line);
-      }
-    }
-    parser.flush();
-  } finally {
-    reader.releaseLock();
-  }
-};
-var createSseParser = (onEvent) => {
-  let eventName = "message";
-  let eventId;
-  let dataLines = [];
-  const reset = () => {
-    eventName = "message";
-    eventId = undefined;
-    dataLines = [];
-  };
-  const dispatch = () => {
-    if (dataLines.length === 0 && !eventId) {
-      reset();
-      return;
-    }
-    onEvent({
-      event: eventName,
-      data: dataLines.join(`
-`),
-      ...eventId ? { id: eventId } : {}
-    });
-    reset();
-  };
-  return {
-    line: (line) => {
-      if (line === "") {
-        dispatch();
-        return;
-      }
-      if (line.startsWith(":")) {
-        return;
-      }
-      const separatorIndex = line.indexOf(":");
-      const field = separatorIndex === -1 ? line : line.slice(0, separatorIndex);
-      const rawValue = separatorIndex === -1 ? "" : line.slice(separatorIndex + 1);
-      const value = rawValue.startsWith(" ") ? rawValue.slice(1) : rawValue;
-      if (field === "event") {
-        eventName = value || "message";
-        return;
-      }
-      if (field === "data") {
-        dataLines.push(value);
-        return;
-      }
-      if (field === "id" && !value.includes("\x00")) {
-        eventId = value;
-      }
-    },
-    flush: dispatch
-  };
-};
-var parseTailLogEvent = (data) => {
-  try {
-    const parsedMessage = WebSocketLogMessageSchema.safeParse(JSON.parse(data));
-    if (!parsedMessage.success) {
-      return [];
-    }
-    const message = parsedMessage.data;
-    return message.data;
-  } catch {
-    return [];
-  }
-};
-var toTailError = (error) => {
-  return error instanceof Error ? error : new Error(String(error));
-};
-var isExpectedAbortError2 = (error) => {
-  return error instanceof Error && error.name === "AbortError";
-};
-var isFatalTailError = (error) => {
-  return error.message.startsWith("Authentication failed") || error.message.startsWith("Forbidden (") || error.message.startsWith("Wrong region (") || error.message.startsWith("Client error (");
 };
 var forwardWithRetry = async (fetchImpl, url, payload, extraHeaders = {}, maxRetries = 3, timeoutMs = 1e4) => {
   let lastError;
@@ -1141,7 +677,7 @@ var forwardWithRetry = async (fetchImpl, url, payload, extraHeaders = {}, maxRet
       globalThis.clearTimeout(timeoutId);
     }
     if (attempt < maxRetries) {
-      await delay(TAIL_RECONNECT_BASE_DELAY_MS * 2 ** attempt);
+      await delay(FORWARD_RETRY_BASE_DELAY_MS * 2 ** attempt);
     }
   }
   throw new Error(`Failed after ${maxRetries + 1} attempts: ${lastError?.message ?? "Unknown error"}`);
@@ -1249,7 +785,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Automations"],
           operationId: "automations.create",
           summary: "Create an automation",
-          description: "Create an automation: either a cron-driven project script (see scripts.create) or a signal investigation bound to a signal definition (see signalDefinitions.create).",
+          description: "Create an automation: a project script run on a cron schedule or by its webhook (see scripts.create).",
           successStatus: 201
         }
       }
@@ -3167,6 +2703,48 @@ var public_api_client_contract_gen_default = {
           description: "Delete a Teams channel's mention route; deleting one that does not exist succeeds."
         }
       }
+    },
+    microsoftTeamsConfiguration: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.microsoftTeamsConfiguration.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/integrations/connections/{connectionId}/microsoft-teams-configuration",
+            tags: ["Integrations"],
+            operationId: "integrations.microsoftTeamsConfiguration.get",
+            summary: "Get Microsoft Teams connection configuration",
+            description: "Read a Microsoft Teams connection's configuration: the default project bot mentions run in when no channel mapping matches."
+          }
+        }
+      },
+      update: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.microsoftTeamsConfiguration.update",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PATCH",
+            path: "/integrations/connections/{connectionId}/microsoft-teams-configuration",
+            tags: ["Integrations"],
+            operationId: "integrations.microsoftTeamsConfiguration.update",
+            summary: "Update Microsoft Teams connection configuration",
+            description: "Update a Microsoft Teams connection's configuration. Omitted fields are left unchanged."
+          }
+        }
+      }
     }
   },
   notificationChannels: {
@@ -3473,7 +3051,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Task status mapping"],
           operationId: "taskStatusMapping.update",
           summary: "Change the status mapping",
-          description: "Turn the mapping on or off, set or empty any of the three rows, and on Jira pick the resolution an Ignored move closes with. Requires settings:write on the organization."
+          description: "Turn the mapping on or off, set or empty any of the three rows, and on Jira pick the resolution a Resolved or an Ignored move closes with. Requires settings:write on the organization."
         }
       }
     }
@@ -4112,152 +3690,6 @@ var public_api_client_contract_gen_default = {
           summary: "Delete a script",
           description: "Soft-delete a project script by name.",
           successStatus: 204
-        }
-      }
-    }
-  },
-  signalDefinitions: {
-    list: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "signalDefinitions.list",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "GET",
-          path: "/signal-definitions",
-          tags: ["Signal definitions"],
-          operationId: "signalDefinitions.list",
-          summary: "List signal definitions",
-          description: "List signal definitions in a project."
-        }
-      }
-    },
-    get: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "signalDefinitions.get",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "GET",
-          path: "/signal-definitions/{signalDefinitionId}",
-          tags: ["Signal definitions"],
-          operationId: "signalDefinitions.get",
-          summary: "Get a signal definition",
-          description: "Get a single signal definition by ID."
-        }
-      }
-    },
-    create: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "signalDefinitions.create",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "POST",
-          path: "/signal-definitions",
-          tags: ["Signal definitions"],
-          operationId: "signalDefinitions.create",
-          summary: "Create a signal definition",
-          description: "Create an independent customer signal definition from exactly one of an authored CEL expression or a published template key/version. Template creation saves resolved provenance and creates no automation.",
-          successStatus: 201
-        }
-      }
-    },
-    update: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "signalDefinitions.update",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "PATCH",
-          path: "/signal-definitions/{signalDefinitionId}",
-          tags: ["Signal definitions"],
-          operationId: "signalDefinitions.update",
-          summary: "Update a signal definition",
-          description: "Update a signal definition's name, CEL body, or enabled state."
-        }
-      }
-    },
-    disable: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "signalDefinitions.disable",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "POST",
-          path: "/signal-definitions/{signalDefinitionId}/disable",
-          tags: ["Signal definitions"],
-          operationId: "signalDefinitions.disable",
-          summary: "Disable a signal definition",
-          description: "Disable a signal definition so it stops matching logs."
-        }
-      }
-    },
-    delete: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "signalDefinitions.delete",
-          backend: "api",
-          pagination: "none",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "DELETE",
-          path: "/signal-definitions/{signalDefinitionId}",
-          tags: ["Signal definitions"],
-          operationId: "signalDefinitions.delete",
-          summary: "Delete a signal definition",
-          description: "Permanently delete a signal definition.",
-          successStatus: 204
-        }
-      }
-    }
-  },
-  signals: {
-    list: {
-      "~orpc": {
-        errorMap: {},
-        meta: {
-          operationId: "signals.list",
-          backend: "api",
-          pagination: "cursor",
-          async: "sync",
-          examples: []
-        },
-        route: {
-          method: "GET",
-          path: "/signals",
-          tags: ["Signals"],
-          operationId: "signals.list",
-          summary: "List signals",
-          description: "List the signals a signal definition fired, newest first. A signal is one admitted match of the signal definition, listed once however many automations received it; each delivery names one automation, its dispatch state, and the automation run it recorded. A match dropped before admission, for example with no enabled automation bound, is not listed."
         }
       }
     }
@@ -8191,9 +7623,7 @@ var createClient = (options) => {
     raw,
     credentialProvider: options.credentialProvider,
     fetch: options.fetch,
-    apiBaseUrl: options.apiBaseUrl ?? DEFAULT_API_BASE_URL2,
-    intakeBaseUrl: options.intakeBaseUrl,
-    tailBaseUrl: options.tailBaseUrl
+    intakeBaseUrl: options.intakeBaseUrl
   });
   const agentStreams = createAgentStreamTransports({
     credentialProvider: options.credentialProvider,
@@ -8453,7 +7883,11 @@ var createClient = (options) => {
       deleteSlackChannelProjectMapping: async (input) => raw.integrations.deleteSlackChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.deleteSlackChannelProjectMapping")),
       listMicrosoftTeamsChannelProjectMappings: async (input) => raw.integrations.listMicrosoftTeamsChannelProjectMappings(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.listMicrosoftTeamsChannelProjectMappings")),
       setMicrosoftTeamsChannelProjectMapping: async (input) => raw.integrations.setMicrosoftTeamsChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.setMicrosoftTeamsChannelProjectMapping")),
-      deleteMicrosoftTeamsChannelProjectMapping: async (input) => raw.integrations.deleteMicrosoftTeamsChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.deleteMicrosoftTeamsChannelProjectMapping"))
+      deleteMicrosoftTeamsChannelProjectMapping: async (input) => raw.integrations.deleteMicrosoftTeamsChannelProjectMapping(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.deleteMicrosoftTeamsChannelProjectMapping")),
+      microsoftTeamsConfiguration: {
+        get: async (input) => raw.integrations.microsoftTeamsConfiguration.get(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.microsoftTeamsConfiguration.get")),
+        update: async (input) => raw.integrations.microsoftTeamsConfiguration.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.microsoftTeamsConfiguration.update"))
+      }
     },
     mcpConnectors: {
       list: async (input = {}) => raw.mcpConnectors.list(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -8508,17 +7942,6 @@ var createClient = (options) => {
         ...input
       })),
       get: async (input) => raw.supportTickets.get(await resolveOrganizationScopedInput(options.credentialProvider, input))
-    },
-    signalDefinitions: {
-      list: async (input = {}) => raw.signalDefinitions.list(await resolveProjectScopedInput(options.credentialProvider, input)),
-      get: async (input) => raw.signalDefinitions.get(await resolveProjectScopedInput(options.credentialProvider, input)),
-      create: async (input) => raw.signalDefinitions.create(await resolveProjectScopedInput(options.credentialProvider, input)),
-      update: async (input) => raw.signalDefinitions.update(await resolveProjectScopedInput(options.credentialProvider, input)),
-      disable: async (input) => raw.signalDefinitions.disable(await resolveProjectScopedInput(options.credentialProvider, input)),
-      delete: async (input) => raw.signalDefinitions.delete(await resolveProjectScopedInput(options.credentialProvider, input))
-    },
-    signals: {
-      list: async (input) => raw.signals.list(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     scripts: {
       list: async (input = {}) => raw.scripts.list(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -8917,11 +8340,6 @@ export {
   ProgressStreamEventSchema,
   PublicAgentStreamEventSchema,
   PublicAgentStreamEventTypeSchema,
-  WebSocketLogEntrySchema as TailLogEntrySchema,
-  LogFiltersSchema as TailLogFiltersSchema,
-  WebSocketLogResourceSchema as TailLogResourceSchema,
-  TailLogsInputSchema,
-  TailStreamOpenError,
   createClient,
   forwardLogsExamples,
   pollDeviceAuthorization,

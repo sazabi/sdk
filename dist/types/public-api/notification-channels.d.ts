@@ -97,8 +97,10 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         integration_connected: "integration_connected";
         integration_disconnected: "integration_disconnected";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_open_digest: "issue_open_digest";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -166,8 +168,10 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         integration_connected: "integration_connected";
         integration_disconnected: "integration_disconnected";
         issue_ignored: "issue_ignored";
+        issue_ongoing: "issue_ongoing";
         issue_open_digest: "issue_open_digest";
         issue_rejected: "issue_rejected";
+        issue_reopened: "issue_reopened";
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
@@ -274,8 +278,10 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             integration_connected: "integration_connected";
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_open_digest: "issue_open_digest";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -343,8 +349,10 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             integration_connected: "integration_connected";
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_open_digest: "issue_open_digest";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -460,8 +468,10 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             integration_connected: "integration_connected";
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_open_digest: "issue_open_digest";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -529,8 +539,10 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             integration_connected: "integration_connected";
             integration_disconnected: "integration_disconnected";
             issue_ignored: "issue_ignored";
+            issue_ongoing: "issue_ongoing";
             issue_open_digest: "issue_open_digest";
             issue_rejected: "issue_rejected";
+            issue_reopened: "issue_reopened";
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
@@ -644,8 +656,10 @@ export declare const notificationChannelsContract: {
                 integration_connected: "integration_connected";
                 integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_open_digest: "issue_open_digest";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
@@ -713,8 +727,10 @@ export declare const notificationChannelsContract: {
                 integration_connected: "integration_connected";
                 integration_disconnected: "integration_disconnected";
                 issue_ignored: "issue_ignored";
+                issue_ongoing: "issue_ongoing";
                 issue_open_digest: "issue_open_digest";
                 issue_rejected: "issue_rejected";
+                issue_reopened: "issue_reopened";
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";

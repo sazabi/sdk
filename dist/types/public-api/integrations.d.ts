@@ -1747,6 +1747,39 @@ export declare const deleteSlackChannelProjectMapping: import("../orpc-contracts
 }, z.core.$strip>, z.ZodObject<{
     success: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const MicrosoftTeamsConfigurationSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type MicrosoftTeamsConfiguration = z.infer<typeof MicrosoftTeamsConfigurationSchema>;
+export declare const GetMicrosoftTeamsConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export type GetMicrosoftTeamsConfigurationInput = z.infer<typeof GetMicrosoftTeamsConfigurationInputSchema>;
+export type GetMicrosoftTeamsConfigurationOutput = MicrosoftTeamsConfiguration;
+export declare const getMicrosoftTeamsConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, "api">;
+export declare const UpdateMicrosoftTeamsConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+}, z.core.$strip>;
+export type UpdateMicrosoftTeamsConfigurationInput = z.infer<typeof UpdateMicrosoftTeamsConfigurationInputSchema>;
+export type UpdateMicrosoftTeamsConfigurationOutput = MicrosoftTeamsConfiguration;
+export declare const updateMicrosoftTeamsConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>, "api">;
 export declare const MicrosoftTeamsChannelProjectMappingSchema: z.ZodObject<{
     connectionId: z.ZodString;
     microsoftTeamsChannelId: z.ZodString;
