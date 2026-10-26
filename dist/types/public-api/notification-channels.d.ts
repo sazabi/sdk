@@ -117,6 +117,7 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         secret_key_created: "secret_key_created";
         secret_key_deleted: "secret_key_deleted";
         security_alert: "security_alert";
+        signal_created: "signal_created";
         user_removed: "user_removed";
     }>>;
 }, z.core.$strip>;
@@ -188,6 +189,7 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         secret_key_created: "secret_key_created";
         secret_key_deleted: "secret_key_deleted";
         security_alert: "security_alert";
+        signal_created: "signal_created";
         user_removed: "user_removed";
     }>;
     enabled: z.ZodBoolean;
@@ -298,6 +300,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             secret_key_created: "secret_key_created";
             secret_key_deleted: "secret_key_deleted";
             security_alert: "security_alert";
+            signal_created: "signal_created";
             user_removed: "user_removed";
         }>>;
     }, z.core.$strip>>;
@@ -369,6 +372,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             secret_key_created: "secret_key_created";
             secret_key_deleted: "secret_key_deleted";
             security_alert: "security_alert";
+            signal_created: "signal_created";
             user_removed: "user_removed";
         }>;
         enabled: z.ZodBoolean;
@@ -488,6 +492,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             secret_key_created: "secret_key_created";
             secret_key_deleted: "secret_key_deleted";
             security_alert: "security_alert";
+            signal_created: "signal_created";
             user_removed: "user_removed";
         }>>;
     }, z.core.$strip>>;
@@ -559,6 +564,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             secret_key_created: "secret_key_created";
             secret_key_deleted: "secret_key_deleted";
             security_alert: "security_alert";
+            signal_created: "signal_created";
             user_removed: "user_removed";
         }>;
         enabled: z.ZodBoolean;
@@ -676,6 +682,7 @@ export declare const notificationChannelsContract: {
                 secret_key_created: "secret_key_created";
                 secret_key_deleted: "secret_key_deleted";
                 security_alert: "security_alert";
+                signal_created: "signal_created";
                 user_removed: "user_removed";
             }>>;
         }, z.core.$strip>>;
@@ -747,6 +754,7 @@ export declare const notificationChannelsContract: {
                 secret_key_created: "secret_key_created";
                 secret_key_deleted: "secret_key_deleted";
                 security_alert: "security_alert";
+                signal_created: "signal_created";
                 user_removed: "user_removed";
             }>;
             enabled: z.ZodBoolean;

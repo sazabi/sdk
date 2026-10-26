@@ -7214,6 +7214,48 @@ var public_api_client_contract_gen_default = {
       }
     }
   },
+  signals: {
+    list: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "signals.list",
+          backend: "api",
+          pagination: "cursor",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/signals",
+          tags: ["Signals"],
+          operationId: "signals.list",
+          summary: "List signals",
+          description: "List a project's signals, newest first, filtered by type or creation time."
+        }
+      }
+    },
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "signals.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/signals/{signalId}",
+          tags: ["Signals"],
+          operationId: "signals.get",
+          summary: "Get a signal",
+          description: "Get one of a project's signals by id."
+        }
+      }
+    }
+  },
   repos: {
     getUsage: {
       "~orpc": {
@@ -8037,6 +8079,10 @@ var createClient = (options) => {
     },
     recommendations: {
       list: async (input = {}) => raw.recommendations.list(await resolveProjectScopedInput(options.credentialProvider, input))
+    },
+    signals: {
+      list: async (input = {}) => raw.signals.list(await resolveProjectScopedInput(options.credentialProvider, input)),
+      get: async (input) => raw.signals.get(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     repos: {
       getUsage: async (input = {}) => raw.repos.getUsage(await resolveProjectScopedInput(options.credentialProvider, input)),

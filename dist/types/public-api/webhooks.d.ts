@@ -188,6 +188,7 @@ export declare const WebhookEnvelopeBaseSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
         test: "test";
     }>;
     apiVersion: z.ZodLiteral<"2026-09-01">;
@@ -346,6 +347,36 @@ export declare const NonIssueWebhookEnvelopeSchema: z.ZodObject<{
     }>;
     test: z.ZodLiteral<false>;
 }, z.core.$strip>;
+export declare const SignalWebhookEnvelopeSchema: z.ZodObject<{
+    id: z.ZodString;
+    apiVersion: z.ZodLiteral<"2026-09-01">;
+    createdAt: z.ZodString;
+    organization: z.ZodObject<{
+        id: z.ZodString;
+    }, z.core.$strip>;
+    notification: z.ZodObject<{
+        title: z.ZodString;
+        message: z.ZodString;
+    }, z.core.$strip>;
+    type: z.ZodLiteral<"signal_created">;
+    test: z.ZodLiteral<false>;
+    project: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>;
+    signal: z.ZodDiscriminatedUnion<[z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        createdAt: z.ZodString;
+        type: z.ZodLiteral<"new_error">;
+        payload: z.ZodObject<{
+            timestamp: z.ZodString;
+            serviceName: z.ZodNullable<z.ZodString>;
+            severity: z.ZodNullable<z.ZodString>;
+            body: z.ZodString;
+        }, z.core.$strict>;
+    }, z.core.$strip>], "type">;
+}, z.core.$strip>;
 export declare const TestWebhookEnvelopeSchema: z.ZodObject<{
     id: z.ZodString;
     apiVersion: z.ZodLiteral<"2026-09-01">;
@@ -490,6 +521,35 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
         issue_rejected: "issue_rejected";
     }>;
     test: z.ZodLiteral<false>;
+}, z.core.$strip>, z.ZodObject<{
+    id: z.ZodString;
+    apiVersion: z.ZodLiteral<"2026-09-01">;
+    createdAt: z.ZodString;
+    organization: z.ZodObject<{
+        id: z.ZodString;
+    }, z.core.$strip>;
+    notification: z.ZodObject<{
+        title: z.ZodString;
+        message: z.ZodString;
+    }, z.core.$strip>;
+    type: z.ZodLiteral<"signal_created">;
+    test: z.ZodLiteral<false>;
+    project: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>;
+    signal: z.ZodDiscriminatedUnion<[z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        createdAt: z.ZodString;
+        type: z.ZodLiteral<"new_error">;
+        payload: z.ZodObject<{
+            timestamp: z.ZodString;
+            serviceName: z.ZodNullable<z.ZodString>;
+            severity: z.ZodNullable<z.ZodString>;
+            body: z.ZodString;
+        }, z.core.$strict>;
+    }, z.core.$strip>], "type">;
 }, z.core.$strip>, z.ZodObject<{
     id: z.ZodString;
     apiVersion: z.ZodLiteral<"2026-09-01">;
@@ -671,6 +731,7 @@ export declare const webhooksSubscribe: import("../orpc-contracts/index.js").Ope
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
         critical: "critical";

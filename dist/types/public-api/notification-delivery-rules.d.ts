@@ -45,6 +45,7 @@ export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -79,6 +80,7 @@ export declare const LegacyDeliveryRuleDefinitionSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     condition: z.ZodObject<{
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
@@ -111,6 +113,7 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
@@ -191,6 +194,7 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -259,6 +263,7 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>>;
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -351,6 +356,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>;
         label: z.ZodString;
         conditions: z.ZodArray<z.ZodEnum<{
@@ -425,6 +431,7 @@ export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
@@ -459,6 +466,7 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -531,6 +539,7 @@ export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
@@ -566,6 +575,7 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -647,6 +657,7 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>>;
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -726,6 +737,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>;
         label: z.ZodString;
         conditions: z.ZodArray<z.ZodEnum<{
@@ -799,6 +811,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
@@ -832,6 +845,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -904,6 +918,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     componentId: z.ZodOptional<z.ZodString>;
@@ -938,6 +953,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
         issue_resolved: "issue_resolved";
         issue_triggered: "issue_triggered";
         issue_updated: "issue_updated";
+        signal_created: "signal_created";
     }>>;
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -1011,6 +1027,7 @@ export declare const notificationDeliveryRulesContract: {
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
+                signal_created: "signal_created";
             }>>;
             destinations: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
@@ -1090,6 +1107,7 @@ export declare const notificationDeliveryRulesContract: {
                 issue_resolved: "issue_resolved";
                 issue_triggered: "issue_triggered";
                 issue_updated: "issue_updated";
+                signal_created: "signal_created";
             }>;
             label: z.ZodString;
             conditions: z.ZodArray<z.ZodEnum<{
@@ -1163,6 +1181,7 @@ export declare const notificationDeliveryRulesContract: {
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         componentId: z.ZodOptional<z.ZodString>;
@@ -1196,6 +1215,7 @@ export declare const notificationDeliveryRulesContract: {
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>>;
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -1268,6 +1288,7 @@ export declare const notificationDeliveryRulesContract: {
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         componentId: z.ZodOptional<z.ZodString>;
@@ -1302,6 +1323,7 @@ export declare const notificationDeliveryRulesContract: {
             issue_resolved: "issue_resolved";
             issue_triggered: "issue_triggered";
             issue_updated: "issue_updated";
+            signal_created: "signal_created";
         }>>;
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
