@@ -11,8 +11,20 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
     readonly account_log_intake: readonly ["intake", "bytesLast24h", "bytesLast7Days", "bytesPreceding7Days", "lastFlowingOn", "bytesSinceTrackingStart"];
     /** The daily account snapshot's GitHub and Slack onboarding steps per organization. */
     readonly organization_onboarding_flags: readonly ["flags", "githubConnectedWithRepos", "slackConnectedWithDefaultChannel"];
+    /**
+     * The daily account snapshot's connection counts per organization
+     * (ENG-11178): live integration connections and their providers, connected
+     * MCP connectors, and sandbox CLI connections of live projects. Read-only.
+     */
+    readonly organization_connection_counts: readonly ["counts", "integrations", "integrationProviders", "mcpConnectors", "sandboxClis"];
+    /**
+     * The daily account snapshot's usage per billable unit for one UTC day,
+     * and the first accepted-log-byte time, per organization (ENG-11178).
+     * Read-only.
+     */
+    readonly account_daily_usage: readonly ["usage", "quantities", "firstAcceptedBytesAt"];
     /** Issue activity and outcome reads composed by the daily account job. */
-    readonly issue_activity_by_organization: readonly ["activity", "hasIssue", "issuesThisWeek", "issuesLastWeek", "lastHumanIssueEventAt", "lastIssueAt"];
+    readonly issue_activity_by_organization: readonly ["activity", "hasIssue", "issuesThisWeek", "issuesLastWeek", "lastHumanIssueEventAt", "lastIssueAt", "firstBillableIssueAt"];
     readonly issue_creation_outcomes: readonly ["issues", "issueId", "organizationId", "projectId", "createdAt", "fixRequested", "fixed", "rejected", "interacted", "nextCursor"];
     /**
      * The stale automation run sweep: runs authorized but never started, and

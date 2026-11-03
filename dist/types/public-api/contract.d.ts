@@ -10329,6 +10329,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodNullable<import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -10353,6 +10354,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -10379,6 +10381,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -10403,6 +10406,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -10428,6 +10432,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -10452,6 +10457,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -10477,6 +10483,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -10519,6 +10526,8 @@ export declare const publicApiContract: {
                             records: import("zod").ZodArray<import("zod").ZodObject<{
                                 scimUserId: import("zod").ZodString;
                                 userId: import("zod").ZodString;
+                                email: import("zod").ZodString;
+                                name: import("zod").ZodString;
                                 userName: import("zod").ZodString;
                                 externalId: import("zod").ZodString;
                                 createdAt: import("zod").ZodString;
@@ -24790,6 +24799,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodNullable<import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -24814,6 +24824,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -24840,6 +24851,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -24864,6 +24876,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -24889,6 +24902,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -24913,6 +24927,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -24938,6 +24953,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 scim: import("zod").ZodObject<{
                     connectionId: import("zod").ZodString;
+                    baseUrl: import("zod").ZodString;
                     enabled: import("zod").ZodBoolean;
                     enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
                     pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -24980,6 +24996,8 @@ export declare const publicApiOperations: {
                             records: import("zod").ZodArray<import("zod").ZodObject<{
                                 scimUserId: import("zod").ZodString;
                                 userId: import("zod").ZodString;
+                                email: import("zod").ZodString;
+                                name: import("zod").ZodString;
                                 userName: import("zod").ZodString;
                                 externalId: import("zod").ZodString;
                                 createdAt: import("zod").ZodString;

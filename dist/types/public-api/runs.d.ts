@@ -16,7 +16,7 @@ import { z } from "zod";
 /**
  * Dormant classes: no new run ends with one, but persisted run results still
  * carry them, so the schema keeps them. The public docs' API reference leaves
- * them out (apps/docs-mintlify/scripts/build-openapi.ts).
+ * them out (apps/docs/scripts/build-openapi.ts).
  */
 export declare const HISTORICAL_RUN_FAILURE_CLASSES: readonly ["ambient_denied"];
 export declare const RunFailureClassSchema: z.ZodEnum<{

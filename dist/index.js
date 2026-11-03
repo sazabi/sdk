@@ -716,8 +716,7 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: [],
-          published: false
+          examples: []
         },
         route: {
           method: "GET",
@@ -725,7 +724,7 @@ var public_api_client_contract_gen_default = {
           tags: ["AgentDispatches"],
           operationId: "agentDispatches.list",
           summary: "List agent dispatches",
-          description: "Read existing attempts, including when new dispatches are unavailable."
+          description: "Read the coding agent attempts on an issue."
         }
       }
     },
@@ -737,8 +736,7 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: [],
-          published: false
+          examples: []
         },
         route: {
           method: "GET",
@@ -759,8 +757,7 @@ var public_api_client_contract_gen_default = {
             backend: "api",
             pagination: "none",
             async: "sync",
-            examples: [],
-            published: false
+            examples: []
           },
           route: {
             method: "POST",
@@ -781,8 +778,7 @@ var public_api_client_contract_gen_default = {
           backend: "api",
           pagination: "none",
           async: "sync",
-          examples: [],
-          published: false
+          examples: []
         },
         route: {
           method: "POST",
@@ -803,8 +799,7 @@ var public_api_client_contract_gen_default = {
             backend: "api",
             pagination: "none",
             async: "sync",
-            examples: [],
-            published: false
+            examples: []
           },
           route: {
             method: "GET",
@@ -824,8 +819,7 @@ var public_api_client_contract_gen_default = {
             backend: "api",
             pagination: "none",
             async: "sync",
-            examples: [],
-            published: false
+            examples: []
           },
           route: {
             method: "PUT",
@@ -5471,6 +5465,7 @@ var public_api_client_contract_gen_default = {
                 output: {
                   scim: {
                     connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    baseUrl: "https://api.platform.sazabi.com/api/auth/scim/v2",
                     enabled: true,
                     enabledAt: "2026-10-28T00:00:00.000Z",
                     pausedAt: null,
@@ -5521,6 +5516,7 @@ var public_api_client_contract_gen_default = {
                 output: {
                   scim: {
                     connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    baseUrl: "https://api.platform.sazabi.com/api/auth/scim/v2",
                     enabled: true,
                     enabledAt: "2026-10-28T00:00:00.000Z",
                     pausedAt: null,
@@ -5573,6 +5569,7 @@ var public_api_client_contract_gen_default = {
                 output: {
                   scim: {
                     connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    baseUrl: "https://api.platform.sazabi.com/api/auth/scim/v2",
                     enabled: true,
                     enabledAt: "2026-10-28T00:00:00.000Z",
                     pausedAt: null,
@@ -5624,6 +5621,7 @@ var public_api_client_contract_gen_default = {
                 output: {
                   scim: {
                     connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    baseUrl: "https://api.platform.sazabi.com/api/auth/scim/v2",
                     enabled: false,
                     enabledAt: null,
                     pausedAt: null,
@@ -5665,6 +5663,7 @@ var public_api_client_contract_gen_default = {
                 output: {
                   scim: {
                     connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    baseUrl: "https://api.platform.sazabi.com/api/auth/scim/v2",
                     enabled: true,
                     enabledAt: "2026-10-28T00:00:00.000Z",
                     pausedAt: "2026-10-29T00:00:00.000Z",
@@ -5716,6 +5715,7 @@ var public_api_client_contract_gen_default = {
                 output: {
                   scim: {
                     connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    baseUrl: "https://api.platform.sazabi.com/api/auth/scim/v2",
                     enabled: true,
                     enabledAt: "2026-10-28T00:00:00.000Z",
                     pausedAt: null,
@@ -5768,6 +5768,7 @@ var public_api_client_contract_gen_default = {
                 output: {
                   scim: {
                     connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    baseUrl: "https://api.platform.sazabi.com/api/auth/scim/v2",
                     enabled: true,
                     enabledAt: "2026-10-28T00:00:00.000Z",
                     pausedAt: null,
@@ -9155,6 +9156,18 @@ var createClient = (options) => {
       unmute: async (input) => raw.issues.unmute(input),
       update: async (input) => raw.issues.update(input),
       reassignAndReopen: async (input) => raw.issues.reassignAndReopen(input)
+    },
+    agentDispatches: {
+      list: async (input) => raw.agentDispatches.list(input),
+      get: async (input) => raw.agentDispatches.get(input),
+      replies: {
+        create: async (input) => raw.agentDispatches.replies.create(input)
+      },
+      cancel: async (input) => raw.agentDispatches.cancel(input),
+      projectDefault: {
+        get: async (input) => raw.agentDispatches.projectDefault.get(input),
+        update: async (input) => raw.agentDispatches.projectDefault.update(input)
+      }
     },
     workItems: {
       create: async (input) => raw.workItems.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "work-items.create")),

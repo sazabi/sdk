@@ -28,6 +28,7 @@ export declare const getSsoScim: import("../orpc-contracts/index.js").OperationD
 }, z.core.$strip>, z.ZodObject<{
     scim: z.ZodNullable<z.ZodObject<{
         connectionId: z.ZodString;
+        baseUrl: z.ZodString;
         enabled: z.ZodBoolean;
         enabledAt: z.ZodNullable<z.ZodString>;
         pausedAt: z.ZodNullable<z.ZodString>;
@@ -52,6 +53,7 @@ export declare const enableSsoScim: import("../orpc-contracts/index.js").Operati
 }, z.core.$strip>, z.ZodObject<{
     scim: z.ZodObject<{
         connectionId: z.ZodString;
+        baseUrl: z.ZodString;
         enabled: z.ZodBoolean;
         enabledAt: z.ZodNullable<z.ZodString>;
         pausedAt: z.ZodNullable<z.ZodString>;
@@ -78,6 +80,7 @@ export declare const rotateSsoScimToken: import("../orpc-contracts/index.js").Op
 }, z.core.$strip>, z.ZodObject<{
     scim: z.ZodObject<{
         connectionId: z.ZodString;
+        baseUrl: z.ZodString;
         enabled: z.ZodBoolean;
         enabledAt: z.ZodNullable<z.ZodString>;
         pausedAt: z.ZodNullable<z.ZodString>;
@@ -102,6 +105,7 @@ export declare const disableSsoScim: import("../orpc-contracts/index.js").Operat
 }, z.core.$strip>, z.ZodObject<{
     scim: z.ZodObject<{
         connectionId: z.ZodString;
+        baseUrl: z.ZodString;
         enabled: z.ZodBoolean;
         enabledAt: z.ZodNullable<z.ZodString>;
         pausedAt: z.ZodNullable<z.ZodString>;
@@ -127,6 +131,7 @@ export declare const pauseSsoScim: import("../orpc-contracts/index.js").Operatio
 }, z.core.$strip>, z.ZodObject<{
     scim: z.ZodObject<{
         connectionId: z.ZodString;
+        baseUrl: z.ZodString;
         enabled: z.ZodBoolean;
         enabledAt: z.ZodNullable<z.ZodString>;
         pausedAt: z.ZodNullable<z.ZodString>;
@@ -151,6 +156,7 @@ export declare const resumeSsoScim: import("../orpc-contracts/index.js").Operati
 }, z.core.$strip>, z.ZodObject<{
     scim: z.ZodObject<{
         connectionId: z.ZodString;
+        baseUrl: z.ZodString;
         enabled: z.ZodBoolean;
         enabledAt: z.ZodNullable<z.ZodString>;
         pausedAt: z.ZodNullable<z.ZodString>;
@@ -176,6 +182,7 @@ export declare const setSsoScimThreshold: import("../orpc-contracts/index.js").O
 }, z.core.$strip>, z.ZodObject<{
     scim: z.ZodObject<{
         connectionId: z.ZodString;
+        baseUrl: z.ZodString;
         enabled: z.ZodBoolean;
         enabledAt: z.ZodNullable<z.ZodString>;
         pausedAt: z.ZodNullable<z.ZodString>;
@@ -225,6 +232,8 @@ export declare const mismatchSsoScim: import("../orpc-contracts/index.js").Opera
             records: z.ZodArray<z.ZodObject<{
                 scimUserId: z.ZodString;
                 userId: z.ZodString;
+                email: z.ZodString;
+                name: z.ZodString;
                 userName: z.ZodString;
                 externalId: z.ZodString;
                 createdAt: z.ZodString;
