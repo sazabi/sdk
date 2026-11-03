@@ -2,7 +2,7 @@ import { z } from "zod";
 /**
  * Supported log source provider values derived from canonical catalog specs.
  */
-export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog", "otel_traces"];
+export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog", "otel_traces", "sazabi_react_native_sdk", "devin_cli", "github_copilot", "gemini_cli", "factory_droid", "cursor", "openhands", "claude_agent_sdk"];
 /**
  * Log source setup modes. `native` log sources hold vendor credentials that
  * Sazabi uses to provision delivery; `manual` log sources mint a keyed
@@ -192,21 +192,27 @@ export declare const LogSourceSchema: z.ZodObject<{
     }, z.core.$strip>>;
     id: z.ZodString;
     provider: z.ZodEnum<{
+        claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
         codex: "codex";
         convex: "convex";
+        cursor: "cursor";
         datadog: "datadog";
         daytona: "daytona";
+        devin_cli: "devin_cli";
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
         evlog: "evlog";
+        factory_droid: "factory_droid";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
+        gemini_cli: "gemini_cli";
+        github_copilot: "github_copilot";
         grafana_alloy: "grafana_alloy";
         inngest: "inngest";
         langchain: "langchain";
@@ -214,6 +220,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         oh_my_pi: "oh_my_pi";
+        openhands: "openhands";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -228,6 +235,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         render: "render";
         respan: "respan";
         sazabi_browser_sdk: "sazabi_browser_sdk";
+        sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -309,21 +317,27 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
     }, z.core.$strip>>;
     id: z.ZodString;
     provider: z.ZodEnum<{
+        claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
         codex: "codex";
         convex: "convex";
+        cursor: "cursor";
         datadog: "datadog";
         daytona: "daytona";
+        devin_cli: "devin_cli";
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
         evlog: "evlog";
+        factory_droid: "factory_droid";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
+        gemini_cli: "gemini_cli";
+        github_copilot: "github_copilot";
         grafana_alloy: "grafana_alloy";
         inngest: "inngest";
         langchain: "langchain";
@@ -331,6 +345,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         oh_my_pi: "oh_my_pi";
+        openhands: "openhands";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -345,6 +360,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         render: "render";
         respan: "respan";
         sazabi_browser_sdk: "sazabi_browser_sdk";
+        sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -450,21 +466,27 @@ export declare const listLogSourceProviders: import("../orpc-contracts/index.js"
 export declare const ListLogSourcesInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     provider: z.ZodOptional<z.ZodEnum<{
+        claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
         codex: "codex";
         convex: "convex";
+        cursor: "cursor";
         datadog: "datadog";
         daytona: "daytona";
+        devin_cli: "devin_cli";
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
         evlog: "evlog";
+        factory_droid: "factory_droid";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
+        gemini_cli: "gemini_cli";
+        github_copilot: "github_copilot";
         grafana_alloy: "grafana_alloy";
         inngest: "inngest";
         langchain: "langchain";
@@ -472,6 +494,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         oh_my_pi: "oh_my_pi";
+        openhands: "openhands";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -486,6 +509,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         render: "render";
         respan: "respan";
         sazabi_browser_sdk: "sazabi_browser_sdk";
+        sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -553,21 +577,27 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -575,6 +605,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -589,6 +620,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -617,21 +649,27 @@ export type ListLogSourcesOutput = z.infer<typeof ListLogSourcesOutputSchema>;
 export declare const listLogSources: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     provider: z.ZodOptional<z.ZodEnum<{
+        claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
         codex: "codex";
         convex: "convex";
+        cursor: "cursor";
         datadog: "datadog";
         daytona: "daytona";
+        devin_cli: "devin_cli";
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
         evlog: "evlog";
+        factory_droid: "factory_droid";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
+        gemini_cli: "gemini_cli";
+        github_copilot: "github_copilot";
         grafana_alloy: "grafana_alloy";
         inngest: "inngest";
         langchain: "langchain";
@@ -639,6 +677,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         neon: "neon";
         netlify: "netlify";
         oh_my_pi: "oh_my_pi";
+        openhands: "openhands";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -653,6 +692,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         render: "render";
         respan: "respan";
         sazabi_browser_sdk: "sazabi_browser_sdk";
+        sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -719,21 +759,27 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -741,6 +787,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -755,6 +802,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -781,21 +829,27 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
 export declare const CreateLogSourceInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
         codex: "codex";
         convex: "convex";
+        cursor: "cursor";
         datadog: "datadog";
         daytona: "daytona";
+        devin_cli: "devin_cli";
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
         evlog: "evlog";
+        factory_droid: "factory_droid";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
+        gemini_cli: "gemini_cli";
+        github_copilot: "github_copilot";
         grafana_alloy: "grafana_alloy";
         inngest: "inngest";
         langchain: "langchain";
@@ -803,6 +857,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         oh_my_pi: "oh_my_pi";
+        openhands: "openhands";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -817,6 +872,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         render: "render";
         respan: "respan";
         sazabi_browser_sdk: "sazabi_browser_sdk";
+        sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -889,21 +945,27 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -911,6 +973,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -925,6 +988,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -978,21 +1042,27 @@ export type CreateLogSourceOutput = z.infer<typeof CreateLogSourceOutputSchema>;
 export declare const createLogSource: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
         cloudflare_workers: "cloudflare_workers";
         cloudwatch: "cloudwatch";
         codex: "codex";
         convex: "convex";
+        cursor: "cursor";
         datadog: "datadog";
         daytona: "daytona";
+        devin_cli: "devin_cli";
         digital_ocean: "digital_ocean";
         e2b: "e2b";
         elastic_cloud: "elastic_cloud";
         evlog: "evlog";
+        factory_droid: "factory_droid";
         fluent_bit: "fluent_bit";
         fly_io: "fly_io";
         gcp: "gcp";
+        gemini_cli: "gemini_cli";
+        github_copilot: "github_copilot";
         grafana_alloy: "grafana_alloy";
         inngest: "inngest";
         langchain: "langchain";
@@ -1000,6 +1070,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         neon: "neon";
         netlify: "netlify";
         oh_my_pi: "oh_my_pi";
+        openhands: "openhands";
         openrouter: "openrouter";
         otel: "otel";
         otel_collector: "otel_collector";
@@ -1014,6 +1085,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         render: "render";
         respan: "respan";
         sazabi_browser_sdk: "sazabi_browser_sdk";
+        sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
         supabase: "supabase";
@@ -1085,21 +1157,27 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -1107,6 +1185,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1121,6 +1200,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1228,21 +1308,27 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -1250,6 +1336,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1264,6 +1351,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1389,21 +1477,27 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -1411,6 +1505,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1425,6 +1520,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1555,21 +1651,27 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -1577,6 +1679,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1591,6 +1694,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1680,21 +1784,27 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -1702,6 +1812,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1716,6 +1827,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1776,21 +1888,27 @@ export declare const logSourcesContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         provider: z.ZodOptional<z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -1798,6 +1916,7 @@ export declare const logSourcesContract: {
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1812,6 +1931,7 @@ export declare const logSourcesContract: {
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -1878,21 +1998,27 @@ export declare const logSourcesContract: {
             }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -1900,6 +2026,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -1914,6 +2041,7 @@ export declare const logSourcesContract: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -1940,21 +2068,27 @@ export declare const logSourcesContract: {
     readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         projectId: z.ZodOptional<z.ZodString>;
         provider: z.ZodEnum<{
+            claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
             cloudflare_workers: "cloudflare_workers";
             cloudwatch: "cloudwatch";
             codex: "codex";
             convex: "convex";
+            cursor: "cursor";
             datadog: "datadog";
             daytona: "daytona";
+            devin_cli: "devin_cli";
             digital_ocean: "digital_ocean";
             e2b: "e2b";
             elastic_cloud: "elastic_cloud";
             evlog: "evlog";
+            factory_droid: "factory_droid";
             fluent_bit: "fluent_bit";
             fly_io: "fly_io";
             gcp: "gcp";
+            gemini_cli: "gemini_cli";
+            github_copilot: "github_copilot";
             grafana_alloy: "grafana_alloy";
             inngest: "inngest";
             langchain: "langchain";
@@ -1962,6 +2096,7 @@ export declare const logSourcesContract: {
             neon: "neon";
             netlify: "netlify";
             oh_my_pi: "oh_my_pi";
+            openhands: "openhands";
             openrouter: "openrouter";
             otel: "otel";
             otel_collector: "otel_collector";
@@ -1976,6 +2111,7 @@ export declare const logSourcesContract: {
             render: "render";
             respan: "respan";
             sazabi_browser_sdk: "sazabi_browser_sdk";
+            sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
             supabase: "supabase";
@@ -2047,21 +2183,27 @@ export declare const logSourcesContract: {
             }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -2069,6 +2211,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -2083,6 +2226,7 @@ export declare const logSourcesContract: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -2189,21 +2333,27 @@ export declare const logSourcesContract: {
             }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -2211,6 +2361,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -2225,6 +2376,7 @@ export declare const logSourcesContract: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -2354,21 +2506,27 @@ export declare const logSourcesContract: {
             }, z.core.$strip>>;
             id: z.ZodString;
             provider: z.ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -2376,6 +2534,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -2390,6 +2549,7 @@ export declare const logSourcesContract: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";

@@ -1,7 +1,6 @@
 // src/index.ts
 import { createORPCClient, ORPCError as ORPCError2 } from "@orpc/client";
 import { OpenAPILink } from "@orpc/openapi-client/fetch";
-
 // ../../contracts/public-api/src/agent-stream.ts
 import { z } from "zod";
 var RunStartedStreamEventSchema = z.object({
@@ -708,6 +707,138 @@ var createMissingContextError = (operationId, message, missingContext) => {
 };
 // src/public-api-client-contract.gen.json
 var public_api_client_contract_gen_default = {
+  agentDispatches: {
+    list: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "agentDispatches.list",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "GET",
+          path: "/agent-dispatches",
+          tags: ["AgentDispatches"],
+          operationId: "agentDispatches.list",
+          summary: "List agent dispatches",
+          description: "Read existing attempts, including when new dispatches are unavailable."
+        }
+      }
+    },
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "agentDispatches.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "GET",
+          path: "/agent-dispatches/{dispatchId}",
+          tags: ["AgentDispatches"],
+          operationId: "agentDispatches.get",
+          summary: "Get an agent dispatch",
+          description: "Read an existing attempt and all its linked pull requests."
+        }
+      }
+    },
+    replies: {
+      create: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "agentDispatches.replies.create",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [],
+            published: false
+          },
+          route: {
+            method: "POST",
+            path: "/agent-dispatches/{dispatchId}/reply",
+            tags: ["AgentDispatches"],
+            operationId: "agentDispatches.replies.create",
+            summary: "Reply to an agent dispatch",
+            description: "Explicitly send a follow-up to the coding agent as the authenticated person."
+          }
+        }
+      }
+    },
+    cancel: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "agentDispatches.cancel",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "POST",
+          path: "/agent-dispatches/{dispatchId}/cancel",
+          tags: ["AgentDispatches"],
+          operationId: "agentDispatches.cancel",
+          summary: "Cancel an agent dispatch",
+          description: "Request cancellation of an existing attempt; acknowledgement is not terminal completion."
+        }
+      }
+    },
+    projectDefault: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "agentDispatches.projectDefault.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [],
+            published: false
+          },
+          route: {
+            method: "GET",
+            path: "/agent-dispatches/project-default",
+            tags: ["AgentDispatches"],
+            operationId: "agentDispatches.projectDefault.get",
+            summary: "Read the project's default coding agent",
+            description: "The coding agent, account and vendor environment the project's Fix hands off to without asking: the last successful handoff's, or the one set with `agentDispatches.projectDefault.update`."
+          }
+        }
+      },
+      update: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "agentDispatches.projectDefault.update",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [],
+            published: false
+          },
+          route: {
+            method: "PUT",
+            path: "/agent-dispatches/project-default",
+            tags: ["AgentDispatches"],
+            operationId: "agentDispatches.projectDefault.update",
+            summary: "Set or clear the project's default coding agent",
+            description: "Set the coding agent and account the project's Fix hands off to without asking, or clear it so Fix asks again. The account must be an active connection without attention. A project setting shared by everyone who presses Fix: needs the project's `settings:write`, while a successful `issues.fixes.create` handoff records its own agent as the default under `issues:write`."
+          }
+        }
+      }
+    }
+  },
   me: {
     "~orpc": {
       errorMap: {},
@@ -2261,6 +2392,50 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    codingAgentRepositories: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.codingAgentRepositories.list",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/integrations/connections/{connectionId}/coding-agent-repositories",
+            tags: ["Integrations"],
+            operationId: "integrations.codingAgentRepositories.list",
+            summary: "List the repositories a coding agent connection reaches",
+            description: "List the GitHub repositories a coding agent connection's key can reach at the vendor. Read live from the vendor; never launches work. An agent that reaches repositories through Sazabi's GitHub App lists none here. For an agent with its own GitHub integration, a fix can only be handed off in a repository that is both connected to the project and listed here; an agent that reaches repositories through Sazabi's GitHub App is checked against the app's installation instead."
+          }
+        }
+      }
+    },
+    codingAgentEnvironments: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.codingAgentEnvironments.list",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/integrations/connections/{connectionId}/coding-agent-environments",
+            tags: ["Integrations"],
+            operationId: "integrations.codingAgentEnvironments.list",
+            summary: "List the environments a coding agent connection may launch in",
+            description: "List the vendor environments a coding agent connection's key may launch a fix in (Replicas organization environments), each with the GitHub repositories it holds. Read live from the vendor; never launches work; personal environments are left out. Pass one's `id` as `environmentId` to `issues.fixes.create` or `agentDispatches.projectDefault.update`. An agent without environments answers `supported: false`."
+          }
+        }
+      }
+    },
     getLinearAutomationConfiguration: {
       "~orpc": {
         errorMap: {},
@@ -2297,7 +2472,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Integrations"],
           operationId: "integrations.createConnection",
           summary: "Create an integration connection",
-          description: "Create an integration connection for an api_key provider. Credentials are validated against the vendor, then stored encrypted.",
+          description: "Create an integration connection. API-key credentials and supported Claude or Codex subscription credentials are validated, then stored encrypted.",
           successStatus: 201
         }
       }
@@ -2320,6 +2495,130 @@ var public_api_client_contract_gen_default = {
           summary: "Begin a browser connect flow",
           description: "Begin a browser connect flow for an OAuth or app-installation provider. Returns a vendor URL to open in a browser and an attempt to poll; the vendor exchange completes server-side and no token ever reaches the caller.",
           successStatus: 201
+        }
+      }
+    },
+    codexDeviceLogin: {
+      beginConnect: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.codexDeviceLogin.beginConnect",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/integrations/codex/device-login/start",
+            tags: ["Integrations"],
+            operationId: "integrations.codexDeviceLogin.beginConnect",
+            summary: "Start Codex sign-in with ChatGPT",
+            description: "Start a temporary Codex device-code sign-in for a project. Answers with the code to enter in ChatGPT; poll the status for approval."
+          }
+        }
+      },
+      getStatus: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.codexDeviceLogin.getStatus",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/integrations/codex/device-login/status",
+            tags: ["Integrations"],
+            operationId: "integrations.codexDeviceLogin.getStatus",
+            summary: "Get Codex sign-in status",
+            description: "Check the status of a Codex sign-in started by this organization: code_shown (with the URL and code) while the person approves, then approved, expired or failed."
+          }
+        }
+      },
+      finish: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.codexDeviceLogin.finish",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/integrations/codex/device-login/complete",
+            tags: ["Integrations"],
+            operationId: "integrations.codexDeviceLogin.finish",
+            summary: "Complete Codex sign-in",
+            description: "Save an approved Codex sign-in as an encrypted connection."
+          }
+        }
+      },
+      create: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.codexDeviceLogin.create",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/integrations/codex/access-token/create",
+            tags: ["Integrations"],
+            operationId: "integrations.codexDeviceLogin.create",
+            summary: "Connect Codex with an access token",
+            description: "Validate a Codex access token and save it as an encrypted connection."
+          }
+        }
+      }
+    },
+    claude: {
+      beginConnect: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.claude.beginConnect",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/integrations/claude/oauth-login/start",
+            tags: ["Integrations"],
+            operationId: "integrations.claude.beginConnect",
+            summary: "Start Claude subscription sign-in",
+            description: "Create a short-lived Claude Code OAuth authorization request."
+          }
+        }
+      },
+      finish: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.claude.finish",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/integrations/claude/oauth-login/complete",
+            tags: ["Integrations"],
+            operationId: "integrations.claude.finish",
+            summary: "Complete Claude subscription sign-in",
+            description: "Exchange an Anthropic authorization code and save its encrypted credential."
+          }
         }
       }
     },
@@ -2764,7 +3063,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Notification channels"],
           operationId: "notificationChannels.getProject",
           summary: "List project notification channels",
-          description: "List a project's notification channels with preferences, prerequisites, connection state, configured destinations, and supported notification types."
+          description: "List a project's notification channels with preferences, prerequisites, connection state, configured destinations, and supported notification types. The personal channel cards (in-app, email, SMS, and Slack) describe the signed-in user, so a session, OAuth, or MCP token shows that user's own state within its project and organization. A secret key is not a person: it sees the personal cards as unavailable, with no destinations."
         }
       }
     }
@@ -4805,6 +5104,804 @@ var public_api_client_contract_gen_default = {
       }
     }
   },
+  sso: {
+    connections: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.connections.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/sso/connection",
+            tags: ["SSO"],
+            operationId: "sso.connections.get",
+            summary: "Get the SSO connection",
+            description: "Get the organization's SSO connection, if any, and the service-provider metadata to register with the identity provider."
+          }
+        }
+      },
+      upsert: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.connections.upsert",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PUT",
+            path: "/sso/connection",
+            tags: ["SSO"],
+            operationId: "sso.connections.upsert",
+            summary: "Create or update the SSO connection",
+            description: "Create the organization's SSO connection or change it. Identity fields need an owner or a key that can manage SSO; other fields need an admin."
+          }
+        }
+      },
+      delete: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.connections.delete",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "DELETE",
+            path: "/sso/connection",
+            tags: ["SSO"],
+            operationId: "sso.connections.delete",
+            summary: "Delete the SSO connection",
+            description: "Delete the organization's SSO connection and end the sessions and MCP access of the people who signed in through it. Refused while any domain enforces SSO."
+          }
+        }
+      },
+      test: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.connections.test",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/sso/connection/test",
+            tags: ["SSO"],
+            operationId: "sso.connections.test",
+            summary: "Test the SSO connection",
+            description: "Start a test sign-in through the SSO connection. Open the returned URL in a browser and sign in at the identity provider; a successful round trip marks the connection tested."
+          }
+        }
+      }
+    },
+    getStatus: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "sso.getStatus",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/sso/status",
+          tags: ["SSO"],
+          operationId: "sso.getStatus",
+          summary: "Get SSO status",
+          description: "Get the SSO connection's state, the organization's domains and whether SSO is enforced."
+        }
+      }
+    },
+    domains: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.domains.list",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "list-sso-domains",
+                input: {},
+                output: {
+                  domains: [
+                    {
+                      id: "7b0f0d4e-3c8a-4c55-9a51-2f1d1f6e8a10",
+                      domain: "example.com",
+                      status: "pending",
+                      verificationRecord: {
+                        type: "TXT",
+                        name: "_sazabi-verification.example.com",
+                        value: "sazabi-domain-verification=Zm9vYmFyYmF6cXV4Zm9vYmFyYmF6cXV4Zm9vYmFyYmE"
+                      },
+                      verifiedAt: null,
+                      lastCheckedAt: null,
+                      enforceSso: false,
+                      createdAt: "2026-10-28T00:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          route: {
+            method: "GET",
+            path: "/sso/domains",
+            tags: ["SSO"],
+            operationId: "sso.domains.list",
+            summary: "List SSO domains",
+            description: "List the domains the organization has claimed for single sign-on, with each one's TXT verification record and status."
+          }
+        }
+      },
+      claim: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.domains.claim",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "claim-sso-domain",
+                input: {
+                  domain: "example.com"
+                },
+                output: {
+                  domain: {
+                    id: "7b0f0d4e-3c8a-4c55-9a51-2f1d1f6e8a10",
+                    domain: "example.com",
+                    status: "pending",
+                    verificationRecord: {
+                      type: "TXT",
+                      name: "_sazabi-verification.example.com",
+                      value: "sazabi-domain-verification=Zm9vYmFyYmF6cXV4Zm9vYmFyYmF6cXV4Zm9vYmFyYmE"
+                    },
+                    verifiedAt: null,
+                    lastCheckedAt: null,
+                    enforceSso: false,
+                    createdAt: "2026-10-28T00:00:00.000Z"
+                  },
+                  created: true
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/domains",
+            tags: ["SSO"],
+            operationId: "sso.domains.claim",
+            summary: "Claim an SSO domain",
+            description: "Claim a domain for single sign-on and get the TXT record to publish. Claiming a domain again returns the existing claim. A domain another organization has verified can't be claimed.",
+            successStatus: 201
+          }
+        }
+      },
+      verify: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.domains.verify",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "verify-sso-domain",
+                input: {
+                  domain: "example.com"
+                },
+                output: {
+                  domain: {
+                    id: "7b0f0d4e-3c8a-4c55-9a51-2f1d1f6e8a10",
+                    domain: "example.com",
+                    status: "verified",
+                    verificationRecord: {
+                      type: "TXT",
+                      name: "_sazabi-verification.example.com",
+                      value: "sazabi-domain-verification=Zm9vYmFyYmF6cXV4Zm9vYmFyYmF6cXV4Zm9vYmFyYmE"
+                    },
+                    verifiedAt: "2026-10-28T00:05:00.000Z",
+                    lastCheckedAt: "2026-10-28T00:05:00.000Z",
+                    enforceSso: false,
+                    createdAt: "2026-10-28T00:00:00.000Z"
+                  },
+                  outcome: "found"
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/domains/{domain}/verify",
+            tags: ["SSO"],
+            operationId: "sso.domains.verify",
+            summary: "Verify an SSO domain",
+            description: "Look up the domain's TXT record now. The domain is verified when the record holds the claim's value. A DNS error changes nothing and answers `dns_error`; try again later."
+          }
+        }
+      },
+      remove: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.domains.remove",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "remove-sso-domain",
+                input: {
+                  params: {
+                    domain: "example.com"
+                  }
+                },
+                output: {
+                  domainId: "7b0f0d4e-3c8a-4c55-9a51-2f1d1f6e8a10"
+                }
+              }
+            ]
+          },
+          route: {
+            method: "DELETE",
+            path: "/sso/domains/{domain}",
+            tags: ["SSO"],
+            operationId: "sso.domains.remove",
+            summary: "Remove an SSO domain",
+            description: "Remove a claimed domain. A domain that enforces single sign-on can't be removed; turn enforcement off first.",
+            inputStructure: "detailed"
+          }
+        }
+      }
+    },
+    breakGlass: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.breakGlass.list",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "list-sso-break-glass-owners",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  owners: [
+                    {
+                      userId: "user_2f1d1f6e8a10",
+                      email: "ada@example.com",
+                      name: "Ada Lovelace",
+                      designatedByUserId: "user_2f1d1f6e8a10",
+                      createdAt: "2026-10-28T00:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          route: {
+            method: "GET",
+            path: "/sso/break-glass/owners",
+            tags: ["SSO"],
+            operationId: "sso.breakGlass.list",
+            summary: "List break-glass owners",
+            description: "List the owners who can sign in with an email code and an authenticator while single sign-on is enforced."
+          }
+        }
+      },
+      setOwners: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.breakGlass.setOwners",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "set-sso-break-glass-owners",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10",
+                  emails: ["ada@example.com"]
+                },
+                output: {
+                  owners: [
+                    {
+                      userId: "user_2f1d1f6e8a10",
+                      email: "ada@example.com",
+                      name: "Ada Lovelace",
+                      designatedByUserId: "user_2f1d1f6e8a10",
+                      createdAt: "2026-10-28T00:00:00.000Z"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          route: {
+            method: "PUT",
+            path: "/sso/break-glass/owners",
+            tags: ["SSO"],
+            operationId: "sso.breakGlass.setOwners",
+            summary: "Set break-glass owners",
+            description: "Name up to two owners, by email, who can sign in with an email code and an authenticator while single sign-on is enforced. Only an owner signed in to the dashboard can make this change; any other caller is refused. An address that isn't an owner of the organization with an authenticator set up answers `break_glass_owner_ineligible`."
+          }
+        }
+      }
+    },
+    scim: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "get-sso-scim",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  scim: {
+                    connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    enabled: true,
+                    enabledAt: "2026-10-28T00:00:00.000Z",
+                    pausedAt: null,
+                    scimOnly: false,
+                    lastChangeAt: null,
+                    deactivationThreshold: null,
+                    tokens: [
+                      {
+                        id: "5f0c2a4e-8d1b-4c7a-9e3f-2b6d8a1c4e70",
+                        prefix: "sazabi_scim_Q2x9aB",
+                        createdAt: "2026-10-28T00:00:00.000Z",
+                        expiresAt: null,
+                        lastUsedAt: null,
+                        lastUsedIp: null,
+                        createdByUserId: "user_2f1d1f6e8a10",
+                        createdBySecretKeyId: null
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          route: {
+            method: "GET",
+            path: "/sso/scim",
+            tags: ["SSO"],
+            operationId: "sso.scim.get",
+            summary: "Get SCIM state",
+            description: "Get whether SCIM is on for the organization's SSO connection, and its live tokens' prefixes, expiries, last use time and IP address. `scim` is null when the organization has no SSO connection."
+          }
+        }
+      },
+      enable: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.enable",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "enable-sso-scim",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  scim: {
+                    connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    enabled: true,
+                    enabledAt: "2026-10-28T00:00:00.000Z",
+                    pausedAt: null,
+                    scimOnly: false,
+                    lastChangeAt: null,
+                    deactivationThreshold: null,
+                    tokens: [
+                      {
+                        id: "5f0c2a4e-8d1b-4c7a-9e3f-2b6d8a1c4e70",
+                        prefix: "sazabi_scim_Q2x9aB",
+                        createdAt: "2026-10-28T00:00:00.000Z",
+                        expiresAt: null,
+                        lastUsedAt: null,
+                        lastUsedIp: null,
+                        createdByUserId: "user_2f1d1f6e8a10",
+                        createdBySecretKeyId: null
+                      }
+                    ]
+                  },
+                  enabled: true,
+                  token: "sazabi_scim_Q2x9aB..."
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/scim/enable",
+            tags: ["SSO"],
+            operationId: "sso.scim.enable",
+            summary: "Turn SCIM on",
+            description: "Turn SCIM on for the organization's SSO connection and return its first token. The token is shown only in this answer. Needs an owner or a key that can manage SSO, a connection that is turned on, and a plan that includes SSO. When SCIM is already on, the answer has `enabled: false`, no token, and changes nothing."
+          }
+        }
+      },
+      rotateToken: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.rotateToken",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "rotate-sso-scim-token",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  scim: {
+                    connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    enabled: true,
+                    enabledAt: "2026-10-28T00:00:00.000Z",
+                    pausedAt: null,
+                    scimOnly: false,
+                    lastChangeAt: null,
+                    deactivationThreshold: null,
+                    tokens: [
+                      {
+                        id: "5f0c2a4e-8d1b-4c7a-9e3f-2b6d8a1c4e70",
+                        prefix: "sazabi_scim_Q2x9aB",
+                        createdAt: "2026-10-28T00:00:00.000Z",
+                        expiresAt: null,
+                        lastUsedAt: null,
+                        lastUsedIp: null,
+                        createdByUserId: "user_2f1d1f6e8a10",
+                        createdBySecretKeyId: null
+                      }
+                    ]
+                  },
+                  token: "sazabi_scim_Hk3mZp..."
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/scim/rotate-token",
+            tags: ["SSO"],
+            operationId: "sso.scim.rotateToken",
+            summary: "Rotate the SCIM token",
+            description: "Issue a new SCIM token, shown only in this answer, and set the current one to expire in 24 hours so the identity provider can be updated. Needs an owner or a key that can manage SSO. Answers `scim_token_limit` while the connection already has two live tokens."
+          }
+        }
+      },
+      disable: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.disable",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "disable-sso-scim",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  scim: {
+                    connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    enabled: false,
+                    enabledAt: null,
+                    pausedAt: null,
+                    scimOnly: false,
+                    lastChangeAt: null,
+                    deactivationThreshold: null,
+                    tokens: []
+                  },
+                  disabled: true,
+                  revokedTokenCount: 1
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/scim/disable",
+            tags: ["SSO"],
+            operationId: "sso.scim.disable",
+            summary: "Turn SCIM off",
+            description: "Turn SCIM off and revoke every token at once. Users, memberships and SCIM records are kept. Needs an owner or a key that can manage SSO. Answers `scim_only` while the connection is SCIM only."
+          }
+        }
+      },
+      pause: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.pause",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "pause-sso-scim",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  scim: {
+                    connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    enabled: true,
+                    enabledAt: "2026-10-28T00:00:00.000Z",
+                    pausedAt: "2026-10-29T00:00:00.000Z",
+                    scimOnly: false,
+                    lastChangeAt: null,
+                    deactivationThreshold: null,
+                    tokens: [
+                      {
+                        id: "5f0c2a4e-8d1b-4c7a-9e3f-2b6d8a1c4e70",
+                        prefix: "sazabi_scim_Q2x9aB",
+                        createdAt: "2026-10-28T00:00:00.000Z",
+                        expiresAt: null,
+                        lastUsedAt: null,
+                        lastUsedIp: null,
+                        createdByUserId: "user_2f1d1f6e8a10",
+                        createdBySecretKeyId: null
+                      }
+                    ]
+                  },
+                  paused: true
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/scim/pause",
+            tags: ["SSO"],
+            operationId: "sso.scim.pause",
+            summary: "Pause SCIM",
+            description: "Pause SCIM writes. While paused, every SCIM write answers 503 with Retry-After, so the identity provider retries, and reads still work. SCIM also pauses itself when deactivations cross the threshold. Needs an owner or a key that can manage SSO. Answers `scim_not_enabled` while SCIM is off."
+          }
+        }
+      },
+      resume: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.resume",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "resume-sso-scim",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  scim: {
+                    connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    enabled: true,
+                    enabledAt: "2026-10-28T00:00:00.000Z",
+                    pausedAt: null,
+                    scimOnly: false,
+                    lastChangeAt: null,
+                    deactivationThreshold: null,
+                    tokens: [
+                      {
+                        id: "5f0c2a4e-8d1b-4c7a-9e3f-2b6d8a1c4e70",
+                        prefix: "sazabi_scim_Q2x9aB",
+                        createdAt: "2026-10-28T00:00:00.000Z",
+                        expiresAt: null,
+                        lastUsedAt: null,
+                        lastUsedIp: null,
+                        createdByUserId: "user_2f1d1f6e8a10",
+                        createdBySecretKeyId: null
+                      }
+                    ]
+                  },
+                  resumed: true
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/scim/resume",
+            tags: ["SSO"],
+            operationId: "sso.scim.resume",
+            summary: "Resume SCIM",
+            description: "Resume SCIM writes after a pause. Deactivations before the resume no longer count toward the threshold. Needs an owner or a key that can manage SSO."
+          }
+        }
+      },
+      setThreshold: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.setThreshold",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [
+              {
+                name: "set-sso-scim-threshold",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10",
+                  threshold: 50
+                },
+                output: {
+                  scim: {
+                    connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                    enabled: true,
+                    enabledAt: "2026-10-28T00:00:00.000Z",
+                    pausedAt: null,
+                    scimOnly: false,
+                    lastChangeAt: null,
+                    deactivationThreshold: 50,
+                    tokens: [
+                      {
+                        id: "5f0c2a4e-8d1b-4c7a-9e3f-2b6d8a1c4e70",
+                        prefix: "sazabi_scim_Q2x9aB",
+                        createdAt: "2026-10-28T00:00:00.000Z",
+                        expiresAt: null,
+                        lastUsedAt: null,
+                        lastUsedIp: null,
+                        createdByUserId: "user_2f1d1f6e8a10",
+                        createdBySecretKeyId: null
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          },
+          route: {
+            method: "POST",
+            path: "/sso/scim/threshold",
+            tags: ["SSO"],
+            operationId: "sso.scim.setThreshold",
+            summary: "Set the SCIM deactivation threshold",
+            description: "Set how many SCIM deactivations a rolling hour allows before SCIM pauses, or null for the default. Needs an owner or a key that can manage SSO."
+          }
+        }
+      },
+      mismatchReport: {
+        get: {
+          "~orpc": {
+            errorMap: {},
+            meta: {
+              operationId: "sso.scim.mismatchReport.get",
+              backend: "api",
+              pagination: "none",
+              async: "sync",
+              examples: [
+                {
+                  name: "get-sso-scim-mismatch-report",
+                  input: {
+                    organizationId: "org_2f1d1f6e8a10"
+                  },
+                  output: {
+                    report: {
+                      connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                      generatedAt: "2026-06-12T09:00:00.000Z",
+                      signInWindowDays: 30,
+                      lastRequestAt: "2026-06-01T17:40:00.000Z",
+                      lastChangeAt: "2026-06-01T17:40:00.000Z",
+                      signedInWithoutScimRecord: {
+                        members: [
+                          {
+                            userId: "usr_8c2e41d0b7a3",
+                            email: "dana@example.com",
+                            name: "Dana Reyes",
+                            lastSignInAt: "2026-06-11T08:12:00.000Z",
+                            linkedAt: "2026-06-04T15:30:00.000Z"
+                          }
+                        ],
+                        truncated: false
+                      },
+                      scimRecordsNeverSignedIn: {
+                        records: [],
+                        truncated: false
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            route: {
+              method: "GET",
+              path: "/sso/scim/mismatch-report",
+              tags: ["SSO"],
+              operationId: "sso.scim.mismatchReport.get",
+              summary: "Get the SCIM mismatch report",
+              description: "List members who signed in by SSO in the last 30 days with no SCIM record, and active SCIM records whose user never signed in by SSO. Each list holds at most 500 rows; `truncated` says whether it was cut. `report` is null when the organization has no SSO connection or SCIM is off."
+            }
+          }
+        }
+      },
+      listMembers: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "sso.scim.listMembers",
+            backend: "api",
+            pagination: "cursor",
+            async: "sync",
+            examples: [
+              {
+                name: "list-sso-scim-members",
+                input: {
+                  organizationId: "org_2f1d1f6e8a10"
+                },
+                output: {
+                  members: [
+                    {
+                      scimUserId: "6f1c2b9e-4d3a-4b8e-9a7f-1e2d3c4b5a69",
+                      userId: "usr_8c2e41d0b7a3",
+                      email: "dana@example.com",
+                      name: "Dana Reyes",
+                      role: "member",
+                      userName: "dana@example.com",
+                      externalId: "00u1a2b3c4d5e6f7g8h9",
+                      active: true,
+                      connectionId: "0b8e4f6a-3c2d-4e1f-a5b7-9c8d7e6f5a40",
+                      connectionState: "scim_off",
+                      provisionedAt: "2026-05-20T10:00:00.000Z"
+                    }
+                  ],
+                  nextCursor: null
+                }
+              }
+            ]
+          },
+          route: {
+            method: "GET",
+            path: "/sso/scim/members",
+            tags: ["SSO"],
+            operationId: "sso.scim.listMembers",
+            summary: "List SCIM-provisioned members",
+            description: "List the organization's members who have a SCIM record, including after SCIM is turned off or the SSO connection is deleted, so you can review whom to remove by hand. `connectionState` says whether SCIM still manages each member."
+          }
+        }
+      }
+    }
+  },
   secretKeys: {
     list: {
       "~orpc": {
@@ -6005,6 +7102,26 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    linkTask: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "issues.linkTask",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/issues/{issueId}/tasks",
+          tags: ["Issues"],
+          operationId: "issues.linkTask",
+          summary: "Link a task to an issue",
+          description: "Link an existing task in the connected Linear, Jira, or GitHub workspace to an issue. The issue shows the task and follows its status like a task Sazabi filed. Linking is idempotent."
+        }
+      }
+    },
     unlinkPullRequest: {
       "~orpc": {
         errorMap: {},
@@ -6264,7 +7381,7 @@ var public_api_client_contract_gen_default = {
             tags: ["Issues"],
             operationId: "issues.fixes.create",
             summary: "Request a fix for an issue",
-            description: "Ask Sazabi's agent to fix an open issue in its issue thread, as the issue page's Fix button does. Only a person may request a fix; the issue must be open and have a thread. The fix is queued and answers with the thread it runs in.",
+            description: "Ask Sazabi's agent to fix an open issue in its issue thread, as the issue page's Fix button does, or hand the fix to a connected coding agent with `agent`. Only a person may request a fix; the issue must be open and have a thread. The fix is queued and answers with the thread it runs in.",
             successStatus: 202
           }
         }
@@ -6643,6 +7760,26 @@ var public_api_client_contract_gen_default = {
             summary: "Get rated usage",
             description: "Estimate gross USD consumption value and net usage cost for eight non-AI products from corrected observed ledger quantities. Every period uses the current effective commercial plan prices and recurring allowances on the current billing schedule. Omit dates for its current cycle; without a current plan the UTC month is native-only. This read-only simulation excludes promotional first-cycle bonuses, subscription fees, taxes, AI tokens, and operational activity; it never recalculates or represents historical invoices and never converts credit prices to USD."
           }
+        }
+      }
+    },
+    listUsageGrants: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "billing.listUsageGrants",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/billing/usage-grants",
+          tags: ["Billing"],
+          operationId: "billing.listUsageGrants",
+          summary: "List usage grants",
+          description: "List the organization's usage grants, newest first, with what settled cycles used and what is left."
         }
       }
     },
@@ -8008,6 +9145,7 @@ var createClient = (options) => {
       unread: async (input) => raw.issues.unread(input),
       linkPullRequest: async (input) => raw.issues.linkPullRequest({ relation: "fixes", ...input }),
       unlinkPullRequest: async (input) => raw.issues.unlinkPullRequest(input),
+      linkTask: async (input) => raw.issues.linkTask(input),
       getRejectionContext: async (input) => raw.issues.getRejectionContext(input),
       reject: async (input) => raw.issues.reject(input),
       resolve: async (input) => raw.issues.resolve(input),
@@ -8051,6 +9189,7 @@ var createClient = (options) => {
       getUsage: async (input = {}) => raw.billing.getUsage(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getUsage")),
       getAccruedUsageCharges: async (input = {}) => raw.billing.getAccruedUsageCharges(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.getAccruedUsageCharges")),
       listUsageInvoices: async (input = {}) => raw.billing.listUsageInvoices(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.listUsageInvoices")),
+      listUsageGrants: async (input = {}) => raw.billing.listUsageGrants(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.listUsageGrants")),
       listTransactions: async (input = {}) => raw.billing.listTransactions(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.listTransactions")),
       previewSubscriptionCancellation: async (input = {}) => raw.billing.previewSubscriptionCancellation(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.previewSubscriptionCancellation")),
       scheduleSubscriptionCancellation: async (input = {}) => raw.billing.scheduleSubscriptionCancellation(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "billing.scheduleSubscriptionCancellation")),

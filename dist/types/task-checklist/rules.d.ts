@@ -46,18 +46,21 @@ export declare const dependenciesFor: (id: TaskKey) => readonly TaskKey[];
  * `SKIPPABLE_TASK_IDS` enum derives from this tuple, so wire membership and
  * the column-pair mapping below cannot drift.
  */
-export declare const TASKS_WITH_SKIP_LEDGER: readonly ["connect_github_account", "install_github_app", "install_slack_app", "trigger_sample_issue"];
+export declare const TASKS_WITH_SKIP_LEDGER: readonly ["connect_github_account", "install_github_app", "install_slack_app", "trigger_sample_issue", "connect_log_sources"];
 export type TaskWithSkipLedger = (typeof TASKS_WITH_SKIP_LEDGER)[number];
 /**
  * The cards whose walks actually OFFER Skip — a strict subset of
  * {@link TASKS_WITH_SKIP_LEDGER} (guard-tested), not the same set.
  *
- * `trigger_sample_issue` is the difference: it keeps its ledger pair and its
+ * `trigger_sample_issue` is one difference: it keeps its ledger pair and its
  * place in the public `tasks.skip` enum so already-recorded skips and the
  * wire contract stay valid, but since the skip-parity fix (audit 2026-09-14
  * §5 rule 1) the web screen is view-and-continue with no skip affordance and
- * the CLI follows — neither walk offers the choice. Membership here is what
- * replaced the old per-card `optional` boolean.
+ * the CLI follows — neither walk offers the choice. `connect_log_sources` is
+ * the other: its one always-enabled Continue records the skip when the
+ * project has no log source yet (docs/design/app/add-log-sources-onboarding-step),
+ * so the walk offers no separate Skip. Membership here is what replaced the
+ * old per-card `optional` boolean.
  */
 export declare const SKIPPABLE_TASKS: ReadonlySet<TaskKey>;
 /** Whether the onboarding walks offer Skip for this card. */
@@ -68,24 +71,28 @@ export declare const isSkippable: (id: TaskKey) => boolean;
  * lives in the surfaces, so the table carries a serializable rule *name* and
  * the interpreter's state supplies the evaluation (see `OnboardingCardState`).
  */
-export declare const TASK_APPLICABILITY_RULES: readonly ["billing-step-enabled", "slack-connect-channel-available"];
+export declare const TASK_APPLICABILITY_RULES: readonly ["billing-step-enabled", "slack-connect-channel-available", "log-sources-step-enabled"];
 export type TaskApplicabilityRule = (typeof TASK_APPLICABILITY_RULES)[number];
 /**
  * Which cards a surface must ask about before walking them. Billing asks
  * whether the step is enabled for the organization; the Slack Connect card
  * (ENG-9842) asks whether the organization has a linked channel with a
  * recorded invitee in `channel_created` or `invited` (the onboarding
- * snapshot's `slackConnect` is non-null) — a card with no entry always
- * applies.
+ * snapshot's `slackConnect` is non-null); the log sources card (ENG-10136)
+ * asks whether the `onboarding-log-sources-step` flag is on for the caller,
+ * read from the resolved flag map because a flag never rides the onboarding
+ * snapshot (`check:feature-flags-in-public-contracts`) — a card with no entry
+ * always applies.
  */
 export declare const TASK_APPLICABILITY: Partial<Record<TaskKey, TaskApplicabilityRule>>;
 /** A card's applicability rule, `null` when it always applies. */
 export declare const applicabilityFor: (id: TaskKey) => TaskApplicabilityRule | null;
 /**
- * Cards that offer no way back. The sample-issue card is the one so far:
- * Resolve is the only thing to press, one click that writes nothing real,
- * so a Back control would only compete with it (product decision
- * 2026-09-22). Both walks read this through `adjacentFlowEntry`, so neither
+ * Cards that offer no way back. The sample-issue card: Resolve is the only
+ * thing to press, one click that writes nothing real, so a Back control
+ * would only compete with it (product decision 2026-09-22). Add log
+ * sources: the card before it is that resolved test issue, which has
+ * nothing left to do (product decision 2026-10-27). Both walks read this through `adjacentFlowEntry`, so neither
  * surface renders a Back the other would not.
  */
 export declare const CARDS_WITHOUT_BACK: ReadonlySet<TaskKey>;
@@ -118,6 +125,7 @@ export type OrgTaskSkipLedger = {
     readonly githubAppSkipped: boolean;
     readonly slackSkipped: boolean;
     readonly sampleIssueSkipped: boolean;
+    readonly logSourcesSkipped: boolean;
 };
 /**
  * The per-card skip-pair mapping (the one source both task-list routers and

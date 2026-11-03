@@ -18,6 +18,7 @@ export declare const NotificationChannelDestinationSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const NotificationChannelCardSchema: z.ZodObject<{
     channel: z.ZodEnum<{
+        better_stack: "better_stack";
         email: "email";
         in_app: "in_app";
         incident_io: "incident_io";
@@ -123,6 +124,7 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const ProjectNotificationChannelPreferenceSchema: z.ZodObject<{
     channel: z.ZodEnum<{
+        better_stack: "better_stack";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -135,6 +137,7 @@ export declare const ProjectNotificationChannelPreferenceSchema: z.ZodObject<{
 }, z.core.$strip>;
 export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
     channel: z.ZodEnum<{
+        better_stack: "better_stack";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -201,6 +204,7 @@ export declare const GetProjectNotificationChannelsInputSchema: z.ZodObject<{
 export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
     channelCards: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             email: "email";
             in_app: "in_app";
             incident_io: "incident_io";
@@ -306,6 +310,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     channels: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -318,6 +323,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     notificationTypePreferences: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -393,6 +399,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
 }, z.core.$strip>, z.ZodObject<{
     channelCards: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             email: "email";
             in_app: "in_app";
             incident_io: "incident_io";
@@ -498,6 +505,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
     }, z.core.$strip>>;
     channels: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -510,6 +518,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
     }, z.core.$strip>>;
     notificationTypePreferences: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -583,6 +592,7 @@ export declare const notificationChannelsContract: {
     }, z.core.$strip>, z.ZodObject<{
         channelCards: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 email: "email";
                 in_app: "in_app";
                 incident_io: "incident_io";
@@ -688,6 +698,7 @@ export declare const notificationChannelsContract: {
         }, z.core.$strip>>;
         channels: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -700,6 +711,7 @@ export declare const notificationChannelsContract: {
         }, z.core.$strip>>;
         notificationTypePreferences: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";

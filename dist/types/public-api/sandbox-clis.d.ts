@@ -35,6 +35,7 @@ export declare const listSandboxCliTypes: import("../orpc-contracts/index.js").O
 }, z.core.$strip>, "api">;
 export declare const SandboxCliCredentialSourceSchema: z.ZodEnum<{
     bitbucket_integration: "bitbucket_integration";
+    coding_agent_integration: "coding_agent_integration";
     github_app: "github_app";
     personal_access_token: "personal_access_token";
     stored_credentials: "stored_credentials";
@@ -97,6 +98,7 @@ export declare const SandboxCliConnectionSchema: z.ZodObject<{
     cliType: z.ZodString;
     credentialSource: z.ZodEnum<{
         bitbucket_integration: "bitbucket_integration";
+        coding_agent_integration: "coding_agent_integration";
         github_app: "github_app";
         personal_access_token: "personal_access_token";
         stored_credentials: "stored_credentials";
@@ -168,6 +170,7 @@ export declare const ListSandboxCliConnectionsOutputSchema: z.ZodObject<{
         cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
+            coding_agent_integration: "coding_agent_integration";
             github_app: "github_app";
             personal_access_token: "personal_access_token";
             stored_credentials: "stored_credentials";
@@ -240,6 +243,7 @@ export declare const listSandboxCliConnections: import("../orpc-contracts/index.
         cliType: z.ZodString;
         credentialSource: z.ZodEnum<{
             bitbucket_integration: "bitbucket_integration";
+            coding_agent_integration: "coding_agent_integration";
             github_app: "github_app";
             personal_access_token: "personal_access_token";
             stored_credentials: "stored_credentials";
@@ -428,6 +432,7 @@ export declare const sandboxClisContract: {
             cliType: z.ZodString;
             credentialSource: z.ZodEnum<{
                 bitbucket_integration: "bitbucket_integration";
+                coding_agent_integration: "coding_agent_integration";
                 github_app: "github_app";
                 personal_access_token: "personal_access_token";
                 stored_credentials: "stored_credentials";

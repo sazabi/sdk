@@ -13,11 +13,13 @@
  */
 import type { Task, TaskKey } from "./index.js";
 /**
- * The onboarding card definitions. Private: consumers read
- * {@link ONBOARDING_FLOW} (cards + the create-project gate) or the derived
- * {@link ONBOARDING_TASKS} (cards only), whose order comes from the flow.
+ * The onboarding card definitions: the cards whose only home is the tour.
+ * Consumers read {@link ONBOARDING_FLOW} (cards + the create-project gate)
+ * or the derived {@link ONBOARDING_TASKS} (cards only), whose order comes
+ * from the flow; the registry's flat `TASK_METADATA` reads this list so a
+ * setup card the tour also walks is listed once.
  */
-declare const ONBOARDING_CARDS: readonly [{
+export declare const ONBOARDING_CARDS: readonly [{
     readonly id: "set_up_billing";
     readonly label: "Choose a plan";
     readonly description: "Choose the plan your organization starts on.";
@@ -27,7 +29,7 @@ declare const ONBOARDING_CARDS: readonly [{
     readonly id: "connect_github_account";
     readonly label: "Connect GitHub account";
     readonly description: "Link your personal GitHub login so code search can list the repositories you have access to.";
-    readonly instructions: "Go to Settings > Connected Accounts and connect GitHub. You will be redirected to GitHub to authorize your personal account.";
+    readonly instructions: "Go to Settings > Connected accounts and connect GitHub. You will be redirected to GitHub to authorize your personal account.";
     readonly category: "onboarding";
 }, {
     readonly id: "install_github_app";
@@ -39,7 +41,7 @@ declare const ONBOARDING_CARDS: readonly [{
     readonly id: "configure_code_search";
     readonly label: "Configure code search";
     readonly description: "Link at least one GitHub repository to your project so agents can search and read your codebase during investigations.";
-    readonly instructions: "Go to Settings > Code Search and click 'Add repository'. Select the GitHub repositories you want agents to have access to.";
+    readonly instructions: "Go to Settings > Code and click 'Add' under Git repositories. Select the GitHub repositories you want agents to have access to.";
     readonly category: "onboarding";
 }, {
     readonly id: "install_slack_app";
@@ -51,7 +53,7 @@ declare const ONBOARDING_CARDS: readonly [{
     readonly id: "configure_slack_alerts";
     readonly label: "Configure Slack alerts";
     readonly description: "Select a Slack channel to receive issue alerts and agent summaries when something goes wrong in production.";
-    readonly instructions: "Go to Settings > Project Notifications and select a Slack channel for issue alerts. Sazabi will post issue alerts and agent summaries to that channel.";
+    readonly instructions: "Go to Settings > Notifications under Project and select a Slack channel for issue alerts. Sazabi will post issue alerts and agent summaries to that channel.";
     readonly category: "onboarding";
 }, {
     readonly id: "join_slack_connect_channel";
@@ -66,8 +68,15 @@ declare const ONBOARDING_CARDS: readonly [{
     readonly instructions: "Open the 'Resolve your first issue' step during onboarding and resolve the test issue Sazabi created with your first project. From the CLI, 'sazabi onboarding' shows that test issue; run 'sazabi onboarding steps complete trigger_sample_issue' to resolve it.";
     readonly category: "onboarding";
 }];
-/** The onboarding card ids, as a literal union for per-surface maps. */
-export type OnboardingTaskKey = (typeof ONBOARDING_CARDS)[number]["id"];
+/**
+ * The setup cards the tour also walks: defined once in `setup-tasks.ts` and
+ * listed in the Setup guide, with a place in {@link ONBOARDING_FLOW} as well.
+ * Both read the same done fact, so finishing the card in either place
+ * finishes it in both, and a skip in the tour leaves the guide's row open.
+ */
+declare const WALKED_SETUP_CARD_IDS: readonly ["connect_log_sources"];
+/** The card ids the tour walks, as a literal union for per-surface maps. */
+export type OnboardingTaskKey = (typeof ONBOARDING_CARDS)[number]["id"] | (typeof WALKED_SETUP_CARD_IDS)[number];
 /**
  * One line of the onboarding walk: a card, or the create-project gate.
  * Gates are not tasks (their done-ness is existence and they cannot be
@@ -78,7 +87,7 @@ export type OnboardingTaskKey = (typeof ONBOARDING_CARDS)[number]["id"];
  */
 export type OnboardingFlowEntry = {
     readonly kind: "card";
-    readonly id: TaskKey;
+    readonly id: OnboardingTaskKey;
 } | {
     readonly kind: "gate";
     readonly id: "create-project";
@@ -92,8 +101,13 @@ export type OnboardingFlowEntry = {
  * or moving the project gate is reordering this array.
  */
 export declare const ONBOARDING_FLOW: readonly OnboardingFlowEntry[];
-/** Card lookup by id, for the interpreter's flow walks. */
+/**
+ * Card lookup by id, for the interpreter's flow walks: the onboarding cards
+ * and the setup cards the tour also walks.
+ */
 export declare const ONBOARDING_CARD_BY_ID: ReadonlyMap<TaskKey, Task>;
+/** The log sources step's card (ENG-10136): its label and copy head the step. */
+export declare const CONNECT_LOG_SOURCES_CARD: Task;
 /**
  * The onboarding tour's cards in walk order, derived from
  * {@link ONBOARDING_FLOW} so the flow and the card list cannot drift. A

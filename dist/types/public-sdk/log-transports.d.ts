@@ -2,6 +2,7 @@ import type { ContractRouterClient } from "@orpc/contract";
 import type { OtlpLogsRequest } from "../otlp-contracts/index.js";
 import type { ProjectRegion, PublicApiContract } from "../public-api/index.js";
 import { z } from "zod";
+import type { ClientFetch } from "./fetch.js";
 /**
  * Input accepted by the OTLP log forwarding helper.
  */
@@ -79,7 +80,7 @@ export interface ForwardLogsParams extends ForwardLogsInput {
 export interface LogTransportOptions {
     raw: ContractRouterClient<PublicApiContract>;
     credentialProvider: LogCredentialProvider;
-    fetch?: typeof globalThis.fetch;
+    fetch?: ClientFetch;
     intakeBaseUrl?: string;
 }
 /**

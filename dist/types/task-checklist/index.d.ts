@@ -36,7 +36,7 @@
  */
 import { type OnboardingFlowEntry } from "./onboarding-tasks.js";
 import { type TaskApplicabilityRule } from "./rules.js";
-export { ONBOARDING_CARD_BY_ID, ONBOARDING_FLOW, ONBOARDING_TASKS, type OnboardingFlowEntry, type OnboardingTaskKey, } from "./onboarding-tasks.js";
+export { CONNECT_LOG_SOURCES_CARD, ONBOARDING_CARD_BY_ID, ONBOARDING_FLOW, ONBOARDING_TASKS, type OnboardingFlowEntry, type OnboardingTaskKey, } from "./onboarding-tasks.js";
 export { SAMPLE_ISSUE, SAMPLE_ISSUE_AGE_MS, SAMPLE_ISSUE_CARD_ID, SAMPLE_ISSUE_DESCRIPTION_LABEL, SAMPLE_ISSUE_DISABLED_ACTION_REASON, SAMPLE_ISSUE_INTRO, SAMPLE_ISSUE_LABEL, SAMPLE_ISSUE_STATUS_LABEL, sampleIssueAgeLabel, sampleIssueOccurredAt, type SampleIssueStatus, } from "./sample-issue.js";
 export { NAVIGATION_SCENARIOS, type NavigationAction, type NavigationLedger, type NavigationPosition, type NavigationScenario, } from "./navigation-scenarios.js";
 export { SETUP_TASKS, type SetupTaskKey } from "./setup-tasks.js";
@@ -90,9 +90,9 @@ export type Task = {
     readonly category: TaskCategory;
 };
 /**
- * Flat task list derived from the two card arrays (onboarding first, then
- * setup). Kept for the existing checklist consumers; new code should read
- * the arrays directly.
+ * Flat task list derived from the two definition arrays (onboarding first,
+ * then setup), so a setup card the tour also walks is listed once. Kept for
+ * the existing checklist consumers; new code should read the arrays directly.
  */
 export declare const TASK_METADATA: readonly Task[];
 /**
@@ -124,7 +124,9 @@ export type TaskCardProjection = {
 /**
  * Projects a card into the shared wire shape. The dashboard `taskChecklist`
  * router and the public `tasks.list` handler both call this one function
- * (self-use §4.c parity), so the two surfaces cannot drift.
+ * (self-use §4.c parity), so the two surfaces cannot drift. `list` follows
+ * the array that defines the card, not the walk: a setup card the tour also
+ * walks (`connect_log_sources`) stays `getting-started` for every caller.
  */
 export declare const toTaskCardProjection: (task: Task) => TaskCardProjection;
 /**

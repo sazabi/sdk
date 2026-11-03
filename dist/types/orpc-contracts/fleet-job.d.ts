@@ -1,4 +1,19 @@
 export declare const FLEET_JOB_OUTPUT_KEYS: {
+    /** Pending coding-agent recovery: one bounded page of dispatch/tenant ids. */
+    readonly coding_agent_dispatch_recovery: readonly ["dispatches", "nextCursor"];
+    /** The daily account snapshot's bounded billing movement history read. */
+    readonly account_movements: readonly ["movements", "activatedPaid", "churned", "upsell", "contraction", "firstPaidActivationAt"];
+    /** The account snapshot job's paged organization and project-count scan. */
+    readonly account_snapshot_organizations: readonly ["organizations", "organizationId", "createdAt", "projects", "nextCursor"];
+    /** The daily account snapshot's bounded billing-state lookup. */
+    readonly account_snapshot_states: readonly ["states", "subscriptionStatus", "planSlug", "recurringAmountCents", "currency", "billingInterval", "cancelScheduledFor", "paused", "paymentFailedAt", "discountState", "isPaying", "paidSubscriptionEndedAt"];
+    /** The daily account snapshot's accepted-log-byte windows per organization. */
+    readonly account_log_intake: readonly ["intake", "bytesLast24h", "bytesLast7Days", "bytesPreceding7Days", "lastFlowingOn", "bytesSinceTrackingStart"];
+    /** The daily account snapshot's GitHub and Slack onboarding steps per organization. */
+    readonly organization_onboarding_flags: readonly ["flags", "githubConnectedWithRepos", "slackConnectedWithDefaultChannel"];
+    /** Issue activity and outcome reads composed by the daily account job. */
+    readonly issue_activity_by_organization: readonly ["activity", "hasIssue", "issuesThisWeek", "issuesLastWeek", "lastHumanIssueEventAt", "lastIssueAt"];
+    readonly issue_creation_outcomes: readonly ["issues", "issueId", "organizationId", "projectId", "createdAt", "fixRequested", "fixed", "rejected", "interacted", "nextCursor"];
     /**
      * The stale automation run sweep: runs authorized but never started, and
      * runs whose workflow never recorded completion, before a cutoff, marked
@@ -35,6 +50,13 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
      * Answers only its two counts.
      */
     readonly mcp_authorizing_expiry: readonly ["expiredConnections", "deletedOauthRequests"];
+    /**
+     * The read-isolation exclusion list (ENG-10514, BYOC foundation "Every
+     * reader and loop has an explicit rule"): every project whose ClickHouse
+     * target is not shared, for billing parity, the drift check and the
+     * empty-log-source reaper to leave out. Read-only.
+     */
+    readonly projects_on_non_shared_clickhouse_targets: readonly ["projects", "organizationId", "projectId"];
 };
 export type FleetJobKind = keyof typeof FLEET_JOB_OUTPUT_KEYS;
 export declare const isFleetJobKind: (value: string) => value is FleetJobKind;

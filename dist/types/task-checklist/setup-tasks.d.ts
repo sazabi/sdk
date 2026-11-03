@@ -10,7 +10,9 @@
  * one-vocabulary decision — the wire `list` value keeps its legacy
  * `getting-started` spelling for published-client compatibility) are shown in
  * the web Setup guide and the CLI's `sazabi setup-tasks list` in this order,
- * but walked by neither onboarding tour; `sazabi setup-tasks get <id>` names
+ * and walked by neither onboarding tour unless `onboarding-tasks.ts` gives
+ * one a place in the flow as well (`connect_log_sources`, ENG-10136), which
+ * keeps it here; `sazabi setup-tasks get <id>` names
  * the standalone command that completes each card (ENG-7562 — the onboarding
  * walk never mentions or chains into the setup checklist; its recap ends at
  * "Onboarding complete."). Promoting a card into the tour is a cut-paste into
@@ -25,8 +27,8 @@ export declare const SETUP_TASKS: readonly [{
 }, {
     readonly id: "connect_log_sources";
     readonly label: "Add log sources";
-    readonly description: "Connect a telemetry data source such as Datadog, Sentry, or AWS CloudWatch so agents have access to your logs, metrics, and traces.";
-    readonly instructions: "Go to Settings > Data Sources and click 'Add data source'. Choose a provider such as Datadog, Sentry, or AWS CloudWatch and follow the configuration steps.";
+    readonly description: "Add one or more log sources from providers such as Datadog, Sentry, or AWS CloudWatch so agents can read your logs, metrics, and traces.";
+    readonly instructions: "Go to Settings > Log streams, pick a provider such as Datadog, Sentry, or AWS CloudWatch under Browse log source providers, and follow its setup steps.";
     readonly category: "setup";
 }, {
     readonly id: "install_cli";
@@ -38,25 +40,25 @@ export declare const SETUP_TASKS: readonly [{
     readonly id: "invite_team";
     readonly label: "Invite team";
     readonly description: "Invite at least one other team member so your whole team can collaborate on investigations and share context.";
-    readonly instructions: "Go to Settings > Members and click 'Invite member'. Enter your teammate's email address and select their role.";
+    readonly instructions: "Go to Settings > Members and click 'Invite'. Enter your teammate's email address, select their role, and click 'Send invites'.";
     readonly category: "setup";
 }, {
     readonly id: "configure_auto_top_up";
     readonly label: "Set up auto top-up";
     readonly description: "Turn on automatic credit reloads so agents never pause mid-investigation when your balance runs low. Auto top-up adds credits automatically whenever your balance falls below a threshold you choose.";
-    readonly instructions: "Go to Settings > Billing and enable automatic reload under Auto top-up. Choose the balance threshold that triggers a reload and the amount to add each time.";
+    readonly instructions: "Go to Settings > Billing and click 'Enable' under Auto top-up. Set 'When credits fall below' and 'Add this much', then click 'Save'.";
     readonly category: "setup";
 }, {
     readonly id: "add_mcp_connectors";
     readonly label: "Add MCP connectors";
     readonly description: "Add a Model Context Protocol (MCP) connector to extend agent capabilities with tools from external services.";
-    readonly instructions: "Go to Settings > MCP Connectors and click 'Add connector'. Choose a connector from the available list and follow the setup steps.";
+    readonly instructions: "Go to Settings > MCP connectors and select a connector from the Connector catalog. Click 'Add' on its page, then follow its setup steps.";
     readonly category: "setup";
 }, {
     readonly id: "customize_sandbox";
     readonly label: "Connect sandbox CLIs";
     readonly description: "Connect a sandbox CLI so agents can use your infrastructure and deployment tooling from inside the agent sandbox during investigations.";
-    readonly instructions: "Go to Settings > Sandbox CLIs and connect a CLI. Sazabi validates the credentials and makes the CLI available in every agent sandbox for this project.";
+    readonly instructions: "Go to Settings > Sandbox and connect a CLI. Sazabi validates the credentials and makes the CLI available in every agent sandbox for this project.";
     readonly category: "setup";
 }, {
     readonly id: "explore_integrations";

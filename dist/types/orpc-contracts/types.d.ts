@@ -1,6 +1,7 @@
 import type { AnySchema, ContractProcedure, InferSchemaInput, InferSchemaOutput, Route } from "@orpc/contract";
 import type { FleetJobKind } from "./fleet-job.js";
 import type { PublicReadKind } from "./public-read.js";
+import type { ShareLinkKind } from "./share-link.js";
 import type { SignedOAuthStateKind } from "./signed-oauth-state.js";
 import type { VendorLookupKind } from "./vendor-lookup.js";
 export type OperationPagination = "none" | "cursor" | "page";
@@ -27,10 +28,11 @@ export interface OperationExample<InputValue, OutputValue> {
  * caller's own identity names, the caller; for a Sazabi operator's
  * cross-tenant or global operation, the operator; for an unauthenticated
  * OAuth callback's write, the signed state it carries; for a public read
- * of registry-global data, nobody; or, for a partner's organization or
- * project, the superorganization that owns it.
+ * of registry-global data, nobody; for a share link, the one record its id
+ * names; or, for a partner's organization or project, the superorganization
+ * that owns it.
  */
-export type OperationAccess = RecordAccess | AuthenticatedAccess | SelfAccess | OwnScopeAccess | OperatorAccess | VendorLookupAccess | FleetJobAccess | SignedOAuthStateAccess | PublicReadAccess | PartnerAccess;
+export type OperationAccess = RecordAccess | AuthenticatedAccess | SelfAccess | OwnScopeAccess | OperatorAccess | VendorLookupAccess | FleetJobAccess | SignedOAuthStateAccess | PublicReadAccess | ShareLinkAccess | PartnerAccess;
 /**
  * The owner resolves the record named by `id` and runs `decideAccess` with
  * `action` before the handler. Contracts may import only contracts, so
@@ -171,6 +173,19 @@ export interface SignedOAuthStateAccess {
  */
 export interface PublicReadAccess {
     publicRead: PublicReadKind;
+}
+/**
+ * A read through a share link (Ed 2026-10-20, "add it"): only a forwarded
+ * `anonymous` principal on the kind's surface reaches the handler, after the
+ * owner resolves the input id (the key `SHARE_LINK_KINDS` lists for
+ * `shareLink`) to one live record. The handler sees only what that record
+ * names, never the id's neighbours; an unknown, revoked or malformed id is
+ * refused exactly as a missing record is. Unlike `publicRead`, the record is
+ * a tenant's, so services/core's boundary check lets the handler read only
+ * the tables it pins for the kind.
+ */
+export interface ShareLinkAccess {
+    shareLink: ShareLinkKind;
 }
 /**
  * A partner key's caller acting on an organization or project that belongs

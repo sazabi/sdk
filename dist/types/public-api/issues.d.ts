@@ -113,15 +113,33 @@ export declare const IssueFixSchema: z.ZodObject<{
         "public-api": "public-api";
         slack: "slack";
     }>;
+    agent: z.ZodEnum<{
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
+        hoplite: "hoplite";
+        replicas: "replicas";
+        sazabi: "sazabi";
+        warp: "warp";
+    }>;
+    dispatchId: z.ZodNullable<z.ZodString>;
+    stoppedBy: z.ZodNullable<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
     status: z.ZodEnum<{
         cancelled: "cancelled";
         failed: "failed";
         no_pr: "no_pr";
+        paused: "paused";
         pr_closed: "pr_closed";
         pr_merged: "pr_merged";
         pr_open: "pr_open";
         queued: "queued";
         running: "running";
+        waiting: "waiting";
     }>;
     pullRequests: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
@@ -240,15 +258,33 @@ export declare const IssueDetailSchema: z.ZodObject<{
             "public-api": "public-api";
             slack: "slack";
         }>;
+        agent: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            sazabi: "sazabi";
+            warp: "warp";
+        }>;
+        dispatchId: z.ZodNullable<z.ZodString>;
+        stoppedBy: z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
         status: z.ZodEnum<{
             cancelled: "cancelled";
             failed: "failed";
             no_pr: "no_pr";
+            paused: "paused";
             pr_closed: "pr_closed";
             pr_merged: "pr_merged";
             pr_open: "pr_open";
             queued: "queued";
             running: "running";
+            waiting: "waiting";
         }>;
         pullRequests: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -262,6 +298,62 @@ export declare const IssueDetailSchema: z.ZodObject<{
             }>>;
         }, z.core.$strip>>;
     }, z.core.$strip>>;
+    fixAgents: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            warp: "warp";
+        }>;
+        displayName: z.ZodString;
+    }, z.core.$strip>>>;
+    fixAgentsNeedingAttention: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            warp: "warp";
+        }>;
+        displayName: z.ZodString;
+    }, z.core.$strip>>>;
+    fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        fullName: z.ZodString;
+        url: z.ZodString;
+        baseBranch: z.ZodString;
+    }, z.core.$strip>>>;
+    fixRepository: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        fullName: z.ZodString;
+        url: z.ZodString;
+        baseBranch: z.ZodString;
+    }, z.core.$strip>>>;
+    fixAgentDefault: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        connectionId: z.ZodString;
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            warp: "warp";
+        }>;
+        displayName: z.ZodString;
+        environment: z.ZodNullable<z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+    }, z.core.$strip>>>;
     hasUnread: z.ZodNullable<z.ZodBoolean>;
 }, z.core.$strip>;
 export type IssueDetail = z.infer<typeof IssueDetailSchema>;
@@ -358,12 +450,34 @@ export declare const ListIssueHistoryOutputSchema: z.ZodObject<{
 export type ListIssueHistoryOutput = z.infer<typeof ListIssueHistoryOutputSchema>;
 export declare const RequestIssueFixInputSchema: z.ZodObject<{
     issueId: z.ZodString;
+    agent: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+        provider: z.ZodLiteral<"sazabi">;
+        repositoryUrl: z.ZodOptional<z.ZodString>;
+        baseBranch: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>, z.ZodObject<{
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            warp: "warp";
+        }>;
+        connectionId: z.ZodOptional<z.ZodString>;
+        repositoryUrl: z.ZodOptional<z.ZodString>;
+        baseBranch: z.ZodOptional<z.ZodString>;
+        environmentId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>]>>;
+    clientRequestId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type RequestIssueFixInput = z.infer<typeof RequestIssueFixInputSchema>;
 export declare const RequestIssueFixOutputSchema: z.ZodObject<{
     issueId: z.ZodString;
     projectId: z.ZodString;
     issueThreadId: z.ZodString;
+    dispatchId: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type RequestIssueFixOutput = z.infer<typeof RequestIssueFixOutputSchema>;
 export declare const MarkIssueReadInputSchema: z.ZodObject<{
@@ -655,15 +769,33 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
                 "public-api": "public-api";
                 slack: "slack";
             }>;
+            agent: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                sazabi: "sazabi";
+                warp: "warp";
+            }>;
+            dispatchId: z.ZodNullable<z.ZodString>;
+            stoppedBy: z.ZodNullable<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             status: z.ZodEnum<{
                 cancelled: "cancelled";
                 failed: "failed";
                 no_pr: "no_pr";
+                paused: "paused";
                 pr_closed: "pr_closed";
                 pr_merged: "pr_merged";
                 pr_open: "pr_open";
                 queued: "queued";
                 running: "running";
+                waiting: "waiting";
             }>;
             pullRequests: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
@@ -677,6 +809,62 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
                 }>>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        fixAgents: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            connectionId: z.ZodString;
+            provider: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                warp: "warp";
+            }>;
+            displayName: z.ZodString;
+        }, z.core.$strip>>>;
+        fixAgentsNeedingAttention: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            connectionId: z.ZodString;
+            provider: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                warp: "warp";
+            }>;
+            displayName: z.ZodString;
+        }, z.core.$strip>>>;
+        fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            fullName: z.ZodString;
+            url: z.ZodString;
+            baseBranch: z.ZodString;
+        }, z.core.$strip>>>;
+        fixRepository: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            fullName: z.ZodString;
+            url: z.ZodString;
+            baseBranch: z.ZodString;
+        }, z.core.$strip>>>;
+        fixAgentDefault: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            connectionId: z.ZodString;
+            provider: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                warp: "warp";
+            }>;
+            displayName: z.ZodString;
+            environment: z.ZodNullable<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
         hasUnread: z.ZodNullable<z.ZodBoolean>;
     }, z.core.$strip>;
 }, z.core.$strip>;
@@ -733,6 +921,24 @@ export declare const LinkIssuePullRequestOutputSchema: z.ZodObject<{
     created: z.ZodBoolean;
 }, z.core.$strip>;
 export type LinkIssuePullRequestOutput = z.infer<typeof LinkIssuePullRequestOutputSchema>;
+export declare const LinkIssueTaskInputSchema: z.ZodObject<{
+    issueId: z.ZodString;
+    task: z.ZodString;
+}, z.core.$strip>;
+export type LinkIssueTaskInput = z.infer<typeof LinkIssueTaskInputSchema>;
+export declare const LinkIssueTaskOutputSchema: z.ZodObject<{
+    taskLink: z.ZodObject<{
+        provider: z.ZodEnum<{
+            github: "github";
+            jira: "jira";
+            linear: "linear";
+        }>;
+        identifier: z.ZodString;
+        url: z.ZodString;
+    }, z.core.$strip>;
+    created: z.ZodBoolean;
+}, z.core.$strip>;
+export type LinkIssueTaskOutput = z.infer<typeof LinkIssueTaskOutputSchema>;
 export declare const UnlinkIssuePullRequestInputSchema: z.ZodObject<{
     issueId: z.ZodString;
     url: z.ZodString;
@@ -1489,15 +1695,33 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
                 "public-api": "public-api";
                 slack: "slack";
             }>;
+            agent: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                sazabi: "sazabi";
+                warp: "warp";
+            }>;
+            dispatchId: z.ZodNullable<z.ZodString>;
+            stoppedBy: z.ZodNullable<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
             status: z.ZodEnum<{
                 cancelled: "cancelled";
                 failed: "failed";
                 no_pr: "no_pr";
+                paused: "paused";
                 pr_closed: "pr_closed";
                 pr_merged: "pr_merged";
                 pr_open: "pr_open";
                 queued: "queued";
                 running: "running";
+                waiting: "waiting";
             }>;
             pullRequests: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
@@ -1511,6 +1735,62 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
                 }>>;
             }, z.core.$strip>>;
         }, z.core.$strip>>;
+        fixAgents: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            connectionId: z.ZodString;
+            provider: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                warp: "warp";
+            }>;
+            displayName: z.ZodString;
+        }, z.core.$strip>>>;
+        fixAgentsNeedingAttention: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            connectionId: z.ZodString;
+            provider: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                warp: "warp";
+            }>;
+            displayName: z.ZodString;
+        }, z.core.$strip>>>;
+        fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            fullName: z.ZodString;
+            url: z.ZodString;
+            baseBranch: z.ZodString;
+        }, z.core.$strip>>>;
+        fixRepository: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            fullName: z.ZodString;
+            url: z.ZodString;
+            baseBranch: z.ZodString;
+        }, z.core.$strip>>>;
+        fixAgentDefault: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            connectionId: z.ZodString;
+            provider: z.ZodEnum<{
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
+                hoplite: "hoplite";
+                replicas: "replicas";
+                warp: "warp";
+            }>;
+            displayName: z.ZodString;
+            environment: z.ZodNullable<z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>>>;
         hasUnread: z.ZodNullable<z.ZodBoolean>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
@@ -1559,10 +1839,32 @@ export declare const listIssueHistory: import("../orpc-contracts/index.js").Oper
 }, z.core.$strip>, "api">;
 export declare const requestIssueFix: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
+    agent: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+        provider: z.ZodLiteral<"sazabi">;
+        repositoryUrl: z.ZodOptional<z.ZodString>;
+        baseBranch: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>, z.ZodObject<{
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            warp: "warp";
+        }>;
+        connectionId: z.ZodOptional<z.ZodString>;
+        repositoryUrl: z.ZodOptional<z.ZodString>;
+        baseBranch: z.ZodOptional<z.ZodString>;
+        environmentId: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>]>>;
+    clientRequestId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     issueId: z.ZodString;
     projectId: z.ZodString;
     issueThreadId: z.ZodString;
+    dispatchId: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const markIssueRead: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
@@ -1690,6 +1992,21 @@ export declare const linkIssuePullRequest: import("../orpc-contracts/index.js").
             linked: "linked";
             sazabi: "sazabi";
         }>;
+    }, z.core.$strip>;
+    created: z.ZodBoolean;
+}, z.core.$strip>, "api">;
+export declare const linkIssueTask: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    issueId: z.ZodString;
+    task: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    taskLink: z.ZodObject<{
+        provider: z.ZodEnum<{
+            github: "github";
+            jira: "jira";
+            linear: "linear";
+        }>;
+        identifier: z.ZodString;
+        url: z.ZodString;
     }, z.core.$strip>;
     created: z.ZodBoolean;
 }, z.core.$strip>, "api">;
@@ -2233,15 +2550,33 @@ export declare const issuesContract: {
                     "public-api": "public-api";
                     slack: "slack";
                 }>;
+                agent: z.ZodEnum<{
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
+                    hoplite: "hoplite";
+                    replicas: "replicas";
+                    sazabi: "sazabi";
+                    warp: "warp";
+                }>;
+                dispatchId: z.ZodNullable<z.ZodString>;
+                stoppedBy: z.ZodNullable<z.ZodObject<{
+                    id: z.ZodString;
+                    name: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
                 status: z.ZodEnum<{
                     cancelled: "cancelled";
                     failed: "failed";
                     no_pr: "no_pr";
+                    paused: "paused";
                     pr_closed: "pr_closed";
                     pr_merged: "pr_merged";
                     pr_open: "pr_open";
                     queued: "queued";
                     running: "running";
+                    waiting: "waiting";
                 }>;
                 pullRequests: z.ZodArray<z.ZodObject<{
                     id: z.ZodString;
@@ -2255,6 +2590,62 @@ export declare const issuesContract: {
                     }>>;
                 }, z.core.$strip>>;
             }, z.core.$strip>>;
+            fixAgents: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                connectionId: z.ZodString;
+                provider: z.ZodEnum<{
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
+                    hoplite: "hoplite";
+                    replicas: "replicas";
+                    warp: "warp";
+                }>;
+                displayName: z.ZodString;
+            }, z.core.$strip>>>;
+            fixAgentsNeedingAttention: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                connectionId: z.ZodString;
+                provider: z.ZodEnum<{
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
+                    hoplite: "hoplite";
+                    replicas: "replicas";
+                    warp: "warp";
+                }>;
+                displayName: z.ZodString;
+            }, z.core.$strip>>>;
+            fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                fullName: z.ZodString;
+                url: z.ZodString;
+                baseBranch: z.ZodString;
+            }, z.core.$strip>>>;
+            fixRepository: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                fullName: z.ZodString;
+                url: z.ZodString;
+                baseBranch: z.ZodString;
+            }, z.core.$strip>>>;
+            fixAgentDefault: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                connectionId: z.ZodString;
+                provider: z.ZodEnum<{
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
+                    hoplite: "hoplite";
+                    replicas: "replicas";
+                    warp: "warp";
+                }>;
+                displayName: z.ZodString;
+                environment: z.ZodNullable<z.ZodObject<{
+                    id: z.ZodString;
+                    name: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>>;
             hasUnread: z.ZodNullable<z.ZodBoolean>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -2713,10 +3104,32 @@ export declare const issuesContract: {
     readonly fixes: {
         readonly create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
             issueId: z.ZodString;
+            agent: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+                provider: z.ZodLiteral<"sazabi">;
+                repositoryUrl: z.ZodOptional<z.ZodString>;
+                baseBranch: z.ZodOptional<z.ZodString>;
+            }, z.core.$strict>, z.ZodObject<{
+                provider: z.ZodEnum<{
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
+                    hoplite: "hoplite";
+                    replicas: "replicas";
+                    warp: "warp";
+                }>;
+                connectionId: z.ZodOptional<z.ZodString>;
+                repositoryUrl: z.ZodOptional<z.ZodString>;
+                baseBranch: z.ZodOptional<z.ZodString>;
+                environmentId: z.ZodOptional<z.ZodString>;
+            }, z.core.$strip>]>>;
+            clientRequestId: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>, z.ZodObject<{
             issueId: z.ZodString;
             projectId: z.ZodString;
             issueThreadId: z.ZodString;
+            dispatchId: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
 };

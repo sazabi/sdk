@@ -15,6 +15,7 @@ export declare const DeliveryRuleConditionSchema: z.ZodObject<{
 }, z.core.$strict>;
 export declare const DeliveryRuleDestinationInputSchema: z.ZodObject<{
     channel: z.ZodEnum<{
+        better_stack: "better_stack";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -27,6 +28,7 @@ export declare const DeliveryRuleDestinationInputSchema: z.ZodObject<{
 export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -62,6 +64,7 @@ export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
 export declare const LegacyDeliveryRuleDefinitionSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -95,6 +98,7 @@ export declare const LegacyDeliveryRuleDefinitionSchema: z.ZodObject<{
 export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -138,6 +142,7 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
 export declare const DeliveryRuleDestinationSchema: z.ZodObject<{
     id: z.ZodString;
     channel: z.ZodEnum<{
+        better_stack: "better_stack";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -158,6 +163,7 @@ export declare const DeliveryRuleDestinationSchema: z.ZodObject<{
 export declare const DeliveryRuleOptionDestinationSchema: z.ZodObject<{
     id: z.ZodString;
     channel: z.ZodEnum<{
+        better_stack: "better_stack";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -199,6 +205,7 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -268,6 +275,7 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -335,6 +343,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -364,6 +373,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
             severity: "severity";
         }>>;
         channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -413,6 +423,7 @@ export type DeliveryRuleOptionsOutput = z.infer<typeof DeliveryRuleOptionsOutput
 export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -471,6 +482,7 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -521,6 +533,7 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
 export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -580,6 +593,7 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -662,6 +676,7 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -716,6 +731,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -745,6 +761,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
             severity: "severity";
         }>>;
         channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -793,6 +810,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
 export declare const createDeliveryRule: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -850,6 +868,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -900,6 +919,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
 export declare const updateDeliveryRule: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -958,6 +978,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
     destinations: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
+            better_stack: "better_stack";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -1032,6 +1053,7 @@ export declare const notificationDeliveryRulesContract: {
             destinations: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
                 channel: z.ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -1086,6 +1108,7 @@ export declare const notificationDeliveryRulesContract: {
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1115,6 +1138,7 @@ export declare const notificationDeliveryRulesContract: {
                 severity: "severity";
             }>>;
             channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1163,6 +1187,7 @@ export declare const notificationDeliveryRulesContract: {
     create: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         destinations: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1220,6 +1245,7 @@ export declare const notificationDeliveryRulesContract: {
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1270,6 +1296,7 @@ export declare const notificationDeliveryRulesContract: {
     update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         destinations: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1328,6 +1355,7 @@ export declare const notificationDeliveryRulesContract: {
         destinations: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             channel: z.ZodEnum<{
+                better_stack: "better_stack";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";

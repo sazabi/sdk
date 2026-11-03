@@ -5,19 +5,28 @@ import { z } from "zod";
  * isomorphic contract package does not pull in the server-only integrations
  * package (which imports Node crypto and database access).
  */
-export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "incident_io", "webhook", "teams", "bitbucket", "jira", "gitcafe"];
+export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "better_stack", "incident_io", "webhook", "teams", "bitbucket", "jira", "gitcafe", "cursor", "devin", "capy", "warp", "replicas", "claude", "codex", "hoplite"];
 export declare const IntegrationProviderEnum: z.ZodEnum<{
+    better_stack: "better_stack";
     bitbucket: "bitbucket";
+    capy: "capy";
+    claude: "claude";
+    codex: "codex";
+    cursor: "cursor";
+    devin: "devin";
     gitcafe: "gitcafe";
     github: "github";
+    hoplite: "hoplite";
     incident_io: "incident_io";
     jira: "jira";
     linear: "linear";
     pagerduty: "pagerduty";
+    replicas: "replicas";
     rootly: "rootly";
     slack: "slack";
     teams: "teams";
     victorops: "victorops";
+    warp: "warp";
     webhook: "webhook";
 }>;
 /** Auth flow a provider uses to connect. */
@@ -47,8 +56,67 @@ export declare const IntegrationHealthStatusEnum: z.ZodEnum<{
     unhealthy: "unhealthy";
     unknown: "unknown";
 }>;
+export declare const startCodexDeviceLogin: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodString;
+    projectId: z.ZodString;
+    accountLabel: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    loginId: z.ZodString;
+    status: z.ZodLiteral<"code_shown">;
+    verificationUrl: z.ZodString;
+    userCode: z.ZodString;
+    expiresAt: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const getCodexDeviceLoginStatus: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodString;
+    loginId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    status: z.ZodEnum<{
+        approved: "approved";
+        code_shown: "code_shown";
+        expired: "expired";
+        failed: "failed";
+        rejected_device_auth_disabled: "rejected_device_auth_disabled";
+    }>;
+    verificationUrl: z.ZodOptional<z.ZodString>;
+    userCode: z.ZodOptional<z.ZodString>;
+    expiresAt: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodOptional<z.ZodString>;
+    message: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, "api">;
+export declare const completeCodexDeviceLogin: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodString;
+    loginId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const createCodexAccessTokenConnection: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodString;
+    projectId: z.ZodString;
+    accessToken: z.ZodString;
+    accountLabel: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const startClaudeOAuthLogin: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodString;
+    projectId: z.ZodString;
+    accountLabel: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    loginId: z.ZodString;
+    authorizationUrl: z.ZodString;
+    expiresAt: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const completeClaudeOAuthLogin: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodString;
+    loginId: z.ZodString;
+    code: z.ZodString;
+    state: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+}, z.core.$strip>, "api">;
 /**
- * One credential field an `api_key` provider requires at connect time,
+ * One credential field an `api_key` provider accepts at connect time,
  * derived server-side from the provider definition so clients stay
  * schema-free.
  */
@@ -65,17 +133,26 @@ export declare const IntegrationCredentialFieldSchema: z.ZodObject<{
  */
 export declare const IntegrationProviderSchema: z.ZodObject<{
     id: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
     name: z.ZodString;
@@ -161,20 +238,30 @@ export declare const IntegrationConnectionSchema: z.ZodObject<{
     }, z.core.$strip>>;
     id: z.ZodString;
     provider: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
     displayName: z.ZodNullable<z.ZodString>;
+    distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
     status: z.ZodEnum<{
         connected: "connected";
         error: "error";
@@ -208,17 +295,26 @@ export type ListIntegrationProvidersInput = z.infer<typeof ListIntegrationProvid
 export declare const ListIntegrationProvidersOutputSchema: z.ZodObject<{
     providers: z.ZodArray<z.ZodObject<{
         id: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         name: z.ZodString;
@@ -252,17 +348,26 @@ export declare const listIntegrationProviders: import("../orpc-contracts/index.j
 }, z.core.$strip>, z.ZodObject<{
     providers: z.ZodArray<z.ZodObject<{
         id: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         name: z.ZodString;
@@ -293,17 +398,26 @@ export declare const listIntegrationProviders: import("../orpc-contracts/index.j
 export declare const ListIntegrationConnectionsInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodOptional<z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>>;
 }, z.core.$strip>;
@@ -363,20 +477,30 @@ export declare const ListIntegrationConnectionsOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -404,17 +528,26 @@ export type ListIntegrationConnectionsOutput = z.infer<typeof ListIntegrationCon
 export declare const listIntegrationConnections: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodOptional<z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>>;
 }, z.core.$strip>, z.ZodObject<{
@@ -473,20 +606,30 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -507,6 +650,96 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
         connectedBy: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
         updatedAt: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const ListCodingAgentRepositoriesInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export declare const CodingAgentRepositorySchema: z.ZodObject<{
+    url: z.ZodString;
+    fullName: z.ZodString;
+    defaultBranch: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export declare const ListCodingAgentRepositoriesOutputSchema: z.ZodObject<{
+    repositories: z.ZodArray<z.ZodObject<{
+        url: z.ZodString;
+        fullName: z.ZodString;
+        defaultBranch: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type ListCodingAgentRepositoriesInput = z.infer<typeof ListCodingAgentRepositoriesInputSchema>;
+export type ListCodingAgentRepositoriesOutput = z.infer<typeof ListCodingAgentRepositoriesOutputSchema>;
+export declare const listCodingAgentRepositories: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    repositories: z.ZodArray<z.ZodObject<{
+        url: z.ZodString;
+        fullName: z.ZodString;
+        defaultBranch: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const CodingAgentEnvironmentSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodNullable<z.ZodString>;
+    scope: z.ZodEnum<{
+        personal: "personal";
+        team: "team";
+    }>;
+    defaultBranch: z.ZodNullable<z.ZodString>;
+    repositories: z.ZodArray<z.ZodObject<{
+        url: z.ZodString;
+        fullName: z.ZodString;
+    }, z.core.$strip>>;
+    readiness: z.ZodObject<{
+        ready: z.ZodBoolean;
+        reason: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>;
+}, z.core.$strip>;
+export declare const ListCodingAgentEnvironmentsOutputSchema: z.ZodObject<{
+    supported: z.ZodBoolean;
+    environments: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+        scope: z.ZodEnum<{
+            personal: "personal";
+            team: "team";
+        }>;
+        defaultBranch: z.ZodNullable<z.ZodString>;
+        repositories: z.ZodArray<z.ZodObject<{
+            url: z.ZodString;
+            fullName: z.ZodString;
+        }, z.core.$strip>>;
+        readiness: z.ZodObject<{
+            ready: z.ZodBoolean;
+            reason: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type CodingAgentEnvironment = z.infer<typeof CodingAgentEnvironmentSchema>;
+export type ListCodingAgentEnvironmentsOutput = z.infer<typeof ListCodingAgentEnvironmentsOutputSchema>;
+export declare const listCodingAgentEnvironments: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    supported: z.ZodBoolean;
+    environments: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodNullable<z.ZodString>;
+        scope: z.ZodEnum<{
+            personal: "personal";
+            team: "team";
+        }>;
+        defaultBranch: z.ZodNullable<z.ZodString>;
+        repositories: z.ZodArray<z.ZodObject<{
+            url: z.ZodString;
+            fullName: z.ZodString;
+        }, z.core.$strip>>;
+        readiness: z.ZodObject<{
+            ready: z.ZodBoolean;
+            reason: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const GetIntegrationConnectionInputSchema: z.ZodObject<{
@@ -569,20 +802,30 @@ export declare const GetIntegrationConnectionOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -666,20 +909,30 @@ export declare const getIntegrationConnection: import("../orpc-contracts/index.j
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -704,18 +957,28 @@ export declare const getIntegrationConnection: import("../orpc-contracts/index.j
 }, z.core.$strip>, "api">;
 export declare const CreateIntegrationConnectionInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
     displayName: z.ZodOptional<z.ZodString>;
@@ -777,20 +1040,30 @@ export declare const CreateIntegrationConnectionOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -817,18 +1090,28 @@ export type CreateIntegrationConnectionInput = z.infer<typeof CreateIntegrationC
 export type CreateIntegrationConnectionOutput = z.infer<typeof CreateIntegrationConnectionOutputSchema>;
 export declare const createIntegrationConnection: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
+    projectId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
     displayName: z.ZodOptional<z.ZodString>;
@@ -889,20 +1172,30 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -928,17 +1221,26 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
 export declare const BeginIntegrationConnectInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
     displayName: z.ZodOptional<z.ZodString>;
@@ -954,17 +1256,26 @@ export type BeginIntegrationConnectOutput = z.infer<typeof BeginIntegrationConne
 export declare const beginIntegrationConnect: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
     displayName: z.ZodOptional<z.ZodString>;
@@ -1050,20 +1361,30 @@ export declare const GetIntegrationConnectAttemptOutputSchema: z.ZodObject<{
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -1156,20 +1477,30 @@ export declare const getIntegrationConnectAttempt: import("../orpc-contracts/ind
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -1210,6 +1541,7 @@ export declare const disconnectIntegrationConnection: import("../orpc-contracts/
 export declare const UpdateIntegrationConnectionCredentialsInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
     credentials: z.ZodRecord<z.ZodString, z.ZodUnknown>;
 }, z.core.$strip>;
 export declare const UpdateIntegrationConnectionCredentialsOutputSchema: z.ZodObject<{
@@ -1268,20 +1600,30 @@ export declare const UpdateIntegrationConnectionCredentialsOutputSchema: z.ZodOb
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -1309,6 +1651,7 @@ export type UpdateIntegrationConnectionCredentialsOutput = z.infer<typeof Update
 export declare const updateIntegrationConnectionCredentials: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     connectionId: z.ZodString;
+    projectId: z.ZodOptional<z.ZodString>;
     credentials: z.ZodRecord<z.ZodString, z.ZodUnknown>;
 }, z.core.$strip>, z.ZodObject<{
     connection: z.ZodObject<{
@@ -1366,20 +1709,30 @@ export declare const updateIntegrationConnectionCredentials: import("../orpc-con
         }, z.core.$strip>>;
         id: z.ZodString;
         provider: z.ZodEnum<{
+            better_stack: "better_stack";
             bitbucket: "bitbucket";
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
             gitcafe: "gitcafe";
             github: "github";
+            hoplite: "hoplite";
             incident_io: "incident_io";
             jira: "jira";
             linear: "linear";
             pagerduty: "pagerduty";
+            replicas: "replicas";
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
             victorops: "victorops";
+            warp: "warp";
             webhook: "webhook";
         }>;
         displayName: z.ZodNullable<z.ZodString>;
+        distinctName: z.ZodOptional<z.ZodNullable<z.ZodString>>;
         status: z.ZodEnum<{
             connected: "connected";
             error: "error";
@@ -1855,17 +2208,26 @@ export declare const deleteMicrosoftTeamsChannelProjectMapping: import("../orpc-
 export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
 }, z.core.$strip>;
@@ -1878,17 +2240,26 @@ export type GetActiveCLIAttemptOutput = z.infer<typeof GetActiveCLIAttemptOutput
 export declare const getActiveCLIAttempt: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
+        better_stack: "better_stack";
         bitbucket: "bitbucket";
+        capy: "capy";
+        claude: "claude";
+        codex: "codex";
+        cursor: "cursor";
+        devin: "devin";
         gitcafe: "gitcafe";
         github: "github";
+        hoplite: "hoplite";
         incident_io: "incident_io";
         jira: "jira";
         linear: "linear";
         pagerduty: "pagerduty";
+        replicas: "replicas";
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
         victorops: "victorops";
+        warp: "warp";
         webhook: "webhook";
     }>;
 }, z.core.$strip>, z.ZodNullable<z.ZodObject<{

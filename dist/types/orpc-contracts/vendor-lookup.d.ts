@@ -24,6 +24,11 @@ export declare const VENDOR_LOOKUP_OUTPUT_KEYS: {
     readonly task_item: readonly ["organizationId", "projectId", "issueId"];
     /** A forge push to the code index lane it signals: its tenant and repository. */
     readonly code_index_push_target: readonly ["organizationId", "projectId", "repositoryId", "externalRepoId"];
+    /**
+     * A project id to its organization, for the public API's project scope
+     * step, which has only the id a signed-in person names (ENG-9452).
+     */
+    readonly project_tenant: readonly ["organizationId", "projectId"];
 };
 export type VendorLookupKind = keyof typeof VENDOR_LOOKUP_OUTPUT_KEYS;
 export declare const isVendorLookupKind: (value: string) => value is VendorLookupKind;

@@ -144,9 +144,10 @@ export declare const listTasks: import("../orpc-contracts/index.js").OperationDe
  * anchors the per-card pair mapping (`isTaskSkippedInLedger`) both task-list
  * routers read — the wire enum and the ledger derivation cannot drift.
  */
-export declare const SKIPPABLE_TASK_IDS: readonly ["connect_github_account", "install_github_app", "install_slack_app", "trigger_sample_issue"];
+export declare const SKIPPABLE_TASK_IDS: readonly ["connect_github_account", "install_github_app", "install_slack_app", "trigger_sample_issue", "connect_log_sources"];
 export declare const SkippableTaskIdSchema: z.ZodEnum<{
     connect_github_account: "connect_github_account";
+    connect_log_sources: "connect_log_sources";
     install_github_app: "install_github_app";
     install_slack_app: "install_slack_app";
     trigger_sample_issue: "trigger_sample_issue";
@@ -155,6 +156,7 @@ export type SkippableTaskId = z.infer<typeof SkippableTaskIdSchema>;
 export declare const SkipTaskInputSchema: z.ZodObject<{
     taskId: z.ZodEnum<{
         connect_github_account: "connect_github_account";
+        connect_log_sources: "connect_log_sources";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";
@@ -170,6 +172,7 @@ export type SkipTaskOutput = z.infer<typeof SkipTaskOutputSchema>;
 export declare const skipTask: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     taskId: z.ZodEnum<{
         connect_github_account: "connect_github_account";
+        connect_log_sources: "connect_log_sources";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";
@@ -182,6 +185,7 @@ export declare const skipTask: import("../orpc-contracts/index.js").OperationDef
 export declare const UnskipTaskInputSchema: z.ZodObject<{
     taskId: z.ZodEnum<{
         connect_github_account: "connect_github_account";
+        connect_log_sources: "connect_log_sources";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";
@@ -197,6 +201,7 @@ export type UnskipTaskOutput = z.infer<typeof UnskipTaskOutputSchema>;
 export declare const unskipTask: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     taskId: z.ZodEnum<{
         connect_github_account: "connect_github_account";
+        connect_log_sources: "connect_log_sources";
         install_github_app: "install_github_app";
         install_slack_app: "install_slack_app";
         trigger_sample_issue: "trigger_sample_issue";

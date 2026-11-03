@@ -13,6 +13,12 @@ import { z } from "zod";
  * "some other failure"; removing one is breaking, so retire a class by
  * leaving it dormant instead.
  */
+/**
+ * Dormant classes: no new run ends with one, but persisted run results still
+ * carry them, so the schema keeps them. The public docs' API reference leaves
+ * them out (apps/docs-mintlify/scripts/build-openapi.ts).
+ */
+export declare const HISTORICAL_RUN_FAILURE_CLASSES: readonly ["ambient_denied"];
 export declare const RunFailureClassSchema: z.ZodEnum<{
     ambient_denied: "ambient_denied";
     billing_account_missing: "billing_account_missing";

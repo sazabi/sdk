@@ -1,4 +1,5 @@
 import { type AgentStreamCursor, type PublicAgentStreamEvent } from "../public-api/index.js";
+import type { ClientFetch } from "./fetch.js";
 /**
  * Minimal credential provider shape needed by the agent stream transports.
  */
@@ -10,7 +11,7 @@ export interface AgentStreamCredentialProvider {
  */
 export interface AgentStreamTransportOptions {
     credentialProvider: AgentStreamCredentialProvider;
-    fetch?: typeof globalThis.fetch;
+    fetch?: ClientFetch;
     /** Public API base URL. Normalized to the `/v1` root, matching the oRPC link. */
     apiBaseUrl?: string;
     /**

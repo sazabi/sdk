@@ -2,6 +2,382 @@
  * Contract tree for public API operations that are implemented contract-first.
  */
 export declare const publicApiContract: {
+    readonly agentDispatches: {
+        readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            issueId: import("zod").ZodOptional<import("zod").ZodString>;
+            connectionId: import("zod").ZodOptional<import("zod").ZodString>;
+            status: import("zod").ZodOptional<import("zod").ZodEnum<{
+                cancel_requested: "cancel_requested";
+                cancelled: "cancelled";
+                completed: "completed";
+                failed: "failed";
+                paused: "paused";
+                queued: "queued";
+                running: "running";
+                unknown: "unknown";
+                waiting: "waiting";
+            }>>;
+            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            dispatches: import("zod").ZodArray<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                id: import("zod").ZodString;
+                issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+                issueId: import("zod").ZodNullable<import("zod").ZodString>;
+                threadId: import("zod").ZodString;
+                connectionId: import("zod").ZodString;
+                provider: import("zod").ZodString;
+                requesterUserId: import("zod").ZodString;
+                connectionOwnerUserId: import("zod").ZodString;
+                clientRequestId: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>;
+                externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                repositoryUrl: import("zod").ZodString;
+                baseBranch: import("zod").ZodString;
+                result: import("zod").ZodNullable<import("zod").ZodString>;
+                turns: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    direction: import("zod").ZodEnum<{
+                        inbound: "inbound";
+                        outbound: "outbound";
+                    }>;
+                    text: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        cancel_requested: "cancel_requested";
+                        cancelled: "cancelled";
+                        completed: "completed";
+                        failed: "failed";
+                        paused: "paused";
+                        queued: "queued";
+                        running: "running";
+                        unknown: "unknown";
+                        waiting: "waiting";
+                    }>>;
+                    requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                    userId: import("zod").ZodNullable<import("zod").ZodString>;
+                    externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                    messageId: import("zod").ZodString;
+                    sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                progress: import("zod").ZodArray<import("zod").ZodObject<{
+                    at: import("zod").ZodString;
+                    role: import("zod").ZodEnum<{
+                        agent: "agent";
+                        system: "system";
+                    }>;
+                    text: import("zod").ZodString;
+                    vendorMessageId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                reopenable: import("zod").ZodBoolean;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            dispatchId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            id: import("zod").ZodString;
+            issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+            issueId: import("zod").ZodNullable<import("zod").ZodString>;
+            threadId: import("zod").ZodString;
+            connectionId: import("zod").ZodString;
+            provider: import("zod").ZodString;
+            requesterUserId: import("zod").ZodString;
+            connectionOwnerUserId: import("zod").ZodString;
+            clientRequestId: import("zod").ZodString;
+            status: import("zod").ZodEnum<{
+                cancel_requested: "cancel_requested";
+                cancelled: "cancelled";
+                completed: "completed";
+                failed: "failed";
+                paused: "paused";
+                queued: "queued";
+                running: "running";
+                unknown: "unknown";
+                waiting: "waiting";
+            }>;
+            externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+            externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            repositoryUrl: import("zod").ZodString;
+            baseBranch: import("zod").ZodString;
+            result: import("zod").ZodNullable<import("zod").ZodString>;
+            turns: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                direction: import("zod").ZodEnum<{
+                    inbound: "inbound";
+                    outbound: "outbound";
+                }>;
+                text: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>>;
+                requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                userId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                messageId: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            progress: import("zod").ZodArray<import("zod").ZodObject<{
+                at: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    agent: "agent";
+                    system: "system";
+                }>;
+                text: import("zod").ZodString;
+                vendorMessageId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            reopenable: import("zod").ZodBoolean;
+            createdAt: import("zod").ZodString;
+            updatedAt: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly replies: {
+            readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                dispatchId: import("zod").ZodString;
+                clientRequestId: import("zod").ZodString;
+                text: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                id: import("zod").ZodString;
+                issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+                issueId: import("zod").ZodNullable<import("zod").ZodString>;
+                threadId: import("zod").ZodString;
+                connectionId: import("zod").ZodString;
+                provider: import("zod").ZodString;
+                requesterUserId: import("zod").ZodString;
+                connectionOwnerUserId: import("zod").ZodString;
+                clientRequestId: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>;
+                externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                repositoryUrl: import("zod").ZodString;
+                baseBranch: import("zod").ZodString;
+                result: import("zod").ZodNullable<import("zod").ZodString>;
+                turns: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    direction: import("zod").ZodEnum<{
+                        inbound: "inbound";
+                        outbound: "outbound";
+                    }>;
+                    text: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        cancel_requested: "cancel_requested";
+                        cancelled: "cancelled";
+                        completed: "completed";
+                        failed: "failed";
+                        paused: "paused";
+                        queued: "queued";
+                        running: "running";
+                        unknown: "unknown";
+                        waiting: "waiting";
+                    }>>;
+                    requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                    userId: import("zod").ZodNullable<import("zod").ZodString>;
+                    externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                    messageId: import("zod").ZodString;
+                    sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                progress: import("zod").ZodArray<import("zod").ZodObject<{
+                    at: import("zod").ZodString;
+                    role: import("zod").ZodEnum<{
+                        agent: "agent";
+                        system: "system";
+                    }>;
+                    text: import("zod").ZodString;
+                    vendorMessageId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                reopenable: import("zod").ZodBoolean;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+        readonly cancel: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            dispatchId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            id: import("zod").ZodString;
+            issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+            issueId: import("zod").ZodNullable<import("zod").ZodString>;
+            threadId: import("zod").ZodString;
+            connectionId: import("zod").ZodString;
+            provider: import("zod").ZodString;
+            requesterUserId: import("zod").ZodString;
+            connectionOwnerUserId: import("zod").ZodString;
+            clientRequestId: import("zod").ZodString;
+            status: import("zod").ZodEnum<{
+                cancel_requested: "cancel_requested";
+                cancelled: "cancelled";
+                completed: "completed";
+                failed: "failed";
+                paused: "paused";
+                queued: "queued";
+                running: "running";
+                unknown: "unknown";
+                waiting: "waiting";
+            }>;
+            externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+            externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            repositoryUrl: import("zod").ZodString;
+            baseBranch: import("zod").ZodString;
+            result: import("zod").ZodNullable<import("zod").ZodString>;
+            turns: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                direction: import("zod").ZodEnum<{
+                    inbound: "inbound";
+                    outbound: "outbound";
+                }>;
+                text: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>>;
+                requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                userId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                messageId: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            progress: import("zod").ZodArray<import("zod").ZodObject<{
+                at: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    agent: "agent";
+                    system: "system";
+                }>;
+                text: import("zod").ZodString;
+                vendorMessageId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            reopenable: import("zod").ZodBoolean;
+            createdAt: import("zod").ZodString;
+            updatedAt: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly projectDefault: {
+            readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                default: import("zod").ZodNullable<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
+                    environment: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                agent: import("zod").ZodNullable<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                clearEnvironment: import("zod").ZodDefault<import("zod").ZodBoolean>;
+                environmentId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                default: import("zod").ZodNullable<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
+                    environment: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+    };
     readonly me: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{}, import("zod/v4/core").$strip>, import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
         credentialType: import("zod").ZodLiteral<"user">;
         user: import("zod").ZodObject<{
@@ -2335,7 +2711,7 @@ export declare const publicApiContract: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2353,7 +2729,7 @@ export declare const publicApiContract: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2378,7 +2754,6 @@ export declare const publicApiContract: {
                                 "http.response.status_code": "http.response.status_code";
                                 "http.route": "http.route";
                                 "k8s.pod.name": "k8s.pod.name";
-                                "log.record.uid": "log.record.uid";
                                 operation_kind: "operation_kind";
                                 "server.address": "server.address";
                                 severity_text: "severity_text";
@@ -2417,7 +2792,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2435,7 +2810,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2456,7 +2831,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2474,7 +2849,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2510,7 +2885,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2528,7 +2903,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2567,7 +2942,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2585,7 +2960,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2671,7 +3046,7 @@ export declare const publicApiContract: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2689,7 +3064,7 @@ export declare const publicApiContract: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -2714,7 +3089,6 @@ export declare const publicApiContract: {
                                 "http.response.status_code": "http.response.status_code";
                                 "http.route": "http.route";
                                 "k8s.pod.name": "k8s.pod.name";
-                                "log.record.uid": "log.record.uid";
                                 operation_kind: "operation_kind";
                                 "server.address": "server.address";
                                 severity_text: "severity_text";
@@ -2753,7 +3127,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2771,7 +3145,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2792,7 +3166,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2810,7 +3184,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2846,7 +3220,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2864,7 +3238,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2903,7 +3277,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -2921,7 +3295,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3014,7 +3388,7 @@ export declare const publicApiContract: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -3032,7 +3406,7 @@ export declare const publicApiContract: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -3057,7 +3431,6 @@ export declare const publicApiContract: {
                                 "http.response.status_code": "http.response.status_code";
                                 "http.route": "http.route";
                                 "k8s.pod.name": "k8s.pod.name";
-                                "log.record.uid": "log.record.uid";
                                 operation_kind: "operation_kind";
                                 "server.address": "server.address";
                                 severity_text: "severity_text";
@@ -3096,7 +3469,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3114,7 +3487,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3135,7 +3508,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3153,7 +3526,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3189,7 +3562,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3207,7 +3580,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3246,7 +3619,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3264,7 +3637,7 @@ export declare const publicApiContract: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -3401,7 +3774,6 @@ export declare const publicApiContract: {
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     examples: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -3420,7 +3792,6 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
                     time: import("zod").ZodString;
                     service: import("zod").ZodString;
                     severity: import("zod").ZodString;
@@ -3528,7 +3899,6 @@ export declare const publicApiContract: {
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         examples: import("zod").ZodArray<import("zod").ZodObject<{
-                            id: import("zod").ZodString;
                             time: import("zod").ZodString;
                             service: import("zod").ZodString;
                             severity: import("zod").ZodString;
@@ -3547,7 +3917,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                     kind: import("zod").ZodLiteral<"rows">;
                     rows: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -3683,7 +4052,7 @@ export declare const publicApiContract: {
                     kind: "severity";
                 } | {
                     kind: "column";
-                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3701,7 +4070,7 @@ export declare const publicApiContract: {
                     kind: "severity";
                 } | {
                     kind: "column";
-                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -3726,7 +4095,6 @@ export declare const publicApiContract: {
                         "http.response.status_code": "http.response.status_code";
                         "http.route": "http.route";
                         "k8s.pod.name": "k8s.pod.name";
-                        "log.record.uid": "log.record.uid";
                         operation_kind: "operation_kind";
                         "server.address": "server.address";
                         severity_text: "severity_text";
@@ -3765,7 +4133,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -3783,7 +4151,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -3804,7 +4172,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -3822,7 +4190,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -3858,7 +4226,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -3876,7 +4244,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -3915,7 +4283,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -3933,7 +4301,7 @@ export declare const publicApiContract: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -4017,7 +4385,6 @@ export declare const publicApiContract: {
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     examples: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -4036,7 +4403,6 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
                     time: import("zod").ZodString;
                     service: import("zod").ZodString;
                     severity: import("zod").ZodString;
@@ -4144,7 +4510,6 @@ export declare const publicApiContract: {
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         examples: import("zod").ZodArray<import("zod").ZodObject<{
-                            id: import("zod").ZodString;
                             time: import("zod").ZodString;
                             service: import("zod").ZodString;
                             severity: import("zod").ZodString;
@@ -4163,7 +4528,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                     kind: import("zod").ZodLiteral<"rows">;
                     rows: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -4325,7 +4689,6 @@ export declare const publicApiContract: {
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     examples: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -4344,7 +4707,6 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
                     time: import("zod").ZodString;
                     service: import("zod").ZodString;
                     severity: import("zod").ZodString;
@@ -4452,7 +4814,6 @@ export declare const publicApiContract: {
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         examples: import("zod").ZodArray<import("zod").ZodObject<{
-                            id: import("zod").ZodString;
                             time: import("zod").ZodString;
                             service: import("zod").ZodString;
                             severity: import("zod").ZodString;
@@ -4471,7 +4832,6 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                     kind: import("zod").ZodLiteral<"rows">;
                     rows: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -4653,21 +5013,27 @@ export declare const publicApiContract: {
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodOptional<import("zod").ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -4675,6 +5041,7 @@ export declare const publicApiContract: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -4689,6 +5056,7 @@ export declare const publicApiContract: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -4755,21 +5123,27 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -4777,6 +5151,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -4791,6 +5166,7 @@ export declare const publicApiContract: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -4817,21 +5193,27 @@ export declare const publicApiContract: {
         readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -4839,6 +5221,7 @@ export declare const publicApiContract: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -4853,6 +5236,7 @@ export declare const publicApiContract: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -4924,21 +5308,27 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -4946,6 +5336,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -4960,6 +5351,7 @@ export declare const publicApiContract: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -5066,21 +5458,27 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -5088,6 +5486,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -5102,6 +5501,7 @@ export declare const publicApiContract: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -5242,21 +5642,27 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -5264,6 +5670,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -5278,6 +5685,7 @@ export declare const publicApiContract: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -5656,17 +6064,26 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             providers: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 name: import("zod").ZodString;
@@ -5697,17 +6114,26 @@ export declare const publicApiContract: {
         readonly listConnections: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodOptional<import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -5766,20 +6192,30 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -5861,20 +6297,30 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -5897,6 +6343,43 @@ export declare const publicApiContract: {
                 updatedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly codingAgentRepositories: {
+            readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                    url: import("zod").ZodString;
+                    fullName: import("zod").ZodString;
+                    defaultBranch: import("zod").ZodNullable<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+        readonly codingAgentEnvironments: {
+            readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                supported: import("zod").ZodBoolean;
+                environments: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    name: import("zod").ZodNullable<import("zod").ZodString>;
+                    scope: import("zod").ZodEnum<{
+                        personal: "personal";
+                        team: "team";
+                    }>;
+                    defaultBranch: import("zod").ZodNullable<import("zod").ZodString>;
+                    repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                        url: import("zod").ZodString;
+                        fullName: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    readiness: import("zod").ZodObject<{
+                        ready: import("zod").ZodBoolean;
+                        reason: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
         readonly getLinearAutomationConfiguration: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             connectionId: import("zod").ZodString;
@@ -5926,18 +6409,28 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly createConnection: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>;
             displayName: import("zod").ZodOptional<import("zod").ZodString>;
@@ -5998,20 +6491,30 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -6037,17 +6540,26 @@ export declare const publicApiContract: {
         readonly beginConnect: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>;
             displayName: import("zod").ZodOptional<import("zod").ZodString>;
@@ -6057,6 +6569,69 @@ export declare const publicApiContract: {
             attemptId: import("zod").ZodString;
             expiresAt: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly codexDeviceLogin: {
+            readonly beginConnect: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                accountLabel: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                loginId: import("zod").ZodString;
+                status: import("zod").ZodLiteral<"code_shown">;
+                verificationUrl: import("zod").ZodString;
+                userCode: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly getStatus: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                loginId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                status: import("zod").ZodEnum<{
+                    approved: "approved";
+                    code_shown: "code_shown";
+                    expired: "expired";
+                    failed: "failed";
+                    rejected_device_auth_disabled: "rejected_device_auth_disabled";
+                }>;
+                verificationUrl: import("zod").ZodOptional<import("zod").ZodString>;
+                userCode: import("zod").ZodOptional<import("zod").ZodString>;
+                expiresAt: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodOptional<import("zod").ZodString>;
+                message: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly finish: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                loginId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                accessToken: import("zod").ZodString;
+                accountLabel: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+        readonly claude: {
+            readonly beginConnect: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                accountLabel: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                loginId: import("zod").ZodString;
+                authorizationUrl: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly finish: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                loginId: import("zod").ZodString;
+                code: import("zod").ZodString;
+                state: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
         readonly getConnectAttempt: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             attemptId: import("zod").ZodString;
@@ -6125,20 +6700,30 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -6164,17 +6749,26 @@ export declare const publicApiContract: {
         readonly getActiveCLIAttempt: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>;
         }, import("zod/v4/core").$strip>, import("zod").ZodNullable<import("zod").ZodObject<{
@@ -6190,6 +6784,7 @@ export declare const publicApiContract: {
         readonly updateConnectionCredentials: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             connectionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
             credentials: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             connection: import("zod").ZodObject<{
@@ -6247,20 +6842,30 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -6488,6 +7093,7 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             channelCards: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     email: "email";
                     in_app: "in_app";
                     incident_io: "incident_io";
@@ -6593,6 +7199,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
             channels: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -6605,6 +7212,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
             notificationTypePreferences: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -6694,6 +7302,7 @@ export declare const publicApiContract: {
                 destinations: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     channel: import("zod").ZodEnum<{
+                        better_stack: "better_stack";
                         incident_io: "incident_io";
                         pagerduty: "pagerduty";
                         rootly: "rootly";
@@ -6748,6 +7357,7 @@ export declare const publicApiContract: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -6777,6 +7387,7 @@ export declare const publicApiContract: {
                     severity: "severity";
                 }>>;
                 channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -6825,6 +7436,7 @@ export declare const publicApiContract: {
         readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -6882,6 +7494,7 @@ export declare const publicApiContract: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -6932,6 +7545,7 @@ export declare const publicApiContract: {
         readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -6990,6 +7604,7 @@ export declare const publicApiContract: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -8464,6 +9079,7 @@ export declare const publicApiContract: {
                 cliType: import("zod").ZodString;
                 credentialSource: import("zod").ZodEnum<{
                     bitbucket_integration: "bitbucket_integration";
+                    coding_agent_integration: "coding_agent_integration";
                     github_app: "github_app";
                     personal_access_token: "personal_access_token";
                     stored_credentials: "stored_credentials";
@@ -9440,6 +10056,503 @@ export declare const publicApiContract: {
                 deactivatedAt: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
+    readonly sso: {
+        readonly connections: {
+            readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connection: import("zod").ZodNullable<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    providerId: import("zod").ZodString;
+                    protocol: import("zod").ZodEnum<{
+                        oidc: "oidc";
+                        saml: "saml";
+                    }>;
+                    issuer: import("zod").ZodString;
+                    oidc: import("zod").ZodNullable<import("zod").ZodObject<{
+                        clientId: import("zod").ZodString;
+                        hasClientSecret: import("zod").ZodBoolean;
+                    }, import("zod/v4/core").$strip>>;
+                    saml: import("zod").ZodNullable<import("zod").ZodObject<{
+                        ssoUrl: import("zod").ZodString;
+                        certificates: import("zod").ZodArray<import("zod").ZodObject<{
+                            fingerprint: import("zod").ZodString;
+                            notAfter: import("zod").ZodNullable<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                        metadataUrl: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    defaultRole: import("zod").ZodEnum<{
+                        member: "member";
+                        viewer: "viewer";
+                    }>;
+                    jitEnabled: import("zod").ZodBoolean;
+                    scimOnly: import("zod").ZodBoolean;
+                    maxSessionAgeSeconds: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    testedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    disabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                    updatedAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                serviceProvider: import("zod").ZodObject<{
+                    entityId: import("zod").ZodString;
+                    acsUrl: import("zod").ZodString;
+                    metadataUrl: import("zod").ZodString;
+                    oidcRedirectUrl: import("zod").ZodString;
+                    initiateLoginUrl: import("zod").ZodString;
+                    certificate: import("zod").ZodNullable<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly upsert: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                protocol: import("zod").ZodEnum<{
+                    oidc: "oidc";
+                    saml: "saml";
+                }>;
+                issuer: import("zod").ZodOptional<import("zod").ZodString>;
+                oidc: import("zod").ZodOptional<import("zod").ZodObject<{
+                    clientId: import("zod").ZodOptional<import("zod").ZodString>;
+                    clientSecret: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+                saml: import("zod").ZodOptional<import("zod").ZodObject<{
+                    ssoUrl: import("zod").ZodOptional<import("zod").ZodURL>;
+                    certificates: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    metadataUrl: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodURL>>;
+                }, import("zod/v4/core").$strip>>;
+                defaultRole: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    member: "member";
+                    viewer: "viewer";
+                }>>;
+                jitEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                scimOnly: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                maxSessionAgeSeconds: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodNumber>>;
+                disabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connection: import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    providerId: import("zod").ZodString;
+                    protocol: import("zod").ZodEnum<{
+                        oidc: "oidc";
+                        saml: "saml";
+                    }>;
+                    issuer: import("zod").ZodString;
+                    oidc: import("zod").ZodNullable<import("zod").ZodObject<{
+                        clientId: import("zod").ZodString;
+                        hasClientSecret: import("zod").ZodBoolean;
+                    }, import("zod/v4/core").$strip>>;
+                    saml: import("zod").ZodNullable<import("zod").ZodObject<{
+                        ssoUrl: import("zod").ZodString;
+                        certificates: import("zod").ZodArray<import("zod").ZodObject<{
+                            fingerprint: import("zod").ZodString;
+                            notAfter: import("zod").ZodNullable<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                        metadataUrl: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    defaultRole: import("zod").ZodEnum<{
+                        member: "member";
+                        viewer: "viewer";
+                    }>;
+                    jitEnabled: import("zod").ZodBoolean;
+                    scimOnly: import("zod").ZodBoolean;
+                    maxSessionAgeSeconds: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    testedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    disabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                    updatedAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                created: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                deleted: import("zod").ZodBoolean;
+                endedAccessUserCount: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly test: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                signInUrl: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+        readonly getStatus: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            connection: import("zod").ZodNullable<import("zod").ZodObject<{
+                protocol: import("zod").ZodEnum<{
+                    oidc: "oidc";
+                    saml: "saml";
+                }>;
+                state: import("zod").ZodEnum<{
+                    active: "active";
+                    disabled: "disabled";
+                    untested: "untested";
+                }>;
+                testedAt: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>;
+            domains: import("zod").ZodArray<import("zod").ZodObject<{
+                domain: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    lapsed: "lapsed";
+                    pending: "pending";
+                    verified: "verified";
+                }>;
+                verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                enforceSso: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>>;
+            enforced: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly domains: {
+            readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                domains: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    domain: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        lapsed: "lapsed";
+                        pending: "pending";
+                        verified: "verified";
+                    }>;
+                    verificationRecord: import("zod").ZodObject<{
+                        type: import("zod").ZodLiteral<"TXT">;
+                        name: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                    verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    lastCheckedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    enforceSso: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly claim: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                domain: import("zod").ZodPipe<import("zod").ZodPipe<import("zod").ZodString, import("zod").ZodTransform<string, string>>, import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                domain: import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    domain: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        lapsed: "lapsed";
+                        pending: "pending";
+                        verified: "verified";
+                    }>;
+                    verificationRecord: import("zod").ZodObject<{
+                        type: import("zod").ZodLiteral<"TXT">;
+                        name: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                    verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    lastCheckedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    enforceSso: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                created: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly verify: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                domain: import("zod").ZodPipe<import("zod").ZodPipe<import("zod").ZodString, import("zod").ZodTransform<string, string>>, import("zod").ZodString>;
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                domain: import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    domain: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        lapsed: "lapsed";
+                        pending: "pending";
+                        verified: "verified";
+                    }>;
+                    verificationRecord: import("zod").ZodObject<{
+                        type: import("zod").ZodLiteral<"TXT">;
+                        name: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                    verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    lastCheckedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    enforceSso: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                outcome: import("zod").ZodEnum<{
+                    dns_error: "dns_error";
+                    found: "found";
+                    not_found: "not_found";
+                }>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly remove: import("@orpc/contract").ContractProcedure<import("zod").ZodPipe<import("zod").ZodObject<{
+                params: import("zod").ZodObject<{
+                    domain: import("zod").ZodPipe<import("zod").ZodPipe<import("zod").ZodString, import("zod").ZodTransform<string, string>>, import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>;
+                query: import("zod").ZodDefault<import("zod").ZodObject<{
+                    organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
+                domain: string;
+                organizationId?: string | undefined;
+            }, {
+                params: {
+                    domain: string;
+                };
+                query: {
+                    organizationId?: string | undefined;
+                };
+            }>>, import("zod").ZodObject<{
+                domainId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+        readonly breakGlass: {
+            readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                owners: import("zod").ZodArray<import("zod").ZodObject<{
+                    userId: import("zod").ZodString;
+                    email: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                    designatedByUserId: import("zod").ZodString;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly setOwners: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                emails: import("zod").ZodArray<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                owners: import("zod").ZodArray<import("zod").ZodObject<{
+                    userId: import("zod").ZodString;
+                    email: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                    designatedByUserId: import("zod").ZodString;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+        readonly scim: {
+            readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodNullable<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly enable: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                expiresAt: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                enabled: import("zod").ZodBoolean;
+                token: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly rotateToken: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                expiresAt: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                token: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly disable: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                disabled: import("zod").ZodBoolean;
+                revokedTokenCount: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly pause: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                paused: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly resume: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                resumed: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly setThreshold: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                threshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly mismatchReport: {
+                readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                    organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    report: import("zod").ZodNullable<import("zod").ZodObject<{
+                        connectionId: import("zod").ZodString;
+                        generatedAt: import("zod").ZodString;
+                        signInWindowDays: import("zod").ZodNumber;
+                        lastRequestAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        signedInWithoutScimRecord: import("zod").ZodObject<{
+                            members: import("zod").ZodArray<import("zod").ZodObject<{
+                                userId: import("zod").ZodString;
+                                email: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                lastSignInAt: import("zod").ZodString;
+                                linkedAt: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            truncated: import("zod").ZodBoolean;
+                        }, import("zod/v4/core").$strip>;
+                        scimRecordsNeverSignedIn: import("zod").ZodObject<{
+                            records: import("zod").ZodArray<import("zod").ZodObject<{
+                                scimUserId: import("zod").ZodString;
+                                userId: import("zod").ZodString;
+                                userName: import("zod").ZodString;
+                                externalId: import("zod").ZodString;
+                                createdAt: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            truncated: import("zod").ZodBoolean;
+                        }, import("zod/v4/core").$strip>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            };
+            readonly listMembers: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                cursor: import("zod").ZodOptional<import("zod").ZodString>;
+                limit: import("zod").ZodOptional<import("zod").ZodCoercedNumber<unknown>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                members: import("zod").ZodArray<import("zod").ZodObject<{
+                    scimUserId: import("zod").ZodString;
+                    userId: import("zod").ZodString;
+                    email: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                    role: import("zod").ZodString;
+                    userName: import("zod").ZodString;
+                    externalId: import("zod").ZodString;
+                    active: import("zod").ZodBoolean;
+                    connectionId: import("zod").ZodString;
+                    connectionState: import("zod").ZodEnum<{
+                        deleted: "deleted";
+                        live: "live";
+                        scim_off: "scim_off";
+                    }>;
+                    provisionedAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
     };
     readonly secretKeys: {
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -10752,15 +11865,33 @@ export declare const publicApiContract: {
                         "public-api": "public-api";
                         slack: "slack";
                     }>;
+                    agent: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        sazabi: "sazabi";
+                        warp: "warp";
+                    }>;
+                    dispatchId: import("zod").ZodNullable<import("zod").ZodString>;
+                    stoppedBy: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
                     status: import("zod").ZodEnum<{
                         cancelled: "cancelled";
                         failed: "failed";
                         no_pr: "no_pr";
+                        paused: "paused";
                         pr_closed: "pr_closed";
                         pr_merged: "pr_merged";
                         pr_open: "pr_open";
                         queued: "queued";
                         running: "running";
+                        waiting: "waiting";
                     }>;
                     pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
                         id: import("zod").ZodString;
@@ -10774,6 +11905,62 @@ export declare const publicApiContract: {
                         }>>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
+                fixAgents: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    displayName: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixAgentsNeedingAttention: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    displayName: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixRepositories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    fullName: import("zod").ZodString;
+                    url: import("zod").ZodString;
+                    baseBranch: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixRepository: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    fullName: import("zod").ZodString;
+                    url: import("zod").ZodString;
+                    baseBranch: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixAgentDefault: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    displayName: import("zod").ZodString;
+                    environment: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>>;
                 hasUnread: import("zod").ZodNullable<import("zod").ZodBoolean>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -10859,6 +12046,21 @@ export declare const publicApiContract: {
                     linked: "linked";
                     sazabi: "sazabi";
                 }>;
+            }, import("zod/v4/core").$strip>;
+            created: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly linkTask: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            issueId: import("zod").ZodString;
+            task: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            taskLink: import("zod").ZodObject<{
+                provider: import("zod").ZodEnum<{
+                    github: "github";
+                    jira: "jira";
+                    linear: "linear";
+                }>;
+                identifier: import("zod").ZodString;
+                url: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
             created: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -11232,10 +12434,32 @@ export declare const publicApiContract: {
         readonly fixes: {
             readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
                 issueId: import("zod").ZodString;
+                agent: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    provider: import("zod").ZodLiteral<"sazabi">;
+                    repositoryUrl: import("zod").ZodOptional<import("zod").ZodString>;
+                    baseBranch: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodOptional<import("zod").ZodString>;
+                    repositoryUrl: import("zod").ZodOptional<import("zod").ZodString>;
+                    baseBranch: import("zod").ZodOptional<import("zod").ZodString>;
+                    environmentId: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>]>>;
+                clientRequestId: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 issueId: import("zod").ZodString;
                 projectId: import("zod").ZodString;
                 issueThreadId: import("zod").ZodString;
+                dispatchId: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         };
     };
@@ -11802,6 +13026,8 @@ export declare const publicApiContract: {
                 overageQuantity: import("zod").ZodString;
                 unitPrice: import("zod").ZodString;
                 amount: import("zod").ZodString;
+                grantedQuantity: import("zod").ZodOptional<import("zod").ZodString>;
+                grantedAmount: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             totalAmount: import("zod").ZodString;
             issueRejectionCount: import("zod").ZodNumber;
@@ -11840,6 +13066,7 @@ export declare const publicApiContract: {
                     }>;
                     quantity: import("zod").ZodNullable<import("zod").ZodString>;
                     includedQuantity: import("zod").ZodNullable<import("zod").ZodString>;
+                    grantedQuantity: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     valueCents: import("zod").ZodNullable<import("zod").ZodString>;
                     chargeCents: import("zod").ZodNullable<import("zod").ZodString>;
                     pricingStatus: import("zod").ZodEnum<{
@@ -11870,6 +13097,42 @@ export declare const publicApiContract: {
                 totalChargeCents: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         };
+        readonly listUsageGrants: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            items: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                program: import("zod").ZodString;
+                programDisplayName: import("zod").ZodString;
+                productKey: import("zod").ZodEnum<{
+                    ai_tokens: "ai_tokens";
+                    automation_runs_completed: "automation_runs_completed";
+                    input_tokens: "input_tokens";
+                    issues_created: "issues_created";
+                    log_queries_executed: "log_queries_executed";
+                    log_questions_answered: "log_questions_answered";
+                    logs_accepted_bytes: "logs_accepted_bytes";
+                    logs_ingested_bytes: "logs_ingested_bytes";
+                    logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                    output_tokens: "output_tokens";
+                    pull_request_reviews_completed: "pull_request_reviews_completed";
+                    pull_requests_created: "pull_requests_created";
+                }>;
+                displayName: import("zod").ZodString;
+                grantedQuantity: import("zod").ZodString;
+                usedQuantity: import("zod").ZodString;
+                remainingQuantity: import("zod").ZodString;
+                effectiveAt: import("zod").ZodString;
+                endsAt: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    active: "active";
+                    exhausted: "exhausted";
+                    expired: "expired";
+                    revoked: "revoked";
+                    scheduled: "scheduled";
+                }>;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly listUsageInvoices: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
@@ -11903,6 +13166,8 @@ export declare const publicApiContract: {
                     overageQuantity: import("zod").ZodString;
                     unitPrice: import("zod").ZodString;
                     amount: import("zod").ZodString;
+                    grantedQuantity: import("zod").ZodOptional<import("zod").ZodString>;
+                    grantedAmount: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 hostedInvoiceUrl: import("zod").ZodNullable<import("zod").ZodString>;
                 finalizedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -12433,6 +13698,7 @@ export declare const publicApiContract: {
         readonly skip: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             taskId: import("zod").ZodEnum<{
                 connect_github_account: "connect_github_account";
+                connect_log_sources: "connect_log_sources";
                 install_github_app: "install_github_app";
                 install_slack_app: "install_slack_app";
                 trigger_sample_issue: "trigger_sample_issue";
@@ -12445,6 +13711,7 @@ export declare const publicApiContract: {
         readonly unskip: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             taskId: import("zod").ZodEnum<{
                 connect_github_account: "connect_github_account";
+                connect_log_sources: "connect_log_sources";
                 install_github_app: "install_github_app";
                 install_slack_app: "install_slack_app";
                 trigger_sample_issue: "trigger_sample_issue";
@@ -13196,6 +14463,382 @@ export declare const publicApiContract: {
  * Operation tree mirroring the public API contract structure.
  */
 export declare const publicApiOperations: {
+    readonly agentDispatches: {
+        readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            issueId: import("zod").ZodOptional<import("zod").ZodString>;
+            connectionId: import("zod").ZodOptional<import("zod").ZodString>;
+            status: import("zod").ZodOptional<import("zod").ZodEnum<{
+                cancel_requested: "cancel_requested";
+                cancelled: "cancelled";
+                completed: "completed";
+                failed: "failed";
+                paused: "paused";
+                queued: "queued";
+                running: "running";
+                unknown: "unknown";
+                waiting: "waiting";
+            }>>;
+            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            dispatches: import("zod").ZodArray<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                id: import("zod").ZodString;
+                issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+                issueId: import("zod").ZodNullable<import("zod").ZodString>;
+                threadId: import("zod").ZodString;
+                connectionId: import("zod").ZodString;
+                provider: import("zod").ZodString;
+                requesterUserId: import("zod").ZodString;
+                connectionOwnerUserId: import("zod").ZodString;
+                clientRequestId: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>;
+                externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                repositoryUrl: import("zod").ZodString;
+                baseBranch: import("zod").ZodString;
+                result: import("zod").ZodNullable<import("zod").ZodString>;
+                turns: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    direction: import("zod").ZodEnum<{
+                        inbound: "inbound";
+                        outbound: "outbound";
+                    }>;
+                    text: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        cancel_requested: "cancel_requested";
+                        cancelled: "cancelled";
+                        completed: "completed";
+                        failed: "failed";
+                        paused: "paused";
+                        queued: "queued";
+                        running: "running";
+                        unknown: "unknown";
+                        waiting: "waiting";
+                    }>>;
+                    requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                    userId: import("zod").ZodNullable<import("zod").ZodString>;
+                    externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                    messageId: import("zod").ZodString;
+                    sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                progress: import("zod").ZodArray<import("zod").ZodObject<{
+                    at: import("zod").ZodString;
+                    role: import("zod").ZodEnum<{
+                        agent: "agent";
+                        system: "system";
+                    }>;
+                    text: import("zod").ZodString;
+                    vendorMessageId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                reopenable: import("zod").ZodBoolean;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            dispatchId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            id: import("zod").ZodString;
+            issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+            issueId: import("zod").ZodNullable<import("zod").ZodString>;
+            threadId: import("zod").ZodString;
+            connectionId: import("zod").ZodString;
+            provider: import("zod").ZodString;
+            requesterUserId: import("zod").ZodString;
+            connectionOwnerUserId: import("zod").ZodString;
+            clientRequestId: import("zod").ZodString;
+            status: import("zod").ZodEnum<{
+                cancel_requested: "cancel_requested";
+                cancelled: "cancelled";
+                completed: "completed";
+                failed: "failed";
+                paused: "paused";
+                queued: "queued";
+                running: "running";
+                unknown: "unknown";
+                waiting: "waiting";
+            }>;
+            externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+            externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            repositoryUrl: import("zod").ZodString;
+            baseBranch: import("zod").ZodString;
+            result: import("zod").ZodNullable<import("zod").ZodString>;
+            turns: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                direction: import("zod").ZodEnum<{
+                    inbound: "inbound";
+                    outbound: "outbound";
+                }>;
+                text: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>>;
+                requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                userId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                messageId: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            progress: import("zod").ZodArray<import("zod").ZodObject<{
+                at: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    agent: "agent";
+                    system: "system";
+                }>;
+                text: import("zod").ZodString;
+                vendorMessageId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            reopenable: import("zod").ZodBoolean;
+            createdAt: import("zod").ZodString;
+            updatedAt: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly replies: {
+            readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                dispatchId: import("zod").ZodString;
+                clientRequestId: import("zod").ZodString;
+                text: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                id: import("zod").ZodString;
+                issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+                issueId: import("zod").ZodNullable<import("zod").ZodString>;
+                threadId: import("zod").ZodString;
+                connectionId: import("zod").ZodString;
+                provider: import("zod").ZodString;
+                requesterUserId: import("zod").ZodString;
+                connectionOwnerUserId: import("zod").ZodString;
+                clientRequestId: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>;
+                externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                repositoryUrl: import("zod").ZodString;
+                baseBranch: import("zod").ZodString;
+                result: import("zod").ZodNullable<import("zod").ZodString>;
+                turns: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    direction: import("zod").ZodEnum<{
+                        inbound: "inbound";
+                        outbound: "outbound";
+                    }>;
+                    text: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        cancel_requested: "cancel_requested";
+                        cancelled: "cancelled";
+                        completed: "completed";
+                        failed: "failed";
+                        paused: "paused";
+                        queued: "queued";
+                        running: "running";
+                        unknown: "unknown";
+                        waiting: "waiting";
+                    }>>;
+                    requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                    userId: import("zod").ZodNullable<import("zod").ZodString>;
+                    externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                    messageId: import("zod").ZodString;
+                    sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                progress: import("zod").ZodArray<import("zod").ZodObject<{
+                    at: import("zod").ZodString;
+                    role: import("zod").ZodEnum<{
+                        agent: "agent";
+                        system: "system";
+                    }>;
+                    text: import("zod").ZodString;
+                    vendorMessageId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                reopenable: import("zod").ZodBoolean;
+                createdAt: import("zod").ZodString;
+                updatedAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+        readonly cancel: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            dispatchId: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            organizationId: import("zod").ZodString;
+            projectId: import("zod").ZodString;
+            id: import("zod").ZodString;
+            issueFixId: import("zod").ZodNullable<import("zod").ZodString>;
+            issueId: import("zod").ZodNullable<import("zod").ZodString>;
+            threadId: import("zod").ZodString;
+            connectionId: import("zod").ZodString;
+            provider: import("zod").ZodString;
+            requesterUserId: import("zod").ZodString;
+            connectionOwnerUserId: import("zod").ZodString;
+            clientRequestId: import("zod").ZodString;
+            status: import("zod").ZodEnum<{
+                cancel_requested: "cancel_requested";
+                cancelled: "cancelled";
+                completed: "completed";
+                failed: "failed";
+                paused: "paused";
+                queued: "queued";
+                running: "running";
+                unknown: "unknown";
+                waiting: "waiting";
+            }>;
+            externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
+            externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            repositoryUrl: import("zod").ZodString;
+            baseBranch: import("zod").ZodString;
+            result: import("zod").ZodNullable<import("zod").ZodString>;
+            turns: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                direction: import("zod").ZodEnum<{
+                    inbound: "inbound";
+                    outbound: "outbound";
+                }>;
+                text: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    cancel_requested: "cancel_requested";
+                    cancelled: "cancelled";
+                    completed: "completed";
+                    failed: "failed";
+                    paused: "paused";
+                    queued: "queued";
+                    running: "running";
+                    unknown: "unknown";
+                    waiting: "waiting";
+                }>>;
+                requestId: import("zod").ZodNullable<import("zod").ZodString>;
+                userId: import("zod").ZodNullable<import("zod").ZodString>;
+                externalId: import("zod").ZodNullable<import("zod").ZodString>;
+                messageId: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                settledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                deliveredAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            progress: import("zod").ZodArray<import("zod").ZodObject<{
+                at: import("zod").ZodString;
+                role: import("zod").ZodEnum<{
+                    agent: "agent";
+                    system: "system";
+                }>;
+                text: import("zod").ZodString;
+                vendorMessageId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            reopenable: import("zod").ZodBoolean;
+            createdAt: import("zod").ZodString;
+            updatedAt: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly projectDefault: {
+            readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                default: import("zod").ZodNullable<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
+                    environment: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                agent: import("zod").ZodNullable<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                clearEnvironment: import("zod").ZodDefault<import("zod").ZodBoolean>;
+                environmentId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                default: import("zod").ZodNullable<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
+                    environment: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+    };
     readonly me: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{}, import("zod/v4/core").$strip>, import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
         credentialType: import("zod").ZodLiteral<"user">;
         user: import("zod").ZodObject<{
@@ -15529,7 +17172,7 @@ export declare const publicApiOperations: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -15547,7 +17190,7 @@ export declare const publicApiOperations: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -15572,7 +17215,6 @@ export declare const publicApiOperations: {
                                 "http.response.status_code": "http.response.status_code";
                                 "http.route": "http.route";
                                 "k8s.pod.name": "k8s.pod.name";
-                                "log.record.uid": "log.record.uid";
                                 operation_kind: "operation_kind";
                                 "server.address": "server.address";
                                 severity_text: "severity_text";
@@ -15611,7 +17253,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15629,7 +17271,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15650,7 +17292,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15668,7 +17310,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15704,7 +17346,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15722,7 +17364,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15761,7 +17403,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15779,7 +17421,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15865,7 +17507,7 @@ export declare const publicApiOperations: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -15883,7 +17525,7 @@ export declare const publicApiOperations: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -15908,7 +17550,6 @@ export declare const publicApiOperations: {
                                 "http.response.status_code": "http.response.status_code";
                                 "http.route": "http.route";
                                 "k8s.pod.name": "k8s.pod.name";
-                                "log.record.uid": "log.record.uid";
                                 operation_kind: "operation_kind";
                                 "server.address": "server.address";
                                 severity_text: "severity_text";
@@ -15947,7 +17588,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15965,7 +17606,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -15986,7 +17627,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16004,7 +17645,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16040,7 +17681,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16058,7 +17699,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16097,7 +17738,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16115,7 +17756,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16208,7 +17849,7 @@ export declare const publicApiOperations: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -16226,7 +17867,7 @@ export declare const publicApiOperations: {
                             kind: "severity";
                         } | {
                             kind: "column";
-                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                            name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                         } | {
                             kind: "attribute";
                             source: "log" | "resource" | "scope";
@@ -16251,7 +17892,6 @@ export declare const publicApiOperations: {
                                 "http.response.status_code": "http.response.status_code";
                                 "http.route": "http.route";
                                 "k8s.pod.name": "k8s.pod.name";
-                                "log.record.uid": "log.record.uid";
                                 operation_kind: "operation_kind";
                                 "server.address": "server.address";
                                 severity_text: "severity_text";
@@ -16290,7 +17930,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16308,7 +17948,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16329,7 +17969,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16347,7 +17987,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16383,7 +18023,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16401,7 +18041,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16440,7 +18080,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16458,7 +18098,7 @@ export declare const publicApiOperations: {
                                 kind: "severity";
                             } | {
                                 kind: "column";
-                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                                name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                             } | {
                                 kind: "attribute";
                                 source: "log" | "resource" | "scope";
@@ -16595,7 +18235,6 @@ export declare const publicApiOperations: {
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     examples: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -16614,7 +18253,6 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
                     time: import("zod").ZodString;
                     service: import("zod").ZodString;
                     severity: import("zod").ZodString;
@@ -16722,7 +18360,6 @@ export declare const publicApiOperations: {
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         examples: import("zod").ZodArray<import("zod").ZodObject<{
-                            id: import("zod").ZodString;
                             time: import("zod").ZodString;
                             service: import("zod").ZodString;
                             severity: import("zod").ZodString;
@@ -16741,7 +18378,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                     kind: import("zod").ZodLiteral<"rows">;
                     rows: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -16877,7 +18513,7 @@ export declare const publicApiOperations: {
                     kind: "severity";
                 } | {
                     kind: "column";
-                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -16895,7 +18531,7 @@ export declare const publicApiOperations: {
                     kind: "severity";
                 } | {
                     kind: "column";
-                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                    name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                 } | {
                     kind: "attribute";
                     source: "log" | "resource" | "scope";
@@ -16920,7 +18556,6 @@ export declare const publicApiOperations: {
                         "http.response.status_code": "http.response.status_code";
                         "http.route": "http.route";
                         "k8s.pod.name": "k8s.pod.name";
-                        "log.record.uid": "log.record.uid";
                         operation_kind: "operation_kind";
                         "server.address": "server.address";
                         severity_text: "severity_text";
@@ -16959,7 +18594,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -16977,7 +18612,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -16998,7 +18633,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -17016,7 +18651,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -17052,7 +18687,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -17070,7 +18705,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -17109,7 +18744,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -17127,7 +18762,7 @@ export declare const publicApiOperations: {
                         kind: "severity";
                     } | {
                         kind: "column";
-                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "log.record.uid" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
+                        name: "deployment.environment" | "event.name" | "http.request.body.size" | "http.request.method" | "http.response.body.size" | "http.response.status_code" | "http.route" | "k8s.pod.name" | "operation_kind" | "server.address" | "severity_text" | "span_id" | "trace_id" | "url.path";
                     } | {
                         kind: "attribute";
                         source: "log" | "resource" | "scope";
@@ -17211,7 +18846,6 @@ export declare const publicApiOperations: {
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     examples: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -17230,7 +18864,6 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
                     time: import("zod").ZodString;
                     service: import("zod").ZodString;
                     severity: import("zod").ZodString;
@@ -17338,7 +18971,6 @@ export declare const publicApiOperations: {
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         examples: import("zod").ZodArray<import("zod").ZodObject<{
-                            id: import("zod").ZodString;
                             time: import("zod").ZodString;
                             service: import("zod").ZodString;
                             severity: import("zod").ZodString;
@@ -17357,7 +18989,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                     kind: import("zod").ZodLiteral<"rows">;
                     rows: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -17519,7 +19150,6 @@ export declare const publicApiOperations: {
                     firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                     examples: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -17538,7 +19168,6 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 kind: import("zod").ZodLiteral<"rows">;
                 rows: import("zod").ZodArray<import("zod").ZodObject<{
-                    id: import("zod").ZodString;
                     time: import("zod").ZodString;
                     service: import("zod").ZodString;
                     severity: import("zod").ZodString;
@@ -17646,7 +19275,6 @@ export declare const publicApiOperations: {
                         firstSeenInWindow: import("zod").ZodOptional<import("zod").ZodBoolean>;
                         lastSeen: import("zod").ZodNullable<import("zod").ZodString>;
                         examples: import("zod").ZodArray<import("zod").ZodObject<{
-                            id: import("zod").ZodString;
                             time: import("zod").ZodString;
                             service: import("zod").ZodString;
                             severity: import("zod").ZodString;
@@ -17665,7 +19293,6 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                     kind: import("zod").ZodLiteral<"rows">;
                     rows: import("zod").ZodArray<import("zod").ZodObject<{
-                        id: import("zod").ZodString;
                         time: import("zod").ZodString;
                         service: import("zod").ZodString;
                         severity: import("zod").ZodString;
@@ -17847,21 +19474,27 @@ export declare const publicApiOperations: {
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodOptional<import("zod").ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -17869,6 +19502,7 @@ export declare const publicApiOperations: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -17883,6 +19517,7 @@ export declare const publicApiOperations: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -17949,21 +19584,27 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -17971,6 +19612,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -17985,6 +19627,7 @@ export declare const publicApiOperations: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -18011,21 +19654,27 @@ export declare const publicApiOperations: {
         readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
+                cursor: "cursor";
                 datadog: "datadog";
                 daytona: "daytona";
+                devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
+                factory_droid: "factory_droid";
                 fluent_bit: "fluent_bit";
                 fly_io: "fly_io";
                 gcp: "gcp";
+                gemini_cli: "gemini_cli";
+                github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
                 inngest: "inngest";
                 langchain: "langchain";
@@ -18033,6 +19682,7 @@ export declare const publicApiOperations: {
                 neon: "neon";
                 netlify: "netlify";
                 oh_my_pi: "oh_my_pi";
+                openhands: "openhands";
                 openrouter: "openrouter";
                 otel: "otel";
                 otel_collector: "otel_collector";
@@ -18047,6 +19697,7 @@ export declare const publicApiOperations: {
                 render: "render";
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
+                sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
                 supabase: "supabase";
@@ -18118,21 +19769,27 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -18140,6 +19797,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -18154,6 +19812,7 @@ export declare const publicApiOperations: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -18260,21 +19919,27 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -18282,6 +19947,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -18296,6 +19962,7 @@ export declare const publicApiOperations: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -18436,21 +20103,27 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
+                    cursor: "cursor";
                     datadog: "datadog";
                     daytona: "daytona";
+                    devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
+                    factory_droid: "factory_droid";
                     fluent_bit: "fluent_bit";
                     fly_io: "fly_io";
                     gcp: "gcp";
+                    gemini_cli: "gemini_cli";
+                    github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
                     inngest: "inngest";
                     langchain: "langchain";
@@ -18458,6 +20131,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     oh_my_pi: "oh_my_pi";
+                    openhands: "openhands";
                     openrouter: "openrouter";
                     otel: "otel";
                     otel_collector: "otel_collector";
@@ -18472,6 +20146,7 @@ export declare const publicApiOperations: {
                     render: "render";
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
+                    sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
                     supabase: "supabase";
@@ -18850,17 +20525,26 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             providers: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 name: import("zod").ZodString;
@@ -18891,17 +20575,26 @@ export declare const publicApiOperations: {
         readonly listConnections: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodOptional<import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -18960,20 +20653,30 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -19055,20 +20758,30 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -19091,6 +20804,43 @@ export declare const publicApiOperations: {
                 updatedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
+        readonly codingAgentRepositories: {
+            readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                    url: import("zod").ZodString;
+                    fullName: import("zod").ZodString;
+                    defaultBranch: import("zod").ZodNullable<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+        readonly codingAgentEnvironments: {
+            readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                supported: import("zod").ZodBoolean;
+                environments: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    name: import("zod").ZodNullable<import("zod").ZodString>;
+                    scope: import("zod").ZodEnum<{
+                        personal: "personal";
+                        team: "team";
+                    }>;
+                    defaultBranch: import("zod").ZodNullable<import("zod").ZodString>;
+                    repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                        url: import("zod").ZodString;
+                        fullName: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    readiness: import("zod").ZodObject<{
+                        ready: import("zod").ZodBoolean;
+                        reason: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
         readonly getLinearAutomationConfiguration: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             connectionId: import("zod").ZodString;
@@ -19120,18 +20870,28 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly createConnection: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>;
             displayName: import("zod").ZodOptional<import("zod").ZodString>;
@@ -19192,20 +20952,30 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -19231,17 +21001,26 @@ export declare const publicApiOperations: {
         readonly beginConnect: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>;
             displayName: import("zod").ZodOptional<import("zod").ZodString>;
@@ -19251,6 +21030,69 @@ export declare const publicApiOperations: {
             attemptId: import("zod").ZodString;
             expiresAt: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, "api">;
+        readonly codexDeviceLogin: {
+            readonly beginConnect: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                accountLabel: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                loginId: import("zod").ZodString;
+                status: import("zod").ZodLiteral<"code_shown">;
+                verificationUrl: import("zod").ZodString;
+                userCode: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly getStatus: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                loginId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                status: import("zod").ZodEnum<{
+                    approved: "approved";
+                    code_shown: "code_shown";
+                    expired: "expired";
+                    failed: "failed";
+                    rejected_device_auth_disabled: "rejected_device_auth_disabled";
+                }>;
+                verificationUrl: import("zod").ZodOptional<import("zod").ZodString>;
+                userCode: import("zod").ZodOptional<import("zod").ZodString>;
+                expiresAt: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodOptional<import("zod").ZodString>;
+                message: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly finish: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                loginId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                accessToken: import("zod").ZodString;
+                accountLabel: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+        readonly claude: {
+            readonly beginConnect: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                accountLabel: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                loginId: import("zod").ZodString;
+                authorizationUrl: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly finish: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                loginId: import("zod").ZodString;
+                code: import("zod").ZodString;
+                state: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
         readonly getConnectAttempt: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             attemptId: import("zod").ZodString;
@@ -19319,20 +21161,30 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -19358,17 +21210,26 @@ export declare const publicApiOperations: {
         readonly getActiveCLIAttempt: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                better_stack: "better_stack";
                 bitbucket: "bitbucket";
+                capy: "capy";
+                claude: "claude";
+                codex: "codex";
+                cursor: "cursor";
+                devin: "devin";
                 gitcafe: "gitcafe";
                 github: "github";
+                hoplite: "hoplite";
                 incident_io: "incident_io";
                 jira: "jira";
                 linear: "linear";
                 pagerduty: "pagerduty";
+                replicas: "replicas";
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
                 victorops: "victorops";
+                warp: "warp";
                 webhook: "webhook";
             }>;
         }, import("zod/v4/core").$strip>, import("zod").ZodNullable<import("zod").ZodObject<{
@@ -19384,6 +21245,7 @@ export declare const publicApiOperations: {
         readonly updateConnectionCredentials: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             connectionId: import("zod").ZodString;
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
             credentials: import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             connection: import("zod").ZodObject<{
@@ -19441,20 +21303,30 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     bitbucket: "bitbucket";
+                    capy: "capy";
+                    claude: "claude";
+                    codex: "codex";
+                    cursor: "cursor";
+                    devin: "devin";
                     gitcafe: "gitcafe";
                     github: "github";
+                    hoplite: "hoplite";
                     incident_io: "incident_io";
                     jira: "jira";
                     linear: "linear";
                     pagerduty: "pagerduty";
+                    replicas: "replicas";
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
                     victorops: "victorops";
+                    warp: "warp";
                     webhook: "webhook";
                 }>;
                 displayName: import("zod").ZodNullable<import("zod").ZodString>;
+                distinctName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                 status: import("zod").ZodEnum<{
                     connected: "connected";
                     error: "error";
@@ -19682,6 +21554,7 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             channelCards: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     email: "email";
                     in_app: "in_app";
                     incident_io: "incident_io";
@@ -19787,6 +21660,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
             channels: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -19799,6 +21673,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
             notificationTypePreferences: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -19888,6 +21763,7 @@ export declare const publicApiOperations: {
                 destinations: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     channel: import("zod").ZodEnum<{
+                        better_stack: "better_stack";
                         incident_io: "incident_io";
                         pagerduty: "pagerduty";
                         rootly: "rootly";
@@ -19942,6 +21818,7 @@ export declare const publicApiOperations: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -19971,6 +21848,7 @@ export declare const publicApiOperations: {
                     severity: "severity";
                 }>>;
                 channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -20019,6 +21897,7 @@ export declare const publicApiOperations: {
         readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -20076,6 +21955,7 @@ export declare const publicApiOperations: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -20126,6 +22006,7 @@ export declare const publicApiOperations: {
         readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -20184,6 +22065,7 @@ export declare const publicApiOperations: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
+                    better_stack: "better_stack";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -21658,6 +23540,7 @@ export declare const publicApiOperations: {
                 cliType: import("zod").ZodString;
                 credentialSource: import("zod").ZodEnum<{
                     bitbucket_integration: "bitbucket_integration";
+                    coding_agent_integration: "coding_agent_integration";
                     github_app: "github_app";
                     personal_access_token: "personal_access_token";
                     stored_credentials: "stored_credentials";
@@ -22634,6 +24517,503 @@ export declare const publicApiOperations: {
                 deactivatedAt: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
+    };
+    readonly sso: {
+        readonly connections: {
+            readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connection: import("zod").ZodNullable<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    providerId: import("zod").ZodString;
+                    protocol: import("zod").ZodEnum<{
+                        oidc: "oidc";
+                        saml: "saml";
+                    }>;
+                    issuer: import("zod").ZodString;
+                    oidc: import("zod").ZodNullable<import("zod").ZodObject<{
+                        clientId: import("zod").ZodString;
+                        hasClientSecret: import("zod").ZodBoolean;
+                    }, import("zod/v4/core").$strip>>;
+                    saml: import("zod").ZodNullable<import("zod").ZodObject<{
+                        ssoUrl: import("zod").ZodString;
+                        certificates: import("zod").ZodArray<import("zod").ZodObject<{
+                            fingerprint: import("zod").ZodString;
+                            notAfter: import("zod").ZodNullable<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                        metadataUrl: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    defaultRole: import("zod").ZodEnum<{
+                        member: "member";
+                        viewer: "viewer";
+                    }>;
+                    jitEnabled: import("zod").ZodBoolean;
+                    scimOnly: import("zod").ZodBoolean;
+                    maxSessionAgeSeconds: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    testedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    disabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                    updatedAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                serviceProvider: import("zod").ZodObject<{
+                    entityId: import("zod").ZodString;
+                    acsUrl: import("zod").ZodString;
+                    metadataUrl: import("zod").ZodString;
+                    oidcRedirectUrl: import("zod").ZodString;
+                    initiateLoginUrl: import("zod").ZodString;
+                    certificate: import("zod").ZodNullable<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly upsert: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                protocol: import("zod").ZodEnum<{
+                    oidc: "oidc";
+                    saml: "saml";
+                }>;
+                issuer: import("zod").ZodOptional<import("zod").ZodString>;
+                oidc: import("zod").ZodOptional<import("zod").ZodObject<{
+                    clientId: import("zod").ZodOptional<import("zod").ZodString>;
+                    clientSecret: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+                saml: import("zod").ZodOptional<import("zod").ZodObject<{
+                    ssoUrl: import("zod").ZodOptional<import("zod").ZodURL>;
+                    certificates: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    metadataUrl: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodURL>>;
+                }, import("zod/v4/core").$strip>>;
+                defaultRole: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    member: "member";
+                    viewer: "viewer";
+                }>>;
+                jitEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                scimOnly: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                maxSessionAgeSeconds: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodNumber>>;
+                disabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connection: import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    providerId: import("zod").ZodString;
+                    protocol: import("zod").ZodEnum<{
+                        oidc: "oidc";
+                        saml: "saml";
+                    }>;
+                    issuer: import("zod").ZodString;
+                    oidc: import("zod").ZodNullable<import("zod").ZodObject<{
+                        clientId: import("zod").ZodString;
+                        hasClientSecret: import("zod").ZodBoolean;
+                    }, import("zod/v4/core").$strip>>;
+                    saml: import("zod").ZodNullable<import("zod").ZodObject<{
+                        ssoUrl: import("zod").ZodString;
+                        certificates: import("zod").ZodArray<import("zod").ZodObject<{
+                            fingerprint: import("zod").ZodString;
+                            notAfter: import("zod").ZodNullable<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                        metadataUrl: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    defaultRole: import("zod").ZodEnum<{
+                        member: "member";
+                        viewer: "viewer";
+                    }>;
+                    jitEnabled: import("zod").ZodBoolean;
+                    scimOnly: import("zod").ZodBoolean;
+                    maxSessionAgeSeconds: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    testedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    disabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    createdAt: import("zod").ZodString;
+                    updatedAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                created: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                deleted: import("zod").ZodBoolean;
+                endedAccessUserCount: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly test: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                signInUrl: import("zod").ZodString;
+                expiresAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+        readonly getStatus: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            connection: import("zod").ZodNullable<import("zod").ZodObject<{
+                protocol: import("zod").ZodEnum<{
+                    oidc: "oidc";
+                    saml: "saml";
+                }>;
+                state: import("zod").ZodEnum<{
+                    active: "active";
+                    disabled: "disabled";
+                    untested: "untested";
+                }>;
+                testedAt: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>>;
+            domains: import("zod").ZodArray<import("zod").ZodObject<{
+                domain: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    lapsed: "lapsed";
+                    pending: "pending";
+                    verified: "verified";
+                }>;
+                verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                enforceSso: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>>;
+            enforced: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly domains: {
+            readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                domains: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    domain: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        lapsed: "lapsed";
+                        pending: "pending";
+                        verified: "verified";
+                    }>;
+                    verificationRecord: import("zod").ZodObject<{
+                        type: import("zod").ZodLiteral<"TXT">;
+                        name: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                    verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    lastCheckedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    enforceSso: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly claim: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                domain: import("zod").ZodPipe<import("zod").ZodPipe<import("zod").ZodString, import("zod").ZodTransform<string, string>>, import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                domain: import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    domain: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        lapsed: "lapsed";
+                        pending: "pending";
+                        verified: "verified";
+                    }>;
+                    verificationRecord: import("zod").ZodObject<{
+                        type: import("zod").ZodLiteral<"TXT">;
+                        name: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                    verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    lastCheckedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    enforceSso: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                created: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly verify: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                domain: import("zod").ZodPipe<import("zod").ZodPipe<import("zod").ZodString, import("zod").ZodTransform<string, string>>, import("zod").ZodString>;
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                domain: import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    domain: import("zod").ZodString;
+                    status: import("zod").ZodEnum<{
+                        lapsed: "lapsed";
+                        pending: "pending";
+                        verified: "verified";
+                    }>;
+                    verificationRecord: import("zod").ZodObject<{
+                        type: import("zod").ZodLiteral<"TXT">;
+                        name: import("zod").ZodString;
+                        value: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>;
+                    verifiedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    lastCheckedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    enforceSso: import("zod").ZodBoolean;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>;
+                outcome: import("zod").ZodEnum<{
+                    dns_error: "dns_error";
+                    found: "found";
+                    not_found: "not_found";
+                }>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly remove: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodPipe<import("zod").ZodObject<{
+                params: import("zod").ZodObject<{
+                    domain: import("zod").ZodPipe<import("zod").ZodPipe<import("zod").ZodString, import("zod").ZodTransform<string, string>>, import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>;
+                query: import("zod").ZodDefault<import("zod").ZodObject<{
+                    organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodTransform<{
+                domain: string;
+                organizationId?: string | undefined;
+            }, {
+                params: {
+                    domain: string;
+                };
+                query: {
+                    organizationId?: string | undefined;
+                };
+            }>>, import("zod").ZodObject<{
+                domainId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+        readonly breakGlass: {
+            readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                owners: import("zod").ZodArray<import("zod").ZodObject<{
+                    userId: import("zod").ZodString;
+                    email: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                    designatedByUserId: import("zod").ZodString;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly setOwners: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                emails: import("zod").ZodArray<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                owners: import("zod").ZodArray<import("zod").ZodObject<{
+                    userId: import("zod").ZodString;
+                    email: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                    designatedByUserId: import("zod").ZodString;
+                    createdAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+        readonly scim: {
+            readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodNullable<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly enable: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                expiresAt: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                enabled: import("zod").ZodBoolean;
+                token: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly rotateToken: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                expiresAt: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                token: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly disable: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                disabled: import("zod").ZodBoolean;
+                revokedTokenCount: import("zod").ZodNumber;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly pause: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                paused: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly resume: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+                resumed: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly setThreshold: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                threshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                scim: import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    enabled: import("zod").ZodBoolean;
+                    enabledAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    pausedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    scimOnly: import("zod").ZodBoolean;
+                    lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    deactivationThreshold: import("zod").ZodNullable<import("zod").ZodNumber>;
+                    tokens: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        prefix: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        expiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastUsedIp: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdByUserId: import("zod").ZodNullable<import("zod").ZodString>;
+                        createdBySecretKeyId: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly mismatchReport: {
+                readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                    organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    report: import("zod").ZodNullable<import("zod").ZodObject<{
+                        connectionId: import("zod").ZodString;
+                        generatedAt: import("zod").ZodString;
+                        signInWindowDays: import("zod").ZodNumber;
+                        lastRequestAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        lastChangeAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        signedInWithoutScimRecord: import("zod").ZodObject<{
+                            members: import("zod").ZodArray<import("zod").ZodObject<{
+                                userId: import("zod").ZodString;
+                                email: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                lastSignInAt: import("zod").ZodString;
+                                linkedAt: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            truncated: import("zod").ZodBoolean;
+                        }, import("zod/v4/core").$strip>;
+                        scimRecordsNeverSignedIn: import("zod").ZodObject<{
+                            records: import("zod").ZodArray<import("zod").ZodObject<{
+                                scimUserId: import("zod").ZodString;
+                                userId: import("zod").ZodString;
+                                userName: import("zod").ZodString;
+                                externalId: import("zod").ZodString;
+                                createdAt: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            truncated: import("zod").ZodBoolean;
+                        }, import("zod/v4/core").$strip>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>, "api">;
+            };
+            readonly listMembers: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                cursor: import("zod").ZodOptional<import("zod").ZodString>;
+                limit: import("zod").ZodOptional<import("zod").ZodCoercedNumber<unknown>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                members: import("zod").ZodArray<import("zod").ZodObject<{
+                    scimUserId: import("zod").ZodString;
+                    userId: import("zod").ZodString;
+                    email: import("zod").ZodString;
+                    name: import("zod").ZodString;
+                    role: import("zod").ZodString;
+                    userName: import("zod").ZodString;
+                    externalId: import("zod").ZodString;
+                    active: import("zod").ZodBoolean;
+                    connectionId: import("zod").ZodString;
+                    connectionState: import("zod").ZodEnum<{
+                        deleted: "deleted";
+                        live: "live";
+                        scim_off: "scim_off";
+                    }>;
+                    provisionedAt: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>;
+                nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
     };
     readonly secretKeys: {
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -23898,15 +26278,33 @@ export declare const publicApiOperations: {
                         "public-api": "public-api";
                         slack: "slack";
                     }>;
+                    agent: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        sazabi: "sazabi";
+                        warp: "warp";
+                    }>;
+                    dispatchId: import("zod").ZodNullable<import("zod").ZodString>;
+                    stoppedBy: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
                     status: import("zod").ZodEnum<{
                         cancelled: "cancelled";
                         failed: "failed";
                         no_pr: "no_pr";
+                        paused: "paused";
                         pr_closed: "pr_closed";
                         pr_merged: "pr_merged";
                         pr_open: "pr_open";
                         queued: "queued";
                         running: "running";
+                        waiting: "waiting";
                     }>;
                     pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
                         id: import("zod").ZodString;
@@ -23920,6 +26318,62 @@ export declare const publicApiOperations: {
                         }>>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
+                fixAgents: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    displayName: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixAgentsNeedingAttention: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    displayName: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixRepositories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    fullName: import("zod").ZodString;
+                    url: import("zod").ZodString;
+                    baseBranch: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixRepository: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    fullName: import("zod").ZodString;
+                    url: import("zod").ZodString;
+                    baseBranch: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>>>;
+                fixAgentDefault: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    connectionId: import("zod").ZodString;
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    displayName: import("zod").ZodString;
+                    environment: import("zod").ZodNullable<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        name: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>>;
                 hasUnread: import("zod").ZodNullable<import("zod").ZodBoolean>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
@@ -24005,6 +26459,21 @@ export declare const publicApiOperations: {
                     linked: "linked";
                     sazabi: "sazabi";
                 }>;
+            }, import("zod/v4/core").$strip>;
+            created: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly linkTask: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            issueId: import("zod").ZodString;
+            task: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            taskLink: import("zod").ZodObject<{
+                provider: import("zod").ZodEnum<{
+                    github: "github";
+                    jira: "jira";
+                    linear: "linear";
+                }>;
+                identifier: import("zod").ZodString;
+                url: import("zod").ZodString;
             }, import("zod/v4/core").$strip>;
             created: import("zod").ZodBoolean;
         }, import("zod/v4/core").$strip>, "api">;
@@ -24378,10 +26847,32 @@ export declare const publicApiOperations: {
         readonly fixes: {
             readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
                 issueId: import("zod").ZodString;
+                agent: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    provider: import("zod").ZodLiteral<"sazabi">;
+                    repositoryUrl: import("zod").ZodOptional<import("zod").ZodString>;
+                    baseBranch: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodOptional<import("zod").ZodString>;
+                    repositoryUrl: import("zod").ZodOptional<import("zod").ZodString>;
+                    baseBranch: import("zod").ZodOptional<import("zod").ZodString>;
+                    environmentId: import("zod").ZodOptional<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>]>>;
+                clientRequestId: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 issueId: import("zod").ZodString;
                 projectId: import("zod").ZodString;
                 issueThreadId: import("zod").ZodString;
+                dispatchId: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, "api">;
         };
     };
@@ -24996,6 +27487,8 @@ export declare const publicApiOperations: {
                 overageQuantity: import("zod").ZodString;
                 unitPrice: import("zod").ZodString;
                 amount: import("zod").ZodString;
+                grantedQuantity: import("zod").ZodOptional<import("zod").ZodString>;
+                grantedAmount: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
             totalAmount: import("zod").ZodString;
             issueRejectionCount: import("zod").ZodNumber;
@@ -25034,6 +27527,7 @@ export declare const publicApiOperations: {
                     }>;
                     quantity: import("zod").ZodNullable<import("zod").ZodString>;
                     includedQuantity: import("zod").ZodNullable<import("zod").ZodString>;
+                    grantedQuantity: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
                     valueCents: import("zod").ZodNullable<import("zod").ZodString>;
                     chargeCents: import("zod").ZodNullable<import("zod").ZodString>;
                     pricingStatus: import("zod").ZodEnum<{
@@ -25064,6 +27558,42 @@ export declare const publicApiOperations: {
                 totalChargeCents: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, "api">;
         };
+        readonly listUsageGrants: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            items: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                program: import("zod").ZodString;
+                programDisplayName: import("zod").ZodString;
+                productKey: import("zod").ZodEnum<{
+                    ai_tokens: "ai_tokens";
+                    automation_runs_completed: "automation_runs_completed";
+                    input_tokens: "input_tokens";
+                    issues_created: "issues_created";
+                    log_queries_executed: "log_queries_executed";
+                    log_questions_answered: "log_questions_answered";
+                    logs_accepted_bytes: "logs_accepted_bytes";
+                    logs_ingested_bytes: "logs_ingested_bytes";
+                    logs_query_bytes_scanned: "logs_query_bytes_scanned";
+                    output_tokens: "output_tokens";
+                    pull_request_reviews_completed: "pull_request_reviews_completed";
+                    pull_requests_created: "pull_requests_created";
+                }>;
+                displayName: import("zod").ZodString;
+                grantedQuantity: import("zod").ZodString;
+                usedQuantity: import("zod").ZodString;
+                remainingQuantity: import("zod").ZodString;
+                effectiveAt: import("zod").ZodString;
+                endsAt: import("zod").ZodString;
+                status: import("zod").ZodEnum<{
+                    active: "active";
+                    exhausted: "exhausted";
+                    expired: "expired";
+                    revoked: "revoked";
+                    scheduled: "scheduled";
+                }>;
+            }, import("zod/v4/core").$strip>>;
+        }, import("zod/v4/core").$strip>, "api">;
         readonly listUsageInvoices: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
             limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
@@ -25097,6 +27627,8 @@ export declare const publicApiOperations: {
                     overageQuantity: import("zod").ZodString;
                     unitPrice: import("zod").ZodString;
                     amount: import("zod").ZodString;
+                    grantedQuantity: import("zod").ZodOptional<import("zod").ZodString>;
+                    grantedAmount: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
                 hostedInvoiceUrl: import("zod").ZodNullable<import("zod").ZodString>;
                 finalizedAt: import("zod").ZodNullable<import("zod").ZodString>;
@@ -25627,6 +28159,7 @@ export declare const publicApiOperations: {
         readonly skip: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             taskId: import("zod").ZodEnum<{
                 connect_github_account: "connect_github_account";
+                connect_log_sources: "connect_log_sources";
                 install_github_app: "install_github_app";
                 install_slack_app: "install_slack_app";
                 trigger_sample_issue: "trigger_sample_issue";
@@ -25639,6 +28172,7 @@ export declare const publicApiOperations: {
         readonly unskip: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             taskId: import("zod").ZodEnum<{
                 connect_github_account: "connect_github_account";
+                connect_log_sources: "connect_log_sources";
                 install_github_app: "install_github_app";
                 install_slack_app: "install_slack_app";
                 trigger_sample_issue: "trigger_sample_issue";
