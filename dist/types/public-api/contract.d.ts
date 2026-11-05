@@ -5100,6 +5100,7 @@ export declare const publicApiContract: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -5232,6 +5233,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -5324,6 +5326,7 @@ export declare const publicApiContract: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -5461,6 +5464,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -5633,6 +5637,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -5839,6 +5844,7 @@ export declare const publicApiContract: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -19774,6 +19780,7 @@ export declare const publicApiOperations: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -19906,6 +19913,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -19998,6 +20006,7 @@ export declare const publicApiOperations: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -20135,6 +20144,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -20307,6 +20317,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -20513,6 +20524,7 @@ export declare const publicApiOperations: {
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
+                    new_relic_browser: "new_relic_browser";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";

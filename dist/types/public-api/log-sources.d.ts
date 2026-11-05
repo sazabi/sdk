@@ -2,7 +2,7 @@ import { z } from "zod";
 /**
  * Supported log source provider values derived from canonical catalog specs.
  */
-export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "cloudtrail", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "osquery", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog", "otel_traces", "sazabi_react_native_sdk", "devin_cli", "auditd", "github_copilot", "gemini_cli", "factory_droid", "cursor", "openhands", "palo_alto", "claude_agent_sdk", "doppler", "tailscale", "jamf_pro", "okta", "auth0", "aws_api_gateway", "zscaler", "vault", "workos", "aws_waf", "sentinelone", "aws_guardduty", "github_audit_log", "aws_vpc_flow_logs", "openclaw", "hermes_agent", "new_relic", "signoz"];
+export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "cloudtrail", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "osquery", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog", "otel_traces", "sazabi_react_native_sdk", "devin_cli", "auditd", "github_copilot", "gemini_cli", "factory_droid", "cursor", "openhands", "palo_alto", "claude_agent_sdk", "doppler", "tailscale", "jamf_pro", "okta", "auth0", "aws_api_gateway", "zscaler", "vault", "workos", "aws_waf", "sentinelone", "aws_guardduty", "github_audit_log", "aws_vpc_flow_logs", "openclaw", "hermes_agent", "new_relic", "new_relic_browser", "signoz"];
 /**
  * Log source setup modes. `native` log sources hold vendor credentials that
  * Sazabi uses to provision delivery; `manual` log sources mint a keyed
@@ -231,6 +231,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
+        new_relic_browser: "new_relic_browser";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -378,6 +379,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
+        new_relic_browser: "new_relic_browser";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -549,6 +551,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
+        new_relic_browser: "new_relic_browser";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -682,6 +685,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -776,6 +780,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
+        new_relic_browser: "new_relic_browser";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -908,6 +913,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1000,6 +1006,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
+        new_relic_browser: "new_relic_browser";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -1138,6 +1145,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1257,6 +1265,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
+        new_relic_browser: "new_relic_browser";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -1394,6 +1403,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1567,6 +1577,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1758,6 +1769,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1954,6 +1966,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -2109,6 +2122,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -2235,6 +2249,7 @@ export declare const logSourcesContract: {
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -2367,6 +2382,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -2459,6 +2475,7 @@ export declare const logSourcesContract: {
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
+            new_relic_browser: "new_relic_browser";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -2596,6 +2613,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -2768,6 +2786,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -2963,6 +2982,7 @@ export declare const logSourcesContract: {
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
+                new_relic_browser: "new_relic_browser";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
