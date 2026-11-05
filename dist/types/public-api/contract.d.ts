@@ -46,6 +46,7 @@ export declare const publicApiContract: {
                 }>;
                 externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
                 externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
                 repositoryUrl: import("zod").ZodString;
                 baseBranch: import("zod").ZodString;
                 result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -77,6 +78,17 @@ export declare const publicApiContract: {
                     createdAt: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    url: import("zod").ZodString;
+                    number: import("zod").ZodNumber;
+                    repositoryFullName: import("zod").ZodString;
+                    title: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        closed: "closed";
+                        merged: "merged";
+                        open: "open";
+                    }>>;
+                }, import("zod/v4/core").$strip>>>;
                 progress: import("zod").ZodArray<import("zod").ZodObject<{
                     at: import("zod").ZodString;
                     role: import("zod").ZodEnum<{
@@ -120,6 +132,7 @@ export declare const publicApiContract: {
             }>;
             externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
             externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
             repositoryUrl: import("zod").ZodString;
             baseBranch: import("zod").ZodString;
             result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -151,6 +164,17 @@ export declare const publicApiContract: {
                 createdAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                url: import("zod").ZodString;
+                number: import("zod").ZodNumber;
+                repositoryFullName: import("zod").ZodString;
+                title: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    closed: "closed";
+                    merged: "merged";
+                    open: "open";
+                }>>;
+            }, import("zod/v4/core").$strip>>>;
             progress: import("zod").ZodArray<import("zod").ZodObject<{
                 at: import("zod").ZodString;
                 role: import("zod").ZodEnum<{
@@ -196,6 +220,7 @@ export declare const publicApiContract: {
                 }>;
                 externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
                 externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
                 repositoryUrl: import("zod").ZodString;
                 baseBranch: import("zod").ZodString;
                 result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -227,6 +252,17 @@ export declare const publicApiContract: {
                     createdAt: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    url: import("zod").ZodString;
+                    number: import("zod").ZodNumber;
+                    repositoryFullName: import("zod").ZodString;
+                    title: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        closed: "closed";
+                        merged: "merged";
+                        open: "open";
+                    }>>;
+                }, import("zod/v4/core").$strip>>>;
                 progress: import("zod").ZodArray<import("zod").ZodObject<{
                     at: import("zod").ZodString;
                     role: import("zod").ZodEnum<{
@@ -270,6 +306,7 @@ export declare const publicApiContract: {
             }>;
             externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
             externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
             repositoryUrl: import("zod").ZodString;
             baseBranch: import("zod").ZodString;
             result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -301,6 +338,17 @@ export declare const publicApiContract: {
                 createdAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                url: import("zod").ZodString;
+                number: import("zod").ZodNumber;
+                repositoryFullName: import("zod").ZodString;
+                title: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    closed: "closed";
+                    merged: "merged";
+                    open: "open";
+                }>>;
+            }, import("zod/v4/core").$strip>>>;
             progress: import("zod").ZodArray<import("zod").ZodObject<{
                 at: import("zod").ZodString;
                 role: import("zod").ZodEnum<{
@@ -5013,10 +5061,17 @@ export declare const publicApiContract: {
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodOptional<import("zod").ZodEnum<{
+                auditd: "auditd";
+                auth0: "auth0";
+                aws_api_gateway: "aws_api_gateway";
+                aws_guardduty: "aws_guardduty";
+                aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                aws_waf: "aws_waf";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
+                cloudtrail: "cloudtrail";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
@@ -5025,6 +5080,7 @@ export declare const publicApiContract: {
                 daytona: "daytona";
                 devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
+                doppler: "doppler";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
@@ -5033,20 +5089,28 @@ export declare const publicApiContract: {
                 fly_io: "fly_io";
                 gcp: "gcp";
                 gemini_cli: "gemini_cli";
+                github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
+                hermes_agent: "hermes_agent";
                 inngest: "inngest";
+                jamf_pro: "jamf_pro";
                 langchain: "langchain";
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                new_relic: "new_relic";
                 oh_my_pi: "oh_my_pi";
+                okta: "okta";
+                openclaw: "openclaw";
                 openhands: "openhands";
                 openrouter: "openrouter";
+                osquery: "osquery";
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
                 otel_traces: "otel_traces";
+                palo_alto: "palo_alto";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";
@@ -5057,15 +5121,21 @@ export declare const publicApiContract: {
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                signoz: "signoz";
                 supabase: "supabase";
+                tailscale: "tailscale";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
                 unkey: "unkey";
+                vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
+                workos: "workos";
+                zscaler: "zscaler";
             }>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             logSources: import("zod").ZodArray<import("zod").ZodObject<{
@@ -5123,10 +5193,17 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -5135,6 +5212,7 @@ export declare const publicApiContract: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -5143,20 +5221,28 @@ export declare const publicApiContract: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -5167,15 +5253,21 @@ export declare const publicApiContract: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -5193,10 +5285,17 @@ export declare const publicApiContract: {
         readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                auditd: "auditd";
+                auth0: "auth0";
+                aws_api_gateway: "aws_api_gateway";
+                aws_guardduty: "aws_guardduty";
+                aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                aws_waf: "aws_waf";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
+                cloudtrail: "cloudtrail";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
@@ -5205,6 +5304,7 @@ export declare const publicApiContract: {
                 daytona: "daytona";
                 devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
+                doppler: "doppler";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
@@ -5213,20 +5313,28 @@ export declare const publicApiContract: {
                 fly_io: "fly_io";
                 gcp: "gcp";
                 gemini_cli: "gemini_cli";
+                github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
+                hermes_agent: "hermes_agent";
                 inngest: "inngest";
+                jamf_pro: "jamf_pro";
                 langchain: "langchain";
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                new_relic: "new_relic";
                 oh_my_pi: "oh_my_pi";
+                okta: "okta";
+                openclaw: "openclaw";
                 openhands: "openhands";
                 openrouter: "openrouter";
+                osquery: "osquery";
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
                 otel_traces: "otel_traces";
+                palo_alto: "palo_alto";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";
@@ -5237,15 +5345,21 @@ export declare const publicApiContract: {
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                signoz: "signoz";
                 supabase: "supabase";
+                tailscale: "tailscale";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
                 unkey: "unkey";
+                vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
+                workos: "workos";
+                zscaler: "zscaler";
             }>;
             mode: import("zod").ZodOptional<import("zod").ZodEnum<{
                 manual: "manual";
@@ -5308,10 +5422,17 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -5320,6 +5441,7 @@ export declare const publicApiContract: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -5328,20 +5450,28 @@ export declare const publicApiContract: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -5352,15 +5482,21 @@ export declare const publicApiContract: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -5458,10 +5594,17 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -5470,6 +5613,7 @@ export declare const publicApiContract: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -5478,20 +5622,28 @@ export declare const publicApiContract: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -5502,15 +5654,21 @@ export declare const publicApiContract: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -5642,10 +5800,17 @@ export declare const publicApiContract: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -5654,6 +5819,7 @@ export declare const publicApiContract: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -5662,20 +5828,28 @@ export declare const publicApiContract: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -5686,15 +5860,21 @@ export declare const publicApiContract: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -6071,6 +6251,7 @@ export declare const publicApiContract: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -6121,6 +6302,7 @@ export declare const publicApiContract: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -6199,6 +6381,7 @@ export declare const publicApiContract: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -6304,6 +6487,7 @@ export declare const publicApiContract: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -6418,6 +6602,7 @@ export declare const publicApiContract: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -6498,6 +6683,7 @@ export declare const publicApiContract: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -6547,6 +6733,7 @@ export declare const publicApiContract: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -6707,6 +6894,7 @@ export declare const publicApiContract: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -6756,6 +6944,7 @@ export declare const publicApiContract: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -6849,6 +7038,7 @@ export declare const publicApiContract: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -7094,6 +7284,7 @@ export declare const publicApiContract: {
             channelCards: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     email: "email";
                     in_app: "in_app";
                     incident_io: "incident_io";
@@ -7200,6 +7391,7 @@ export declare const publicApiContract: {
             channels: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -7213,6 +7405,7 @@ export declare const publicApiContract: {
             notificationTypePreferences: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -7303,6 +7496,7 @@ export declare const publicApiContract: {
                     id: import("zod").ZodString;
                     channel: import("zod").ZodEnum<{
                         better_stack: "better_stack";
+                        discord_channel: "discord_channel";
                         incident_io: "incident_io";
                         pagerduty: "pagerduty";
                         rootly: "rootly";
@@ -7358,6 +7552,7 @@ export declare const publicApiContract: {
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -7388,6 +7583,7 @@ export declare const publicApiContract: {
                 }>>;
                 channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -7437,6 +7633,7 @@ export declare const publicApiContract: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -7495,6 +7692,7 @@ export declare const publicApiContract: {
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -7546,6 +7744,7 @@ export declare const publicApiContract: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -7605,6 +7804,7 @@ export declare const publicApiContract: {
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -13030,6 +13230,8 @@ export declare const publicApiContract: {
                     pull_requests_created: "pull_requests_created";
                 }>;
                 displayName: import("zod").ZodString;
+                usageDescription: import("zod").ZodOptional<import("zod").ZodString>;
+                grantedUsageDescription: import("zod").ZodOptional<import("zod").ZodString>;
                 meteredQuantity: import("zod").ZodString;
                 includedQuantity: import("zod").ZodString;
                 overageQuantity: import("zod").ZodString;
@@ -13170,6 +13372,8 @@ export declare const publicApiContract: {
                         pull_requests_created: "pull_requests_created";
                     }>;
                     displayName: import("zod").ZodString;
+                    usageDescription: import("zod").ZodOptional<import("zod").ZodString>;
+                    grantedUsageDescription: import("zod").ZodOptional<import("zod").ZodString>;
                     meteredQuantity: import("zod").ZodString;
                     includedQuantity: import("zod").ZodString;
                     overageQuantity: import("zod").ZodString;
@@ -14516,6 +14720,7 @@ export declare const publicApiOperations: {
                 }>;
                 externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
                 externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
                 repositoryUrl: import("zod").ZodString;
                 baseBranch: import("zod").ZodString;
                 result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -14547,6 +14752,17 @@ export declare const publicApiOperations: {
                     createdAt: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    url: import("zod").ZodString;
+                    number: import("zod").ZodNumber;
+                    repositoryFullName: import("zod").ZodString;
+                    title: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        closed: "closed";
+                        merged: "merged";
+                        open: "open";
+                    }>>;
+                }, import("zod/v4/core").$strip>>>;
                 progress: import("zod").ZodArray<import("zod").ZodObject<{
                     at: import("zod").ZodString;
                     role: import("zod").ZodEnum<{
@@ -14590,6 +14806,7 @@ export declare const publicApiOperations: {
             }>;
             externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
             externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
             repositoryUrl: import("zod").ZodString;
             baseBranch: import("zod").ZodString;
             result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -14621,6 +14838,17 @@ export declare const publicApiOperations: {
                 createdAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                url: import("zod").ZodString;
+                number: import("zod").ZodNumber;
+                repositoryFullName: import("zod").ZodString;
+                title: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    closed: "closed";
+                    merged: "merged";
+                    open: "open";
+                }>>;
+            }, import("zod/v4/core").$strip>>>;
             progress: import("zod").ZodArray<import("zod").ZodObject<{
                 at: import("zod").ZodString;
                 role: import("zod").ZodEnum<{
@@ -14666,6 +14894,7 @@ export declare const publicApiOperations: {
                 }>;
                 externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
                 externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+                sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
                 repositoryUrl: import("zod").ZodString;
                 baseBranch: import("zod").ZodString;
                 result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -14697,6 +14926,17 @@ export declare const publicApiOperations: {
                     createdAt: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
                 pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+                pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                    url: import("zod").ZodString;
+                    number: import("zod").ZodNumber;
+                    repositoryFullName: import("zod").ZodString;
+                    title: import("zod").ZodNullable<import("zod").ZodString>;
+                    status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                        closed: "closed";
+                        merged: "merged";
+                        open: "open";
+                    }>>;
+                }, import("zod/v4/core").$strip>>>;
                 progress: import("zod").ZodArray<import("zod").ZodObject<{
                     at: import("zod").ZodString;
                     role: import("zod").ZodEnum<{
@@ -14740,6 +14980,7 @@ export declare const publicApiOperations: {
             }>;
             externalSessionId: import("zod").ZodNullable<import("zod").ZodString>;
             externalTurnId: import("zod").ZodNullable<import("zod").ZodString>;
+            sessionUrl: import("zod").ZodNullable<import("zod").ZodString>;
             repositoryUrl: import("zod").ZodString;
             baseBranch: import("zod").ZodString;
             result: import("zod").ZodNullable<import("zod").ZodString>;
@@ -14771,6 +15012,17 @@ export declare const publicApiOperations: {
                 createdAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             pullRequests: import("zod").ZodArray<import("zod").ZodString>;
+            pullRequestDetails: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                url: import("zod").ZodString;
+                number: import("zod").ZodNumber;
+                repositoryFullName: import("zod").ZodString;
+                title: import("zod").ZodNullable<import("zod").ZodString>;
+                status: import("zod").ZodNullable<import("zod").ZodEnum<{
+                    closed: "closed";
+                    merged: "merged";
+                    open: "open";
+                }>>;
+            }, import("zod/v4/core").$strip>>>;
             progress: import("zod").ZodArray<import("zod").ZodObject<{
                 at: import("zod").ZodString;
                 role: import("zod").ZodEnum<{
@@ -19483,10 +19735,17 @@ export declare const publicApiOperations: {
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodOptional<import("zod").ZodEnum<{
+                auditd: "auditd";
+                auth0: "auth0";
+                aws_api_gateway: "aws_api_gateway";
+                aws_guardduty: "aws_guardduty";
+                aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                aws_waf: "aws_waf";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
+                cloudtrail: "cloudtrail";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
@@ -19495,6 +19754,7 @@ export declare const publicApiOperations: {
                 daytona: "daytona";
                 devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
+                doppler: "doppler";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
@@ -19503,20 +19763,28 @@ export declare const publicApiOperations: {
                 fly_io: "fly_io";
                 gcp: "gcp";
                 gemini_cli: "gemini_cli";
+                github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
+                hermes_agent: "hermes_agent";
                 inngest: "inngest";
+                jamf_pro: "jamf_pro";
                 langchain: "langchain";
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                new_relic: "new_relic";
                 oh_my_pi: "oh_my_pi";
+                okta: "okta";
+                openclaw: "openclaw";
                 openhands: "openhands";
                 openrouter: "openrouter";
+                osquery: "osquery";
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
                 otel_traces: "otel_traces";
+                palo_alto: "palo_alto";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";
@@ -19527,15 +19795,21 @@ export declare const publicApiOperations: {
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                signoz: "signoz";
                 supabase: "supabase";
+                tailscale: "tailscale";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
                 unkey: "unkey";
+                vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
+                workos: "workos";
+                zscaler: "zscaler";
             }>>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             logSources: import("zod").ZodArray<import("zod").ZodObject<{
@@ -19593,10 +19867,17 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -19605,6 +19886,7 @@ export declare const publicApiOperations: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -19613,20 +19895,28 @@ export declare const publicApiOperations: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -19637,15 +19927,21 @@ export declare const publicApiOperations: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -19663,10 +19959,17 @@ export declare const publicApiOperations: {
         readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             provider: import("zod").ZodEnum<{
+                auditd: "auditd";
+                auth0: "auth0";
+                aws_api_gateway: "aws_api_gateway";
+                aws_guardduty: "aws_guardduty";
+                aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                aws_waf: "aws_waf";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
                 cloudflare_workers: "cloudflare_workers";
+                cloudtrail: "cloudtrail";
                 cloudwatch: "cloudwatch";
                 codex: "codex";
                 convex: "convex";
@@ -19675,6 +19978,7 @@ export declare const publicApiOperations: {
                 daytona: "daytona";
                 devin_cli: "devin_cli";
                 digital_ocean: "digital_ocean";
+                doppler: "doppler";
                 e2b: "e2b";
                 elastic_cloud: "elastic_cloud";
                 evlog: "evlog";
@@ -19683,20 +19987,28 @@ export declare const publicApiOperations: {
                 fly_io: "fly_io";
                 gcp: "gcp";
                 gemini_cli: "gemini_cli";
+                github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
                 grafana_alloy: "grafana_alloy";
+                hermes_agent: "hermes_agent";
                 inngest: "inngest";
+                jamf_pro: "jamf_pro";
                 langchain: "langchain";
                 mastra: "mastra";
                 neon: "neon";
                 netlify: "netlify";
+                new_relic: "new_relic";
                 oh_my_pi: "oh_my_pi";
+                okta: "okta";
+                openclaw: "openclaw";
                 openhands: "openhands";
                 openrouter: "openrouter";
+                osquery: "osquery";
                 otel: "otel";
                 otel_collector: "otel_collector";
                 otel_metrics: "otel_metrics";
                 otel_traces: "otel_traces";
+                palo_alto: "palo_alto";
                 plain: "plain";
                 porter: "porter";
                 posthog: "posthog";
@@ -19707,15 +20019,21 @@ export declare const publicApiOperations: {
                 respan: "respan";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                signoz: "signoz";
                 supabase: "supabase";
+                tailscale: "tailscale";
                 temporal: "temporal";
                 trigger_dev: "trigger_dev";
                 unkey: "unkey";
+                vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
                 webhook_events: "webhook_events";
+                workos: "workos";
+                zscaler: "zscaler";
             }>;
             mode: import("zod").ZodOptional<import("zod").ZodEnum<{
                 manual: "manual";
@@ -19778,10 +20096,17 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -19790,6 +20115,7 @@ export declare const publicApiOperations: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -19798,20 +20124,28 @@ export declare const publicApiOperations: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -19822,15 +20156,21 @@ export declare const publicApiOperations: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -19928,10 +20268,17 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -19940,6 +20287,7 @@ export declare const publicApiOperations: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -19948,20 +20296,28 @@ export declare const publicApiOperations: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -19972,15 +20328,21 @@ export declare const publicApiOperations: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -20112,10 +20474,17 @@ export declare const publicApiOperations: {
                 }, import("zod/v4/core").$strip>>;
                 id: import("zod").ZodString;
                 provider: import("zod").ZodEnum<{
+                    auditd: "auditd";
+                    auth0: "auth0";
+                    aws_api_gateway: "aws_api_gateway";
+                    aws_guardduty: "aws_guardduty";
+                    aws_vpc_flow_logs: "aws_vpc_flow_logs";
+                    aws_waf: "aws_waf";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
                     cloudflare_workers: "cloudflare_workers";
+                    cloudtrail: "cloudtrail";
                     cloudwatch: "cloudwatch";
                     codex: "codex";
                     convex: "convex";
@@ -20124,6 +20493,7 @@ export declare const publicApiOperations: {
                     daytona: "daytona";
                     devin_cli: "devin_cli";
                     digital_ocean: "digital_ocean";
+                    doppler: "doppler";
                     e2b: "e2b";
                     elastic_cloud: "elastic_cloud";
                     evlog: "evlog";
@@ -20132,20 +20502,28 @@ export declare const publicApiOperations: {
                     fly_io: "fly_io";
                     gcp: "gcp";
                     gemini_cli: "gemini_cli";
+                    github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
                     grafana_alloy: "grafana_alloy";
+                    hermes_agent: "hermes_agent";
                     inngest: "inngest";
+                    jamf_pro: "jamf_pro";
                     langchain: "langchain";
                     mastra: "mastra";
                     neon: "neon";
                     netlify: "netlify";
+                    new_relic: "new_relic";
                     oh_my_pi: "oh_my_pi";
+                    okta: "okta";
+                    openclaw: "openclaw";
                     openhands: "openhands";
                     openrouter: "openrouter";
+                    osquery: "osquery";
                     otel: "otel";
                     otel_collector: "otel_collector";
                     otel_metrics: "otel_metrics";
                     otel_traces: "otel_traces";
+                    palo_alto: "palo_alto";
                     plain: "plain";
                     porter: "porter";
                     posthog: "posthog";
@@ -20156,15 +20534,21 @@ export declare const publicApiOperations: {
                     respan: "respan";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
+                    sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    signoz: "signoz";
                     supabase: "supabase";
+                    tailscale: "tailscale";
                     temporal: "temporal";
                     trigger_dev: "trigger_dev";
                     unkey: "unkey";
+                    vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
                     webhook_events: "webhook_events";
+                    workos: "workos";
+                    zscaler: "zscaler";
                 }>;
                 mode: import("zod").ZodEnum<{
                     manual: "manual";
@@ -20541,6 +20925,7 @@ export declare const publicApiOperations: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -20591,6 +20976,7 @@ export declare const publicApiOperations: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -20669,6 +21055,7 @@ export declare const publicApiOperations: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -20774,6 +21161,7 @@ export declare const publicApiOperations: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -20888,6 +21276,7 @@ export declare const publicApiOperations: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -20968,6 +21357,7 @@ export declare const publicApiOperations: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -21017,6 +21407,7 @@ export declare const publicApiOperations: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -21177,6 +21568,7 @@ export declare const publicApiOperations: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -21226,6 +21618,7 @@ export declare const publicApiOperations: {
                 codex: "codex";
                 cursor: "cursor";
                 devin: "devin";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 hoplite: "hoplite";
@@ -21319,6 +21712,7 @@ export declare const publicApiOperations: {
                     codex: "codex";
                     cursor: "cursor";
                     devin: "devin";
+                    discord: "discord";
                     gitcafe: "gitcafe";
                     github: "github";
                     hoplite: "hoplite";
@@ -21564,6 +21958,7 @@ export declare const publicApiOperations: {
             channelCards: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     email: "email";
                     in_app: "in_app";
                     incident_io: "incident_io";
@@ -21670,6 +22065,7 @@ export declare const publicApiOperations: {
             channels: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -21683,6 +22079,7 @@ export declare const publicApiOperations: {
             notificationTypePreferences: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -21773,6 +22170,7 @@ export declare const publicApiOperations: {
                     id: import("zod").ZodString;
                     channel: import("zod").ZodEnum<{
                         better_stack: "better_stack";
+                        discord_channel: "discord_channel";
                         incident_io: "incident_io";
                         pagerduty: "pagerduty";
                         rootly: "rootly";
@@ -21828,6 +22226,7 @@ export declare const publicApiOperations: {
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -21858,6 +22257,7 @@ export declare const publicApiOperations: {
                 }>>;
                 channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -21907,6 +22307,7 @@ export declare const publicApiOperations: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -21965,6 +22366,7 @@ export declare const publicApiOperations: {
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -22016,6 +22418,7 @@ export declare const publicApiOperations: {
             destinations: import("zod").ZodArray<import("zod").ZodObject<{
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -22075,6 +22478,7 @@ export declare const publicApiOperations: {
                 id: import("zod").ZodString;
                 channel: import("zod").ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -27500,6 +27904,8 @@ export declare const publicApiOperations: {
                     pull_requests_created: "pull_requests_created";
                 }>;
                 displayName: import("zod").ZodString;
+                usageDescription: import("zod").ZodOptional<import("zod").ZodString>;
+                grantedUsageDescription: import("zod").ZodOptional<import("zod").ZodString>;
                 meteredQuantity: import("zod").ZodString;
                 includedQuantity: import("zod").ZodString;
                 overageQuantity: import("zod").ZodString;
@@ -27640,6 +28046,8 @@ export declare const publicApiOperations: {
                         pull_requests_created: "pull_requests_created";
                     }>;
                     displayName: import("zod").ZodString;
+                    usageDescription: import("zod").ZodOptional<import("zod").ZodString>;
+                    grantedUsageDescription: import("zod").ZodOptional<import("zod").ZodString>;
                     meteredQuantity: import("zod").ZodString;
                     includedQuantity: import("zod").ZodString;
                     overageQuantity: import("zod").ZodString;

@@ -69,6 +69,20 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
      * empty-log-source reaper to leave out. Read-only.
      */
     readonly projects_on_non_shared_clickhouse_targets: readonly ["projects", "organizationId", "projectId"];
+    /**
+     * One plane's cloud by its plane code (owned planes, "Every plane row names
+     * its cloud"), for the admin API's staged-run executor read to compare with
+     * a run's signed cloud, plus the plane's own ClickHouse target and how many
+     * live projects it holds, which a plane teardown's start reads (Ed's ruling
+     * (a), RULING #151). Read-only, and it answers nothing else.
+     */
+    readonly plane_cloud: readonly ["cloud", "clickhouseTarget", "liveProjectCount"];
+    /**
+     * Every plane on one ClickHouse target that has a customer plane file, with
+     * its owner organization (BYOC provisioning design, row 18), for a staged
+     * run's `attachment_state_keys`. Read-only.
+     */
+    readonly clickhouse_target_planes: readonly ["planes"];
 };
 export type FleetJobKind = keyof typeof FLEET_JOB_OUTPUT_KEYS;
 export declare const isFleetJobKind: (value: string) => value is FleetJobKind;

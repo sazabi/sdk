@@ -16,6 +16,7 @@ export declare const DeliveryRuleConditionSchema: z.ZodObject<{
 export declare const DeliveryRuleDestinationInputSchema: z.ZodObject<{
     channel: z.ZodEnum<{
         better_stack: "better_stack";
+        discord_channel: "discord_channel";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -29,6 +30,7 @@ export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -65,6 +67,7 @@ export declare const LegacyDeliveryRuleDefinitionSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -99,6 +102,7 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -143,6 +147,7 @@ export declare const DeliveryRuleDestinationSchema: z.ZodObject<{
     id: z.ZodString;
     channel: z.ZodEnum<{
         better_stack: "better_stack";
+        discord_channel: "discord_channel";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -164,6 +169,7 @@ export declare const DeliveryRuleOptionDestinationSchema: z.ZodObject<{
     id: z.ZodString;
     channel: z.ZodEnum<{
         better_stack: "better_stack";
+        discord_channel: "discord_channel";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -206,6 +212,7 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -276,6 +283,7 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
             id: z.ZodString;
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -344,6 +352,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -374,6 +383,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
         }>>;
         channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -424,6 +434,7 @@ export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -483,6 +494,7 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -534,6 +546,7 @@ export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -594,6 +607,7 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
         id: z.ZodString;
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -677,6 +691,7 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
             id: z.ZodString;
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -732,6 +747,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
         id: z.ZodString;
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -762,6 +778,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
         }>>;
         channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -811,6 +828,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -869,6 +887,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
         id: z.ZodString;
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -920,6 +939,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
     destinations: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -979,6 +999,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
         id: z.ZodString;
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -1054,6 +1075,7 @@ export declare const notificationDeliveryRulesContract: {
                 id: z.ZodString;
                 channel: z.ZodEnum<{
                     better_stack: "better_stack";
+                    discord_channel: "discord_channel";
                     incident_io: "incident_io";
                     pagerduty: "pagerduty";
                     rootly: "rootly";
@@ -1109,6 +1131,7 @@ export declare const notificationDeliveryRulesContract: {
             id: z.ZodString;
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1139,6 +1162,7 @@ export declare const notificationDeliveryRulesContract: {
             }>>;
             channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1188,6 +1212,7 @@ export declare const notificationDeliveryRulesContract: {
         destinations: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1246,6 +1271,7 @@ export declare const notificationDeliveryRulesContract: {
             id: z.ZodString;
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1297,6 +1323,7 @@ export declare const notificationDeliveryRulesContract: {
         destinations: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -1356,6 +1383,7 @@ export declare const notificationDeliveryRulesContract: {
             id: z.ZodString;
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";

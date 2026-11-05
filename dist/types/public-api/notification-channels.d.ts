@@ -19,6 +19,7 @@ export declare const NotificationChannelDestinationSchema: z.ZodObject<{
 export declare const NotificationChannelCardSchema: z.ZodObject<{
     channel: z.ZodEnum<{
         better_stack: "better_stack";
+        discord_channel: "discord_channel";
         email: "email";
         in_app: "in_app";
         incident_io: "incident_io";
@@ -125,6 +126,7 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
 export declare const ProjectNotificationChannelPreferenceSchema: z.ZodObject<{
     channel: z.ZodEnum<{
         better_stack: "better_stack";
+        discord_channel: "discord_channel";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -138,6 +140,7 @@ export declare const ProjectNotificationChannelPreferenceSchema: z.ZodObject<{
 export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
     channel: z.ZodEnum<{
         better_stack: "better_stack";
+        discord_channel: "discord_channel";
         incident_io: "incident_io";
         pagerduty: "pagerduty";
         rootly: "rootly";
@@ -205,6 +208,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
     channelCards: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             email: "email";
             in_app: "in_app";
             incident_io: "incident_io";
@@ -311,6 +315,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
     channels: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -324,6 +329,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
     notificationTypePreferences: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -400,6 +406,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
     channelCards: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             email: "email";
             in_app: "in_app";
             incident_io: "incident_io";
@@ -506,6 +513,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
     channels: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -519,6 +527,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
     notificationTypePreferences: z.ZodArray<z.ZodObject<{
         channel: z.ZodEnum<{
             better_stack: "better_stack";
+            discord_channel: "discord_channel";
             incident_io: "incident_io";
             pagerduty: "pagerduty";
             rootly: "rootly";
@@ -593,6 +602,7 @@ export declare const notificationChannelsContract: {
         channelCards: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 email: "email";
                 in_app: "in_app";
                 incident_io: "incident_io";
@@ -699,6 +709,7 @@ export declare const notificationChannelsContract: {
         channels: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";
@@ -712,6 +723,7 @@ export declare const notificationChannelsContract: {
         notificationTypePreferences: z.ZodArray<z.ZodObject<{
             channel: z.ZodEnum<{
                 better_stack: "better_stack";
+                discord_channel: "discord_channel";
                 incident_io: "incident_io";
                 pagerduty: "pagerduty";
                 rootly: "rootly";

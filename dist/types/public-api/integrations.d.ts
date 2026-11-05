@@ -5,7 +5,7 @@ import { z } from "zod";
  * isomorphic contract package does not pull in the server-only integrations
  * package (which imports Node crypto and database access).
  */
-export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "better_stack", "incident_io", "webhook", "teams", "bitbucket", "jira", "gitcafe", "cursor", "devin", "capy", "warp", "replicas", "claude", "codex", "hoplite"];
+export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "better_stack", "incident_io", "webhook", "teams", "discord", "bitbucket", "jira", "gitcafe", "cursor", "devin", "capy", "warp", "replicas", "claude", "codex", "hoplite"];
 export declare const IntegrationProviderEnum: z.ZodEnum<{
     better_stack: "better_stack";
     bitbucket: "bitbucket";
@@ -14,6 +14,7 @@ export declare const IntegrationProviderEnum: z.ZodEnum<{
     codex: "codex";
     cursor: "cursor";
     devin: "devin";
+    discord: "discord";
     gitcafe: "gitcafe";
     github: "github";
     hoplite: "hoplite";
@@ -140,6 +141,7 @@ export declare const IntegrationProviderSchema: z.ZodObject<{
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -245,6 +247,7 @@ export declare const IntegrationConnectionSchema: z.ZodObject<{
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -302,6 +305,7 @@ export declare const ListIntegrationProvidersOutputSchema: z.ZodObject<{
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -355,6 +359,7 @@ export declare const listIntegrationProviders: import("../orpc-contracts/index.j
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -405,6 +410,7 @@ export declare const ListIntegrationConnectionsInputSchema: z.ZodObject<{
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -484,6 +490,7 @@ export declare const ListIntegrationConnectionsOutputSchema: z.ZodObject<{
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -535,6 +542,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -613,6 +621,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -809,6 +818,7 @@ export declare const GetIntegrationConnectionOutputSchema: z.ZodObject<{
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -916,6 +926,7 @@ export declare const getIntegrationConnection: import("../orpc-contracts/index.j
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -966,6 +977,7 @@ export declare const CreateIntegrationConnectionInputSchema: z.ZodObject<{
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1047,6 +1059,7 @@ export declare const CreateIntegrationConnectionOutputSchema: z.ZodObject<{
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1099,6 +1112,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1179,6 +1193,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1228,6 +1243,7 @@ export declare const BeginIntegrationConnectInputSchema: z.ZodObject<{
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1263,6 +1279,7 @@ export declare const beginIntegrationConnect: import("../orpc-contracts/index.js
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1368,6 +1385,7 @@ export declare const GetIntegrationConnectAttemptOutputSchema: z.ZodObject<{
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1484,6 +1502,7 @@ export declare const getIntegrationConnectAttempt: import("../orpc-contracts/ind
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1607,6 +1626,7 @@ export declare const UpdateIntegrationConnectionCredentialsOutputSchema: z.ZodOb
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1716,6 +1736,7 @@ export declare const updateIntegrationConnectionCredentials: import("../orpc-con
             codex: "codex";
             cursor: "cursor";
             devin: "devin";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -2215,6 +2236,7 @@ export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -2247,6 +2269,7 @@ export declare const getActiveCLIAttempt: import("../orpc-contracts/index.js").O
         codex: "codex";
         cursor: "cursor";
         devin: "devin";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";

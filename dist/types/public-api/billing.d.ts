@@ -1720,6 +1720,8 @@ export declare const BillingUsageInvoiceLineItemSchema: z.ZodObject<{
         pull_requests_created: "pull_requests_created";
     }>;
     displayName: z.ZodString;
+    usageDescription: z.ZodOptional<z.ZodString>;
+    grantedUsageDescription: z.ZodOptional<z.ZodString>;
     meteredQuantity: z.ZodString;
     includedQuantity: z.ZodString;
     overageQuantity: z.ZodString;
@@ -1753,6 +1755,8 @@ export declare const BillingUsageInvoiceSchema: z.ZodObject<{
             pull_requests_created: "pull_requests_created";
         }>;
         displayName: z.ZodString;
+        usageDescription: z.ZodOptional<z.ZodString>;
+        grantedUsageDescription: z.ZodOptional<z.ZodString>;
         meteredQuantity: z.ZodString;
         includedQuantity: z.ZodString;
         overageQuantity: z.ZodString;
@@ -1799,6 +1803,8 @@ export declare const ListUsageInvoicesOutputSchema: z.ZodObject<{
                 pull_requests_created: "pull_requests_created";
             }>;
             displayName: z.ZodString;
+            usageDescription: z.ZodOptional<z.ZodString>;
+            grantedUsageDescription: z.ZodOptional<z.ZodString>;
             meteredQuantity: z.ZodString;
             includedQuantity: z.ZodString;
             overageQuantity: z.ZodString;
@@ -1840,6 +1846,8 @@ export declare const listUsageInvoices: import("../orpc-contracts/index.js").Ope
                 pull_requests_created: "pull_requests_created";
             }>;
             displayName: z.ZodString;
+            usageDescription: z.ZodOptional<z.ZodString>;
+            grantedUsageDescription: z.ZodOptional<z.ZodString>;
             meteredQuantity: z.ZodString;
             includedQuantity: z.ZodString;
             overageQuantity: z.ZodString;
@@ -2001,6 +2009,8 @@ export declare const GetAccruedUsageChargesOutputSchema: z.ZodObject<{
             pull_requests_created: "pull_requests_created";
         }>;
         displayName: z.ZodString;
+        usageDescription: z.ZodOptional<z.ZodString>;
+        grantedUsageDescription: z.ZodOptional<z.ZodString>;
         meteredQuantity: z.ZodString;
         includedQuantity: z.ZodString;
         overageQuantity: z.ZodString;
@@ -2052,6 +2062,8 @@ export declare const getAccruedUsageCharges: import("../orpc-contracts/index.js"
             pull_requests_created: "pull_requests_created";
         }>;
         displayName: z.ZodString;
+        usageDescription: z.ZodOptional<z.ZodString>;
+        grantedUsageDescription: z.ZodOptional<z.ZodString>;
         meteredQuantity: z.ZodString;
         includedQuantity: z.ZodString;
         overageQuantity: z.ZodString;
@@ -2750,6 +2762,8 @@ export declare const billingContract: {
                 pull_requests_created: "pull_requests_created";
             }>;
             displayName: z.ZodString;
+            usageDescription: z.ZodOptional<z.ZodString>;
+            grantedUsageDescription: z.ZodOptional<z.ZodString>;
             meteredQuantity: z.ZodString;
             includedQuantity: z.ZodString;
             overageQuantity: z.ZodString;
@@ -2854,6 +2868,8 @@ export declare const billingContract: {
                     pull_requests_created: "pull_requests_created";
                 }>;
                 displayName: z.ZodString;
+                usageDescription: z.ZodOptional<z.ZodString>;
+                grantedUsageDescription: z.ZodOptional<z.ZodString>;
                 meteredQuantity: z.ZodString;
                 includedQuantity: z.ZodString;
                 overageQuantity: z.ZodString;

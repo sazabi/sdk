@@ -72,6 +72,7 @@ export declare const AgentDispatchSchema: z.ZodObject<{
     }>;
     externalSessionId: z.ZodNullable<z.ZodString>;
     externalTurnId: z.ZodNullable<z.ZodString>;
+    sessionUrl: z.ZodNullable<z.ZodString>;
     repositoryUrl: z.ZodString;
     baseBranch: z.ZodString;
     result: z.ZodNullable<z.ZodString>;
@@ -103,6 +104,17 @@ export declare const AgentDispatchSchema: z.ZodObject<{
         createdAt: z.ZodString;
     }, z.core.$strip>>;
     pullRequests: z.ZodArray<z.ZodString>;
+    pullRequestDetails: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        url: z.ZodString;
+        number: z.ZodNumber;
+        repositoryFullName: z.ZodString;
+        title: z.ZodNullable<z.ZodString>;
+        status: z.ZodNullable<z.ZodEnum<{
+            closed: "closed";
+            merged: "merged";
+            open: "open";
+        }>>;
+    }, z.core.$strip>>>;
     progress: z.ZodArray<z.ZodObject<{
         at: z.ZodString;
         role: z.ZodEnum<{
@@ -161,6 +173,7 @@ export declare const ListAgentDispatchesOutputSchema: z.ZodObject<{
         }>;
         externalSessionId: z.ZodNullable<z.ZodString>;
         externalTurnId: z.ZodNullable<z.ZodString>;
+        sessionUrl: z.ZodNullable<z.ZodString>;
         repositoryUrl: z.ZodString;
         baseBranch: z.ZodString;
         result: z.ZodNullable<z.ZodString>;
@@ -192,6 +205,17 @@ export declare const ListAgentDispatchesOutputSchema: z.ZodObject<{
             createdAt: z.ZodString;
         }, z.core.$strip>>;
         pullRequests: z.ZodArray<z.ZodString>;
+        pullRequestDetails: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            url: z.ZodString;
+            number: z.ZodNumber;
+            repositoryFullName: z.ZodString;
+            title: z.ZodNullable<z.ZodString>;
+            status: z.ZodNullable<z.ZodEnum<{
+                closed: "closed";
+                merged: "merged";
+                open: "open";
+            }>>;
+        }, z.core.$strip>>>;
         progress: z.ZodArray<z.ZodObject<{
             at: z.ZodString;
             role: z.ZodEnum<{
@@ -271,6 +295,7 @@ export declare const listAgentDispatches: import("../orpc-contracts/index.js").O
         }>;
         externalSessionId: z.ZodNullable<z.ZodString>;
         externalTurnId: z.ZodNullable<z.ZodString>;
+        sessionUrl: z.ZodNullable<z.ZodString>;
         repositoryUrl: z.ZodString;
         baseBranch: z.ZodString;
         result: z.ZodNullable<z.ZodString>;
@@ -302,6 +327,17 @@ export declare const listAgentDispatches: import("../orpc-contracts/index.js").O
             createdAt: z.ZodString;
         }, z.core.$strip>>;
         pullRequests: z.ZodArray<z.ZodString>;
+        pullRequestDetails: z.ZodOptional<z.ZodArray<z.ZodObject<{
+            url: z.ZodString;
+            number: z.ZodNumber;
+            repositoryFullName: z.ZodString;
+            title: z.ZodNullable<z.ZodString>;
+            status: z.ZodNullable<z.ZodEnum<{
+                closed: "closed";
+                merged: "merged";
+                open: "open";
+            }>>;
+        }, z.core.$strip>>>;
         progress: z.ZodArray<z.ZodObject<{
             at: z.ZodString;
             role: z.ZodEnum<{
@@ -345,6 +381,7 @@ export declare const getAgentDispatch: import("../orpc-contracts/index.js").Oper
     }>;
     externalSessionId: z.ZodNullable<z.ZodString>;
     externalTurnId: z.ZodNullable<z.ZodString>;
+    sessionUrl: z.ZodNullable<z.ZodString>;
     repositoryUrl: z.ZodString;
     baseBranch: z.ZodString;
     result: z.ZodNullable<z.ZodString>;
@@ -376,6 +413,17 @@ export declare const getAgentDispatch: import("../orpc-contracts/index.js").Oper
         createdAt: z.ZodString;
     }, z.core.$strip>>;
     pullRequests: z.ZodArray<z.ZodString>;
+    pullRequestDetails: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        url: z.ZodString;
+        number: z.ZodNumber;
+        repositoryFullName: z.ZodString;
+        title: z.ZodNullable<z.ZodString>;
+        status: z.ZodNullable<z.ZodEnum<{
+            closed: "closed";
+            merged: "merged";
+            open: "open";
+        }>>;
+    }, z.core.$strip>>>;
     progress: z.ZodArray<z.ZodObject<{
         at: z.ZodString;
         role: z.ZodEnum<{
@@ -420,6 +468,7 @@ export declare const replyAgentDispatch: import("../orpc-contracts/index.js").Op
     }>;
     externalSessionId: z.ZodNullable<z.ZodString>;
     externalTurnId: z.ZodNullable<z.ZodString>;
+    sessionUrl: z.ZodNullable<z.ZodString>;
     repositoryUrl: z.ZodString;
     baseBranch: z.ZodString;
     result: z.ZodNullable<z.ZodString>;
@@ -451,6 +500,17 @@ export declare const replyAgentDispatch: import("../orpc-contracts/index.js").Op
         createdAt: z.ZodString;
     }, z.core.$strip>>;
     pullRequests: z.ZodArray<z.ZodString>;
+    pullRequestDetails: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        url: z.ZodString;
+        number: z.ZodNumber;
+        repositoryFullName: z.ZodString;
+        title: z.ZodNullable<z.ZodString>;
+        status: z.ZodNullable<z.ZodEnum<{
+            closed: "closed";
+            merged: "merged";
+            open: "open";
+        }>>;
+    }, z.core.$strip>>>;
     progress: z.ZodArray<z.ZodObject<{
         at: z.ZodString;
         role: z.ZodEnum<{
@@ -493,6 +553,7 @@ export declare const cancelAgentDispatch: import("../orpc-contracts/index.js").O
     }>;
     externalSessionId: z.ZodNullable<z.ZodString>;
     externalTurnId: z.ZodNullable<z.ZodString>;
+    sessionUrl: z.ZodNullable<z.ZodString>;
     repositoryUrl: z.ZodString;
     baseBranch: z.ZodString;
     result: z.ZodNullable<z.ZodString>;
@@ -524,6 +585,17 @@ export declare const cancelAgentDispatch: import("../orpc-contracts/index.js").O
         createdAt: z.ZodString;
     }, z.core.$strip>>;
     pullRequests: z.ZodArray<z.ZodString>;
+    pullRequestDetails: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        url: z.ZodString;
+        number: z.ZodNumber;
+        repositoryFullName: z.ZodString;
+        title: z.ZodNullable<z.ZodString>;
+        status: z.ZodNullable<z.ZodEnum<{
+            closed: "closed";
+            merged: "merged";
+            open: "open";
+        }>>;
+    }, z.core.$strip>>>;
     progress: z.ZodArray<z.ZodObject<{
         at: z.ZodString;
         role: z.ZodEnum<{
