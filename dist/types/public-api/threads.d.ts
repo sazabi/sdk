@@ -17,6 +17,7 @@ export declare const ThreadSchema: z.ZodObject<{
         app: "app";
         bitbucket: "bitbucket";
         cli: "cli";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         linear: "linear";
@@ -125,6 +126,7 @@ export declare const MessageSchema: z.ZodObject<{
         app: "app";
         bitbucket: "bitbucket";
         cli: "cli";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         linear: "linear";
@@ -168,6 +170,7 @@ export declare const ListThreadsOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -208,6 +211,7 @@ export declare const GetThreadOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -313,6 +317,7 @@ export declare const GetThreadOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -458,6 +463,7 @@ export declare const UpdateThreadOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -501,6 +507,7 @@ export declare const listThreads: import("../orpc-contracts/index.js").Operation
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -537,6 +544,7 @@ export declare const getThread: import("../orpc-contracts/index.js").OperationDe
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -642,6 +650,7 @@ export declare const getThread: import("../orpc-contracts/index.js").OperationDe
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -755,6 +764,7 @@ export declare const updateThread: import("../orpc-contracts/index.js").Operatio
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -803,6 +813,7 @@ export declare const ForkThreadOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -848,6 +859,7 @@ export declare const SetThreadVisibilityOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -954,6 +966,7 @@ export declare const forkThread: import("../orpc-contracts/index.js").OperationD
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -993,6 +1006,7 @@ export declare const setThreadVisibility: import("../orpc-contracts/index.js").O
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -1072,6 +1086,7 @@ export declare const threadsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
@@ -1105,6 +1120,7 @@ export declare const threadsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
@@ -1210,6 +1226,7 @@ export declare const threadsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
@@ -1311,6 +1328,7 @@ export declare const threadsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
@@ -1344,6 +1362,7 @@ export declare const threadsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
@@ -1380,6 +1399,7 @@ export declare const threadsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";

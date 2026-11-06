@@ -19,6 +19,17 @@ export declare const SHARE_LINK_KINDS: {
         readonly surface: "dashboard";
         readonly idKey: "id";
     };
+    /**
+     * A published status page (docs/design/app/public-status-pages), as
+     * public-api's anonymous `statusPages.public.*` reads answer it: the slug of
+     * a published, unsuspended, live `status_pages` row is the link, and hiding,
+     * suspending, deleting or renaming the page revokes it. The handler reads
+     * only that page's published content.
+     */
+    readonly status_page: {
+        readonly surface: "public_api";
+        readonly idKey: "slug";
+    };
 };
 export type ShareLinkKind = keyof typeof SHARE_LINK_KINDS;
 export declare const isShareLinkKind: (value: string) => value is ShareLinkKind;

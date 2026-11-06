@@ -1266,6 +1266,462 @@ var public_api_client_contract_gen_default = {
       }
     }
   },
+  statusPages: {
+    list: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "statusPages.list",
+          backend: "api",
+          pagination: "cursor",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/status-pages",
+          tags: ["StatusPages"],
+          operationId: "statusPages.list",
+          summary: "List status pages",
+          description: "List the project's status pages."
+        }
+      }
+    },
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "statusPages.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "GET",
+          path: "/status-pages/{statusPageId}",
+          tags: ["StatusPages"],
+          operationId: "statusPages.get",
+          summary: "Get a status page",
+          description: "Get one status page with its sections and surfaces and each surface's current status."
+        }
+      }
+    },
+    create: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "statusPages.create",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/status-pages",
+          tags: ["StatusPages"],
+          operationId: "statusPages.create",
+          summary: "Create a status page",
+          description: "Create a hidden status page. Nothing is public until statusPages.setVisibility publishes it."
+        }
+      }
+    },
+    update: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "statusPages.update",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "PATCH",
+          path: "/status-pages/{statusPageId}",
+          tags: ["StatusPages"],
+          operationId: "statusPages.update",
+          summary: "Update a status page",
+          description: "Change a page's slug, title, branding or time zone. Visibility changes only through publish and hide."
+        }
+      }
+    },
+    delete: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "statusPages.delete",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "DELETE",
+          path: "/status-pages/{statusPageId}",
+          tags: ["StatusPages"],
+          operationId: "statusPages.delete",
+          summary: "Delete a status page",
+          description: "Delete a status page. Its URL returns 404 at once and its slug is free to reuse."
+        }
+      }
+    },
+    setVisibility: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "statusPages.setVisibility",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/status-pages/{statusPageId}/visibility",
+          tags: ["StatusPages"],
+          operationId: "statusPages.setVisibility",
+          summary: "Publish or hide a status page",
+          description: "Publish a page to make it public at its URL, or hide it to take it offline (its URL returns 404 until published again)."
+        }
+      }
+    },
+    structure: {
+      put: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.structure.put",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PUT",
+            path: "/status-pages/{statusPageId}/structure",
+            tags: ["StatusPages"],
+            operationId: "statusPages.structure.put",
+            summary: "Apply a status page's structure",
+            description: "Replace the page's sections and surfaces from one document, matched by key. Surfaces dropped from the document are removed; their history stays on past reports. With dryRun, returns the diff without writing."
+          }
+        }
+      }
+    },
+    sections: {
+      create: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.sections.create",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/status-pages/{statusPageId}/sections",
+            tags: ["StatusPages"],
+            operationId: "statusPages.sections.create",
+            summary: "Create a status page section",
+            description: "Add a section to a status page."
+          }
+        }
+      },
+      update: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.sections.update",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PATCH",
+            path: "/status-pages/{statusPageId}/sections/{sectionId}",
+            tags: ["StatusPages"],
+            operationId: "statusPages.sections.update",
+            summary: "Update a status page section",
+            description: "Rename, describe or move a section."
+          }
+        }
+      },
+      delete: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.sections.delete",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "DELETE",
+            path: "/status-pages/{statusPageId}/sections/{sectionId}",
+            tags: ["StatusPages"],
+            operationId: "statusPages.sections.delete",
+            summary: "Delete a status page section",
+            description: "Remove a section. Its surfaces move to the page's top level."
+          }
+        }
+      }
+    },
+    surfaces: {
+      create: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.surfaces.create",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/status-pages/{statusPageId}/surfaces",
+            tags: ["StatusPages"],
+            operationId: "statusPages.surfaces.create",
+            summary: "Create a status page surface",
+            description: "Add a surface (a public row, such as API) to a status page."
+          }
+        }
+      },
+      update: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.surfaces.update",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PATCH",
+            path: "/status-pages/{statusPageId}/surfaces/{surfaceId}",
+            tags: ["StatusPages"],
+            operationId: "statusPages.surfaces.update",
+            summary: "Update a status page surface",
+            description: "Rename, describe or move a surface. A surface's status changes only through report updates."
+          }
+        }
+      },
+      delete: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.surfaces.delete",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "DELETE",
+            path: "/status-pages/{statusPageId}/surfaces/{surfaceId}",
+            tags: ["StatusPages"],
+            operationId: "statusPages.surfaces.delete",
+            summary: "Delete a status page surface",
+            description: "Remove a surface from the page. Its history stays on past reports."
+          }
+        }
+      }
+    },
+    reports: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.reports.list",
+            backend: "api",
+            pagination: "cursor",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/status-pages/{statusPageId}/reports",
+            tags: ["StatusPages"],
+            operationId: "statusPages.reports.list",
+            summary: "List status reports",
+            description: "List a status page's incident and maintenance reports, drafts included, newest first."
+          }
+        }
+      },
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.reports.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/status-pages/{statusPageId}/reports/{reportId}",
+            tags: ["StatusPages"],
+            operationId: "statusPages.reports.get",
+            summary: "Get a status report",
+            description: "Get one report with every update, drafts included."
+          }
+        }
+      },
+      create: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.reports.create",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/status-pages/{statusPageId}/reports",
+            tags: ["StatusPages"],
+            operationId: "statusPages.reports.create",
+            summary: "Create a status report",
+            description: "Create an incident or maintenance report with its first update, as a draft. Nothing shows on the public page until statusPages.reports.setVisibility publishes it."
+          }
+        }
+      },
+      setVisibility: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.reports.setVisibility",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "POST",
+            path: "/status-reports/{reportId}/visibility",
+            tags: ["StatusPages"],
+            operationId: "statusPages.reports.setVisibility",
+            summary: "Publish a status report",
+            description: "Publish a report and every draft update on it. The public page shows them within seconds."
+          }
+        }
+      },
+      updates: {
+        create: {
+          "~orpc": {
+            errorMap: {},
+            meta: {
+              operationId: "statusPages.reports.updates.create",
+              backend: "api",
+              pagination: "none",
+              async: "sync",
+              examples: []
+            },
+            route: {
+              method: "POST",
+              path: "/status-reports/{reportId}/updates",
+              tags: ["StatusPages"],
+              operationId: "statusPages.reports.updates.create",
+              summary: "Add a status report update",
+              description: "Add a draft update to a report: a new state, a message and the surfaces it affects. Publish it with statusPages.reports.setVisibility."
+            }
+          }
+        }
+      },
+      delete: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.reports.delete",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "DELETE",
+            path: "/status-reports/{reportId}",
+            tags: ["StatusPages"],
+            operationId: "statusPages.reports.delete",
+            summary: "Delete a draft status report",
+            description: "Delete a report that was never published. Published reports stay as public history."
+          }
+        }
+      }
+    },
+    public: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "statusPages.public.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/public/status-pages/{slug}",
+            tags: ["StatusPages"],
+            operationId: "statusPages.public.get",
+            summary: "Read a public status page",
+            description: "Read a published status page without authentication: surfaces with current status and 90 days of uptime, open reports, upcoming maintenance and the 20 most recent resolved reports. Returns 404 for hidden, suspended, deleted and unknown slugs alike."
+          }
+        }
+      },
+      reports: {
+        get: {
+          "~orpc": {
+            errorMap: {},
+            meta: {
+              operationId: "statusPages.public.reports.get",
+              backend: "api",
+              pagination: "none",
+              async: "sync",
+              examples: []
+            },
+            route: {
+              method: "GET",
+              path: "/public/status-pages/{slug}/reports/{reportId}",
+              tags: ["StatusPages"],
+              operationId: "statusPages.public.reports.get",
+              summary: "Read a public status report",
+              description: "Read one published report and its published updates on a published status page, without authentication. Returns 404 for drafts and for pages that aren't public."
+            }
+          }
+        },
+        list: {
+          "~orpc": {
+            errorMap: {},
+            meta: {
+              operationId: "statusPages.public.reports.list",
+              backend: "api",
+              pagination: "none",
+              async: "sync",
+              examples: []
+            },
+            route: {
+              method: "GET",
+              path: "/public/status-pages/{slug}/reports",
+              tags: ["StatusPages"],
+              operationId: "statusPages.public.reports.list",
+              summary: "List a public status page's reports",
+              description: "List one month of published reports on a published status page, without authentication. Backs the page's history."
+            }
+          }
+        }
+      }
+    }
+  },
   dashboards: {
     list: {
       "~orpc": {
@@ -3035,6 +3491,90 @@ var public_api_client_contract_gen_default = {
             operationId: "integrations.microsoftTeamsConfiguration.update",
             summary: "Update Microsoft Teams connection configuration",
             description: "Update a Microsoft Teams connection's configuration. Omitted fields are left unchanged."
+          }
+        }
+      }
+    },
+    discordChannels: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.discordChannels.list",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/integrations/connections/{connectionId}/discord-channels",
+            tags: ["Integrations"],
+            operationId: "integrations.discordChannels.list",
+            summary: "List a Discord bot connection's channels",
+            description: "List the text and announcement channels the Sazabi bot can see in a Discord bot connection's server, in Discord's order. These are the channels a channel-to-project mapping can name."
+          }
+        }
+      }
+    },
+    discordChannelProjectMappings: {
+      list: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.discordChannelProjectMappings.list",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/integrations/connections/{connectionId}/discord-channel-project-mappings",
+            tags: ["Integrations"],
+            operationId: "integrations.discordChannelProjectMappings.list",
+            summary: "List Discord channel-to-project mappings",
+            description: "List a Discord bot connection's channel-to-project mappings, by channel name."
+          }
+        }
+      },
+      upsert: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.discordChannelProjectMappings.upsert",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PUT",
+            path: "/integrations/connections/{connectionId}/discord-channel-project-mappings/{discordChannelId}",
+            tags: ["Integrations"],
+            operationId: "integrations.discordChannelProjectMappings.upsert",
+            summary: "Set a Discord channel-to-project mapping",
+            description: "Create or replace one Discord channel's mapping. Idempotent on (connection, channel). New conversations in the channel and its threads then run in the project; existing conversations keep theirs."
+          }
+        }
+      },
+      delete: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.discordChannelProjectMappings.delete",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "DELETE",
+            path: "/integrations/connections/{connectionId}/discord-channel-project-mappings/{discordChannelId}",
+            tags: ["Integrations"],
+            operationId: "integrations.discordChannelProjectMappings.delete",
+            summary: "Delete a Discord channel-to-project mapping",
+            description: "Delete a Discord channel's mapping; its new conversations then run in the connection's default project. Deleting one that does not exist succeeds."
           }
         }
       }
@@ -8325,7 +8865,7 @@ var public_api_client_contract_gen_default = {
           tags: ["FeatureFlags"],
           operationId: "featureFlags.resolvePublic",
           summary: "Resolve public feature flags",
-          description: "Return the Sazabi feature flags approved for anonymous reading that are on, without authentication; flags that are off are omitted. Serves anonymous Sazabi surfaces such as www.sazabi.com. This map resolves app-wide only."
+          description: "Return every Sazabi feature flag approved for anonymous reading as `true` (on) or `false` (off), without authentication. Serves anonymous Sazabi surfaces such as www.sazabi.com and the Labs sites. This map resolves app-wide only."
         }
       }
     }
@@ -8857,6 +9397,19 @@ var createClient = (options) => {
       render: async (input) => raw.dashboards.render(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.render")),
       delete: async (input) => raw.dashboards.delete(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "dashboards.delete"))
     },
+    statusPages: {
+      get: raw.statusPages.get,
+      update: raw.statusPages.update,
+      delete: raw.statusPages.delete,
+      setVisibility: raw.statusPages.setVisibility,
+      structure: raw.statusPages.structure,
+      sections: raw.statusPages.sections,
+      surfaces: raw.statusPages.surfaces,
+      reports: raw.statusPages.reports,
+      public: raw.statusPages.public,
+      list: async (input = {}) => raw.statusPages.list(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "statusPages.list")),
+      create: async (input) => raw.statusPages.create(await resolveRequiredProjectScopedInput(options.credentialProvider, input, "statusPages.create"))
+    },
     logs: {
       ...logs,
       ask: async (input) => raw.logs.ask(await resolveProjectScopedInput(options.credentialProvider, input)),
@@ -9067,6 +9620,14 @@ var createClient = (options) => {
       microsoftTeamsConfiguration: {
         get: async (input) => raw.integrations.microsoftTeamsConfiguration.get(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.microsoftTeamsConfiguration.get")),
         update: async (input) => raw.integrations.microsoftTeamsConfiguration.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.microsoftTeamsConfiguration.update"))
+      },
+      discordChannels: {
+        list: async (input) => raw.integrations.discordChannels.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.discordChannels.list"))
+      },
+      discordChannelProjectMappings: {
+        list: async (input) => raw.integrations.discordChannelProjectMappings.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.discordChannelProjectMappings.list")),
+        upsert: async (input) => raw.integrations.discordChannelProjectMappings.upsert(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.discordChannelProjectMappings.upsert")),
+        delete: async (input) => raw.integrations.discordChannelProjectMappings.delete(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.discordChannelProjectMappings.delete"))
       }
     },
     mcpConnectors: {

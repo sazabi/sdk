@@ -86,6 +86,7 @@ export declare const GetDashboardOutputSchema: z.ZodObject<{
         path: z.ZodString;
         type: z.ZodEnum<{
             area_chart: "area_chart";
+            bar_chart: "bar_chart";
             flame_chart: "flame_chart";
             graph_chart: "graph_chart";
             metric: "metric";
@@ -244,6 +245,31 @@ export declare const GetDashboardOutputSchema: z.ZodObject<{
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         version: z.ZodLiteral<2>;
+        type: z.ZodLiteral<"bar_chart">;
+        data: z.ZodObject<{
+            series: z.ZodArray<z.ZodObject<{
+                name: z.ZodString;
+                tone: z.ZodOptional<z.ZodEnum<{
+                    critical: "critical";
+                    danger: "danger";
+                    info: "info";
+                    neutral: "neutral";
+                    success: "success";
+                    warning: "warning";
+                }>>;
+                points: z.ZodArray<z.ZodObject<{
+                    x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                    y: z.ZodNullable<z.ZodNumber>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>;
+        view: z.ZodOptional<z.ZodObject<{
+            title: z.ZodOptional<z.ZodString>;
+            unit: z.ZodOptional<z.ZodString>;
+            stacked: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strict>>;
+    }, z.core.$strict>, z.ZodObject<{
+        version: z.ZodLiteral<2>;
         type: z.ZodLiteral<"timeseries">;
         data: z.ZodObject<{
             series: z.ZodArray<z.ZodObject<{
@@ -284,15 +310,26 @@ export declare const GetDashboardOutputSchema: z.ZodObject<{
                 label: z.ZodOptional<z.ZodString>;
                 unit: z.ZodOptional<z.ZodString>;
             }, z.core.$strict>>>;
+            pivot: z.ZodOptional<z.ZodObject<{
+                field: z.ZodString;
+            }, z.core.$strict>>;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         type: z.ZodLiteral<"metric">;
         data: z.ZodObject<{
             value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+            previous: z.ZodOptional<z.ZodObject<{
+                value: z.ZodNullable<z.ZodNumber>;
+                from: z.ZodISODateTime;
+                to: z.ZodISODateTime;
+            }, z.core.$strict>>;
         }, z.core.$strict>;
         view: z.ZodOptional<z.ZodObject<{
             unit: z.ZodOptional<z.ZodString>;
+            compare: z.ZodOptional<z.ZodEnum<{
+                previous_period: "previous_period";
+            }>>;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         version: z.ZodLiteral<2>;
@@ -552,6 +589,31 @@ export declare const ValidateDashboardInputSchema: z.ZodObject<{
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"timeseries">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
@@ -592,15 +654,26 @@ export declare const ValidateDashboardInputSchema: z.ZodObject<{
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -882,6 +955,31 @@ export declare const CreateDashboardInputSchema: z.ZodObject<{
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"timeseries">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
@@ -922,15 +1020,26 @@ export declare const CreateDashboardInputSchema: z.ZodObject<{
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -1214,6 +1323,31 @@ export declare const UpdateDashboardInputSchema: z.ZodObject<{
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"timeseries">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
@@ -1254,15 +1388,26 @@ export declare const UpdateDashboardInputSchema: z.ZodObject<{
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -1400,6 +1545,8 @@ export declare const RenderDashboardInputSchema: z.ZodObject<{
         lookbackSeconds: z.ZodNumber;
     }, z.core.$strict>], "kind">>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    variables: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+    refresh: z.ZodOptional<z.ZodBoolean>;
     projectId: z.ZodOptional<z.ZodUUID>;
 }, z.core.$strict>;
 export type RenderDashboardInput = z.infer<typeof RenderDashboardInputSchema>;
@@ -1436,6 +1583,31 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
         data: z.ZodDiscriminatedUnion<[z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"area_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
                     name: z.ZodString;
@@ -1500,15 +1672,26 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -1895,6 +2078,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     "1d": "1d";
                     "1h": "1h";
                     "1m": "1m";
+                    "1w": "1w";
                     "30m": "30m";
                     "5m": "5m";
                     "6h": "6h";
@@ -1948,6 +2132,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
+            readRows: z.ZodOptional<z.ZodNumber>;
+            readBytes: z.ZodOptional<z.ZodNumber>;
+            sharedQuery: z.ZodOptional<z.ZodBoolean>;
+            cachedAt: z.ZodOptional<z.ZodISODateTime>;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"empty">;
@@ -2230,6 +2418,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     "1d": "1d";
                     "1h": "1h";
                     "1m": "1m";
+                    "1w": "1w";
                     "30m": "30m";
                     "5m": "5m";
                     "6h": "6h";
@@ -2283,6 +2472,10 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
+            readRows: z.ZodOptional<z.ZodNumber>;
+            readBytes: z.ZodOptional<z.ZodNumber>;
+            sharedQuery: z.ZodOptional<z.ZodBoolean>;
+            cachedAt: z.ZodOptional<z.ZodISODateTime>;
         }, z.core.$strict>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"rejected">;
@@ -2572,6 +2765,7 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
                     "1d": "1d";
                     "1h": "1h";
                     "1m": "1m";
+                    "1w": "1w";
                     "30m": "30m";
                     "5m": "5m";
                     "6h": "6h";
@@ -2734,6 +2928,7 @@ export declare const getDashboard: import("../orpc-contracts/index.js").Operatio
         path: z.ZodString;
         type: z.ZodEnum<{
             area_chart: "area_chart";
+            bar_chart: "bar_chart";
             flame_chart: "flame_chart";
             graph_chart: "graph_chart";
             metric: "metric";
@@ -2892,6 +3087,31 @@ export declare const getDashboard: import("../orpc-contracts/index.js").Operatio
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         version: z.ZodLiteral<2>;
+        type: z.ZodLiteral<"bar_chart">;
+        data: z.ZodObject<{
+            series: z.ZodArray<z.ZodObject<{
+                name: z.ZodString;
+                tone: z.ZodOptional<z.ZodEnum<{
+                    critical: "critical";
+                    danger: "danger";
+                    info: "info";
+                    neutral: "neutral";
+                    success: "success";
+                    warning: "warning";
+                }>>;
+                points: z.ZodArray<z.ZodObject<{
+                    x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                    y: z.ZodNullable<z.ZodNumber>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>;
+        view: z.ZodOptional<z.ZodObject<{
+            title: z.ZodOptional<z.ZodString>;
+            unit: z.ZodOptional<z.ZodString>;
+            stacked: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strict>>;
+    }, z.core.$strict>, z.ZodObject<{
+        version: z.ZodLiteral<2>;
         type: z.ZodLiteral<"timeseries">;
         data: z.ZodObject<{
             series: z.ZodArray<z.ZodObject<{
@@ -2932,15 +3152,26 @@ export declare const getDashboard: import("../orpc-contracts/index.js").Operatio
                 label: z.ZodOptional<z.ZodString>;
                 unit: z.ZodOptional<z.ZodString>;
             }, z.core.$strict>>>;
+            pivot: z.ZodOptional<z.ZodObject<{
+                field: z.ZodString;
+            }, z.core.$strict>>;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         version: z.ZodLiteral<2>;
         type: z.ZodLiteral<"metric">;
         data: z.ZodObject<{
             value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+            previous: z.ZodOptional<z.ZodObject<{
+                value: z.ZodNullable<z.ZodNumber>;
+                from: z.ZodISODateTime;
+                to: z.ZodISODateTime;
+            }, z.core.$strict>>;
         }, z.core.$strict>;
         view: z.ZodOptional<z.ZodObject<{
             unit: z.ZodOptional<z.ZodString>;
+            compare: z.ZodOptional<z.ZodEnum<{
+                previous_period: "previous_period";
+            }>>;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         version: z.ZodLiteral<2>;
@@ -3199,6 +3430,31 @@ export declare const validateDashboard: import("../orpc-contracts/index.js").Ope
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"timeseries">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
@@ -3239,15 +3495,26 @@ export declare const validateDashboard: import("../orpc-contracts/index.js").Ope
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -3526,6 +3793,31 @@ export declare const createDashboard: import("../orpc-contracts/index.js").Opera
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"timeseries">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
@@ -3566,15 +3858,26 @@ export declare const createDashboard: import("../orpc-contracts/index.js").Opera
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -3869,6 +4172,31 @@ export declare const updateDashboard: import("../orpc-contracts/index.js").Opera
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"timeseries">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
@@ -3909,15 +4237,26 @@ export declare const updateDashboard: import("../orpc-contracts/index.js").Opera
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -4052,6 +4391,8 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
         lookbackSeconds: z.ZodNumber;
     }, z.core.$strict>], "kind">>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    variables: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodString>>;
+    refresh: z.ZodOptional<z.ZodBoolean>;
     projectId: z.ZodOptional<z.ZodUUID>;
 }, z.core.$strict>, z.ZodObject<{
     id: z.ZodUUID;
@@ -4086,6 +4427,31 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
         data: z.ZodDiscriminatedUnion<[z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"area_chart">;
+            data: z.ZodObject<{
+                series: z.ZodArray<z.ZodObject<{
+                    name: z.ZodString;
+                    tone: z.ZodOptional<z.ZodEnum<{
+                        critical: "critical";
+                        danger: "danger";
+                        info: "info";
+                        neutral: "neutral";
+                        success: "success";
+                        warning: "warning";
+                    }>>;
+                    points: z.ZodArray<z.ZodObject<{
+                        x: z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>;
+                        y: z.ZodNullable<z.ZodNumber>;
+                    }, z.core.$strict>>;
+                }, z.core.$strict>>;
+            }, z.core.$strict>;
+            view: z.ZodOptional<z.ZodObject<{
+                title: z.ZodOptional<z.ZodString>;
+                unit: z.ZodOptional<z.ZodString>;
+                stacked: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strict>>;
+        }, z.core.$strict>, z.ZodObject<{
+            version: z.ZodLiteral<2>;
+            type: z.ZodLiteral<"bar_chart">;
             data: z.ZodObject<{
                 series: z.ZodArray<z.ZodObject<{
                     name: z.ZodString;
@@ -4150,15 +4516,26 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     label: z.ZodOptional<z.ZodString>;
                     unit: z.ZodOptional<z.ZodString>;
                 }, z.core.$strict>>>;
+                pivot: z.ZodOptional<z.ZodObject<{
+                    field: z.ZodString;
+                }, z.core.$strict>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
             type: z.ZodLiteral<"metric">;
             data: z.ZodObject<{
                 value: z.ZodUnion<readonly [z.ZodNumber, z.ZodString]>;
+                previous: z.ZodOptional<z.ZodObject<{
+                    value: z.ZodNullable<z.ZodNumber>;
+                    from: z.ZodISODateTime;
+                    to: z.ZodISODateTime;
+                }, z.core.$strict>>;
             }, z.core.$strict>;
             view: z.ZodOptional<z.ZodObject<{
                 unit: z.ZodOptional<z.ZodString>;
+                compare: z.ZodOptional<z.ZodEnum<{
+                    previous_period: "previous_period";
+                }>>;
             }, z.core.$strict>>;
         }, z.core.$strict>, z.ZodObject<{
             version: z.ZodLiteral<2>;
@@ -4545,6 +4922,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     "1d": "1d";
                     "1h": "1h";
                     "1m": "1m";
+                    "1w": "1w";
                     "30m": "30m";
                     "5m": "5m";
                     "6h": "6h";
@@ -4598,6 +4976,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
+            readRows: z.ZodOptional<z.ZodNumber>;
+            readBytes: z.ZodOptional<z.ZodNumber>;
+            sharedQuery: z.ZodOptional<z.ZodBoolean>;
+            cachedAt: z.ZodOptional<z.ZodISODateTime>;
         }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"empty">;
@@ -4880,6 +5262,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     "1d": "1d";
                     "1h": "1h";
                     "1m": "1m";
+                    "1w": "1w";
                     "30m": "30m";
                     "5m": "5m";
                     "6h": "6h";
@@ -4933,6 +5316,10 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
             }, z.core.$strict>;
             took: z.ZodNumber;
             executionMs: z.ZodNumber;
+            readRows: z.ZodOptional<z.ZodNumber>;
+            readBytes: z.ZodOptional<z.ZodNumber>;
+            sharedQuery: z.ZodOptional<z.ZodBoolean>;
+            cachedAt: z.ZodOptional<z.ZodISODateTime>;
         }, z.core.$strict>;
     }, z.core.$strict>, z.ZodObject<{
         status: z.ZodLiteral<"rejected">;
@@ -5222,6 +5609,7 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
                     "1d": "1d";
                     "1h": "1h";
                     "1m": "1m";
+                    "1w": "1w";
                     "30m": "30m";
                     "5m": "5m";
                     "6h": "6h";

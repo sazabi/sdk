@@ -351,14 +351,29 @@ export type LogMeasureV2 = Measure<LogFieldRef> | {
 };
 /**
  * The time buckets a series can take, finest first: the sizes people ask for
- * ("per 10 minutes", "every 15 minutes", "every 6 hours"). Every bucket is
- * epoch-aligned, a whole number of minutes, and divides or is a multiple of an
- * hour, so the minute and hour rollups can merge into it.
+ * ("per 10 minutes", "every 15 minutes", "every 6 hours", "weekly"). Every
+ * bucket under a week is epoch-aligned, a whole number of minutes, and divides
+ * or is a multiple of an hour, so the minute and hour rollups can merge into
+ * it. `1w` starts each week at Monday 00:00 UTC (`toStartOfWeek(…, 1)`), the
+ * week `weekStartOf` writes on product facts; the epoch is a Thursday, so an
+ * epoch-aligned week would start on Thursday.
  */
-export declare const LOG_QUERY_BUCKETS: readonly ["1m", "5m", "10m", "15m", "30m", "1h", "6h", "12h", "1d"];
+export declare const LOG_QUERY_BUCKETS: readonly ["1m", "5m", "10m", "15m", "30m", "1h", "6h", "12h", "1d", "1w"];
 export type LogQueryBucket = (typeof LOG_QUERY_BUCKETS)[number];
 /** Each bucket's length in seconds. */
 export declare const LOG_QUERY_BUCKET_SECONDS: Record<LogQueryBucket, number>;
+/** A week's length in milliseconds. */
+export declare const LOG_QUERY_WEEK_MS: number;
+/**
+ * Milliseconds from the epoch to the first Monday (1970-01-05): the epoch is a
+ * Thursday, so Monday-aligned weeks sit four days into each epoch week.
+ */
+export declare const LOG_QUERY_WEEK_EPOCH_OFFSET_MS: number;
+/**
+ * The start, in epoch milliseconds, of the `bucket` holding `ms`: epoch-aligned
+ * for every bucket but `1w`, which floors to Monday 00:00 UTC.
+ */
+export declare const logQueryBucketStartMs: (bucket: LogQueryBucket, ms: number) => number;
 /** What a grouped result is ranked by: its value (the measure), or its groups' own values. */
 export declare const LOG_QUERY_ORDER_BYS: readonly ["value", "dimension"];
 export declare const LOG_QUERY_ORDER_DIRECTIONS: readonly ["asc", "desc"];
@@ -668,6 +683,7 @@ export declare const logQuerySpecV2Schema: z.ZodObject<{
         "1d": "1d";
         "1h": "1h";
         "1m": "1m";
+        "1w": "1w";
         "30m": "30m";
         "5m": "5m";
         "6h": "6h";

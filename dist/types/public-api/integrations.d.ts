@@ -5,7 +5,7 @@ import { z } from "zod";
  * isomorphic contract package does not pull in the server-only integrations
  * package (which imports Node crypto and database access).
  */
-export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "better_stack", "incident_io", "webhook", "teams", "discord", "bitbucket", "jira", "gitcafe", "cursor", "devin", "capy", "warp", "replicas", "claude", "codex", "hoplite"];
+export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "better_stack", "incident_io", "webhook", "teams", "discord", "discord_bot", "bitbucket", "jira", "gitcafe", "cursor", "devin", "capy", "warp", "replicas", "claude", "codex", "hoplite"];
 export declare const IntegrationProviderEnum: z.ZodEnum<{
     better_stack: "better_stack";
     bitbucket: "bitbucket";
@@ -15,6 +15,7 @@ export declare const IntegrationProviderEnum: z.ZodEnum<{
     cursor: "cursor";
     devin: "devin";
     discord: "discord";
+    discord_bot: "discord_bot";
     gitcafe: "gitcafe";
     github: "github";
     hoplite: "hoplite";
@@ -142,6 +143,7 @@ export declare const IntegrationProviderSchema: z.ZodObject<{
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -248,6 +250,7 @@ export declare const IntegrationConnectionSchema: z.ZodObject<{
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -306,6 +309,7 @@ export declare const ListIntegrationProvidersOutputSchema: z.ZodObject<{
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -360,6 +364,7 @@ export declare const listIntegrationProviders: import("../orpc-contracts/index.j
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -411,6 +416,7 @@ export declare const ListIntegrationConnectionsInputSchema: z.ZodObject<{
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -491,6 +497,7 @@ export declare const ListIntegrationConnectionsOutputSchema: z.ZodObject<{
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -543,6 +550,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -622,6 +630,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -819,6 +828,7 @@ export declare const GetIntegrationConnectionOutputSchema: z.ZodObject<{
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -927,6 +937,7 @@ export declare const getIntegrationConnection: import("../orpc-contracts/index.j
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -978,6 +989,7 @@ export declare const CreateIntegrationConnectionInputSchema: z.ZodObject<{
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1060,6 +1072,7 @@ export declare const CreateIntegrationConnectionOutputSchema: z.ZodObject<{
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1113,6 +1126,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1194,6 +1208,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1244,6 +1259,7 @@ export declare const BeginIntegrationConnectInputSchema: z.ZodObject<{
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1280,6 +1296,7 @@ export declare const beginIntegrationConnect: import("../orpc-contracts/index.js
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -1386,6 +1403,7 @@ export declare const GetIntegrationConnectAttemptOutputSchema: z.ZodObject<{
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1503,6 +1521,7 @@ export declare const getIntegrationConnectAttempt: import("../orpc-contracts/ind
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1627,6 +1646,7 @@ export declare const UpdateIntegrationConnectionCredentialsOutputSchema: z.ZodOb
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -1737,6 +1757,7 @@ export declare const updateIntegrationConnectionCredentials: import("../orpc-con
             cursor: "cursor";
             devin: "devin";
             discord: "discord";
+            discord_bot: "discord_bot";
             gitcafe: "gitcafe";
             github: "github";
             hoplite: "hoplite";
@@ -2226,6 +2247,107 @@ export declare const deleteMicrosoftTeamsChannelProjectMapping: import("../orpc-
 }, z.core.$strip>, z.ZodObject<{
     success: z.ZodBoolean;
 }, z.core.$strip>, "api">;
+export declare const DiscordChannelSchema: z.ZodObject<{
+    id: z.ZodString;
+    name: z.ZodString;
+    parentId: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+export type DiscordChannel = z.infer<typeof DiscordChannelSchema>;
+export declare const ListDiscordChannelsInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export declare const ListDiscordChannelsOutputSchema: z.ZodObject<{
+    channels: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        parentId: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type ListDiscordChannelsInput = z.infer<typeof ListDiscordChannelsInputSchema>;
+export type ListDiscordChannelsOutput = z.infer<typeof ListDiscordChannelsOutputSchema>;
+export declare const listDiscordChannels: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    channels: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        parentId: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const DiscordChannelProjectMappingSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    discordGuildId: z.ZodString;
+    discordChannelId: z.ZodString;
+    discordChannelName: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>;
+export type DiscordChannelProjectMapping = z.infer<typeof DiscordChannelProjectMappingSchema>;
+export declare const ListDiscordChannelProjectMappingsInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export declare const ListDiscordChannelProjectMappingsOutputSchema: z.ZodObject<{
+    mappings: z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        discordGuildId: z.ZodString;
+        discordChannelId: z.ZodString;
+        discordChannelName: z.ZodString;
+        projectId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type ListDiscordChannelProjectMappingsInput = z.infer<typeof ListDiscordChannelProjectMappingsInputSchema>;
+export type ListDiscordChannelProjectMappingsOutput = z.infer<typeof ListDiscordChannelProjectMappingsOutputSchema>;
+export declare const listDiscordChannelProjectMappings: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    mappings: z.ZodArray<z.ZodObject<{
+        connectionId: z.ZodString;
+        discordGuildId: z.ZodString;
+        discordChannelId: z.ZodString;
+        discordChannelName: z.ZodString;
+        projectId: z.ZodString;
+    }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const UpsertDiscordChannelProjectMappingInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    discordChannelId: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>;
+export type UpsertDiscordChannelProjectMappingInput = z.infer<typeof UpsertDiscordChannelProjectMappingInputSchema>;
+export type UpsertDiscordChannelProjectMappingOutput = DiscordChannelProjectMapping;
+export declare const upsertDiscordChannelProjectMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    discordChannelId: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    discordGuildId: z.ZodString;
+    discordChannelId: z.ZodString;
+    discordChannelName: z.ZodString;
+    projectId: z.ZodString;
+}, z.core.$strip>, "api">;
+export declare const DeleteDiscordChannelProjectMappingInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    discordChannelId: z.ZodString;
+}, z.core.$strip>;
+export declare const DeleteDiscordChannelProjectMappingOutputSchema: z.ZodObject<{
+    success: z.ZodBoolean;
+}, z.core.$strip>;
+export type DeleteDiscordChannelProjectMappingInput = z.infer<typeof DeleteDiscordChannelProjectMappingInputSchema>;
+export type DeleteDiscordChannelProjectMappingOutput = z.infer<typeof DeleteDiscordChannelProjectMappingOutputSchema>;
+export declare const deleteDiscordChannelProjectMapping: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    discordChannelId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    success: z.ZodBoolean;
+}, z.core.$strip>, "api">;
 export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     provider: z.ZodEnum<{
@@ -2237,6 +2359,7 @@ export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";
@@ -2270,6 +2393,7 @@ export declare const getActiveCLIAttempt: import("../orpc-contracts/index.js").O
         cursor: "cursor";
         devin: "devin";
         discord: "discord";
+        discord_bot: "discord_bot";
         gitcafe: "gitcafe";
         github: "github";
         hoplite: "hoplite";

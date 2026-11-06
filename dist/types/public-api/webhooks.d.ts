@@ -375,6 +375,94 @@ export declare const SignalWebhookEnvelopeSchema: z.ZodObject<{
             severity: z.ZodNullable<z.ZodString>;
             body: z.ZodString;
         }, z.core.$strict>;
+    }, z.core.$strip>, z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        createdAt: z.ZodString;
+        type: z.ZodLiteral<"sensor">;
+        payload: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            transition: z.ZodLiteral<"firing">;
+            sensor: z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                description: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>;
+            group: z.ZodUnion<readonly [z.ZodLiteral<"*">, z.ZodRecord<z.ZodString, z.ZodUnknown>]>;
+            groups: z.ZodOptional<z.ZodObject<{
+                count: z.ZodNumber;
+                top: z.ZodArray<z.ZodObject<{
+                    group: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+                    score: z.ZodNullable<z.ZodNumber>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
+            since: z.ZodString;
+            detection: z.ZodOptional<z.ZodObject<{
+                condition: z.ZodOptional<z.ZodString>;
+                observed: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                past: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                band: z.ZodOptional<z.ZodNullable<z.ZodArray<z.ZodNumber>>>;
+                test: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                score: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                volume: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                answers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+                samples: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    at: z.ZodString;
+                    message: z.ZodString;
+                }, z.core.$strip>>>;
+            }, z.core.$strip>>;
+            evidence: z.ZodOptional<z.ZodObject<{
+                window: z.ZodArray<z.ZodString>;
+                query: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>, z.ZodObject<{
+            transition: z.ZodLiteral<"resolved">;
+            sensor: z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                description: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>;
+            group: z.ZodUnion<readonly [z.ZodLiteral<"*">, z.ZodRecord<z.ZodString, z.ZodUnknown>]>;
+            since: z.ZodString;
+            reason: z.ZodEnum<{
+                deleted: "deleted";
+                passing: "passing";
+                updated: "updated";
+            }>;
+            detection: z.ZodOptional<z.ZodObject<{
+                condition: z.ZodOptional<z.ZodString>;
+                observed: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                past: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                band: z.ZodOptional<z.ZodNullable<z.ZodArray<z.ZodNumber>>>;
+                test: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                score: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                volume: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                answers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+                samples: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    at: z.ZodString;
+                    message: z.ZodString;
+                }, z.core.$strip>>>;
+            }, z.core.$strip>>;
+            evidence: z.ZodOptional<z.ZodObject<{
+                window: z.ZodArray<z.ZodString>;
+                query: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>, z.ZodObject<{
+            transition: z.ZodLiteral<"stopped">;
+            sensor: z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                description: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>;
+            since: z.ZodString;
+            reason: z.ZodEnum<{
+                query_error: "query_error";
+                scan_budget: "scan_budget";
+            }>;
+            message: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            transition: z.ZodLiteral<"reset">;
+            since: z.ZodString;
+        }, z.core.$strip>], "transition">;
     }, z.core.$strip>], "type">;
 }, z.core.$strip>;
 export declare const TestWebhookEnvelopeSchema: z.ZodObject<{
@@ -549,6 +637,94 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
             severity: z.ZodNullable<z.ZodString>;
             body: z.ZodString;
         }, z.core.$strict>;
+    }, z.core.$strip>, z.ZodObject<{
+        id: z.ZodString;
+        projectId: z.ZodString;
+        createdAt: z.ZodString;
+        type: z.ZodLiteral<"sensor">;
+        payload: z.ZodDiscriminatedUnion<[z.ZodObject<{
+            transition: z.ZodLiteral<"firing">;
+            sensor: z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                description: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>;
+            group: z.ZodUnion<readonly [z.ZodLiteral<"*">, z.ZodRecord<z.ZodString, z.ZodUnknown>]>;
+            groups: z.ZodOptional<z.ZodObject<{
+                count: z.ZodNumber;
+                top: z.ZodArray<z.ZodObject<{
+                    group: z.ZodRecord<z.ZodString, z.ZodUnknown>;
+                    score: z.ZodNullable<z.ZodNumber>;
+                }, z.core.$strip>>;
+            }, z.core.$strip>>;
+            since: z.ZodString;
+            detection: z.ZodOptional<z.ZodObject<{
+                condition: z.ZodOptional<z.ZodString>;
+                observed: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                past: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                band: z.ZodOptional<z.ZodNullable<z.ZodArray<z.ZodNumber>>>;
+                test: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                score: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                volume: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                answers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+                samples: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    at: z.ZodString;
+                    message: z.ZodString;
+                }, z.core.$strip>>>;
+            }, z.core.$strip>>;
+            evidence: z.ZodOptional<z.ZodObject<{
+                window: z.ZodArray<z.ZodString>;
+                query: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>, z.ZodObject<{
+            transition: z.ZodLiteral<"resolved">;
+            sensor: z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                description: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>;
+            group: z.ZodUnion<readonly [z.ZodLiteral<"*">, z.ZodRecord<z.ZodString, z.ZodUnknown>]>;
+            since: z.ZodString;
+            reason: z.ZodEnum<{
+                deleted: "deleted";
+                passing: "passing";
+                updated: "updated";
+            }>;
+            detection: z.ZodOptional<z.ZodObject<{
+                condition: z.ZodOptional<z.ZodString>;
+                observed: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                past: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                band: z.ZodOptional<z.ZodNullable<z.ZodArray<z.ZodNumber>>>;
+                test: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+                score: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                volume: z.ZodOptional<z.ZodNullable<z.ZodNumber>>;
+                answers: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+                samples: z.ZodOptional<z.ZodArray<z.ZodObject<{
+                    at: z.ZodString;
+                    message: z.ZodString;
+                }, z.core.$strip>>>;
+            }, z.core.$strip>>;
+            evidence: z.ZodOptional<z.ZodObject<{
+                window: z.ZodArray<z.ZodString>;
+                query: z.ZodString;
+            }, z.core.$strip>>;
+        }, z.core.$strip>, z.ZodObject<{
+            transition: z.ZodLiteral<"stopped">;
+            sensor: z.ZodObject<{
+                id: z.ZodString;
+                name: z.ZodString;
+                description: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>;
+            since: z.ZodString;
+            reason: z.ZodEnum<{
+                query_error: "query_error";
+                scan_budget: "scan_budget";
+            }>;
+            message: z.ZodOptional<z.ZodString>;
+        }, z.core.$strip>, z.ZodObject<{
+            transition: z.ZodLiteral<"reset">;
+            since: z.ZodString;
+        }, z.core.$strip>], "transition">;
     }, z.core.$strip>], "type">;
 }, z.core.$strip>, z.ZodObject<{
     id: z.ZodString;

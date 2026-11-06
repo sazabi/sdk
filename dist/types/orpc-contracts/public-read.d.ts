@@ -31,13 +31,22 @@ export declare const PUBLIC_READ_KINDS: {
      * nothing. Forwarded from services/public-api only. This amends the
      * 2026-10-15 ruling that no-login reads belong to services/api for this one
      * read, and it is revisitable; it does not open no-login reads on the
-     * public API in general.
+     * public API in general. `variants` (ENG-11393) adds, for each on flag that
+     * declares variants, its app-wide variant as a row of key and variant
+     * name: the same flags, chosen app-wide, as the design for feature flag
+     * variants settles. `off` lists the catalog's other public keys, the ones
+     * that are off app-wide, each as a row carrying its key, so the public map
+     * can answer them as explicit `false` and a reader can tell a flag switched
+     * off from one this build does not know (a default-on kill switch an
+     * override turned off).
      */
     readonly public_feature_flags: {
         readonly surface: "public_api";
         readonly inputKeys: readonly [];
         readonly outputKeys: {
             readonly flags: readonly ["key"];
+            readonly variants: readonly ["key", "variant"];
+            readonly off: readonly ["key"];
         };
     };
 };

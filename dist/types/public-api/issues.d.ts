@@ -554,6 +554,7 @@ export declare const CreateIssueOutputSchema: z.ZodObject<{
     created: z.ZodBoolean;
     message: z.ZodString;
     duplicateIssueId: z.ZodOptional<z.ZodString>;
+    reopened: z.ZodOptional<z.ZodBoolean>;
     possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type CreateIssueOutput = z.infer<typeof CreateIssueOutputSchema>;
@@ -1440,6 +1441,7 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     contentMdx: z.ZodOptional<z.ZodString>;
+    summary: z.ZodOptional<z.ZodString>;
     severity: z.ZodOptional<z.ZodEnum<{
         critical: "critical";
         high: "high";
@@ -1489,6 +1491,7 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
     created: z.ZodBoolean;
     message: z.ZodString;
     duplicateIssueId: z.ZodOptional<z.ZodString>;
+    reopened: z.ZodOptional<z.ZodBoolean>;
     possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const listIssues: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
@@ -2295,6 +2298,7 @@ export declare const issuesContract: {
         projectId: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
         contentMdx: z.ZodOptional<z.ZodString>;
+        summary: z.ZodOptional<z.ZodString>;
         severity: z.ZodOptional<z.ZodEnum<{
             critical: "critical";
             high: "high";
@@ -2344,6 +2348,7 @@ export declare const issuesContract: {
         created: z.ZodBoolean;
         message: z.ZodString;
         duplicateIssueId: z.ZodOptional<z.ZodString>;
+        reopened: z.ZodOptional<z.ZodBoolean>;
         possibleDuplicateOfIssueId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{

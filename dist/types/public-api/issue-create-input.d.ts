@@ -5,6 +5,7 @@ export declare const CreateIssueInputObjectSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     contentMdx: z.ZodOptional<z.ZodString>;
+    summary: z.ZodOptional<z.ZodString>;
     severity: z.ZodOptional<z.ZodEnum<{
         critical: "critical";
         high: "high";
@@ -30,6 +31,7 @@ export declare const CreateIssueInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
     contentMdx: z.ZodOptional<z.ZodString>;
+    summary: z.ZodOptional<z.ZodString>;
     severity: z.ZodOptional<z.ZodEnum<{
         critical: "critical";
         high: "high";

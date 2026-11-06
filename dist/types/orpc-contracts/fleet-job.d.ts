@@ -83,6 +83,19 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
      * run's `attachment_state_keys`. Read-only.
      */
     readonly clickhouse_target_planes: readonly ["planes"];
+    /**
+     * Every ClickHouse target's code, kind, status and AWS region (architect
+     * ruling #166, RULING #264), for Exec's staged-run start to sign a
+     * bring-up's preflight facts. Read-only.
+     */
+    readonly clickhouse_targets: readonly ["targets"];
+    /**
+     * One ClickHouse target's ClickHouse Cloud service ID by its code, or null
+     * until its service stage writes one (architect RULING #242), for the
+     * provisioner's candidate-test `narrow`. Read-only, and it answers nothing
+     * else.
+     */
+    readonly clickhouse_target_service_id: readonly ["code", "cloudServiceId"];
 };
 export type FleetJobKind = keyof typeof FLEET_JOB_OUTPUT_KEYS;
 export declare const isFleetJobKind: (value: string) => value is FleetJobKind;

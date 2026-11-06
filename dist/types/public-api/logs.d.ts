@@ -305,6 +305,7 @@ export declare const ExecuteLogQueryInputSchema: z.ZodObject<{
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "1w": "1w";
             "30m": "30m";
             "5m": "5m";
             "6h": "6h";
@@ -1982,6 +1983,7 @@ export declare const executeLogQuery: import("../orpc-contracts/index.js").Opera
             "1d": "1d";
             "1h": "1h";
             "1m": "1m";
+            "1w": "1w";
             "30m": "30m";
             "5m": "5m";
             "6h": "6h";
@@ -3334,6 +3336,7 @@ export declare const logsContract: {
                 "1d": "1d";
                 "1h": "1h";
                 "1m": "1m";
+                "1w": "1w";
                 "30m": "30m";
                 "5m": "5m";
                 "6h": "6h";

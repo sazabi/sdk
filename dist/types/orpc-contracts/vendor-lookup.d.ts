@@ -14,6 +14,11 @@ export declare const VENDOR_LOOKUP_OUTPUT_KEYS: {
     readonly slack_team: readonly ["organizationId", "connectionId"];
     /** A Microsoft Teams tenant to its organization and connection. */
     readonly microsoft_teams_tenant: readonly ["organizationId", "connectionId"];
+    /**
+     * A Discord user's direct-message route to the organization and Discord
+     * bot connection their DMs run in (ENG-11419).
+     */
+    readonly discord_direct_message_route: readonly ["organizationId", "connectionId"];
     /** A GitHub App installation to its organization and connection. */
     readonly github_installation: readonly ["organizationId", "connectionId"];
     /** A webhook delivery to the webhook it is for, and its tenant. */

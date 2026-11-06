@@ -133,6 +133,7 @@ export declare const RunSchema: z.ZodObject<{
         app: "app";
         bitbucket: "bitbucket";
         cli: "cli";
+        discord: "discord";
         gitcafe: "gitcafe";
         github: "github";
         linear: "linear";
@@ -147,6 +148,23 @@ export declare const RunSchema: z.ZodObject<{
     updatedAt: z.ZodString;
     completedAt: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
+/**
+ * Where a run listing resumes, newest first (ENG-1761): before a run's
+ * `createdAt` at the stored microsecond precision and its id, written
+ * `<createdAt>_<id>`. The separator is safe unquoted in a shell, because the
+ * CLI prints `sazabi runs list --cursor <nextCursor>` for the next page. A
+ * cursor issued before ENG-1761 is a plain datetime and resumes before that
+ * time, with no id. Null when it is neither.
+ */
+export declare const parseRunListCursor: (cursor: string) => {
+    createdAt: string;
+    id: string | null;
+} | null;
+/** A run listing's `nextCursor` after the run at `createdAt` and `id`. */
+export declare const encodeRunListCursor: (position: {
+    createdAt: string;
+    id: string;
+}) => string;
 export declare const ListRunsInputSchema: z.ZodObject<{
     projectId: z.ZodOptional<z.ZodString>;
     limit: z.ZodDefault<z.ZodCoercedNumber<unknown>>;
@@ -196,6 +214,7 @@ export declare const ListRunsOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -261,6 +280,7 @@ export declare const ListThreadRunsOutputSchema: z.ZodObject<{
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -439,6 +459,7 @@ export declare const listRuns: import("../orpc-contracts/index.js").OperationDef
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -506,6 +527,7 @@ export declare const listThreadRuns: import("../orpc-contracts/index.js").Operat
             app: "app";
             bitbucket: "bitbucket";
             cli: "cli";
+            discord: "discord";
             gitcafe: "gitcafe";
             github: "github";
             linear: "linear";
@@ -626,6 +648,7 @@ export declare const runsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
@@ -690,6 +713,7 @@ export declare const runsContract: {
                 app: "app";
                 bitbucket: "bitbucket";
                 cli: "cli";
+                discord: "discord";
                 gitcafe: "gitcafe";
                 github: "github";
                 linear: "linear";
