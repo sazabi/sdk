@@ -293,6 +293,12 @@ export interface PublicSdkClient {
     projects: {
         getIssueDetectionSettings(input: GetProjectInput): Promise<ProjectIssueDetectionSettings>;
         updateIssueDetectionSettings(input: UpdateProjectIssueDetectionSettingsInput): Promise<ProjectIssueDetectionSettings>;
+        codeReviewSettings: {
+            /** A project's Settings > Code fields: code review, security review, Logging review and git commit author (GET /projects/{projectId}/code-review-settings). */
+            get(input: ContractInputs["projects"]["codeReviewSettings"]["get"]): Promise<ContractOutputs["projects"]["codeReviewSettings"]["get"]>;
+            /** Changes any of a project's Settings > Code fields; omitted fields stay unchanged (PATCH /projects/{projectId}/code-review-settings). */
+            update(input: ContractInputs["projects"]["codeReviewSettings"]["update"]): Promise<ContractOutputs["projects"]["codeReviewSettings"]["update"]>;
+        };
         list(input?: Partial<ListProjectsInput>): Promise<ListProjectsOutput>;
         get(input: GetProjectInput): Promise<GetProjectDetailsOutput>;
         create(input: Pick<CreateProjectInput, "name"> & Partial<CreateProjectInput>): Promise<CreateProjectOutput>;

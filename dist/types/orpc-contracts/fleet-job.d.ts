@@ -23,6 +23,28 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
      * Read-only.
      */
     readonly account_daily_usage: readonly ["usage", "quantities", "firstAcceptedBytesAt"];
+    /**
+     * The component registry outbox drain's claim (ENG-8294): in one
+     * transaction, every expired component write gate cleared, every terminal
+     * effect past retention pruned, then one bounded batch of pending effects
+     * claimed under a fresh claim token. Answers the two counts and the claimed
+     * rows, each with its tenant, operation and payload, which the drain then
+     * dispatches.
+     */
+    readonly component_registry_outbox_claim: readonly ["expiredGateCount", "prunedCount", "rows", "id", "organizationId", "projectId", "operationId", "effectType", "dedupeKey", "payload", "createdAt", "claimedAt", "claimToken", "attemptCount"];
+    /**
+     * One claimed component registry outbox effect marked dispatched, by its id
+     * and the claim token it was claimed under (ENG-8294). Answers only whether
+     * the claim still held.
+     */
+    readonly component_registry_outbox_completion: readonly ["completed"];
+    /**
+     * One claimed component registry outbox effect's failed attempt recorded,
+     * by its id and claim token, terminal once it used its last attempt
+     * (ENG-8294). Answers only whether it went terminal and its attempt count,
+     * or null when the claim no longer held.
+     */
+    readonly component_registry_outbox_failure: readonly ["failure", "terminal", "attemptCount"];
     /** Issue activity and outcome reads composed by the daily account job. */
     readonly issue_activity_by_organization: readonly ["activity", "hasIssue", "issuesThisWeek", "issuesLastWeek", "lastHumanIssueEventAt", "lastIssueAt", "firstBillableIssueAt"];
     readonly issue_creation_outcomes: readonly ["issues", "issueId", "organizationId", "projectId", "createdAt", "fixRequested", "fixed", "rejected", "interacted", "nextCursor"];

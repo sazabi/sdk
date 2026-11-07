@@ -88,6 +88,11 @@ export declare const StatusPageSchema: z.ZodObject<{
     updatedAt: z.ZodString;
 }, z.core.$strip>;
 export type StatusPage = z.infer<typeof StatusPageSchema>;
+export declare const StatusPageUsageSchema: z.ZodObject<{
+    count: z.ZodNumber;
+    limit: z.ZodNullable<z.ZodNumber>;
+}, z.core.$strip>;
+export type StatusPageUsage = z.infer<typeof StatusPageUsageSchema>;
 export declare const StatusPageSectionSchema: z.ZodObject<{
     id: z.ZodString;
     key: z.ZodString;
@@ -327,6 +332,10 @@ export declare const ListStatusPagesOutputSchema: z.ZodObject<{
         updatedAt: z.ZodString;
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
+    usage: z.ZodObject<{
+        count: z.ZodNumber;
+        limit: z.ZodNullable<z.ZodNumber>;
+    }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const GetStatusPageInputSchema: z.ZodObject<{
     statusPageId: z.ZodString;
@@ -1397,6 +1406,10 @@ export declare const listStatusPages: import("../orpc-contracts/index.js").Opera
         updatedAt: z.ZodString;
     }, z.core.$strip>>;
     nextCursor: z.ZodNullable<z.ZodString>;
+    usage: z.ZodObject<{
+        count: z.ZodNumber;
+        limit: z.ZodNullable<z.ZodNumber>;
+    }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const getStatusPage: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     statusPageId: z.ZodString;

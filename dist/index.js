@@ -1323,7 +1323,7 @@ var public_api_client_contract_gen_default = {
           tags: ["StatusPages"],
           operationId: "statusPages.create",
           summary: "Create a status page",
-          description: "Create a hidden status page. Nothing is public until statusPages.setVisibility publishes it."
+          description: "Create a hidden status page. Nothing is public until statusPages.setVisibility publishes it. A plan allows a limited number of status pages across all its projects; at the limit this answers 402 and existing pages are untouched."
         }
       }
     },
@@ -6662,6 +6662,48 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    codeReviewSettings: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "projects.codeReviewSettings.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/projects/{projectId}/code-review-settings",
+            tags: ["Projects"],
+            operationId: "projects.codeReviewSettings.get",
+            summary: "Get code review settings",
+            description: "Read a project's Settings > Code fields: automatic code review, review on push, pull request approval, security review, Logging review (switch, delivery mode, daily auto-commit limit) and the git commit author. Requires access to the project; changing them requires settings:write permission."
+          }
+        }
+      },
+      update: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "projects.codeReviewSettings.update",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PATCH",
+            path: "/projects/{projectId}/code-review-settings",
+            tags: ["Projects"],
+            operationId: "projects.codeReviewSettings.update",
+            summary: "Update code review settings",
+            description: "Change any of a project's Settings > Code fields; an omitted field is left unchanged and at least one must be sent. Turning on code review, review on push, pull request approval or Logging review needs the plan's code-review entitlement and code review to be available for the project. A custom git commit author needs both a name and an email. User credentials require settings:write permission in the project and the organization."
+          }
+        }
+      }
+    },
     list: {
       "~orpc": {
         errorMap: {},
@@ -9535,6 +9577,10 @@ var createClient = (options) => {
     projects: {
       getIssueDetectionSettings: async (input) => raw.projects.getIssueDetectionSettings(input),
       updateIssueDetectionSettings: async (input) => raw.projects.updateIssueDetectionSettings(input),
+      codeReviewSettings: {
+        get: async (input) => raw.projects.codeReviewSettings.get(input),
+        update: async (input) => raw.projects.codeReviewSettings.update(input)
+      },
       list: async (input = {}) => raw.projects.list(await resolveListProjectsInput(options.credentialProvider, input)),
       get: async (input) => raw.projects.get(input),
       create: async (input) => raw.projects.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "projects.create")),

@@ -1164,6 +1164,10 @@ export declare const publicApiContract: {
                 updatedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+            usage: import("zod").ZodObject<{
+                count: import("zod").ZodNumber;
+                limit: import("zod").ZodNullable<import("zod").ZodNumber>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             statusPageId: import("zod").ZodString;
@@ -12298,6 +12302,69 @@ export declare const publicApiContract: {
                 userId: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly codeReviewSettings: {
+            readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                codeReviewEnabled: import("zod").ZodBoolean;
+                codeReviewOnPushEnabled: import("zod").ZodBoolean;
+                codeReviewApprovalEnabled: import("zod").ZodBoolean;
+                securityReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewMode: import("zod").ZodEnum<{
+                    auto_commit: "auto_commit";
+                    on_demand: "on_demand";
+                    suggest: "suggest";
+                }>;
+                loggingReviewDailyCommitLimit: import("zod").ZodNullable<import("zod").ZodNumber>;
+                gitCommitAuthorMode: import("zod").ZodEnum<{
+                    custom: "custom";
+                    default: "default";
+                }>;
+                gitCommitAuthorName: import("zod").ZodNullable<import("zod").ZodString>;
+                gitCommitAuthorEmail: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                codeReviewEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                codeReviewOnPushEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                codeReviewApprovalEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                securityReviewEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                loggingReviewEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                loggingReviewMode: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    auto_commit: "auto_commit";
+                    on_demand: "on_demand";
+                    suggest: "suggest";
+                }>>;
+                loggingReviewDailyCommitLimit: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodNumber>>;
+                gitCommitAuthorMode: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    custom: "custom";
+                    default: "default";
+                }>>;
+                gitCommitAuthorName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                gitCommitAuthorEmail: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                codeReviewEnabled: import("zod").ZodBoolean;
+                codeReviewOnPushEnabled: import("zod").ZodBoolean;
+                codeReviewApprovalEnabled: import("zod").ZodBoolean;
+                securityReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewMode: import("zod").ZodEnum<{
+                    auto_commit: "auto_commit";
+                    on_demand: "on_demand";
+                    suggest: "suggest";
+                }>;
+                loggingReviewDailyCommitLimit: import("zod").ZodNullable<import("zod").ZodNumber>;
+                gitCommitAuthorMode: import("zod").ZodEnum<{
+                    custom: "custom";
+                    default: "default";
+                }>;
+                gitCommitAuthorName: import("zod").ZodNullable<import("zod").ZodString>;
+                gitCommitAuthorEmail: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -17450,6 +17517,10 @@ export declare const publicApiOperations: {
                 updatedAt: import("zod").ZodString;
             }, import("zod/v4/core").$strip>>;
             nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+            usage: import("zod").ZodObject<{
+                count: import("zod").ZodNumber;
+                limit: import("zod").ZodNullable<import("zod").ZodNumber>;
+            }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             statusPageId: import("zod").ZodString;
@@ -28584,6 +28655,69 @@ export declare const publicApiOperations: {
                 userId: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
+        readonly codeReviewSettings: {
+            readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                codeReviewEnabled: import("zod").ZodBoolean;
+                codeReviewOnPushEnabled: import("zod").ZodBoolean;
+                codeReviewApprovalEnabled: import("zod").ZodBoolean;
+                securityReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewMode: import("zod").ZodEnum<{
+                    auto_commit: "auto_commit";
+                    on_demand: "on_demand";
+                    suggest: "suggest";
+                }>;
+                loggingReviewDailyCommitLimit: import("zod").ZodNullable<import("zod").ZodNumber>;
+                gitCommitAuthorMode: import("zod").ZodEnum<{
+                    custom: "custom";
+                    default: "default";
+                }>;
+                gitCommitAuthorName: import("zod").ZodNullable<import("zod").ZodString>;
+                gitCommitAuthorEmail: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                codeReviewEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                codeReviewOnPushEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                codeReviewApprovalEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                securityReviewEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                loggingReviewEnabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                loggingReviewMode: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    auto_commit: "auto_commit";
+                    on_demand: "on_demand";
+                    suggest: "suggest";
+                }>>;
+                loggingReviewDailyCommitLimit: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodNumber>>;
+                gitCommitAuthorMode: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    custom: "custom";
+                    default: "default";
+                }>>;
+                gitCommitAuthorName: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                gitCommitAuthorEmail: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                codeReviewEnabled: import("zod").ZodBoolean;
+                codeReviewOnPushEnabled: import("zod").ZodBoolean;
+                codeReviewApprovalEnabled: import("zod").ZodBoolean;
+                securityReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewEnabled: import("zod").ZodBoolean;
+                loggingReviewMode: import("zod").ZodEnum<{
+                    auto_commit: "auto_commit";
+                    on_demand: "on_demand";
+                    suggest: "suggest";
+                }>;
+                loggingReviewDailyCommitLimit: import("zod").ZodNullable<import("zod").ZodNumber>;
+                gitCommitAuthorMode: import("zod").ZodEnum<{
+                    custom: "custom";
+                    default: "default";
+                }>;
+                gitCommitAuthorName: import("zod").ZodNullable<import("zod").ZodString>;
+                gitCommitAuthorEmail: import("zod").ZodNullable<import("zod").ZodString>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{

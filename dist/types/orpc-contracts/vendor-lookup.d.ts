@@ -19,6 +19,11 @@ export declare const VENDOR_LOOKUP_OUTPUT_KEYS: {
      * bot connection their DMs run in (ENG-11419).
      */
     readonly discord_direct_message_route: readonly ["organizationId", "connectionId"];
+    /**
+     * A Discord guild to the organization and Discord bot connection installed
+     * in it (ENG-8294).
+     */
+    readonly discord_guild: readonly ["organizationId", "connectionId"];
     /** A GitHub App installation to its organization and connection. */
     readonly github_installation: readonly ["organizationId", "connectionId"];
     /** A webhook delivery to the webhook it is for, and its tenant. */
