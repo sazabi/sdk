@@ -54,6 +54,20 @@ export declare const ListLogStreamsOutputSchema: z.ZodObject<{
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export type ListLogStreamsInput = z.infer<typeof ListLogStreamsInputSchema>;
@@ -102,6 +116,20 @@ export declare const listLogStreams: import("../orpc-contracts/index.js").Operat
                 value: z.ZodString;
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
+        }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
         }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
@@ -238,6 +266,20 @@ export declare const GetLogStreamOutputSchema: z.ZodObject<{
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type GetLogStreamInput = z.infer<typeof GetLogStreamInputSchema>;
@@ -286,11 +328,54 @@ export declare const getLogStream: import("../orpc-contracts/index.js").Operatio
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>, "api">;
 export declare const UpdateLogStreamInputSchema: z.ZodObject<{
     streamId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
+    signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        scheme: z.ZodString;
+        custom: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            signatureHeader: z.ZodString;
+            algorithm: z.ZodEnum<{
+                sha1: "sha1";
+                sha256: "sha256";
+                sha512: "sha512";
+            }>;
+            encoding: z.ZodEnum<{
+                base64: "base64";
+                hex: "hex";
+            }>;
+            prefix: z.ZodOptional<z.ZodString>;
+            timestamp: z.ZodOptional<z.ZodObject<{
+                header: z.ZodString;
+                unit: z.ZodEnum<{
+                    ms: "ms";
+                    s: "s";
+                }>;
+                toleranceSeconds: z.ZodNumber;
+            }, z.core.$strict>>;
+        }, z.core.$strict>>>;
+        secret: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+            generate: z.ZodLiteral<true>;
+        }, z.core.$strict>, z.ZodObject<{
+            value: z.ZodString;
+        }, z.core.$strict>]>>;
+    }, z.core.$strict>>>;
 }, z.core.$strict>;
 export declare const UpdateLogStreamOutputSchema: z.ZodObject<{
     stream: z.ZodObject<{
@@ -334,13 +419,57 @@ export declare const UpdateLogStreamOutputSchema: z.ZodObject<{
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
+    generatedSecret: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type UpdateLogStreamInput = z.infer<typeof UpdateLogStreamInputSchema>;
 export type UpdateLogStreamOutput = z.infer<typeof UpdateLogStreamOutputSchema>;
 export declare const updateLogStream: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     streamId: z.ZodString;
     enabled: z.ZodOptional<z.ZodBoolean>;
+    signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        scheme: z.ZodString;
+        custom: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            signatureHeader: z.ZodString;
+            algorithm: z.ZodEnum<{
+                sha1: "sha1";
+                sha256: "sha256";
+                sha512: "sha512";
+            }>;
+            encoding: z.ZodEnum<{
+                base64: "base64";
+                hex: "hex";
+            }>;
+            prefix: z.ZodOptional<z.ZodString>;
+            timestamp: z.ZodOptional<z.ZodObject<{
+                header: z.ZodString;
+                unit: z.ZodEnum<{
+                    ms: "ms";
+                    s: "s";
+                }>;
+                toleranceSeconds: z.ZodNumber;
+            }, z.core.$strict>>;
+        }, z.core.$strict>>>;
+        secret: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+            generate: z.ZodLiteral<true>;
+        }, z.core.$strict>, z.ZodObject<{
+            value: z.ZodString;
+        }, z.core.$strict>]>>;
+    }, z.core.$strict>>>;
 }, z.core.$strict>, z.ZodObject<{
     stream: z.ZodObject<{
         id: z.ZodString;
@@ -383,7 +512,22 @@ export declare const updateLogStream: import("../orpc-contracts/index.js").Opera
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
+    generatedSecret: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const DeleteLogStreamInputSchema: z.ZodObject<{
     streamId: z.ZodString;
@@ -444,6 +588,20 @@ export declare const ReassignLogStreamOutputSchema: z.ZodObject<{
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
 }, z.core.$strip>;
 export type ReassignLogStreamInput = z.infer<typeof ReassignLogStreamInputSchema>;
@@ -493,7 +651,115 @@ export declare const reassignLogStream: import("../orpc-contracts/index.js").Ope
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>;
+}, z.core.$strip>, "api">;
+export declare const RotateLogStreamSignatureSecretInputSchema: z.ZodObject<{
+    streamId: z.ZodString;
+    secret: z.ZodUnion<readonly [z.ZodObject<{
+        generate: z.ZodLiteral<true>;
+    }, z.core.$strict>, z.ZodObject<{
+        value: z.ZodString;
+    }, z.core.$strict>]>;
+    gracePeriodSeconds: z.ZodDefault<z.ZodNumber>;
+}, z.core.$strict>;
+export declare const RotateLogStreamSignatureSecretOutputSchema: z.ZodObject<{
+    signatureVerification: z.ZodNullable<z.ZodObject<{
+        scheme: z.ZodString;
+        mode: z.ZodEnum<{
+            enforce: "enforce";
+            shadow: "shadow";
+        }>;
+        secrets: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            last4: z.ZodString;
+            createdAt: z.ZodString;
+            retiresAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        needsSecret: z.ZodOptional<z.ZodBoolean>;
+    }, z.core.$strip>>;
+    generatedSecret: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>;
+export type RotateLogStreamSignatureSecretInput = z.input<typeof RotateLogStreamSignatureSecretInputSchema>;
+export type RotateLogStreamSignatureSecretOutput = z.infer<typeof RotateLogStreamSignatureSecretOutputSchema>;
+export declare const rotateLogStreamSignatureSecret: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    streamId: z.ZodString;
+    secret: z.ZodUnion<readonly [z.ZodObject<{
+        generate: z.ZodLiteral<true>;
+    }, z.core.$strict>, z.ZodObject<{
+        value: z.ZodString;
+    }, z.core.$strict>]>;
+    gracePeriodSeconds: z.ZodDefault<z.ZodNumber>;
+}, z.core.$strict>, z.ZodObject<{
+    signatureVerification: z.ZodNullable<z.ZodObject<{
+        scheme: z.ZodString;
+        mode: z.ZodEnum<{
+            enforce: "enforce";
+            shadow: "shadow";
+        }>;
+        secrets: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            last4: z.ZodString;
+            createdAt: z.ZodString;
+            retiresAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        needsSecret: z.ZodOptional<z.ZodBoolean>;
+    }, z.core.$strip>>;
+    generatedSecret: z.ZodOptional<z.ZodString>;
+}, z.core.$strip>, "api">;
+export declare const RemoveLogStreamSignatureSecretInputSchema: z.ZodObject<{
+    streamId: z.ZodString;
+    secretId: z.ZodString;
+}, z.core.$strict>;
+export declare const RemoveLogStreamSignatureSecretOutputSchema: z.ZodObject<{
+    signatureVerification: z.ZodNullable<z.ZodObject<{
+        scheme: z.ZodString;
+        mode: z.ZodEnum<{
+            enforce: "enforce";
+            shadow: "shadow";
+        }>;
+        secrets: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            last4: z.ZodString;
+            createdAt: z.ZodString;
+            retiresAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        needsSecret: z.ZodOptional<z.ZodBoolean>;
+    }, z.core.$strip>>;
+}, z.core.$strip>;
+export type RemoveLogStreamSignatureSecretInput = z.infer<typeof RemoveLogStreamSignatureSecretInputSchema>;
+export type RemoveLogStreamSignatureSecretOutput = z.infer<typeof RemoveLogStreamSignatureSecretOutputSchema>;
+export declare const removeLogStreamSignatureSecret: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    streamId: z.ZodString;
+    secretId: z.ZodString;
+}, z.core.$strict>, z.ZodObject<{
+    signatureVerification: z.ZodNullable<z.ZodObject<{
+        scheme: z.ZodString;
+        mode: z.ZodEnum<{
+            enforce: "enforce";
+            shadow: "shadow";
+        }>;
+        secrets: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            last4: z.ZodString;
+            createdAt: z.ZodString;
+            retiresAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        needsSecret: z.ZodOptional<z.ZodBoolean>;
+    }, z.core.$strip>>;
 }, z.core.$strip>, "api">;
 export declare const logStreamsContract: {
     readonly list: import("@orpc/contract").ContractProcedure<z.ZodObject<{
@@ -540,6 +806,20 @@ export declare const logStreamsContract: {
                     value: z.ZodString;
                     description: z.ZodOptional<z.ZodString>;
                 }, z.core.$strip>>;
+            }, z.core.$strip>>>;
+            signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                scheme: z.ZodString;
+                mode: z.ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    last4: z.ZodString;
+                    createdAt: z.ZodString;
+                    retiresAt: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+                needsSecret: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strip>>>;
         }, z.core.$strip>>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -620,11 +900,54 @@ export declare const logStreamsContract: {
                     description: z.ZodOptional<z.ZodString>;
                 }, z.core.$strip>>;
             }, z.core.$strip>>>;
+            signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                scheme: z.ZodString;
+                mode: z.ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    last4: z.ZodString;
+                    createdAt: z.ZodString;
+                    retiresAt: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+                needsSecret: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strip>>>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         streamId: z.ZodString;
         enabled: z.ZodOptional<z.ZodBoolean>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            custom: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                signatureHeader: z.ZodString;
+                algorithm: z.ZodEnum<{
+                    sha1: "sha1";
+                    sha256: "sha256";
+                    sha512: "sha512";
+                }>;
+                encoding: z.ZodEnum<{
+                    base64: "base64";
+                    hex: "hex";
+                }>;
+                prefix: z.ZodOptional<z.ZodString>;
+                timestamp: z.ZodOptional<z.ZodObject<{
+                    header: z.ZodString;
+                    unit: z.ZodEnum<{
+                        ms: "ms";
+                        s: "s";
+                    }>;
+                    toleranceSeconds: z.ZodNumber;
+                }, z.core.$strict>>;
+            }, z.core.$strict>>>;
+            secret: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+                generate: z.ZodLiteral<true>;
+            }, z.core.$strict>, z.ZodObject<{
+                value: z.ZodString;
+            }, z.core.$strict>]>>;
+        }, z.core.$strict>>>;
     }, z.core.$strict>, z.ZodObject<{
         stream: z.ZodObject<{
             id: z.ZodString;
@@ -667,7 +990,22 @@ export declare const logStreamsContract: {
                     description: z.ZodOptional<z.ZodString>;
                 }, z.core.$strip>>;
             }, z.core.$strip>>>;
+            signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                scheme: z.ZodString;
+                mode: z.ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    last4: z.ZodString;
+                    createdAt: z.ZodString;
+                    retiresAt: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+                needsSecret: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strip>>>;
         }, z.core.$strip>;
+        generatedSecret: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly delete: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         streamId: z.ZodString;
@@ -719,6 +1057,66 @@ export declare const logStreamsContract: {
                     description: z.ZodOptional<z.ZodString>;
                 }, z.core.$strip>>;
             }, z.core.$strip>>>;
+            signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                scheme: z.ZodString;
+                mode: z.ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    last4: z.ZodString;
+                    createdAt: z.ZodString;
+                    retiresAt: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+                needsSecret: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strip>>>;
         }, z.core.$strip>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly rotateSecret: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+        streamId: z.ZodString;
+        secret: z.ZodUnion<readonly [z.ZodObject<{
+            generate: z.ZodLiteral<true>;
+        }, z.core.$strict>, z.ZodObject<{
+            value: z.ZodString;
+        }, z.core.$strict>]>;
+        gracePeriodSeconds: z.ZodDefault<z.ZodNumber>;
+    }, z.core.$strict>, z.ZodObject<{
+        signatureVerification: z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>;
+        generatedSecret: z.ZodOptional<z.ZodString>;
+    }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    readonly signatureSecrets: {
+        readonly remove: import("@orpc/contract").ContractProcedure<z.ZodObject<{
+            streamId: z.ZodString;
+            secretId: z.ZodString;
+        }, z.core.$strict>, z.ZodObject<{
+            signatureVerification: z.ZodNullable<z.ZodObject<{
+                scheme: z.ZodString;
+                mode: z.ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    last4: z.ZodString;
+                    createdAt: z.ZodString;
+                    retiresAt: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+                needsSecret: z.ZodOptional<z.ZodBoolean>;
+            }, z.core.$strip>>;
+        }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
 };

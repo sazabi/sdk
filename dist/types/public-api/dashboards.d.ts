@@ -1531,6 +1531,21 @@ export declare const DashboardWriteOutputSchema: z.ZodObject<{
         dashboardId: z.ZodUUID;
         revision: z.ZodNumber;
     }, z.core.$strict>;
+    warnings: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        code: z.ZodString;
+        message: z.ZodString;
+        severity: z.ZodEnum<{
+            error: "error";
+            warning: "warning";
+        }>;
+        line: z.ZodOptional<z.ZodNumber>;
+        column: z.ZodOptional<z.ZodNumber>;
+        componentId: z.ZodOptional<z.ZodString>;
+        filePath: z.ZodOptional<z.ZodString>;
+        artifactPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        propPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        repairHint: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>>>;
 }, z.core.$strict>;
 export type DashboardWriteOutput = z.infer<typeof DashboardWriteOutputSchema>;
 export declare const RenderDashboardInputSchema: z.ZodObject<{
@@ -2811,6 +2826,12 @@ export declare const RenderDashboardOutputSchema: z.ZodObject<{
             too_large: "too_large";
             unavailable: "unavailable";
         }>;
+        reason: z.ZodOptional<z.ZodEnum<{
+            configuration: "configuration";
+            provisioning: "provisioning";
+            setup: "setup";
+            transient: "transient";
+        }>>;
         message: z.ZodString;
         retryable: z.ZodBoolean;
     }, z.core.$strict>], "status">>;
@@ -4020,6 +4041,21 @@ export declare const createDashboard: import("../orpc-contracts/index.js").Opera
         dashboardId: z.ZodUUID;
         revision: z.ZodNumber;
     }, z.core.$strict>;
+    warnings: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        code: z.ZodString;
+        message: z.ZodString;
+        severity: z.ZodEnum<{
+            error: "error";
+            warning: "warning";
+        }>;
+        line: z.ZodOptional<z.ZodNumber>;
+        column: z.ZodOptional<z.ZodNumber>;
+        componentId: z.ZodOptional<z.ZodString>;
+        filePath: z.ZodOptional<z.ZodString>;
+        artifactPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        propPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        repairHint: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>>>;
 }, z.core.$strict>, "api">;
 export declare const updateDashboard: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     id: z.ZodUUID;
@@ -4378,6 +4414,21 @@ export declare const updateDashboard: import("../orpc-contracts/index.js").Opera
         dashboardId: z.ZodUUID;
         revision: z.ZodNumber;
     }, z.core.$strict>;
+    warnings: z.ZodOptional<z.ZodArray<z.ZodObject<{
+        code: z.ZodString;
+        message: z.ZodString;
+        severity: z.ZodEnum<{
+            error: "error";
+            warning: "warning";
+        }>;
+        line: z.ZodOptional<z.ZodNumber>;
+        column: z.ZodOptional<z.ZodNumber>;
+        componentId: z.ZodOptional<z.ZodString>;
+        filePath: z.ZodOptional<z.ZodString>;
+        artifactPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        propPath: z.ZodOptional<z.ZodArray<z.ZodUnion<readonly [z.ZodString, z.ZodNumber]>>>;
+        repairHint: z.ZodOptional<z.ZodString>;
+    }, z.core.$strict>>>;
 }, z.core.$strict>, "api">;
 export declare const renderDashboard: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     id: z.ZodUUID;
@@ -5655,6 +5706,12 @@ export declare const renderDashboard: import("../orpc-contracts/index.js").Opera
             too_large: "too_large";
             unavailable: "unavailable";
         }>;
+        reason: z.ZodOptional<z.ZodEnum<{
+            configuration: "configuration";
+            provisioning: "provisioning";
+            setup: "setup";
+            transient: "transient";
+        }>>;
         message: z.ZodString;
         retryable: z.ZodBoolean;
     }, z.core.$strict>], "status">>;

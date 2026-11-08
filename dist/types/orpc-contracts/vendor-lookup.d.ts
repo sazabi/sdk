@@ -39,6 +39,13 @@ export declare const VENDOR_LOOKUP_OUTPUT_KEYS: {
      * step, which has only the id a signed-in person names (ENG-9452).
      */
     readonly project_tenant: readonly ["organizationId", "projectId"];
+    /**
+     * A GitCafe repository to every organization whose live GitCafe
+     * integration links it to a live project (ENG-8294). A `repos` row is
+     * shared, so one delivery can belong to several organizations; the caller
+     * reads each one's target afterwards, organization-scoped.
+     */
+    readonly gitcafe_repository_organizations: readonly ["organizationIds"];
 };
 export type VendorLookupKind = keyof typeof VENDOR_LOOKUP_OUTPUT_KEYS;
 export declare const isVendorLookupKind: (value: string) => value is VendorLookupKind;

@@ -8,6 +8,7 @@ export declare const CodingAgentFixProviderSchema: z.ZodEnum<{
     devin: "devin";
     hoplite: "hoplite";
     replicas: "replicas";
+    tembo: "tembo";
     warp: "warp";
 }>;
 export type CodingAgentFixProvider = z.infer<typeof CodingAgentFixProviderSchema>;

@@ -23,6 +23,12 @@ export declare const TaskCreationRuleConditionSchema: z.ZodObject<{
     }>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>>;
 }, z.core.$strict>;
 export type TaskCreationRuleCondition = z.infer<typeof TaskCreationRuleConditionSchema>;
 export declare const TaskCreationRuleSchema: z.ZodObject<{
@@ -45,6 +51,12 @@ export declare const TaskCreationRuleSchema: z.ZodObject<{
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>;
     defaultItemType: z.ZodNullable<z.ZodString>;
     defaultState: z.ZodNullable<z.ZodString>;
@@ -78,6 +90,12 @@ export declare const ListTaskCreationRulesOutputSchema: z.ZodObject<{
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>;
         defaultItemType: z.ZodNullable<z.ZodString>;
         defaultState: z.ZodNullable<z.ZodString>;
@@ -110,6 +128,12 @@ export declare const listTaskCreationRules: import("../orpc-contracts/index.js")
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>;
         defaultItemType: z.ZodNullable<z.ZodString>;
         defaultState: z.ZodNullable<z.ZodString>;
@@ -143,6 +167,12 @@ export declare const GetTaskCreationRuleOutputSchema: z.ZodObject<{
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>;
     defaultItemType: z.ZodNullable<z.ZodString>;
     defaultState: z.ZodNullable<z.ZodString>;
@@ -174,6 +204,12 @@ export declare const getTaskCreationRule: import("../orpc-contracts/index.js").O
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>;
     defaultItemType: z.ZodNullable<z.ZodString>;
     defaultState: z.ZodNullable<z.ZodString>;
@@ -199,6 +235,12 @@ export declare const CreateTaskCreationRuleInputSchema: z.ZodObject<{
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>>;
     enabled: z.ZodOptional<z.ZodBoolean>;
     defaultItemType: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -226,6 +268,12 @@ export declare const CreateTaskCreationRuleOutputSchema: z.ZodObject<{
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>;
     defaultItemType: z.ZodNullable<z.ZodString>;
     defaultState: z.ZodNullable<z.ZodString>;
@@ -252,6 +300,12 @@ export declare const createTaskCreationRule: import("../orpc-contracts/index.js"
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>>;
     enabled: z.ZodOptional<z.ZodBoolean>;
     defaultItemType: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -277,6 +331,12 @@ export declare const createTaskCreationRule: import("../orpc-contracts/index.js"
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>;
     defaultItemType: z.ZodNullable<z.ZodString>;
     defaultState: z.ZodNullable<z.ZodString>;
@@ -293,6 +353,12 @@ export declare const UpdateTaskCreationRuleConditionSchema: z.ZodObject<{
     }>>>;
     componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
     teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+    types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>>;
 }, z.core.$strict>;
 export type UpdateTaskCreationRuleCondition = z.infer<typeof UpdateTaskCreationRuleConditionSchema>;
 export declare const UpdateTaskCreationRuleInputSchema: z.ZodObject<{
@@ -314,6 +380,12 @@ export declare const UpdateTaskCreationRuleInputSchema: z.ZodObject<{
         }>>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>>;
     enabled: z.ZodOptional<z.ZodBoolean>;
     defaultItemType: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -341,6 +413,12 @@ export declare const UpdateTaskCreationRuleOutputSchema: z.ZodObject<{
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>;
     defaultItemType: z.ZodNullable<z.ZodString>;
     defaultState: z.ZodNullable<z.ZodString>;
@@ -368,6 +446,12 @@ export declare const updateTaskCreationRule: import("../orpc-contracts/index.js"
         }>>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>>;
     enabled: z.ZodOptional<z.ZodBoolean>;
     defaultItemType: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -393,6 +477,12 @@ export declare const updateTaskCreationRule: import("../orpc-contracts/index.js"
         }>>;
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>;
     defaultItemType: z.ZodNullable<z.ZodString>;
     defaultState: z.ZodNullable<z.ZodString>;
@@ -441,6 +531,12 @@ export declare const ReorderTaskCreationRulesOutputSchema: z.ZodObject<{
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>;
         defaultItemType: z.ZodNullable<z.ZodString>;
         defaultState: z.ZodNullable<z.ZodString>;
@@ -474,6 +570,12 @@ export declare const reorderTaskCreationRules: import("../orpc-contracts/index.j
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>;
         defaultItemType: z.ZodNullable<z.ZodString>;
         defaultState: z.ZodNullable<z.ZodString>;
@@ -506,6 +608,12 @@ export declare const taskCreationRulesContract: {
                 }>>;
                 componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
                 teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+                types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, z.core.$strict>;
             defaultItemType: z.ZodNullable<z.ZodString>;
             defaultState: z.ZodNullable<z.ZodString>;
@@ -537,6 +645,12 @@ export declare const taskCreationRulesContract: {
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>;
         defaultItemType: z.ZodNullable<z.ZodString>;
         defaultState: z.ZodNullable<z.ZodString>;
@@ -562,6 +676,12 @@ export declare const taskCreationRulesContract: {
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>>;
         enabled: z.ZodOptional<z.ZodBoolean>;
         defaultItemType: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -587,6 +707,12 @@ export declare const taskCreationRulesContract: {
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>;
         defaultItemType: z.ZodNullable<z.ZodString>;
         defaultState: z.ZodNullable<z.ZodString>;
@@ -613,6 +739,12 @@ export declare const taskCreationRulesContract: {
             }>>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>>;
         enabled: z.ZodOptional<z.ZodBoolean>;
         defaultItemType: z.ZodOptional<z.ZodNullable<z.ZodString>>;
@@ -638,6 +770,12 @@ export declare const taskCreationRulesContract: {
             }>>;
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>;
         defaultItemType: z.ZodNullable<z.ZodString>;
         defaultState: z.ZodNullable<z.ZodString>;
@@ -675,6 +813,12 @@ export declare const taskCreationRulesContract: {
                 }>>;
                 componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
                 teamIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
+                types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, z.core.$strict>;
             defaultItemType: z.ZodNullable<z.ZodString>;
             defaultState: z.ZodNullable<z.ZodString>;

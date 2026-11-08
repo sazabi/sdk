@@ -15,6 +15,32 @@ export declare const IssueSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
+    types: z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    categories: z.ZodArray<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodNullable<z.ZodString>;
     componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
@@ -104,11 +130,12 @@ export type IssuePullRequest = z.infer<typeof IssuePullRequestSchema>;
 export declare const IssueFixSchema: z.ZodObject<{
     id: z.ZodString;
     requestedAt: z.ZodString;
-    requestedBy: z.ZodObject<{
+    requestedBy: z.ZodNullable<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodNullable<z.ZodString>;
-    }, z.core.$strip>;
+    }, z.core.$strip>>;
     source: z.ZodEnum<{
+        "auto-fix": "auto-fix";
         dashboard: "dashboard";
         "public-api": "public-api";
         slack: "slack";
@@ -122,6 +149,7 @@ export declare const IssueFixSchema: z.ZodObject<{
         hoplite: "hoplite";
         replicas: "replicas";
         sazabi: "sazabi";
+        tembo: "tembo";
         warp: "warp";
     }>;
     dispatchId: z.ZodNullable<z.ZodString>;
@@ -170,6 +198,32 @@ export declare const IssueDetailSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
+    types: z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    categories: z.ZodArray<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodNullable<z.ZodString>;
     componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
@@ -249,11 +303,12 @@ export declare const IssueDetailSchema: z.ZodObject<{
     fixes: z.ZodArray<z.ZodObject<{
         id: z.ZodString;
         requestedAt: z.ZodString;
-        requestedBy: z.ZodObject<{
+        requestedBy: z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
             name: z.ZodNullable<z.ZodString>;
-        }, z.core.$strip>;
+        }, z.core.$strip>>;
         source: z.ZodEnum<{
+            "auto-fix": "auto-fix";
             dashboard: "dashboard";
             "public-api": "public-api";
             slack: "slack";
@@ -267,6 +322,7 @@ export declare const IssueDetailSchema: z.ZodObject<{
             hoplite: "hoplite";
             replicas: "replicas";
             sazabi: "sazabi";
+            tembo: "tembo";
             warp: "warp";
         }>;
         dispatchId: z.ZodNullable<z.ZodString>;
@@ -308,6 +364,7 @@ export declare const IssueDetailSchema: z.ZodObject<{
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            tembo: "tembo";
             warp: "warp";
         }>;
         displayName: z.ZodString;
@@ -322,9 +379,14 @@ export declare const IssueDetailSchema: z.ZodObject<{
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            tembo: "tembo";
             warp: "warp";
         }>;
         displayName: z.ZodString;
+        reason: z.ZodOptional<z.ZodEnum<{
+            needs_attention: "needs_attention";
+            needs_owner: "needs_owner";
+        }>>;
     }, z.core.$strip>>>;
     fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
         fullName: z.ZodString;
@@ -346,6 +408,7 @@ export declare const IssueDetailSchema: z.ZodObject<{
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            tembo: "tembo";
             warp: "warp";
         }>;
         displayName: z.ZodString;
@@ -463,6 +526,7 @@ export declare const RequestIssueFixInputSchema: z.ZodObject<{
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            tembo: "tembo";
             warp: "warp";
         }>;
         connectionId: z.ZodOptional<z.ZodString>;
@@ -510,6 +574,32 @@ export declare const IssueSearchItemSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
+    types: z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    categories: z.ZodArray<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodNullable<z.ZodString>;
     componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
@@ -540,6 +630,32 @@ export declare const CreateIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -573,6 +689,32 @@ export declare const ListIssuesInputSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    category: z.ZodOptional<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodOptional<z.ZodString>;
     causedByPullRequestUrl: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -594,6 +736,32 @@ export declare const ListIssuesOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -623,6 +791,32 @@ export declare const SearchIssuesInputSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    category: z.ZodOptional<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodOptional<z.ZodString>;
     causedByPullRequestUrl: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
@@ -646,6 +840,32 @@ export declare const SearchIssuesOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -682,6 +902,32 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -761,11 +1007,12 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
         fixes: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             requestedAt: z.ZodString;
-            requestedBy: z.ZodObject<{
+            requestedBy: z.ZodNullable<z.ZodObject<{
                 id: z.ZodString;
                 name: z.ZodNullable<z.ZodString>;
-            }, z.core.$strip>;
+            }, z.core.$strip>>;
             source: z.ZodEnum<{
+                "auto-fix": "auto-fix";
                 dashboard: "dashboard";
                 "public-api": "public-api";
                 slack: "slack";
@@ -779,6 +1026,7 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
                 hoplite: "hoplite";
                 replicas: "replicas";
                 sazabi: "sazabi";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             dispatchId: z.ZodNullable<z.ZodString>;
@@ -820,6 +1068,7 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
                 devin: "devin";
                 hoplite: "hoplite";
                 replicas: "replicas";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             displayName: z.ZodString;
@@ -834,9 +1083,14 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
                 devin: "devin";
                 hoplite: "hoplite";
                 replicas: "replicas";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             displayName: z.ZodString;
+            reason: z.ZodOptional<z.ZodEnum<{
+                needs_attention: "needs_attention";
+                needs_owner: "needs_owner";
+            }>>;
         }, z.core.$strip>>>;
         fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
             fullName: z.ZodString;
@@ -858,6 +1112,7 @@ export declare const GetIssueOutputSchema: z.ZodObject<{
                 devin: "devin";
                 hoplite: "hoplite";
                 replicas: "replicas";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             displayName: z.ZodString;
@@ -1205,6 +1460,32 @@ export declare const ResolveIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1239,6 +1520,32 @@ export declare const IgnoreIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1274,6 +1581,32 @@ export declare const ReopenIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1310,6 +1643,32 @@ export declare const ReassignAndReopenIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1327,12 +1686,38 @@ export declare const ReassignAndReopenIssueOutputSchema: z.ZodObject<{
 export type ReassignAndReopenIssueOutput = z.infer<typeof ReassignAndReopenIssueOutputSchema>;
 export declare const UpdateIssueInputSchema: z.ZodObject<{
     issueId: z.ZodString;
-    severity: z.ZodEnum<{
+    severity: z.ZodOptional<z.ZodEnum<{
         critical: "critical";
         high: "high";
         low: "low";
         medium: "medium";
-    }>;
+    }>>;
+    types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>>;
+    categories: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>>;
     note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type UpdateIssueInput = z.infer<typeof UpdateIssueInputSchema>;
@@ -1353,6 +1738,32 @@ export declare const UpdateIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1388,6 +1799,32 @@ export declare const MuteIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1422,6 +1859,32 @@ export declare const UnmuteIssueOutputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1448,6 +1911,32 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
         low: "low";
         medium: "medium";
     }>>;
+    types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>>;
+    categories: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>>;
     componentId: z.ZodOptional<z.ZodString>;
     statusStartedAt: z.ZodOptional<z.ZodString>;
     suspectedPullRequest: z.ZodOptional<z.ZodObject<{
@@ -1477,6 +1966,32 @@ export declare const createIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1509,6 +2024,32 @@ export declare const listIssues: import("../orpc-contracts/index.js").OperationD
         low: "low";
         medium: "medium";
     }>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    category: z.ZodOptional<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodOptional<z.ZodString>;
     causedByPullRequestUrl: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -1528,6 +2069,32 @@ export declare const listIssues: import("../orpc-contracts/index.js").OperationD
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1556,6 +2123,32 @@ export declare const searchIssues: import("../orpc-contracts/index.js").Operatio
         low: "low";
         medium: "medium";
     }>>;
+    type: z.ZodOptional<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    category: z.ZodOptional<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodOptional<z.ZodString>;
     causedByPullRequestUrl: z.ZodOptional<z.ZodString>;
     name: z.ZodOptional<z.ZodString>;
@@ -1577,6 +2170,32 @@ export declare const searchIssues: import("../orpc-contracts/index.js").Operatio
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1610,6 +2229,32 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1689,11 +2334,12 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
         fixes: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
             requestedAt: z.ZodString;
-            requestedBy: z.ZodObject<{
+            requestedBy: z.ZodNullable<z.ZodObject<{
                 id: z.ZodString;
                 name: z.ZodNullable<z.ZodString>;
-            }, z.core.$strip>;
+            }, z.core.$strip>>;
             source: z.ZodEnum<{
+                "auto-fix": "auto-fix";
                 dashboard: "dashboard";
                 "public-api": "public-api";
                 slack: "slack";
@@ -1707,6 +2353,7 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
                 hoplite: "hoplite";
                 replicas: "replicas";
                 sazabi: "sazabi";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             dispatchId: z.ZodNullable<z.ZodString>;
@@ -1748,6 +2395,7 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
                 devin: "devin";
                 hoplite: "hoplite";
                 replicas: "replicas";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             displayName: z.ZodString;
@@ -1762,9 +2410,14 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
                 devin: "devin";
                 hoplite: "hoplite";
                 replicas: "replicas";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             displayName: z.ZodString;
+            reason: z.ZodOptional<z.ZodEnum<{
+                needs_attention: "needs_attention";
+                needs_owner: "needs_owner";
+            }>>;
         }, z.core.$strip>>>;
         fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
             fullName: z.ZodString;
@@ -1786,6 +2439,7 @@ export declare const getIssue: import("../orpc-contracts/index.js").OperationDef
                 devin: "devin";
                 hoplite: "hoplite";
                 replicas: "replicas";
+                tembo: "tembo";
                 warp: "warp";
             }>;
             displayName: z.ZodString;
@@ -1855,6 +2509,7 @@ export declare const requestIssueFix: import("../orpc-contracts/index.js").Opera
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            tembo: "tembo";
             warp: "warp";
         }>;
         connectionId: z.ZodOptional<z.ZodString>;
@@ -1901,6 +2556,32 @@ export declare const resolveIssue: import("../orpc-contracts/index.js").Operatio
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -1915,12 +2596,38 @@ export declare const resolveIssue: import("../orpc-contracts/index.js").Operatio
 }, z.core.$strip>, "api">;
 export declare const updateIssue: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
     issueId: z.ZodString;
-    severity: z.ZodEnum<{
+    severity: z.ZodOptional<z.ZodEnum<{
         critical: "critical";
         high: "high";
         low: "low";
         medium: "medium";
-    }>;
+    }>>;
+    types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>>;
+    categories: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>>;
     note: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
     issue: z.ZodObject<{
@@ -1939,6 +2646,32 @@ export declare const updateIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -2150,6 +2883,32 @@ export declare const ignoreIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -2182,6 +2941,32 @@ export declare const reopenIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -2215,6 +3000,32 @@ export declare const reassignAndReopenIssue: import("../orpc-contracts/index.js"
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -2248,6 +3059,32 @@ export declare const muteIssue: import("../orpc-contracts/index.js").OperationDe
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -2279,6 +3116,32 @@ export declare const unmuteIssue: import("../orpc-contracts/index.js").Operation
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -2305,6 +3168,32 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
+        categories: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>>;
         componentId: z.ZodOptional<z.ZodString>;
         statusStartedAt: z.ZodOptional<z.ZodString>;
         suspectedPullRequest: z.ZodOptional<z.ZodObject<{
@@ -2334,6 +3223,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2366,6 +3281,32 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>>;
+        type: z.ZodOptional<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        category: z.ZodOptional<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodOptional<z.ZodString>;
         causedByPullRequestUrl: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
@@ -2385,6 +3326,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2413,6 +3380,32 @@ export declare const issuesContract: {
             low: "low";
             medium: "medium";
         }>>;
+        type: z.ZodOptional<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        category: z.ZodOptional<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodOptional<z.ZodString>;
         causedByPullRequestUrl: z.ZodOptional<z.ZodString>;
         name: z.ZodOptional<z.ZodString>;
@@ -2434,6 +3427,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2467,6 +3486,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2546,11 +3591,12 @@ export declare const issuesContract: {
             fixes: z.ZodArray<z.ZodObject<{
                 id: z.ZodString;
                 requestedAt: z.ZodString;
-                requestedBy: z.ZodObject<{
+                requestedBy: z.ZodNullable<z.ZodObject<{
                     id: z.ZodString;
                     name: z.ZodNullable<z.ZodString>;
-                }, z.core.$strip>;
+                }, z.core.$strip>>;
                 source: z.ZodEnum<{
+                    "auto-fix": "auto-fix";
                     dashboard: "dashboard";
                     "public-api": "public-api";
                     slack: "slack";
@@ -2564,6 +3610,7 @@ export declare const issuesContract: {
                     hoplite: "hoplite";
                     replicas: "replicas";
                     sazabi: "sazabi";
+                    tembo: "tembo";
                     warp: "warp";
                 }>;
                 dispatchId: z.ZodNullable<z.ZodString>;
@@ -2605,6 +3652,7 @@ export declare const issuesContract: {
                     devin: "devin";
                     hoplite: "hoplite";
                     replicas: "replicas";
+                    tembo: "tembo";
                     warp: "warp";
                 }>;
                 displayName: z.ZodString;
@@ -2619,9 +3667,14 @@ export declare const issuesContract: {
                     devin: "devin";
                     hoplite: "hoplite";
                     replicas: "replicas";
+                    tembo: "tembo";
                     warp: "warp";
                 }>;
                 displayName: z.ZodString;
+                reason: z.ZodOptional<z.ZodEnum<{
+                    needs_attention: "needs_attention";
+                    needs_owner: "needs_owner";
+                }>>;
             }, z.core.$strip>>>;
             fixRepositories: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 fullName: z.ZodString;
@@ -2643,6 +3696,7 @@ export declare const issuesContract: {
                     devin: "devin";
                     hoplite: "hoplite";
                     replicas: "replicas";
+                    tembo: "tembo";
                     warp: "warp";
                 }>;
                 displayName: z.ZodString;
@@ -2656,12 +3710,38 @@ export declare const issuesContract: {
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly update: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         issueId: z.ZodString;
-        severity: z.ZodEnum<{
+        severity: z.ZodOptional<z.ZodEnum<{
             critical: "critical";
             high: "high";
             low: "low";
             medium: "medium";
-        }>;
+        }>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
+        categories: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>>;
         note: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
         issue: z.ZodObject<{
@@ -2680,6 +3760,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2877,6 +3983,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2908,6 +4040,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2940,6 +4098,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -2973,6 +4157,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -3006,6 +4216,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -3037,6 +4273,32 @@ export declare const issuesContract: {
                 low: "low";
                 medium: "medium";
             }>;
+            types: z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            categories: z.ZodArray<z.ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: z.ZodNullable<z.ZodString>;
             componentName: z.ZodNullable<z.ZodString>;
             createdAt: z.ZodString;
@@ -3122,6 +4384,7 @@ export declare const issuesContract: {
                     devin: "devin";
                     hoplite: "hoplite";
                     replicas: "replicas";
+                    tembo: "tembo";
                     warp: "warp";
                 }>;
                 connectionId: z.ZodOptional<z.ZodString>;

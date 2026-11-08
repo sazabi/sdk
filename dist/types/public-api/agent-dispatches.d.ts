@@ -56,7 +56,7 @@ export declare const AgentDispatchSchema: z.ZodObject<{
     threadId: z.ZodString;
     connectionId: z.ZodString;
     provider: z.ZodString;
-    requesterUserId: z.ZodString;
+    requesterUserId: z.ZodNullable<z.ZodString>;
     connectionOwnerUserId: z.ZodString;
     clientRequestId: z.ZodString;
     status: z.ZodEnum<{
@@ -157,7 +157,7 @@ export declare const ListAgentDispatchesOutputSchema: z.ZodObject<{
         threadId: z.ZodString;
         connectionId: z.ZodString;
         provider: z.ZodString;
-        requesterUserId: z.ZodString;
+        requesterUserId: z.ZodNullable<z.ZodString>;
         connectionOwnerUserId: z.ZodString;
         clientRequestId: z.ZodString;
         status: z.ZodEnum<{
@@ -279,7 +279,7 @@ export declare const listAgentDispatches: import("../orpc-contracts/index.js").O
         threadId: z.ZodString;
         connectionId: z.ZodString;
         provider: z.ZodString;
-        requesterUserId: z.ZodString;
+        requesterUserId: z.ZodNullable<z.ZodString>;
         connectionOwnerUserId: z.ZodString;
         clientRequestId: z.ZodString;
         status: z.ZodEnum<{
@@ -365,7 +365,7 @@ export declare const getAgentDispatch: import("../orpc-contracts/index.js").Oper
     threadId: z.ZodString;
     connectionId: z.ZodString;
     provider: z.ZodString;
-    requesterUserId: z.ZodString;
+    requesterUserId: z.ZodNullable<z.ZodString>;
     connectionOwnerUserId: z.ZodString;
     clientRequestId: z.ZodString;
     status: z.ZodEnum<{
@@ -452,7 +452,7 @@ export declare const replyAgentDispatch: import("../orpc-contracts/index.js").Op
     threadId: z.ZodString;
     connectionId: z.ZodString;
     provider: z.ZodString;
-    requesterUserId: z.ZodString;
+    requesterUserId: z.ZodNullable<z.ZodString>;
     connectionOwnerUserId: z.ZodString;
     clientRequestId: z.ZodString;
     status: z.ZodEnum<{
@@ -537,7 +537,7 @@ export declare const cancelAgentDispatch: import("../orpc-contracts/index.js").O
     threadId: z.ZodString;
     connectionId: z.ZodString;
     provider: z.ZodString;
-    requesterUserId: z.ZodString;
+    requesterUserId: z.ZodNullable<z.ZodString>;
     connectionOwnerUserId: z.ZodString;
     clientRequestId: z.ZodString;
     status: z.ZodEnum<{
@@ -609,12 +609,15 @@ export declare const cancelAgentDispatch: import("../orpc-contracts/index.js").O
     createdAt: z.ZodString;
     updatedAt: z.ZodString;
 }, z.core.$strip>, "api">;
-/** The vendor environment a remembered agent fixes in (a Replicas organization environment). */
+/** The vendor environment the selected coding agent fixes in (a Replicas organization environment). */
 export declare const AgentDispatchProjectDefaultEnvironmentSchema: z.ZodObject<{
     id: z.ZodString;
     name: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
-/** The project's remembered Fix agent (ENG-10725), as `issues.get`'s `fixAgentDefault` reports it. */
+/**
+ * The agent a project's fixes go to (ENG-10725): a connected coding agent
+ * account, or Sazabi's agent (`provider: "sazabi"`, no connection).
+ */
 export declare const AgentDispatchProjectDefaultSchema: z.ZodObject<{
     provider: z.ZodEnum<{
         capy: "capy";
@@ -624,9 +627,11 @@ export declare const AgentDispatchProjectDefaultSchema: z.ZodObject<{
         devin: "devin";
         hoplite: "hoplite";
         replicas: "replicas";
+        sazabi: "sazabi";
+        tembo: "tembo";
         warp: "warp";
     }>;
-    connectionId: z.ZodString;
+    connectionId: z.ZodNullable<z.ZodString>;
     displayName: z.ZodString;
     environment: z.ZodNullable<z.ZodObject<{
         id: z.ZodString;
@@ -647,20 +652,20 @@ export declare const AgentDispatchProjectDefaultOutputSchema: z.ZodObject<{
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            sazabi: "sazabi";
+            tembo: "tembo";
             warp: "warp";
         }>;
-        connectionId: z.ZodString;
+        connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         environment: z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
             name: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>>;
-}, z.core.$strip>;
-export declare const SetAgentDispatchProjectDefaultInputSchema: z.ZodObject<{
-    organizationId: z.ZodString;
-    projectId: z.ZodString;
-    agent: z.ZodNullable<z.ZodObject<{
+    autoFix: z.ZodBoolean;
+    connectionBroken: z.ZodBoolean;
+    agents: z.ZodArray<z.ZodObject<{
         provider: z.ZodEnum<{
             capy: "capy";
             claude: "claude";
@@ -669,10 +674,33 @@ export declare const SetAgentDispatchProjectDefaultInputSchema: z.ZodObject<{
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            tembo: "tembo";
             warp: "warp";
         }>;
         connectionId: z.ZodString;
+        displayName: z.ZodString;
     }, z.core.$strip>>;
+}, z.core.$strip>;
+export declare const SetAgentDispatchProjectDefaultInputSchema: z.ZodObject<{
+    organizationId: z.ZodString;
+    projectId: z.ZodString;
+    agent: z.ZodNullable<z.ZodUnion<readonly [z.ZodObject<{
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            tembo: "tembo";
+            warp: "warp";
+        }>;
+        connectionId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        provider: z.ZodLiteral<"sazabi">;
+    }, z.core.$strip>]>>;
+    autoFix: z.ZodOptional<z.ZodBoolean>;
     clearEnvironment: z.ZodDefault<z.ZodBoolean>;
     environmentId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
@@ -692,20 +720,20 @@ export declare const getAgentDispatchProjectDefault: import("../orpc-contracts/i
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            sazabi: "sazabi";
+            tembo: "tembo";
             warp: "warp";
         }>;
-        connectionId: z.ZodString;
+        connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         environment: z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
             name: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>>;
-}, z.core.$strip>, "api">;
-export declare const updateAgentDispatchProjectDefault: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
-    organizationId: z.ZodString;
-    projectId: z.ZodString;
-    agent: z.ZodNullable<z.ZodObject<{
+    autoFix: z.ZodBoolean;
+    connectionBroken: z.ZodBoolean;
+    agents: z.ZodArray<z.ZodObject<{
         provider: z.ZodEnum<{
             capy: "capy";
             claude: "claude";
@@ -714,10 +742,33 @@ export declare const updateAgentDispatchProjectDefault: import("../orpc-contract
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            tembo: "tembo";
             warp: "warp";
         }>;
         connectionId: z.ZodString;
+        displayName: z.ZodString;
     }, z.core.$strip>>;
+}, z.core.$strip>, "api">;
+export declare const updateAgentDispatchProjectDefault: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodString;
+    projectId: z.ZodString;
+    agent: z.ZodNullable<z.ZodUnion<readonly [z.ZodObject<{
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            tembo: "tembo";
+            warp: "warp";
+        }>;
+        connectionId: z.ZodString;
+    }, z.core.$strip>, z.ZodObject<{
+        provider: z.ZodLiteral<"sazabi">;
+    }, z.core.$strip>]>>;
+    autoFix: z.ZodOptional<z.ZodBoolean>;
     clearEnvironment: z.ZodDefault<z.ZodBoolean>;
     environmentId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -730,13 +781,32 @@ export declare const updateAgentDispatchProjectDefault: import("../orpc-contract
             devin: "devin";
             hoplite: "hoplite";
             replicas: "replicas";
+            sazabi: "sazabi";
+            tembo: "tembo";
             warp: "warp";
         }>;
-        connectionId: z.ZodString;
+        connectionId: z.ZodNullable<z.ZodString>;
         displayName: z.ZodString;
         environment: z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
             name: z.ZodNullable<z.ZodString>;
         }, z.core.$strip>>;
+    }, z.core.$strip>>;
+    autoFix: z.ZodBoolean;
+    connectionBroken: z.ZodBoolean;
+    agents: z.ZodArray<z.ZodObject<{
+        provider: z.ZodEnum<{
+            capy: "capy";
+            claude: "claude";
+            codex: "codex";
+            cursor: "cursor";
+            devin: "devin";
+            hoplite: "hoplite";
+            replicas: "replicas";
+            tembo: "tembo";
+            warp: "warp";
+        }>;
+        connectionId: z.ZodString;
+        displayName: z.ZodString;
     }, z.core.$strip>>;
 }, z.core.$strip>, "api">;

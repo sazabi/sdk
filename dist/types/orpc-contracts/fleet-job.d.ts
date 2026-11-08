@@ -49,6 +49,20 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
     readonly issue_activity_by_organization: readonly ["activity", "hasIssue", "issuesThisWeek", "issuesLastWeek", "lastHumanIssueEventAt", "lastIssueAt", "firstBillableIssueAt"];
     readonly issue_creation_outcomes: readonly ["issues", "issueId", "organizationId", "projectId", "createdAt", "fixRequested", "fixed", "rejected", "interacted", "nextCursor"];
     /**
+     * The issue recall audit's inactivity resolutions (ENG-8113, ENG-8294):
+     * every resolution the inactivity sweep recorded in a window, across every
+     * tenant, with its issue, tenant, time and the activity time the sweep went
+     * by. Read-only.
+     */
+    readonly issue_inactive_resolutions: readonly ["resolutions", "issueId", "organizationId", "projectId", "resolvedAt", "lastActivityAt"];
+    /**
+     * The issue recall audit's duplicates born ignored (ENG-8113, ENG-8294):
+     * every issue created ignored as a possible duplicate in a window, across
+     * every tenant, with its tenant, the issue it duplicates and whether that
+     * issue was closed at the time. Read-only.
+     */
+    readonly issue_born_ignored_duplicates: readonly ["duplicates", "issueId", "organizationId", "projectId", "createdAt", "duplicateOfIssueId", "canonicalClosedAtCreation"];
+    /**
      * The stale automation run sweep: runs authorized but never started, and
      * runs whose workflow never recorded completion, before a cutoff, marked
      * timed_out. Answers the ids it marked.
@@ -66,6 +80,14 @@ export declare const FLEET_JOB_OUTPUT_KEYS: {
      * cycle at a time. Answers only its counts.
      */
     readonly issue_rejection_adjustments: readonly ["cycles", "applied", "pending", "failed"];
+    /**
+     * The token usage materializer's source read (ENG-8294): every billable,
+     * completed, live run that did not error, by completion time inside a
+     * window or by id, joined to its live steps' model and token counts, for
+     * services/temporal-consumer's materializer activity to turn into usage
+     * facts. Read-only.
+     */
+    readonly billable_run_token_rows: readonly ["rows", "organizationId", "projectId", "runId", "usageOccurredAt", "stepId", "modelId", "inputTokens", "cachedInputTokens", "cacheWriteInputTokens", "outputTokens", "textTokens", "reasoningTokens"];
     /**
      * The no-new-issues monitor's health read (ENG-10062): when the newest
      * live issue was created, if after the caller's cutoff. Read-only.

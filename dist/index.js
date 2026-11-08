@@ -806,8 +806,8 @@ var public_api_client_contract_gen_default = {
             path: "/agent-dispatches/project-default",
             tags: ["AgentDispatches"],
             operationId: "agentDispatches.projectDefault.get",
-            summary: "Read the project's default coding agent",
-            description: "The coding agent, account and vendor environment the project's Fix hands off to without asking: the last successful handoff's, or the one set with `agentDispatches.projectDefault.update`."
+            summary: "Read the project's fix setting",
+            description: "The project's fix setting: the agent `issues.fixes.create` hands off to when it names no `agent`, a connected coding agent account (with the vendor environment the next launch prefers) or Sazabi's agent, and whether every new issue starts a fix. Set only with `agentDispatches.projectDefault.update`; a handoff no longer records the agent it used. `connectionBroken` says the selected connection is disconnected or needs attention, so fixes go to Sazabi's agent until it reconnects."
           }
         }
       },
@@ -826,8 +826,8 @@ var public_api_client_contract_gen_default = {
             path: "/agent-dispatches/project-default",
             tags: ["AgentDispatches"],
             operationId: "agentDispatches.projectDefault.update",
-            summary: "Set or clear the project's default coding agent",
-            description: "Set the coding agent and account the project's Fix hands off to without asking, or clear it so Fix asks again. The account must be an active connection without attention. A project setting shared by everyone who presses Fix: needs the project's `settings:write`, while a successful `issues.fixes.create` handoff records its own agent as the default under `issues:write`."
+            summary: "Set or clear the project's fix setting",
+            description: "Set the agent the project's fixes go to, a coding agent account or Sazabi's agent, and whether every new issue starts a fix (`autoFix`); null clears the selection and the switch. A coding agent account must be an active connection without attention, and `autoFix: true` with no agent selected is refused. A project setting shared by everyone who presses Fix: needs the project's `settings:write`, and nothing else writes the selected agent."
           }
         }
       }
@@ -1851,7 +1851,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Dashboards"],
           operationId: "dashboards.get",
           summary: "Get a dashboard",
-          description: "Read a dashboard's current MDX source (with its edit base), metadata, and static file descriptors. Set includeFiles to also receive the static file contents, giving a copy you can edit and pass back to dashboards.update. Never runs queries."
+          description: "Read a dashboard's current MDX source, metadata, and static file descriptors. Editable dashboards include an edit base so their source can be passed back to dashboards.update. Set includeFiles to also receive static file contents. Built-in dashboards are read-only; create an independent copy with dashboards.create using input.dashboard.id and input.dashboard.revision before editing. Never runs queries."
         }
       }
     },
@@ -1933,7 +1933,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Dashboards"],
           operationId: "dashboards.validate",
           summary: "Validate a dashboard",
-          description: "Check dashboard MDX, static files, layout, query shapes, and your permission without saving or running queries. Optional: create and update always validate too. Each diagnostic carries its source line and column, component id, code, and repair hint."
+          description: "Check dashboard MDX, static files, layout, query shapes, and your permission without saving or running queries. Optional: create and update always validate too and return nonblocking warnings on success. Diagnostics include a code and message, with source line and column, component id, and repair hint when available. Query errors on named-query bindings point to the Query declaration while retaining the consuming component id; document-wide and permission diagnostics may have no source location."
         }
       }
     },
@@ -2651,7 +2651,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Log Streams"],
           operationId: "logStreams.update",
           summary: "Update a log stream",
-          description: "Update a log stream: pause or resume its ingestion. Log streams cannot be renamed."
+          description: "Update a log stream: pause or resume its ingestion, or turn webhook signature verification on, change its scheme, or turn it off. Log streams cannot be renamed."
         }
       }
     },
@@ -2694,6 +2694,50 @@ var public_api_client_contract_gen_default = {
           summary: "Reassign a log stream",
           description: "Move a log stream to a different manual log source in the same project. Preserves the stream's ID, intake key credential, and ingested data; rebinds the key's intake adapter to the target log source's provider so future data is processed as that provider's format.",
           successStatus: 200
+        }
+      }
+    },
+    rotateSecret: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "logStreams.rotateSecret",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: []
+        },
+        route: {
+          method: "POST",
+          path: "/log-streams/{streamId}/signature-secrets/rotate",
+          tags: ["Log Streams"],
+          operationId: "logStreams.rotateSecret",
+          summary: "Rotate a log stream's verification secret",
+          description: "Add a new webhook verification secret to a verified log stream. The new secret takes effect within about a minute, so wait that long before switching the sender. The current secret keeps being accepted until the grace period ends, so the sender can switch without rejected deliveries; with a grace period of 0 there is no overlap. A stream holds at most two active secrets. Requires the webhook signature verification feature on the organization.",
+          successStatus: 200
+        }
+      }
+    },
+    signatureSecrets: {
+      remove: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "logStreams.signatureSecrets.remove",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "DELETE",
+            path: "/log-streams/{streamId}/signature-secrets/{secretId}",
+            tags: ["Log Streams"],
+            operationId: "logStreams.signatureSecrets.remove",
+            summary: "Remove a log stream's verification secret",
+            description: "Stop accepting one webhook verification secret, e.g. to end a rotation's grace period early. The last active secret of a verified stream cannot be removed: turn verification off first. Requires the webhook signature verification feature on the organization.",
+            successStatus: 200
+          }
         }
       }
     }
@@ -3470,7 +3514,7 @@ var public_api_client_contract_gen_default = {
             tags: ["Integrations"],
             operationId: "integrations.microsoftTeamsConfiguration.get",
             summary: "Get Microsoft Teams connection configuration",
-            description: "Read a Microsoft Teams connection's configuration: the default project bot mentions run in when no channel mapping matches."
+            description: "Read a Microsoft Teams connection's configuration: the default project bot mentions run in when no channel mapping matches, and whether automatic responses are on."
           }
         }
       },
@@ -3491,6 +3535,48 @@ var public_api_client_contract_gen_default = {
             operationId: "integrations.microsoftTeamsConfiguration.update",
             summary: "Update Microsoft Teams connection configuration",
             description: "Update a Microsoft Teams connection's configuration. Omitted fields are left unchanged."
+          }
+        }
+      }
+    },
+    discordConfiguration: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.discordConfiguration.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "GET",
+            path: "/integrations/connections/{connectionId}/discord-configuration",
+            tags: ["Integrations"],
+            operationId: "integrations.discordConfiguration.get",
+            summary: "Get Discord bot connection configuration",
+            description: "Read a Discord bot connection's configuration: the default project conversations run in when no channel mapping matches, and whether automatic responses are on."
+          }
+        }
+      },
+      update: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "integrations.discordConfiguration.update",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: []
+          },
+          route: {
+            method: "PATCH",
+            path: "/integrations/connections/{connectionId}/discord-configuration",
+            tags: ["Integrations"],
+            operationId: "integrations.discordConfiguration.update",
+            summary: "Update Discord bot connection configuration",
+            description: "Update a Discord bot connection's configuration. Omitted fields are left unchanged."
           }
         }
       }
@@ -6704,6 +6790,50 @@ var public_api_client_contract_gen_default = {
         }
       }
     },
+    dailyRecapSettings: {
+      get: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "projects.dailyRecapSettings.get",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [],
+            published: false
+          },
+          route: {
+            method: "GET",
+            path: "/projects/{projectId}/daily-recap-settings",
+            tags: ["Projects"],
+            operationId: "projects.dailyRecapSettings.get",
+            summary: "Get daily recap settings",
+            description: "Read a project's daily recap settings: whether it sends, its time zone and local send hour, and whether quiet days are skipped. Answers only for projects daily recaps are rolled out to."
+          }
+        }
+      },
+      update: {
+        "~orpc": {
+          errorMap: {},
+          meta: {
+            operationId: "projects.dailyRecapSettings.update",
+            backend: "api",
+            pagination: "none",
+            async: "sync",
+            examples: [],
+            published: false
+          },
+          route: {
+            method: "PATCH",
+            path: "/projects/{projectId}/daily-recap-settings",
+            tags: ["Projects"],
+            operationId: "projects.dailyRecapSettings.update",
+            summary: "Update daily recap settings",
+            description: "Change any of a project's daily recap settings; an omitted field is left unchanged and at least one must be sent. The time zone must be an IANA name. User credentials require settings:write permission in the project. Answers only for projects daily recaps are rolled out to."
+          }
+        }
+      }
+    },
     list: {
       "~orpc": {
         errorMap: {},
@@ -6803,6 +6933,115 @@ var public_api_client_contract_gen_default = {
           summary: "Delete a project",
           description: "Delete one project by ID. User credentials require the `settings:write` organization permission (admin or owner role).",
           successStatus: 204
+        }
+      }
+    }
+  },
+  recaps: {
+    list: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "recaps.list",
+          backend: "api",
+          pagination: "cursor",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "GET",
+          path: "/recaps",
+          tags: ["Recaps"],
+          operationId: "recaps.list",
+          summary: "List daily recaps",
+          description: "List a project's daily recaps, newest day first. Answers only for projects daily recaps are rolled out to."
+        }
+      }
+    },
+    get: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "recaps.get",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "GET",
+          path: "/recaps/{date}",
+          tags: ["Recaps"],
+          operationId: "recaps.get",
+          summary: "Get a daily recap",
+          description: "Get a project's daily recap for one local day, with its facts. Answers only for projects daily recaps are rolled out to."
+        }
+      }
+    },
+    render: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "recaps.render",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "POST",
+          path: "/recaps/render",
+          tags: ["Recaps"],
+          operationId: "recaps.render",
+          summary: "Render a daily recap",
+          description: "Render a project's recap for a local day from the data as it stands now, without storing or sending it. The result has the template text only: the written summary and the merged pull requests are added when the recap is built to send. Answers only for projects daily recaps are rolled out to."
+        }
+      }
+    }
+  },
+  deploys: {
+    create: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "deploys.create",
+          backend: "api",
+          pagination: "none",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "POST",
+          path: "/deploys",
+          tags: ["Deploys"],
+          operationId: "deploys.create",
+          summary: "Record a deploy",
+          description: "Record that a service was deployed, usually from CI once a rollout starts. Daily recaps list it beside the deploys they find in the logs, and a record wins when both describe the same service and version within the hour. User credentials require data-source:write permission in the project. Answers only for projects daily recaps are rolled out to."
+        }
+      }
+    },
+    list: {
+      "~orpc": {
+        errorMap: {},
+        meta: {
+          operationId: "deploys.list",
+          backend: "api",
+          pagination: "cursor",
+          async: "sync",
+          examples: [],
+          published: false
+        },
+        route: {
+          method: "GET",
+          path: "/deploys",
+          tags: ["Deploys"],
+          operationId: "deploys.list",
+          summary: "List deploys",
+          description: "List the deploys a project recorded, newest first. Answers only for projects daily recaps are rolled out to."
         }
       }
     }
@@ -7641,7 +7880,7 @@ var public_api_client_contract_gen_default = {
           tags: ["Issues"],
           operationId: "issues.update",
           summary: "Update an issue",
-          description: "Change an issue's severity, with an optional note recorded in its history. A change notifies no one."
+          description: "Change an issue's severity, types or categories, with an optional note recorded in its history. A severity or category change notifies no one."
         }
       }
     },
@@ -9581,6 +9820,10 @@ var createClient = (options) => {
         get: async (input) => raw.projects.codeReviewSettings.get(input),
         update: async (input) => raw.projects.codeReviewSettings.update(input)
       },
+      dailyRecapSettings: {
+        get: async (input) => raw.projects.dailyRecapSettings.get(input),
+        update: async (input) => raw.projects.dailyRecapSettings.update(input)
+      },
       list: async (input = {}) => raw.projects.list(await resolveListProjectsInput(options.credentialProvider, input)),
       get: async (input) => raw.projects.get(input),
       create: async (input) => raw.projects.create(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "projects.create")),
@@ -9628,6 +9871,10 @@ var createClient = (options) => {
       update: async (input) => raw.logStreams.update(input),
       delete: async (input) => raw.logStreams.delete(input),
       reassign: async (input) => raw.logStreams.reassign(input),
+      rotateSecret: async (input) => raw.logStreams.rotateSecret(input),
+      signatureSecrets: {
+        remove: async (input) => raw.logStreams.signatureSecrets.remove(input)
+      },
       createBatch: async (input) => raw.logStreams.createBatch(input),
       volumeStats: async (input) => raw.logStreams.volumeStats(input)
     },
@@ -9666,6 +9913,10 @@ var createClient = (options) => {
       microsoftTeamsConfiguration: {
         get: async (input) => raw.integrations.microsoftTeamsConfiguration.get(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.microsoftTeamsConfiguration.get")),
         update: async (input) => raw.integrations.microsoftTeamsConfiguration.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.microsoftTeamsConfiguration.update"))
+      },
+      discordConfiguration: {
+        get: async (input) => raw.integrations.discordConfiguration.get(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.discordConfiguration.get")),
+        update: async (input) => raw.integrations.discordConfiguration.update(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.discordConfiguration.update"))
       },
       discordChannels: {
         list: async (input) => raw.integrations.discordChannels.list(await resolveRequiredOrganizationScopedInput(options.credentialProvider, input, "integrations.discordChannels.list"))
@@ -9838,6 +10089,15 @@ var createClient = (options) => {
     },
     recommendations: {
       list: async (input = {}) => raw.recommendations.list(await resolveProjectScopedInput(options.credentialProvider, input))
+    },
+    recaps: {
+      list: async (input = {}) => raw.recaps.list(await resolveProjectScopedInput(options.credentialProvider, input)),
+      get: async (input) => raw.recaps.get(await resolveProjectScopedInput(options.credentialProvider, input)),
+      render: async (input = {}) => raw.recaps.render(await resolveProjectScopedInput(options.credentialProvider, input))
+    },
+    deploys: {
+      create: async (input) => raw.deploys.create(await resolveProjectScopedInput(options.credentialProvider, input)),
+      list: async (input = {}) => raw.deploys.list(await resolveProjectScopedInput(options.credentialProvider, input))
     },
     signals: {
       list: async (input = {}) => raw.signals.list(await resolveProjectScopedInput(options.credentialProvider, input)),

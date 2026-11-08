@@ -30,7 +30,7 @@ export declare const publicApiContract: {
                 threadId: import("zod").ZodString;
                 connectionId: import("zod").ZodString;
                 provider: import("zod").ZodString;
-                requesterUserId: import("zod").ZodString;
+                requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
                 connectionOwnerUserId: import("zod").ZodString;
                 clientRequestId: import("zod").ZodString;
                 status: import("zod").ZodEnum<{
@@ -116,7 +116,7 @@ export declare const publicApiContract: {
             threadId: import("zod").ZodString;
             connectionId: import("zod").ZodString;
             provider: import("zod").ZodString;
-            requesterUserId: import("zod").ZodString;
+            requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
             connectionOwnerUserId: import("zod").ZodString;
             clientRequestId: import("zod").ZodString;
             status: import("zod").ZodEnum<{
@@ -204,7 +204,7 @@ export declare const publicApiContract: {
                 threadId: import("zod").ZodString;
                 connectionId: import("zod").ZodString;
                 provider: import("zod").ZodString;
-                requesterUserId: import("zod").ZodString;
+                requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
                 connectionOwnerUserId: import("zod").ZodString;
                 clientRequestId: import("zod").ZodString;
                 status: import("zod").ZodEnum<{
@@ -290,7 +290,7 @@ export declare const publicApiContract: {
             threadId: import("zod").ZodString;
             connectionId: import("zod").ZodString;
             provider: import("zod").ZodString;
-            requesterUserId: import("zod").ZodString;
+            requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
             connectionOwnerUserId: import("zod").ZodString;
             clientRequestId: import("zod").ZodString;
             status: import("zod").ZodEnum<{
@@ -376,20 +376,20 @@ export declare const publicApiContract: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        sazabi: "sazabi";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
-                    connectionId: import("zod").ZodString;
+                    connectionId: import("zod").ZodNullable<import("zod").ZodString>;
                     displayName: import("zod").ZodString;
                     environment: import("zod").ZodNullable<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         name: import("zod").ZodNullable<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
-            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
-            readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
-                organizationId: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                agent: import("zod").ZodNullable<import("zod").ZodObject<{
+                autoFix: import("zod").ZodBoolean;
+                connectionBroken: import("zod").ZodBoolean;
+                agents: import("zod").ZodArray<import("zod").ZodObject<{
                     provider: import("zod").ZodEnum<{
                         capy: "capy";
                         claude: "claude";
@@ -398,10 +398,33 @@ export declare const publicApiContract: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                agent: import("zod").ZodNullable<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        tembo: "tembo";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    provider: import("zod").ZodLiteral<"sazabi">;
+                }, import("zod/v4/core").$strip>]>>;
+                autoFix: import("zod").ZodOptional<import("zod").ZodBoolean>;
                 clearEnvironment: import("zod").ZodDefault<import("zod").ZodBoolean>;
                 environmentId: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -414,14 +437,33 @@ export declare const publicApiContract: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        sazabi: "sazabi";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
-                    connectionId: import("zod").ZodString;
+                    connectionId: import("zod").ZodNullable<import("zod").ZodString>;
                     displayName: import("zod").ZodString;
                     environment: import("zod").ZodNullable<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         name: import("zod").ZodNullable<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                autoFix: import("zod").ZodBoolean;
+                connectionBroken: import("zod").ZodBoolean;
+                agents: import("zod").ZodArray<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        tembo: "tembo";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         };
@@ -3474,6 +3516,21 @@ export declare const publicApiContract: {
                 dashboardId: import("zod").ZodUUID;
                 revision: import("zod").ZodNumber;
             }, import("zod/v4/core").$strict>;
+            warnings: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                code: import("zod").ZodString;
+                message: import("zod").ZodString;
+                severity: import("zod").ZodEnum<{
+                    error: "error";
+                    warning: "warning";
+                }>;
+                line: import("zod").ZodOptional<import("zod").ZodNumber>;
+                column: import("zod").ZodOptional<import("zod").ZodNumber>;
+                componentId: import("zod").ZodOptional<import("zod").ZodString>;
+                filePath: import("zod").ZodOptional<import("zod").ZodString>;
+                artifactPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                propPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                repairHint: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strict>>>;
         }, import("zod/v4/core").$strict>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             id: import("zod").ZodUUID;
@@ -3832,6 +3889,21 @@ export declare const publicApiContract: {
                 dashboardId: import("zod").ZodUUID;
                 revision: import("zod").ZodNumber;
             }, import("zod/v4/core").$strict>;
+            warnings: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                code: import("zod").ZodString;
+                message: import("zod").ZodString;
+                severity: import("zod").ZodEnum<{
+                    error: "error";
+                    warning: "warning";
+                }>;
+                line: import("zod").ZodOptional<import("zod").ZodNumber>;
+                column: import("zod").ZodOptional<import("zod").ZodNumber>;
+                componentId: import("zod").ZodOptional<import("zod").ZodString>;
+                filePath: import("zod").ZodOptional<import("zod").ZodString>;
+                artifactPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                propPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                repairHint: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strict>>>;
         }, import("zod/v4/core").$strict>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly render: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             id: import("zod").ZodUUID;
@@ -5109,6 +5181,12 @@ export declare const publicApiContract: {
                     too_large: "too_large";
                     unavailable: "unavailable";
                 }>;
+                reason: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    configuration: "configuration";
+                    provisioning: "provisioning";
+                    setup: "setup";
+                    transient: "transient";
+                }>>;
                 message: import("zod").ZodString;
                 retryable: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strict>], "status">>;
@@ -6429,6 +6507,7 @@ export declare const publicApiContract: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -6453,16 +6532,21 @@ export declare const publicApiContract: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -6482,12 +6566,15 @@ export declare const publicApiContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -6496,6 +6583,7 @@ export declare const publicApiContract: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";
@@ -6562,6 +6650,7 @@ export declare const publicApiContract: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -6586,16 +6675,21 @@ export declare const publicApiContract: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -6615,12 +6709,15 @@ export declare const publicApiContract: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -6629,6 +6726,7 @@ export declare const publicApiContract: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -6655,6 +6753,7 @@ export declare const publicApiContract: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -6679,16 +6778,21 @@ export declare const publicApiContract: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -6708,12 +6812,15 @@ export declare const publicApiContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -6722,6 +6829,7 @@ export declare const publicApiContract: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";
@@ -6731,6 +6839,35 @@ export declare const publicApiContract: {
                 native: "native";
             }>>;
             metadata: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
+            signatureVerification: import("zod").ZodOptional<import("zod").ZodObject<{
+                scheme: import("zod").ZodString;
+                custom: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    signatureHeader: import("zod").ZodString;
+                    algorithm: import("zod").ZodEnum<{
+                        sha1: "sha1";
+                        sha256: "sha256";
+                        sha512: "sha512";
+                    }>;
+                    encoding: import("zod").ZodEnum<{
+                        base64: "base64";
+                        hex: "hex";
+                    }>;
+                    prefix: import("zod").ZodOptional<import("zod").ZodString>;
+                    timestamp: import("zod").ZodOptional<import("zod").ZodObject<{
+                        header: import("zod").ZodString;
+                        unit: import("zod").ZodEnum<{
+                            ms: "ms";
+                            s: "s";
+                        }>;
+                        toleranceSeconds: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strict>>;
+                }, import("zod/v4/core").$strict>>>;
+                secret: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    generate: import("zod").ZodLiteral<true>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    value: import("zod").ZodString;
+                }, import("zod/v4/core").$strict>]>>;
+            }, import("zod/v4/core").$strict>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             logSource: import("zod").ZodObject<{
                 connectionStatus: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
@@ -6793,6 +6930,7 @@ export declare const publicApiContract: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -6817,16 +6955,21 @@ export declare const publicApiContract: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -6846,12 +6989,15 @@ export declare const publicApiContract: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -6860,6 +7006,7 @@ export declare const publicApiContract: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -6901,6 +7048,7 @@ export declare const publicApiContract: {
                     description: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>>;
+            generatedSecret: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             logSourceId: import("zod").ZodString;
@@ -6966,6 +7114,7 @@ export declare const publicApiContract: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -6990,16 +7139,21 @@ export declare const publicApiContract: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -7019,12 +7173,15 @@ export declare const publicApiContract: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -7033,6 +7190,7 @@ export declare const publicApiContract: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -7088,6 +7246,20 @@ export declare const publicApiContract: {
                             value: import("zod").ZodString;
                             description: import("zod").ZodOptional<import("zod").ZodString>;
                         }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>>;
+                    signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                        scheme: import("zod").ZodString;
+                        mode: import("zod").ZodEnum<{
+                            enforce: "enforce";
+                            shadow: "shadow";
+                        }>;
+                        secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            last4: import("zod").ZodString;
+                            createdAt: import("zod").ZodString;
+                            retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                        needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strip>>>;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
@@ -7173,6 +7345,7 @@ export declare const publicApiContract: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -7197,16 +7370,21 @@ export declare const publicApiContract: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -7226,12 +7404,15 @@ export declare const publicApiContract: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -7240,6 +7421,7 @@ export declare const publicApiContract: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -7309,6 +7491,20 @@ export declare const publicApiContract: {
                         value: import("zod").ZodString;
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
                 }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
@@ -7389,11 +7585,54 @@ export declare const publicApiContract: {
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             streamId: import("zod").ZodString;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                scheme: import("zod").ZodString;
+                custom: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    signatureHeader: import("zod").ZodString;
+                    algorithm: import("zod").ZodEnum<{
+                        sha1: "sha1";
+                        sha256: "sha256";
+                        sha512: "sha512";
+                    }>;
+                    encoding: import("zod").ZodEnum<{
+                        base64: "base64";
+                        hex: "hex";
+                    }>;
+                    prefix: import("zod").ZodOptional<import("zod").ZodString>;
+                    timestamp: import("zod").ZodOptional<import("zod").ZodObject<{
+                        header: import("zod").ZodString;
+                        unit: import("zod").ZodEnum<{
+                            ms: "ms";
+                            s: "s";
+                        }>;
+                        toleranceSeconds: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strict>>;
+                }, import("zod/v4/core").$strict>>>;
+                secret: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    generate: import("zod").ZodLiteral<true>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    value: import("zod").ZodString;
+                }, import("zod/v4/core").$strict>]>>;
+            }, import("zod/v4/core").$strict>>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             stream: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -7436,7 +7675,22 @@ export declare const publicApiContract: {
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>;
+            generatedSecret: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             streamId: import("zod").ZodString;
@@ -7488,8 +7742,68 @@ export declare const publicApiContract: {
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly rotateSecret: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            streamId: import("zod").ZodString;
+            secret: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                generate: import("zod").ZodLiteral<true>;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                value: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>]>;
+            gracePeriodSeconds: import("zod").ZodDefault<import("zod").ZodNumber>;
+        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+            signatureVerification: import("zod").ZodNullable<import("zod").ZodObject<{
+                scheme: import("zod").ZodString;
+                mode: import("zod").ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    last4: import("zod").ZodString;
+                    createdAt: import("zod").ZodString;
+                    retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+                needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>>;
+            generatedSecret: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly signatureSecrets: {
+            readonly remove: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                streamId: import("zod").ZodString;
+                secretId: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                signatureVerification: import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
     };
     readonly connectedAccounts: {
         readonly beginConnect: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -7634,6 +7948,7 @@ export declare const publicApiContract: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -7686,6 +8001,7 @@ export declare const publicApiContract: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -7766,6 +8082,7 @@ export declare const publicApiContract: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -7873,6 +8190,7 @@ export declare const publicApiContract: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -7989,6 +8307,7 @@ export declare const publicApiContract: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -8071,6 +8390,7 @@ export declare const publicApiContract: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -8122,6 +8442,7 @@ export declare const publicApiContract: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -8284,6 +8605,7 @@ export declare const publicApiContract: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -8335,6 +8657,7 @@ export declare const publicApiContract: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -8430,6 +8753,7 @@ export declare const publicApiContract: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -8646,14 +8970,37 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 connectionId: import("zod").ZodString;
                 defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
             readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
                 organizationId: import("zod").ZodOptional<import("zod").ZodString>;
                 connectionId: import("zod").ZodString;
                 defaultProjectId: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                automaticResponses: import("zod").ZodOptional<import("zod").ZodBoolean>;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 connectionId: import("zod").ZodString;
                 defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
+        readonly discordConfiguration: {
+            readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                automaticResponses: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         };
         readonly discordChannels: {
@@ -8784,6 +9131,7 @@ export declare const publicApiContract: {
                     billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
                     code_repo_connected: "code_repo_connected";
                     code_repo_disconnected: "code_repo_disconnected";
+                    daily_recap: "daily_recap";
                     github_connected: "github_connected";
                     github_disconnected: "github_disconnected";
                     integration_connected: "integration_connected";
@@ -8860,6 +9208,7 @@ export declare const publicApiContract: {
                     billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
                     code_repo_connected: "code_repo_connected";
                     code_repo_disconnected: "code_repo_disconnected";
+                    daily_recap: "daily_recap";
                     github_connected: "github_connected";
                     github_disconnected: "github_disconnected";
                     integration_connected: "integration_connected";
@@ -8908,6 +9257,7 @@ export declare const publicApiContract: {
                 projectId: import("zod").ZodString;
                 notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
+                    daily_recap: "daily_recap";
                     issue_ignored: "issue_ignored";
                     issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
@@ -8938,6 +9288,12 @@ export declare const publicApiContract: {
                         high: "high";
                         low: "low";
                         medium: "medium";
+                    }>>>;
+                    types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        correctness: "correctness";
+                        efficiency: "efficiency";
+                        reliability: "reliability";
+                        security: "security";
                     }>>>;
                 }, import("zod/v4/core").$strict>;
                 component: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -8992,6 +9348,7 @@ export declare const publicApiContract: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodObject<{
                 notificationType: import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
+                    daily_recap: "daily_recap";
                     issue_ignored: "issue_ignored";
                     issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
@@ -9005,6 +9362,7 @@ export declare const publicApiContract: {
                 conditions: import("zod").ZodArray<import("zod").ZodEnum<{
                     component: "component";
                     severity: "severity";
+                    type: "type";
                 }>>;
                 channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
                     better_stack: "better_stack";
@@ -9070,6 +9428,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -9089,6 +9448,12 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
@@ -9097,6 +9462,12 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -9104,6 +9475,7 @@ export declare const publicApiContract: {
             projectId: import("zod").ZodString;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -9134,6 +9506,12 @@ export declare const publicApiContract: {
                     high: "high";
                     low: "low";
                     medium: "medium";
+                }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
                 }>>>;
             }, import("zod/v4/core").$strict>;
             component: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -9181,6 +9559,7 @@ export declare const publicApiContract: {
             }, import("zod/v4/core").$strip>>;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -9200,6 +9579,12 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
@@ -9207,6 +9592,12 @@ export declare const publicApiContract: {
                     high: "high";
                     low: "low";
                     medium: "medium";
+                }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
                 }>>>;
             }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -9216,6 +9607,7 @@ export declare const publicApiContract: {
             projectId: import("zod").ZodString;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -9246,6 +9638,12 @@ export declare const publicApiContract: {
                     high: "high";
                     low: "low";
                     medium: "medium";
+                }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
                 }>>>;
             }, import("zod/v4/core").$strict>;
             component: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -9308,6 +9706,12 @@ export declare const publicApiContract: {
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                     teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        correctness: "correctness";
+                        efficiency: "efficiency";
+                        reliability: "reliability";
+                        security: "security";
+                    }>>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -9339,6 +9743,12 @@ export declare const publicApiContract: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -9364,6 +9774,12 @@ export declare const publicApiContract: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -9389,6 +9805,12 @@ export declare const publicApiContract: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -9415,6 +9837,12 @@ export declare const publicApiContract: {
                 }>>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -9440,6 +9868,12 @@ export declare const publicApiContract: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -9477,6 +9911,12 @@ export declare const publicApiContract: {
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                     teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        correctness: "correctness";
+                        efficiency: "efficiency";
+                        reliability: "reliability";
+                        security: "security";
+                    }>>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -12365,6 +12805,30 @@ export declare const publicApiContract: {
                 gitCommitAuthorEmail: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         };
+        readonly dailyRecapSettings: {
+            readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                timeZone: import("zod").ZodString;
+                hour: import("zod").ZodNumber;
+                skipQuietDays: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+            readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                timeZone: import("zod").ZodOptional<import("zod").ZodString>;
+                hour: import("zod").ZodOptional<import("zod").ZodNumber>;
+                skipQuietDays: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                timeZone: import("zod").ZodString;
+                hour: import("zod").ZodNumber;
+                skipQuietDays: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        };
         readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -12476,6 +12940,513 @@ export declare const publicApiContract: {
         readonly delete: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             projectId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodVoid, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
+    readonly recaps: {
+        readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            cursor: import("zod").ZodOptional<import("zod").ZodString>;
+            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            recaps: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                date: import("zod").ZodString;
+                timeZone: import("zod").ZodString;
+                windowStart: import("zod").ZodString;
+                windowEnd: import("zod").ZodString;
+                verdict: import("zod").ZodEnum<{
+                    bad: "bad";
+                    good: "good";
+                    watch: "watch";
+                }>;
+                quiet: import("zod").ZodBoolean;
+                headline: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly get: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            date: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            recap: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                date: import("zod").ZodString;
+                timeZone: import("zod").ZodString;
+                windowStart: import("zod").ZodString;
+                windowEnd: import("zod").ZodString;
+                verdict: import("zod").ZodEnum<{
+                    bad: "bad";
+                    good: "good";
+                    watch: "watch";
+                }>;
+                quiet: import("zod").ZodBoolean;
+                headline: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+                facts: import("zod").ZodObject<{
+                    version: import("zod").ZodLiteral<1>;
+                    issues: import("zod").ZodObject<{
+                        opened: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        resolved: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        openAtEnd: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                    components: import("zod").ZodObject<{
+                        incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                            componentId: import("zod").ZodString;
+                            componentName: import("zod").ZodString;
+                            severity: import("zod").ZodEnum<{
+                                degraded: "degraded";
+                                outage: "outage";
+                            }>;
+                            minutes: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        new: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            name: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    statusReports: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        title: import("zod").ZodString;
+                        kind: import("zod").ZodEnum<{
+                            incident: "incident";
+                            maintenance: "maintenance";
+                        }>;
+                        state: import("zod").ZodString;
+                        startedAt: import("zod").ZodString;
+                        resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        issueId: import("zod").ZodString;
+                        provider: import("zod").ZodString;
+                        status: import("zod").ZodString;
+                        url: import("zod").ZodNullable<import("zod").ZodString>;
+                        openedAt: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    traffic: import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        baselineWeeks: import("zod").ZodNumber;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            serviceName: import("zod").ZodString;
+                            requests: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        logs: import("zod").ZodObject<{
+                            total: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                total: import("zod").ZodNumber;
+                                errors: import("zod").ZodNumber;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        events: import("zod").ZodArray<import("zod").ZodObject<{
+                            eventName: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baselineCount: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">;
+                    newErrors: import("zod").ZodNullable<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        listed: import("zod").ZodArray<import("zod").ZodObject<{
+                            signalId: import("zod").ZodString;
+                            serviceName: import("zod").ZodNullable<import("zod").ZodString>;
+                            message: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    automations: import("zod").ZodObject<{
+                        runs: import("zod").ZodNumber;
+                        failedCount: import("zod").ZodNumber;
+                        failed: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            automationId: import("zod").ZodString;
+                            automationName: import("zod").ZodString;
+                            status: import("zod").ZodEnum<{
+                                failed: "failed";
+                                timed_out: "timed_out";
+                            }>;
+                            startedAt: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    deploys: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        timeZone: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                        deploys: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            environment: import("zod").ZodNullable<import("zod").ZodString>;
+                            version: import("zod").ZodString;
+                            previousVersion: import("zod").ZodNullable<import("zod").ZodString>;
+                            deployedAt: import("zod").ZodString;
+                            firstSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rolloutEndAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rollback: import("zod").ZodBoolean;
+                            source: import("zod").ZodEnum<{
+                                both: "both";
+                                logs: "logs";
+                                recorded: "recorded";
+                            }>;
+                            commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                            url: import("zod").ZodNullable<import("zod").ZodString>;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                repository: import("zod").ZodString;
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            hourBefore: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                            hourAfter: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unreliableServices: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">>;
+                    shipped: import("zod").ZodOptional<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                            fullName: import("zod").ZodString;
+                            provider: import("zod").ZodEnum<{
+                                bitbucket: "bitbucket";
+                                gitcafe: "gitcafe";
+                                github: "github";
+                            }>;
+                            branch: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            truncated: import("zod").ZodBoolean;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                                authorLogin: import("zod").ZodNullable<import("zod").ZodString>;
+                                mergedAt: import("zod").ZodString;
+                                mergeCommitSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                                headSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unavailable: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    sazabi: import("zod").ZodObject<{
+                        issuesResolved: import("zod").ZodNumber;
+                        pullRequestsOpened: import("zod").ZodNumber;
+                        pullRequestsMerged: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>;
+                reasons: import("zod").ZodArray<import("zod").ZodString>;
+                text: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly render: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            date: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            recap: import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                date: import("zod").ZodString;
+                timeZone: import("zod").ZodString;
+                windowStart: import("zod").ZodString;
+                windowEnd: import("zod").ZodString;
+                verdict: import("zod").ZodEnum<{
+                    bad: "bad";
+                    good: "good";
+                    watch: "watch";
+                }>;
+                quiet: import("zod").ZodBoolean;
+                headline: import("zod").ZodString;
+                facts: import("zod").ZodObject<{
+                    version: import("zod").ZodLiteral<1>;
+                    issues: import("zod").ZodObject<{
+                        opened: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        resolved: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        openAtEnd: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                    components: import("zod").ZodObject<{
+                        incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                            componentId: import("zod").ZodString;
+                            componentName: import("zod").ZodString;
+                            severity: import("zod").ZodEnum<{
+                                degraded: "degraded";
+                                outage: "outage";
+                            }>;
+                            minutes: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        new: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            name: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    statusReports: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        title: import("zod").ZodString;
+                        kind: import("zod").ZodEnum<{
+                            incident: "incident";
+                            maintenance: "maintenance";
+                        }>;
+                        state: import("zod").ZodString;
+                        startedAt: import("zod").ZodString;
+                        resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        issueId: import("zod").ZodString;
+                        provider: import("zod").ZodString;
+                        status: import("zod").ZodString;
+                        url: import("zod").ZodNullable<import("zod").ZodString>;
+                        openedAt: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    traffic: import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        baselineWeeks: import("zod").ZodNumber;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            serviceName: import("zod").ZodString;
+                            requests: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        logs: import("zod").ZodObject<{
+                            total: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                total: import("zod").ZodNumber;
+                                errors: import("zod").ZodNumber;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        events: import("zod").ZodArray<import("zod").ZodObject<{
+                            eventName: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baselineCount: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">;
+                    newErrors: import("zod").ZodNullable<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        listed: import("zod").ZodArray<import("zod").ZodObject<{
+                            signalId: import("zod").ZodString;
+                            serviceName: import("zod").ZodNullable<import("zod").ZodString>;
+                            message: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    automations: import("zod").ZodObject<{
+                        runs: import("zod").ZodNumber;
+                        failedCount: import("zod").ZodNumber;
+                        failed: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            automationId: import("zod").ZodString;
+                            automationName: import("zod").ZodString;
+                            status: import("zod").ZodEnum<{
+                                failed: "failed";
+                                timed_out: "timed_out";
+                            }>;
+                            startedAt: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    deploys: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        timeZone: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                        deploys: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            environment: import("zod").ZodNullable<import("zod").ZodString>;
+                            version: import("zod").ZodString;
+                            previousVersion: import("zod").ZodNullable<import("zod").ZodString>;
+                            deployedAt: import("zod").ZodString;
+                            firstSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rolloutEndAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rollback: import("zod").ZodBoolean;
+                            source: import("zod").ZodEnum<{
+                                both: "both";
+                                logs: "logs";
+                                recorded: "recorded";
+                            }>;
+                            commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                            url: import("zod").ZodNullable<import("zod").ZodString>;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                repository: import("zod").ZodString;
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            hourBefore: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                            hourAfter: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unreliableServices: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">>;
+                    shipped: import("zod").ZodOptional<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                            fullName: import("zod").ZodString;
+                            provider: import("zod").ZodEnum<{
+                                bitbucket: "bitbucket";
+                                gitcafe: "gitcafe";
+                                github: "github";
+                            }>;
+                            branch: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            truncated: import("zod").ZodBoolean;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                                authorLogin: import("zod").ZodNullable<import("zod").ZodString>;
+                                mergedAt: import("zod").ZodString;
+                                mergeCommitSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                                headSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unavailable: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    sazabi: import("zod").ZodObject<{
+                        issuesResolved: import("zod").ZodNumber;
+                        pullRequestsOpened: import("zod").ZodNumber;
+                        pullRequestsMerged: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>;
+                reasons: import("zod").ZodArray<import("zod").ZodString>;
+                text: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+    };
+    readonly deploys: {
+        readonly create: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            service: import("zod").ZodString;
+            version: import("zod").ZodString;
+            environment: import("zod").ZodOptional<import("zod").ZodString>;
+            commitSha: import("zod").ZodOptional<import("zod").ZodString>;
+            url: import("zod").ZodOptional<import("zod").ZodString>;
+            deployedAt: import("zod").ZodOptional<import("zod").ZodString>;
+            idempotencyKey: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            deploy: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                service: import("zod").ZodString;
+                environment: import("zod").ZodNullable<import("zod").ZodString>;
+                version: import("zod").ZodString;
+                commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                url: import("zod").ZodNullable<import("zod").ZodString>;
+                deployedAt: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+            created: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
+        readonly list: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            service: import("zod").ZodOptional<import("zod").ZodString>;
+            since: import("zod").ZodOptional<import("zod").ZodString>;
+            until: import("zod").ZodOptional<import("zod").ZodString>;
+            cursor: import("zod").ZodOptional<import("zod").ZodString>;
+            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            deploys: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                service: import("zod").ZodString;
+                environment: import("zod").ZodNullable<import("zod").ZodString>;
+                version: import("zod").ZodString;
+                commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                url: import("zod").ZodNullable<import("zod").ZodString>;
+                deployedAt: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     };
     readonly search: {
         readonly threads: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
@@ -13323,6 +14294,32 @@ export declare const publicApiContract: {
                 low: "low";
                 medium: "medium";
             }>>;
+            types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
+            categories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
             statusStartedAt: import("zod").ZodOptional<import("zod").ZodString>;
             suspectedPullRequest: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -13352,6 +14349,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -13384,6 +14407,32 @@ export declare const publicApiContract: {
                 low: "low";
                 medium: "medium";
             }>>;
+            type: import("zod").ZodOptional<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            category: import("zod").ZodOptional<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
             causedByPullRequestUrl: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -13403,6 +14452,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -13431,6 +14506,32 @@ export declare const publicApiContract: {
                 low: "low";
                 medium: "medium";
             }>>;
+            type: import("zod").ZodOptional<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            category: import("zod").ZodOptional<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
             causedByPullRequestUrl: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodOptional<import("zod").ZodString>;
@@ -13452,6 +14553,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -13485,6 +14612,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -13564,11 +14717,12 @@ export declare const publicApiContract: {
                 fixes: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     requestedAt: import("zod").ZodString;
-                    requestedBy: import("zod").ZodObject<{
+                    requestedBy: import("zod").ZodNullable<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         name: import("zod").ZodNullable<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>;
+                    }, import("zod/v4/core").$strip>>;
                     source: import("zod").ZodEnum<{
+                        "auto-fix": "auto-fix";
                         dashboard: "dashboard";
                         "public-api": "public-api";
                         slack: "slack";
@@ -13582,6 +14736,7 @@ export declare const publicApiContract: {
                         hoplite: "hoplite";
                         replicas: "replicas";
                         sazabi: "sazabi";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     dispatchId: import("zod").ZodNullable<import("zod").ZodString>;
@@ -13623,6 +14778,7 @@ export declare const publicApiContract: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     displayName: import("zod").ZodString;
@@ -13637,9 +14793,14 @@ export declare const publicApiContract: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     displayName: import("zod").ZodString;
+                    reason: import("zod").ZodOptional<import("zod").ZodEnum<{
+                        needs_attention: "needs_attention";
+                        needs_owner: "needs_owner";
+                    }>>;
                 }, import("zod/v4/core").$strip>>>;
                 fixRepositories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
                     fullName: import("zod").ZodString;
@@ -13661,6 +14822,7 @@ export declare const publicApiContract: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     displayName: import("zod").ZodString;
@@ -13674,12 +14836,38 @@ export declare const publicApiContract: {
         }, import("zod/v4/core").$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
         readonly update: import("@orpc/contract").ContractProcedure<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
-            severity: import("zod").ZodEnum<{
+            severity: import("zod").ZodOptional<import("zod").ZodEnum<{
                 critical: "critical";
                 high: "high";
                 low: "low";
                 medium: "medium";
-            }>;
+            }>>;
+            types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
+            categories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>>;
             note: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             issue: import("zod").ZodObject<{
@@ -13698,6 +14886,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -13910,6 +15124,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -13941,6 +15181,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -13973,6 +15239,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -14006,6 +15298,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -14039,6 +15357,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -14070,6 +15414,32 @@ export declare const publicApiContract: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -14155,6 +15525,7 @@ export declare const publicApiContract: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     connectionId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -14363,6 +15734,7 @@ export declare const publicApiContract: {
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -16383,7 +17755,7 @@ export declare const publicApiOperations: {
                 threadId: import("zod").ZodString;
                 connectionId: import("zod").ZodString;
                 provider: import("zod").ZodString;
-                requesterUserId: import("zod").ZodString;
+                requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
                 connectionOwnerUserId: import("zod").ZodString;
                 clientRequestId: import("zod").ZodString;
                 status: import("zod").ZodEnum<{
@@ -16469,7 +17841,7 @@ export declare const publicApiOperations: {
             threadId: import("zod").ZodString;
             connectionId: import("zod").ZodString;
             provider: import("zod").ZodString;
-            requesterUserId: import("zod").ZodString;
+            requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
             connectionOwnerUserId: import("zod").ZodString;
             clientRequestId: import("zod").ZodString;
             status: import("zod").ZodEnum<{
@@ -16557,7 +17929,7 @@ export declare const publicApiOperations: {
                 threadId: import("zod").ZodString;
                 connectionId: import("zod").ZodString;
                 provider: import("zod").ZodString;
-                requesterUserId: import("zod").ZodString;
+                requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
                 connectionOwnerUserId: import("zod").ZodString;
                 clientRequestId: import("zod").ZodString;
                 status: import("zod").ZodEnum<{
@@ -16643,7 +18015,7 @@ export declare const publicApiOperations: {
             threadId: import("zod").ZodString;
             connectionId: import("zod").ZodString;
             provider: import("zod").ZodString;
-            requesterUserId: import("zod").ZodString;
+            requesterUserId: import("zod").ZodNullable<import("zod").ZodString>;
             connectionOwnerUserId: import("zod").ZodString;
             clientRequestId: import("zod").ZodString;
             status: import("zod").ZodEnum<{
@@ -16729,20 +18101,20 @@ export declare const publicApiOperations: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        sazabi: "sazabi";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
-                    connectionId: import("zod").ZodString;
+                    connectionId: import("zod").ZodNullable<import("zod").ZodString>;
                     displayName: import("zod").ZodString;
                     environment: import("zod").ZodNullable<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         name: import("zod").ZodNullable<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>;
-            }, import("zod/v4/core").$strip>, "api">;
-            readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
-                organizationId: import("zod").ZodString;
-                projectId: import("zod").ZodString;
-                agent: import("zod").ZodNullable<import("zod").ZodObject<{
+                autoFix: import("zod").ZodBoolean;
+                connectionBroken: import("zod").ZodBoolean;
+                agents: import("zod").ZodArray<import("zod").ZodObject<{
                     provider: import("zod").ZodEnum<{
                         capy: "capy";
                         claude: "claude";
@@ -16751,10 +18123,33 @@ export declare const publicApiOperations: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                agent: import("zod").ZodNullable<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        tembo: "tembo";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                    provider: import("zod").ZodLiteral<"sazabi">;
+                }, import("zod/v4/core").$strip>]>>;
+                autoFix: import("zod").ZodOptional<import("zod").ZodBoolean>;
                 clearEnvironment: import("zod").ZodDefault<import("zod").ZodBoolean>;
                 environmentId: import("zod").ZodOptional<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -16767,14 +18162,33 @@ export declare const publicApiOperations: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        sazabi: "sazabi";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
-                    connectionId: import("zod").ZodString;
+                    connectionId: import("zod").ZodNullable<import("zod").ZodString>;
                     displayName: import("zod").ZodString;
                     environment: import("zod").ZodNullable<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         name: import("zod").ZodNullable<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>;
+                autoFix: import("zod").ZodBoolean;
+                connectionBroken: import("zod").ZodBoolean;
+                agents: import("zod").ZodArray<import("zod").ZodObject<{
+                    provider: import("zod").ZodEnum<{
+                        capy: "capy";
+                        claude: "claude";
+                        codex: "codex";
+                        cursor: "cursor";
+                        devin: "devin";
+                        hoplite: "hoplite";
+                        replicas: "replicas";
+                        tembo: "tembo";
+                        warp: "warp";
+                    }>;
+                    connectionId: import("zod").ZodString;
+                    displayName: import("zod").ZodString;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>, "api">;
         };
@@ -19827,6 +21241,21 @@ export declare const publicApiOperations: {
                 dashboardId: import("zod").ZodUUID;
                 revision: import("zod").ZodNumber;
             }, import("zod/v4/core").$strict>;
+            warnings: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                code: import("zod").ZodString;
+                message: import("zod").ZodString;
+                severity: import("zod").ZodEnum<{
+                    error: "error";
+                    warning: "warning";
+                }>;
+                line: import("zod").ZodOptional<import("zod").ZodNumber>;
+                column: import("zod").ZodOptional<import("zod").ZodNumber>;
+                componentId: import("zod").ZodOptional<import("zod").ZodString>;
+                filePath: import("zod").ZodOptional<import("zod").ZodString>;
+                artifactPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                propPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                repairHint: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strict>>>;
         }, import("zod/v4/core").$strict>, "api">;
         readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             id: import("zod").ZodUUID;
@@ -20185,6 +21614,21 @@ export declare const publicApiOperations: {
                 dashboardId: import("zod").ZodUUID;
                 revision: import("zod").ZodNumber;
             }, import("zod/v4/core").$strict>;
+            warnings: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
+                code: import("zod").ZodString;
+                message: import("zod").ZodString;
+                severity: import("zod").ZodEnum<{
+                    error: "error";
+                    warning: "warning";
+                }>;
+                line: import("zod").ZodOptional<import("zod").ZodNumber>;
+                column: import("zod").ZodOptional<import("zod").ZodNumber>;
+                componentId: import("zod").ZodOptional<import("zod").ZodString>;
+                filePath: import("zod").ZodOptional<import("zod").ZodString>;
+                artifactPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                propPath: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodUnion<readonly [import("zod").ZodString, import("zod").ZodNumber]>>>;
+                repairHint: import("zod").ZodOptional<import("zod").ZodString>;
+            }, import("zod/v4/core").$strict>>>;
         }, import("zod/v4/core").$strict>, "api">;
         readonly render: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             id: import("zod").ZodUUID;
@@ -21462,6 +22906,12 @@ export declare const publicApiOperations: {
                     too_large: "too_large";
                     unavailable: "unavailable";
                 }>;
+                reason: import("zod").ZodOptional<import("zod").ZodEnum<{
+                    configuration: "configuration";
+                    provisioning: "provisioning";
+                    setup: "setup";
+                    transient: "transient";
+                }>>;
                 message: import("zod").ZodString;
                 retryable: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strict>], "status">>;
@@ -22782,6 +24232,7 @@ export declare const publicApiOperations: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -22806,16 +24257,21 @@ export declare const publicApiOperations: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -22835,12 +24291,15 @@ export declare const publicApiOperations: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -22849,6 +24308,7 @@ export declare const publicApiOperations: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";
@@ -22915,6 +24375,7 @@ export declare const publicApiOperations: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -22939,16 +24400,21 @@ export declare const publicApiOperations: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -22968,12 +24434,15 @@ export declare const publicApiOperations: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -22982,6 +24451,7 @@ export declare const publicApiOperations: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -23008,6 +24478,7 @@ export declare const publicApiOperations: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -23032,16 +24503,21 @@ export declare const publicApiOperations: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -23061,12 +24537,15 @@ export declare const publicApiOperations: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -23075,6 +24554,7 @@ export declare const publicApiOperations: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";
@@ -23084,6 +24564,35 @@ export declare const publicApiOperations: {
                 native: "native";
             }>>;
             metadata: import("zod").ZodOptional<import("zod").ZodRecord<import("zod").ZodString, import("zod").ZodUnknown>>;
+            signatureVerification: import("zod").ZodOptional<import("zod").ZodObject<{
+                scheme: import("zod").ZodString;
+                custom: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    signatureHeader: import("zod").ZodString;
+                    algorithm: import("zod").ZodEnum<{
+                        sha1: "sha1";
+                        sha256: "sha256";
+                        sha512: "sha512";
+                    }>;
+                    encoding: import("zod").ZodEnum<{
+                        base64: "base64";
+                        hex: "hex";
+                    }>;
+                    prefix: import("zod").ZodOptional<import("zod").ZodString>;
+                    timestamp: import("zod").ZodOptional<import("zod").ZodObject<{
+                        header: import("zod").ZodString;
+                        unit: import("zod").ZodEnum<{
+                            ms: "ms";
+                            s: "s";
+                        }>;
+                        toleranceSeconds: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strict>>;
+                }, import("zod/v4/core").$strict>>>;
+                secret: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    generate: import("zod").ZodLiteral<true>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    value: import("zod").ZodString;
+                }, import("zod/v4/core").$strict>]>>;
+            }, import("zod/v4/core").$strict>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             logSource: import("zod").ZodObject<{
                 connectionStatus: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
@@ -23146,6 +24655,7 @@ export declare const publicApiOperations: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -23170,16 +24680,21 @@ export declare const publicApiOperations: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -23199,12 +24714,15 @@ export declare const publicApiOperations: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -23213,6 +24731,7 @@ export declare const publicApiOperations: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -23254,6 +24773,7 @@ export declare const publicApiOperations: {
                     description: import("zod").ZodOptional<import("zod").ZodString>;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>>>;
+            generatedSecret: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             logSourceId: import("zod").ZodString;
@@ -23319,6 +24839,7 @@ export declare const publicApiOperations: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -23343,16 +24864,21 @@ export declare const publicApiOperations: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -23372,12 +24898,15 @@ export declare const publicApiOperations: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -23386,6 +24915,7 @@ export declare const publicApiOperations: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -23441,6 +24971,20 @@ export declare const publicApiOperations: {
                             value: import("zod").ZodString;
                             description: import("zod").ZodOptional<import("zod").ZodString>;
                         }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>>;
+                    signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                        scheme: import("zod").ZodString;
+                        mode: import("zod").ZodEnum<{
+                            enforce: "enforce";
+                            shadow: "shadow";
+                        }>;
+                        secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            last4: import("zod").ZodString;
+                            createdAt: import("zod").ZodString;
+                            retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                        }, import("zod/v4/core").$strip>>;
+                        needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
                     }, import("zod/v4/core").$strip>>>;
                 }, import("zod/v4/core").$strip>>;
             }, import("zod/v4/core").$strip>;
@@ -23526,6 +25070,7 @@ export declare const publicApiOperations: {
                     aws_guardduty: "aws_guardduty";
                     aws_vpc_flow_logs: "aws_vpc_flow_logs";
                     aws_waf: "aws_waf";
+                    buildkite: "buildkite";
                     claude_agent_sdk: "claude_agent_sdk";
                     claude_code: "claude_code";
                     cloudflare: "cloudflare";
@@ -23550,16 +25095,21 @@ export declare const publicApiOperations: {
                     gemini_cli: "gemini_cli";
                     github_audit_log: "github_audit_log";
                     github_copilot: "github_copilot";
+                    github_webhooks: "github_webhooks";
                     grafana_alloy: "grafana_alloy";
                     hermes_agent: "hermes_agent";
                     inngest: "inngest";
                     jamf_pro: "jamf_pro";
+                    jenkins: "jenkins";
                     langchain: "langchain";
+                    linear_webhooks: "linear_webhooks";
                     mastra: "mastra";
+                    modal: "modal";
                     neon: "neon";
                     netlify: "netlify";
                     new_relic: "new_relic";
                     new_relic_browser: "new_relic_browser";
+                    northflank: "northflank";
                     oh_my_pi: "oh_my_pi";
                     okta: "okta";
                     openclaw: "openclaw";
@@ -23579,12 +25129,15 @@ export declare const publicApiOperations: {
                     railway: "railway";
                     render: "render";
                     respan: "respan";
+                    runs_on: "runs_on";
                     sazabi_browser_sdk: "sazabi_browser_sdk";
                     sazabi_react_native_sdk: "sazabi_react_native_sdk";
                     sentinelone: "sentinelone";
                     sentry: "sentry";
                     sentry_platform: "sentry_platform";
+                    shopify_webhooks: "shopify_webhooks";
                     signoz: "signoz";
+                    stripe_webhooks: "stripe_webhooks";
                     supabase: "supabase";
                     tailscale: "tailscale";
                     temporal: "temporal";
@@ -23593,6 +25146,7 @@ export declare const publicApiOperations: {
                     vault: "vault";
                     vector: "vector";
                     vercel: "vercel";
+                    warpbuild: "warpbuild";
                     webhook_events: "webhook_events";
                     workos: "workos";
                     zscaler: "zscaler";
@@ -23662,6 +25216,20 @@ export declare const publicApiOperations: {
                         value: import("zod").ZodString;
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
+                }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
                 }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>>;
         }, import("zod/v4/core").$strip>, "api">;
@@ -23742,11 +25310,54 @@ export declare const publicApiOperations: {
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             streamId: import("zod").ZodString;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                scheme: import("zod").ZodString;
+                custom: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    signatureHeader: import("zod").ZodString;
+                    algorithm: import("zod").ZodEnum<{
+                        sha1: "sha1";
+                        sha256: "sha256";
+                        sha512: "sha512";
+                    }>;
+                    encoding: import("zod").ZodEnum<{
+                        base64: "base64";
+                        hex: "hex";
+                    }>;
+                    prefix: import("zod").ZodOptional<import("zod").ZodString>;
+                    timestamp: import("zod").ZodOptional<import("zod").ZodObject<{
+                        header: import("zod").ZodString;
+                        unit: import("zod").ZodEnum<{
+                            ms: "ms";
+                            s: "s";
+                        }>;
+                        toleranceSeconds: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strict>>;
+                }, import("zod/v4/core").$strict>>>;
+                secret: import("zod").ZodOptional<import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                    generate: import("zod").ZodLiteral<true>;
+                }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                    value: import("zod").ZodString;
+                }, import("zod/v4/core").$strict>]>>;
+            }, import("zod/v4/core").$strict>>>;
         }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
             stream: import("zod").ZodObject<{
                 id: import("zod").ZodString;
@@ -23789,7 +25400,22 @@ export declare const publicApiOperations: {
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>;
+            generatedSecret: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, "api">;
         readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             streamId: import("zod").ZodString;
@@ -23841,8 +25467,68 @@ export declare const publicApiOperations: {
                         description: import("zod").ZodOptional<import("zod").ZodString>;
                     }, import("zod/v4/core").$strip>>;
                 }, import("zod/v4/core").$strip>>>;
+                signatureVerification: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>>;
             }, import("zod/v4/core").$strip>;
         }, import("zod/v4/core").$strip>, "api">;
+        readonly rotateSecret: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            streamId: import("zod").ZodString;
+            secret: import("zod").ZodUnion<readonly [import("zod").ZodObject<{
+                generate: import("zod").ZodLiteral<true>;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                value: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>]>;
+            gracePeriodSeconds: import("zod").ZodDefault<import("zod").ZodNumber>;
+        }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+            signatureVerification: import("zod").ZodNullable<import("zod").ZodObject<{
+                scheme: import("zod").ZodString;
+                mode: import("zod").ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                    id: import("zod").ZodString;
+                    last4: import("zod").ZodString;
+                    createdAt: import("zod").ZodString;
+                    retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                }, import("zod/v4/core").$strip>>;
+                needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>>;
+            generatedSecret: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly signatureSecrets: {
+            readonly remove: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                streamId: import("zod").ZodString;
+                secretId: import("zod").ZodString;
+            }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
+                signatureVerification: import("zod").ZodNullable<import("zod").ZodObject<{
+                    scheme: import("zod").ZodString;
+                    mode: import("zod").ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        last4: import("zod").ZodString;
+                        createdAt: import("zod").ZodString;
+                        retiresAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    needsSecret: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                }, import("zod/v4/core").$strip>>;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
     };
     readonly connectedAccounts: {
         readonly beginConnect: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -23987,6 +25673,7 @@ export declare const publicApiOperations: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -24039,6 +25726,7 @@ export declare const publicApiOperations: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -24119,6 +25807,7 @@ export declare const publicApiOperations: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -24226,6 +25915,7 @@ export declare const publicApiOperations: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -24342,6 +26032,7 @@ export declare const publicApiOperations: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -24424,6 +26115,7 @@ export declare const publicApiOperations: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -24475,6 +26167,7 @@ export declare const publicApiOperations: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -24637,6 +26330,7 @@ export declare const publicApiOperations: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -24688,6 +26382,7 @@ export declare const publicApiOperations: {
                 rootly: "rootly";
                 slack: "slack";
                 teams: "teams";
+                tembo: "tembo";
                 victorops: "victorops";
                 warp: "warp";
                 webhook: "webhook";
@@ -24783,6 +26478,7 @@ export declare const publicApiOperations: {
                     rootly: "rootly";
                     slack: "slack";
                     teams: "teams";
+                    tembo: "tembo";
                     victorops: "victorops";
                     warp: "warp";
                     webhook: "webhook";
@@ -24999,14 +26695,37 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 connectionId: import("zod").ZodString;
                 defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, "api">;
             readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
                 organizationId: import("zod").ZodOptional<import("zod").ZodString>;
                 connectionId: import("zod").ZodString;
                 defaultProjectId: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                automaticResponses: import("zod").ZodOptional<import("zod").ZodBoolean>;
             }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
                 connectionId: import("zod").ZodString;
                 defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
+        readonly discordConfiguration: {
+            readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                organizationId: import("zod").ZodOptional<import("zod").ZodString>;
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                automaticResponses: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                connectionId: import("zod").ZodString;
+                defaultProjectId: import("zod").ZodNullable<import("zod").ZodString>;
+                automaticResponses: import("zod").ZodBoolean;
             }, import("zod/v4/core").$strip>, "api">;
         };
         readonly discordChannels: {
@@ -25137,6 +26856,7 @@ export declare const publicApiOperations: {
                     billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
                     code_repo_connected: "code_repo_connected";
                     code_repo_disconnected: "code_repo_disconnected";
+                    daily_recap: "daily_recap";
                     github_connected: "github_connected";
                     github_disconnected: "github_disconnected";
                     integration_connected: "integration_connected";
@@ -25213,6 +26933,7 @@ export declare const publicApiOperations: {
                     billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
                     code_repo_connected: "code_repo_connected";
                     code_repo_disconnected: "code_repo_disconnected";
+                    daily_recap: "daily_recap";
                     github_connected: "github_connected";
                     github_disconnected: "github_disconnected";
                     integration_connected: "integration_connected";
@@ -25261,6 +26982,7 @@ export declare const publicApiOperations: {
                 projectId: import("zod").ZodString;
                 notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
+                    daily_recap: "daily_recap";
                     issue_ignored: "issue_ignored";
                     issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
@@ -25291,6 +27013,12 @@ export declare const publicApiOperations: {
                         high: "high";
                         low: "low";
                         medium: "medium";
+                    }>>>;
+                    types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        correctness: "correctness";
+                        efficiency: "efficiency";
+                        reliability: "reliability";
+                        security: "security";
                     }>>>;
                 }, import("zod/v4/core").$strict>;
                 component: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -25345,6 +27073,7 @@ export declare const publicApiOperations: {
             notificationTypes: import("zod").ZodArray<import("zod").ZodObject<{
                 notificationType: import("zod").ZodEnum<{
                     automation_run_failed: "automation_run_failed";
+                    daily_recap: "daily_recap";
                     issue_ignored: "issue_ignored";
                     issue_ongoing: "issue_ongoing";
                     issue_rejected: "issue_rejected";
@@ -25358,6 +27087,7 @@ export declare const publicApiOperations: {
                 conditions: import("zod").ZodArray<import("zod").ZodEnum<{
                     component: "component";
                     severity: "severity";
+                    type: "type";
                 }>>;
                 channels: import("zod").ZodDefault<import("zod").ZodArray<import("zod").ZodEnum<{
                     better_stack: "better_stack";
@@ -25423,6 +27153,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -25442,6 +27173,12 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
@@ -25450,6 +27187,12 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -25457,6 +27200,7 @@ export declare const publicApiOperations: {
             projectId: import("zod").ZodString;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -25487,6 +27231,12 @@ export declare const publicApiOperations: {
                     high: "high";
                     low: "low";
                     medium: "medium";
+                }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
                 }>>>;
             }, import("zod/v4/core").$strict>;
             component: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -25534,6 +27284,7 @@ export declare const publicApiOperations: {
             }, import("zod/v4/core").$strip>>;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -25553,6 +27304,12 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>, import("zod").ZodObject<{
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 severities: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
@@ -25560,6 +27317,12 @@ export declare const publicApiOperations: {
                     high: "high";
                     low: "low";
                     medium: "medium";
+                }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
                 }>>>;
             }, import("zod/v4/core").$strict>]>;
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -25569,6 +27332,7 @@ export declare const publicApiOperations: {
             projectId: import("zod").ZodString;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -25599,6 +27363,12 @@ export declare const publicApiOperations: {
                     high: "high";
                     low: "low";
                     medium: "medium";
+                }>>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
                 }>>>;
             }, import("zod/v4/core").$strict>;
             component: import("zod").ZodNullable<import("zod").ZodObject<{
@@ -25661,6 +27431,12 @@ export declare const publicApiOperations: {
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                     teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        correctness: "correctness";
+                        efficiency: "efficiency";
+                        reliability: "reliability";
+                        security: "security";
+                    }>>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -25692,6 +27468,12 @@ export declare const publicApiOperations: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -25717,6 +27499,12 @@ export declare const publicApiOperations: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -25742,6 +27530,12 @@ export declare const publicApiOperations: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -25768,6 +27562,12 @@ export declare const publicApiOperations: {
                 }>>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>>;
             enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
             defaultItemType: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
@@ -25793,6 +27593,12 @@ export declare const publicApiOperations: {
                 }>>;
                 componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                 teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>>;
             }, import("zod/v4/core").$strict>;
             defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
             defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -25830,6 +27636,12 @@ export declare const publicApiOperations: {
                     }>>;
                     componentIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
                     teamIds: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodString>>;
+                    types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                        correctness: "correctness";
+                        efficiency: "efficiency";
+                        reliability: "reliability";
+                        security: "security";
+                    }>>>;
                 }, import("zod/v4/core").$strict>;
                 defaultItemType: import("zod").ZodNullable<import("zod").ZodString>;
                 defaultState: import("zod").ZodNullable<import("zod").ZodString>;
@@ -28718,6 +30530,30 @@ export declare const publicApiOperations: {
                 gitCommitAuthorEmail: import("zod").ZodNullable<import("zod").ZodString>;
             }, import("zod/v4/core").$strip>, "api">;
         };
+        readonly dailyRecapSettings: {
+            readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                timeZone: import("zod").ZodString;
+                hour: import("zod").ZodNumber;
+                skipQuietDays: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+            readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                enabled: import("zod").ZodOptional<import("zod").ZodBoolean>;
+                timeZone: import("zod").ZodOptional<import("zod").ZodString>;
+                hour: import("zod").ZodOptional<import("zod").ZodNumber>;
+                skipQuietDays: import("zod").ZodOptional<import("zod").ZodBoolean>;
+            }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                enabled: import("zod").ZodBoolean;
+                timeZone: import("zod").ZodString;
+                hour: import("zod").ZodNumber;
+                skipQuietDays: import("zod").ZodBoolean;
+            }, import("zod/v4/core").$strip>, "api">;
+        };
         readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             organizationId: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -28829,6 +30665,513 @@ export declare const publicApiOperations: {
         readonly delete: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             projectId: import("zod").ZodString;
         }, import("zod/v4/core").$strip>, import("zod").ZodVoid, "api">;
+    };
+    readonly recaps: {
+        readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            cursor: import("zod").ZodOptional<import("zod").ZodString>;
+            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            recaps: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                date: import("zod").ZodString;
+                timeZone: import("zod").ZodString;
+                windowStart: import("zod").ZodString;
+                windowEnd: import("zod").ZodString;
+                verdict: import("zod").ZodEnum<{
+                    bad: "bad";
+                    good: "good";
+                    watch: "watch";
+                }>;
+                quiet: import("zod").ZodBoolean;
+                headline: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly get: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            date: import("zod").ZodString;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            recap: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                projectId: import("zod").ZodString;
+                date: import("zod").ZodString;
+                timeZone: import("zod").ZodString;
+                windowStart: import("zod").ZodString;
+                windowEnd: import("zod").ZodString;
+                verdict: import("zod").ZodEnum<{
+                    bad: "bad";
+                    good: "good";
+                    watch: "watch";
+                }>;
+                quiet: import("zod").ZodBoolean;
+                headline: import("zod").ZodString;
+                sentAt: import("zod").ZodNullable<import("zod").ZodString>;
+                createdAt: import("zod").ZodString;
+                facts: import("zod").ZodObject<{
+                    version: import("zod").ZodLiteral<1>;
+                    issues: import("zod").ZodObject<{
+                        opened: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        resolved: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        openAtEnd: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                    components: import("zod").ZodObject<{
+                        incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                            componentId: import("zod").ZodString;
+                            componentName: import("zod").ZodString;
+                            severity: import("zod").ZodEnum<{
+                                degraded: "degraded";
+                                outage: "outage";
+                            }>;
+                            minutes: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        new: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            name: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    statusReports: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        title: import("zod").ZodString;
+                        kind: import("zod").ZodEnum<{
+                            incident: "incident";
+                            maintenance: "maintenance";
+                        }>;
+                        state: import("zod").ZodString;
+                        startedAt: import("zod").ZodString;
+                        resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        issueId: import("zod").ZodString;
+                        provider: import("zod").ZodString;
+                        status: import("zod").ZodString;
+                        url: import("zod").ZodNullable<import("zod").ZodString>;
+                        openedAt: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    traffic: import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        baselineWeeks: import("zod").ZodNumber;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            serviceName: import("zod").ZodString;
+                            requests: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        logs: import("zod").ZodObject<{
+                            total: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                total: import("zod").ZodNumber;
+                                errors: import("zod").ZodNumber;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        events: import("zod").ZodArray<import("zod").ZodObject<{
+                            eventName: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baselineCount: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">;
+                    newErrors: import("zod").ZodNullable<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        listed: import("zod").ZodArray<import("zod").ZodObject<{
+                            signalId: import("zod").ZodString;
+                            serviceName: import("zod").ZodNullable<import("zod").ZodString>;
+                            message: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    automations: import("zod").ZodObject<{
+                        runs: import("zod").ZodNumber;
+                        failedCount: import("zod").ZodNumber;
+                        failed: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            automationId: import("zod").ZodString;
+                            automationName: import("zod").ZodString;
+                            status: import("zod").ZodEnum<{
+                                failed: "failed";
+                                timed_out: "timed_out";
+                            }>;
+                            startedAt: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    deploys: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        timeZone: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                        deploys: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            environment: import("zod").ZodNullable<import("zod").ZodString>;
+                            version: import("zod").ZodString;
+                            previousVersion: import("zod").ZodNullable<import("zod").ZodString>;
+                            deployedAt: import("zod").ZodString;
+                            firstSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rolloutEndAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rollback: import("zod").ZodBoolean;
+                            source: import("zod").ZodEnum<{
+                                both: "both";
+                                logs: "logs";
+                                recorded: "recorded";
+                            }>;
+                            commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                            url: import("zod").ZodNullable<import("zod").ZodString>;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                repository: import("zod").ZodString;
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            hourBefore: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                            hourAfter: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unreliableServices: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">>;
+                    shipped: import("zod").ZodOptional<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                            fullName: import("zod").ZodString;
+                            provider: import("zod").ZodEnum<{
+                                bitbucket: "bitbucket";
+                                gitcafe: "gitcafe";
+                                github: "github";
+                            }>;
+                            branch: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            truncated: import("zod").ZodBoolean;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                                authorLogin: import("zod").ZodNullable<import("zod").ZodString>;
+                                mergedAt: import("zod").ZodString;
+                                mergeCommitSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                                headSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unavailable: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    sazabi: import("zod").ZodObject<{
+                        issuesResolved: import("zod").ZodNumber;
+                        pullRequestsOpened: import("zod").ZodNumber;
+                        pullRequestsMerged: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>;
+                reasons: import("zod").ZodArray<import("zod").ZodString>;
+                text: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly render: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            date: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            recap: import("zod").ZodObject<{
+                projectId: import("zod").ZodString;
+                date: import("zod").ZodString;
+                timeZone: import("zod").ZodString;
+                windowStart: import("zod").ZodString;
+                windowEnd: import("zod").ZodString;
+                verdict: import("zod").ZodEnum<{
+                    bad: "bad";
+                    good: "good";
+                    watch: "watch";
+                }>;
+                quiet: import("zod").ZodBoolean;
+                headline: import("zod").ZodString;
+                facts: import("zod").ZodObject<{
+                    version: import("zod").ZodLiteral<1>;
+                    issues: import("zod").ZodObject<{
+                        opened: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        resolved: import("zod").ZodObject<{
+                            count: import("zod").ZodNumber;
+                            listed: import("zod").ZodArray<import("zod").ZodObject<{
+                                id: import("zod").ZodString;
+                                name: import("zod").ZodString;
+                                severity: import("zod").ZodEnum<{
+                                    critical: "critical";
+                                    high: "high";
+                                    low: "low";
+                                    medium: "medium";
+                                }>;
+                                categories: import("zod").ZodArray<import("zod").ZodString>;
+                                componentId: import("zod").ZodNullable<import("zod").ZodString>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        openAtEnd: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                    components: import("zod").ZodObject<{
+                        incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                            componentId: import("zod").ZodString;
+                            componentName: import("zod").ZodString;
+                            severity: import("zod").ZodEnum<{
+                                degraded: "degraded";
+                                outage: "outage";
+                            }>;
+                            minutes: import("zod").ZodNumber;
+                        }, import("zod/v4/core").$strip>>;
+                        new: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            name: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    statusReports: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        title: import("zod").ZodString;
+                        kind: import("zod").ZodEnum<{
+                            incident: "incident";
+                            maintenance: "maintenance";
+                        }>;
+                        state: import("zod").ZodString;
+                        startedAt: import("zod").ZodString;
+                        resolvedAt: import("zod").ZodNullable<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    incidents: import("zod").ZodArray<import("zod").ZodObject<{
+                        id: import("zod").ZodString;
+                        issueId: import("zod").ZodString;
+                        provider: import("zod").ZodString;
+                        status: import("zod").ZodString;
+                        url: import("zod").ZodNullable<import("zod").ZodString>;
+                        openedAt: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>>;
+                    traffic: import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        baselineWeeks: import("zod").ZodNumber;
+                        services: import("zod").ZodArray<import("zod").ZodObject<{
+                            serviceName: import("zod").ZodString;
+                            requests: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        logs: import("zod").ZodObject<{
+                            total: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baseline: import("zod").ZodNullable<import("zod").ZodObject<{
+                                total: import("zod").ZodNumber;
+                                errors: import("zod").ZodNumber;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>;
+                        events: import("zod").ZodArray<import("zod").ZodObject<{
+                            eventName: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            errors: import("zod").ZodNumber;
+                            baselineCount: import("zod").ZodNullable<import("zod").ZodNumber>;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">;
+                    newErrors: import("zod").ZodNullable<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        listed: import("zod").ZodArray<import("zod").ZodObject<{
+                            signalId: import("zod").ZodString;
+                            serviceName: import("zod").ZodNullable<import("zod").ZodString>;
+                            message: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>>;
+                    automations: import("zod").ZodObject<{
+                        runs: import("zod").ZodNumber;
+                        failedCount: import("zod").ZodNumber;
+                        failed: import("zod").ZodArray<import("zod").ZodObject<{
+                            id: import("zod").ZodString;
+                            automationId: import("zod").ZodString;
+                            automationName: import("zod").ZodString;
+                            status: import("zod").ZodEnum<{
+                                failed: "failed";
+                                timed_out: "timed_out";
+                            }>;
+                            startedAt: import("zod").ZodString;
+                        }, import("zod/v4/core").$strip>>;
+                    }, import("zod/v4/core").$strip>;
+                    deploys: import("zod").ZodOptional<import("zod").ZodDiscriminatedUnion<[import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<true>;
+                        timeZone: import("zod").ZodString;
+                        count: import("zod").ZodNumber;
+                        deploys: import("zod").ZodArray<import("zod").ZodObject<{
+                            service: import("zod").ZodString;
+                            environment: import("zod").ZodNullable<import("zod").ZodString>;
+                            version: import("zod").ZodString;
+                            previousVersion: import("zod").ZodNullable<import("zod").ZodString>;
+                            deployedAt: import("zod").ZodString;
+                            firstSeenAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rolloutEndAt: import("zod").ZodNullable<import("zod").ZodString>;
+                            rollback: import("zod").ZodBoolean;
+                            source: import("zod").ZodEnum<{
+                                both: "both";
+                                logs: "logs";
+                                recorded: "recorded";
+                            }>;
+                            commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                            url: import("zod").ZodNullable<import("zod").ZodString>;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                repository: import("zod").ZodString;
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                            }, import("zod/v4/core").$strip>>;
+                            hourBefore: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                            hourAfter: import("zod").ZodNullable<import("zod").ZodObject<{
+                                requests: import("zod").ZodNumber;
+                                errorRate: import("zod").ZodNullable<import("zod").ZodNumber>;
+                                p95Ms: import("zod").ZodNullable<import("zod").ZodNumber>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unreliableServices: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+                        available: import("zod").ZodLiteral<false>;
+                        reason: import("zod").ZodString;
+                    }, import("zod/v4/core").$strip>], "available">>;
+                    shipped: import("zod").ZodOptional<import("zod").ZodObject<{
+                        count: import("zod").ZodNumber;
+                        repositories: import("zod").ZodArray<import("zod").ZodObject<{
+                            fullName: import("zod").ZodString;
+                            provider: import("zod").ZodEnum<{
+                                bitbucket: "bitbucket";
+                                gitcafe: "gitcafe";
+                                github: "github";
+                            }>;
+                            branch: import("zod").ZodString;
+                            count: import("zod").ZodNumber;
+                            truncated: import("zod").ZodBoolean;
+                            pullRequests: import("zod").ZodArray<import("zod").ZodObject<{
+                                number: import("zod").ZodNumber;
+                                title: import("zod").ZodString;
+                                url: import("zod").ZodString;
+                                authorLogin: import("zod").ZodNullable<import("zod").ZodString>;
+                                mergedAt: import("zod").ZodString;
+                                mergeCommitSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                                headSha: import("zod").ZodOptional<import("zod").ZodNullable<import("zod").ZodString>>;
+                            }, import("zod/v4/core").$strip>>;
+                        }, import("zod/v4/core").$strip>>;
+                        unavailable: import("zod").ZodArray<import("zod").ZodString>;
+                    }, import("zod/v4/core").$strip>>;
+                    sazabi: import("zod").ZodObject<{
+                        issuesResolved: import("zod").ZodNumber;
+                        pullRequestsOpened: import("zod").ZodNumber;
+                        pullRequestsMerged: import("zod").ZodNumber;
+                    }, import("zod/v4/core").$strip>;
+                }, import("zod/v4/core").$strip>;
+                reasons: import("zod").ZodArray<import("zod").ZodString>;
+                text: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+        }, import("zod/v4/core").$strip>, "api">;
+    };
+    readonly deploys: {
+        readonly create: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            service: import("zod").ZodString;
+            version: import("zod").ZodString;
+            environment: import("zod").ZodOptional<import("zod").ZodString>;
+            commitSha: import("zod").ZodOptional<import("zod").ZodString>;
+            url: import("zod").ZodOptional<import("zod").ZodString>;
+            deployedAt: import("zod").ZodOptional<import("zod").ZodString>;
+            idempotencyKey: import("zod").ZodOptional<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            deploy: import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                service: import("zod").ZodString;
+                environment: import("zod").ZodNullable<import("zod").ZodString>;
+                version: import("zod").ZodString;
+                commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                url: import("zod").ZodNullable<import("zod").ZodString>;
+                deployedAt: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>;
+            created: import("zod").ZodBoolean;
+        }, import("zod/v4/core").$strip>, "api">;
+        readonly list: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
+            projectId: import("zod").ZodOptional<import("zod").ZodString>;
+            service: import("zod").ZodOptional<import("zod").ZodString>;
+            since: import("zod").ZodOptional<import("zod").ZodString>;
+            until: import("zod").ZodOptional<import("zod").ZodString>;
+            cursor: import("zod").ZodOptional<import("zod").ZodString>;
+            limit: import("zod").ZodDefault<import("zod").ZodCoercedNumber<unknown>>;
+        }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
+            deploys: import("zod").ZodArray<import("zod").ZodObject<{
+                id: import("zod").ZodString;
+                service: import("zod").ZodString;
+                environment: import("zod").ZodNullable<import("zod").ZodString>;
+                version: import("zod").ZodString;
+                commitSha: import("zod").ZodNullable<import("zod").ZodString>;
+                url: import("zod").ZodNullable<import("zod").ZodString>;
+                deployedAt: import("zod").ZodString;
+                createdAt: import("zod").ZodString;
+            }, import("zod/v4/core").$strip>>;
+            nextCursor: import("zod").ZodNullable<import("zod").ZodString>;
+        }, import("zod/v4/core").$strip>, "api">;
     };
     readonly search: {
         readonly threads: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
@@ -29628,6 +31971,32 @@ export declare const publicApiOperations: {
                 low: "low";
                 medium: "medium";
             }>>;
+            types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
+            categories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
             statusStartedAt: import("zod").ZodOptional<import("zod").ZodString>;
             suspectedPullRequest: import("zod").ZodOptional<import("zod").ZodObject<{
@@ -29657,6 +32026,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -29689,6 +32084,32 @@ export declare const publicApiOperations: {
                 low: "low";
                 medium: "medium";
             }>>;
+            type: import("zod").ZodOptional<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            category: import("zod").ZodOptional<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
             causedByPullRequestUrl: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
@@ -29708,6 +32129,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -29736,6 +32183,32 @@ export declare const publicApiOperations: {
                 low: "low";
                 medium: "medium";
             }>>;
+            type: import("zod").ZodOptional<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>;
+            category: import("zod").ZodOptional<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>;
             componentId: import("zod").ZodOptional<import("zod").ZodString>;
             causedByPullRequestUrl: import("zod").ZodOptional<import("zod").ZodString>;
             name: import("zod").ZodOptional<import("zod").ZodString>;
@@ -29757,6 +32230,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -29790,6 +32289,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -29869,11 +32394,12 @@ export declare const publicApiOperations: {
                 fixes: import("zod").ZodArray<import("zod").ZodObject<{
                     id: import("zod").ZodString;
                     requestedAt: import("zod").ZodString;
-                    requestedBy: import("zod").ZodObject<{
+                    requestedBy: import("zod").ZodNullable<import("zod").ZodObject<{
                         id: import("zod").ZodString;
                         name: import("zod").ZodNullable<import("zod").ZodString>;
-                    }, import("zod/v4/core").$strip>;
+                    }, import("zod/v4/core").$strip>>;
                     source: import("zod").ZodEnum<{
+                        "auto-fix": "auto-fix";
                         dashboard: "dashboard";
                         "public-api": "public-api";
                         slack: "slack";
@@ -29887,6 +32413,7 @@ export declare const publicApiOperations: {
                         hoplite: "hoplite";
                         replicas: "replicas";
                         sazabi: "sazabi";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     dispatchId: import("zod").ZodNullable<import("zod").ZodString>;
@@ -29928,6 +32455,7 @@ export declare const publicApiOperations: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     displayName: import("zod").ZodString;
@@ -29942,9 +32470,14 @@ export declare const publicApiOperations: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     displayName: import("zod").ZodString;
+                    reason: import("zod").ZodOptional<import("zod").ZodEnum<{
+                        needs_attention: "needs_attention";
+                        needs_owner: "needs_owner";
+                    }>>;
                 }, import("zod/v4/core").$strip>>>;
                 fixRepositories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodObject<{
                     fullName: import("zod").ZodString;
@@ -29966,6 +32499,7 @@ export declare const publicApiOperations: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     displayName: import("zod").ZodString;
@@ -29979,12 +32513,38 @@ export declare const publicApiOperations: {
         }, import("zod/v4/core").$strip>, "api">;
         readonly update: import("../orpc-contracts/index.js").OperationDefinition<import("zod").ZodObject<{
             issueId: import("zod").ZodString;
-            severity: import("zod").ZodEnum<{
+            severity: import("zod").ZodOptional<import("zod").ZodEnum<{
                 critical: "critical";
                 high: "high";
                 low: "low";
                 medium: "medium";
-            }>;
+            }>>;
+            types: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
+            categories: import("zod").ZodOptional<import("zod").ZodArray<import("zod").ZodEnum<{
+                abuse_and_fraud: "abuse_and_fraud";
+                active_attack: "active_attack";
+                agent_misbehavior: "agent_misbehavior";
+                background_job_failure: "background_job_failure";
+                business_flow_breakage: "business_flow_breakage";
+                capacity_risk: "capacity_risk";
+                configuration_drift: "configuration_drift";
+                cost_anomaly: "cost_anomaly";
+                data_integrity: "data_integrity";
+                dependency_failure: "dependency_failure";
+                exposure: "exposure";
+                frontend_breakage: "frontend_breakage";
+                observability_gap: "observability_gap";
+                outage: "outage";
+                performance_degradation: "performance_degradation";
+                regression: "regression";
+                silent_failure: "silent_failure";
+                suspicious_access: "suspicious_access";
+            }>>>;
             note: import("zod").ZodOptional<import("zod").ZodString>;
         }, import("zod/v4/core").$strip>, import("zod").ZodObject<{
             issue: import("zod").ZodObject<{
@@ -30003,6 +32563,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -30215,6 +32801,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -30246,6 +32858,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -30278,6 +32916,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -30311,6 +32975,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -30344,6 +33034,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -30375,6 +33091,32 @@ export declare const publicApiOperations: {
                     low: "low";
                     medium: "medium";
                 }>;
+                types: import("zod").ZodArray<import("zod").ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
+                }>>;
+                categories: import("zod").ZodArray<import("zod").ZodEnum<{
+                    abuse_and_fraud: "abuse_and_fraud";
+                    active_attack: "active_attack";
+                    agent_misbehavior: "agent_misbehavior";
+                    background_job_failure: "background_job_failure";
+                    business_flow_breakage: "business_flow_breakage";
+                    capacity_risk: "capacity_risk";
+                    configuration_drift: "configuration_drift";
+                    cost_anomaly: "cost_anomaly";
+                    data_integrity: "data_integrity";
+                    dependency_failure: "dependency_failure";
+                    exposure: "exposure";
+                    frontend_breakage: "frontend_breakage";
+                    observability_gap: "observability_gap";
+                    outage: "outage";
+                    performance_degradation: "performance_degradation";
+                    regression: "regression";
+                    silent_failure: "silent_failure";
+                    suspicious_access: "suspicious_access";
+                }>>;
                 componentId: import("zod").ZodNullable<import("zod").ZodString>;
                 componentName: import("zod").ZodNullable<import("zod").ZodString>;
                 createdAt: import("zod").ZodString;
@@ -30460,6 +33202,7 @@ export declare const publicApiOperations: {
                         devin: "devin";
                         hoplite: "hoplite";
                         replicas: "replicas";
+                        tembo: "tembo";
                         warp: "warp";
                     }>;
                     connectionId: import("zod").ZodOptional<import("zod").ZodString>;
@@ -30668,6 +33411,7 @@ export declare const publicApiOperations: {
             projectId: import("zod").ZodOptional<import("zod").ZodString>;
             notificationTypes: import("zod").ZodArray<import("zod").ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";

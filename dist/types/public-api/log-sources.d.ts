@@ -2,7 +2,7 @@ import { z } from "zod";
 /**
  * Supported log source provider values derived from canonical catalog specs.
  */
-export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "cloudtrail", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "osquery", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog", "otel_traces", "sazabi_react_native_sdk", "devin_cli", "auditd", "github_copilot", "gemini_cli", "factory_droid", "cursor", "openhands", "palo_alto", "claude_agent_sdk", "doppler", "tailscale", "jamf_pro", "okta", "auth0", "aws_api_gateway", "zscaler", "vault", "workos", "aws_waf", "sentinelone", "aws_guardduty", "github_audit_log", "aws_vpc_flow_logs", "openclaw", "hermes_agent", "new_relic", "new_relic_browser", "signoz"];
+export declare const LOG_SOURCE_PROVIDER_VALUES: readonly ["vercel", "cloudflare", "railway", "render", "fly_io", "netlify", "northflank", "supabase", "digital_ocean", "inngest", "trigger_dev", "temporal", "mastra", "neon", "langchain", "daytona", "e2b", "cloudwatch", "cloudtrail", "convex", "datadog", "sentry", "sentry_platform", "openrouter", "posthog", "posthog_sdk", "gcp", "otel", "otel_metrics", "fluent_bit", "osquery", "vector", "grafana_alloy", "otel_collector", "cloudflare_workers", "elastic_cloud", "porter", "respan", "plain", "prometheus", "webhook_events", "github_webhooks", "stripe_webhooks", "shopify_webhooks", "linear_webhooks", "claude_code", "codex", "sazabi_browser_sdk", "oh_my_pi", "unkey", "evlog", "otel_traces", "sazabi_react_native_sdk", "devin_cli", "auditd", "github_copilot", "gemini_cli", "factory_droid", "cursor", "openhands", "palo_alto", "claude_agent_sdk", "doppler", "tailscale", "jamf_pro", "jenkins", "okta", "auth0", "aws_api_gateway", "zscaler", "vault", "workos", "aws_waf", "sentinelone", "aws_guardduty", "github_audit_log", "aws_vpc_flow_logs", "openclaw", "hermes_agent", "new_relic", "new_relic_browser", "signoz", "buildkite", "modal", "warpbuild", "runs_on"];
 /**
  * Log source setup modes. `native` log sources hold vendor credentials that
  * Sazabi uses to provision delivery; `manual` log sources mint a keyed
@@ -88,6 +88,68 @@ export declare const LogSourceEndpointCardSchema: z.ZodObject<{
 }, z.core.$strip>;
 export type LogSourceEndpointCard = z.infer<typeof LogSourceEndpointCardSchema>;
 /**
+ * Where a new verification secret comes from: Sazabi mints one (`generate`,
+ * answered once as `generatedSecret`) or the caller pastes the one its
+ * platform shows (`value`). The plaintext is never answered again.
+ */
+export declare const SignatureSecretInputSchema: z.ZodUnion<readonly [z.ZodObject<{
+    generate: z.ZodLiteral<true>;
+}, z.core.$strict>, z.ZodObject<{
+    value: z.ZodString;
+}, z.core.$strict>]>;
+export declare const SignatureVerificationInputSchema: z.ZodObject<{
+    scheme: z.ZodString;
+    custom: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        signatureHeader: z.ZodString;
+        algorithm: z.ZodEnum<{
+            sha1: "sha1";
+            sha256: "sha256";
+            sha512: "sha512";
+        }>;
+        encoding: z.ZodEnum<{
+            base64: "base64";
+            hex: "hex";
+        }>;
+        prefix: z.ZodOptional<z.ZodString>;
+        timestamp: z.ZodOptional<z.ZodObject<{
+            header: z.ZodString;
+            unit: z.ZodEnum<{
+                ms: "ms";
+                s: "s";
+            }>;
+            toleranceSeconds: z.ZodNumber;
+        }, z.core.$strict>>;
+    }, z.core.$strict>>>;
+    secret: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+        generate: z.ZodLiteral<true>;
+    }, z.core.$strict>, z.ZodObject<{
+        value: z.ZodString;
+    }, z.core.$strict>]>>;
+}, z.core.$strict>;
+export declare const GeneratedSecretSchema: z.ZodString;
+/** One webhook verification secret, without its value (ENG-11656). */
+export declare const SignatureSecretSummarySchema: z.ZodObject<{
+    id: z.ZodString;
+    last4: z.ZodString;
+    createdAt: z.ZodString;
+    retiresAt: z.ZodNullable<z.ZodString>;
+}, z.core.$strip>;
+/** A log stream's webhook signature verification (ENG-11656). */
+export declare const LogStreamSignatureVerificationSchema: z.ZodNullable<z.ZodObject<{
+    scheme: z.ZodString;
+    mode: z.ZodEnum<{
+        enforce: "enforce";
+        shadow: "shadow";
+    }>;
+    secrets: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+        last4: z.ZodString;
+        createdAt: z.ZodString;
+        retiresAt: z.ZodNullable<z.ZodString>;
+    }, z.core.$strip>>;
+    needsSecret: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>>;
+/**
  * A log stream record — one provisioned event flow under a log source.
  */
 export declare const LogStreamSchema: z.ZodObject<{
@@ -130,6 +192,20 @@ export declare const LogStreamSchema: z.ZodObject<{
             value: z.ZodString;
             description: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
+    }, z.core.$strip>>>;
+    signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+        scheme: z.ZodString;
+        mode: z.ZodEnum<{
+            enforce: "enforce";
+            shadow: "shadow";
+        }>;
+        secrets: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            last4: z.ZodString;
+            createdAt: z.ZodString;
+            retiresAt: z.ZodNullable<z.ZodString>;
+        }, z.core.$strip>>;
+        needsSecret: z.ZodOptional<z.ZodBoolean>;
     }, z.core.$strip>>>;
 }, z.core.$strip>;
 /**
@@ -198,6 +274,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         aws_guardduty: "aws_guardduty";
         aws_vpc_flow_logs: "aws_vpc_flow_logs";
         aws_waf: "aws_waf";
+        buildkite: "buildkite";
         claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
@@ -222,16 +299,21 @@ export declare const LogSourceSchema: z.ZodObject<{
         gemini_cli: "gemini_cli";
         github_audit_log: "github_audit_log";
         github_copilot: "github_copilot";
+        github_webhooks: "github_webhooks";
         grafana_alloy: "grafana_alloy";
         hermes_agent: "hermes_agent";
         inngest: "inngest";
         jamf_pro: "jamf_pro";
+        jenkins: "jenkins";
         langchain: "langchain";
+        linear_webhooks: "linear_webhooks";
         mastra: "mastra";
+        modal: "modal";
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
         new_relic_browser: "new_relic_browser";
+        northflank: "northflank";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -251,12 +333,15 @@ export declare const LogSourceSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        runs_on: "runs_on";
         sazabi_browser_sdk: "sazabi_browser_sdk";
         sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentinelone: "sentinelone";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
+        shopify_webhooks: "shopify_webhooks";
         signoz: "signoz";
+        stripe_webhooks: "stripe_webhooks";
         supabase: "supabase";
         tailscale: "tailscale";
         temporal: "temporal";
@@ -265,6 +350,7 @@ export declare const LogSourceSchema: z.ZodObject<{
         vault: "vault";
         vector: "vector";
         vercel: "vercel";
+        warpbuild: "warpbuild";
         webhook_events: "webhook_events";
         workos: "workos";
         zscaler: "zscaler";
@@ -346,6 +432,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         aws_guardduty: "aws_guardduty";
         aws_vpc_flow_logs: "aws_vpc_flow_logs";
         aws_waf: "aws_waf";
+        buildkite: "buildkite";
         claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
@@ -370,16 +457,21 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         gemini_cli: "gemini_cli";
         github_audit_log: "github_audit_log";
         github_copilot: "github_copilot";
+        github_webhooks: "github_webhooks";
         grafana_alloy: "grafana_alloy";
         hermes_agent: "hermes_agent";
         inngest: "inngest";
         jamf_pro: "jamf_pro";
+        jenkins: "jenkins";
         langchain: "langchain";
+        linear_webhooks: "linear_webhooks";
         mastra: "mastra";
+        modal: "modal";
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
         new_relic_browser: "new_relic_browser";
+        northflank: "northflank";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -399,12 +491,15 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        runs_on: "runs_on";
         sazabi_browser_sdk: "sazabi_browser_sdk";
         sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentinelone: "sentinelone";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
+        shopify_webhooks: "shopify_webhooks";
         signoz: "signoz";
+        stripe_webhooks: "stripe_webhooks";
         supabase: "supabase";
         tailscale: "tailscale";
         temporal: "temporal";
@@ -413,6 +508,7 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
         vault: "vault";
         vector: "vector";
         vercel: "vercel";
+        warpbuild: "warpbuild";
         webhook_events: "webhook_events";
         workos: "workos";
         zscaler: "zscaler";
@@ -469,6 +565,20 @@ export declare const LogSourceDetailSchema: z.ZodObject<{
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            scheme: z.ZodString;
+            mode: z.ZodEnum<{
+                enforce: "enforce";
+                shadow: "shadow";
+            }>;
+            secrets: z.ZodArray<z.ZodObject<{
+                id: z.ZodString;
+                last4: z.ZodString;
+                createdAt: z.ZodString;
+                retiresAt: z.ZodNullable<z.ZodString>;
+            }, z.core.$strip>>;
+            needsSecret: z.ZodOptional<z.ZodBoolean>;
+        }, z.core.$strip>>>;
     }, z.core.$strip>>;
 }, z.core.$strip>;
 export declare const ListLogSourceProvidersInputSchema: z.ZodObject<{}, z.core.$strip>;
@@ -518,6 +628,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         aws_guardduty: "aws_guardduty";
         aws_vpc_flow_logs: "aws_vpc_flow_logs";
         aws_waf: "aws_waf";
+        buildkite: "buildkite";
         claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
@@ -542,16 +653,21 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         gemini_cli: "gemini_cli";
         github_audit_log: "github_audit_log";
         github_copilot: "github_copilot";
+        github_webhooks: "github_webhooks";
         grafana_alloy: "grafana_alloy";
         hermes_agent: "hermes_agent";
         inngest: "inngest";
         jamf_pro: "jamf_pro";
+        jenkins: "jenkins";
         langchain: "langchain";
+        linear_webhooks: "linear_webhooks";
         mastra: "mastra";
+        modal: "modal";
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
         new_relic_browser: "new_relic_browser";
+        northflank: "northflank";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -571,12 +687,15 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        runs_on: "runs_on";
         sazabi_browser_sdk: "sazabi_browser_sdk";
         sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentinelone: "sentinelone";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
+        shopify_webhooks: "shopify_webhooks";
         signoz: "signoz";
+        stripe_webhooks: "stripe_webhooks";
         supabase: "supabase";
         tailscale: "tailscale";
         temporal: "temporal";
@@ -585,6 +704,7 @@ export declare const ListLogSourcesInputSchema: z.ZodObject<{
         vault: "vault";
         vector: "vector";
         vercel: "vercel";
+        warpbuild: "warpbuild";
         webhook_events: "webhook_events";
         workos: "workos";
         zscaler: "zscaler";
@@ -652,6 +772,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -676,16 +797,21 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -705,12 +831,15 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -719,6 +848,7 @@ export declare const ListLogSourcesOutputSchema: z.ZodObject<{
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -747,6 +877,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         aws_guardduty: "aws_guardduty";
         aws_vpc_flow_logs: "aws_vpc_flow_logs";
         aws_waf: "aws_waf";
+        buildkite: "buildkite";
         claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
@@ -771,16 +902,21 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         gemini_cli: "gemini_cli";
         github_audit_log: "github_audit_log";
         github_copilot: "github_copilot";
+        github_webhooks: "github_webhooks";
         grafana_alloy: "grafana_alloy";
         hermes_agent: "hermes_agent";
         inngest: "inngest";
         jamf_pro: "jamf_pro";
+        jenkins: "jenkins";
         langchain: "langchain";
+        linear_webhooks: "linear_webhooks";
         mastra: "mastra";
+        modal: "modal";
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
         new_relic_browser: "new_relic_browser";
+        northflank: "northflank";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -800,12 +936,15 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         railway: "railway";
         render: "render";
         respan: "respan";
+        runs_on: "runs_on";
         sazabi_browser_sdk: "sazabi_browser_sdk";
         sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentinelone: "sentinelone";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
+        shopify_webhooks: "shopify_webhooks";
         signoz: "signoz";
+        stripe_webhooks: "stripe_webhooks";
         supabase: "supabase";
         tailscale: "tailscale";
         temporal: "temporal";
@@ -814,6 +953,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
         vault: "vault";
         vector: "vector";
         vercel: "vercel";
+        warpbuild: "warpbuild";
         webhook_events: "webhook_events";
         workos: "workos";
         zscaler: "zscaler";
@@ -880,6 +1020,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -904,16 +1045,21 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -933,12 +1079,15 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -947,6 +1096,7 @@ export declare const listLogSources: import("../orpc-contracts/index.js").Operat
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -973,6 +1123,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         aws_guardduty: "aws_guardduty";
         aws_vpc_flow_logs: "aws_vpc_flow_logs";
         aws_waf: "aws_waf";
+        buildkite: "buildkite";
         claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
@@ -997,16 +1148,21 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         gemini_cli: "gemini_cli";
         github_audit_log: "github_audit_log";
         github_copilot: "github_copilot";
+        github_webhooks: "github_webhooks";
         grafana_alloy: "grafana_alloy";
         hermes_agent: "hermes_agent";
         inngest: "inngest";
         jamf_pro: "jamf_pro";
+        jenkins: "jenkins";
         langchain: "langchain";
+        linear_webhooks: "linear_webhooks";
         mastra: "mastra";
+        modal: "modal";
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
         new_relic_browser: "new_relic_browser";
+        northflank: "northflank";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -1026,12 +1182,15 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         railway: "railway";
         render: "render";
         respan: "respan";
+        runs_on: "runs_on";
         sazabi_browser_sdk: "sazabi_browser_sdk";
         sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentinelone: "sentinelone";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
+        shopify_webhooks: "shopify_webhooks";
         signoz: "signoz";
+        stripe_webhooks: "stripe_webhooks";
         supabase: "supabase";
         tailscale: "tailscale";
         temporal: "temporal";
@@ -1040,6 +1199,7 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         vault: "vault";
         vector: "vector";
         vercel: "vercel";
+        warpbuild: "warpbuild";
         webhook_events: "webhook_events";
         workos: "workos";
         zscaler: "zscaler";
@@ -1049,6 +1209,35 @@ export declare const CreateLogSourceInputSchema: z.ZodObject<{
         native: "native";
     }>>;
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    signatureVerification: z.ZodOptional<z.ZodObject<{
+        scheme: z.ZodString;
+        custom: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            signatureHeader: z.ZodString;
+            algorithm: z.ZodEnum<{
+                sha1: "sha1";
+                sha256: "sha256";
+                sha512: "sha512";
+            }>;
+            encoding: z.ZodEnum<{
+                base64: "base64";
+                hex: "hex";
+            }>;
+            prefix: z.ZodOptional<z.ZodString>;
+            timestamp: z.ZodOptional<z.ZodObject<{
+                header: z.ZodString;
+                unit: z.ZodEnum<{
+                    ms: "ms";
+                    s: "s";
+                }>;
+                toleranceSeconds: z.ZodNumber;
+            }, z.core.$strict>>;
+        }, z.core.$strict>>>;
+        secret: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+            generate: z.ZodLiteral<true>;
+        }, z.core.$strict>, z.ZodObject<{
+            value: z.ZodString;
+        }, z.core.$strict>]>>;
+    }, z.core.$strict>>;
 }, z.core.$strict>;
 export declare const CreateLogSourceOutputSchema: z.ZodObject<{
     logSource: z.ZodObject<{
@@ -1112,6 +1301,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -1136,16 +1326,21 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1165,12 +1360,15 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -1179,6 +1377,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -1220,6 +1419,7 @@ export declare const CreateLogSourceOutputSchema: z.ZodObject<{
             description: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>>>;
+    generatedSecret: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>;
 export type CreateLogSourceInput = z.infer<typeof CreateLogSourceInputSchema>;
 export type CreateLogSourceOutput = z.infer<typeof CreateLogSourceOutputSchema>;
@@ -1232,6 +1432,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         aws_guardduty: "aws_guardduty";
         aws_vpc_flow_logs: "aws_vpc_flow_logs";
         aws_waf: "aws_waf";
+        buildkite: "buildkite";
         claude_agent_sdk: "claude_agent_sdk";
         claude_code: "claude_code";
         cloudflare: "cloudflare";
@@ -1256,16 +1457,21 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         gemini_cli: "gemini_cli";
         github_audit_log: "github_audit_log";
         github_copilot: "github_copilot";
+        github_webhooks: "github_webhooks";
         grafana_alloy: "grafana_alloy";
         hermes_agent: "hermes_agent";
         inngest: "inngest";
         jamf_pro: "jamf_pro";
+        jenkins: "jenkins";
         langchain: "langchain";
+        linear_webhooks: "linear_webhooks";
         mastra: "mastra";
+        modal: "modal";
         neon: "neon";
         netlify: "netlify";
         new_relic: "new_relic";
         new_relic_browser: "new_relic_browser";
+        northflank: "northflank";
         oh_my_pi: "oh_my_pi";
         okta: "okta";
         openclaw: "openclaw";
@@ -1285,12 +1491,15 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         railway: "railway";
         render: "render";
         respan: "respan";
+        runs_on: "runs_on";
         sazabi_browser_sdk: "sazabi_browser_sdk";
         sazabi_react_native_sdk: "sazabi_react_native_sdk";
         sentinelone: "sentinelone";
         sentry: "sentry";
         sentry_platform: "sentry_platform";
+        shopify_webhooks: "shopify_webhooks";
         signoz: "signoz";
+        stripe_webhooks: "stripe_webhooks";
         supabase: "supabase";
         tailscale: "tailscale";
         temporal: "temporal";
@@ -1299,6 +1508,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         vault: "vault";
         vector: "vector";
         vercel: "vercel";
+        warpbuild: "warpbuild";
         webhook_events: "webhook_events";
         workos: "workos";
         zscaler: "zscaler";
@@ -1308,6 +1518,35 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
         native: "native";
     }>>;
     metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+    signatureVerification: z.ZodOptional<z.ZodObject<{
+        scheme: z.ZodString;
+        custom: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+            signatureHeader: z.ZodString;
+            algorithm: z.ZodEnum<{
+                sha1: "sha1";
+                sha256: "sha256";
+                sha512: "sha512";
+            }>;
+            encoding: z.ZodEnum<{
+                base64: "base64";
+                hex: "hex";
+            }>;
+            prefix: z.ZodOptional<z.ZodString>;
+            timestamp: z.ZodOptional<z.ZodObject<{
+                header: z.ZodString;
+                unit: z.ZodEnum<{
+                    ms: "ms";
+                    s: "s";
+                }>;
+                toleranceSeconds: z.ZodNumber;
+            }, z.core.$strict>>;
+        }, z.core.$strict>>>;
+        secret: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+            generate: z.ZodLiteral<true>;
+        }, z.core.$strict>, z.ZodObject<{
+            value: z.ZodString;
+        }, z.core.$strict>]>>;
+    }, z.core.$strict>>;
 }, z.core.$strict>, z.ZodObject<{
     logSource: z.ZodObject<{
         connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
@@ -1370,6 +1609,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -1394,16 +1634,21 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1423,12 +1668,15 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -1437,6 +1685,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -1478,6 +1727,7 @@ export declare const createLogSource: import("../orpc-contracts/index.js").Opera
             description: z.ZodOptional<z.ZodString>;
         }, z.core.$strip>>;
     }, z.core.$strip>>>;
+    generatedSecret: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, "api">;
 export declare const GetLogSourceInputSchema: z.ZodObject<{
     logSourceId: z.ZodString;
@@ -1544,6 +1794,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -1568,16 +1819,21 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1597,12 +1853,15 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -1611,6 +1870,7 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -1666,6 +1926,20 @@ export declare const GetLogSourceOutputSchema: z.ZodObject<{
                     value: z.ZodString;
                     description: z.ZodOptional<z.ZodString>;
                 }, z.core.$strip>>;
+            }, z.core.$strip>>>;
+            signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                scheme: z.ZodString;
+                mode: z.ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    last4: z.ZodString;
+                    createdAt: z.ZodString;
+                    retiresAt: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+                needsSecret: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strip>>>;
         }, z.core.$strip>>;
     }, z.core.$strip>;
@@ -1736,6 +2010,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -1760,16 +2035,21 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1789,12 +2069,15 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -1803,6 +2086,7 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -1858,6 +2142,20 @@ export declare const getLogSource: import("../orpc-contracts/index.js").Operatio
                     value: z.ZodString;
                     description: z.ZodOptional<z.ZodString>;
                 }, z.core.$strip>>;
+            }, z.core.$strip>>>;
+            signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                scheme: z.ZodString;
+                mode: z.ZodEnum<{
+                    enforce: "enforce";
+                    shadow: "shadow";
+                }>;
+                secrets: z.ZodArray<z.ZodObject<{
+                    id: z.ZodString;
+                    last4: z.ZodString;
+                    createdAt: z.ZodString;
+                    retiresAt: z.ZodNullable<z.ZodString>;
+                }, z.core.$strip>>;
+                needsSecret: z.ZodOptional<z.ZodBoolean>;
             }, z.core.$strip>>>;
         }, z.core.$strip>>;
     }, z.core.$strip>;
@@ -1933,6 +2231,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -1957,16 +2256,21 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -1986,12 +2290,15 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -2000,6 +2307,7 @@ export declare const UpdateLogSourceOutputSchema: z.ZodObject<{
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -2089,6 +2397,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -2113,16 +2422,21 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -2142,12 +2456,15 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -2156,6 +2473,7 @@ export declare const updateLogSource: import("../orpc-contracts/index.js").Opera
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -2216,6 +2534,7 @@ export declare const logSourcesContract: {
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -2240,16 +2559,21 @@ export declare const logSourcesContract: {
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -2269,12 +2593,15 @@ export declare const logSourcesContract: {
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -2283,6 +2610,7 @@ export declare const logSourcesContract: {
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -2349,6 +2677,7 @@ export declare const logSourcesContract: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -2373,16 +2702,21 @@ export declare const logSourcesContract: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -2402,12 +2736,15 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -2416,6 +2753,7 @@ export declare const logSourcesContract: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";
@@ -2442,6 +2780,7 @@ export declare const logSourcesContract: {
             aws_guardduty: "aws_guardduty";
             aws_vpc_flow_logs: "aws_vpc_flow_logs";
             aws_waf: "aws_waf";
+            buildkite: "buildkite";
             claude_agent_sdk: "claude_agent_sdk";
             claude_code: "claude_code";
             cloudflare: "cloudflare";
@@ -2466,16 +2805,21 @@ export declare const logSourcesContract: {
             gemini_cli: "gemini_cli";
             github_audit_log: "github_audit_log";
             github_copilot: "github_copilot";
+            github_webhooks: "github_webhooks";
             grafana_alloy: "grafana_alloy";
             hermes_agent: "hermes_agent";
             inngest: "inngest";
             jamf_pro: "jamf_pro";
+            jenkins: "jenkins";
             langchain: "langchain";
+            linear_webhooks: "linear_webhooks";
             mastra: "mastra";
+            modal: "modal";
             neon: "neon";
             netlify: "netlify";
             new_relic: "new_relic";
             new_relic_browser: "new_relic_browser";
+            northflank: "northflank";
             oh_my_pi: "oh_my_pi";
             okta: "okta";
             openclaw: "openclaw";
@@ -2495,12 +2839,15 @@ export declare const logSourcesContract: {
             railway: "railway";
             render: "render";
             respan: "respan";
+            runs_on: "runs_on";
             sazabi_browser_sdk: "sazabi_browser_sdk";
             sazabi_react_native_sdk: "sazabi_react_native_sdk";
             sentinelone: "sentinelone";
             sentry: "sentry";
             sentry_platform: "sentry_platform";
+            shopify_webhooks: "shopify_webhooks";
             signoz: "signoz";
+            stripe_webhooks: "stripe_webhooks";
             supabase: "supabase";
             tailscale: "tailscale";
             temporal: "temporal";
@@ -2509,6 +2856,7 @@ export declare const logSourcesContract: {
             vault: "vault";
             vector: "vector";
             vercel: "vercel";
+            warpbuild: "warpbuild";
             webhook_events: "webhook_events";
             workos: "workos";
             zscaler: "zscaler";
@@ -2518,6 +2866,35 @@ export declare const logSourcesContract: {
             native: "native";
         }>>;
         metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodUnknown>>;
+        signatureVerification: z.ZodOptional<z.ZodObject<{
+            scheme: z.ZodString;
+            custom: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                signatureHeader: z.ZodString;
+                algorithm: z.ZodEnum<{
+                    sha1: "sha1";
+                    sha256: "sha256";
+                    sha512: "sha512";
+                }>;
+                encoding: z.ZodEnum<{
+                    base64: "base64";
+                    hex: "hex";
+                }>;
+                prefix: z.ZodOptional<z.ZodString>;
+                timestamp: z.ZodOptional<z.ZodObject<{
+                    header: z.ZodString;
+                    unit: z.ZodEnum<{
+                        ms: "ms";
+                        s: "s";
+                    }>;
+                    toleranceSeconds: z.ZodNumber;
+                }, z.core.$strict>>;
+            }, z.core.$strict>>>;
+            secret: z.ZodOptional<z.ZodUnion<readonly [z.ZodObject<{
+                generate: z.ZodLiteral<true>;
+            }, z.core.$strict>, z.ZodObject<{
+                value: z.ZodString;
+            }, z.core.$strict>]>>;
+        }, z.core.$strict>>;
     }, z.core.$strict>, z.ZodObject<{
         logSource: z.ZodObject<{
             connectionStatus: z.ZodOptional<z.ZodNullable<z.ZodObject<{
@@ -2580,6 +2957,7 @@ export declare const logSourcesContract: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -2604,16 +2982,21 @@ export declare const logSourcesContract: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -2633,12 +3016,15 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -2647,6 +3033,7 @@ export declare const logSourcesContract: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";
@@ -2688,6 +3075,7 @@ export declare const logSourcesContract: {
                 description: z.ZodOptional<z.ZodString>;
             }, z.core.$strip>>;
         }, z.core.$strip>>>;
+        generatedSecret: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, Record<never, never>, import("../orpc-contracts/index.js").OperationContractMetadata<"api">>;
     readonly get: import("@orpc/contract").ContractProcedure<z.ZodObject<{
         logSourceId: z.ZodString;
@@ -2753,6 +3141,7 @@ export declare const logSourcesContract: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -2777,16 +3166,21 @@ export declare const logSourcesContract: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -2806,12 +3200,15 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -2820,6 +3217,7 @@ export declare const logSourcesContract: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";
@@ -2875,6 +3273,20 @@ export declare const logSourcesContract: {
                         value: z.ZodString;
                         description: z.ZodOptional<z.ZodString>;
                     }, z.core.$strip>>;
+                }, z.core.$strip>>>;
+                signatureVerification: z.ZodOptional<z.ZodNullable<z.ZodObject<{
+                    scheme: z.ZodString;
+                    mode: z.ZodEnum<{
+                        enforce: "enforce";
+                        shadow: "shadow";
+                    }>;
+                    secrets: z.ZodArray<z.ZodObject<{
+                        id: z.ZodString;
+                        last4: z.ZodString;
+                        createdAt: z.ZodString;
+                        retiresAt: z.ZodNullable<z.ZodString>;
+                    }, z.core.$strip>>;
+                    needsSecret: z.ZodOptional<z.ZodBoolean>;
                 }, z.core.$strip>>>;
             }, z.core.$strip>>;
         }, z.core.$strip>;
@@ -2949,6 +3361,7 @@ export declare const logSourcesContract: {
                 aws_guardduty: "aws_guardduty";
                 aws_vpc_flow_logs: "aws_vpc_flow_logs";
                 aws_waf: "aws_waf";
+                buildkite: "buildkite";
                 claude_agent_sdk: "claude_agent_sdk";
                 claude_code: "claude_code";
                 cloudflare: "cloudflare";
@@ -2973,16 +3386,21 @@ export declare const logSourcesContract: {
                 gemini_cli: "gemini_cli";
                 github_audit_log: "github_audit_log";
                 github_copilot: "github_copilot";
+                github_webhooks: "github_webhooks";
                 grafana_alloy: "grafana_alloy";
                 hermes_agent: "hermes_agent";
                 inngest: "inngest";
                 jamf_pro: "jamf_pro";
+                jenkins: "jenkins";
                 langchain: "langchain";
+                linear_webhooks: "linear_webhooks";
                 mastra: "mastra";
+                modal: "modal";
                 neon: "neon";
                 netlify: "netlify";
                 new_relic: "new_relic";
                 new_relic_browser: "new_relic_browser";
+                northflank: "northflank";
                 oh_my_pi: "oh_my_pi";
                 okta: "okta";
                 openclaw: "openclaw";
@@ -3002,12 +3420,15 @@ export declare const logSourcesContract: {
                 railway: "railway";
                 render: "render";
                 respan: "respan";
+                runs_on: "runs_on";
                 sazabi_browser_sdk: "sazabi_browser_sdk";
                 sazabi_react_native_sdk: "sazabi_react_native_sdk";
                 sentinelone: "sentinelone";
                 sentry: "sentry";
                 sentry_platform: "sentry_platform";
+                shopify_webhooks: "shopify_webhooks";
                 signoz: "signoz";
+                stripe_webhooks: "stripe_webhooks";
                 supabase: "supabase";
                 tailscale: "tailscale";
                 temporal: "temporal";
@@ -3016,6 +3437,7 @@ export declare const logSourcesContract: {
                 vault: "vault";
                 vector: "vector";
                 vercel: "vercel";
+                warpbuild: "warpbuild";
                 webhook_events: "webhook_events";
                 workos: "workos";
                 zscaler: "zscaler";

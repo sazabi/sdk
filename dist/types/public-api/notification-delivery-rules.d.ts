@@ -12,6 +12,12 @@ export declare const DeliveryRuleConditionSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>>>;
+    types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>>;
 }, z.core.$strict>;
 export declare const DeliveryRuleDestinationInputSchema: z.ZodObject<{
     channel: z.ZodEnum<{
@@ -42,6 +48,7 @@ export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -59,6 +66,12 @@ export declare const DeliveryRuleDefinitionSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>;
 }, z.core.$strip>;
@@ -79,6 +92,7 @@ export declare const LegacyDeliveryRuleDefinitionSchema: z.ZodObject<{
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -95,6 +109,12 @@ export declare const LegacyDeliveryRuleDefinitionSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>;
 }, z.core.$strip>;
@@ -114,6 +134,7 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -133,6 +154,12 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>, z.ZodObject<{
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
@@ -140,6 +167,12 @@ export declare const DeliveryRuleDefinitionInputSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>]>;
 }, z.core.$strip>;
@@ -199,6 +232,7 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
     projectId: z.ZodString;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -229,6 +263,12 @@ export declare const ProjectDeliveryRuleSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>;
     component: z.ZodNullable<z.ZodObject<{
@@ -270,6 +310,7 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
         projectId: z.ZodString;
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -300,6 +341,12 @@ export declare const ListDeliveryRulesOutputSchema: z.ZodObject<{
                 high: "high";
                 low: "low";
                 medium: "medium";
+            }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
             }>>>;
         }, z.core.$strict>;
         component: z.ZodNullable<z.ZodObject<{
@@ -367,6 +414,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
     notificationTypes: z.ZodArray<z.ZodObject<{
         notificationType: z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -380,6 +428,7 @@ export declare const DeliveryRuleOptionsOutputSchema: z.ZodObject<{
         conditions: z.ZodArray<z.ZodEnum<{
             component: "component";
             severity: "severity";
+            type: "type";
         }>>;
         channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
             better_stack: "better_stack";
@@ -446,6 +495,7 @@ export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -465,6 +515,12 @@ export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>, z.ZodObject<{
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
@@ -472,6 +528,12 @@ export declare const CreateDeliveryRuleInputSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>]>;
     projectId: z.ZodOptional<z.ZodString>;
@@ -481,6 +543,7 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
     projectId: z.ZodString;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -511,6 +574,12 @@ export declare const CreateDeliveryRuleOutputSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>;
     component: z.ZodNullable<z.ZodObject<{
@@ -558,6 +627,7 @@ export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -577,6 +647,12 @@ export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>, z.ZodObject<{
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
@@ -584,6 +660,12 @@ export declare const UpdateDeliveryRuleInputSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>]>;
     projectId: z.ZodOptional<z.ZodString>;
@@ -594,6 +676,7 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
     projectId: z.ZodString;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -624,6 +707,12 @@ export declare const UpdateDeliveryRuleOutputSchema: z.ZodObject<{
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>;
     component: z.ZodNullable<z.ZodObject<{
@@ -678,6 +767,7 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
         projectId: z.ZodString;
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -708,6 +798,12 @@ export declare const listDeliveryRules: import("../orpc-contracts/index.js").Ope
                 high: "high";
                 low: "low";
                 medium: "medium";
+            }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
             }>>>;
         }, z.core.$strict>;
         component: z.ZodNullable<z.ZodObject<{
@@ -762,6 +858,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
     notificationTypes: z.ZodArray<z.ZodObject<{
         notificationType: z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -775,6 +872,7 @@ export declare const getDeliveryRuleOptions: import("../orpc-contracts/index.js"
         conditions: z.ZodArray<z.ZodEnum<{
             component: "component";
             severity: "severity";
+            type: "type";
         }>>;
         channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
             better_stack: "better_stack";
@@ -840,6 +938,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -859,6 +958,12 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
             low: "low";
             medium: "medium";
         }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>, z.ZodObject<{
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
@@ -867,6 +972,12 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
             low: "low";
             medium: "medium";
         }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>]>;
     projectId: z.ZodOptional<z.ZodString>;
 }, z.core.$strip>, z.ZodObject<{
@@ -874,6 +985,7 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
     projectId: z.ZodString;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -904,6 +1016,12 @@ export declare const createDeliveryRule: import("../orpc-contracts/index.js").Op
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>;
     component: z.ZodNullable<z.ZodObject<{
@@ -951,6 +1069,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
     }, z.core.$strip>>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -970,6 +1089,12 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
             low: "low";
             medium: "medium";
         }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>>;
     }, z.core.$strict>, z.ZodObject<{
         componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
         severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
@@ -977,6 +1102,12 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>]>;
     projectId: z.ZodOptional<z.ZodString>;
@@ -986,6 +1117,7 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
     projectId: z.ZodString;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -1016,6 +1148,12 @@ export declare const updateDeliveryRule: import("../orpc-contracts/index.js").Op
             high: "high";
             low: "low";
             medium: "medium";
+        }>>>;
+        types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
         }>>>;
     }, z.core.$strict>;
     component: z.ZodNullable<z.ZodObject<{
@@ -1062,6 +1200,7 @@ export declare const notificationDeliveryRulesContract: {
             projectId: z.ZodString;
             notificationTypes: z.ZodArray<z.ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -1092,6 +1231,12 @@ export declare const notificationDeliveryRulesContract: {
                     high: "high";
                     low: "low";
                     medium: "medium";
+                }>>>;
+                types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                    correctness: "correctness";
+                    efficiency: "efficiency";
+                    reliability: "reliability";
+                    security: "security";
                 }>>>;
             }, z.core.$strict>;
             component: z.ZodNullable<z.ZodObject<{
@@ -1146,6 +1291,7 @@ export declare const notificationDeliveryRulesContract: {
         notificationTypes: z.ZodArray<z.ZodObject<{
             notificationType: z.ZodEnum<{
                 automation_run_failed: "automation_run_failed";
+                daily_recap: "daily_recap";
                 issue_ignored: "issue_ignored";
                 issue_ongoing: "issue_ongoing";
                 issue_rejected: "issue_rejected";
@@ -1159,6 +1305,7 @@ export declare const notificationDeliveryRulesContract: {
             conditions: z.ZodArray<z.ZodEnum<{
                 component: "component";
                 severity: "severity";
+                type: "type";
             }>>;
             channels: z.ZodDefault<z.ZodArray<z.ZodEnum<{
                 better_stack: "better_stack";
@@ -1224,6 +1371,7 @@ export declare const notificationDeliveryRulesContract: {
         }, z.core.$strip>>;
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -1243,6 +1391,12 @@ export declare const notificationDeliveryRulesContract: {
                 low: "low";
                 medium: "medium";
             }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>, z.ZodObject<{
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
@@ -1251,6 +1405,12 @@ export declare const notificationDeliveryRulesContract: {
                 low: "low";
                 medium: "medium";
             }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>]>;
         projectId: z.ZodOptional<z.ZodString>;
     }, z.core.$strip>, z.ZodObject<{
@@ -1258,6 +1418,7 @@ export declare const notificationDeliveryRulesContract: {
         projectId: z.ZodString;
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -1288,6 +1449,12 @@ export declare const notificationDeliveryRulesContract: {
                 high: "high";
                 low: "low";
                 medium: "medium";
+            }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
             }>>>;
         }, z.core.$strict>;
         component: z.ZodNullable<z.ZodObject<{
@@ -1335,6 +1502,7 @@ export declare const notificationDeliveryRulesContract: {
         }, z.core.$strip>>;
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -1354,6 +1522,12 @@ export declare const notificationDeliveryRulesContract: {
                 low: "low";
                 medium: "medium";
             }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
+            }>>>;
         }, z.core.$strict>, z.ZodObject<{
             componentIds: z.ZodOptional<z.ZodArray<z.ZodString>>;
             severities: z.ZodOptional<z.ZodArray<z.ZodEnum<{
@@ -1361,6 +1535,12 @@ export declare const notificationDeliveryRulesContract: {
                 high: "high";
                 low: "low";
                 medium: "medium";
+            }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
             }>>>;
         }, z.core.$strict>]>;
         projectId: z.ZodOptional<z.ZodString>;
@@ -1370,6 +1550,7 @@ export declare const notificationDeliveryRulesContract: {
         projectId: z.ZodString;
         notificationTypes: z.ZodArray<z.ZodEnum<{
             automation_run_failed: "automation_run_failed";
+            daily_recap: "daily_recap";
             issue_ignored: "issue_ignored";
             issue_ongoing: "issue_ongoing";
             issue_rejected: "issue_rejected";
@@ -1400,6 +1581,12 @@ export declare const notificationDeliveryRulesContract: {
                 high: "high";
                 low: "low";
                 medium: "medium";
+            }>>>;
+            types: z.ZodOptional<z.ZodArray<z.ZodEnum<{
+                correctness: "correctness";
+                efficiency: "efficiency";
+                reliability: "reliability";
+                security: "security";
             }>>>;
         }, z.core.$strict>;
         component: z.ZodNullable<z.ZodObject<{

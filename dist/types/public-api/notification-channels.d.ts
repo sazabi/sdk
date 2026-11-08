@@ -94,6 +94,7 @@ export declare const NotificationChannelCardSchema: z.ZodObject<{
         billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
         code_repo_connected: "code_repo_connected";
         code_repo_disconnected: "code_repo_disconnected";
+        daily_recap: "daily_recap";
         github_connected: "github_connected";
         github_disconnected: "github_disconnected";
         integration_connected: "integration_connected";
@@ -170,6 +171,7 @@ export declare const ProjectNotificationTypePreferenceSchema: z.ZodObject<{
         billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
         code_repo_connected: "code_repo_connected";
         code_repo_disconnected: "code_repo_disconnected";
+        daily_recap: "daily_recap";
         github_connected: "github_connected";
         github_disconnected: "github_disconnected";
         integration_connected: "integration_connected";
@@ -283,6 +285,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
+            daily_recap: "daily_recap";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -359,6 +362,7 @@ export declare const GetProjectNotificationChannelsOutputSchema: z.ZodObject<{
             billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
+            daily_recap: "daily_recap";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -481,6 +485,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
+            daily_recap: "daily_recap";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -557,6 +562,7 @@ export declare const getProjectNotificationChannels: import("../orpc-contracts/i
             billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
             code_repo_connected: "code_repo_connected";
             code_repo_disconnected: "code_repo_disconnected";
+            daily_recap: "daily_recap";
             github_connected: "github_connected";
             github_disconnected: "github_disconnected";
             integration_connected: "integration_connected";
@@ -677,6 +683,7 @@ export declare const notificationChannelsContract: {
                 billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
                 code_repo_connected: "code_repo_connected";
                 code_repo_disconnected: "code_repo_disconnected";
+                daily_recap: "daily_recap";
                 github_connected: "github_connected";
                 github_disconnected: "github_disconnected";
                 integration_connected: "integration_connected";
@@ -753,6 +760,7 @@ export declare const notificationChannelsContract: {
                 billing_subscription_cancellation_scheduled: "billing_subscription_cancellation_scheduled";
                 code_repo_connected: "code_repo_connected";
                 code_repo_disconnected: "code_repo_disconnected";
+                daily_recap: "daily_recap";
                 github_connected: "github_connected";
                 github_disconnected: "github_disconnected";
                 integration_connected: "integration_connected";

@@ -124,6 +124,32 @@ export declare const WebhookIssueSchema: z.ZodObject<{
         low: "low";
         medium: "medium";
     }>;
+    types: z.ZodArray<z.ZodEnum<{
+        correctness: "correctness";
+        efficiency: "efficiency";
+        reliability: "reliability";
+        security: "security";
+    }>>;
+    categories: z.ZodArray<z.ZodEnum<{
+        abuse_and_fraud: "abuse_and_fraud";
+        active_attack: "active_attack";
+        agent_misbehavior: "agent_misbehavior";
+        background_job_failure: "background_job_failure";
+        business_flow_breakage: "business_flow_breakage";
+        capacity_risk: "capacity_risk";
+        configuration_drift: "configuration_drift";
+        cost_anomaly: "cost_anomaly";
+        data_integrity: "data_integrity";
+        dependency_failure: "dependency_failure";
+        exposure: "exposure";
+        frontend_breakage: "frontend_breakage";
+        observability_gap: "observability_gap";
+        outage: "outage";
+        performance_degradation: "performance_degradation";
+        regression: "regression";
+        silent_failure: "silent_failure";
+        suspicious_access: "suspicious_access";
+    }>>;
     componentId: z.ZodNullable<z.ZodString>;
     componentName: z.ZodNullable<z.ZodString>;
     createdAt: z.ZodString;
@@ -181,6 +207,7 @@ export declare const WebhookEnvelopeBaseSchema: z.ZodObject<{
     id: z.ZodString;
     type: z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";
@@ -259,6 +286,32 @@ export declare const IssueWebhookEnvelopeSchema: z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -465,6 +518,50 @@ export declare const SignalWebhookEnvelopeSchema: z.ZodObject<{
         }, z.core.$strip>], "transition">;
     }, z.core.$strip>], "type">;
 }, z.core.$strip>;
+export declare const WebhookDailyRecapSchema: z.ZodObject<{
+    id: z.ZodString;
+    date: z.ZodString;
+    timeZone: z.ZodString;
+    verdict: z.ZodEnum<{
+        bad: "bad";
+        good: "good";
+        watch: "watch";
+    }>;
+    quiet: z.ZodBoolean;
+    headline: z.ZodString;
+    url: z.ZodString;
+}, z.core.$strip>;
+export declare const DailyRecapWebhookEnvelopeSchema: z.ZodObject<{
+    id: z.ZodString;
+    apiVersion: z.ZodLiteral<"2026-09-01">;
+    createdAt: z.ZodString;
+    organization: z.ZodObject<{
+        id: z.ZodString;
+    }, z.core.$strip>;
+    notification: z.ZodObject<{
+        title: z.ZodString;
+        message: z.ZodString;
+    }, z.core.$strip>;
+    type: z.ZodLiteral<"daily_recap">;
+    test: z.ZodLiteral<false>;
+    project: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>;
+    recap: z.ZodObject<{
+        id: z.ZodString;
+        date: z.ZodString;
+        timeZone: z.ZodString;
+        verdict: z.ZodEnum<{
+            bad: "bad";
+            good: "good";
+            watch: "watch";
+        }>;
+        quiet: z.ZodBoolean;
+        headline: z.ZodString;
+        url: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>;
 export declare const TestWebhookEnvelopeSchema: z.ZodObject<{
     id: z.ZodString;
     apiVersion: z.ZodLiteral<"2026-09-01">;
@@ -523,6 +620,32 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
             low: "low";
             medium: "medium";
         }>;
+        types: z.ZodArray<z.ZodEnum<{
+            correctness: "correctness";
+            efficiency: "efficiency";
+            reliability: "reliability";
+            security: "security";
+        }>>;
+        categories: z.ZodArray<z.ZodEnum<{
+            abuse_and_fraud: "abuse_and_fraud";
+            active_attack: "active_attack";
+            agent_misbehavior: "agent_misbehavior";
+            background_job_failure: "background_job_failure";
+            business_flow_breakage: "business_flow_breakage";
+            capacity_risk: "capacity_risk";
+            configuration_drift: "configuration_drift";
+            cost_anomaly: "cost_anomaly";
+            data_integrity: "data_integrity";
+            dependency_failure: "dependency_failure";
+            exposure: "exposure";
+            frontend_breakage: "frontend_breakage";
+            observability_gap: "observability_gap";
+            outage: "outage";
+            performance_degradation: "performance_degradation";
+            regression: "regression";
+            silent_failure: "silent_failure";
+            suspicious_access: "suspicious_access";
+        }>>;
         componentId: z.ZodNullable<z.ZodString>;
         componentName: z.ZodNullable<z.ZodString>;
         createdAt: z.ZodString;
@@ -733,6 +856,36 @@ export declare const WebhookEnvelopeSchema: z.ZodUnion<readonly [z.ZodObject<{
     organization: z.ZodObject<{
         id: z.ZodString;
     }, z.core.$strip>;
+    notification: z.ZodObject<{
+        title: z.ZodString;
+        message: z.ZodString;
+    }, z.core.$strip>;
+    type: z.ZodLiteral<"daily_recap">;
+    test: z.ZodLiteral<false>;
+    project: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+    }, z.core.$strip>;
+    recap: z.ZodObject<{
+        id: z.ZodString;
+        date: z.ZodString;
+        timeZone: z.ZodString;
+        verdict: z.ZodEnum<{
+            bad: "bad";
+            good: "good";
+            watch: "watch";
+        }>;
+        quiet: z.ZodBoolean;
+        headline: z.ZodString;
+        url: z.ZodString;
+    }, z.core.$strip>;
+}, z.core.$strip>, z.ZodObject<{
+    id: z.ZodString;
+    apiVersion: z.ZodLiteral<"2026-09-01">;
+    createdAt: z.ZodString;
+    organization: z.ZodObject<{
+        id: z.ZodString;
+    }, z.core.$strip>;
     project: z.ZodNullable<z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
@@ -900,6 +1053,7 @@ export declare const webhooksSubscribe: import("../orpc-contracts/index.js").Ope
     projectId: z.ZodOptional<z.ZodString>;
     notificationTypes: z.ZodArray<z.ZodEnum<{
         automation_run_failed: "automation_run_failed";
+        daily_recap: "daily_recap";
         issue_ignored: "issue_ignored";
         issue_ongoing: "issue_ongoing";
         issue_rejected: "issue_rejected";

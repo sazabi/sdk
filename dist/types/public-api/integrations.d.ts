@@ -5,7 +5,7 @@ import { z } from "zod";
  * isomorphic contract package does not pull in the server-only integrations
  * package (which imports Node crypto and database access).
  */
-export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "better_stack", "incident_io", "webhook", "teams", "discord", "discord_bot", "bitbucket", "jira", "gitcafe", "cursor", "devin", "capy", "warp", "replicas", "claude", "codex", "hoplite"];
+export declare const INTEGRATION_PROVIDER_VALUES: readonly ["slack", "github", "linear", "pagerduty", "victorops", "rootly", "better_stack", "incident_io", "webhook", "teams", "discord", "discord_bot", "bitbucket", "jira", "gitcafe", "cursor", "devin", "capy", "warp", "replicas", "claude", "codex", "hoplite", "tembo"];
 export declare const IntegrationProviderEnum: z.ZodEnum<{
     better_stack: "better_stack";
     bitbucket: "bitbucket";
@@ -27,6 +27,7 @@ export declare const IntegrationProviderEnum: z.ZodEnum<{
     rootly: "rootly";
     slack: "slack";
     teams: "teams";
+    tembo: "tembo";
     victorops: "victorops";
     warp: "warp";
     webhook: "webhook";
@@ -155,6 +156,7 @@ export declare const IntegrationProviderSchema: z.ZodObject<{
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -262,6 +264,7 @@ export declare const IntegrationConnectionSchema: z.ZodObject<{
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -321,6 +324,7 @@ export declare const ListIntegrationProvidersOutputSchema: z.ZodObject<{
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -376,6 +380,7 @@ export declare const listIntegrationProviders: import("../orpc-contracts/index.j
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -428,6 +433,7 @@ export declare const ListIntegrationConnectionsInputSchema: z.ZodObject<{
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -509,6 +515,7 @@ export declare const ListIntegrationConnectionsOutputSchema: z.ZodObject<{
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -562,6 +569,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -642,6 +650,7 @@ export declare const listIntegrationConnections: import("../orpc-contracts/index
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -840,6 +849,7 @@ export declare const GetIntegrationConnectionOutputSchema: z.ZodObject<{
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -949,6 +959,7 @@ export declare const getIntegrationConnection: import("../orpc-contracts/index.j
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -1001,6 +1012,7 @@ export declare const CreateIntegrationConnectionInputSchema: z.ZodObject<{
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -1084,6 +1096,7 @@ export declare const CreateIntegrationConnectionOutputSchema: z.ZodObject<{
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -1138,6 +1151,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -1220,6 +1234,7 @@ export declare const createIntegrationConnection: import("../orpc-contracts/inde
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -1271,6 +1286,7 @@ export declare const BeginIntegrationConnectInputSchema: z.ZodObject<{
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -1308,6 +1324,7 @@ export declare const beginIntegrationConnect: import("../orpc-contracts/index.js
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -1415,6 +1432,7 @@ export declare const GetIntegrationConnectAttemptOutputSchema: z.ZodObject<{
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -1533,6 +1551,7 @@ export declare const getIntegrationConnectAttempt: import("../orpc-contracts/ind
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -1658,6 +1677,7 @@ export declare const UpdateIntegrationConnectionCredentialsOutputSchema: z.ZodOb
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -1769,6 +1789,7 @@ export declare const updateIntegrationConnectionCredentials: import("../orpc-con
             rootly: "rootly";
             slack: "slack";
             teams: "teams";
+            tembo: "tembo";
             victorops: "victorops";
             warp: "warp";
             webhook: "webhook";
@@ -2145,6 +2166,7 @@ export declare const deleteSlackChannelProjectMapping: import("../orpc-contracts
 export declare const MicrosoftTeamsConfigurationSchema: z.ZodObject<{
     connectionId: z.ZodString;
     defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
 }, z.core.$strip>;
 export type MicrosoftTeamsConfiguration = z.infer<typeof MicrosoftTeamsConfigurationSchema>;
 export declare const GetMicrosoftTeamsConfigurationInputSchema: z.ZodObject<{
@@ -2159,11 +2181,13 @@ export declare const getMicrosoftTeamsConfiguration: import("../orpc-contracts/i
 }, z.core.$strip>, z.ZodObject<{
     connectionId: z.ZodString;
     defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
 }, z.core.$strip>, "api">;
 export declare const UpdateMicrosoftTeamsConfigurationInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     connectionId: z.ZodString;
     defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    automaticResponses: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>;
 export type UpdateMicrosoftTeamsConfigurationInput = z.infer<typeof UpdateMicrosoftTeamsConfigurationInputSchema>;
 export type UpdateMicrosoftTeamsConfigurationOutput = MicrosoftTeamsConfiguration;
@@ -2171,9 +2195,11 @@ export declare const updateMicrosoftTeamsConfiguration: import("../orpc-contract
     organizationId: z.ZodOptional<z.ZodString>;
     connectionId: z.ZodString;
     defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    automaticResponses: z.ZodOptional<z.ZodBoolean>;
 }, z.core.$strip>, z.ZodObject<{
     connectionId: z.ZodString;
     defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
 }, z.core.$strip>, "api">;
 export declare const MicrosoftTeamsChannelProjectMappingSchema: z.ZodObject<{
     connectionId: z.ZodString;
@@ -2253,6 +2279,44 @@ export declare const DiscordChannelSchema: z.ZodObject<{
     parentId: z.ZodNullable<z.ZodString>;
 }, z.core.$strip>;
 export type DiscordChannel = z.infer<typeof DiscordChannelSchema>;
+export declare const DiscordConfigurationSchema: z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
+}, z.core.$strip>;
+export type DiscordConfiguration = z.infer<typeof DiscordConfigurationSchema>;
+export declare const GetDiscordConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>;
+export type GetDiscordConfigurationInput = z.infer<typeof GetDiscordConfigurationInputSchema>;
+export type GetDiscordConfigurationOutput = DiscordConfiguration;
+export declare const getDiscordConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
+}, z.core.$strip>, "api">;
+export declare const UpdateDiscordConfigurationInputSchema: z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    automaticResponses: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>;
+export type UpdateDiscordConfigurationInput = z.infer<typeof UpdateDiscordConfigurationInputSchema>;
+export type UpdateDiscordConfigurationOutput = DiscordConfiguration;
+export declare const updateDiscordConfiguration: import("../orpc-contracts/index.js").OperationDefinition<z.ZodObject<{
+    organizationId: z.ZodOptional<z.ZodString>;
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+    automaticResponses: z.ZodOptional<z.ZodBoolean>;
+}, z.core.$strip>, z.ZodObject<{
+    connectionId: z.ZodString;
+    defaultProjectId: z.ZodNullable<z.ZodString>;
+    automaticResponses: z.ZodBoolean;
+}, z.core.$strip>, "api">;
 export declare const ListDiscordChannelsInputSchema: z.ZodObject<{
     organizationId: z.ZodOptional<z.ZodString>;
     connectionId: z.ZodString;
@@ -2371,6 +2435,7 @@ export declare const GetActiveCLIAttemptInputSchema: z.ZodObject<{
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
@@ -2405,6 +2470,7 @@ export declare const getActiveCLIAttempt: import("../orpc-contracts/index.js").O
         rootly: "rootly";
         slack: "slack";
         teams: "teams";
+        tembo: "tembo";
         victorops: "victorops";
         warp: "warp";
         webhook: "webhook";
